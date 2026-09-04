@@ -33,4 +33,5 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-03 — Render health-only Blueprint](2026-09-03-render-health.md)
 - [2026-09-03 — Ticket 001 scaffold](2026-09-03-ticket-001-scaffold.md)

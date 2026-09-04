@@ -55,7 +55,7 @@ A copper key glints beneath the water.
 | Product requirements | Published in [`docs/PRD.md`](docs/PRD.md) |
 | Public GitHub repository | This repository |
 | Playable client | Not started (Ticket 005) |
-| Live deployment | Health-only after you apply `render.yaml` |
+| Live deployment | Health-only at https://greenwood-collegium.onrender.com |
 | CI | GitHub Actions on pull requests and `main` |
 | Interface generations | Classic UI is the first target |
 
