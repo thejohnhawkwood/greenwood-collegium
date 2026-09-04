@@ -4,25 +4,25 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **Release target:** v0.0 foundation (classic UI 0, three rooms, look and movement)
-- **Active ticket:** [#7 — Multiplayer presence and say](https://github.com/thejohnhawkwood/greenwood-collegium/issues/7)
+- **Release target:** v0.0 foundation (classic UI 0, three rooms, look, movement, presence, say)
+- **Active ticket:** [#8 — PostgreSQL and Drizzle](https://github.com/thejohnhawkwood/greenwood-collegium/issues/8)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
-- **Render public hostname:** https://greenwood-collegium.onrender.com (classic look and movement after Ticket 006; no connection strings in this file)
+- **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. [`packages/game-engine/AGENTS.md`](../../packages/game-engine/AGENTS.md)
-3. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
-4. PRD Appendix E Ticket 007
+2. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
+3. ADR-0004
+4. PRD Appendix E Ticket 008
 
 ## Forbidden this pass
 
-- Drizzle, migrations, or connecting to Postgres from the app
-- Colour, HUD, or glyph presentation (later design sprints)
+- Pasting Render secrets, `DATABASE_URL`, or student data into Git or chat
+- Requesting or accepting a production database dump
+- Colour, HUD, or glyph presentation
 - Playwright
-- student accounts, invites, or auth
-- pasting Render secrets, `DATABASE_URL`, or student data into Git or chat
+- Classroom accounts and invites (Ticket 009)
 
 The owner authorized CLI merge after CI is green for this setup stretch.
 
@@ -36,6 +36,6 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 007
+## After Ticket 008
 
-Next ticket is **008 — PostgreSQL and Drizzle**.
+Next ticket is **009 — Classroom authentication**.
