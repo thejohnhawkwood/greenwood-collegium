@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 003 pure `look` command in the game engine (no web or database).
 - Ticket 002 shared event envelope, semantic segments, and a Lantern Court `room.snapshot` fixture.
 - Ticket 001 TypeScript monorepo scaffold (pnpm, Vite/React, Fastify health, Zod contracts).
 - Iteration pillars: ADRs, context pack, devlog, classroom roles, machine and Render runbooks.
