@@ -1,0 +1,13 @@
+---
+description: Pure game-engine package rules
+globs: packages/game-engine/**/*
+alwaysApply: false
+---
+
+# Game engine
+
+- Keep rules pure: movement, combat, quests, items, permissions.
+- No imports from React, Fastify, Socket.IO, PostgreSQL, Drizzle, Render, or browser APIs.
+- Accept an injectable random source so combat tests can be deterministic.
+- Return domain results and events; do not persist or emit sockets here.
+- Classic plain-text narration must remain available on significant events.

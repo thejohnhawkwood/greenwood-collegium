@@ -1,0 +1,30 @@
+name: Release
+description: Plan or track a version tag and classroom rollout.
+title: "[Release] "
+labels: ["release"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: v0.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: goals
+    attributes:
+      label: Release goals
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Acceptance and rollout checks
+      value: |
+        - [ ] Tests and CI
+        - [ ] Migrations
+        - [ ] Backup notes
+        - [ ] README / CHANGELOG
+        - [ ] No student data in the tag
+    validations:
+      required: true

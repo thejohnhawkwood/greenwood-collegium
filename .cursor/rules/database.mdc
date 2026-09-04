@@ -1,0 +1,13 @@
+---
+description: PostgreSQL, Drizzle, and migrations
+globs: "{drizzle/**/*,apps/server/src/persistence/**/*}"
+alwaysApply: false
+---
+
+# Database
+
+- Persistent player state lives in PostgreSQL, not the Render filesystem.
+- Schema changes require a version-controlled migration.
+- Released migrations are immutable.
+- Never commit dumps, backups, or student records.
+- In-memory repositories are for tests and early demos only, using the same interfaces.

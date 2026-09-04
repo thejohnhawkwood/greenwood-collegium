@@ -1,0 +1,28 @@
+name: Design Sprint
+description: Start a written interface upgrade before coding it.
+title: "[Design Sprint] DS-"
+labels: ["design-sprint"]
+body:
+  - type: input
+    id: sprint_id
+    attributes:
+      label: Sprint ID
+      placeholder: DS-001
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Observed problem
+    validations:
+      required: true
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: We believe [change] will improve [measurable outcome].
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: Copy the full template from `docs/design-sprints/README.md` into `docs/design-sprints/` on the feature branch.

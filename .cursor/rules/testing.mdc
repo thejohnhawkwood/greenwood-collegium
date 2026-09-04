@@ -1,0 +1,13 @@
+---
+description: Tests and definition of done
+globs: "**/*.{test,spec}.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing
+
+- Every behaviour change needs tests. Do not weaken tests to obtain a pass.
+- Engine rules get unit tests. Schemas get contract tests. Persistence and sockets get integration tests.
+- Keep classic renderer fixtures as a regression baseline.
+- Combat and rewards must have deterministic, idempotent cases.
+- Do not use `any` to silence a failing type.

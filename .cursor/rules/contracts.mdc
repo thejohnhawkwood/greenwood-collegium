@@ -1,0 +1,13 @@
+---
+description: Shared command and event contracts
+globs: packages/contracts/**/*
+alwaysApply: false
+---
+
+# Contracts
+
+- Commands, events, snapshots, and errors are shared Zod schemas.
+- Every significant event needs structured payload and plain-text narration.
+- Semantic segments are data, not a client parsing prose.
+- Do not break existing event fixtures without a versioned migration plan.
+- The client must not claim a different account, role, or character in command fields.

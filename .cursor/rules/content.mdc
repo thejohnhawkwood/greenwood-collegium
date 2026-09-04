@@ -1,0 +1,13 @@
+---
+description: Declarative world content
+globs: packages/content/**/*
+alwaysApply: false
+---
+
+# Content
+
+- Rooms, items, NPCs, spells, quests, and help text stay declarative.
+- Use stable IDs. Do not casually rename released IDs.
+- All public names and descriptions must be original or licensed.
+- Reject HTML, scripts, and student personal information.
+- Invalid content should fail validation rather than load silently.

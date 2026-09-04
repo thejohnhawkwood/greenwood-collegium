@@ -1,0 +1,33 @@
+name: Feature
+description: Propose a bounded product or engine change.
+title: "[Feature] "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What classroom or player problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Non-goals
+      description: What should not be included?
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Fit
+      options:
+        - label: This is issue-sized, not an entire system
+        - label: I checked the PRD non-goals
+        - label: Classic commands remain the canonical interaction if this is player-facing

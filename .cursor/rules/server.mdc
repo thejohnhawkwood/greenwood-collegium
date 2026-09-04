@@ -1,0 +1,14 @@
+---
+description: Fastify, sockets, and application services
+globs: apps/server/**/*
+alwaysApply: false
+---
+
+# Server
+
+- Socket handlers coordinate; they do not calculate damage, rewards, or permissions.
+- Authenticate from server session context. Ignore client-supplied account, role, or character authority.
+- Validate every command and socket payload at the boundary.
+- Persist critical mutations before acknowledging success.
+- Duplicate command IDs must not duplicate movement, items, or rewards.
+- Enforce classroom mode defaults: no public registration, DMs, or PvP.

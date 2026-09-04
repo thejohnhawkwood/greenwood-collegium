@@ -1,0 +1,14 @@
+---
+description: React client and progressive interfaces
+globs: apps/web/**/*
+alwaysApply: false
+---
+
+# Web client
+
+- Typed commands are the canonical interaction. Panels may assist; they must not replace the vocabulary.
+- React components never contain game rules.
+- Apply server events to presentation state. Do not invent authoritative outcomes.
+- Keep classic mode fully playable. Colour, HUD, and effects are progressive.
+- Do not communicate essential information through colour alone.
+- Respect reduced motion. Keep a permanent transcript of important events.

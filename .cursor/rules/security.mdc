@@ -1,0 +1,13 @@
+---
+description: Secrets, privacy, and classroom safety
+alwaysApply: true
+---
+
+# Security
+
+- Never read, log, or commit secrets, production URLs with credentials, or student data.
+- Treat all user input as untrusted. Validate with Zod. Render chat as text, never HTML.
+- Permissions are enforced on the server.
+- Do not write exploit PoCs or attack procedures.
+- Prefer failing tests and hardening patches.
+- `.env` is local only. `.env.example` contains names and safe placeholders.

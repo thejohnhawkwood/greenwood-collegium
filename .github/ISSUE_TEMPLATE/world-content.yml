@@ -1,0 +1,29 @@
+name: World Content
+description: Propose original rooms, items, NPCs, quests, or help text.
+title: "[World] "
+labels: ["world-content"]
+body:
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose in the world
+    validations:
+      required: true
+  - type: textarea
+    id: content
+    attributes:
+      label: Proposed content
+      description: IDs, exits, original description. No classmate personal information.
+    validations:
+      required: true
+  - type: checkboxes
+    id: originality
+    attributes:
+      label: Originality
+      options:
+        - label: This text is original or appropriately licensed
+          required: true
+        - label: No student personal data is included
+          required: true
+        - label: Language is school-appropriate
+          required: true

@@ -1,0 +1,15 @@
+﻿# Keep secrets and operational data out of agent context.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets/
+backups/
+production-exports/
+student-data/
+classroom-private/
+*.dump
+*.sqlite
+*.sqlite3

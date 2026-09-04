@@ -1,0 +1,13 @@
+---
+description: Accessibility acceptance for interface work
+globs: apps/web/**/*
+alwaysApply: false
+---
+
+# Accessibility
+
+- Keyboard-only play is required for essential functions.
+- Colour is never the only meaning.
+- Provide reduced-motion and skippable effects before animated combat ships.
+- Health, maps, and targets need text alternatives and numeric values.
+- Important events belong in a live region and in the transcript.

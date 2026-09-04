@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/thejohnhawkwood/greenwood-collegium/security/advisories/new
+    about: Report a vulnerability privately. Do not file a public issue for secrets or student data.
+  - name: Product requirements
+    url: https://github.com/thejohnhawkwood/greenwood-collegium/blob/main/docs/PRD.md
+    about: Read the PRD before proposing a large new system.

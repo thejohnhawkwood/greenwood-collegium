@@ -1,0 +1,21 @@
+name: Security
+description: Non-sensitive security hardening or process work. Vulnerabilities go to a private advisory.
+title: "[Security] "
+labels: ["security"]
+body:
+  - type: markdown
+    attributes:
+      value: If this report could be exploited, stop and use a private advisory or email philipdbird@gmail.com instead.
+  - type: textarea
+    id: work
+    attributes:
+      label: Hardening or process work
+    validations:
+      required: true
+  - type: checkboxes
+    id: not_exploit
+    attributes:
+      label: Confirmation
+      options:
+        - label: This issue does not include an exploit, secret, or student data
+          required: true

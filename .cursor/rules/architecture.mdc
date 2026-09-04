@@ -1,0 +1,13 @@
+---
+description: Modular monolith and layer boundaries
+alwaysApply: true
+---
+
+# Architecture
+
+- One repository, one Node web service, one PostgreSQL database, one browser client.
+- Do not introduce microservices, a second deployable API, or a competing source of game truth.
+- Layers: client presentation, transport, application services, pure game engine, persistence, declarative content.
+- The engine determines truth. The interface determines presentation.
+- Record irreversible choices in `docs/adr/`.
+- Do not add a runtime dependency unless the pull request states a one-sentence rationale.
