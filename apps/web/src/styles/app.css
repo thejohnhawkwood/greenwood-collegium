@@ -84,7 +84,68 @@ body {
   opacity: 0.5;
 }
 
-.command-label input:focus {
+.command-label input:focus,
+.auth-form input:focus,
+.auth-actions button:focus,
+.auth-form button:focus {
   outline: 2px solid var(--lantern);
   outline-offset: 2px;
+}
+
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
+}
+
+.auth-gate {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.auth-gate h2,
+.auth-form h3 {
+  margin: 0 0 0.4rem;
+  color: var(--lantern);
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 24rem;
+}
+
+.auth-form label,
+.chrome label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.auth-form input,
+.chrome input {
+  background: transparent;
+  border: 1px solid var(--lantern);
+  color: inherit;
+  font: inherit;
+  padding: 0.35rem 0.4rem;
+}
+
+.auth-form button,
+.auth-actions button,
+.auth-gate button {
+  width: fit-content;
+  background: transparent;
+  border: 1px solid var(--lantern);
+  color: inherit;
+  font: inherit;
+  padding: 0.35rem 0.7rem;
+}
+
+.auth-error {
+  margin: 0;
 }

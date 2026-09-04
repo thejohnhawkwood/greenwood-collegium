@@ -4,7 +4,7 @@ Ticket 008 added Drizzle, SQL migrations, and account/character repositories.
 
 ## What is persisted
 
-Accounts and characters can be written and read back. Guest play in the browser is still in-memory until Ticket 009.
+Accounts, characters, sessions, and invites can be written and read back. Guest play remains in development only. Production sockets require a session.
 
 `DATABASE_URL` never goes in Git. Do not paste Render connection strings into chat.
 
