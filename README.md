@@ -7,7 +7,7 @@ This repository is public and open source. It is also a classroom artifact: the 
 **Current public version:** not yet released (repository foundation)  
 **Product owner:** Philip Bird  
 **Primary setting:** St. Joseph's Collegiate, Brooks, Alberta  
-**License:** [MIT](LICENSE) for code; [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) for original world text and educational documentation
+**License:** [MIT](LICENSE) for code; [CC BY 4.0](docs/CONTENT-LICENSE.md) for original world text and educational documentation
 
 > **Privacy:** This repository never stores student records, real chat logs, production database exports, passwords, or tokens. Gameplay names are fictional or classroom-approved pseudonyms.
 
@@ -151,12 +151,13 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability. Do not file pu
 ## License
 
 - **Code and software:** [MIT License](LICENSE)
-- **Original world prose and educational documentation:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- **Original world prose and educational documentation:** [CC BY 4.0](docs/CONTENT-LICENSE.md)
 - **Third-party materials:** [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
 
 ## Documents
 
 - [Product Requirements Document](docs/PRD.md)
+- [Content license (CC BY 4.0)](docs/CONTENT-LICENSE.md)
 - [Architecture notes](docs/architecture/)
 - [Architecture decision records](docs/adr/)
 - [Changelog](CHANGELOG.md)
