@@ -16,7 +16,7 @@ Ticket 001 creates the database in the Blueprint so the semester stack exists, b
 - `DATABASE_URL` is wired by the Blueprint (`fromDatabase`). It never enters Git.
 - Drizzle and SQL migrations start at Ticket 008.
 - In-memory repositories may appear with the first persistence interfaces. They are never presented as production storage.
-- `/health/ready` stays unready (503) until the database is used and content can load.
+- `/health/ready` stays unready (503) until the database is used and content can load. Ticket 008 may remove `database unwired` after a successful ping.
 
 ## Consequences
 

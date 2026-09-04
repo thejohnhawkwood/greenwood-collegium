@@ -17,6 +17,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0009](0009-health-only-deploy.md) | Health-only deploy in Ticket 001 |
 | [0010](0010-socket-io-temp-identity.md) | Socket.IO round trip and temporary identity |
 | [0011](0011-per-connection-identity.md) | One temporary character per socket |
+| [0012](0012-drizzle-repositories.md) | Drizzle repositories and CI Postgres |
 
 ## Template
 

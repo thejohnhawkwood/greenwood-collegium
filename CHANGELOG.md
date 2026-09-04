@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 008 Drizzle schema, SQL migrations, and account/character repositories.
 - Ticket 007 per-connection presence, room `say`, entry/exit notices, and chat rate limits.
 - Ticket 006 three-room movement, missing-exit rejection, and first-visit discovery.
 - Ticket 005 classic transcript, command input, connection indicator, and history.

@@ -37,7 +37,7 @@ If any click fails, stop. Do not create a second database by hand or paste `DATA
 16. Wait until the deploy is live.
 17. Open `https://<service>.onrender.com/` — after Ticket 004, expect the look proof page when `apps/web/dist` was built. Health routes stay on the same origin.
 18. Open `https://<service>.onrender.com/health/live` — expect HTTP 200 and JSON status ok.
-19. Open `https://<service>.onrender.com/health/ready` — expect HTTP 503 and an honest reason (`database unwired`, `content absent`).
+19. Open `https://<service>.onrender.com/health/ready` — expect HTTP 503. After Ticket 008 a successful database ping drops `database unwired`; `content absent` remains.
 20. Open `https://<service>.onrender.com/version` — expect a safe version payload, no secrets.
 21. Put **only** the public hostname into `docs/context/CURRENT.md`. Open a small docs PR if needed. Never commit connection strings.
 
