@@ -1,11 +1,15 @@
 import { schemaVersion, type CommandRequest } from "@greenwood/contracts";
 
-export function createLookRequest(commandId: string): CommandRequest {
+export function createCommandRequest(
+  commandId: string,
+  raw: string,
+  lastSequence: number,
+): CommandRequest {
   return {
     schemaVersion,
     commandId,
-    raw: "look",
-    lastSequence: 0,
+    raw,
+    lastSequence,
     interfaceMode: "classic",
   };
 }

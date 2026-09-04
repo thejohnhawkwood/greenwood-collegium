@@ -15,37 +15,76 @@ body {
   font-family: var(--font);
 }
 
-.shell {
-  max-width: 40rem;
+.client {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 48rem;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem;
+  gap: 1rem;
 }
 
-h1 {
+.chrome h1 {
   color: var(--lantern);
   font-weight: 600;
+  margin: 0 0 0.4rem;
 }
 
 .meta {
+  margin: 0;
   opacity: 0.75;
 }
 
-button {
-  background: var(--lantern);
-  color: var(--moss);
-  border: 0;
-  font: inherit;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .transcript {
-  white-space: pre-wrap;
+  flex: 1;
+  overflow: auto;
+  min-height: 12rem;
   border-left: 3px solid var(--lantern);
   padding-left: 1rem;
+}
+
+.line {
+  margin: 0 0 0.75rem;
+  white-space: pre-wrap;
+  font: inherit;
+}
+
+.line-command,
+.line-notice {
+  opacity: 0.8;
+}
+
+.command-form {
+  border-top: 1px solid var(--lantern);
+  padding-top: 0.75rem;
+}
+
+.command-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.prompt {
+  color: var(--lantern);
+}
+
+.command-label input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 0.2rem 0;
+}
+
+.command-label input:disabled {
+  opacity: 0.5;
+}
+
+.command-label input:focus {
+  outline: 2px solid var(--lantern);
+  outline-offset: 2px;
 }

@@ -1,8 +1,8 @@
 # @greenwood/web
 
-React client. Typed commands will be the canonical interaction once Ticket 005 exists.
+React client. Typed commands are the canonical player interaction.
 
-- Ticket 001: placeholder page that builds. Not playable.
-- React components never contain game rules.
-- Apply server events to presentation state later. Do not invent authoritative outcomes.
+- Ticket 005 owns the classic transcript, command input, connection indicator, and history.
+- React components never contain game rules. Render `event.narration` with `renderClassicNarration`.
+- Do not invent authoritative outcomes from the client.
 - Keep classic mode possible. No Tailwind or component library.
