@@ -10,6 +10,9 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 001 TypeScript monorepo scaffold (pnpm, Vite/React, Fastify health, Zod contracts).
+- Iteration pillars: ADRs, context pack, devlog, classroom roles, machine and Render runbooks.
+- GitHub Actions CI and a health-only Render Blueprint.
 - Public open-source repository foundation.
 - Product Requirements Document at `docs/PRD.md`.
 - MIT license for code and CC BY 4.0 notice for original world and educational text.

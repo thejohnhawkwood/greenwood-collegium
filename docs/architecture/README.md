@@ -17,4 +17,4 @@ PURE GAME ENGINE
 POSTGRESQL
 ```
 
-Fixed decisions for version 0.1 are listed in [PRD section 34](../PRD.md#34-decisions-fixed-for-version-01). Record later decisions in [`docs/adr/`](../adr/).
+Fixed decisions for version 0.1 are listed in [PRD section 34](../PRD.md#34-decisions-fixed-for-version-01). Accepted records live in [`docs/adr/`](../adr/). Start a session from [`docs/context/CURRENT.md`](../context/CURRENT.md).

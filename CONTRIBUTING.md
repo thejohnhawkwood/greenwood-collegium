@@ -24,7 +24,7 @@ Student content contributions must never include personal information about clas
 
 ## Development setup
 
-The TypeScript monorepo is not scaffolded yet (Ticket 001). When it exists, the expected local flow will be:
+Follow [`docs/dev/machine-setup.md`](docs/dev/machine-setup.md). The expected local flow is:
 
 ```text
 pnpm install
