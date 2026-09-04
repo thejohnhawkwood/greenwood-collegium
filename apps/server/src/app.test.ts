@@ -16,7 +16,6 @@ describe("health-only server", () => {
     expect(response.statusCode).toBe(200);
     expect(response.headers["content-type"]).toMatch(/text\/html/);
     expect(response.body).toContain("The Greenwood Collegium");
-    expect(response.body).toContain("not a playable game yet");
   });
 
   it("reports live", async () => {

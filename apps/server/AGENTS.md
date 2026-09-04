@@ -1,8 +1,8 @@
 # @greenwood/server
 
-Fastify process for HTTP and, later, Socket.IO.
+Fastify process for HTTP and Socket.IO.
 
-- Ticket 001: health and version routes only.
-- Ticket 004: command round trip. Socket handlers coordinate; they do not calculate domain outcomes.
-- Authenticate from server session context when auth exists. Ignore client-supplied identity fields.
+- Socket handlers coordinate. They call the engine. They do not invent room text.
+- Ignore client-supplied account, role, or character fields. Ticket 004 uses a temporary server-chosen character.
+- Validate command payloads with Zod before calling `handleLook`.
 - Persist critical mutations before acknowledging success (Ticket 008+).

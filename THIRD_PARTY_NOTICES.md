@@ -14,6 +14,8 @@ these so the empty scaffold can typecheck, test, lint, and build:
 | React 19 / React DOM | Browser client |
 | Vite 8 | Client dev server and production build |
 | Fastify 5 | HTTP process and health endpoints |
+| Socket.IO 4 | Command and event transport (Ticket 004) |
+| @fastify/static | Serve the built web client from the same origin |
 | Zod 4 | Shared contracts |
 | Vitest | Unit and contract tests |
 | ESLint / typescript-eslint | Lint TypeScript and React |
