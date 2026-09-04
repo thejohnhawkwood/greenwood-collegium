@@ -1,0 +1,7 @@
+:root {
+  color-scheme: dark;
+  --ink: #e8e0d0;
+  --moss: #1b2a22;
+  --lantern: #d4a45a;
+  --font: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+}

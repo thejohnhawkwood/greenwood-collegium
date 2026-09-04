@@ -1,0 +1,22 @@
+{
+  "name": "@greenwood/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@greenwood/contracts": "workspace:*",
+    "@greenwood/game-engine": "workspace:*",
+    "fastify": "^5.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

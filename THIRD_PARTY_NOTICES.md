@@ -4,9 +4,24 @@ This file lists third-party materials distributed with The Greenwood Collegium.
 Original project code is MIT-licensed. Original world prose and educational
 documentation are also available under CC BY 4.0. See [LICENSE](LICENSE).
 
-No third-party runtime packages have been added yet. When dependencies are
-introduced, each new runtime dependency needs a one-sentence rationale in its
-pull request, and this file should name the package, license, and source.
+Runtime and toolchain packages are pinned in `pnpm-lock.yaml`. Ticket 001 added
+these so the empty scaffold can typecheck, test, lint, and build:
+
+| Package | Rationale |
+|---|---|
+| TypeScript | Strict typing across the monorepo |
+| pnpm | Workspace installs and scripts |
+| React 19 / React DOM | Browser client |
+| Vite 8 | Client dev server and production build |
+| Fastify 5 | HTTP process and health endpoints |
+| Zod 4 | Shared contracts |
+| Vitest | Unit and contract tests |
+| ESLint / typescript-eslint | Lint TypeScript and React |
+| Prettier | Formatting |
+| @vitejs/plugin-react | Vite React transform |
+| Pino (via Fastify) | Structured logs |
+
+Exact versions and licenses are in the lockfile and each package's npm listing.
 
 ## Documents adapted for this repository
 

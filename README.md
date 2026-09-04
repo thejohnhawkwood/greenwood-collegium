@@ -54,12 +54,21 @@ A copper key glints beneath the water.
 |---|---|
 | Product requirements | Published in [`docs/PRD.md`](docs/PRD.md) |
 | Public GitHub repository | This repository |
-| Playable client | Not started (Ticket 001 is next) |
-| Live deployment | Not deployed |
-| CI | Not yet wired |
+| Playable client | Not started (Ticket 005) |
+| Live deployment | Health-only after you apply `render.yaml` |
+| CI | GitHub Actions on pull requests and `main` |
 | Interface generations | Classic UI is the first target |
 
-Implementation follows the ticket sequence in [Appendix E of the PRD](docs/PRD.md#appendix-e-initial-implementation-ticket-sequence). The first slice is a TypeScript monorepo that typechecks, lints, tests, and builds.
+Implementation follows the ticket sequence in [Appendix E of the PRD](docs/PRD.md#appendix-e-initial-implementation-ticket-sequence). Ticket 001 is the empty monorepo scaffold. Start every session from [`docs/context/CURRENT.md`](docs/context/CURRENT.md).
+
+```text
+pnpm install
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm build
+pnpm --filter @greenwood/server start
+```
 
 ---
 
@@ -156,7 +165,12 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability. Do not file pu
 
 ## Documents
 
+- [Current context](docs/context/CURRENT.md)
 - [Product Requirements Document](docs/PRD.md)
+- [Devlog](docs/devlog/)
+- [Machine setup](docs/dev/machine-setup.md)
+- [Render setup](docs/dev/render-setup.md)
+- [Classroom roles](docs/classroom/roles.md)
 - [Content license (CC BY 4.0)](docs/CONTENT-LICENSE.md)
 - [Architecture notes](docs/architecture/)
 - [Architecture decision records](docs/adr/)
