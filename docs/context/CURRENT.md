@@ -5,7 +5,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Status
 
 - **Release target:** v0.0 foundation (classic UI 0, three rooms, look, movement, presence, say)
-- **Active ticket:** [#8 — PostgreSQL and Drizzle](https://github.com/thejohnhawkwood/greenwood-collegium/issues/8)
+- **Active ticket:** [#9 — Classroom authentication](https://github.com/thejohnhawkwood/greenwood-collegium/issues/9)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
@@ -13,16 +13,17 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
 2. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
-3. ADR-0004
-4. PRD Appendix E Ticket 008
+3. ADR-0005, ADR-0012
+4. PRD 10.1, 14.4, and Appendix E Ticket 009
 
 ## Forbidden this pass
 
-- Pasting Render secrets, `DATABASE_URL`, or student data into Git or chat
+- Pasting Render secrets, `DATABASE_URL`, passwords, session tokens, or student data into Git or chat
 - Requesting or accepting a production database dump
+- Enabling public registration
 - Colour, HUD, or glyph presentation
 - Playwright
-- Classroom accounts and invites (Ticket 009)
+- Reconnection and command idempotency (Ticket 010)
 
 The owner authorized CLI merge after CI is green for this setup stretch.
 
@@ -36,6 +37,6 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 008
+## After Ticket 009
 
-Next ticket is **009 — Classroom authentication**.
+Next ticket is **010 — Reconnection and idempotency**.
