@@ -15,6 +15,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0007](0007-declarative-content.md) | Declarative JSON world content |
 | [0008](0008-iteration-pillars.md) | Iteration pillars and context budget |
 | [0009](0009-health-only-deploy.md) | Health-only deploy in Ticket 001 |
+| [0010](0010-socket-io-temp-identity.md) | Socket.IO round trip and temporary identity |
 
 ## Template
 

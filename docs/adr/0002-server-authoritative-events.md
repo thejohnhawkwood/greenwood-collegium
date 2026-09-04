@@ -15,7 +15,7 @@ Socket.IO is the required transport, but Ticket 001 has no gameplay and no comma
 - The server is the only authority for game state.
 - React components and future socket handlers must not calculate damage, rewards, movement, or permissions.
 - Realtime transport is Socket.IO 4.x, introduced in Ticket 004.
-- Ticket 001 exposes HTTP health and version only. No Socket.IO dependency is added until Ticket 004.
+- Ticket 001 exposed HTTP health and version only. Ticket 004 adds Socket.IO.
 
 ## Consequences
 

@@ -27,3 +27,9 @@ export {
   type RoomSnapshotPayload,
 } from "./events/room-snapshot.js";
 export { lanternCourtSnapshotFixture } from "./fixtures/room-snapshot.js";
+export {
+  commandRequestSchema,
+  interfaceModeSchema,
+  type CommandRequest,
+} from "./commands/request.js";
+export { commandAckSchema, type CommandAck } from "./commands/ack.js";

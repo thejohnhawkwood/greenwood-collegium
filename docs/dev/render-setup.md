@@ -33,9 +33,9 @@ If any click fails, stop. Do not create a second database by hand or paste `DATA
 12. Apply / create the Blueprint.
 13. Wait for Render to generate `SESSION_SECRET` and `ADMIN_BOOTSTRAP_TOKEN`. Do not paste those values into Git, issues, or chat.
 14. After the first deploy starts, note the public hostname `https://<name>.onrender.com`.
-15. Optional until Ticket 004: on the web service **Environment**, set `ALLOWED_ORIGINS` to that `https://….onrender.com` origin. Leaving `http://localhost:5173` is acceptable for Ticket 001.
+15. Ticket 004: `ALLOWED_ORIGINS` should include the public `https://….onrender.com` origin. The process also allows `RENDER_EXTERNAL_URL` automatically.
 16. Wait until the deploy is live.
-17. Open `https://<service>.onrender.com/` — expect the foundation HTML page, not a 404.
+17. Open `https://<service>.onrender.com/` — after Ticket 004, expect the look proof page when `apps/web/dist` was built. Health routes stay on the same origin.
 18. Open `https://<service>.onrender.com/health/live` — expect HTTP 200 and JSON status ok.
 19. Open `https://<service>.onrender.com/health/ready` — expect HTTP 503 and an honest reason (`database unwired`, `content absent`).
 20. Open `https://<service>.onrender.com/version` — expect a safe version payload, no secrets.

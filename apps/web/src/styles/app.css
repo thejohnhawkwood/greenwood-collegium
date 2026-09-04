@@ -29,3 +29,23 @@ h1 {
 .meta {
   opacity: 0.75;
 }
+
+button {
+  background: var(--lantern);
+  color: var(--moss);
+  border: 0;
+  font: inherit;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.transcript {
+  white-space: pre-wrap;
+  border-left: 3px solid var(--lantern);
+  padding-left: 1rem;
+}
