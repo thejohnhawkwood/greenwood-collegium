@@ -1,7 +1,12 @@
-import { schemaVersion } from "@greenwood/contracts";
-
-export const engineName = "greenwood-game-engine";
-
-export function contractsSchemaVersion(): number {
-  return schemaVersion;
-}
+export { engineName } from "./engine-name.js";
+export { handleLook } from "./look.js";
+export type { LookFailure, LookResult, LookSuccess } from "./look.js";
+export type {
+  Character,
+  EngineRuntime,
+  LookIntent,
+  Room,
+  RoomExit,
+  RoomFixture,
+  WorldState,
+} from "./state.js";

@@ -39,4 +39,4 @@ pnpm build
 
 ## After Ticket 003
 
-Next ticket is **004 — Fastify and Socket.IO round trip**. Health routes already exist.
+Next ticket is **004 — Fastify and Socket.IO round trip**. Health routes already exist. `look` stays in the engine; sockets only deliver it.
