@@ -5,16 +5,16 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Status
 
 - **Release target:** v0.0 foundation (classic UI 0, three rooms, look, movement, presence, say)
-- **Active ticket:** [#10 — Reconnection and idempotency](https://github.com/thejohnhawkwood/greenwood-collegium/issues/10)
+- **Active ticket:** [#11 — Content loader](https://github.com/thejohnhawkwood/greenwood-collegium/issues/11)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
-3. ADR-0002, ADR-0013
-4. PRD Appendix E Ticket 010
+2. [`packages/content/AGENTS.md`](../../packages/content/AGENTS.md) if it exists
+3. ADR-0007
+4. PRD Appendix E Ticket 011 and section 19
 
 ## Forbidden this pass
 
@@ -23,7 +23,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 - Enabling public registration
 - Colour, HUD, or glyph presentation
 - Playwright
-- Content loader, inventory, or combat (Tickets 011–013)
+- Inventory or combat (Tickets 012–013)
 
 The owner authorized CLI merge after CI is green for this setup stretch.
 
@@ -37,6 +37,6 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 010
+## After Ticket 011
 
-Next ticket is **011 — Content loader**.
+Next ticket is **012 — Inventory vertical slice**.
