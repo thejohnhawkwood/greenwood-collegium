@@ -4,7 +4,13 @@ import {
   eventEnvelopeSchema,
   type CommandAck,
 } from "@greenwood/contracts";
-import { handleLook, parseLookCommand, type WorldState } from "@greenwood/game-engine";
+import {
+  handleLook,
+  handleMove,
+  parsePlayerCommand,
+  type EngineRuntime,
+  type WorldState,
+} from "@greenwood/game-engine";
 import type { FastifyInstance } from "fastify";
 import { Server } from "socket.io";
 import { DEV_CHARACTER_ID } from "../application/dev-world.js";
@@ -57,7 +63,7 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
         return;
       }
 
-      const intent = parseLookCommand(parsed.data.raw, characterId);
+      const intent = parsePlayerCommand(parsed.data.raw, characterId);
       if (!intent) {
         reply(
           ack,
@@ -65,22 +71,18 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
             commandId: parsed.data.commandId,
             status: "rejected",
             errorCode: "unknown_command",
-            message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look`,
+            message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  north\n  south\n  east\n  west`,
             resyncRequired: false,
           }),
         );
         return;
       }
 
-      const result = handleLook(world, intent, {
-        now: () => new Date(),
-        nextEventId: () => crypto.randomUUID(),
-        nextSequence: (id) => {
-          const next = (sequences.get(id) ?? 0) + 1;
-          sequences.set(id, next);
-          return next;
-        },
-      });
+      const runtime = commandRuntime(sequences);
+      const result =
+        intent.verb === "look"
+          ? handleLook(world, intent, runtime)
+          : handleMove(world, intent, runtime);
 
       if (!result.ok) {
         reply(
@@ -96,16 +98,36 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
         return;
       }
 
-      const event = eventEnvelopeSchema.parse(result.event);
-      socket.emit("event", event);
+      const events = "events" in result ? result.events : [result.event];
+      const delivered = events.map((event) => eventEnvelopeSchema.parse(event));
+      for (const event of delivered) {
+        socket.emit("event", event);
+      }
+
+      const first = delivered[0];
+      const last = delivered[delivered.length - 1];
+      if (!first || !last) {
+        reply(
+          ack,
+          commandAckSchema.parse({
+            commandId: parsed.data.commandId,
+            status: "rejected",
+            errorCode: "empty_result",
+            message: "The command produced no events.",
+            resyncRequired: false,
+          }),
+        );
+        return;
+      }
+
       reply(
         ack,
         commandAckSchema.parse({
           commandId: parsed.data.commandId,
           status: "accepted",
-          message: "look",
-          eventSequenceStart: event.sequence,
-          eventSequenceEnd: event.sequence,
+          message: intent.verb === "look" ? "look" : intent.direction,
+          eventSequenceStart: first.sequence,
+          eventSequenceEnd: last.sequence,
           resyncRequired: false,
         }),
       );
@@ -113,6 +135,18 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
   });
 
   return io;
+}
+
+function commandRuntime(sequences: Map<string, number>): EngineRuntime {
+  return {
+    now: () => new Date(),
+    nextEventId: () => crypto.randomUUID(),
+    nextSequence: (id) => {
+      const next = (sequences.get(id) ?? 0) + 1;
+      sequences.set(id, next);
+      return next;
+    },
+  };
 }
 
 function reply(ack: ((response: CommandAck) => void) | undefined, response: CommandAck): void {

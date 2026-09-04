@@ -19,12 +19,33 @@ export function createDevWorld(): WorldState {
         ],
         fixtures: [{ id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" }],
       },
+      "great-hall": {
+        id: "great-hall",
+        title: "Great Hall",
+        shortDescription: "A high oak hall lit by hanging lanterns.",
+        longDescription:
+          "Long tables run beneath oak beams.\nSchool banners hang between the lanterns.",
+        zone: "academy-core",
+        exits: [{ direction: "south", toRoomId: "lantern-court" }],
+        fixtures: [],
+      },
+      "west-cloister": {
+        id: "west-cloister",
+        title: "West Cloister",
+        shortDescription: "A mossy covered walk beside the court.",
+        longDescription:
+          "Stone arches frame a quiet walk.\nMoss holds the rain in small bright beads.",
+        zone: "academy-core",
+        exits: [{ direction: "east", toRoomId: "lantern-court" }],
+        fixtures: [],
+      },
     },
     characters: {
       [DEV_CHARACTER_ID]: {
         id: DEV_CHARACTER_ID,
         name: "Rowan the Hare",
         roomId: "lantern-court",
+        discoveredRoomIds: ["lantern-court"],
       },
     },
   };

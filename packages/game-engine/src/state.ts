@@ -23,6 +23,7 @@ export type Character = {
   id: string;
   name: string;
   roomId: string;
+  discoveredRoomIds: string[];
 };
 
 export type WorldState = {
@@ -34,6 +35,14 @@ export type LookIntent = {
   verb: "look";
   characterId: string;
 };
+
+export type MoveIntent = {
+  verb: "move";
+  characterId: string;
+  direction: string;
+};
+
+export type PlayerCommand = LookIntent | MoveIntent;
 
 export type EngineRuntime = {
   now(): Date;

@@ -21,7 +21,7 @@ export function App() {
     {
       id: "notice-start",
       kind: "notice",
-      text: "Type look to see the room. Up and down recall earlier commands.",
+      text: "Type look, or a direction such as north. Up and down recall earlier commands.",
     },
   ]);
   const [draft, setDraft] = useState("");
