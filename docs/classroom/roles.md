@@ -22,7 +22,7 @@ Bounded work only:
 
 | Ladder | Typical work | Touches |
 |---|---|---|
-| Writer | Room or help prose | `packages/content` after Ticket 011 |
+| Writer | Room or help prose | `packages/content/rooms` |
 | Tester | Repro steps, extra cases | `*.test.ts`, issue reports |
 | Coder | One command or one bug | a single package plus tests |
 | Observer | Read README, PRD, diffs | no write access required |

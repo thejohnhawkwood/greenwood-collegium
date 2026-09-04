@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "east-meadow",
+  "title": "East Meadow",
+  "shortDescription": "Open grass beyond the east gate.",
+  "longDescription": "The grass runs toward a low hedge.\nBees work the clover in the warm light.",
+  "zone": "grounds",
+  "unmapped": true,
+  "exits": [{ "direction": "west", "toRoomId": "east-gate" }],
+  "fixtures": []
+}

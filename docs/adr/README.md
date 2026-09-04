@@ -20,6 +20,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0012](0012-drizzle-repositories.md) | Drizzle repositories and CI Postgres |
 | [0013](0013-classroom-authentication.md) | Classroom authentication |
 | [0014](0014-reconnection-idempotency.md) | Reconnection grace and command idempotency |
+| [0015](0015-content-loader.md) | File-per-room content loader |
 
 ## Template
 

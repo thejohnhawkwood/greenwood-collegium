@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "dormitory-willow",
+  "title": "Willow Dormitory",
+  "shortDescription": "A quieter dorm under willow shade.",
+  "longDescription": "Willow branches brush the window glass.\nThe beds are made and the floor is swept.",
+  "zone": "lodgings",
+  "unmapped": true,
+  "exits": [{ "direction": "west", "toRoomId": "dormitory-oak" }],
+  "fixtures": []
+}

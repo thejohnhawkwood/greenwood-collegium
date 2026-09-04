@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 011 declarative room JSON, content validation, and a twenty-five-room academy.
 - Ticket 010 command-id idempotency, authenticated resume, and `session.snapshot`.
 - Ticket 009 classroom authentication: owner bootstrap, invites, Argon2id passwords, HttpOnly sessions, and production guest refusal.
 - Ticket 008 Drizzle schema, SQL migrations, and account/character repositories.

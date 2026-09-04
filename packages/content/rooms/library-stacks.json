@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "library-stacks",
+  "title": "Library Stacks",
+  "shortDescription": "Tall shelves of cloth-bound books.",
+  "longDescription": "Narrow aisles run between tall oak shelves.\nBookplates name students from many years.",
+  "zone": "studies",
+  "unmapped": true,
+  "exits": [
+    { "direction": "east", "toRoomId": "great-hall" },
+    { "direction": "west", "toRoomId": "scriptorium" },
+    { "direction": "north", "toRoomId": "archive-cellar" }
+  ],
+  "fixtures": []
+}

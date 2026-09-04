@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "south-orchard",
+  "title": "South Orchard",
+  "shortDescription": "Rows of apple trees below the court.",
+  "longDescription": "Low apple trees stand in careful rows.\nFallen blossom gathers along the path.",
+  "zone": "grounds",
+  "map": { "x": 0, "y": -1 },
+  "exits": [
+    { "direction": "north", "toRoomId": "lantern-court" },
+    { "direction": "south", "toRoomId": "river-landing" },
+    { "direction": "west", "toRoomId": "herb-garden" },
+    { "direction": "east", "toRoomId": "pottery-shed" }
+  ],
+  "fixtures": []
+}

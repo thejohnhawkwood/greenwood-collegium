@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "herb-garden",
+  "title": "Herb Garden",
+  "shortDescription": "Raised beds of mint and thyme.",
+  "longDescription": "Raised beds hold mint, thyme, and sage.\nA slate label names each plant in careful letters.",
+  "zone": "grounds",
+  "unmapped": true,
+  "exits": [
+    { "direction": "east", "toRoomId": "south-orchard" },
+    { "direction": "north", "toRoomId": "greenhouse" },
+    { "direction": "west", "toRoomId": "quiet-chapel" }
+  ],
+  "fixtures": []
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "porter-lodge",
+  "title": "Porter Lodge",
+  "shortDescription": "A small lodge beside the east gate.",
+  "longDescription": "A kettle sits on a black stove.\nKeys hang from a numbered board.",
+  "zone": "lodgings",
+  "unmapped": true,
+  "exits": [
+    { "direction": "south", "toRoomId": "east-gate" },
+    { "direction": "east", "toRoomId": "infirmary" }
+  ],
+  "fixtures": []
+}

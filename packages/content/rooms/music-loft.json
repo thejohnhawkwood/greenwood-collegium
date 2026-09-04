@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "music-loft",
+  "title": "Music Loft",
+  "shortDescription": "A loft of stands and quiet instruments.",
+  "longDescription": "Music stands wait in a loose circle.\nA covered harp leans against the wall.",
+  "zone": "studies",
+  "unmapped": true,
+  "exits": [{ "direction": "east", "toRoomId": "north-quad" }],
+  "fixtures": []
+}

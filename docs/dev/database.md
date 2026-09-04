@@ -35,4 +35,4 @@ Use a throwaway database. Do not point this variable at Render.
 
 ## Production
 
-Render already injects `DATABASE_URL`. The process applies `drizzle/` migrations on start and pings before treating the database as reachable. `/health/ready` stays 503 until content can load.
+Render already injects `DATABASE_URL`. The process applies `drizzle/` migrations on start and pings before treating the database as reachable. `/health/ready` reports ready when that ping succeeds and the content loader accepts the room files.

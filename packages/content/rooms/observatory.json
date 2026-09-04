@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "observatory",
+  "title": "Observatory",
+  "shortDescription": "A dome and a covered telescope.",
+  "longDescription": "A brass telescope points at the closed slit.\nStar charts hang from wooden pegs.",
+  "zone": "studies",
+  "unmapped": true,
+  "exits": [{ "direction": "south", "toRoomId": "north-quad" }],
+  "fixtures": []
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "refectory",
+  "title": "Refectory",
+  "shortDescription": "Long tables set for school meals.",
+  "longDescription": "Plates are stacked at the end of each table.\nThe smell of bread comes from the north door.",
+  "zone": "lodgings",
+  "unmapped": true,
+  "exits": [
+    { "direction": "south", "toRoomId": "lecture-theatre" },
+    { "direction": "north", "toRoomId": "kitchens" }
+  ],
+  "fixtures": []
+}

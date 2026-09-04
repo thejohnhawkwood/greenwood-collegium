@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "west-cloister",
+  "title": "West Cloister",
+  "shortDescription": "A mossy covered walk beside the court.",
+  "longDescription": "Stone arches frame a quiet walk.\nMoss holds the rain in small bright beads.",
+  "zone": "academy-core",
+  "map": { "x": -1, "y": 0 },
+  "exits": [{ "direction": "east", "toRoomId": "lantern-court" }],
+  "fixtures": []
+}

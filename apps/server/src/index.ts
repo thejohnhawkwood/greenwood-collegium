@@ -1,3 +1,4 @@
+import { ContentValidationError } from "@greenwood/content";
 import { argon2Hasher } from "./auth/hasher.js";
 import { createAuthService } from "./auth/service.js";
 import { createDevWorld } from "./application/dev-world.js";
@@ -60,6 +61,16 @@ const auth = createAuthService({
   bootstrapToken: process.env.ADMIN_BOOTSTRAP_TOKEN,
 });
 
+let world;
+try {
+  world = createDevWorld();
+} catch (error) {
+  const message =
+    error instanceof ContentValidationError ? error.message : "world content failed validation";
+  process.stderr.write(`${message}\n`);
+  process.exit(1);
+}
+
 const app = await buildApp({
   async databaseStatus() {
     if (databaseStatus !== "ok" || !persistence) {
@@ -72,6 +83,7 @@ const app = await buildApp({
       return "unreachable";
     }
   },
+  contentStatus: () => "ok",
 });
 
 if (databaseStatus === "unreachable") {
@@ -90,7 +102,7 @@ app.addHook("onClose", async () => {
   }
 });
 
-await attachRealtime(app, createDevWorld(), {
+await attachRealtime(app, world, {
   allowGuestPlay,
   resolveSession: (token) => auth.resolvePlayIdentity(token),
   persistRoom: (characterId, roomId) => stores.characters.updateRoom(characterId, roomId),

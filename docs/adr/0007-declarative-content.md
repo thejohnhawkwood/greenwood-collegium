@@ -12,7 +12,7 @@ Students should be able to contribute rooms and items without writing server cod
 
 World content (rooms, exits, items, NPCs, spells, quests, help) lives as declarative JSON validated against schemas. `packages/content` is the home for that data. Ticket 001 creates the package boundary only.
 
-Content validation becomes a required command at Ticket 011. Invalid content must fail the build or start, not load silently.
+Content validation is a required command (`pnpm --filter @greenwood/content validate`). Invalid content must fail the build or start, not load silently.
 
 ## Consequences
 

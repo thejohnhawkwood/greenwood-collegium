@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "dormitory-oak",
+  "title": "Oak Dormitory",
+  "shortDescription": "A long room of oak bunks.",
+  "longDescription": "Oak bunks stand in two quiet rows.\nEach trunk has a name painted on the lid.",
+  "zone": "lodgings",
+  "unmapped": true,
+  "exits": [
+    { "direction": "north", "toRoomId": "east-gate" },
+    { "direction": "east", "toRoomId": "dormitory-willow" }
+  ],
+  "fixtures": []
+}

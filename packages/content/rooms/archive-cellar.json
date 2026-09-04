@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "archive-cellar",
+  "title": "Archive Cellar",
+  "shortDescription": "A cool cellar of labelled boxes.",
+  "longDescription": "Stone steps lead to labelled boxes.\nThe air smells of paper and dry earth.",
+  "zone": "studies",
+  "unmapped": true,
+  "exits": [{ "direction": "south", "toRoomId": "library-stacks" }],
+  "fixtures": []
+}
