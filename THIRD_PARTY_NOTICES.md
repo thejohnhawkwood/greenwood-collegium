@@ -15,6 +15,8 @@ these so the empty scaffold can typecheck, test, lint, and build:
 | Vite 8 | Client dev server and production build |
 | Fastify 5 | HTTP process and health endpoints |
 | Socket.IO 4 | Command and event transport (Ticket 004) |
+| Drizzle ORM / Drizzle Kit | Typed queries and SQL migrations (Ticket 008) |
+| pg | Render-compatible PostgreSQL 18 driver |
 | @fastify/static | Serve the built web client from the same origin |
 | Zod 4 | Shared contracts |
 | Vitest | Unit and contract tests |

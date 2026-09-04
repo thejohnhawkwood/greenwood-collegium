@@ -35,6 +35,30 @@ describe("health-only server", () => {
     });
   });
 
+  it("reports database unreachable when the ping fails", async () => {
+    app = await buildApp({
+      databaseStatus: async () => "unreachable",
+    });
+    const response = await app.inject({ method: "GET", url: "/health/ready" });
+    expect(response.statusCode).toBe(503);
+    expect(response.json()).toEqual({
+      status: "not_ready",
+      reasons: ["database unreachable", "content absent"],
+    });
+  });
+
+  it("keeps content absent after the database is reachable", async () => {
+    app = await buildApp({
+      databaseStatus: async () => "ok",
+    });
+    const response = await app.inject({ method: "GET", url: "/health/ready" });
+    expect(response.statusCode).toBe(503);
+    expect(response.json()).toEqual({
+      status: "not_ready",
+      reasons: ["content absent"],
+    });
+  });
+
   it("returns a safe version payload", async () => {
     app = await buildApp();
     const response = await app.inject({ method: "GET", url: "/version" });

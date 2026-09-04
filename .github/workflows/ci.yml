@@ -8,6 +8,22 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: greenwood
+          POSTGRES_PASSWORD: greenwood
+          POSTGRES_DB: greenwood_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U greenwood -d greenwood_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      GREENWOOD_TEST_DATABASE_URL: postgres://greenwood:greenwood@localhost:5432/greenwood_test
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
