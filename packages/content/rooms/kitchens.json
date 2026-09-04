@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "kitchens",
+  "title": "Kitchens",
+  "shortDescription": "A warm kitchen of pans and bread tins.",
+  "longDescription": "Copper pans hang above a scrubbed table.\nBread tins cool beside the oven door.",
+  "zone": "lodgings",
+  "unmapped": true,
+  "exits": [{ "direction": "south", "toRoomId": "refectory" }],
+  "fixtures": []
+}

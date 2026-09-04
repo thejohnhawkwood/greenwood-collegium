@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "greenhouse",
+  "title": "Greenhouse",
+  "shortDescription": "Warm glass and trays of seedlings.",
+  "longDescription": "Sunlight fills the glass roof.\nSeedlings stand in damp trays along the bench.",
+  "zone": "grounds",
+  "unmapped": true,
+  "exits": [{ "direction": "south", "toRoomId": "herb-garden" }],
+  "fixtures": []
+}

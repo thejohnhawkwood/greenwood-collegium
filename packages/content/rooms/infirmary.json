@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "infirmary",
+  "title": "Infirmary",
+  "shortDescription": "White beds and a cabinet of clean bandages.",
+  "longDescription": "Two neat beds face a bright window.\nA cabinet holds bandages and a jar of honey.",
+  "zone": "lodgings",
+  "unmapped": true,
+  "exits": [{ "direction": "west", "toRoomId": "porter-lodge" }],
+  "fixtures": []
+}

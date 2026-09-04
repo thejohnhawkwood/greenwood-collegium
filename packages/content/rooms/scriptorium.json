@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "scriptorium",
+  "title": "Scriptorium",
+  "shortDescription": "Desks set for careful copying.",
+  "longDescription": "Slanted desks wait with clean paper.\nA pot of ink sits capped beside the blotter.",
+  "zone": "studies",
+  "unmapped": true,
+  "exits": [{ "direction": "east", "toRoomId": "library-stacks" }],
+  "fixtures": []
+}

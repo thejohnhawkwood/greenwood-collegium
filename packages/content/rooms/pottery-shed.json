@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "pottery-shed",
+  "title": "Pottery Shed",
+  "shortDescription": "A shed of wheels and drying cups.",
+  "longDescription": "Clay-spattered wheels face the orchard light.\nCups dry on a rack above the sink.",
+  "zone": "grounds",
+  "unmapped": true,
+  "exits": [{ "direction": "west", "toRoomId": "south-orchard" }],
+  "fixtures": []
+}

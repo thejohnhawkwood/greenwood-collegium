@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "quiet-chapel",
+  "title": "Quiet Chapel",
+  "shortDescription": "A small chapel with unstained benches.",
+  "longDescription": "Plain benches face a narrow window.\nSomeone left a sprig of rosemary on the sill.",
+  "zone": "grounds",
+  "unmapped": true,
+  "exits": [{ "direction": "east", "toRoomId": "herb-garden" }],
+  "fixtures": []
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "north-quad",
+  "title": "North Quad",
+  "shortDescription": "A grass square behind the Great Hall.",
+  "longDescription": "Four paths cross a square of clipped grass.\nThe clock tower ticks above the north wall.",
+  "zone": "academy-core",
+  "unmapped": true,
+  "exits": [
+    { "direction": "south", "toRoomId": "great-hall" },
+    { "direction": "north", "toRoomId": "observatory" },
+    { "direction": "east", "toRoomId": "clock-tower" },
+    { "direction": "west", "toRoomId": "music-loft" }
+  ],
+  "fixtures": []
+}

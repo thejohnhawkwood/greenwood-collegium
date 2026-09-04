@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "lantern-court",
+  "title": "Lantern Court",
+  "shortDescription": "A circular courtyard under drifting blue lanterns.",
+  "longDescription": "Ancient oak branches arch over a circular courtyard.\nBlue lanterns drift between the leaves.",
+  "zone": "academy-core",
+  "map": { "x": 0, "y": 0 },
+  "exits": [
+    { "direction": "north", "toRoomId": "great-hall" },
+    { "direction": "east", "toRoomId": "east-gate" },
+    { "direction": "west", "toRoomId": "west-cloister" },
+    { "direction": "south", "toRoomId": "south-orchard" }
+  ],
+  "fixtures": [{ "id": "npc-porter-bramble", "name": "Porter Bramble", "kind": "npc" }]
+}

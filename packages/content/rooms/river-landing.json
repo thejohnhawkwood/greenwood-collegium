@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "river-landing",
+  "title": "River Landing",
+  "shortDescription": "A wooden landing on the slow river.",
+  "longDescription": "A flat boat is tied to a worn post.\nThe river slides past willow roots.",
+  "zone": "grounds",
+  "unmapped": true,
+  "exits": [{ "direction": "north", "toRoomId": "south-orchard" }],
+  "fixtures": []
+}

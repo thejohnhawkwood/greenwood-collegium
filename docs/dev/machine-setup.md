@@ -76,7 +76,7 @@ pnpm --filter @greenwood/server start
 
 Open http://localhost:3000/health/live — expect JSON `{ "status": "ok" }` (or equivalent).
 
-Open http://localhost:3000/health/ready — expect **503** until later tickets.
+Open http://localhost:3000/health/ready — expect **503** `database unwired` when `DATABASE_URL` is unset. Content can still load from `packages/content/rooms`.
 
 Local `NODE_ENV` is not production, so guest play still works. Production on Render requires sign-in.
 

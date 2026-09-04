@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "clock-tower",
+  "title": "Clock Tower",
+  "shortDescription": "A winding stair beneath the clock.",
+  "longDescription": "The stair turns around a timber post.\nEach landing shows a little more of the quad.",
+  "zone": "academy-core",
+  "unmapped": true,
+  "exits": [{ "direction": "west", "toRoomId": "north-quad" }],
+  "fixtures": []
+}

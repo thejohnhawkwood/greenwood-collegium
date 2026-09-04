@@ -59,6 +59,42 @@ describe("health-only server", () => {
     });
   });
 
+  it("drops content absent when rooms load and the database is unwired", async () => {
+    app = await buildApp({
+      databaseStatus: async () => "unwired",
+      contentStatus: () => "ok",
+    });
+    const response = await app.inject({ method: "GET", url: "/health/ready" });
+    expect(response.statusCode).toBe(503);
+    expect(response.json()).toEqual({
+      status: "not_ready",
+      reasons: ["database unwired"],
+    });
+  });
+
+  it("reports content invalid when the loader fails", async () => {
+    app = await buildApp({
+      databaseStatus: async () => "ok",
+      contentStatus: () => "invalid",
+    });
+    const response = await app.inject({ method: "GET", url: "/health/ready" });
+    expect(response.statusCode).toBe(503);
+    expect(response.json()).toEqual({
+      status: "not_ready",
+      reasons: ["content invalid"],
+    });
+  });
+
+  it("reports ready when the database pings and content loads", async () => {
+    app = await buildApp({
+      databaseStatus: async () => "ok",
+      contentStatus: () => "ok",
+    });
+    const response = await app.inject({ method: "GET", url: "/health/ready" });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toEqual({ status: "ok" });
+  });
+
   it("returns a safe version payload", async () => {
     app = await buildApp();
     const response = await app.inject({ method: "GET", url: "/version" });

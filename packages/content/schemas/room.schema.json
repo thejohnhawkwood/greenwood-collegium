@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://greenwood.local/schemas/room.json",
+  "title": "Greenwood room",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "shortDescription", "longDescription", "zone", "exits"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shortDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "longDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "zone": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "exits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/exit"
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fixture"
+      }
+    },
+    "map": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      }
+    },
+    "unmapped": {
+      "const": true
+    },
+    "terminal": {
+      "type": "boolean"
+    }
+  },
+  "anyOf": [
+    {
+      "required": ["map"]
+    },
+    {
+      "required": ["unmapped"]
+    }
+  ],
+  "$defs": {
+    "exit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["direction", "toRoomId"],
+      "properties": {
+        "direction": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "toRoomId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": ["npc", "object"]
+        }
+      }
+    }
+  }
+}

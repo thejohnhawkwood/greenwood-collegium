@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "east-gate",
+  "title": "East Gate",
+  "shortDescription": "An oak gate opening toward the meadow.",
+  "longDescription": "Iron hinges hold a wide oak gate.\nThe meadow wind carries the smell of wet grass.",
+  "zone": "academy-core",
+  "map": { "x": 1, "y": 0 },
+  "exits": [
+    { "direction": "west", "toRoomId": "lantern-court" },
+    { "direction": "east", "toRoomId": "east-meadow" },
+    { "direction": "north", "toRoomId": "porter-lodge" },
+    { "direction": "south", "toRoomId": "dormitory-oak" }
+  ],
+  "fixtures": []
+}

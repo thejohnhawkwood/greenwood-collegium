@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "lecture-theatre",
+  "title": "Lecture Theatre",
+  "shortDescription": "Tiered benches facing a slate board.",
+  "longDescription": "Wooden benches rise in quiet tiers.\nChalk dust hangs in a shaft of window light.",
+  "zone": "studies",
+  "unmapped": true,
+  "exits": [
+    { "direction": "west", "toRoomId": "great-hall" },
+    { "direction": "north", "toRoomId": "refectory" }
+  ],
+  "fixtures": []
+}

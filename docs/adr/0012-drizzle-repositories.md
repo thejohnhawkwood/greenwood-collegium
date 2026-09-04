@@ -18,4 +18,4 @@ Ticket 008 must persist accounts and characters. Local `pnpm test` must still pa
 
 ## Consequences
 
-CI proves the SQL path. A developer without Docker still has a green unit suite. `/health/ready` can drop `database unwired` after a successful ping, but stays 503 while content is absent.
+CI proves the SQL path. A developer without Docker still has a green unit suite. `/health/ready` can drop `database unwired` after a successful ping. After Ticket 011 it can report ready when content also loads.

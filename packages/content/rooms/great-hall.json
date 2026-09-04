@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "great-hall",
+  "title": "Great Hall",
+  "shortDescription": "A high oak hall lit by hanging lanterns.",
+  "longDescription": "Long tables run beneath oak beams.\nSchool banners hang between the lanterns.",
+  "zone": "academy-core",
+  "map": { "x": 0, "y": 1 },
+  "exits": [
+    { "direction": "south", "toRoomId": "lantern-court" },
+    { "direction": "north", "toRoomId": "north-quad" },
+    { "direction": "east", "toRoomId": "lecture-theatre" },
+    { "direction": "west", "toRoomId": "library-stacks" }
+  ],
+  "fixtures": []
+}
