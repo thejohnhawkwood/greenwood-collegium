@@ -10,6 +10,15 @@ describe("health-only server", () => {
     }
   });
 
+  it("serves a foundation page at /", async () => {
+    app = await buildApp();
+    const response = await app.inject({ method: "GET", url: "/" });
+    expect(response.statusCode).toBe(200);
+    expect(response.headers["content-type"]).toMatch(/text\/html/);
+    expect(response.body).toContain("The Greenwood Collegium");
+    expect(response.body).toContain("not a playable game yet");
+  });
+
   it("reports live", async () => {
     app = await buildApp();
     const response = await app.inject({ method: "GET", url: "/health/live" });
