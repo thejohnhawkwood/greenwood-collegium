@@ -7,7 +7,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 - **Release target:** v0.0 foundation (not playable)
 - **Active ticket:** [#1 — Repository foundation](https://github.com/thejohnhawkwood/greenwood-collegium/issues/1)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
-- **Render public hostname:** not set yet (health-only; paste `https://….onrender.com` here after the Blueprint applies — no connection strings)
+- **Render public hostname:** https://greenwood-collegium.onrender.com (health-only; no connection strings in this file)
 
 ## Read next
 
