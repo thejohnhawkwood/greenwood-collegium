@@ -7,3 +7,4 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Classic rendering uses `narration`. Later renderers may use `segments`.
 - The client must never be allowed to claim account, role, or character authority through payload fields.
 - Do not add Socket.IO, engine rules, or extra event payloads here unless a ticket asks.
+- Ticket 009 owns HTTP auth request and public session schemas. The client must not claim account, role, or character authority.

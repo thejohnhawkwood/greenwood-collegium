@@ -78,6 +78,8 @@ Open http://localhost:3000/health/live — expect JSON `{ "status": "ok" }` (or 
 
 Open http://localhost:3000/health/ready — expect **503** until later tickets.
 
+Local `NODE_ENV` is not production, so guest play still works. Production on Render requires sign-in.
+
 ## 7. Open in Cursor
 
 1. File → Open Folder on the clone.

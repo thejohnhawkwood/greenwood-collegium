@@ -17,6 +17,7 @@ these so the empty scaffold can typecheck, test, lint, and build:
 | Socket.IO 4 | Command and event transport (Ticket 004) |
 | Drizzle ORM / Drizzle Kit | Typed queries and SQL migrations (Ticket 008) |
 | pg | Render-compatible PostgreSQL 18 driver |
+| @node-rs/argon2 | Argon2id password hashing (Ticket 009) |
 | @fastify/static | Serve the built web client from the same origin |
 | Zod 4 | Shared contracts |
 | Vitest | Unit and contract tests |

@@ -14,7 +14,7 @@ Ticket 008 must persist accounts and characters. Local `pnpm test` must still pa
 - Repositories share one interface. In-memory implementations run in every test suite.
 - Postgres implementations run only when `GREENWOOD_TEST_DATABASE_URL` is set. CI provides a disposable Postgres 18 service with that name.
 - The live process migrates and pings when `DATABASE_URL` is present. It never logs the connection string.
-- Guest gameplay stays in memory until Ticket 009.
+- Guest gameplay stays in memory in development. Ticket 009 requires a session in production.
 
 ## Consequences
 

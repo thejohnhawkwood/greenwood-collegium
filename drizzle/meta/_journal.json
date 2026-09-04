@@ -8,6 +8,13 @@
       "when": 1756962000000,
       "tag": "0000_accounts_characters",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1756965600000,
+      "tag": "0001_sessions_invites",
+      "breakpoints": true
     }
   ]
 }

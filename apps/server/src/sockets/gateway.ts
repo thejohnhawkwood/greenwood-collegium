@@ -26,6 +26,14 @@ import {
   SAY_RATE_WINDOW_MS,
 } from "../application/rate-limit.js";
 import { claimDevCharacter, DEV_START_ROOM_ID } from "../application/session-characters.js";
+import { parseCookie, SESSION_COOKIE } from "../auth/cookies.js";
+import type { PlayIdentity } from "../auth/service.js";
+
+export type RealtimeOptions = {
+  allowGuestPlay?: boolean;
+  resolveSession?: (token: string) => Promise<PlayIdentity | undefined>;
+  persistRoom?: (characterId: string, roomId: string) => Promise<void>;
+};
 
 const defaultAllowedOrigins =
   "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000";
@@ -42,15 +50,21 @@ export function allowedOrigins(): string[] {
   return listed;
 }
 
-export async function attachRealtime(app: FastifyInstance, world: WorldState): Promise<Server> {
+export async function attachRealtime(
+  app: FastifyInstance,
+  world: WorldState,
+  options: RealtimeOptions = {},
+): Promise<Server> {
   await app.ready();
 
+  const allowGuestPlay = options.allowGuestPlay ?? true;
   const sequences = new Map<string, number>();
   const sockets = new Map<string, Socket>();
   const limiter = new RateLimiter();
   const io = new Server(app.server, {
     cors: {
       origin: allowedOrigins(),
+      credentials: true,
     },
   });
 
@@ -58,8 +72,38 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
     await io.close();
   });
 
+  io.use((socket, next) => {
+    void (async () => {
+      try {
+        const token = parseCookie(socket.handshake.headers.cookie, SESSION_COOKIE);
+        if (token && options.resolveSession) {
+          const identity = await options.resolveSession(token);
+          if (identity) {
+            socket.data.identity = identity;
+            next();
+            return;
+          }
+        }
+        if (!allowGuestPlay) {
+          next(new Error("sign_in_required"));
+          return;
+        }
+        next();
+      } catch {
+        next(new Error("sign_in_required"));
+      }
+    })();
+  });
+
   io.on("connection", (socket) => {
-    const claimed = claimDevCharacter(world);
+    const identity = socket.data.identity as PlayIdentity | undefined;
+    const claimed = identity
+      ? {
+          id: identity.characterId,
+          name: identity.characterName,
+          roomId: identity.roomId,
+        }
+      : claimDevCharacter(world);
     if (!claimed) {
       socket.emit(
         "event",
@@ -85,11 +129,27 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
         verb: "join",
         characterId: claimed.id,
         name: claimed.name,
-        roomId: DEV_START_ROOM_ID,
+        roomId: "roomId" in claimed ? claimed.roomId : DEV_START_ROOM_ID,
       },
       runtime,
     );
     if (!joined.ok) {
+      socket.emit(
+        "event",
+        eventEnvelopeSchema.parse({
+          eventId: crypto.randomUUID(),
+          sequence: 1,
+          schemaVersion,
+          type: "system.notice",
+          occurredAt: new Date().toISOString(),
+          audience: "character",
+          narration:
+            joined.code === "character_exists"
+              ? "That student is already in the Collegium. Close the other tab first."
+              : joined.message,
+          payload: {},
+        }),
+      );
       socket.disconnect(true);
       return;
     }
@@ -215,10 +275,15 @@ export async function attachRealtime(app: FastifyInstance, world: WorldState): P
     });
 
     socket.on("disconnect", () => {
+      const occupant = world.characters[characterId];
+      const roomId = occupant?.roomId;
       sockets.delete(characterId);
       const left = handleLeave(world, { verb: "leave", characterId }, commandRuntime(sequences));
       if (left.ok) {
         deliver(sockets, characterId, left.events, left.notices);
+      }
+      if (identity && roomId && options.persistRoom) {
+        void options.persistRoom(characterId, roomId);
       }
     });
   });

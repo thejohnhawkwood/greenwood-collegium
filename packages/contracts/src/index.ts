@@ -58,3 +58,25 @@ export {
   type CommandRequest,
 } from "./commands/request.js";
 export { commandAckSchema, type CommandAck } from "./commands/ack.js";
+export {
+  accountRoleSchema,
+  authAcceptInviteRequestSchema,
+  authBootstrapRequestSchema,
+  authCreateInviteRequestSchema,
+  authDisableAccountRequestSchema,
+  authErrorSchema,
+  authInviteCreatedSchema,
+  authSessionPublicSchema,
+  authSignInRequestSchema,
+  authStatusSchema,
+  passwordSchema,
+  usernameSchema,
+  type AuthAcceptInviteRequest,
+  type AuthBootstrapRequest,
+  type AuthCreateInviteRequest,
+  type AuthDisableAccountRequest,
+  type AuthInviteCreated,
+  type AuthSessionPublic,
+  type AuthSignInRequest,
+  type AuthStatus,
+} from "./auth/schemas.js";

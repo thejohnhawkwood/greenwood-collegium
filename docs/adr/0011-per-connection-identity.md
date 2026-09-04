@@ -13,7 +13,7 @@ Ticket 007 needs two browser sessions to see one another. ADR-0010 bound every c
 - The server assigns an unused in-memory woodland character to each socket.
 - The client still cannot choose account, role, or character.
 - Disconnect removes that character and notifies remaining occupants.
-- Ticket 009 replaces this pool with authenticated characters.
+- Ticket 009 replaces this pool with authenticated characters in production. Development and tests keep the pool.
 
 ## Consequences
 
