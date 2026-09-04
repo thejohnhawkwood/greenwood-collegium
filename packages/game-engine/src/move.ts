@@ -7,11 +7,19 @@ import {
   type RoomSnapshotEvent,
 } from "@greenwood/contracts";
 import { handleLook } from "./look.js";
+import { charactersInRoom } from "./occupants.js";
+import {
+  arrivalDirection,
+  enteredNotices,
+  leftNotices,
+  type OccupantNotice,
+} from "./presence-events.js";
 import type { EngineRuntime, MoveIntent, Room, WorldState } from "./state.js";
 
 export type MoveSuccess = {
   ok: true;
   events: Array<MapDiscoveredEvent | RoomSnapshotEvent>;
+  notices: OccupantNotice[];
 };
 
 export type MoveFailure = {
@@ -63,7 +71,9 @@ export function handleMove(
     };
   }
 
+  const leavers = charactersInRoom(world, room.id, character.id);
   character.roomId = destination.id;
+  const arrivals = charactersInRoom(world, destination.id, character.id);
 
   const events: Array<MapDiscoveredEvent | RoomSnapshotEvent> = [];
   if (!character.discoveredRoomIds.includes(destination.id)) {
@@ -77,7 +87,20 @@ export function handleMove(
   }
   events.push(look.event);
 
-  return { ok: true, events };
+  return {
+    ok: true,
+    events,
+    notices: [
+      ...leftNotices(leavers, character, room.id, runtime, intent.direction),
+      ...enteredNotices(
+        arrivals,
+        character,
+        destination.id,
+        runtime,
+        arrivalDirection(intent.direction),
+      ),
+    ],
+  };
 }
 
 function missingExitMessage(room: Room, direction: string): string {

@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 007 per-connection presence, room `say`, entry/exit notices, and chat rate limits.
 - Ticket 006 three-room movement, missing-exit rejection, and first-visit discovery.
 - Ticket 005 classic transcript, command input, connection indicator, and history.
 - Ticket 004 Socket.IO `look` round trip with a temporary in-memory character.

@@ -42,7 +42,25 @@ export type MoveIntent = {
   direction: string;
 };
 
-export type PlayerCommand = LookIntent | MoveIntent;
+export type SayIntent = {
+  verb: "say";
+  characterId: string;
+  text: string;
+};
+
+export type JoinIntent = {
+  verb: "join";
+  characterId: string;
+  name: string;
+  roomId: string;
+};
+
+export type LeaveIntent = {
+  verb: "leave";
+  characterId: string;
+};
+
+export type PlayerCommand = LookIntent | MoveIntent | SayIntent;
 
 export type EngineRuntime = {
   now(): Date;
