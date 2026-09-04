@@ -4,21 +4,21 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **Release target:** v0.0 foundation (one-room look over the socket; classic UI not done)
-- **Active ticket:** [#5 — Classic React client](https://github.com/thejohnhawkwood/greenwood-collegium/issues/5)
+- **Release target:** v0.0 foundation (classic UI 0, one room, look only)
+- **Active ticket:** [#6 — Three-room movement](https://github.com/thejohnhawkwood/greenwood-collegium/issues/6)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
-- **Render public hostname:** https://greenwood-collegium.onrender.com (look proof after Ticket 004; no connection strings in this file)
+- **Render public hostname:** https://greenwood-collegium.onrender.com (classic look client after Ticket 005; no connection strings in this file)
 
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. [`apps/web/AGENTS.md`](../../apps/web/AGENTS.md)
+2. [`packages/game-engine/AGENTS.md`](../../packages/game-engine/AGENTS.md)
 3. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
-4. PRD Appendix E Ticket 005 and ADR-0006
+4. PRD Appendix E Ticket 006
 
 ## Forbidden this pass
 
-- Movement between rooms (Ticket 006)
+- Presence, `say`, or two-client chat (Ticket 007)
 - Colour, HUD, or glyph presentation (later design sprints)
 - Drizzle, migrations, or connecting to Postgres from the app
 - Playwright
@@ -37,6 +37,6 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 005
+## After Ticket 006
 
-Next ticket is **006 — Three-room movement**.
+Next ticket is **007 — Multiplayer presence and say**.
