@@ -117,6 +117,38 @@ describe("handleMove", () => {
     expect(cloister.events[0]?.type).toBe("map.discovered");
   });
 
+  it("notifies occupants who stay and who are already in the destination", () => {
+    const world = threeRooms();
+    world.characters["char-moss"] = {
+      id: "char-moss",
+      name: "Moss the Mole",
+      roomId: "lantern-court",
+      discoveredRoomIds: ["lantern-court"],
+    };
+    world.characters["char-pip"] = {
+      id: "char-pip",
+      name: "Pip the Sparrow",
+      roomId: "great-hall",
+      discoveredRoomIds: ["great-hall"],
+    };
+
+    const north = handleMove(
+      world,
+      { verb: "move", direction: "north", characterId: "char-rowan" },
+      countingRuntime(),
+    );
+    expect(north.ok).toBe(true);
+    if (!north.ok) {
+      return;
+    }
+    expect(north.notices.map((notice) => notice.event.narration)).toEqual([
+      "Rowan the Hare leaves north.",
+      "Rowan the Hare arrives from the south.",
+    ]);
+    expect(north.notices[0]?.characterId).toBe("char-moss");
+    expect(north.notices[1]?.characterId).toBe("char-pip");
+  });
+
   it("does not move through a missing exit or a closed path", () => {
     const world = threeRooms();
     const south = handleMove(

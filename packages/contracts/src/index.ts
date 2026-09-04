@@ -36,6 +36,23 @@ export {
 } from "./events/map-discovered.js";
 export { greatHallDiscoveredFixture } from "./fixtures/map-discovered.js";
 export {
+  chatSaidEventSchema,
+  chatSaidPayloadSchema,
+  formatChatSaidText,
+  type ChatSaidEvent,
+  type ChatSaidPayload,
+} from "./events/chat-said.js";
+export {
+  entityEnteredEventSchema,
+  entityLeftEventSchema,
+  entityPresencePayloadSchema,
+  formatEntityEnteredText,
+  formatEntityLeftText,
+  type EntityEnteredEvent,
+  type EntityLeftEvent,
+  type EntityPresencePayload,
+} from "./events/entity-presence.js";
+export {
   commandRequestSchema,
   interfaceModeSchema,
   type CommandRequest,

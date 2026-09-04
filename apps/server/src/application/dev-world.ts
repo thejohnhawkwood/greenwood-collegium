@@ -1,7 +1,5 @@
 import type { WorldState } from "@greenwood/game-engine";
 
-export const DEV_CHARACTER_ID = "char-rowan";
-
 export function createDevWorld(): WorldState {
   return {
     rooms: {
@@ -40,13 +38,6 @@ export function createDevWorld(): WorldState {
         fixtures: [],
       },
     },
-    characters: {
-      [DEV_CHARACTER_ID]: {
-        id: DEV_CHARACTER_ID,
-        name: "Rowan the Hare",
-        roomId: "lantern-court",
-        discoveredRoomIds: ["lantern-court"],
-      },
-    },
+    characters: {},
   };
 }

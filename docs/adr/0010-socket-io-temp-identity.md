@@ -18,4 +18,4 @@ Ticket 004 must deliver `look` from a browser to the engine and back. Auth does 
 
 ## Consequences
 
-The live process can prove the command cycle before accounts exist. Ticket 007 and 009 must replace the shared temporary character. Ticket 005 owns the classic transcript chrome.
+The live process can prove the command cycle before accounts exist. Ticket 007 replaces the shared temporary character with one character per socket. Ticket 009 replaces that pool with authenticated characters. Ticket 005 owns the classic transcript chrome.
