@@ -35,10 +35,11 @@ If any click fails, stop. Do not create a second database by hand or paste `DATA
 14. After the first deploy starts, note the public hostname `https://<name>.onrender.com`.
 15. Optional until Ticket 004: on the web service **Environment**, set `ALLOWED_ORIGINS` to that `https://….onrender.com` origin. Leaving `http://localhost:5173` is acceptable for Ticket 001.
 16. Wait until the deploy is live.
-17. Open `https://<service>.onrender.com/health/live` — expect HTTP 200 and JSON status ok.
-18. Open `https://<service>.onrender.com/health/ready` — expect HTTP 503 and an honest reason (`database unwired`, `content absent`).
-19. Open `https://<service>.onrender.com/version` — expect a safe version payload, no secrets.
-20. Put **only** the public hostname into `docs/context/CURRENT.md`. Open a small docs PR if needed. Never commit connection strings.
+17. Open `https://<service>.onrender.com/` — expect the foundation HTML page, not a 404.
+18. Open `https://<service>.onrender.com/health/live` — expect HTTP 200 and JSON status ok.
+19. Open `https://<service>.onrender.com/health/ready` — expect HTTP 503 and an honest reason (`database unwired`, `content absent`).
+20. Open `https://<service>.onrender.com/version` — expect a safe version payload, no secrets.
+21. Put **only** the public hostname into `docs/context/CURRENT.md`. Open a small docs PR if needed. Never commit connection strings.
 
 ## If health/live fails
 
