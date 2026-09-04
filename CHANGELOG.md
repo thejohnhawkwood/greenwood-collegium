@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 002 shared event envelope, semantic segments, and a Lantern Court `room.snapshot` fixture.
 - Ticket 001 TypeScript monorepo scaffold (pnpm, Vite/React, Fastify health, Zod contracts).
 - Iteration pillars: ADRs, context pack, devlog, classroom roles, machine and Render runbooks.
 - GitHub Actions CI and a health-only Render Blueprint.
