@@ -18,4 +18,4 @@ Ticket 009 must replace temporary identity in production. Public registration st
 
 ## Consequences
 
-The live site requires sign-in. A developer can still type `look` locally without an account. Ticket 010 still owns reconnection after refresh mid-command.
+The live site requires sign-in. A developer can still type `look` locally without an account. Ticket 010 owns reconnection after refresh mid-command.
