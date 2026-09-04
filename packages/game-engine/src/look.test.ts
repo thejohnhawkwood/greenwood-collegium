@@ -27,11 +27,13 @@ const lanternCourtWorld = (): WorldState => ({
       id: "char-rowan",
       name: "Rowan the Hare",
       roomId: "lantern-court",
+      discoveredRoomIds: ["lantern-court"],
     },
     "char-observer": {
       id: "char-observer",
       name: "Moss the Mole",
       roomId: "lantern-court",
+      discoveredRoomIds: ["lantern-court"],
     },
   },
 });

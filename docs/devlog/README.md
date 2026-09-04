@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-03 — Ticket 006 three-room movement](2026-09-03-ticket-006-three-room-movement.md)
 - [2026-09-03 — Ticket 005 classic client](2026-09-03-ticket-005-classic-client.md)
 - [2026-09-03 — Ticket 004 Socket.IO look](2026-09-03-ticket-004-socket-look.md)
 - [2026-09-03 — Ticket 003 one-room look](2026-09-03-ticket-003-look-engine.md)

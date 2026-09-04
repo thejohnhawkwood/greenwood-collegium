@@ -28,6 +28,14 @@ export {
 } from "./events/room-snapshot.js";
 export { lanternCourtSnapshotFixture } from "./fixtures/room-snapshot.js";
 export {
+  formatMapDiscoveredText,
+  mapDiscoveredEventSchema,
+  mapDiscoveredPayloadSchema,
+  type MapDiscoveredEvent,
+  type MapDiscoveredPayload,
+} from "./events/map-discovered.js";
+export { greatHallDiscoveredFixture } from "./fixtures/map-discovered.js";
+export {
   commandRequestSchema,
   interfaceModeSchema,
   type CommandRequest,
