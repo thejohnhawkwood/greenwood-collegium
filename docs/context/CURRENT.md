@@ -5,20 +5,19 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Status
 
 - **Release target:** v0.0 foundation (not playable)
-- **Active ticket:** [#2 — Shared event contract](https://github.com/thejohnhawkwood/greenwood-collegium/issues/2)
+- **Active ticket:** [#3 — Pure one-room engine](https://github.com/thejohnhawkwood/greenwood-collegium/issues/3)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (health-only; no connection strings in this file)
 
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. [`docs/adr/0002-server-authoritative-events.md`](../adr/0002-server-authoritative-events.md)
+2. [`packages/game-engine/AGENTS.md`](../../packages/game-engine/AGENTS.md)
 3. [`packages/contracts/AGENTS.md`](../../packages/contracts/AGENTS.md)
-4. PRD section 16 and Appendix E Ticket 002
+4. PRD Appendix E Ticket 003
 
 ## Forbidden this pass
 
-- `look` engine (Ticket 003)
 - Socket.IO (Ticket 004)
 - React gameplay UI (Ticket 005)
 - Drizzle, migrations, or connecting to Postgres from the app
@@ -38,6 +37,6 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 002
+## After Ticket 003
 
-Next ticket is **003 — Pure one-room engine**. `look` stays in the engine package with no web or database dependency.
+Next ticket is **004 — Fastify and Socket.IO round trip**. Health routes already exist.
