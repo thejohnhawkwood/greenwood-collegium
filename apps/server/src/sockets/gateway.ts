@@ -18,6 +18,7 @@ import {
 } from "@greenwood/game-engine";
 import type { FastifyInstance } from "fastify";
 import { Server, type Socket } from "socket.io";
+import { CommandLog } from "../application/command-log.js";
 import {
   COMMAND_RATE_MAX,
   COMMAND_RATE_WINDOW_MS,
@@ -26,11 +27,15 @@ import {
   SAY_RATE_WINDOW_MS,
 } from "../application/rate-limit.js";
 import { claimDevCharacter, DEV_START_ROOM_ID } from "../application/session-characters.js";
+import { sessionSnapshotEvent } from "../application/session-snapshot.js";
 import { parseCookie, SESSION_COOKIE } from "../auth/cookies.js";
 import type { PlayIdentity } from "../auth/service.js";
 
+export const DEFAULT_RECONNECT_GRACE_MS = 10_000;
+
 export type RealtimeOptions = {
   allowGuestPlay?: boolean;
+  reconnectGraceMs?: number;
   resolveSession?: (token: string) => Promise<PlayIdentity | undefined>;
   persistRoom?: (characterId: string, roomId: string) => Promise<void>;
 };
@@ -58,8 +63,11 @@ export async function attachRealtime(
   await app.ready();
 
   const allowGuestPlay = options.allowGuestPlay ?? true;
+  const reconnectGraceMs = options.reconnectGraceMs ?? DEFAULT_RECONNECT_GRACE_MS;
   const sequences = new Map<string, number>();
   const sockets = new Map<string, Socket>();
+  const leaveTimers = new Map<string, ReturnType<typeof setTimeout>>();
+  const commandLog = new CommandLog();
   const limiter = new RateLimiter();
   const io = new Server(app.server, {
     cors: {
@@ -69,6 +77,10 @@ export async function attachRealtime(
   });
 
   app.addHook("onClose", async () => {
+    for (const timer of leaveTimers.values()) {
+      clearTimeout(timer);
+    }
+    leaveTimers.clear();
     await io.close();
   });
 
@@ -105,20 +117,15 @@ export async function attachRealtime(
         }
       : claimDevCharacter(world);
     if (!claimed) {
-      socket.emit(
-        "event",
-        eventEnvelopeSchema.parse({
-          eventId: crypto.randomUUID(),
-          sequence: 1,
-          schemaVersion,
-          type: "system.notice",
-          occurredAt: new Date().toISOString(),
-          audience: "character",
-          narration: "The courtyard cannot hold another student right now.",
-          payload: {},
-        }),
-      );
-      socket.disconnect(true);
+      noticeAndDisconnect(socket, "The courtyard cannot hold another student right now.");
+      return;
+    }
+
+    const characterId = claimed.id;
+    const present = world.characters[characterId];
+    if (identity && present) {
+      resumeAuthenticated(socket, characterId);
+      bindCommandHandlers(socket, characterId, identity);
       return;
     }
 
@@ -127,37 +134,50 @@ export async function attachRealtime(
       world,
       {
         verb: "join",
-        characterId: claimed.id,
+        characterId,
         name: claimed.name,
         roomId: "roomId" in claimed ? claimed.roomId : DEV_START_ROOM_ID,
       },
       runtime,
     );
     if (!joined.ok) {
-      socket.emit(
-        "event",
-        eventEnvelopeSchema.parse({
-          eventId: crypto.randomUUID(),
-          sequence: 1,
-          schemaVersion,
-          type: "system.notice",
-          occurredAt: new Date().toISOString(),
-          audience: "character",
-          narration:
-            joined.code === "character_exists"
-              ? "That student is already in the Collegium. Close the other tab first."
-              : joined.message,
-          payload: {},
-        }),
+      noticeAndDisconnect(
+        socket,
+        joined.code === "character_exists"
+          ? "That student is already in the Collegium. Close the other tab first."
+          : joined.message,
       );
-      socket.disconnect(true);
       return;
     }
 
-    const characterId = claimed.id;
     sockets.set(characterId, socket);
     deliver(sockets, characterId, joined.events, joined.notices);
+    bindCommandHandlers(socket, characterId, identity);
+  });
 
+  function resumeAuthenticated(socket: Socket, characterId: string): void {
+    const previous = sockets.get(characterId);
+    if (previous && previous !== socket) {
+      previous.disconnect(true);
+    }
+    const timer = leaveTimers.get(characterId);
+    if (timer) {
+      clearTimeout(timer);
+      leaveTimers.delete(characterId);
+    }
+    sockets.set(characterId, socket);
+    const runtime = commandRuntime(sequences);
+    const snapshot = sessionSnapshotEvent(world, characterId, runtime);
+    const look = handleLook(world, { verb: "look", characterId }, runtime);
+    const events = look.ok ? [snapshot, look.event] : [snapshot];
+    deliver(sockets, characterId, events, []);
+  }
+
+  function bindCommandHandlers(
+    socket: Socket,
+    characterId: string,
+    identity: PlayIdentity | undefined,
+  ): void {
     socket.on("command", (payload: unknown, ack?: (response: CommandAck) => void) => {
       const parsed = commandRequestSchema.safeParse(payload);
       if (!parsed.success) {
@@ -174,18 +194,28 @@ export async function attachRealtime(
         return;
       }
 
+      const recorded = commandLog.get(characterId, parsed.data.commandId);
+      if (recorded) {
+        deliver(sockets, characterId, recorded.events, recorded.notices);
+        reply(ack, recorded.ack);
+        return;
+      }
+
       const intent = parsePlayerCommand(parsed.data.raw, characterId);
       if (!intent) {
-        reply(
-          ack,
-          commandAckSchema.parse({
-            commandId: parsed.data.commandId,
-            status: "rejected",
-            errorCode: "unknown_command",
-            message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  north\n  south\n  east\n  west`,
-            resyncRequired: false,
-          }),
-        );
+        const rejection = commandAckSchema.parse({
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: "unknown_command",
+          message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  north\n  south\n  east\n  west`,
+          resyncRequired: false,
+        });
+        commandLog.set(characterId, parsed.data.commandId, {
+          ack: rejection,
+          events: [],
+          notices: [],
+        });
+        reply(ack, rejection);
         return;
       }
 
@@ -228,16 +258,19 @@ export async function attachRealtime(
             : handleSay(world, intent, commandRuntime(sequences));
 
       if (!result.ok) {
-        reply(
-          ack,
-          commandAckSchema.parse({
-            commandId: parsed.data.commandId,
-            status: "rejected",
-            errorCode: result.code,
-            message: result.message,
-            resyncRequired: false,
-          }),
-        );
+        const rejection = commandAckSchema.parse({
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: result.code,
+          message: result.message,
+          resyncRequired: false,
+        });
+        commandLog.set(characterId, parsed.data.commandId, {
+          ack: rejection,
+          events: [],
+          notices: [],
+        });
+        reply(ack, rejection);
         return;
       }
 
@@ -260,35 +293,77 @@ export async function attachRealtime(
         return;
       }
 
-      reply(
-        ack,
-        commandAckSchema.parse({
-          commandId: parsed.data.commandId,
-          status: "accepted",
-          message:
-            intent.verb === "look" ? "look" : intent.verb === "move" ? intent.direction : "say",
-          eventSequenceStart: first.sequence,
-          eventSequenceEnd: last.sequence,
-          resyncRequired: false,
-        }),
-      );
+      const accepted = commandAckSchema.parse({
+        commandId: parsed.data.commandId,
+        status: "accepted",
+        message:
+          intent.verb === "look" ? "look" : intent.verb === "move" ? intent.direction : "say",
+        eventSequenceStart: first.sequence,
+        eventSequenceEnd: last.sequence,
+        resyncRequired: false,
+      });
+      commandLog.set(characterId, parsed.data.commandId, {
+        ack: accepted,
+        events: delivered,
+        notices,
+      });
+      reply(ack, accepted);
     });
 
     socket.on("disconnect", () => {
+      if (sockets.get(characterId) !== socket) {
+        return;
+      }
       const occupant = world.characters[characterId];
       const roomId = occupant?.roomId;
+      if (identity && options.persistRoom && roomId) {
+        void options.persistRoom(characterId, roomId);
+      }
+      if (identity && reconnectGraceMs > 0) {
+        const timer = setTimeout(() => {
+          leaveTimers.delete(characterId);
+          if (sockets.get(characterId) !== socket) {
+            return;
+          }
+          sockets.delete(characterId);
+          const left = handleLeave(
+            world,
+            { verb: "leave", characterId },
+            commandRuntime(sequences),
+          );
+          if (left.ok) {
+            deliver(sockets, characterId, left.events, left.notices);
+          }
+        }, reconnectGraceMs);
+        leaveTimers.set(characterId, timer);
+        return;
+      }
       sockets.delete(characterId);
       const left = handleLeave(world, { verb: "leave", characterId }, commandRuntime(sequences));
       if (left.ok) {
         deliver(sockets, characterId, left.events, left.notices);
       }
-      if (identity && roomId && options.persistRoom) {
-        void options.persistRoom(characterId, roomId);
-      }
     });
-  });
+  }
 
   return io;
+}
+
+function noticeAndDisconnect(socket: Socket, narration: string): void {
+  socket.emit(
+    "event",
+    eventEnvelopeSchema.parse({
+      eventId: crypto.randomUUID(),
+      sequence: 1,
+      schemaVersion,
+      type: "system.notice",
+      occurredAt: new Date().toISOString(),
+      audience: "character",
+      narration,
+      payload: {},
+    }),
+  );
+  socket.disconnect(true);
 }
 
 function deliver(

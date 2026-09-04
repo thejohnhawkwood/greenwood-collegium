@@ -13,6 +13,8 @@ import { AuthGate } from "./AuthGate.js";
 import { loadAuthStatus, shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { createCommandRequest } from "./command-request.js";
+import { readStoredSequence, shouldApplyEvent, writeStoredSequence } from "./event-sequence.js";
+import { pendingAfterAck, type PendingCommand } from "./pending-command.js";
 import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
 
@@ -88,7 +90,8 @@ function ClassicClient({
   const socketRef = useRef<Socket | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
-  const lastSequenceRef = useRef(0);
+  const lastSequenceRef = useRef(me ? readStoredSequence(sessionStorage, me.characterId) : 0);
+  const pendingRef = useRef<PendingCommand | undefined>(undefined);
   const [connection, setConnection] = useState("disconnected");
   const [lines, setLines] = useState<TranscriptLine[]>([
     {
@@ -107,11 +110,19 @@ function ClassicClient({
       path: "/socket.io",
       transports: ["websocket"],
       withCredentials: true,
+      auth: () => ({ lastSequence: lastSequenceRef.current }),
     });
     socketRef.current = socket;
     socket.on("connect", () => {
       setConnection("connected");
       inputRef.current?.focus();
+      const pending = pendingRef.current;
+      if (pending) {
+        socket.emit(
+          "command",
+          createCommandRequest(pending.commandId, pending.raw, lastSequenceRef.current),
+        );
+      }
     });
     socket.on("disconnect", () => {
       setConnection("disconnected");
@@ -129,10 +140,13 @@ function ClassicClient({
     });
     socket.on("event", (payload: unknown) => {
       const parsed = eventEnvelopeSchema.safeParse(payload);
-      if (!parsed.success) {
+      if (!parsed.success || !shouldApplyEvent(lastSequenceRef.current, parsed.data.sequence)) {
         return;
       }
       lastSequenceRef.current = parsed.data.sequence;
+      if (me) {
+        writeStoredSequence(sessionStorage, me.characterId, parsed.data.sequence);
+      }
       setLines((current) =>
         appendTranscript(current, {
           id: parsed.data.eventId,
@@ -146,7 +160,7 @@ function ClassicClient({
       socket.close();
       socketRef.current = null;
     };
-  }, []);
+  }, [me]);
 
   useEffect(() => {
     const log = logRef.current;
@@ -174,6 +188,7 @@ function ClassicClient({
     }
 
     const commandId = crypto.randomUUID();
+    pendingRef.current = { commandId, raw };
     setLines((current) =>
       appendTranscript(current, {
         id: commandId,
@@ -195,6 +210,7 @@ function ClassicClient({
           addNotice("The server acknowledgement was not valid.");
           return;
         }
+        pendingRef.current = pendingAfterAck(pendingRef.current, ack.data.commandId);
         if (ack.data.status === "rejected") {
           addNotice(ack.data.message);
         }

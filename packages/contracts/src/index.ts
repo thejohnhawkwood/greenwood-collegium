@@ -28,6 +28,13 @@ export {
 } from "./events/room-snapshot.js";
 export { lanternCourtSnapshotFixture } from "./fixtures/room-snapshot.js";
 export {
+  formatSessionSnapshotText,
+  sessionSnapshotEventSchema,
+  sessionSnapshotPayloadSchema,
+  type SessionSnapshotEvent,
+  type SessionSnapshotPayload,
+} from "./events/session-snapshot.js";
+export {
   formatMapDiscoveredText,
   mapDiscoveredEventSchema,
   mapDiscoveredPayloadSchema,
