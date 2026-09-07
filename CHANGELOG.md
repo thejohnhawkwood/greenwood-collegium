@@ -25,6 +25,7 @@ first playable package is tagged.
 
 ### Fixed
 
+- After a process restart the classic client forgets stored event sequences when the server's boot id changes, so `look` and `help` are not silently dropped while the socket still says connected.
 - Signed-in play fetches a short-lived socket ticket over the session cookie and keeps the game socket on HTTP polling, so Render can drop the websocket upgrade without locking teachers and students out of the courtyard.
 - The classic command box stays typable during guest play, with a blinking `>` and lantern caret, even while the socket is still connecting.
 - Invite tokens are trimmed on accept, and unused tokens stay on the teacher roster until a student uses them.

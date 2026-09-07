@@ -35,6 +35,11 @@ export {
   type SessionSnapshotPayload,
 } from "./events/session-snapshot.js";
 export {
+  SESSION_HELLO_EVENT,
+  sessionHelloSchema,
+  type SessionHello,
+} from "./events/session-hello.js";
+export {
   formatMapDiscoveredText,
   mapDiscoveredEventSchema,
   mapDiscoveredPayloadSchema,

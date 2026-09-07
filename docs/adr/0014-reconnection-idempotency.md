@@ -14,7 +14,8 @@ Ticket 010 must stop refresh and network retries from applying movement twice. C
 - Authenticated sockets get a short disconnect grace. A new socket for the same character resumes in place, emits `session.snapshot`, then a `room.snapshot`.
 - Guests still leave immediately. Local refresh as a guest may become a new woodland student.
 - The command log is process-local. Process restart is not a reconnect.
+- Each process emits a `session-hello` boot id on connect. If that id changed, the client forgets stored event sequences so a new process is not treated as a replay of the old one.
 
 ## Consequences
 
-A replayed `north` cannot walk the character a second time. A signed-in refresh stays in the same room. Ticket 012+ can attach rewards to the same command id.
+A replayed `north` cannot walk the character a second time. A signed-in refresh stays in the same room. Ticket 012+ can attach rewards to the same command id. After a Render restart, `look` and `help` are not silently dropped.

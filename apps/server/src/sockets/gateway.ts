@@ -3,6 +3,8 @@ import {
   commandRequestSchema,
   eventEnvelopeSchema,
   schemaVersion,
+  SESSION_HELLO_EVENT,
+  sessionHelloSchema,
   type CommandAck,
   type EventEnvelope,
 } from "@greenwood/contracts";
@@ -184,6 +186,7 @@ export async function attachRealtime(
   const limiter = new RateLimiter();
   const mutedUntil = new Map<string, number>();
   const identities = new Map<string, PlayIdentity>();
+  const bootId = crypto.randomUUID();
   const io = new Server(app.server, {
     cors: {
       origin(origin, callback) {
@@ -239,6 +242,7 @@ export async function attachRealtime(
   });
 
   io.on("connection", (socket) => {
+    socket.emit(SESSION_HELLO_EVENT, sessionHelloSchema.parse({ bootId }));
     void startPlay(socket).catch(() => {
       noticeAndDisconnect(socket, "The courtyard could not seat you. Refresh and try again.");
     });

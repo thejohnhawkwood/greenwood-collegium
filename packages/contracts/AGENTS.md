@@ -12,6 +12,7 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Character creation schemas carry chosen name, species, and gender. The client still cannot claim account authority.
 - Sign-in may include `audience` (`student` or `staff`). `authClassroomSchema` is the teacher roster. It never includes passwords.
 - Ticket 010 owns `session.snapshot` for authenticated resume.
+- `sessionHelloSchema` is a process boot handshake. It is not account, role, or character authority.
 - Ticket 012 owns `item.taken`, `item.dropped`, and `inventory.updated`.
 - Ticket 013 owns combat start, turn, action, end, and `progress.experience_gained`.
 - Ticket 014 owns Ember, burning, `combat.status_applied`, and the Ember event fixture. Presentation keys do not decide damage.

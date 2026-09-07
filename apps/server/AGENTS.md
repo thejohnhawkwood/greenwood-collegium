@@ -11,6 +11,7 @@ Fastify process for HTTP and Socket.IO.
 - Ticket 014 owns `cast`. Handlers do not invent Ember damage, burning, or presentation.
 - Ticket 015 owns Arrival, `help`, and `quests`. Handlers do not invent Porter speech or award XP twice.
 - Repeat command IDs must return the first result. Authenticated disconnects get a resume grace and `session.snapshot`.
+- Each process emits `session-hello` with a boot id on connect. Do not log the boot id as a secret; it is not a session token.
 - Account and character records use repository interfaces. In-memory tests always run. Postgres tests run only with `GREENWOOD_TEST_DATABASE_URL`.
 - Owner and teacher may read unused invite tokens, accepted usernames, and Collegian names on `GET /auth/classroom`. Students may not. Passwords never appear in that payload. Teachers may issue a batch of unused student tokens.
 - Ticket 016 owns classroom commands. Socket handlers check owner/teacher from the session, apply mute and kick, and append an audit row. They do not invent announce text beyond the validated plain-text line. Never log session tokens, invite tokens, or socket tickets.
