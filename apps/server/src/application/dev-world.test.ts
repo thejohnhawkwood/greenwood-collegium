@@ -7,5 +7,6 @@ describe("createDevWorld", () => {
     expect(Object.keys(world.rooms)).toHaveLength(25);
     expect(world.rooms["lantern-court"]?.title).toBe("Lantern Court");
     expect(world.rooms["east-gate"]?.title).toBe("East Gate");
+    expect(world.items?.["item-copper-key-lantern-court"]?.name).toBe("Small Copper Key");
   });
 });

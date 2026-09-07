@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "small-copper-key",
+  "name": "Small Copper Key",
+  "shortDescription": "A small copper key.",
+  "examineDescription": "The bow is worn smooth by many pockets.\nA faint green stain marks the bit.",
+  "category": "key",
+  "unique": true
+}

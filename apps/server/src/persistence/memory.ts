@@ -14,6 +14,9 @@ import {
   type CreateSessionInput,
   type InviteRecord,
   type InviteRepository,
+  type ItemInstanceRecord,
+  type ItemInstanceRepository,
+  type ItemPlacementSeed,
   type SessionRecord,
   type SessionRepository,
 } from "./types.js";
@@ -187,10 +190,63 @@ export class InMemoryInviteRepository implements InviteRepository {
   }
 }
 
+export class InMemoryItemRepository implements ItemInstanceRepository {
+  private readonly byId = new Map<string, ItemInstanceRecord>();
+
+  async ensurePlacements(seeds: readonly ItemPlacementSeed[]): Promise<void> {
+    const now = new Date();
+    for (const seed of seeds) {
+      if (this.byId.has(seed.id)) {
+        continue;
+      }
+      this.byId.set(seed.id, {
+        id: seed.id,
+        templateId: seed.templateId,
+        roomId: seed.roomId,
+        createdAt: now,
+        updatedAt: now,
+      });
+    }
+  }
+
+  async list(): Promise<ItemInstanceRecord[]> {
+    return [...this.byId.values()];
+  }
+
+  async claim(itemId: string, characterId: string, roomId: string): Promise<boolean> {
+    const item = this.byId.get(itemId);
+    if (!item || item.holderCharacterId || item.roomId !== roomId) {
+      return false;
+    }
+    this.byId.set(itemId, {
+      ...item,
+      holderCharacterId: characterId,
+      roomId: undefined,
+      updatedAt: new Date(),
+    });
+    return true;
+  }
+
+  async release(itemId: string, characterId: string, roomId: string): Promise<boolean> {
+    const item = this.byId.get(itemId);
+    if (!item || item.holderCharacterId !== characterId || item.roomId) {
+      return false;
+    }
+    this.byId.set(itemId, {
+      ...item,
+      holderCharacterId: undefined,
+      roomId,
+      updatedAt: new Date(),
+    });
+    return true;
+  }
+}
+
 export function createMemoryStores() {
   const accounts = new InMemoryAccountRepository();
   const characters = new InMemoryCharacterRepository(accounts);
   const sessions = new InMemorySessionRepository();
   const invites = new InMemoryInviteRepository();
-  return { accounts, characters, sessions, invites };
+  const items = new InMemoryItemRepository();
+  return { accounts, characters, sessions, invites, items };
 }

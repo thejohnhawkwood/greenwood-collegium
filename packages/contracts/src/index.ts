@@ -60,6 +60,28 @@ export {
   type EntityPresencePayload,
 } from "./events/entity-presence.js";
 export {
+  formatItemTakenText,
+  itemTakenEventSchema,
+  itemTakenPayloadSchema,
+  type ItemTakenEvent,
+  type ItemTakenPayload,
+} from "./events/item-taken.js";
+export {
+  formatItemDroppedText,
+  itemDroppedEventSchema,
+  itemDroppedPayloadSchema,
+  type ItemDroppedEvent,
+  type ItemDroppedPayload,
+} from "./events/item-dropped.js";
+export {
+  formatInventoryUpdatedText,
+  inventoryItemSchema,
+  inventoryUpdatedEventSchema,
+  inventoryUpdatedPayloadSchema,
+  type InventoryUpdatedEvent,
+  type InventoryUpdatedPayload,
+} from "./events/inventory-updated.js";
+export {
   commandRequestSchema,
   interfaceModeSchema,
   type CommandRequest,

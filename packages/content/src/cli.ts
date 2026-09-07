@@ -3,7 +3,9 @@ import { ContentValidationError } from "./validate.js";
 
 try {
   const world = loadBundledWorld();
-  process.stdout.write(`loaded ${String(Object.keys(world.rooms).length)} rooms\n`);
+  process.stdout.write(
+    `loaded ${String(Object.keys(world.rooms).length)} rooms and ${String(Object.keys(world.items).length)} items\n`,
+  );
 } catch (error) {
   const message =
     error instanceof ContentValidationError ? error.message : "world content failed validation";

@@ -1,13 +1,24 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { roomFileSchema, type RoomFile } from "./schema.js";
-import { ContentValidationError, validateWorld, type NamedRoom } from "./validate.js";
+import type { z } from "zod";
+import { itemPlacementSchema, itemTemplateSchema } from "./item-schema.js";
+import { roomFileSchema } from "./schema.js";
+import {
+  ContentValidationError,
+  validateCatalog,
+  validateWorld,
+  type NamedPlacement,
+  type NamedRoom,
+  type NamedTemplate,
+} from "./validate.js";
 import { toWorldState, type LoadedWorld } from "./world.js";
 
 export const bundledRoomsDirectory = fileURLToPath(new URL("../rooms", import.meta.url));
+export const bundledItemsDirectory = fileURLToPath(new URL("../items", import.meta.url));
+export const bundledPlacementsDirectory = fileURLToPath(new URL("../placements", import.meta.url));
 
-function parseRoomFile(fileName: string, raw: string): RoomFile {
+function parseJsonFile<T>(fileName: string, raw: string, schema: z.ZodType<T>): T {
   let parsed: unknown;
   try {
     parsed = JSON.parse(raw);
@@ -21,7 +32,7 @@ function parseRoomFile(fileName: string, raw: string): RoomFile {
     ]);
   }
 
-  const result = roomFileSchema.safeParse(parsed);
+  const result = schema.safeParse(parsed);
   if (!result.success) {
     throw new ContentValidationError(
       result.error.issues.map((issue) => ({
@@ -34,11 +45,14 @@ function parseRoomFile(fileName: string, raw: string): RoomFile {
   return result.data;
 }
 
-export function loadWorldFromDirectory(directory: string): LoadedWorld {
-  const fileNames = readdirSync(directory)
+function listJsonFiles(directory: string): string[] {
+  return readdirSync(directory)
     .filter((name) => name.endsWith(".json"))
     .sort((left, right) => left.localeCompare(right));
+}
 
+function loadNamedRooms(directory: string): NamedRoom[] {
+  const fileNames = listJsonFiles(directory);
   if (fileNames.length === 0) {
     throw new ContentValidationError([
       {
@@ -47,20 +61,59 @@ export function loadWorldFromDirectory(directory: string): LoadedWorld {
       },
     ]);
   }
-
-  const namedRooms: NamedRoom[] = fileNames.map((fileName) => ({
+  return fileNames.map((fileName) => ({
     fileName: basename(fileName),
-    room: parseRoomFile(fileName, readFileSync(join(directory, fileName), "utf8")),
+    room: parseJsonFile(fileName, readFileSync(join(directory, fileName), "utf8"), roomFileSchema),
   }));
+}
 
+function loadNamedTemplates(directory: string): NamedTemplate[] {
+  return listJsonFiles(directory).map((fileName) => ({
+    fileName: basename(fileName),
+    template: parseJsonFile(
+      fileName,
+      readFileSync(join(directory, fileName), "utf8"),
+      itemTemplateSchema,
+    ),
+  }));
+}
+
+function loadNamedPlacements(directory: string): NamedPlacement[] {
+  return listJsonFiles(directory).map((fileName) => ({
+    fileName: basename(fileName),
+    placement: parseJsonFile(
+      fileName,
+      readFileSync(join(directory, fileName), "utf8"),
+      itemPlacementSchema,
+    ),
+  }));
+}
+
+export function loadWorldFromDirectory(directory: string): LoadedWorld {
+  const namedRooms = loadNamedRooms(directory);
   const issues = validateWorld(namedRooms);
   if (issues.length > 0) {
     throw new ContentValidationError(issues);
   }
-
   return toWorldState(namedRooms.map((named) => named.room));
 }
 
 export function loadBundledWorld(): LoadedWorld {
-  return loadWorldFromDirectory(bundledRoomsDirectory);
+  const namedRooms = loadNamedRooms(bundledRoomsDirectory);
+  const namedTemplates = loadNamedTemplates(bundledItemsDirectory);
+  const namedPlacements = loadNamedPlacements(bundledPlacementsDirectory);
+  const issues = [
+    ...validateWorld(namedRooms),
+    ...validateCatalog(namedRooms, namedTemplates, namedPlacements),
+  ];
+  if (issues.length > 0) {
+    throw new ContentValidationError(issues);
+  }
+  return toWorldState(
+    namedRooms.map((named) => named.room),
+    {
+      templates: namedTemplates.map((named) => named.template),
+      placements: namedPlacements.map((named) => named.placement),
+    },
+  );
 }

@@ -9,3 +9,4 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Do not add Socket.IO, engine rules, or extra event payloads here unless a ticket asks.
 - Ticket 009 owns HTTP auth request and public session schemas. The client must not claim account, role, or character authority.
 - Ticket 010 owns `session.snapshot` for authenticated resume.
+- Ticket 012 owns `item.taken`, `item.dropped`, and `inventory.updated`.

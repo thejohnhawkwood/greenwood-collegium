@@ -1,9 +1,11 @@
+import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import { START_ROOM_ID, type RoomFile } from "./schema.js";
 
 export type ContentIssue = {
   code: string;
   message: string;
   roomId?: string;
+  itemId?: string;
   fileName?: string;
 };
 
@@ -133,6 +135,90 @@ export function validateWorld(namedRooms: NamedRoom[]): ContentIssue[] {
           fileName: roomsById.get(roomId)?.fileName,
         });
       }
+    }
+  }
+
+  return issues;
+}
+
+export type NamedTemplate = {
+  fileName: string;
+  template: ItemTemplate;
+};
+
+export type NamedPlacement = {
+  fileName: string;
+  placement: ItemPlacement;
+};
+
+export function validateCatalog(
+  namedRooms: NamedRoom[],
+  namedTemplates: NamedTemplate[],
+  namedPlacements: NamedPlacement[],
+): ContentIssue[] {
+  const issues: ContentIssue[] = [];
+  const roomIds = new Set(namedRooms.map((named) => named.room.id));
+  const templatesById = new Map<string, NamedTemplate>();
+
+  for (const named of namedTemplates) {
+    const stem = named.fileName.replace(/\.json$/u, "");
+    if (stem !== named.template.id) {
+      issues.push({
+        code: "id_filename_mismatch",
+        message: `${named.fileName} must be named ${named.template.id}.json`,
+        itemId: named.template.id,
+        fileName: named.fileName,
+      });
+    }
+    if (templatesById.has(named.template.id)) {
+      issues.push({
+        code: "duplicate_id",
+        message: `duplicate item template ${named.template.id}`,
+        itemId: named.template.id,
+        fileName: named.fileName,
+      });
+    } else {
+      templatesById.set(named.template.id, named);
+    }
+  }
+
+  const placementsById = new Map<string, NamedPlacement>();
+  for (const named of namedPlacements) {
+    const stem = named.fileName.replace(/\.json$/u, "");
+    if (stem !== named.placement.id) {
+      issues.push({
+        code: "id_filename_mismatch",
+        message: `${named.fileName} must be named ${named.placement.id}.json`,
+        itemId: named.placement.id,
+        fileName: named.fileName,
+      });
+    }
+    if (placementsById.has(named.placement.id)) {
+      issues.push({
+        code: "duplicate_id",
+        message: `duplicate item instance ${named.placement.id}`,
+        itemId: named.placement.id,
+        fileName: named.fileName,
+      });
+    } else {
+      placementsById.set(named.placement.id, named);
+    }
+    if (!templatesById.has(named.placement.templateId)) {
+      issues.push({
+        code: "unknown_item_template",
+        message: `${named.placement.id} uses unknown template ${named.placement.templateId}`,
+        itemId: named.placement.id,
+        fileName: named.fileName,
+      });
+    }
+    if (!roomIds.has(named.placement.roomId)) {
+      issues.push({
+        code: "missing_reference",
+        message: `${named.placement.id} is placed in unknown room ${named.placement.roomId}`,
+        itemId: named.placement.id,
+        roomId: named.placement.roomId,
+        fileName: named.fileName,
+      });
     }
   }
 

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://greenwood.local/schemas/item.json",
+  "title": "Greenwood item template",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "shortDescription", "examineDescription", "category"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shortDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "examineDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "enum": ["key", "book", "ordinary"]
+    },
+    "unique": {
+      "const": true
+    }
+  }
+}

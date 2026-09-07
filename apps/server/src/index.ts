@@ -2,6 +2,7 @@ import { ContentValidationError } from "@greenwood/content";
 import { argon2Hasher } from "./auth/hasher.js";
 import { createAuthService } from "./auth/service.js";
 import { createDevWorld } from "./application/dev-world.js";
+import { hydrateWorldItems } from "./application/item-state.js";
 import { buildApp } from "./app.js";
 import { registerAuthRoutes } from "./http/auth.js";
 import {
@@ -17,6 +18,7 @@ import {
   PostgresAccountRepository,
   PostgresCharacterRepository,
   PostgresInviteRepository,
+  PostgresItemRepository,
   PostgresSessionRepository,
 } from "./persistence/postgres.js";
 import { attachRealtime } from "./sockets/gateway.js";
@@ -102,9 +104,15 @@ app.addHook("onClose", async () => {
   }
 });
 
+const persistItem = persistence ? new PostgresItemRepository(persistence.db) : undefined;
+if (persistItem) {
+  await hydrateWorldItems(world, persistItem);
+}
+
 await attachRealtime(app, world, {
   allowGuestPlay,
   resolveSession: (token) => auth.resolvePlayIdentity(token),
   persistRoom: (characterId, roomId) => stores.characters.updateRoom(characterId, roomId),
+  persistItem,
 });
 await app.listen({ port, host });

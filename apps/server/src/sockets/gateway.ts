@@ -7,12 +7,18 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import {
+  handleDrop,
+  handleExamine,
+  handleInventory,
   handleJoin,
   handleLeave,
   handleLook,
   handleMove,
   handleSay,
+  handleTake,
   parsePlayerCommand,
+  revertDrop,
+  revertTake,
   type EngineRuntime,
   type WorldState,
 } from "@greenwood/game-engine";
@@ -38,6 +44,10 @@ export type RealtimeOptions = {
   reconnectGraceMs?: number;
   resolveSession?: (token: string) => Promise<PlayIdentity | undefined>;
   persistRoom?: (characterId: string, roomId: string) => Promise<void>;
+  persistItem?: {
+    claim(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+    release(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+  };
 };
 
 const defaultAllowedOrigins =
@@ -179,135 +189,7 @@ export async function attachRealtime(
     identity: PlayIdentity | undefined,
   ): void {
     socket.on("command", (payload: unknown, ack?: (response: CommandAck) => void) => {
-      const parsed = commandRequestSchema.safeParse(payload);
-      if (!parsed.success) {
-        reply(
-          ack,
-          commandAckSchema.parse({
-            commandId: "invalid",
-            status: "rejected",
-            errorCode: "invalid_command",
-            message: "That command was not a valid request.",
-            resyncRequired: false,
-          }),
-        );
-        return;
-      }
-
-      const recorded = commandLog.get(characterId, parsed.data.commandId);
-      if (recorded) {
-        deliver(sockets, characterId, recorded.events, recorded.notices);
-        reply(ack, recorded.ack);
-        return;
-      }
-
-      const intent = parsePlayerCommand(parsed.data.raw, characterId);
-      if (!intent) {
-        const rejection = commandAckSchema.parse({
-          commandId: parsed.data.commandId,
-          status: "rejected",
-          errorCode: "unknown_command",
-          message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  north\n  south\n  east\n  west`,
-          resyncRequired: false,
-        });
-        commandLog.set(characterId, parsed.data.commandId, {
-          ack: rejection,
-          events: [],
-          notices: [],
-        });
-        reply(ack, rejection);
-        return;
-      }
-
-      if (!limiter.allow(`command:${characterId}`, COMMAND_RATE_MAX, COMMAND_RATE_WINDOW_MS)) {
-        reply(
-          ack,
-          commandAckSchema.parse({
-            commandId: parsed.data.commandId,
-            status: "rejected",
-            errorCode: "rate_limited",
-            message: "Please wait a moment before sending another command.",
-            resyncRequired: false,
-          }),
-        );
-        return;
-      }
-
-      if (
-        intent.verb === "say" &&
-        !limiter.allow(`say:${characterId}`, SAY_RATE_MAX, SAY_RATE_WINDOW_MS)
-      ) {
-        reply(
-          ack,
-          commandAckSchema.parse({
-            commandId: parsed.data.commandId,
-            status: "rejected",
-            errorCode: "rate_limited",
-            message: "Please wait a moment before saying more.",
-            resyncRequired: false,
-          }),
-        );
-        return;
-      }
-
-      const result =
-        intent.verb === "look"
-          ? handleLook(world, intent, commandRuntime(sequences))
-          : intent.verb === "move"
-            ? handleMove(world, intent, commandRuntime(sequences))
-            : handleSay(world, intent, commandRuntime(sequences));
-
-      if (!result.ok) {
-        const rejection = commandAckSchema.parse({
-          commandId: parsed.data.commandId,
-          status: "rejected",
-          errorCode: result.code,
-          message: result.message,
-          resyncRequired: false,
-        });
-        commandLog.set(characterId, parsed.data.commandId, {
-          ack: rejection,
-          events: [],
-          notices: [],
-        });
-        reply(ack, rejection);
-        return;
-      }
-
-      const events = "events" in result ? result.events : [result.event];
-      const notices = "notices" in result ? result.notices : [];
-      const delivered = deliver(sockets, characterId, events, notices);
-      const first = delivered[0];
-      const last = delivered[delivered.length - 1];
-      if (!first || !last) {
-        reply(
-          ack,
-          commandAckSchema.parse({
-            commandId: parsed.data.commandId,
-            status: "rejected",
-            errorCode: "empty_result",
-            message: "The command produced no events.",
-            resyncRequired: false,
-          }),
-        );
-        return;
-      }
-
-      const accepted = commandAckSchema.parse({
-        commandId: parsed.data.commandId,
-        status: "accepted",
-        message:
-          intent.verb === "look" ? "look" : intent.verb === "move" ? intent.direction : "say",
-        eventSequenceStart: first.sequence,
-        eventSequenceEnd: last.sequence,
-        resyncRequired: false,
-      });
-      commandLog.set(characterId, parsed.data.commandId, {
-        ack: accepted,
-        events: delivered,
-        notices,
-      });
-      reply(ack, accepted);
+      void handleCommand(characterId, identity, payload, ack);
     });
 
     socket.on("disconnect", () => {
@@ -344,6 +226,186 @@ export async function attachRealtime(
         deliver(sockets, characterId, left.events, left.notices);
       }
     });
+  }
+
+  async function handleCommand(
+    characterId: string,
+    identity: PlayIdentity | undefined,
+    payload: unknown,
+    ack: ((response: CommandAck) => void) | undefined,
+  ): Promise<void> {
+    const parsed = commandRequestSchema.safeParse(payload);
+    if (!parsed.success) {
+      reply(
+        ack,
+        commandAckSchema.parse({
+          commandId: "invalid",
+          status: "rejected",
+          errorCode: "invalid_command",
+          message: "That command was not a valid request.",
+          resyncRequired: false,
+        }),
+      );
+      return;
+    }
+
+    const recorded = commandLog.get(characterId, parsed.data.commandId);
+    if (recorded) {
+      deliver(sockets, characterId, recorded.events, recorded.notices);
+      reply(ack, recorded.ack);
+      return;
+    }
+
+    const intent = parsePlayerCommand(parsed.data.raw, characterId);
+    if (!intent) {
+      const rejection = commandAckSchema.parse({
+        commandId: parsed.data.commandId,
+        status: "rejected",
+        errorCode: "unknown_command",
+        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  north\n  south\n  east\n  west`,
+        resyncRequired: false,
+      });
+      commandLog.set(characterId, parsed.data.commandId, {
+        ack: rejection,
+        events: [],
+        notices: [],
+      });
+      reply(ack, rejection);
+      return;
+    }
+
+    if (!limiter.allow(`command:${characterId}`, COMMAND_RATE_MAX, COMMAND_RATE_WINDOW_MS)) {
+      reply(
+        ack,
+        commandAckSchema.parse({
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: "rate_limited",
+          message: "Please wait a moment before sending another command.",
+          resyncRequired: false,
+        }),
+      );
+      return;
+    }
+
+    if (
+      intent.verb === "say" &&
+      !limiter.allow(`say:${characterId}`, SAY_RATE_MAX, SAY_RATE_WINDOW_MS)
+    ) {
+      reply(
+        ack,
+        commandAckSchema.parse({
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: "rate_limited",
+          message: "Please wait a moment before saying more.",
+          resyncRequired: false,
+        }),
+      );
+      return;
+    }
+
+    const runtime = commandRuntime(sequences);
+    const result =
+      intent.verb === "look"
+        ? handleLook(world, intent, runtime)
+        : intent.verb === "move"
+          ? handleMove(world, intent, runtime)
+          : intent.verb === "say"
+            ? handleSay(world, intent, runtime)
+            : intent.verb === "take"
+              ? handleTake(world, intent, runtime)
+              : intent.verb === "drop"
+                ? handleDrop(world, intent, runtime)
+                : intent.verb === "examine"
+                  ? handleExamine(world, intent, runtime)
+                  : handleInventory(world, intent, runtime);
+
+    if (!result.ok) {
+      const rejection = commandAckSchema.parse({
+        commandId: parsed.data.commandId,
+        status: "rejected",
+        errorCode: result.code,
+        message: result.message,
+        resyncRequired: false,
+      });
+      commandLog.set(characterId, parsed.data.commandId, {
+        ack: rejection,
+        events: [],
+        notices: [],
+      });
+      reply(ack, rejection);
+      return;
+    }
+
+    if (identity && options.persistItem && result.ok && "itemId" in result) {
+      const persisted =
+        intent.verb === "take"
+          ? await options.persistItem.claim(result.itemId, characterId, result.roomId)
+          : intent.verb === "drop"
+            ? await options.persistItem.release(result.itemId, characterId, result.roomId)
+            : true;
+      if (!persisted) {
+        const item = world.items?.[result.itemId];
+        if (item && intent.verb === "take") {
+          revertTake(item, result.roomId);
+        }
+        if (item && intent.verb === "drop") {
+          revertDrop(item, characterId);
+        }
+        const rejection = commandAckSchema.parse({
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: "already_taken",
+          message:
+            intent.verb === "drop"
+              ? "You are no longer carrying that."
+              : "The item is no longer here.",
+          resyncRequired: false,
+        });
+        commandLog.set(characterId, parsed.data.commandId, {
+          ack: rejection,
+          events: [],
+          notices: [],
+        });
+        reply(ack, rejection);
+        return;
+      }
+    }
+
+    const events = "events" in result ? result.events : [result.event];
+    const notices = "notices" in result ? result.notices : [];
+    const delivered = deliver(sockets, characterId, events, notices);
+    const first = delivered[0];
+    const last = delivered[delivered.length - 1];
+    if (!first || !last) {
+      reply(
+        ack,
+        commandAckSchema.parse({
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: "empty_result",
+          message: "The command produced no events.",
+          resyncRequired: false,
+        }),
+      );
+      return;
+    }
+
+    const accepted = commandAckSchema.parse({
+      commandId: parsed.data.commandId,
+      status: "accepted",
+      message: intent.verb === "move" ? intent.direction : intent.verb,
+      eventSequenceStart: first.sequence,
+      eventSequenceEnd: last.sequence,
+      resyncRequired: false,
+    });
+    commandLog.set(characterId, parsed.data.commandId, {
+      ack: accepted,
+      events: delivered,
+      notices,
+    });
+    reply(ack, accepted);
   }
 
   return io;

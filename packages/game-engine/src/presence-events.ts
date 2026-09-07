@@ -7,12 +7,13 @@ import {
   schemaVersion,
   type EntityEnteredEvent,
   type EntityLeftEvent,
+  type EventEnvelope,
 } from "@greenwood/contracts";
 import type { Character, EngineRuntime } from "./state.js";
 
 export type OccupantNotice = {
   characterId: string;
-  event: EntityEnteredEvent | EntityLeftEvent;
+  event: EventEnvelope;
 };
 
 const oppositeDirection: Record<string, string> = {

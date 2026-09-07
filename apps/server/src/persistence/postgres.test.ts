@@ -7,11 +7,13 @@ import {
   type Persistence,
 } from "./connection.js";
 import { persistSessionsAndInvites } from "./persist-auth.contract.js";
+import { persistInventoryOwnership } from "./persist-inventory.contract.js";
 import { persistAccountAndCharacter } from "./persist.contract.js";
 import {
   PostgresAccountRepository,
   PostgresCharacterRepository,
   PostgresInviteRepository,
+  PostgresItemRepository,
   PostgresSessionRepository,
 } from "./postgres.js";
 
@@ -23,6 +25,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
   const characters = () => new PostgresCharacterRepository(persistence.db, accounts());
   const sessions = () => new PostgresSessionRepository(persistence.db);
   const invites = () => new PostgresInviteRepository(persistence.db);
+  const items = () => new PostgresItemRepository(persistence.db);
 
   beforeAll(async () => {
     if (!testDatabaseUrl) {
@@ -31,6 +34,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     persistence = createPersistence(testDatabaseUrl);
     await pingDatabase(persistence);
     await applyMigrations(persistence);
+    await persistence.pool.query("delete from item_instances");
     await persistence.pool.query("delete from sessions");
     await persistence.pool.query("delete from invites");
     await persistence.pool.query("delete from characters");
@@ -85,6 +89,29 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       create: (input) => invites().create(input),
       getByTokenHash: (tokenHash) => invites().getByTokenHash(tokenHash),
       consume: (id, at) => invites().consume(id, at),
+    },
+  );
+
+  persistInventoryOwnership(
+    {
+      create: (input) => accounts().create(input),
+      getById: (id) => accounts().getById(id),
+      getByUsername: (username) => accounts().getByUsername(username),
+      listByRole: (role) => accounts().listByRole(role),
+      updateStatus: (id, status) => accounts().updateStatus(id, status),
+      touchSignIn: (id, at) => accounts().touchSignIn(id, at),
+    },
+    {
+      create: (input) => characters().create(input),
+      getById: (id) => characters().getById(id),
+      listByAccountId: (accountId) => characters().listByAccountId(accountId),
+      updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
+    },
+    {
+      ensurePlacements: (seeds) => items().ensurePlacements(seeds),
+      list: () => items().list(),
+      claim: (itemId, characterId, roomId) => items().claim(itemId, characterId, roomId),
+      release: (itemId, characterId, roomId) => items().release(itemId, characterId, roomId),
     },
   );
 });

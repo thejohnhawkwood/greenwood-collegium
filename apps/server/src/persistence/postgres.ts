@@ -1,6 +1,6 @@
 import { and, eq, isNull } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import { accounts, characters, invites, sessions } from "./schema.js";
+import { accounts, characters, invites, itemInstances, sessions } from "./schema.js";
 import {
   AccountNotFoundError,
   DuplicateUsernameError,
@@ -17,6 +17,9 @@ import {
   type CreateSessionInput,
   type InviteRecord,
   type InviteRepository,
+  type ItemInstanceRecord,
+  type ItemInstanceRepository,
+  type ItemPlacementSeed,
   type SessionRecord,
   type SessionRepository,
 } from "./types.js";
@@ -214,6 +217,67 @@ export class PostgresInviteRepository implements InviteRepository {
   }
 }
 
+export class PostgresItemRepository implements ItemInstanceRepository {
+  constructor(private readonly db: Database) {}
+
+  async ensurePlacements(seeds: readonly ItemPlacementSeed[]): Promise<void> {
+    if (seeds.length === 0) {
+      return;
+    }
+    const now = new Date();
+    await this.db
+      .insert(itemInstances)
+      .values(
+        seeds.map((seed) => ({
+          id: seed.id,
+          templateId: seed.templateId,
+          roomId: seed.roomId,
+          holderCharacterId: null,
+          createdAt: now,
+          updatedAt: now,
+        })),
+      )
+      .onConflictDoNothing({ target: itemInstances.id });
+  }
+
+  async list(): Promise<ItemInstanceRecord[]> {
+    const rows = await this.db.select().from(itemInstances);
+    return rows.map(toItem);
+  }
+
+  async claim(itemId: string, characterId: string, roomId: string): Promise<boolean> {
+    const [row] = await this.db
+      .update(itemInstances)
+      .set({
+        holderCharacterId: characterId,
+        roomId: null,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(
+          eq(itemInstances.id, itemId),
+          isNull(itemInstances.holderCharacterId),
+          eq(itemInstances.roomId, roomId),
+        ),
+      )
+      .returning({ id: itemInstances.id });
+    return row !== undefined;
+  }
+
+  async release(itemId: string, characterId: string, roomId: string): Promise<boolean> {
+    const [row] = await this.db
+      .update(itemInstances)
+      .set({
+        holderCharacterId: null,
+        roomId,
+        updatedAt: new Date(),
+      })
+      .where(and(eq(itemInstances.id, itemId), eq(itemInstances.holderCharacterId, characterId)))
+      .returning({ id: itemInstances.id });
+    return row !== undefined;
+  }
+}
+
 function asDate(value: Date | string): Date {
   return value instanceof Date ? value : new Date(value);
 }
@@ -255,6 +319,17 @@ function toSession(row: typeof sessions.$inferSelect): SessionRecord {
     expiresAt: asDate(row.expiresAt),
     revokedAt: row.revokedAt ? asDate(row.revokedAt) : undefined,
     lastSeenAt: asDate(row.lastSeenAt),
+  };
+}
+
+function toItem(row: typeof itemInstances.$inferSelect): ItemInstanceRecord {
+  return {
+    id: row.id,
+    templateId: row.templateId,
+    roomId: row.roomId ?? undefined,
+    holderCharacterId: row.holderCharacterId ?? undefined,
+    createdAt: asDate(row.createdAt),
+    updatedAt: asDate(row.updatedAt),
   };
 }
 

@@ -104,6 +104,28 @@ export interface InviteRepository {
   consume(id: string, at: Date): Promise<boolean>;
 }
 
+export type ItemInstanceRecord = {
+  id: string;
+  templateId: string;
+  roomId?: string;
+  holderCharacterId?: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type ItemPlacementSeed = {
+  id: string;
+  templateId: string;
+  roomId: string;
+};
+
+export interface ItemInstanceRepository {
+  ensurePlacements(seeds: readonly ItemPlacementSeed[]): Promise<void>;
+  list(): Promise<ItemInstanceRecord[]>;
+  claim(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+  release(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+}
+
 export class DuplicateUsernameError extends Error {
   readonly code = "duplicate_username";
 
