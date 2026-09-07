@@ -1,6 +1,9 @@
 import {
   AccountNotFoundError,
+  CharacterNotFoundError,
+  DuplicateCharacterNameError,
   DuplicateUsernameError,
+  normalizeCharacterName,
   normalizeUsername,
   type AccountRecord,
   type AccountRepository,
@@ -21,6 +24,7 @@ import {
   type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
+  type UpdateCharacterCreationInput,
 } from "./types.js";
 
 export class InMemoryAccountRepository implements AccountRepository {
@@ -90,16 +94,22 @@ export class InMemoryCharacterRepository implements CharacterRepository {
     if (!account) {
       throw new AccountNotFoundError(input.accountId);
     }
+    const name = input.name.trim();
+    if (await this.getByNormalizedName(name)) {
+      throw new DuplicateCharacterNameError(name);
+    }
     const now = new Date();
     const record: CharacterRecord = {
       id: crypto.randomUUID(),
       accountId: input.accountId,
-      name: input.name.trim(),
+      name,
       speciesId: input.speciesId,
+      gender: input.gender,
       level: 1,
       experience: 0,
       roomId: input.roomId,
       status: input.status ?? "active",
+      creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
       updatedAt: now,
     };
@@ -111,8 +121,36 @@ export class InMemoryCharacterRepository implements CharacterRepository {
     return this.byId.get(id);
   }
 
+  async getByNormalizedName(name: string): Promise<CharacterRecord | undefined> {
+    const needle = normalizeCharacterName(name);
+    return [...this.byId.values()].find(
+      (character) => normalizeCharacterName(character.name) === needle,
+    );
+  }
+
   async listByAccountId(accountId: string): Promise<CharacterRecord[]> {
     return [...this.byId.values()].filter((character) => character.accountId === accountId);
+  }
+
+  async updateCreation(id: string, input: UpdateCharacterCreationInput): Promise<CharacterRecord> {
+    const character = this.byId.get(id);
+    if (!character) {
+      throw new CharacterNotFoundError(id);
+    }
+    const taken = await this.getByNormalizedName(input.name);
+    if (taken && taken.id !== id) {
+      throw new DuplicateCharacterNameError(input.name);
+    }
+    const updated: CharacterRecord = {
+      ...character,
+      name: input.name.trim(),
+      speciesId: input.speciesId,
+      gender: input.gender,
+      creationCompletedAt: input.creationCompletedAt,
+      updatedAt: new Date(),
+    };
+    this.byId.set(id, updated);
+    return updated;
   }
 
   async updateRoom(id: string, roomId: string): Promise<void> {

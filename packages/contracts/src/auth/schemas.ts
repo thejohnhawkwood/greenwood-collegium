@@ -49,12 +49,43 @@ export const authSocketTicketSchema = z.object({
   ticket: z.string().min(1).max(200),
 });
 
+export const authCharacterGenderSchema = z.enum(["female", "male", "nonbinary"]);
+
+export const authCharacterNameSchema = z
+  .string()
+  .trim()
+  .min(2)
+  .max(24)
+  .regex(/^[A-Za-z][A-Za-z '-]*$/);
+
+export const authCharacterCreateRequestSchema = z.object({
+  name: authCharacterNameSchema,
+  speciesId: z.string().min(1).max(32),
+  gender: authCharacterGenderSchema,
+});
+
+export const authSuggestedNameRequestSchema = z.object({
+  speciesId: z.string().min(1).max(32),
+  gender: authCharacterGenderSchema,
+});
+
+export const authSuggestedNameSchema = z.object({
+  name: z.string().min(1),
+});
+
+export const authCharacterOptionsSchema = z.object({
+  intro: z.string().min(1),
+  species: z.array(z.object({ id: z.string(), name: z.string() })),
+  genders: z.array(z.object({ id: authCharacterGenderSchema, label: z.string() })),
+});
+
 export const authSessionPublicSchema = z.object({
   accountId: z.string(),
   username: z.string(),
   role: accountRoleSchema,
-  characterId: z.string(),
-  characterName: z.string(),
+  characterComplete: z.boolean(),
+  characterId: z.string().optional(),
+  characterName: z.string().optional(),
 });
 
 export const authInviteCreatedSchema = z.object({
@@ -98,6 +129,11 @@ export type AuthDisableAccountRequest = z.infer<typeof authDisableAccountRequest
 export type AuthStatus = z.infer<typeof authStatusSchema>;
 export type AuthSessionPublic = z.infer<typeof authSessionPublicSchema>;
 export type AuthSocketTicket = z.infer<typeof authSocketTicketSchema>;
+export type AuthCharacterCreateRequest = z.infer<typeof authCharacterCreateRequestSchema>;
+export type AuthSuggestedNameRequest = z.infer<typeof authSuggestedNameRequestSchema>;
+export type AuthSuggestedName = z.infer<typeof authSuggestedNameSchema>;
+export type AuthCharacterOptions = z.infer<typeof authCharacterOptionsSchema>;
+export type AuthCharacterGender = z.infer<typeof authCharacterGenderSchema>;
 export type AuthInviteCreated = z.infer<typeof authInviteCreatedSchema>;
 export type AuthClassroom = z.infer<typeof authClassroomSchema>;
 export type AuthClassroomInvite = z.infer<typeof authClassroomInviteSchema>;

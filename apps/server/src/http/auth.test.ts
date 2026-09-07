@@ -1,7 +1,11 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { buildApp } from "../app.js";
 import { SESSION_COOKIE } from "../auth/cookies.js";
-import { createTestAuth, TEST_BOOTSTRAP_TOKEN } from "../auth/test-harness.js";
+import {
+  completeTestCharacter,
+  createTestAuth,
+  TEST_BOOTSTRAP_TOKEN,
+} from "../auth/test-harness.js";
 import { registerAuthRoutes } from "./auth.js";
 
 describe("auth HTTP", () => {
@@ -34,7 +38,12 @@ describe("auth HTTP", () => {
     expect(boot.statusCode).toBe(200);
     expect(JSON.stringify(boot.json())).not.toContain("lantern-path");
     expect(JSON.stringify(boot.json())).not.toContain(TEST_BOOTSTRAP_TOKEN);
-    expect(boot.json()).toMatchObject({ username: "rowan", role: "owner", characterName: "Rowan" });
+    expect(boot.json()).toMatchObject({
+      username: "rowan",
+      role: "owner",
+      characterComplete: false,
+    });
+    expect(boot.json().characterName).toBeUndefined();
     const cookie = cookieValue(boot, SESSION_COOKIE);
     expect(boot.headers["set-cookie"]?.toString()).toContain("HttpOnly");
 
@@ -74,6 +83,13 @@ describe("auth HTTP", () => {
       payload: { token: TEST_BOOTSTRAP_TOKEN, username: "Rowan", password: "lantern-path" },
     });
     const cookie = cookieValue(boot, SESSION_COOKIE);
+    const before = await app.inject({
+      method: "GET",
+      url: "/auth/socket-ticket",
+      cookies: { [SESSION_COOKIE]: cookie },
+    });
+    expect(before.statusCode).toBe(401);
+    await completeTestCharacter(auth, String(boot.json().accountId));
     const issued = await app.inject({
       method: "GET",
       url: "/auth/socket-ticket",
@@ -82,6 +98,43 @@ describe("auth HTTP", () => {
     expect(issued.statusCode).toBe(200);
     expect(issued.json()).toEqual({ ticket: expect.any(String) });
     expect(String(issued.json().ticket)).not.toBe(cookie);
+  });
+
+  it("lets a signed-in account finish a Collegian", async () => {
+    const { auth } = createTestAuth();
+    app = await buildApp();
+    await registerAuthRoutes(app, { auth, allowGuestPlay: false, secureCookies: false });
+    const boot = await app.inject({
+      method: "POST",
+      url: "/auth/bootstrap",
+      payload: { token: TEST_BOOTSTRAP_TOKEN, username: "arbird", password: "lantern-path" },
+    });
+    const cookie = cookieValue(boot, SESSION_COOKIE);
+    const options = await app.inject({
+      method: "GET",
+      url: "/auth/character-options",
+      cookies: { [SESSION_COOKIE]: cookie },
+    });
+    expect(options.statusCode).toBe(200);
+    expect(options.json().intro).toContain("Greenwood Collegium");
+    const suggested = await app.inject({
+      method: "POST",
+      url: "/auth/suggested-name",
+      cookies: { [SESSION_COOKIE]: cookie },
+    });
+    expect(suggested.statusCode).toBe(200);
+    const created = await app.inject({
+      method: "POST",
+      url: "/auth/character",
+      cookies: { [SESSION_COOKIE]: cookie },
+      payload: { name: "Lumen", speciesId: "otter", gender: "female" },
+    });
+    expect(created.statusCode).toBe(200);
+    expect(created.json()).toMatchObject({
+      username: "arbird",
+      characterComplete: true,
+      characterName: "Lumen the Otter",
+    });
   });
 
   it("issues an invite, accepts it, and blocks a disabled account", async () => {

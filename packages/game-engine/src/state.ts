@@ -7,6 +7,7 @@ export type RoomFixture = {
   id: string;
   name: string;
   kind: "npc" | "object";
+  examineDescription?: string;
 };
 
 export type Room = {

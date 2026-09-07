@@ -18,6 +18,7 @@ export type LoadedRoom = {
     id: string;
     name: string;
     kind: "npc" | "object";
+    examineDescription?: string;
   }>;
 };
 
@@ -109,6 +110,7 @@ export function toWorldState(
         id: fixture.id,
         name: fixture.name,
         kind: fixture.kind,
+        examineDescription: fixture.examineDescription,
       })),
     };
   }

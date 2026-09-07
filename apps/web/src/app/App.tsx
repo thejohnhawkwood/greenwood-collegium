@@ -12,6 +12,8 @@ import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 
 import { io, type Socket } from "socket.io-client";
 import { AcademyFrame } from "./academy-frame.js";
 import { AuthGate } from "./AuthGate.js";
+import { CharacterGate } from "./CharacterGate.js";
+import { shouldShowCharacterGate } from "./character-gate.js";
 import { loadClassroom } from "./classroom-data.js";
 import { ClassroomRoster } from "./classroom-roster.js";
 import {
@@ -44,6 +46,28 @@ export function App() {
       <AcademyFrame>
         <main className="client">
           <p>Loading the Collegium.</p>
+        </main>
+      </AcademyFrame>
+    );
+  }
+
+  if (me && shouldShowCharacterGate(me)) {
+    return (
+      <AcademyFrame>
+        <main className="client">
+          <header className="chrome">
+            <h1>{APP_TITLE}</h1>
+            <p className="meta">Signed in as {me.username}.</p>
+          </header>
+          <CharacterGate
+            username={me.username}
+            onReady={() => {
+              void refreshAuth(setStatus, setMe);
+            }}
+            onSignedOut={() => {
+              void refreshAuth(setStatus, setMe);
+            }}
+          />
         </main>
       </AcademyFrame>
     );
@@ -99,7 +123,9 @@ function ClassicClient({
   const socketRef = useRef<Socket | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
-  const lastSequenceRef = useRef(me ? readStoredSequence(sessionStorage, me.characterId) : 0);
+  const lastSequenceRef = useRef(
+    me?.characterId ? readStoredSequence(sessionStorage, me.characterId) : 0,
+  );
   const pendingRef = useRef<PendingCommand | undefined>(undefined);
   const [connection, setConnection] = useState("disconnected");
   const [lines, setLines] = useState<TranscriptLine[]>([
@@ -167,7 +193,7 @@ function ClassicClient({
         return;
       }
       lastSequenceRef.current = parsed.data.sequence;
-      if (me) {
+      if (me?.characterId) {
         writeStoredSequence(sessionStorage, me.characterId, parsed.data.sequence);
       }
       setLines((current) =>

@@ -1,3 +1,15 @@
+export {
+  CHARACTER_GENDERS,
+  characterCreationIntro,
+  formatCharacterName,
+  isKnownGender,
+  isKnownSpecies,
+  listSpecies,
+  reservedCharacterNames,
+  speciesName,
+  suggestedCharacterNames,
+  type CharacterGenderId,
+} from "./character-creation.js";
 export { contentReady } from "./ready.js";
 export { START_ROOM_ID, roomFileSchema } from "./schema.js";
 export { itemPlacementSchema, itemTemplateSchema } from "./item-schema.js";

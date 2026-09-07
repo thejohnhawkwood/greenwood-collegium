@@ -15,3 +15,4 @@ Declarative world data. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or ga
 - Do not edit TypeScript to register a room, item, enemy, spell, or quest.
 - Invalid content fails `pnpm --filter @greenwood/content validate` and process start.
 - Students start in `lantern-court`.
+- Character-creation species, reserved names, and the narrator intro live in `character-creation/`. Do not copy franchise names.

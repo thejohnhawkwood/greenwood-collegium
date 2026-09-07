@@ -4205,6 +4205,19 @@ Create:
 
 Only after the complete classic vertical slice is stable, begin semantic-colour interface work.
 
+## Ticket 020 — Character Creation After Sign-in
+
+Create:
+
+- narrator introduction;
+- species choice;
+- gender choice;
+- suggested or typed given name;
+- one-time finish step for existing accounts;
+- socket refusal until the Collegian is complete.
+
+**Exit criterion:** a signed-in student enters Lantern Court under a chosen name that is not their username.
+
 ---
 
 _End of Product Requirements Document._

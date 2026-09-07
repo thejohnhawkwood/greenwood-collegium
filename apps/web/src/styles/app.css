@@ -216,6 +216,7 @@ body {
 
 .command-label input:focus,
 .auth-form input:focus,
+.auth-form select:focus,
 .auth-actions button:focus,
 .auth-form button:focus {
   outline: 2px solid var(--lantern);
@@ -256,7 +257,32 @@ body {
   gap: 0.25rem;
 }
 
+.creation-intro {
+  white-space: pre-wrap;
+}
+
+.auth-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.auth-form legend {
+  padding: 0;
+  color: var(--lantern);
+}
+
+.choice-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .auth-form input,
+.auth-form select,
 .chrome input {
   background: transparent;
   border: 1px solid var(--lantern);

@@ -1,6 +1,7 @@
 export type AccountStatus = "active" | "disabled";
 export type AccountRole = "owner" | "teacher" | "student";
 export type CharacterStatus = "active" | "disabled";
+export type CharacterGender = "female" | "male" | "nonbinary";
 export type InviteRole = "student" | "teacher";
 
 export type AccountRecord = {
@@ -19,10 +20,12 @@ export type CharacterRecord = {
   accountId: string;
   name: string;
   speciesId: string;
+  gender?: CharacterGender;
   level: number;
   experience: number;
   roomId: string;
   status: CharacterStatus;
+  creationCompletedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -61,7 +64,16 @@ export type CreateCharacterInput = {
   name: string;
   speciesId: string;
   roomId: string;
+  gender?: CharacterGender;
   status?: CharacterStatus;
+  creationCompletedAt?: Date;
+};
+
+export type UpdateCharacterCreationInput = {
+  name: string;
+  speciesId: string;
+  gender: CharacterGender;
+  creationCompletedAt: Date;
 };
 
 export type CreateSessionInput = {
@@ -90,7 +102,9 @@ export interface AccountRepository {
 export interface CharacterRepository {
   create(input: CreateCharacterInput): Promise<CharacterRecord>;
   getById(id: string): Promise<CharacterRecord | undefined>;
+  getByNormalizedName(name: string): Promise<CharacterRecord | undefined>;
   listByAccountId(accountId: string): Promise<CharacterRecord[]>;
+  updateCreation(id: string, input: UpdateCharacterCreationInput): Promise<CharacterRecord>;
   updateRoom(id: string, roomId: string): Promise<void>;
   updateProgress(id: string, input: { experience: number; level: number }): Promise<void>;
 }
@@ -153,6 +167,28 @@ export class DuplicateUsernameError extends Error {
     super(`Username "${username}" is already taken.`);
     this.name = "DuplicateUsernameError";
   }
+}
+
+export class DuplicateCharacterNameError extends Error {
+  readonly code = "duplicate_character_name";
+
+  constructor(name: string) {
+    super(`The name "${name}" is already taken.`);
+    this.name = "DuplicateCharacterNameError";
+  }
+}
+
+export class CharacterNotFoundError extends Error {
+  readonly code = "character_not_found";
+
+  constructor(characterId: string) {
+    super(`Character "${characterId}" was not found.`);
+    this.name = "CharacterNotFoundError";
+  }
+}
+
+export function normalizeCharacterName(name: string): string {
+  return name.trim().replace(/\s+/g, " ").toLowerCase();
 }
 
 export class AccountNotFoundError extends Error {

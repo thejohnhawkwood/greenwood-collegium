@@ -57,9 +57,10 @@ corepack pnpm --filter @greenwood/server start
 
 3. Open http://127.0.0.1:3000 on **this** computer. Other phones and laptops on the house Wi-Fi cannot use 127.0.0.1; that address means “this machine only.”
 4. If you see a sign-in page, click **Continue as guest**. Guest play is allowed only on a local development server, not on the live classroom site.
-5. You should land in **Lantern Court**. Porter Bramble, a hedgehog in a too-large coat, will greet you and name the first words.
-6. Play the Arrival script in [The first quest](#the-first-quest).
-7. Up to four guests can play on one local server at once. A fifth connection is refused.
+5. If you created an account, finish the Collegian form first. Guests skip that step.
+6. You should land in **Lantern Court**. Porter Bramble, a hedgehog in a too-large coat, will greet you and name the first words. `examine porter` looks at him more closely.
+7. Play the Arrival script in [The first quest](#the-first-quest).
+8. Up to four guests can play on one local server at once. A fifth connection is refused.
 
 Guest play is perfect for “does this even work?” It is not how you run a class.
 
@@ -109,7 +110,7 @@ The page heading should say **First-time teacher setup**.
 
 If the owner form is missing, an owner already exists on this server. Use **Teacher sign-in** (below the student form), or restart after wiping local memory (stop the process; memory accounts vanish).
 
-You are now the owner. That is the teacher/admin account. Later visits use **Teacher sign-in**, not the student form.
+You are now the owner. Finish the Collegian form (species, gender, name) before the courtyard opens. Later visits use **Teacher sign-in**, not the student form, then the same form if the Collegian is not finished yet.
 
 ### 4. Invite a child
 
@@ -135,7 +136,8 @@ The public hostname is in [`docs/context/CURRENT.md`](docs/context/CURRENT.md). 
 2. Open the public site. Production does **not** offer guest play.
 3. If no owner exists yet, the **First-time teacher setup** form is shown. Use the dashboard token once. The form then disappears forever for that database.
 4. Issue student invites in class. Give each student a token privately. They accept it on the sign-in page.
-5. If the bootstrap form is missing, the owner already exists. Use **Teacher sign-in**. The roster on that site lists unused tokens and accepted usernames.
+5. After sign-in, each person finishes a Collegian: read the introduction, choose species and gender, then suggest or type a given name. The classroom username is not the character name.
+6. If the bootstrap form is missing, the owner already exists. Use **Teacher sign-in**. The roster on that site lists unused tokens and accepted usernames.
 
 Students keep Arrival progress after refresh because the classroom database stores quest, experience, and level.
 

@@ -1,9 +1,12 @@
-import { and, eq, isNull } from "drizzle-orm";
+import { and, eq, isNull, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import { accounts, characters, invites, itemInstances, questProgress, sessions } from "./schema.js";
 import {
   AccountNotFoundError,
+  CharacterNotFoundError,
+  DuplicateCharacterNameError,
   DuplicateUsernameError,
+  normalizeCharacterName,
   normalizeUsername,
   type AccountRecord,
   type AccountRepository,
@@ -24,6 +27,7 @@ import {
   type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
+  type UpdateCharacterCreationInput,
 } from "./types.js";
 
 type Database = NodePgDatabase;
@@ -117,14 +121,23 @@ export class PostgresCharacterRepository implements CharacterRepository {
       accountId: input.accountId,
       name: input.name.trim(),
       speciesId: input.speciesId,
+      gender: input.gender,
       level: 1,
       experience: 0,
       roomId: input.roomId,
       status: input.status ?? "active",
+      creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
       updatedAt: now,
     };
-    await this.db.insert(characters).values(record);
+    try {
+      await this.db.insert(characters).values(record);
+    } catch (error) {
+      if (isUniqueViolation(error)) {
+        throw new DuplicateCharacterNameError(record.name);
+      }
+      throw error;
+    }
     return record;
   }
 
@@ -133,9 +146,43 @@ export class PostgresCharacterRepository implements CharacterRepository {
     return row ? toCharacter(row) : undefined;
   }
 
+  async getByNormalizedName(name: string): Promise<CharacterRecord | undefined> {
+    const [row] = await this.db
+      .select()
+      .from(characters)
+      .where(sql`lower(${characters.name}) = ${normalizeCharacterName(name)}`)
+      .limit(1);
+    return row ? toCharacter(row) : undefined;
+  }
+
   async listByAccountId(accountId: string): Promise<CharacterRecord[]> {
     const rows = await this.db.select().from(characters).where(eq(characters.accountId, accountId));
     return rows.map(toCharacter);
+  }
+
+  async updateCreation(id: string, input: UpdateCharacterCreationInput): Promise<CharacterRecord> {
+    try {
+      const [row] = await this.db
+        .update(characters)
+        .set({
+          name: input.name.trim(),
+          speciesId: input.speciesId,
+          gender: input.gender,
+          creationCompletedAt: input.creationCompletedAt,
+          updatedAt: new Date(),
+        })
+        .where(eq(characters.id, id))
+        .returning();
+      if (!row) {
+        throw new CharacterNotFoundError(id);
+      }
+      return toCharacter(row);
+    } catch (error) {
+      if (isUniqueViolation(error)) {
+        throw new DuplicateCharacterNameError(input.name);
+      }
+      throw error;
+    }
   }
 
   async updateRoom(id: string, roomId: string): Promise<void> {
@@ -364,10 +411,12 @@ function toCharacter(row: typeof characters.$inferSelect): CharacterRecord {
     accountId: row.accountId,
     name: row.name,
     speciesId: row.speciesId,
+    gender: row.gender ? (row.gender as CharacterRecord["gender"]) : undefined,
     level: row.level,
     experience: row.experience,
     roomId: row.roomId,
     status: row.status as CharacterRecord["status"],
+    creationCompletedAt: row.creationCompletedAt ? asDate(row.creationCompletedAt) : undefined,
     createdAt: asDate(row.createdAt),
     updatedAt: asDate(row.updatedAt),
   };

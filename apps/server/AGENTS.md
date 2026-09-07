@@ -3,7 +3,7 @@
 Fastify process for HTTP and Socket.IO.
 
 - Socket handlers coordinate. They call the engine. They do not invent room text.
-- Ignore client-supplied account, role, or character fields. Production sockets require a session cookie or a short-lived server-issued socket ticket. Development and tests may still assign an unused in-memory guest.
+- Ignore client-supplied account, role, or character fields. Production sockets require a completed Collegian plus a session cookie or a short-lived server-issued socket ticket. Development and tests may still assign an unused in-memory guest.
 - Validate command payloads with Zod before calling engine handlers.
 - Persist critical mutations before acknowledging success (Ticket 008+).
 - Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory.
