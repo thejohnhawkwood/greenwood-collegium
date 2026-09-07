@@ -119,6 +119,7 @@ if (persistItem) {
 await attachRealtime(app, world, {
   allowGuestPlay,
   resolveSession: (token) => auth.resolvePlayIdentity(token),
+  resolveSocketTicket: (ticket) => auth.resolveSocketTicket(ticket),
   persistRoom: (characterId, roomId) => stores.characters.updateRoom(characterId, roomId),
   persistProgress: (characterId, input) => stores.characters.updateProgress(characterId, input),
   persistItem,

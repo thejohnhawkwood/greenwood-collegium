@@ -3,7 +3,7 @@
 Fastify process for HTTP and Socket.IO.
 
 - Socket handlers coordinate. They call the engine. They do not invent room text.
-- Ignore client-supplied account, role, or character fields. Production sockets require a session cookie. Development and tests may still assign an unused in-memory guest.
+- Ignore client-supplied account, role, or character fields. Production sockets require a session cookie or a short-lived server-issued socket ticket. Development and tests may still assign an unused in-memory guest.
 - Validate command payloads with Zod before calling engine handlers.
 - Persist critical mutations before acknowledging success (Ticket 008+).
 - Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory.
@@ -13,6 +13,6 @@ Fastify process for HTTP and Socket.IO.
 - Repeat command IDs must return the first result. Authenticated disconnects get a resume grace and `session.snapshot`.
 - Account and character records use repository interfaces. In-memory tests always run. Postgres tests run only with `GREENWOOD_TEST_DATABASE_URL`.
 - Owner and teacher may read unused invite tokens and accepted usernames on `GET /auth/classroom`. Students may not. Passwords never appear in that payload.
-- Never log `DATABASE_URL`, passwords, session tokens, invite tokens, or read a production dump.
+- Never log `DATABASE_URL`, passwords, session tokens, invite tokens, socket tickets, or read a production dump.
 - `pnpm start` loads the repo-root `.env` when that file exists. Do not print secret values.
 - Development may accept private LAN origins so household devices can play. Production may not.

@@ -28,6 +28,7 @@ describe("authenticated socket identity", () => {
     await attachRealtime(app, createDevWorld(), {
       allowGuestPlay: false,
       resolveSession: (token) => auth.resolvePlayIdentity(token),
+      resolveSocketTicket: (ticket) => auth.resolveSocketTicket(ticket),
     });
     await app.listen({ port: 0, host: "127.0.0.1" });
     const address = app.server.address();
@@ -84,5 +85,64 @@ describe("authenticated socket identity", () => {
     const event = roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(await eventPromise));
     expect(event.payload.title).toBe("Lantern Court");
     expect(event.narration).not.toContain("Rowan the Hare");
+  });
+
+  it("accepts a socket ticket when the session cookie is missing", async () => {
+    const { auth } = createTestAuth();
+    app = await buildApp();
+    await registerAuthRoutes(app, { auth, allowGuestPlay: false, secureCookies: false });
+    await attachRealtime(app, createDevWorld(), {
+      allowGuestPlay: false,
+      resolveSession: (token) => auth.resolvePlayIdentity(token),
+      resolveSocketTicket: (ticket) => auth.resolveSocketTicket(ticket),
+    });
+    await app.listen({ port: 0, host: "127.0.0.1" });
+    const address = app.server.address();
+    if (!address || typeof address === "string") {
+      throw new Error("expected a TCP address");
+    }
+
+    const boot = await app.inject({
+      method: "POST",
+      url: "/auth/bootstrap",
+      payload: { token: TEST_BOOTSTRAP_TOKEN, username: "Rowan", password: "lantern-path" },
+    });
+    const cookie = boot.cookies.find((entry) => entry.name === SESSION_COOKIE);
+    if (!cookie) {
+      throw new Error("missing session cookie");
+    }
+    const ticketResponse = await app.inject({
+      method: "GET",
+      url: "/auth/socket-ticket",
+      cookies: { [SESSION_COOKIE]: cookie.value },
+    });
+    expect(ticketResponse.statusCode).toBe(200);
+    const ticket = String(ticketResponse.json().ticket);
+
+    client = ioClient(`http://127.0.0.1:${String(address.port)}`, {
+      transports: ["polling"],
+      upgrade: false,
+      auth: { ticket },
+    });
+    await new Promise<void>((resolve, reject) => {
+      client?.once("connect", () => {
+        resolve();
+      });
+      client?.once("connect_error", reject);
+    });
+
+    const eventPromise = new Promise((resolve) => {
+      client?.once("event", resolve);
+    });
+    const ack = await new Promise((resolve) => {
+      client?.emit(
+        "command",
+        { schemaVersion: 0, commandId: "cmd-look-ticket", raw: "look", lastSequence: 0 },
+        resolve,
+      );
+    });
+    expect(ack).toMatchObject({ status: "accepted" });
+    const event = roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(await eventPromise));
+    expect(event.payload.title).toBe("Lantern Court");
   });
 });

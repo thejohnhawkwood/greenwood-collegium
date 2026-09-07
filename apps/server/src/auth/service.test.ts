@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { argon2Hasher } from "./hasher.js";
-import { createAuthService } from "./service.js";
+import { createAuthService, SOCKET_TICKET_TTL_MS } from "./service.js";
 import { createTestAuth, TEST_BOOTSTRAP_TOKEN } from "./test-harness.js";
 
 describe("classroom auth service", () => {
@@ -196,6 +196,29 @@ describe("classroom auth service", () => {
       password: "lantern-path",
     });
     expect(created.ok).toBe(true);
+  });
+
+  it("issues a hashed socket ticket that expires", async () => {
+    let nowMs = Date.parse("2026-09-07T12:00:00.000Z");
+    const { auth } = createTestAuth(() => new Date(nowMs));
+    const owner = await auth.bootstrap({
+      token: TEST_BOOTSTRAP_TOKEN,
+      username: "owner",
+      password: "lantern-path",
+    });
+    expect(owner.ok).toBe(true);
+    if (!owner.ok) {
+      return;
+    }
+    const ticket = await auth.issueSocketTicket(owner.account.id);
+    expect(ticket).toEqual(expect.any(String));
+    expect(await auth.resolveSocketTicket(ticket ?? "")).toMatchObject({
+      accountId: owner.account.id,
+      characterName: "Owner",
+    });
+    expect(await auth.resolveSocketTicket("not-a-ticket")).toBeUndefined();
+    nowMs += SOCKET_TICKET_TTL_MS + 1;
+    expect(await auth.resolveSocketTicket(ticket ?? "")).toBeUndefined();
   });
 
   it("rejects a wrong bootstrap token without creating an owner", async () => {

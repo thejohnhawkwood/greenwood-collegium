@@ -156,6 +156,7 @@ export {
   authErrorSchema,
   authInviteCreatedSchema,
   authSessionPublicSchema,
+  authSocketTicketSchema,
   authSignInAudienceSchema,
   authSignInRequestSchema,
   authStatusSchema,
@@ -170,6 +171,7 @@ export {
   type AuthDisableAccountRequest,
   type AuthInviteCreated,
   type AuthSessionPublic,
+  type AuthSocketTicket,
   type AuthSignInRequest,
   type AuthStatus,
 } from "./auth/schemas.js";

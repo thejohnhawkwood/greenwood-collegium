@@ -13,6 +13,7 @@ import type { PasswordHasher } from "./hasher.js";
 import { hashToken, randomToken, tokensEqual } from "./tokens.js";
 
 export const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+export const SOCKET_TICKET_TTL_MS = 2 * 60 * 1000;
 export const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 export const DEFAULT_START_ROOM_ID = "lantern-court";
 export const DEFAULT_SPECIES_ID = "hare";
@@ -104,6 +105,8 @@ export type AuthService = {
     sessionToken: string,
   ): Promise<{ account: AccountRecord; character: CharacterRecord } | undefined>;
   resolvePlayIdentity(sessionToken: string): Promise<PlayIdentity | undefined>;
+  issueSocketTicket(accountId: string): Promise<string | undefined>;
+  resolveSocketTicket(ticket: string): Promise<PlayIdentity | undefined>;
 };
 
 export type AuthServiceDeps = {
@@ -120,6 +123,7 @@ export type AuthServiceDeps = {
 export function createAuthService(deps: AuthServiceDeps): AuthService {
   const now = deps.now ?? (() => new Date());
   const startRoomId = deps.startRoomId ?? DEFAULT_START_ROOM_ID;
+  const socketTickets = new Map<string, { accountId: string; expiresAt: number }>();
 
   async function bootstrapOpen(): Promise<boolean> {
     const owners = await deps.accounts.listByRole("owner");
@@ -337,14 +341,45 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!resolved) {
       return undefined;
     }
-    return {
-      accountId: resolved.account.id,
-      characterId: resolved.character.id,
-      characterName: resolved.character.name,
-      roomId: resolved.character.roomId,
-      experience: resolved.character.experience,
-      level: resolved.character.level,
-    };
+    return playIdentity(resolved.account, resolved.character);
+  }
+
+  async function playIdentityForAccount(accountId: string): Promise<PlayIdentity | undefined> {
+    const account = await deps.accounts.getById(accountId);
+    if (!account || account.status !== "active") {
+      return undefined;
+    }
+    const character = await requireCharacter(account.id);
+    if (!character) {
+      return undefined;
+    }
+    return playIdentity(account, character);
+  }
+
+  async function issueSocketTicket(accountId: string): Promise<string | undefined> {
+    if (!(await playIdentityForAccount(accountId))) {
+      return undefined;
+    }
+    const ticket = randomToken();
+    socketTickets.set(hashToken(ticket), {
+      accountId,
+      expiresAt: now().getTime() + SOCKET_TICKET_TTL_MS,
+    });
+    return ticket;
+  }
+
+  async function resolveSocketTicket(ticket: string): Promise<PlayIdentity | undefined> {
+    const trimmed = ticket.trim();
+    if (!trimmed) {
+      return undefined;
+    }
+    const hash = hashToken(trimmed);
+    const row = socketTickets.get(hash);
+    if (!row || row.expiresAt <= now().getTime()) {
+      socketTickets.delete(hash);
+      return undefined;
+    }
+    return playIdentityForAccount(row.accountId);
   }
 
   async function createAccountWithCharacter(input: {
@@ -412,6 +447,19 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     disableAccount,
     resolveSession,
     resolvePlayIdentity,
+    issueSocketTicket,
+    resolveSocketTicket,
+  };
+}
+
+function playIdentity(account: AccountRecord, character: CharacterRecord): PlayIdentity {
+  return {
+    accountId: account.id,
+    characterId: character.id,
+    characterName: character.name,
+    roomId: character.roomId,
+    experience: character.experience,
+    level: character.level,
   };
 }
 

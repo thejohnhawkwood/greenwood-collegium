@@ -14,7 +14,13 @@ import { AcademyFrame } from "./academy-frame.js";
 import { AuthGate } from "./AuthGate.js";
 import { loadClassroom } from "./classroom-data.js";
 import { ClassroomRoster } from "./classroom-roster.js";
-import { DISCONNECTED_COMMAND_NOTICE, SOCKET_TRANSPORTS, canSendCommand } from "./command-input.js";
+import {
+  DISCONNECTED_COMMAND_NOTICE,
+  SOCKET_TRANSPORTS,
+  SOCKET_UPGRADE,
+  canSendCommand,
+} from "./command-input.js";
+import { loadSocketTicket } from "./socket-ticket.js";
 import { loadAuthStatus, shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { createCommandRequest } from "./command-request.js";
@@ -114,9 +120,14 @@ function ClassicClient({
     const socket = io({
       path: "/socket.io",
       transports: [...SOCKET_TRANSPORTS],
-      upgrade: true,
+      upgrade: SOCKET_UPGRADE,
       withCredentials: true,
-      auth: () => ({ lastSequence: lastSequenceRef.current }),
+      auth: (callback) => {
+        void (async () => {
+          const ticket = me ? await loadSocketTicket() : undefined;
+          callback({ lastSequence: lastSequenceRef.current, ticket });
+        })();
+      },
     });
     socketRef.current = socket;
     socket.on("connect", () => {
