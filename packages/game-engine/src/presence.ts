@@ -54,6 +54,8 @@ export function handleJoin(
     id: intent.characterId,
     name: intent.name,
     accountUsername: intent.accountUsername,
+    lookDescription: intent.lookDescription,
+    examineDescription: intent.examineDescription,
     roomId: room.id,
     discoveredRoomIds: [room.id],
     experience: intent.experience ?? 0,

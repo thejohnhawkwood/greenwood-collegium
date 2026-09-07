@@ -19,13 +19,21 @@ const lanternCourtWorld = (): WorldState => ({
         { direction: "east", toRoomId: "east-gate" },
         { direction: "west", toRoomId: "west-cloister" },
       ],
-      fixtures: [{ id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" }],
+      fixtures: [
+        {
+          id: "npc-porter-bramble",
+          name: "Porter Bramble",
+          kind: "npc",
+          lookDescription: "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
+        },
+      ],
     },
   },
   characters: {
     "char-rowan": {
       id: "char-rowan",
       name: "Rowan the Hare",
+      lookDescription: "A hare doe in a travel cloak, long ears ink-tipped.",
       roomId: "lantern-court",
       discoveredRoomIds: ["lantern-court"],
     },
@@ -60,8 +68,8 @@ describe("handleLook", () => {
     const event = roomSnapshotEventSchema.parse(result.event);
     const text = renderClassicNarration(event);
     expect(text).toContain("Lantern Court");
-    expect(text).toContain("Porter Bramble");
-    expect(text).toContain("Rowan the Hare");
+    expect(text).toContain("Porter Bramble — A hedgehog porter in a too-large coat");
+    expect(text).toContain("Rowan the Hare — A hare doe in a travel cloak");
     expect(text).toContain("Exits: north, east, west");
     expect(text).not.toContain("Moss the Mole");
   });

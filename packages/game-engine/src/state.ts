@@ -8,6 +8,7 @@ export type RoomFixture = {
   name: string;
   kind: "npc" | "object";
   examineDescription?: string;
+  lookDescription?: string;
 };
 
 export type Room = {
@@ -24,6 +25,8 @@ export type Character = {
   id: string;
   name: string;
   accountUsername?: string;
+  lookDescription?: string;
+  examineDescription?: string;
   roomId: string;
   discoveredRoomIds: string[];
   health?: number;
@@ -89,6 +92,7 @@ export type EnemySpawn = {
   templateId: string;
   name: string;
   examineDescription: string;
+  lookDescription?: string;
   roomId: string;
   maxHealth: number;
   attack: number;
@@ -158,6 +162,8 @@ export type JoinIntent = {
   name: string;
   roomId: string;
   accountUsername?: string;
+  lookDescription?: string;
+  examineDescription?: string;
   experience?: number;
   level?: number;
 };
@@ -249,8 +255,26 @@ export type AuditIntent = {
   characterId: string;
 };
 
+export type RosterIntent = {
+  verb: "roster";
+  characterId: string;
+};
+
+export type RemoveIntent = {
+  verb: "remove";
+  characterId: string;
+  target: string;
+};
+
 export type StaffCommand =
-  StaffHelpIntent | AnnounceIntent | InspectIntent | MuteIntent | KickIntent | AuditIntent;
+  | StaffHelpIntent
+  | AnnounceIntent
+  | InspectIntent
+  | MuteIntent
+  | KickIntent
+  | AuditIntent
+  | RosterIntent
+  | RemoveIntent;
 
 export type PlayerCommand =
   | LookIntent

@@ -160,7 +160,7 @@ export interface QuestProgressRepository {
   upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void>;
 }
 
-export type AuditAction = "announce" | "inspect" | "mute" | "kick";
+export type AuditAction = "announce" | "inspect" | "mute" | "kick" | "remove";
 
 export type AuditRecord = {
   id: string;

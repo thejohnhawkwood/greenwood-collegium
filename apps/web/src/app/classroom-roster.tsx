@@ -1,9 +1,14 @@
 import type { AuthClassroom } from "@greenwood/contracts";
-import { unusedInvites, usedInvites } from "./classroom-data.js";
+import { unusedInvites } from "./classroom-data.js";
 
-export function ClassroomRoster({ classroom }: { classroom: AuthClassroom }) {
+export function ClassroomRoster({
+  classroom,
+  onRemove,
+}: {
+  classroom: AuthClassroom;
+  onRemove?: (username: string) => void;
+}) {
   const unused = unusedInvites(classroom);
-  const used = usedInvites(classroom);
 
   return (
     <section className="classroom-roster" aria-labelledby="classroom-roster-heading">
@@ -18,7 +23,7 @@ export function ClassroomRoster({ classroom }: { classroom: AuthClassroom }) {
       )}
       <h3>Unused invites</h3>
       {unused.length === 0 ? (
-        <p>No unused tokens. Issue a student invite above.</p>
+        <p>No unused tokens. Choose how many students, then issue invites above.</p>
       ) : (
         <ul>
           {unused.map((invite) => (
@@ -38,26 +43,48 @@ export function ClassroomRoster({ classroom }: { classroom: AuthClassroom }) {
           ))}
         </ul>
       )}
-      <h3>Accepted accounts</h3>
-      {used.length === 0 && classroom.accounts.length === 0 ? (
+      <h3>Students and teachers</h3>
+      {classroom.accounts.length === 0 ? (
         <p>No student has created a username yet.</p>
       ) : (
-        <ul>
-          {used.map((invite) => (
-            <li key={invite.id}>
-              {invite.username ?? "unknown"} created a {invite.role} username and password.
-            </li>
-          ))}
-          {classroom.accounts
-            .filter((account) => !used.some((invite) => invite.username === account.username))
-            .map((account) => (
-              <li key={account.username}>
-                {account.username} ({account.role}) has an account.
-              </li>
+        <table className="roster-table">
+          <caption className="visually-hidden">Classroom logins and Collegian names</caption>
+          <thead>
+            <tr>
+              <th scope="col">Login</th>
+              <th scope="col">Collegian</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {classroom.accounts.map((account) => (
+              <tr key={account.accountId}>
+                <td>{account.username}</td>
+                <td>{account.characterName ?? "Not finished yet"}</td>
+                <td>{account.role}</td>
+                <td>{account.status}</td>
+                <td>
+                  {onRemove && account.status === "active" ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onRemove(account.username);
+                      }}
+                    >
+                      Remove
+                    </button>
+                  ) : null}
+                </td>
+              </tr>
             ))}
-        </ul>
+          </tbody>
+        </table>
       )}
-      <p>Passwords are never shown.</p>
+      <p>
+        Passwords are never shown. Unused tokens stay here so you can copy them onto a class list.
+      </p>
     </section>
   );
 }

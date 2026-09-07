@@ -1,0 +1,112 @@
+{
+  "mouse": {
+    "female": {
+      "look": "A small mouse maid in a neat travel cloak, whiskers white at the tips.",
+      "examine": "She is a mouse, quick-eyed and tidy, with a faded green cloak pinned by a wooden clasp. Her paws are ink-stained, as if she has already been writing."
+    },
+    "male": {
+      "look": "A small mouse gent in a patched jacket, whiskers white at the tips.",
+      "examine": "He is a mouse in a patched jacket, ears alert, a scrap of map peeking from one pocket. His whiskers twitch whenever someone new enters the room."
+    }
+  },
+  "hare": {
+    "female": {
+      "look": "A hare doe in a travel cloak, long ears ink-tipped.",
+      "examine": "She is a hare, tall for a first-year, with ink-tipped ears and a travel cloak still dusty from the road. A braided cord holds a wooden token at her throat."
+    },
+    "male": {
+      "look": "A hare buck in a travel cloak, long ears ink-tipped.",
+      "examine": "He is a hare, long-legged and restless, ears ink-tipped and a travel cloak still creased from packing. A braided cord holds a wooden token at his throat."
+    }
+  },
+  "badger": {
+    "female": {
+      "look": "A broad badger sow in academy grey, stripe bright as chalk.",
+      "examine": "She is a badger, solid as a doorpost, her stripe bright as chalk. Academy grey sits well on her shoulders, and her claws are clean but not idle."
+    },
+    "male": {
+      "look": "A broad badger boar in academy grey, stripe bright as chalk.",
+      "examine": "He is a badger, heavy-shouldered, stripe bright as chalk. Academy grey sits well on him, and he looks as if he would rather be useful than praised."
+    }
+  },
+  "otter": {
+    "female": {
+      "look": "A sleek otter vixen with wet-dark fur and a moss-green scarf.",
+      "examine": "She is an otter, fur still dark as river water, a moss-green scarf knotted once. Her whiskers are bright, and she smells faintly of reed and lamp oil."
+    },
+    "male": {
+      "look": "A sleek otter dog with wet-dark fur and a moss-green scarf.",
+      "examine": "He is an otter, fur still dark as river water, a moss-green scarf knotted once. His paws look ready to climb or swim at the first excuse."
+    }
+  },
+  "squirrel": {
+    "female": {
+      "look": "A red squirrel maid with a bushy tail and a satchel of nuts.",
+      "examine": "She is a squirrel, tail full as a banner, satchel bumping her hip. There are nut shells in one pocket and a stub of chalk in the other."
+    },
+    "male": {
+      "look": "A red squirrel gent with a bushy tail and a satchel of nuts.",
+      "examine": "He is a squirrel, tail full as a banner, satchel bumping his hip. He keeps glancing at the rafters as if the floor were only a suggestion."
+    }
+  },
+  "mole": {
+    "female": {
+      "look": "A mole maid in earth-brown velveteen, paws large and gentle.",
+      "examine": "She is a mole in earth-brown velveteen, eyes kind and a little short-sighted. Her paws are large, and she speaks as if every word should be placed carefully."
+    },
+    "male": {
+      "look": "A mole gent in earth-brown velveteen, paws large and gentle.",
+      "examine": "He is a mole in earth-brown velveteen, eyes kind and a little short-sighted. His paws are large, and he smells of damp soil and warm bread."
+    }
+  },
+  "hedgehog": {
+    "female": {
+      "look": "A hedgehog maid with combed quills and a too-serious waistcoat.",
+      "examine": "She is a hedgehog, quills combed as well as quills allow, waistcoat buttoned one too high. A brass pin of a lantern sits on her lapel."
+    },
+    "male": {
+      "look": "A hedgehog gent with combed quills and a too-serious waistcoat.",
+      "examine": "He is a hedgehog, quills combed as well as quills allow, waistcoat buttoned one too high. A brass pin of a lantern sits on his lapel."
+    }
+  },
+  "fox": {
+    "female": {
+      "look": "A fox vixen in russet, brush neat, eyes sharp as needles.",
+      "examine": "She is a fox, russet coat brushed, white bib clean. Her eyes miss little, and a thin silver chain holds a leaf-shaped charm."
+    },
+    "male": {
+      "look": "A fox dog in russet, brush neat, eyes sharp as needles.",
+      "examine": "He is a fox, russet coat brushed, white bib clean. His eyes miss little, and a thin silver chain holds a leaf-shaped charm."
+    }
+  },
+  "stoat": {
+    "female": {
+      "look": "A slim stoat maid in a dark jerkin, tail tipped in black.",
+      "examine": "She is a stoat, slim and quick, jerkin dark, tail black-tipped. She stands as if she might dart, then remembers she is meant to be still."
+    },
+    "male": {
+      "look": "A slim stoat gent in a dark jerkin, tail tipped in black.",
+      "examine": "He is a stoat, slim and quick, jerkin dark, tail black-tipped. He stands as if he might dart, then remembers he is meant to be still."
+    }
+  },
+  "owl": {
+    "female": {
+      "look": "A barn owl maid with a heart-shaped face and a scholar's ribbon.",
+      "examine": "She is an owl, heart-shaped face pale as parchment, a scholar's ribbon on one talon. She blinks slowly, as if the room were a page she is still reading."
+    },
+    "male": {
+      "look": "A barn owl gent with a heart-shaped face and a scholar's ribbon.",
+      "examine": "He is an owl, heart-shaped face pale as parchment, a scholar's ribbon on one talon. He blinks slowly, as if the room were a page he is still reading."
+    }
+  },
+  "toad": {
+    "female": {
+      "look": "A stout toad maid in a damp waistcoat, gold spectacles low.",
+      "examine": "She is a toad, stout and gleaming, waistcoat a little damp, gold spectacles low on her snout. She smells of pondweed and peppermint."
+    },
+    "male": {
+      "look": "A stout toad gent in a damp waistcoat, gold spectacles low.",
+      "examine": "He is a toad, stout and gleaming, waistcoat a little damp, gold spectacles low on his snout. He smells of pondweed and peppermint."
+    }
+  }
+}

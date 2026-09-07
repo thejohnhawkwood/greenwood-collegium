@@ -31,12 +31,16 @@ export const roomFixtureSchema = z
     name: z.string().min(1),
     kind: z.enum(["npc", "object"]),
     examineDescription: z.string().min(1).optional(),
+    lookDescription: z.string().min(1).optional(),
   })
   .strict()
   .superRefine((fixture, ctx) => {
     rejectMarkup(fixture.name, "fixture name", ctx);
     if (fixture.examineDescription) {
       rejectMarkup(fixture.examineDescription, "examineDescription", ctx);
+    }
+    if (fixture.lookDescription) {
+      rejectMarkup(fixture.lookDescription, "lookDescription", ctx);
     }
   });
 

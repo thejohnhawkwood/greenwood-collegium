@@ -38,6 +38,9 @@ function courtWithKey(): WorldState {
         id: "char-moss",
         name: "Moss the Mole",
         accountUsername: "noelle",
+        lookDescription: "A mole gent in earth-brown velveteen, paws large and gentle.",
+        examineDescription:
+          "He is a mole in earth-brown velveteen, eyes kind and a little short-sighted.",
         roomId: "lantern-court",
         discoveredRoomIds: ["lantern-court"],
       },
@@ -152,7 +155,7 @@ describe("inventory slice", () => {
     );
     expect(byName.ok).toBe(true);
     if (byName.ok) {
-      expect(byName.event.narration).toContain("Moss the Mole is a Collegian standing nearby.");
+      expect(byName.event.narration).toContain("earth-brown velveteen");
     }
     const byLogin = handleExamine(
       courtWithKey(),

@@ -19,6 +19,7 @@ export type LoadedRoom = {
     name: string;
     kind: "npc" | "object";
     examineDescription?: string;
+    lookDescription?: string;
   }>;
 };
 
@@ -35,6 +36,7 @@ export type LoadedEnemy = {
   templateId: string;
   name: string;
   examineDescription: string;
+  lookDescription?: string;
   roomId: string;
   maxHealth: number;
   attack: number;
@@ -111,6 +113,7 @@ export function toWorldState(
         name: fixture.name,
         kind: fixture.kind,
         examineDescription: fixture.examineDescription,
+        lookDescription: fixture.lookDescription,
       })),
     };
   }
@@ -143,6 +146,7 @@ export function toWorldState(
       templateId: template.id,
       name: template.name,
       examineDescription: template.examineDescription,
+      lookDescription: template.lookDescription,
       roomId: placement.roomId,
       maxHealth: template.maxHealth,
       attack: template.attack,

@@ -306,9 +306,42 @@ body {
   margin: 0;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.invite-batch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: end;
+  margin: 0.35rem 0 0;
+}
+
+.invite-batch label {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.invite-batch select {
+  background: var(--panel);
+  color: inherit;
+  font: inherit;
+  border: 1px solid var(--gold);
+  padding: 0.35rem 0.5rem;
+}
+
 .classroom-roster {
   margin-top: 0.75rem;
-  max-height: 12rem;
+  max-height: 28rem;
   overflow: auto;
   padding-right: 0.35rem;
 }
@@ -340,6 +373,23 @@ body {
 
 .classroom-roster input {
   width: 100%;
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.roster-table th,
+.roster-table td {
+  text-align: left;
+  padding: 0.25rem 0.45rem 0.25rem 0;
+  vertical-align: top;
+}
+
+.roster-table button {
+  font: inherit;
 }
 
 @keyframes academy-grow {

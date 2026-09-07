@@ -22,7 +22,16 @@ const classroom: AuthClassroom = {
       username: "pip",
     },
   ],
-  accounts: [{ username: "pip", role: "student", createdAt: "2026-09-06T00:00:00.000Z" }],
+  accounts: [
+    {
+      accountId: "acct-pip",
+      username: "pip",
+      role: "student",
+      status: "active",
+      createdAt: "2026-09-06T00:00:00.000Z",
+      characterName: "Pip the Sparrow",
+    },
+  ],
 };
 
 describe("classroom roster helpers", () => {

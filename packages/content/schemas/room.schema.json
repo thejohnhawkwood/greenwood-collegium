@@ -104,6 +104,10 @@
         "examineDescription": {
           "type": "string",
           "minLength": 1
+        },
+        "lookDescription": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

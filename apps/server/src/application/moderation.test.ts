@@ -57,6 +57,8 @@ function teacher(): PlayIdentity {
     characterName: "Bramble the Hedgehog",
     username: "arbird",
     role: "owner",
+    speciesId: "hedgehog",
+    gender: "male",
     roomId: "lantern-court",
     experience: 10,
     level: 2,
@@ -70,6 +72,8 @@ function student(): PlayIdentity {
     characterName: "Lumen the Otter",
     username: "noelle",
     role: "student",
+    speciesId: "otter",
+    gender: "female",
     roomId: "lantern-court",
     experience: 0,
     level: 1,
@@ -184,6 +188,44 @@ describe("classroom moderation", () => {
       expect(log.events[0]?.narration).toContain("announce");
       expect(log.events[0]?.narration).toContain("inspect");
       expect(log.events[0]?.narration).toContain("mute");
+    }
+
+    const roster = await handleStaffCommand(
+      { verb: "roster", characterId: "char-teacher" },
+      {
+        world: state,
+        actorId: "char-teacher",
+        identity: teacher(),
+        runtime: clock,
+        onlineCharacterIds: ["char-teacher", "char-student"],
+        mutedUntil,
+        identities,
+        audit,
+        now,
+        listClassroom: async () => ({
+          invites: [
+            {
+              status: "unused",
+              role: "student",
+              token: "keep-this",
+            },
+          ],
+          accounts: [
+            {
+              username: "noelle",
+              characterName: "Lumen the Otter",
+              role: "student",
+              status: "active",
+            },
+          ],
+        }),
+      },
+    );
+    expect(roster.ok).toBe(true);
+    if (roster.ok) {
+      expect(roster.events[0]?.narration).toContain("keep-this");
+      expect(roster.events[0]?.narration).toContain("noelle");
+      expect(roster.events[0]?.narration).toContain("Lumen the Otter");
     }
   });
 });

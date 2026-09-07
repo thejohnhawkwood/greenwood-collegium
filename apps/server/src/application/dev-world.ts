@@ -26,6 +26,7 @@ export function createDevWorld(): WorldState {
           templateId: enemy.templateId,
           name: enemy.name,
           examineDescription: enemy.examineDescription,
+          lookDescription: enemy.lookDescription,
           roomId: enemy.roomId,
           maxHealth: enemy.maxHealth,
           attack: enemy.attack,

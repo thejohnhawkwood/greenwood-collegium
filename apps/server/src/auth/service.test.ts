@@ -144,11 +144,51 @@ describe("classroom auth service", () => {
       username: "pip",
     });
     expect(after.invites[0]?.token).toBeUndefined();
-    expect(after.accounts).toEqual([expect.objectContaining({ username: "pip", role: "student" })]);
+    expect(after.accounts).toEqual([
+      expect.objectContaining({ username: "pip", role: "student", status: "active" }),
+    ]);
+    await completeTestCharacter(auth, student.account.id, {
+      name: "Pip",
+      speciesId: "squirrel",
+      gender: "female",
+    });
+    const named = await auth.listClassroom(owner.account.id);
+    expect(named.ok).toBe(true);
+    if (named.ok) {
+      expect(named.accounts[0]).toMatchObject({
+        username: "pip",
+        characterName: "Pip the Squirrel",
+      });
+    }
     expect(await auth.listClassroom(student.account.id)).toMatchObject({
       ok: false,
       code: "forbidden",
     });
+  });
+
+  it("issues several unused student tokens at once", async () => {
+    const { auth } = createTestAuth();
+    const owner = await auth.bootstrap({
+      token: TEST_BOOTSTRAP_TOKEN,
+      username: "owner",
+      password: "lantern-path",
+    });
+    expect(owner.ok).toBe(true);
+    if (!owner.ok) {
+      return;
+    }
+    const batch = await auth.createInvite(owner.account.id, "student", 3);
+    expect(batch.ok).toBe(true);
+    if (!batch.ok) {
+      return;
+    }
+    expect(batch.tokens).toHaveLength(3);
+    expect(new Set(batch.tokens).size).toBe(3);
+    const roster = await auth.listClassroom(owner.account.id);
+    expect(roster.ok).toBe(true);
+    if (roster.ok) {
+      expect(roster.invites.filter((invite) => invite.status === "unused")).toHaveLength(3);
+    }
   });
 
   it("sends owner and teacher to the staff sign-in", async () => {
@@ -227,7 +267,7 @@ describe("classroom auth service", () => {
     const created = await auth.completeCharacter(owner.account.id, {
       name: "lumen",
       speciesId: "otter",
-      gender: "nonbinary",
+      gender: "female",
     });
     expect(created).toMatchObject({ ok: true });
     if (!created.ok) {
