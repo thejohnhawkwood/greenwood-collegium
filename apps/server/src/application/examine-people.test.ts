@@ -1,4 +1,10 @@
-import { handleExamine, handleJoin, handleMove, type EngineRuntime } from "@greenwood/game-engine";
+import {
+  handleExamine,
+  handleJoin,
+  handleLook,
+  handleMove,
+  type EngineRuntime,
+} from "@greenwood/game-engine";
 import { describe, expect, it } from "vitest";
 import { createDevWorld } from "./dev-world.js";
 
@@ -27,6 +33,12 @@ describe("bundled examine targets", () => {
       clock,
     );
     expect(joined.ok).toBe(true);
+
+    const looked = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    expect(looked.ok).toBe(true);
+    if (looked.ok) {
+      expect(looked.event.narration).toContain("Porter Bramble — A hedgehog porter");
+    }
 
     const porter = handleExamine(
       world,
@@ -62,7 +74,7 @@ describe("bundled examine targets", () => {
     );
     expect(dummy.ok).toBe(true);
     if (dummy.ok) {
-      expect(dummy.event.narration).toContain("Straw and canvas");
+      expect(dummy.event.narration).toContain("well-worn");
     }
   });
 });

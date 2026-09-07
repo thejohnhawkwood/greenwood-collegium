@@ -114,11 +114,11 @@ You are now the owner. Finish the Collegian form (species, gender, name) before 
 
 ### 4. Invite a child
 
-1. Stay signed in as the teacher. Click **Issue student invite**.
-2. The token appears in the **Classroom roster** and stays there until the child creates an account. Copy it to a scrap of paper or a password manager. Do not put it on the projector.
-3. In a second browser or private window, open **Accept an invite**. Paste the token, pick a classroom username (not a real legal name), and a password of at least 10 characters.
+1. Stay signed in as the teacher. Choose **Number of students**, then click **Issue student invites**.
+2. The unused tokens appear in the **Classroom roster**. Copy them onto your class list. Do not put tokens on the projector.
+3. In a second browser or private window, open **Accept an invite**. Paste one token, pick a classroom username (not a real legal name), and a password of at least 10 characters.
 4. Click **Create account**.
-5. Refresh or look at the teacher roster: the token disappears, and the child's username is listed. Passwords are never shown.
+5. After the child finishes a Collegian, the roster shows their login beside the name they picked. Passwords are never shown. **Remove** disables that login.
 
 If the roster says the server is using memory, every rebuild or restart forgets unused tokens and student accounts. Local Postgres keeps them. A token issued on your laptop will not work on the live Render site, and the reverse is also true.
 
@@ -136,7 +136,7 @@ The public hostname is in [`docs/context/CURRENT.md`](docs/context/CURRENT.md). 
 2. Open the public site. Production does **not** offer guest play.
 3. If no owner exists yet, the **First-time teacher setup** form is shown. Use the dashboard token once. The form then disappears forever for that database.
 4. Issue student invites in class. Give each student a token privately. They accept it on the sign-in page.
-5. After sign-in, each person finishes a Collegian: read the introduction, choose species and gender, then suggest or type a given name. The classroom username is not the character name.
+5. After sign-in, each person finishes a Collegian: read the introduction, choose species and gender (female or male), then suggest or type a given name. The classroom username is not the character name.
 6. If the bootstrap form is missing, the owner already exists. Use **Teacher sign-in**. The roster on that site lists unused tokens and accepted usernames.
 
 Students keep Arrival progress after refresh because the classroom database stores quest, experience, and level.
@@ -247,10 +247,12 @@ admin announce The lanterns are lit.
 admin inspect lumen
 admin mute lumen 10
 admin kick lumen
+admin roster
+admin remove noelle
 admin audit
 ```
 
-`inspect` may use a given name or the login name. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Disable an account from the teacher roster, not from a typed command.
+`inspect` and `remove` may use a given name or the login name. `admin roster` lists unused tokens and each login with its Collegian name. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Remove disables the account. You can also Remove from the roster table.
 
 Students who type those words hear that only a teacher can use them.
 

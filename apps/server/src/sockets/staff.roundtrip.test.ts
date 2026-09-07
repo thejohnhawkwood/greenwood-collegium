@@ -82,7 +82,7 @@ describe("teacher staff commands", () => {
     await completeTestCharacter(auth, String(boot.json().accountId), {
       name: "Lumen",
       speciesId: "otter",
-      gender: "nonbinary",
+      gender: "female",
     });
 
     teacher = ioClient(`http://127.0.0.1:${String(address.port)}`, {

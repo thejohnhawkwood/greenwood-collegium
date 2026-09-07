@@ -17,9 +17,11 @@ export const STAFF_HELP_TEXT = [
   "  admin inspect <character>",
   "  admin mute <character> [minutes]",
   "  admin kick <character>",
+  "  admin roster",
+  "  admin remove <username>",
   "  admin audit",
   "",
-  "Disable an account from the teacher roster. These commands are logged.",
+  "admin roster lists unused tokens and each login with its Collegian name.",
 ].join("\n");
 
 export type StaffSuccess = {
@@ -47,6 +49,25 @@ export type StaffContext = {
   identities: Map<string, PlayIdentity>;
   audit?: AuditLogRepository;
   now: () => Date;
+  listClassroom?: () => Promise<
+    | {
+        invites: Array<{
+          status: string;
+          role: string;
+          token?: string;
+          username?: string;
+          characterName?: string;
+        }>;
+        accounts: Array<{
+          username: string;
+          role: string;
+          status: string;
+          characterName?: string;
+        }>;
+      }
+    | undefined
+  >;
+  disableAccount?: (username: string) => Promise<{ ok: true } | { ok: false; message: string }>;
 };
 
 export function canModerate(identity: PlayIdentity | undefined): boolean {
@@ -79,6 +100,18 @@ export async function handleStaffCommand(
       events: [noticeFor(context.actorId, await formatAudit(context), context.runtime)],
       notices: [],
     };
+  }
+
+  if (intent.verb === "roster") {
+    return {
+      ok: true,
+      events: [noticeFor(context.actorId, await formatRoster(context), context.runtime)],
+      notices: [],
+    };
+  }
+
+  if (intent.verb === "remove") {
+    return removeAccount(intent.target, context);
   }
 
   if (intent.verb === "announce") {
@@ -262,6 +295,66 @@ async function writeAudit(
     targetName,
     detail,
   });
+}
+
+async function removeAccount(raw: string, context: StaffContext): Promise<StaffResult> {
+  const matches = matchCourtyardCharacters(context.world, raw);
+  const matched = matches.length === 1 ? matches[0] : undefined;
+  const username = matched?.accountUsername ?? raw.trim();
+  if (!context.disableAccount) {
+    return {
+      ok: false,
+      code: "invalid_command",
+      message: "That account could not be removed.",
+    };
+  }
+  const result = await context.disableAccount(username);
+  if (!result.ok) {
+    return { ok: false, code: "forbidden", message: result.message };
+  }
+  await writeAudit(context, "remove", username, "disabled");
+  const kickCharacterId =
+    matched?.id ??
+    Object.values(context.world.characters).find(
+      (character) => character.accountUsername === username,
+    )?.id;
+  return {
+    ok: true,
+    events: [noticeFor(context.actorId, `You disable ${username}.`, context.runtime)],
+    notices: kickCharacterId
+      ? [
+          {
+            characterId: kickCharacterId,
+            event: noticeFor(
+              kickCharacterId,
+              "A teacher has removed this account. You cannot sign in again.",
+              context.runtime,
+            ),
+          },
+        ]
+      : [],
+    kickCharacterId,
+  };
+}
+
+async function formatRoster(context: StaffContext): Promise<string> {
+  const classroom = context.listClassroom ? await context.listClassroom() : undefined;
+  if (!classroom) {
+    return "The classroom roster is empty.";
+  }
+  const unused = classroom.invites
+    .filter((invite) => invite.status === "unused" && invite.token)
+    .map((invite) => `  ${invite.role}  ${invite.token}`);
+  const accounts = classroom.accounts.map((account) => {
+    const collegian = account.characterName ?? "not finished";
+    return `  ${account.username}  ${collegian}  ${account.role}  ${account.status}`;
+  });
+  return [
+    "Unused invite tokens:",
+    ...(unused.length > 0 ? unused : ["  (none)"]),
+    "Logins and Collegian names:",
+    ...(accounts.length > 0 ? accounts : ["  (none)"]),
+  ].join("\n");
 }
 
 async function formatAudit(context: StaffContext): Promise<string> {

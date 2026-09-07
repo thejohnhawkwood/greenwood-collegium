@@ -10,6 +10,15 @@ first playable package is tagged.
 
 ### Added
 
+- Teachers can issue 1–30 student invite tokens at once, see each student's Collegian name on the roster, and remove a login from the roster or with `admin roster` / `admin remove`.
+- Look and examine describe people from species and gender. Porter and the Practice Dummy have worn, specific looks.
+
+### Changed
+
+- Character creation offers female or male. Non-binary is no longer a choice.
+
+### Added
+
 - Teacher and owner classroom commands: `admin announce`, `admin inspect`, `admin mute`, `admin kick`, and `admin audit`. Role checks stay on the server. Actions write an audit log. Mute is in-memory until the process restarts.
 - After sign-in, a player hears a narrator introduction and chooses species, gender, and a given name. The classroom username is no longer the character name.
 - `examine porter` describes Porter Bramble. Examine also works on other courtyard fixtures, enemies, nearby Collegians, and a Collegian's login name. `x` is an examine alias. The Practice Dummy is in the South Orchard.

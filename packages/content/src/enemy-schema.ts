@@ -23,6 +23,7 @@ export const enemyTemplateSchema = z
     name: z.string().min(1),
     shortDescription: z.string().min(1),
     examineDescription: z.string().min(1),
+    lookDescription: z.string().min(1).optional(),
     maxHealth: z.number().int().positive(),
     attack: z.number().int().positive(),
     experience: z.number().int().nonnegative(),
@@ -32,6 +33,9 @@ export const enemyTemplateSchema = z
     rejectMarkup(enemy.name, "name", ctx);
     rejectMarkup(enemy.shortDescription, "shortDescription", ctx);
     rejectMarkup(enemy.examineDescription, "examineDescription", ctx);
+    if (enemy.lookDescription) {
+      rejectMarkup(enemy.lookDescription, "lookDescription", ctx);
+    }
   });
 
 export const enemyPlacementSchema = z

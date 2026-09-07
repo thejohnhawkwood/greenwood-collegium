@@ -1,10 +1,10 @@
 import type { WorldState } from "@greenwood/game-engine";
 
 export const DEV_CHARACTERS = [
-  { id: "char-rowan", name: "Rowan the Hare" },
-  { id: "char-moss", name: "Moss the Mole" },
-  { id: "char-pip", name: "Pip the Sparrow" },
-  { id: "char-thistle", name: "Thistle the Hedgehog" },
+  { id: "char-rowan", name: "Rowan the Hare", speciesId: "hare", gender: "female" },
+  { id: "char-moss", name: "Moss the Mole", speciesId: "mole", gender: "male" },
+  { id: "char-pip", name: "Pip the Sparrow", speciesId: "squirrel", gender: "female" },
+  { id: "char-thistle", name: "Thistle the Hedgehog", speciesId: "hedgehog", gender: "male" },
 ] as const;
 
 export const DEV_START_ROOM_ID = "lantern-court";

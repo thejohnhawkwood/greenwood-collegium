@@ -7,7 +7,7 @@ export const TEST_BOOTSTRAP_TOKEN = "test-bootstrap-token";
 export async function completeTestCharacter(
   auth: AuthService,
   accountId: string,
-  input: { name: string; speciesId: string; gender: "female" | "male" | "nonbinary" } = {
+  input: { name: string; speciesId: string; gender: "female" | "male" } = {
     name: "Rowan",
     speciesId: "hare",
     gender: "female",

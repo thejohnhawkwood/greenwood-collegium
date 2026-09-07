@@ -50,12 +50,13 @@ export function handleExamine(
       name: fixture.name,
       description:
         fixture.examineDescription ??
+        fixture.lookDescription ??
         `${fixture.name} is here. You notice nothing more from this distance.`,
     })),
     ...enemiesInRoom(world, character.roomId).map((enemy) => ({
       id: enemy.id,
       name: enemy.name,
-      description: enemy.examineDescription,
+      description: enemy.examineDescription ?? enemy.lookDescription,
     })),
     ...[...itemsInRoom(world, character.roomId), ...itemsHeldBy(world, character.id)].map(
       (item) => ({
@@ -70,7 +71,10 @@ export function handleExamine(
         id: other.id,
         name: other.name,
         aliases: other.accountUsername ? [other.accountUsername] : undefined,
-        description: `${other.name} is a Collegian standing nearby.`,
+        description:
+          other.examineDescription ??
+          other.lookDescription ??
+          `${other.name} is a Collegian standing nearby.`,
       })),
   ];
 

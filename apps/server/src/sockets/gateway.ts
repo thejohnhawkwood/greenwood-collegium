@@ -30,6 +30,7 @@ import {
   type EngineRuntime,
   type WorldState,
 } from "@greenwood/game-engine";
+import { describeCollegian } from "@greenwood/content";
 import type { FastifyInstance } from "fastify";
 import { Server, type Socket } from "socket.io";
 import { CommandLog } from "../application/command-log.js";
@@ -49,6 +50,22 @@ import type { AuditLogRepository } from "../persistence/types.js";
 
 export const DEFAULT_RECONNECT_GRACE_MS = 10_000;
 
+export type ClassroomReadModel = {
+  invites: Array<{
+    status: "unused" | "used" | "expired";
+    role: string;
+    token?: string;
+    username?: string;
+    characterName?: string;
+  }>;
+  accounts: Array<{
+    username: string;
+    role: string;
+    status: string;
+    characterName?: string;
+  }>;
+};
+
 export type RealtimeOptions = {
   allowGuestPlay?: boolean;
   reconnectGraceMs?: number;
@@ -64,6 +81,11 @@ export type RealtimeOptions = {
     input: { experience: number; level: number },
   ) => Promise<void>;
   auditLog?: AuditLogRepository;
+  listClassroom?: (actorAccountId: string) => Promise<ClassroomReadModel | undefined>;
+  disableAccount?: (
+    actorAccountId: string,
+    username: string,
+  ) => Promise<{ ok: true } | { ok: false; message: string }>;
   persistQuest?: {
     listByCharacter(characterId: string): Promise<
       Array<{
@@ -251,12 +273,20 @@ export async function attachRealtime(
     const present = world.characters[characterId];
     if (identity && present) {
       present.accountUsername = identity.username;
+      const appearance = describeCollegian(identity.speciesId, identity.gender);
+      present.lookDescription = appearance.look;
+      present.examineDescription = appearance.examine;
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
       return;
     }
 
     const runtime = commandRuntime(sequences);
+    const appearance = identity
+      ? describeCollegian(identity.speciesId, identity.gender)
+      : "speciesId" in claimed
+        ? describeCollegian(claimed.speciesId, claimed.gender)
+        : describeCollegian("hare", "female");
     const joined = handleJoin(
       world,
       {
@@ -265,6 +295,8 @@ export async function attachRealtime(
         name: claimed.name,
         roomId: "roomId" in claimed ? claimed.roomId : DEV_START_ROOM_ID,
         accountUsername: identity?.username,
+        lookDescription: appearance.look,
+        examineDescription: appearance.examine,
         experience: identity?.experience,
         level: identity?.level,
       },
@@ -487,6 +519,22 @@ export async function attachRealtime(
         identities,
         audit: options.auditLog,
         now: () => new Date(),
+        listClassroom: identity
+          ? async () => {
+              if (!options.listClassroom) {
+                return undefined;
+              }
+              return options.listClassroom(identity.accountId);
+            }
+          : undefined,
+        disableAccount: identity
+          ? async (username) => {
+              if (!options.disableAccount) {
+                return { ok: false as const, message: "That account could not be removed." };
+              }
+              return options.disableAccount(identity.accountId, username);
+            }
+          : undefined,
       });
       if (!staff.ok) {
         const rejection = commandAckSchema.parse({

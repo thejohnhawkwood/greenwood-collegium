@@ -33,6 +33,10 @@
       "type": "string",
       "minLength": 1
     },
+    "lookDescription": {
+      "type": "string",
+      "minLength": 1
+    },
     "maxHealth": {
       "type": "integer",
       "minimum": 1

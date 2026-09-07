@@ -71,12 +71,16 @@ export type ClassroomInvite = {
   expiresAt: Date;
   token?: string;
   username?: string;
+  characterName?: string;
 };
 
 export type ClassroomAccount = {
+  accountId: string;
   username: string;
   role: Exclude<AccountRecord["role"], "owner">;
+  status: AccountRecord["status"];
   createdAt: Date;
+  characterName?: string;
 };
 
 export type PlayIdentity = {
@@ -85,6 +89,8 @@ export type PlayIdentity = {
   characterName: string;
   username: string;
   role: AccountRecord["role"];
+  speciesId: string;
+  gender?: CharacterRecord["gender"];
   roomId: string;
   experience: number;
   level: number;
@@ -114,13 +120,17 @@ export type AuthService = {
   createInvite(
     actorId: string,
     role: InviteRole,
-  ): Promise<{ ok: true; token: string; role: InviteRole; expiresAt: Date } | AuthFailure>;
+    count?: number,
+  ): Promise<
+    { ok: true; token: string; tokens: string[]; role: InviteRole; expiresAt: Date } | AuthFailure
+  >;
   acceptInvite(input: {
     token: string;
     username: string;
     password: string;
   }): Promise<SignedIn | AuthFailure>;
   disableAccount(actorId: string, targetId: string): Promise<{ ok: true } | AuthFailure>;
+  disableAccountByUsername(actorId: string, username: string): Promise<{ ok: true } | AuthFailure>;
   resolveSession(
     sessionToken: string,
   ): Promise<{ account: AccountRecord; character?: CharacterRecord } | undefined>;
@@ -222,7 +232,10 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
   async function createInvite(
     actorId: string,
     role: InviteRole,
-  ): Promise<{ ok: true; token: string; role: InviteRole; expiresAt: Date } | AuthFailure> {
+    count = 1,
+  ): Promise<
+    { ok: true; token: string; tokens: string[]; role: InviteRole; expiresAt: Date } | AuthFailure
+  > {
     const actor = await deps.accounts.getById(actorId);
     if (!actor || actor.status !== "active") {
       return fail("unauthenticated", "Sign in to continue.");
@@ -233,16 +246,30 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (role === "teacher" && actor.role !== "owner") {
       return fail("forbidden", "Only the owner can invite a teacher.");
     }
-    const token = randomToken();
+    if (role === "teacher" && count !== 1) {
+      return fail("forbidden", "Issue teacher invites one at a time.");
+    }
+    if (!Number.isInteger(count) || count < 1 || count > 30) {
+      return fail("invalid_invite", "Choose between 1 and 30 student invites.");
+    }
+    const tokens: string[] = [];
     const expiresAt = new Date(now().getTime() + INVITE_TTL_MS);
-    await deps.invites.create({
-      tokenHash: hashToken(token),
-      role,
-      createdByAccountId: actor.id,
-      expiresAt,
-      issuedToken: token,
-    });
-    return { ok: true, token, role, expiresAt };
+    for (let index = 0; index < count; index += 1) {
+      const token = randomToken();
+      await deps.invites.create({
+        tokenHash: hashToken(token),
+        role,
+        createdByAccountId: actor.id,
+        expiresAt,
+        issuedToken: token,
+      });
+      tokens.push(token);
+    }
+    const token = tokens[0];
+    if (!token) {
+      return fail("invalid_invite", "Choose between 1 and 30 student invites.");
+    }
+    return { ok: true, token, tokens, role, expiresAt };
   }
 
   async function acceptInvite(input: {
@@ -289,9 +316,17 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       deps.accounts.listByRole("student"),
       deps.accounts.listByRole("teacher"),
     ]);
+    const listed = [...students, ...teachers].sort((left, right) =>
+      left.username.localeCompare(right.username),
+    );
+    const names = new Map<string, string>();
     const usernames = new Map<string, string>();
-    for (const account of [...students, ...teachers]) {
+    for (const account of listed) {
       usernames.set(account.id, account.username);
+      const [character] = await deps.characters.listByAccountId(account.id);
+      if (character && isCharacterComplete(character)) {
+        names.set(account.id, formatCharacterName(character.name, character.speciesId));
+      }
     }
     return {
       ok: true,
@@ -308,15 +343,19 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
           username: invite.consumedByAccountId
             ? usernames.get(invite.consumedByAccountId)
             : undefined,
+          characterName: invite.consumedByAccountId
+            ? names.get(invite.consumedByAccountId)
+            : undefined,
         };
       }),
-      accounts: [...students, ...teachers]
-        .sort((left, right) => left.username.localeCompare(right.username))
-        .map((account) => ({
-          username: account.username,
-          role: account.role === "teacher" ? ("teacher" as const) : ("student" as const),
-          createdAt: account.createdAt,
-        })),
+      accounts: listed.map((account) => ({
+        accountId: account.id,
+        username: account.username,
+        role: account.role === "teacher" ? ("teacher" as const) : ("student" as const),
+        status: account.status,
+        createdAt: account.createdAt,
+        characterName: names.get(account.id),
+      })),
     };
   }
 
@@ -344,6 +383,17 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     await deps.accounts.updateStatus(target.id, "disabled");
     await deps.sessions.revokeAllForAccount(target.id, now());
     return { ok: true };
+  }
+
+  async function disableAccountByUsername(
+    actorId: string,
+    username: string,
+  ): Promise<{ ok: true } | AuthFailure> {
+    const target = await deps.accounts.getByUsername(username);
+    if (!target) {
+      return fail("forbidden", "That account was not found.");
+    }
+    return disableAccount(actorId, target.id);
   }
 
   async function resolveSession(
@@ -543,6 +593,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     acceptInvite,
     listClassroom,
     disableAccount,
+    disableAccountByUsername,
     resolveSession,
     resolvePlayIdentity,
     issueSocketTicket,
@@ -560,6 +611,8 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     characterName: formatCharacterName(character.name, character.speciesId),
     username: account.username,
     role: account.role,
+    speciesId: character.speciesId,
+    gender: character.gender,
     roomId: character.roomId,
     experience: character.experience,
     level: character.level,

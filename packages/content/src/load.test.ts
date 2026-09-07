@@ -47,8 +47,9 @@ describe("content loader", () => {
         id: "npc-porter-bramble",
         name: "Porter Bramble",
         kind: "npc",
+        lookDescription: "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
         examineDescription:
-          "A hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. He watches the courtyard as if every new Collegian were expected.",
+          "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. His eyes are kind and busy. He watches the courtyard as if every new Collegian were expected.",
       },
     ]);
     expect(world.rooms["east-gate"]).toBeDefined();

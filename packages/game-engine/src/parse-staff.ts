@@ -44,6 +44,15 @@ export function parseStaffCommand(raw: string, characterId: string): StaffComman
     return { verb: "audit", characterId };
   }
 
+  if (/^(?:roster|who)$/iu.test(body)) {
+    return { verb: "roster", characterId };
+  }
+
+  const remove = /^(?:remove|disable)\s+(.+)$/iu.exec(body);
+  if (remove?.[1]) {
+    return { verb: "remove", characterId, target: remove[1].trim() };
+  }
+
   return prefixed ? { verb: "staff-help", characterId } : null;
 }
 
@@ -54,7 +63,9 @@ export function isStaffCommand(intent: { verb: string } | null): intent is Staff
     intent?.verb === "inspect" ||
     intent?.verb === "mute" ||
     intent?.verb === "kick" ||
-    intent?.verb === "audit"
+    intent?.verb === "audit" ||
+    intent?.verb === "roster" ||
+    intent?.verb === "remove"
   );
 }
 

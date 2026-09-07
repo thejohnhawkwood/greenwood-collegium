@@ -40,10 +40,31 @@ const INTRO = introSchema.parse(
   ),
 );
 
+const appearancePairSchema = z.object({
+  look: z.string().min(1),
+  examine: z.string().min(1),
+});
+
+const APPEARANCES = z
+  .record(z.string(), z.object({ female: appearancePairSchema, male: appearancePairSchema }))
+  .parse(
+    JSON.parse(
+      readFileSync(
+        fileURLToPath(new URL("../character-creation/appearances.json", import.meta.url)),
+        { encoding: "utf8" },
+      ),
+    ),
+  );
+
+for (const species of SPECIES) {
+  if (!APPEARANCES[species.id]) {
+    throw new Error(`Missing appearance text for species "${species.id}".`);
+  }
+}
+
 export const CHARACTER_GENDERS = [
   { id: "female", label: "Female" },
   { id: "male", label: "Male" },
-  { id: "nonbinary", label: "Non-binary" },
 ] as const;
 
 export type CharacterGenderId = (typeof CHARACTER_GENDERS)[number]["id"];
@@ -79,4 +100,21 @@ export function suggestedCharacterNames(): readonly string[] {
 export function formatCharacterName(givenName: string, speciesId: string): string {
   const species = speciesName(speciesId);
   return species ? `${givenName} the ${species}` : givenName;
+}
+
+export function describeCollegian(
+  speciesId: string,
+  gender: string | undefined,
+): { look: string; examine: string } {
+  if (gender === "female" || gender === "male") {
+    const pair = APPEARANCES[speciesId]?.[gender];
+    if (pair) {
+      return pair;
+    }
+  }
+  const species = speciesName(speciesId) ?? "woodland";
+  return {
+    look: `A ${species.toLowerCase()} Collegian in academy colors.`,
+    examine: `A ${species.toLowerCase()} Collegian in academy colors, standing ready for the next lesson.`,
+  };
 }

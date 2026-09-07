@@ -79,6 +79,8 @@ export type {
   InspectIntent,
   KickIntent,
   MuteIntent,
+  RemoveIntent,
+  RosterIntent,
   StaffCommand,
   StaffHelpIntent,
   QuestProgress,

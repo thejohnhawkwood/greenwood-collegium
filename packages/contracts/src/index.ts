@@ -155,6 +155,7 @@ export {
   authClassroomAccountSchema,
   authClassroomInviteSchema,
   authClassroomSchema,
+  STUDENT_INVITE_BATCH_MAX,
   authCreateInviteRequestSchema,
   authDisableAccountRequestSchema,
   authErrorSchema,

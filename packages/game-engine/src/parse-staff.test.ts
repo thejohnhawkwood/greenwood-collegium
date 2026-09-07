@@ -24,8 +24,14 @@ describe("parseStaffCommand", () => {
       characterId: "char-1",
       target: "Practice Dummy",
     });
+    expect(parseStaffCommand("admin roster", "char-1")?.verb).toBe("roster");
+    expect(parseStaffCommand("admin remove pip", "char-1")).toEqual({
+      verb: "remove",
+      characterId: "char-1",
+      target: "pip",
+    });
     expect(parseStaffCommand("admin", "char-1")?.verb).toBe("staff-help");
-    expect(parseStaffCommand("admin who", "char-1")?.verb).toBe("staff-help");
+    expect(parseStaffCommand("admin who", "char-1")?.verb).toBe("roster");
     expect(parseStaffCommand("dance", "char-1")).toBeNull();
   });
 });

@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  CHARACTER_GENDERS,
   characterCreationIntro,
+  describeCollegian,
   formatCharacterName,
+  isKnownGender,
   isKnownSpecies,
   listSpecies,
   suggestedCharacterNames,
@@ -14,5 +17,13 @@ describe("character creation content", () => {
     expect(formatCharacterName("Lumen", "otter")).toBe("Lumen the Otter");
     expect(characterCreationIntro()).toContain("Greenwood Collegium");
     expect(suggestedCharacterNames().length).toBeGreaterThan(10);
+    expect(CHARACTER_GENDERS.map((gender) => gender.id)).toEqual(["female", "male"]);
+    expect(isKnownGender("nonbinary")).toBe(false);
+    expect(describeCollegian("otter", "female").look).toContain("otter");
+    expect(describeCollegian("otter", "female").examine).toContain("otter");
+    for (const species of listSpecies()) {
+      expect(describeCollegian(species.id, "female").examine.length).toBeGreaterThan(20);
+      expect(describeCollegian(species.id, "male").examine.length).toBeGreaterThan(20);
+    }
   });
 });

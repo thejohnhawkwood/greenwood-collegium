@@ -31,13 +31,21 @@ export const authAcceptInviteRequestSchema = z.object({
   password: passwordSchema,
 });
 
+export const STUDENT_INVITE_BATCH_MAX = 30;
+
 export const authCreateInviteRequestSchema = z.object({
   role: z.enum(["student", "teacher"]).default("student"),
+  count: z.number().int().min(1).max(STUDENT_INVITE_BATCH_MAX).default(1),
 });
 
-export const authDisableAccountRequestSchema = z.object({
-  accountId: z.string().min(1).max(80),
-});
+export const authDisableAccountRequestSchema = z
+  .object({
+    accountId: z.string().min(1).max(80).optional(),
+    username: usernameSchema.optional(),
+  })
+  .refine((value) => Boolean(value.accountId || value.username), {
+    message: "accountId or username is required",
+  });
 
 export const authStatusSchema = z.object({
   signedIn: z.boolean(),
@@ -49,7 +57,7 @@ export const authSocketTicketSchema = z.object({
   ticket: z.string().min(1).max(200),
 });
 
-export const authCharacterGenderSchema = z.enum(["female", "male", "nonbinary"]);
+export const authCharacterGenderSchema = z.enum(["female", "male"]);
 
 export const authCharacterNameSchema = z
   .string()
@@ -90,6 +98,7 @@ export const authSessionPublicSchema = z.object({
 
 export const authInviteCreatedSchema = z.object({
   token: z.string(),
+  tokens: z.array(z.string()).min(1),
   role: z.enum(["student", "teacher"]),
   expiresAt: z.string(),
 });
@@ -107,12 +116,16 @@ export const authClassroomInviteSchema = z.object({
   expiresAt: z.string(),
   token: z.string().optional(),
   username: z.string().optional(),
+  characterName: z.string().optional(),
 });
 
 export const authClassroomAccountSchema = z.object({
+  accountId: z.string(),
   username: z.string(),
   role: z.enum(["student", "teacher"]),
+  status: z.enum(["active", "disabled"]),
   createdAt: z.string(),
+  characterName: z.string().optional(),
 });
 
 export const authClassroomSchema = z.object({

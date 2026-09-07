@@ -90,11 +90,15 @@ export async function registerAuthRoutes(
         expiresAt: invite.expiresAt.toISOString(),
         token: invite.token,
         username: invite.username,
+        characterName: invite.characterName,
       })),
       accounts: result.accounts.map((account) => ({
+        accountId: account.accountId,
         username: account.username,
         role: account.role,
+        status: account.status,
         createdAt: account.createdAt.toISOString(),
+        characterName: account.characterName,
       })),
     });
   });
@@ -210,7 +214,11 @@ export async function registerAuthRoutes(
     if (!parsed.success) {
       return invalidBody(reply);
     }
-    const result = await deps.auth.createInvite(actor.account.id, parsed.data.role);
+    const result = await deps.auth.createInvite(
+      actor.account.id,
+      parsed.data.role,
+      parsed.data.count,
+    );
     if (!result.ok) {
       return reply.status(failureStatus[result.code]).send({
         error: result.code,
@@ -218,11 +226,17 @@ export async function registerAuthRoutes(
       });
     }
     app.log.info(
-      { action: "invite_created", accountId: actor.account.id, username: actor.account.username },
+      {
+        action: "invite_created",
+        accountId: actor.account.id,
+        username: actor.account.username,
+        count: result.tokens.length,
+      },
       "invite created",
     );
     return {
       token: result.token,
+      tokens: result.tokens,
       role: result.role,
       expiresAt: result.expiresAt.toISOString(),
     };
@@ -249,7 +263,9 @@ export async function registerAuthRoutes(
     if (!parsed.success) {
       return invalidBody(reply);
     }
-    const result = await deps.auth.disableAccount(actor.account.id, parsed.data.accountId);
+    const result = parsed.data.username
+      ? await deps.auth.disableAccountByUsername(actor.account.id, parsed.data.username)
+      : await deps.auth.disableAccount(actor.account.id, parsed.data.accountId ?? "");
     if (!result.ok) {
       return reply.status(failureStatus[result.code]).send({
         error: result.code,
@@ -261,7 +277,7 @@ export async function registerAuthRoutes(
         action: "account_disabled",
         accountId: actor.account.id,
         username: actor.account.username,
-        targetId: parsed.data.accountId,
+        targetUsername: parsed.data.username,
       },
       "account disabled",
     );

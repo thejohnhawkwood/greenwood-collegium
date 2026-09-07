@@ -78,6 +78,7 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
       id: character.id,
       name: character.name,
       kind: "player" as const,
+      description: character.lookDescription,
     }));
 
   return {
@@ -92,11 +93,13 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
         id: fixture.id,
         name: fixture.name,
         kind: fixture.kind,
+        description: fixture.lookDescription,
       })),
       ...enemiesInRoom(world, room.id).map((enemy) => ({
         id: enemy.id,
         name: enemy.name,
         kind: "npc" as const,
+        description: enemy.lookDescription,
       })),
       ...itemsInRoom(world, room.id).map((item) => ({
         id: item.id,
@@ -123,6 +126,9 @@ function snapshotSegments(payload: RoomSnapshotPayload): SemanticSegment[] {
         id: entity.id,
         text: entity.name,
       });
+      if (entity.description) {
+        segments.push({ kind: "text", text: ` — ${entity.description}` });
+      }
     }
   }
 

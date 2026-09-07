@@ -127,5 +127,13 @@ await attachRealtime(app, world, {
   persistItem,
   persistQuest: stores.quests,
   auditLog: stores.audit,
+  listClassroom: async (actorAccountId) => {
+    const result = await auth.listClassroom(actorAccountId);
+    return result.ok ? result : undefined;
+  },
+  disableAccount: async (actorAccountId, username) => {
+    const result = await auth.disableAccountByUsername(actorAccountId, username);
+    return result.ok ? { ok: true } : { ok: false, message: result.message };
+  },
 });
 await app.listen({ port, host });

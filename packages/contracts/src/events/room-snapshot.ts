@@ -10,6 +10,7 @@ export const roomVisibleEntitySchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   kind: z.enum(["player", "npc", "object"]),
+  description: z.string().min(1).optional(),
 });
 
 export const roomSnapshotPayloadSchema = z.object({
@@ -38,7 +39,9 @@ export function formatRoomSnapshotText(payload: RoomSnapshotPayload): string {
   if (payload.visible.length > 0) {
     lines.push("", "You see:");
     for (const entity of payload.visible) {
-      lines.push(`  ${entity.name}`);
+      lines.push(
+        entity.description ? `  ${entity.name} — ${entity.description}` : `  ${entity.name}`,
+      );
     }
   }
 

@@ -1,4 +1,5 @@
 import {
+  STUDENT_INVITE_BATCH_MAX,
   authInviteCreatedSchema,
   authSessionPublicSchema,
   commandAckSchema,
@@ -140,6 +141,7 @@ function ClassicClient({
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [classroom, setClassroom] = useState<AuthClassroom | undefined>();
+  const [inviteCount, setInviteCount] = useState(8);
   const canInvite = me?.role === "owner" || me?.role === "teacher";
 
   useEffect(() => {
@@ -325,20 +327,40 @@ function ClassicClient({
           {me ? (
             <>
               {canInvite ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    void issueInvite("student", setClassroom, addNotice);
-                  }}
-                >
-                  Issue student invite
-                </button>
+                <span className="invite-batch">
+                  <label>
+                    Number of students
+                    <select
+                      value={inviteCount}
+                      onChange={(event) => {
+                        setInviteCount(Number.parseInt(event.target.value, 10));
+                      }}
+                    >
+                      {Array.from(
+                        { length: STUDENT_INVITE_BATCH_MAX },
+                        (_, index) => index + 1,
+                      ).map((count) => (
+                        <option key={count} value={count}>
+                          {count}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void issueInvite("student", inviteCount, setClassroom, addNotice);
+                    }}
+                  >
+                    Issue student invites
+                  </button>
+                </span>
               ) : null}
               {me?.role === "owner" ? (
                 <button
                   type="button"
                   onClick={() => {
-                    void issueInvite("teacher", setClassroom, addNotice);
+                    void issueInvite("teacher", 1, setClassroom, addNotice);
                   }}
                 >
                   Issue teacher invite
@@ -359,7 +381,14 @@ function ClassicClient({
             </button>
           )}
         </p>
-        {canInvite && classroom ? <ClassroomRoster classroom={classroom} /> : null}
+        {canInvite && classroom ? (
+          <ClassroomRoster
+            classroom={classroom}
+            onRemove={(username) => {
+              void removeStudent(username, setClassroom, addNotice);
+            }}
+          />
+        ) : null}
       </header>
       <div
         ref={logRef}
@@ -424,8 +453,30 @@ async function signOut(onSignedOut: () => void): Promise<void> {
   onSignedOut();
 }
 
+async function removeStudent(
+  username: string,
+  onClassroom: (classroom: AuthClassroom | undefined) => void,
+  addNotice: (text: string) => void,
+): Promise<void> {
+  if (!window.confirm(`Disable ${username}? They will not be able to sign in.`)) {
+    return;
+  }
+  const response = await fetch("/auth/disable", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username }),
+  });
+  if (!response.ok) {
+    addNotice("That account could not be removed.");
+    return;
+  }
+  onClassroom(await loadClassroom());
+}
+
 async function issueInvite(
   role: "student" | "teacher",
+  count: number,
   onClassroom: (classroom: AuthClassroom | undefined) => void,
   addNotice: (text: string) => void,
 ): Promise<void> {
@@ -433,7 +484,7 @@ async function issueInvite(
     method: "POST",
     credentials: "same-origin",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ role }),
+    body: JSON.stringify({ role, count }),
   });
   const payload: unknown = await response.json().catch(() => undefined);
   const parsed = authInviteCreatedSchema.safeParse(payload);
