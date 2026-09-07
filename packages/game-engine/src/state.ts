@@ -26,9 +26,19 @@ export type Character = {
   discoveredRoomIds: string[];
 };
 
+export type ItemInstance = {
+  id: string;
+  templateId: string;
+  name: string;
+  examineDescription: string;
+  roomId?: string;
+  holderCharacterId?: string;
+};
+
 export type WorldState = {
   rooms: Record<string, Room>;
   characters: Record<string, Character>;
+  items?: Record<string, ItemInstance>;
 };
 
 export type LookIntent = {
@@ -60,7 +70,31 @@ export type LeaveIntent = {
   characterId: string;
 };
 
-export type PlayerCommand = LookIntent | MoveIntent | SayIntent;
+export type TakeIntent = {
+  verb: "take";
+  characterId: string;
+  target: string;
+};
+
+export type DropIntent = {
+  verb: "drop";
+  characterId: string;
+  target: string;
+};
+
+export type ExamineIntent = {
+  verb: "examine";
+  characterId: string;
+  target: string;
+};
+
+export type InventoryIntent = {
+  verb: "inventory";
+  characterId: string;
+};
+
+export type PlayerCommand =
+  LookIntent | MoveIntent | SayIntent | TakeIntent | DropIntent | ExamineIntent | InventoryIntent;
 
 export type EngineRuntime = {
   now(): Date;

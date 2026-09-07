@@ -7,6 +7,7 @@ import {
   type RoomSnapshotPayload,
   type SemanticSegment,
 } from "@greenwood/contracts";
+import { itemsInRoom } from "./items.js";
 import type { Character, EngineRuntime, LookIntent, Room, WorldState } from "./state.js";
 
 export type LookSuccess = {
@@ -90,6 +91,11 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
         id: fixture.id,
         name: fixture.name,
         kind: fixture.kind,
+      })),
+      ...itemsInRoom(world, room.id).map((item) => ({
+        id: item.id,
+        name: item.name,
+        kind: "object" as const,
       })),
       ...otherPlayers,
     ],

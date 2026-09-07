@@ -49,6 +49,12 @@ describe("content loader", () => {
     expect(world.rooms["west-cloister"]?.exits).toEqual([
       { direction: "east", toRoomId: START_ROOM_ID },
     ]);
+    expect(world.items["item-copper-key-lantern-court"]).toMatchObject({
+      templateId: "small-copper-key",
+      name: "Small Copper Key",
+      roomId: START_ROOM_ID,
+    });
+    expect(Object.keys(world.items)).toHaveLength(2);
   });
 
   it("loads an extra room file without a code change", () => {

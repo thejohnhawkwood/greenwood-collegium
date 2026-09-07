@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "moss-bound-primer",
+  "name": "Moss-bound Primer",
+  "shortDescription": "A slim book bound in moss-green cloth.",
+  "examineDescription": "The first page is a student hand: Look, then walk, then speak.\nThe ink has faded at the fold.",
+  "category": "book",
+  "unique": true
+}

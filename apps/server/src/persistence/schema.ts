@@ -61,3 +61,19 @@ export const invites = pgTable(
   },
   (table) => [index("invites_created_by_account_id_idx").on(table.createdByAccountId)],
 );
+
+export const itemInstances = pgTable(
+  "item_instances",
+  {
+    id: text("id").primaryKey(),
+    templateId: text("template_id").notNull(),
+    roomId: text("room_id"),
+    holderCharacterId: text("holder_character_id").references(() => characters.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+  },
+  (table) => [
+    index("item_instances_holder_character_id_idx").on(table.holderCharacterId),
+    index("item_instances_room_id_idx").on(table.roomId),
+  ],
+);
