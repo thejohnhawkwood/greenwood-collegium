@@ -60,6 +60,30 @@ describe("auth HTTP", () => {
     expect(after.statusCode).toBe(401);
   });
 
+  it("issues a socket ticket only to a signed-in session", async () => {
+    const { auth } = createTestAuth();
+    app = await buildApp();
+    await registerAuthRoutes(app, { auth, allowGuestPlay: false, secureCookies: false });
+
+    const denied = await app.inject({ method: "GET", url: "/auth/socket-ticket" });
+    expect(denied.statusCode).toBe(401);
+
+    const boot = await app.inject({
+      method: "POST",
+      url: "/auth/bootstrap",
+      payload: { token: TEST_BOOTSTRAP_TOKEN, username: "Rowan", password: "lantern-path" },
+    });
+    const cookie = cookieValue(boot, SESSION_COOKIE);
+    const issued = await app.inject({
+      method: "GET",
+      url: "/auth/socket-ticket",
+      cookies: { [SESSION_COOKIE]: cookie },
+    });
+    expect(issued.statusCode).toBe(200);
+    expect(issued.json()).toEqual({ ticket: expect.any(String) });
+    expect(String(issued.json().ticket)).not.toBe(cookie);
+  });
+
   it("issues an invite, accepts it, and blocks a disabled account", async () => {
     const { auth } = createTestAuth();
     app = await buildApp();

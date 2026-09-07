@@ -45,6 +45,10 @@ export const authStatusSchema = z.object({
   bootstrapOpen: z.boolean(),
 });
 
+export const authSocketTicketSchema = z.object({
+  ticket: z.string().min(1).max(200),
+});
+
 export const authSessionPublicSchema = z.object({
   accountId: z.string(),
   username: z.string(),
@@ -93,6 +97,7 @@ export type AuthCreateInviteRequest = z.infer<typeof authCreateInviteRequestSche
 export type AuthDisableAccountRequest = z.infer<typeof authDisableAccountRequestSchema>;
 export type AuthStatus = z.infer<typeof authStatusSchema>;
 export type AuthSessionPublic = z.infer<typeof authSessionPublicSchema>;
+export type AuthSocketTicket = z.infer<typeof authSocketTicketSchema>;
 export type AuthInviteCreated = z.infer<typeof authInviteCreatedSchema>;
 export type AuthClassroom = z.infer<typeof authClassroomSchema>;
 export type AuthClassroomInvite = z.infer<typeof authClassroomInviteSchema>;

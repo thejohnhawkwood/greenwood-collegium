@@ -50,6 +50,7 @@ export type RealtimeOptions = {
   allowGuestPlay?: boolean;
   reconnectGraceMs?: number;
   resolveSession?: (token: string) => Promise<PlayIdentity | undefined>;
+  resolveSocketTicket?: (ticket: string) => Promise<PlayIdentity | undefined>;
   persistRoom?: (characterId: string, roomId: string) => Promise<void>;
   persistItem?: {
     claim(itemId: string, characterId: string, roomId: string): Promise<boolean>;
@@ -188,6 +189,16 @@ export async function attachRealtime(
             return;
           }
         }
+        const ticket =
+          typeof socket.handshake.auth?.ticket === "string" ? socket.handshake.auth.ticket : "";
+        if (ticket && options.resolveSocketTicket) {
+          const identity = await options.resolveSocketTicket(ticket);
+          if (identity) {
+            socket.data.identity = identity;
+            next();
+            return;
+          }
+        }
         if (!allowGuestPlay) {
           next(new Error("sign_in_required"));
           return;
@@ -200,7 +211,9 @@ export async function attachRealtime(
   });
 
   io.on("connection", (socket) => {
-    void startPlay(socket);
+    void startPlay(socket).catch(() => {
+      noticeAndDisconnect(socket, "The courtyard could not seat you. Refresh and try again.");
+    });
   });
 
   async function startPlay(socket: Socket): Promise<void> {

@@ -3,7 +3,7 @@
 React client. Typed commands are the canonical player interaction.
 
 - Ticket 005 owns the classic transcript, command input, connection indicator, and history.
-- The command box stays enabled so a guest can type. Submit still waits for a connected socket. The client opens on polling first, then may upgrade to websocket, so production cookies reach the server.
+- The command box stays enabled so a guest can type. Submit still waits for a connected socket. The live client stays on polling and sends a server-issued socket ticket so production play does not depend on a websocket cookie.
 - Ticket 009 owns the sign-in gate. Production play requires a session cookie. Guest play remains for local development.
 - Student and teacher sign-in are separate forms. The teacher roster renders `/auth/classroom`. It never invents tokens or shows passwords.
 - Ticket 015 owns the first-time teacher bootstrap copy. The client still does not invent quest or level outcomes.

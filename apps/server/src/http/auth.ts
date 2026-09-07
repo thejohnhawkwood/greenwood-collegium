@@ -5,6 +5,7 @@ import {
   authCreateInviteRequestSchema,
   authDisableAccountRequestSchema,
   authSessionPublicSchema,
+  authSocketTicketSchema,
   authSignInRequestSchema,
   authStatusSchema,
 } from "@greenwood/contracts";
@@ -86,6 +87,18 @@ export async function registerAuthRoutes(
         createdAt: account.createdAt.toISOString(),
       })),
     });
+  });
+
+  app.get("/auth/socket-ticket", async (request, reply) => {
+    const session = await sessionFromRequest(deps.auth, request);
+    if (!session) {
+      return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
+    }
+    const ticket = await deps.auth.issueSocketTicket(session.account.id);
+    if (!ticket) {
+      return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
+    }
+    return authSocketTicketSchema.parse({ ticket });
   });
 
   app.get("/auth/me", async (request, reply) => {
