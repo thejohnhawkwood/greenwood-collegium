@@ -8,6 +8,7 @@ export { handleDrop, revertDrop } from "./drop.js";
 export { handleExamine } from "./examine.js";
 export { handleInventory } from "./inventory.js";
 export { handleAttack } from "./attack.js";
+export { handleCast } from "./cast.js";
 export { parseLookCommand } from "./parse-look.js";
 export { parseMoveCommand } from "./parse-move.js";
 export { parseSayCommand } from "./parse-say.js";
@@ -16,12 +17,14 @@ export { parseDropCommand } from "./parse-drop.js";
 export { parseExamineCommand } from "./parse-examine.js";
 export { parseInventoryCommand } from "./parse-inventory.js";
 export { parseAttackCommand } from "./parse-attack.js";
+export { parseCastCommand } from "./parse-cast.js";
 export { parsePlayerCommand } from "./parse-command.js";
 export { SAY_MAX_LENGTH } from "./speech.js";
 export { itemsHeldBy, itemsInRoom, matchItems, worldItems } from "./items.js";
 export { enemiesInRoom, matchEnemies, worldEnemies } from "./enemies.js";
 export {
   DEFAULT_PLAYER_ATTACK,
+  DEFAULT_PLAYER_MAX_FOCUS,
   DEFAULT_PLAYER_MAX_HEALTH,
   INFIRMARY_ROOM_ID,
   activeEncounter,
@@ -35,10 +38,12 @@ export type { DropFailure, DropResult, DropSuccess } from "./drop.js";
 export type { ExamineFailure, ExamineResult, ExamineSuccess } from "./examine.js";
 export type { InventoryFailure, InventoryResult, InventorySuccess } from "./inventory.js";
 export type { AttackFailure, AttackResult, AttackSuccess } from "./attack.js";
+export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
 export type {
   AttackIntent,
+  CastIntent,
   Character,
   DropIntent,
   Encounter,
@@ -56,6 +61,7 @@ export type {
   RoomExit,
   RoomFixture,
   SayIntent,
+  SpellTemplate,
   TakeIntent,
   WorldState,
 } from "./state.js";

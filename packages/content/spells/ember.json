@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "ember",
+  "name": "Ember",
+  "school": "ember",
+  "description": "A small taught flame. It scorches a foe and leaves them smouldering.",
+  "focusCost": 4,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 5,
+  "burningRounds": 2,
+  "burningDamage": 1,
+  "presentationKey": "ember-burst",
+  "helpText": "cast ember"
+}

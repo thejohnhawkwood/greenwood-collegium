@@ -9,5 +9,6 @@ describe("createDevWorld", () => {
     expect(world.rooms["east-gate"]?.title).toBe("East Gate");
     expect(world.items?.["item-copper-key-lantern-court"]?.name).toBe("Small Copper Key");
     expect(world.enemies?.["enemy-practice-dummy-south-orchard"]?.name).toBe("Practice Dummy");
+    expect(world.spells?.ember?.name).toBe("Ember");
   });
 });

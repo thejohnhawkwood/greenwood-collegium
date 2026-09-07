@@ -64,6 +64,14 @@ describe("content loader", () => {
       experience: 5,
     });
     expect(Object.keys(world.enemies)).toHaveLength(1);
+    expect(world.spells.ember).toMatchObject({
+      name: "Ember",
+      focusCost: 4,
+      damage: 5,
+      burningRounds: 2,
+      presentationKey: "ember-burst",
+    });
+    expect(Object.keys(world.spells)).toHaveLength(1);
   });
 
   it("loads an extra room file without a code change", () => {

@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-07 — Ticket 014 spell and Ember event](2026-09-07-ticket-014-ember.md)
 - [2026-09-07 — Ticket 013 combat vertical slice](2026-09-07-ticket-013-combat.md)
 - [2026-09-07 — Ticket 012 inventory vertical slice](2026-09-07-ticket-012-inventory.md)
 - [2026-09-04 — Ticket 011 content loader](2026-09-04-ticket-011-content-loader.md)

@@ -7,6 +7,7 @@ Pure game rules. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or browser A
 - Ticket 007 owns `handleSay`, `handleJoin`, and `handleLeave`. Socket handlers still do not invent room or chat text.
 - Ticket 012 owns `handleTake`, `handleDrop`, `handleExamine`, and `handleInventory`. Unique items have one owner.
 - Ticket 013 owns `handleAttack`. Combat uses an injectable `random()` so tests stay deterministic.
+- Ticket 014 owns `handleCast`, focus, Ember, and burning. Presentation keys do not decide damage.
 - Callers supply world state, a look or move intent, and an injectable clock / id source.
 - Do not persist or emit sockets here.
 - Accept an injectable random source when combat exists.

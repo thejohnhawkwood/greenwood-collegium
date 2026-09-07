@@ -26,8 +26,33 @@ export type Character = {
   discoveredRoomIds: string[];
   health?: number;
   maxHealth?: number;
+  focus?: number;
+  maxFocus?: number;
   experience?: number;
   encounterId?: string;
+};
+
+export type StatusEffect = {
+  id: "burning";
+  targetId: string;
+  remainingRounds: number;
+  tickDamage: number;
+  appliedRound: number;
+};
+
+export type SpellTemplate = {
+  id: string;
+  name: string;
+  school: string;
+  description: string;
+  focusCost: number;
+  targetType: "enemy";
+  context: "encounter";
+  damage: number;
+  burningRounds: number;
+  burningDamage: number;
+  presentationKey: string;
+  helpText: string;
 };
 
 export type EnemySpawn = {
@@ -58,6 +83,7 @@ export type Encounter = {
   playerId: string;
   spawnId: string;
   enemy: EncounterCombatant;
+  effects: StatusEffect[];
 };
 
 export type ItemInstance = {
@@ -75,6 +101,7 @@ export type WorldState = {
   items?: Record<string, ItemInstance>;
   enemies?: Record<string, EnemySpawn>;
   encounters?: Record<string, Encounter>;
+  spells?: Record<string, SpellTemplate>;
 };
 
 export type LookIntent = {
@@ -135,6 +162,13 @@ export type AttackIntent = {
   target?: string;
 };
 
+export type CastIntent = {
+  verb: "cast";
+  characterId: string;
+  spell: string;
+  target?: string;
+};
+
 export type PlayerCommand =
   | LookIntent
   | MoveIntent
@@ -143,7 +177,8 @@ export type PlayerCommand =
   | DropIntent
   | ExamineIntent
   | InventoryIntent
-  | AttackIntent;
+  | AttackIntent
+  | CastIntent;
 
 export type EngineRuntime = {
   now(): Date;

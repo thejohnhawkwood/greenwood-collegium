@@ -6,7 +6,10 @@ export const combatActionResolvedPayloadSchema = z.object({
   actorId: z.string().min(1),
   actorName: z.string().min(1),
   actorKind: z.enum(["player", "enemy"]),
-  verb: z.literal("attack"),
+  verb: z.enum(["attack", "cast"]),
+  spellId: z.string().min(1).optional(),
+  spellName: z.string().min(1).optional(),
+  focusSpent: z.number().int().nonnegative().optional(),
   targetId: z.string().min(1),
   targetName: z.string().min(1),
   damage: z.number().int().nonnegative(),
@@ -25,6 +28,9 @@ export const combatActionResolvedEventSchema = eventEnvelopeSchema.extend({
 export type CombatActionResolvedEvent = z.infer<typeof combatActionResolvedEventSchema>;
 
 export function formatCombatActionResolvedText(payload: CombatActionResolvedPayload): string {
+  if (payload.verb === "cast" && payload.spellName) {
+    return `You cast ${payload.spellName} at the ${payload.targetName} for ${String(payload.damage)}. It has ${String(payload.targetHealth)} remaining.`;
+  }
   if (payload.actorKind === "player") {
     return `You strike the ${payload.targetName} for ${String(payload.damage)}. It has ${String(payload.targetHealth)} remaining.`;
   }

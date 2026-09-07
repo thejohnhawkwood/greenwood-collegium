@@ -5,15 +5,18 @@ import type { z } from "zod";
 import { enemyPlacementSchema, enemyTemplateSchema } from "./enemy-schema.js";
 import { itemPlacementSchema, itemTemplateSchema } from "./item-schema.js";
 import { roomFileSchema } from "./schema.js";
+import { spellTemplateSchema } from "./spell-schema.js";
 import {
   ContentValidationError,
   validateBestiary,
   validateCatalog,
+  validateSpells,
   validateWorld,
   type NamedEnemyPlacement,
   type NamedEnemyTemplate,
   type NamedPlacement,
   type NamedRoom,
+  type NamedSpell,
   type NamedTemplate,
 } from "./validate.js";
 import { toWorldState, type LoadedWorld } from "./world.js";
@@ -25,6 +28,7 @@ export const bundledEnemiesDirectory = fileURLToPath(new URL("../enemies", impor
 export const bundledEnemyPlacementsDirectory = fileURLToPath(
   new URL("../enemy-placements", import.meta.url),
 );
+export const bundledSpellsDirectory = fileURLToPath(new URL("../spells", import.meta.url));
 
 function parseJsonFile<T>(fileName: string, raw: string, schema: z.ZodType<T>): T {
   let parsed: unknown;
@@ -119,6 +123,17 @@ function loadNamedEnemyPlacements(directory: string): NamedEnemyPlacement[] {
   }));
 }
 
+function loadNamedSpells(directory: string): NamedSpell[] {
+  return listJsonFiles(directory).map((fileName) => ({
+    fileName: basename(fileName),
+    template: parseJsonFile(
+      fileName,
+      readFileSync(join(directory, fileName), "utf8"),
+      spellTemplateSchema,
+    ),
+  }));
+}
+
 export function loadWorldFromDirectory(directory: string): LoadedWorld {
   const namedRooms = loadNamedRooms(directory);
   const issues = validateWorld(namedRooms);
@@ -134,10 +149,12 @@ export function loadBundledWorld(): LoadedWorld {
   const namedPlacements = loadNamedPlacements(bundledPlacementsDirectory);
   const namedEnemies = loadNamedEnemyTemplates(bundledEnemiesDirectory);
   const namedEnemyPlacements = loadNamedEnemyPlacements(bundledEnemyPlacementsDirectory);
+  const namedSpells = loadNamedSpells(bundledSpellsDirectory);
   const issues = [
     ...validateWorld(namedRooms),
     ...validateCatalog(namedRooms, namedTemplates, namedPlacements),
     ...validateBestiary(namedRooms, namedEnemies, namedEnemyPlacements),
+    ...validateSpells(namedSpells),
   ];
   if (issues.length > 0) {
     throw new ContentValidationError(issues);
@@ -149,6 +166,7 @@ export function loadBundledWorld(): LoadedWorld {
       placements: namedPlacements.map((named) => named.placement),
       enemies: namedEnemies.map((named) => named.template),
       enemyPlacements: namedEnemyPlacements.map((named) => named.placement),
+      spells: namedSpells.map((named) => named.template),
     },
   );
 }

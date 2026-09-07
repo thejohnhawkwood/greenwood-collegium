@@ -21,6 +21,17 @@ describe("parsePlayerCommand", () => {
       verb: "attack",
       characterId: "char-rowan",
     });
+    expect(parsePlayerCommand("cast ember dummy", "char-rowan")).toEqual({
+      verb: "cast",
+      characterId: "char-rowan",
+      spell: "ember",
+      target: "dummy",
+    });
+    expect(parsePlayerCommand("cast ember", "char-rowan")).toEqual({
+      verb: "cast",
+      characterId: "char-rowan",
+      spell: "ember",
+    });
     expect(parsePlayerCommand("dance", "char-rowan")).toBeNull();
   });
 });

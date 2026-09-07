@@ -1,6 +1,7 @@
 import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import type { RoomFile } from "./schema.js";
+import type { SpellTemplate } from "./spell-schema.js";
 
 export type LoadedRoom = {
   id: string;
@@ -38,11 +39,27 @@ export type LoadedEnemy = {
   experience: number;
 };
 
+export type LoadedSpell = {
+  id: string;
+  name: string;
+  school: string;
+  description: string;
+  focusCost: number;
+  targetType: "enemy";
+  context: "encounter";
+  damage: number;
+  burningRounds: number;
+  burningDamage: number;
+  presentationKey: string;
+  helpText: string;
+};
+
 export type LoadedWorld = {
   rooms: Record<string, LoadedRoom>;
   characters: Record<string, never>;
   items: Record<string, LoadedItem>;
   enemies: Record<string, LoadedEnemy>;
+  spells: Record<string, LoadedSpell>;
 };
 
 export function toWorldState(
@@ -52,6 +69,7 @@ export function toWorldState(
     placements: ItemPlacement[];
     enemies?: EnemyTemplate[];
     enemyPlacements?: EnemyPlacement[];
+    spells?: SpellTemplate[];
   } = {
     templates: [],
     placements: [],
@@ -111,10 +129,28 @@ export function toWorldState(
       experience: template.experience,
     };
   }
+  const spells: Record<string, LoadedSpell> = {};
+  for (const spell of catalog.spells ?? []) {
+    spells[spell.id] = {
+      id: spell.id,
+      name: spell.name,
+      school: spell.school,
+      description: spell.description,
+      focusCost: spell.focusCost,
+      targetType: spell.targetType,
+      context: spell.context,
+      damage: spell.damage,
+      burningRounds: spell.burningRounds,
+      burningDamage: spell.burningDamage,
+      presentationKey: spell.presentationKey,
+      helpText: spell.helpText,
+    };
+  }
   return {
     rooms: loaded,
     characters: {},
     items,
     enemies,
+    spells,
   };
 }
