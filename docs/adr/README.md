@@ -22,6 +22,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0014](0014-reconnection-idempotency.md) | Reconnection grace and command idempotency |
 | [0015](0015-content-loader.md) | File-per-room content loader |
 | [0016](0016-inventory-ownership.md) | Unique item ownership |
+| [0017](0017-combat-engine.md) | Server-authoritative combat in the engine |
 
 ## Template
 

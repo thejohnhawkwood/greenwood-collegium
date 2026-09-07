@@ -55,6 +55,15 @@ describe("content loader", () => {
       roomId: START_ROOM_ID,
     });
     expect(Object.keys(world.items)).toHaveLength(2);
+    expect(world.enemies["enemy-practice-dummy-south-orchard"]).toMatchObject({
+      templateId: "practice-dummy",
+      name: "Practice Dummy",
+      roomId: "south-orchard",
+      maxHealth: 8,
+      attack: 2,
+      experience: 5,
+    });
+    expect(Object.keys(world.enemies)).toHaveLength(1);
   });
 
   it("loads an extra room file without a code change", () => {

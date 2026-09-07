@@ -1,4 +1,5 @@
 import type { RoomSnapshotEvent } from "@greenwood/contracts";
+import { activeEncounter, closeEncounter } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
@@ -93,6 +94,10 @@ export function handleLeave(
   const roomId = character.roomId;
   const watchers = charactersInRoom(world, roomId, character.id);
   const notices = leftNotices(watchers, character, roomId, runtime);
+  const encounter = activeEncounter(world, character.id);
+  if (encounter) {
+    closeEncounter(world, encounter);
+  }
   delete world.characters[character.id];
   return { ok: true, events: [], notices };
 }

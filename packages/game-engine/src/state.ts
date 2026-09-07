@@ -24,6 +24,40 @@ export type Character = {
   name: string;
   roomId: string;
   discoveredRoomIds: string[];
+  health?: number;
+  maxHealth?: number;
+  experience?: number;
+  encounterId?: string;
+};
+
+export type EnemySpawn = {
+  id: string;
+  templateId: string;
+  name: string;
+  examineDescription: string;
+  roomId: string;
+  maxHealth: number;
+  attack: number;
+  experience: number;
+};
+
+export type EncounterCombatant = {
+  id: string;
+  name: string;
+  health: number;
+  maxHealth: number;
+  attack: number;
+  experience: number;
+};
+
+export type Encounter = {
+  id: string;
+  roomId: string;
+  status: "awaiting_player" | "closed";
+  round: number;
+  playerId: string;
+  spawnId: string;
+  enemy: EncounterCombatant;
 };
 
 export type ItemInstance = {
@@ -39,6 +73,8 @@ export type WorldState = {
   rooms: Record<string, Room>;
   characters: Record<string, Character>;
   items?: Record<string, ItemInstance>;
+  enemies?: Record<string, EnemySpawn>;
+  encounters?: Record<string, Encounter>;
 };
 
 export type LookIntent = {
@@ -93,11 +129,25 @@ export type InventoryIntent = {
   characterId: string;
 };
 
+export type AttackIntent = {
+  verb: "attack";
+  characterId: string;
+  target?: string;
+};
+
 export type PlayerCommand =
-  LookIntent | MoveIntent | SayIntent | TakeIntent | DropIntent | ExamineIntent | InventoryIntent;
+  | LookIntent
+  | MoveIntent
+  | SayIntent
+  | TakeIntent
+  | DropIntent
+  | ExamineIntent
+  | InventoryIntent
+  | AttackIntent;
 
 export type EngineRuntime = {
   now(): Date;
   nextEventId(): string;
   nextSequence(characterId: string): number;
+  random?(): number;
 };

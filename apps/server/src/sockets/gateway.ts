@@ -7,6 +7,7 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import {
+  handleAttack,
   handleDrop,
   handleExamine,
   handleInventory,
@@ -262,7 +263,7 @@ export async function attachRealtime(
         commandId: parsed.data.commandId,
         status: "rejected",
         errorCode: "unknown_command",
-        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  north\n  south\n  east\n  west`,
+        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  attack dummy\n  north\n  south\n  east\n  west`,
         resyncRequired: false,
       });
       commandLog.set(characterId, parsed.data.commandId, {
@@ -319,7 +320,9 @@ export async function attachRealtime(
                 ? handleDrop(world, intent, runtime)
                 : intent.verb === "examine"
                   ? handleExamine(world, intent, runtime)
-                  : handleInventory(world, intent, runtime);
+                  : intent.verb === "inventory"
+                    ? handleInventory(world, intent, runtime)
+                    : handleAttack(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -336,6 +339,16 @@ export async function attachRealtime(
       });
       reply(ack, rejection);
       return;
+    }
+
+    if (
+      identity &&
+      options.persistRoom &&
+      result.ok &&
+      "outcome" in result &&
+      result.outcome === "defeat"
+    ) {
+      await options.persistRoom(characterId, result.roomId);
     }
 
     if (identity && options.persistItem && result.ok && "itemId" in result) {
@@ -453,6 +466,7 @@ function commandRuntime(sequences: Map<string, number>): EngineRuntime {
       sequences.set(id, next);
       return next;
     },
+    random: () => Math.random(),
   };
 }
 

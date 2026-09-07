@@ -8,6 +8,7 @@ import {
   type InventoryUpdatedEvent,
   type ItemTakenEvent,
 } from "@greenwood/contracts";
+import { rejectIfInCombat } from "./combat-state.js";
 import { itemsHeldBy, itemsInRoom, matchItems } from "./items.js";
 import { charactersInRoom } from "./occupants.js";
 import type { OccupantNotice } from "./presence-events.js";
@@ -28,7 +29,8 @@ export type TakeFailure = {
     | "room_not_found"
     | "item_not_found"
     | "item_ambiguous"
-    | "already_taken";
+    | "already_taken"
+    | "in_combat";
   message: string;
 };
 
@@ -60,6 +62,11 @@ export function handleTake(
       code: "room_not_found",
       message: `The room "${character.roomId}" is missing.`,
     };
+  }
+
+  const blocked = rejectIfInCombat(world, character.id);
+  if (blocked) {
+    return blocked;
   }
 
   const matches = matchItems(itemsInRoom(world, room.id), intent.target);

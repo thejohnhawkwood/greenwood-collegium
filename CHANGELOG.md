@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 013 turn-based practice-dummy combat with victory, infirmary defeat, and deterministic rolls.
 - Ticket 012 unique item instances, take/drop/examine/inventory, and an ownership claim.
 - Ticket 011 declarative room JSON, content validation, and a twenty-five-room academy.
 - Ticket 010 command-id idempotency, authenticated resume, and `session.snapshot`.

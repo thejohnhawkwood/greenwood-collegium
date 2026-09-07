@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://greenwood.local/schemas/enemy.json",
+  "title": "Greenwood enemy template",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "shortDescription",
+    "examineDescription",
+    "maxHealth",
+    "attack",
+    "experience"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shortDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "examineDescription": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maxHealth": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "attack": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "experience": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

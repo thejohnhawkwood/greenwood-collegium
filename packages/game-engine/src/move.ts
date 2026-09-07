@@ -6,6 +6,7 @@ import {
   type MapDiscoveredEvent,
   type RoomSnapshotEvent,
 } from "@greenwood/contracts";
+import { rejectIfInCombat } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import {
@@ -24,7 +25,7 @@ export type MoveSuccess = {
 
 export type MoveFailure = {
   ok: false;
-  code: "character_not_found" | "room_not_found" | "no_exit" | "exit_closed";
+  code: "character_not_found" | "room_not_found" | "no_exit" | "exit_closed" | "in_combat";
   message: string;
 };
 
@@ -51,6 +52,11 @@ export function handleMove(
       code: "room_not_found",
       message: `The room "${character.roomId}" is missing.`,
     };
+  }
+
+  const blocked = rejectIfInCombat(world, character.id);
+  if (blocked) {
+    return blocked;
   }
 
   const exit = room.exits.find((candidate) => candidate.direction === intent.direction);
