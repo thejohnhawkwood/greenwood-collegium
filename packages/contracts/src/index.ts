@@ -82,6 +82,41 @@ export {
   type InventoryUpdatedPayload,
 } from "./events/inventory-updated.js";
 export {
+  combatStartedEventSchema,
+  combatStartedPayloadSchema,
+  formatCombatStartedText,
+  type CombatStartedEvent,
+  type CombatStartedPayload,
+} from "./events/combat-started.js";
+export {
+  combatTurnStartedEventSchema,
+  combatTurnStartedPayloadSchema,
+  formatCombatTurnStartedText,
+  type CombatTurnStartedEvent,
+  type CombatTurnStartedPayload,
+} from "./events/combat-turn-started.js";
+export {
+  combatActionResolvedEventSchema,
+  combatActionResolvedPayloadSchema,
+  formatCombatActionResolvedText,
+  type CombatActionResolvedEvent,
+  type CombatActionResolvedPayload,
+} from "./events/combat-action-resolved.js";
+export {
+  combatEndedEventSchema,
+  combatEndedPayloadSchema,
+  formatCombatEndedText,
+  type CombatEndedEvent,
+  type CombatEndedPayload,
+} from "./events/combat-ended.js";
+export {
+  experienceGainedEventSchema,
+  experienceGainedPayloadSchema,
+  formatExperienceGainedText,
+  type ExperienceGainedEvent,
+  type ExperienceGainedPayload,
+} from "./events/progress-experience-gained.js";
+export {
   commandRequestSchema,
   interfaceModeSchema,
   type CommandRequest,

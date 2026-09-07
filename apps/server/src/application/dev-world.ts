@@ -18,5 +18,20 @@ export function createDevWorld(): WorldState {
         },
       ]),
     ),
+    enemies: Object.fromEntries(
+      Object.values(loaded.enemies).map((enemy) => [
+        enemy.id,
+        {
+          id: enemy.id,
+          templateId: enemy.templateId,
+          name: enemy.name,
+          examineDescription: enemy.examineDescription,
+          roomId: enemy.roomId,
+          maxHealth: enemy.maxHealth,
+          attack: enemy.attack,
+          experience: enemy.experience,
+        },
+      ]),
+    ),
   };
 }

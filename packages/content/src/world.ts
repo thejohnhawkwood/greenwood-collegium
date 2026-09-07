@@ -1,3 +1,4 @@
+import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import type { RoomFile } from "./schema.js";
 
@@ -26,15 +27,32 @@ export type LoadedItem = {
   roomId: string;
 };
 
+export type LoadedEnemy = {
+  id: string;
+  templateId: string;
+  name: string;
+  examineDescription: string;
+  roomId: string;
+  maxHealth: number;
+  attack: number;
+  experience: number;
+};
+
 export type LoadedWorld = {
   rooms: Record<string, LoadedRoom>;
   characters: Record<string, never>;
   items: Record<string, LoadedItem>;
+  enemies: Record<string, LoadedEnemy>;
 };
 
 export function toWorldState(
   rooms: RoomFile[],
-  catalog: { templates: ItemTemplate[]; placements: ItemPlacement[] } = {
+  catalog: {
+    templates: ItemTemplate[];
+    placements: ItemPlacement[];
+    enemies?: EnemyTemplate[];
+    enemyPlacements?: EnemyPlacement[];
+  } = {
     templates: [],
     placements: [],
   },
@@ -73,9 +91,30 @@ export function toWorldState(
       roomId: placement.roomId,
     };
   }
+  const enemyTemplates = new Map(
+    (catalog.enemies ?? []).map((template) => [template.id, template]),
+  );
+  const enemies: Record<string, LoadedEnemy> = {};
+  for (const placement of catalog.enemyPlacements ?? []) {
+    const template = enemyTemplates.get(placement.templateId);
+    if (!template) {
+      continue;
+    }
+    enemies[placement.id] = {
+      id: placement.id,
+      templateId: template.id,
+      name: template.name,
+      examineDescription: template.examineDescription,
+      roomId: placement.roomId,
+      maxHealth: template.maxHealth,
+      attack: template.attack,
+      experience: template.experience,
+    };
+  }
   return {
     rooms: loaded,
     characters: {},
     items,
+    enemies,
   };
 }

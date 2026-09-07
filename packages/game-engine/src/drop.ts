@@ -8,6 +8,7 @@ import {
   type InventoryUpdatedEvent,
   type ItemDroppedEvent,
 } from "@greenwood/contracts";
+import { rejectIfInCombat } from "./combat-state.js";
 import { itemsHeldBy, matchItems } from "./items.js";
 import { charactersInRoom } from "./occupants.js";
 import type { OccupantNotice } from "./presence-events.js";
@@ -23,7 +24,8 @@ export type DropSuccess = {
 
 export type DropFailure = {
   ok: false;
-  code: "character_not_found" | "room_not_found" | "item_not_found" | "item_ambiguous";
+  code:
+    "character_not_found" | "room_not_found" | "item_not_found" | "item_ambiguous" | "in_combat";
   message: string;
 };
 
@@ -55,6 +57,11 @@ export function handleDrop(
       code: "room_not_found",
       message: `The room "${character.roomId}" is missing.`,
     };
+  }
+
+  const blocked = rejectIfInCombat(world, character.id);
+  if (blocked) {
+    return blocked;
   }
 
   const matches = matchItems(itemsHeldBy(world, character.id), intent.target);

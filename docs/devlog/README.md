@@ -33,6 +33,9 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-07 — Ticket 013 combat vertical slice](2026-09-07-ticket-013-combat.md)
+- [2026-09-07 — Ticket 012 inventory vertical slice](2026-09-07-ticket-012-inventory.md)
+- [2026-09-04 — Ticket 011 content loader](2026-09-04-ticket-011-content-loader.md)
 - [2026-09-03 — Ticket 010 reconnection and idempotency](2026-09-03-ticket-010-reconnection.md)
 - [2026-09-03 — Ticket 009 classroom authentication](2026-09-03-ticket-009-classroom-auth.md)
 - [2026-09-03 — Ticket 008 PostgreSQL and Drizzle](2026-09-03-ticket-008-postgres-drizzle.md)

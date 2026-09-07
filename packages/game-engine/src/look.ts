@@ -7,6 +7,7 @@ import {
   type RoomSnapshotPayload,
   type SemanticSegment,
 } from "@greenwood/contracts";
+import { enemiesInRoom } from "./enemies.js";
 import { itemsInRoom } from "./items.js";
 import type { Character, EngineRuntime, LookIntent, Room, WorldState } from "./state.js";
 
@@ -91,6 +92,11 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
         id: fixture.id,
         name: fixture.name,
         kind: fixture.kind,
+      })),
+      ...enemiesInRoom(world, room.id).map((enemy) => ({
+        id: enemy.id,
+        name: enemy.name,
+        kind: "npc" as const,
       })),
       ...itemsInRoom(world, room.id).map((item) => ({
         id: item.id,

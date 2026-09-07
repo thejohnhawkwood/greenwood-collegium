@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "practice-dummy",
+  "name": "Practice Dummy",
+  "shortDescription": "A straw dummy for lessons.",
+  "examineDescription": "Straw and canvas marked with chalk circles.\nIt is meant to be struck, not feared.",
+  "maxHealth": 8,
+  "attack": 2,
+  "experience": 5
+}

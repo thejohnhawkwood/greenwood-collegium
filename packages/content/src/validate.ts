@@ -1,3 +1,4 @@
+import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import { START_ROOM_ID, type RoomFile } from "./schema.js";
 
@@ -6,6 +7,7 @@ export type ContentIssue = {
   message: string;
   roomId?: string;
   itemId?: string;
+  enemyId?: string;
   fileName?: string;
 };
 
@@ -216,6 +218,90 @@ export function validateCatalog(
         code: "missing_reference",
         message: `${named.placement.id} is placed in unknown room ${named.placement.roomId}`,
         itemId: named.placement.id,
+        roomId: named.placement.roomId,
+        fileName: named.fileName,
+      });
+    }
+  }
+
+  return issues;
+}
+
+export type NamedEnemyTemplate = {
+  fileName: string;
+  template: EnemyTemplate;
+};
+
+export type NamedEnemyPlacement = {
+  fileName: string;
+  placement: EnemyPlacement;
+};
+
+export function validateBestiary(
+  namedRooms: NamedRoom[],
+  namedTemplates: NamedEnemyTemplate[],
+  namedPlacements: NamedEnemyPlacement[],
+): ContentIssue[] {
+  const issues: ContentIssue[] = [];
+  const roomIds = new Set(namedRooms.map((named) => named.room.id));
+  const templatesById = new Map<string, NamedEnemyTemplate>();
+
+  for (const named of namedTemplates) {
+    const stem = named.fileName.replace(/\.json$/u, "");
+    if (stem !== named.template.id) {
+      issues.push({
+        code: "id_filename_mismatch",
+        message: `${named.fileName} must be named ${named.template.id}.json`,
+        enemyId: named.template.id,
+        fileName: named.fileName,
+      });
+    }
+    if (templatesById.has(named.template.id)) {
+      issues.push({
+        code: "duplicate_id",
+        message: `duplicate enemy template ${named.template.id}`,
+        enemyId: named.template.id,
+        fileName: named.fileName,
+      });
+    } else {
+      templatesById.set(named.template.id, named);
+    }
+  }
+
+  const placementsById = new Map<string, NamedEnemyPlacement>();
+  for (const named of namedPlacements) {
+    const stem = named.fileName.replace(/\.json$/u, "");
+    if (stem !== named.placement.id) {
+      issues.push({
+        code: "id_filename_mismatch",
+        message: `${named.fileName} must be named ${named.placement.id}.json`,
+        enemyId: named.placement.id,
+        fileName: named.fileName,
+      });
+    }
+    if (placementsById.has(named.placement.id)) {
+      issues.push({
+        code: "duplicate_id",
+        message: `duplicate enemy instance ${named.placement.id}`,
+        enemyId: named.placement.id,
+        fileName: named.fileName,
+      });
+    } else {
+      placementsById.set(named.placement.id, named);
+    }
+    if (!templatesById.has(named.placement.templateId)) {
+      issues.push({
+        code: "unknown_enemy_template",
+        message: `${named.placement.id} uses unknown template ${named.placement.templateId}`,
+        enemyId: named.placement.id,
+        fileName: named.fileName,
+      });
+    }
+    if (!roomIds.has(named.placement.roomId)) {
+      issues.push({
+        code: "missing_reference",
+        message: `${named.placement.id} is placed in unknown room ${named.placement.roomId}`,
+        enemyId: named.placement.id,
         roomId: named.placement.roomId,
         fileName: named.fileName,
       });
