@@ -172,6 +172,7 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability. Do not file pu
 - [Render setup](docs/dev/render-setup.md)
 - [Environment variables](docs/dev/environment.md)
 - [Backup and restore](docs/ops/backup-restore.md)
+- [Classroom load test](docs/ops/load-test.md)
 - [Classroom roles](docs/classroom/roles.md)
 - [Content license (CC BY 4.0)](docs/CONTENT-LICENSE.md)
 - [Architecture notes](docs/architecture/)

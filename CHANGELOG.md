@@ -10,10 +10,12 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 018: a 30-client localhost load simulation, command-verb process logs, and crash lines that redact database URLs. Chat text is not logged.
 - Ticket 017 production Blueprint: pre-deploy `db:migrate`, Render health check on `/health/ready`, environment names, and human-only backup notes. Production refuses to start without Postgres.
 
 ### Changed
 
+- `admin audit` now says it lists teacher actions only, not student say, when the classroom log is empty.
 - The student invite count is a number field, not a dropdown, so the painted frame cannot close the list before a teacher picks 24 or 30.
 
 ### Added

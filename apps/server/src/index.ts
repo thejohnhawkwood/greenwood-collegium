@@ -5,6 +5,7 @@ import { createDevWorld } from "./application/dev-world.js";
 import { hydrateWorldItems } from "./application/item-state.js";
 import { buildApp } from "./app.js";
 import { registerAuthRoutes } from "./http/auth.js";
+import { safeErrorMessage } from "./application/safe-log.js";
 import { productionStartError } from "./persistence/boot.js";
 import {
   closePersistence,
@@ -145,4 +146,18 @@ await attachRealtime(app, world, {
     return result.ok ? { ok: true } : { ok: false, message: result.message };
   },
 });
+process.on("uncaughtException", (error) => {
+  app.log.error({ event: "uncaught_exception", message: safeErrorMessage(error) }, "process crash");
+});
+process.on("unhandledRejection", (error) => {
+  app.log.error(
+    { event: "unhandled_rejection", message: safeErrorMessage(error) },
+    "process crash",
+  );
+});
+
 await app.listen({ port, host });
+app.log.info(
+  { event: "process_listening", host, port, worldVersion: process.env.WORLD_VERSION ?? "dev" },
+  "courtyard listening",
+);
