@@ -81,6 +81,28 @@ function student(): PlayIdentity {
 }
 
 describe("classroom moderation", () => {
+  it("explains that audit is the teacher action log, not student say", async () => {
+    const empty = await handleStaffCommand(
+      { verb: "audit", characterId: "char-teacher" },
+      {
+        world: world(),
+        actorId: "char-teacher",
+        identity: teacher(),
+        runtime: runtime(),
+        onlineCharacterIds: ["char-teacher"],
+        mutedUntil: new Map(),
+        identities: new Map([["char-teacher", teacher()]]),
+        audit: new InMemoryAuditRepository(),
+        now: () => new Date("2026-09-07T22:10:00.000Z"),
+      },
+    );
+    expect(empty.ok).toBe(true);
+    if (empty.ok) {
+      expect(empty.events[0]?.narration).toContain("does not record student say");
+      expect(empty.events[0]?.narration).toContain("No teacher actions are stored yet.");
+    }
+  });
+
   it("refuses students and lets a teacher announce, inspect, mute, and audit", async () => {
     const state = world();
     const audit = new InMemoryAuditRepository();

@@ -22,6 +22,8 @@ export const STAFF_HELP_TEXT = [
   "  admin audit",
   "",
   "admin roster lists unused tokens and each login with its Collegian name.",
+  "admin audit lists teacher actions (announce, inspect, mute, kick, remove) with times.",
+  "It does not list student say or movement.",
 ].join("\n");
 
 export type StaffSuccess = {
@@ -360,7 +362,11 @@ async function formatRoster(context: StaffContext): Promise<string> {
 async function formatAudit(context: StaffContext): Promise<string> {
   const rows = context.audit ? await context.audit.listRecent(20) : [];
   if (rows.length === 0) {
-    return "The classroom log is empty.";
+    return [
+      "The classroom log records teacher actions: announce, inspect, mute, kick, and remove.",
+      "It does not record student say or movement.",
+      "No teacher actions are stored yet.",
+    ].join("\n");
   }
   const lines = rows.map((row) => {
     const target = row.targetName ? ` ${row.targetName}` : "";

@@ -252,7 +252,7 @@ admin remove noelle
 admin audit
 ```
 
-`inspect` and `remove` may use a given name or the login name. `admin roster` lists unused tokens and each login with its Collegian name. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Remove disables the account. You can also Remove from the roster table.
+`inspect` and `remove` may use a given name or the login name. `admin roster` lists unused tokens and each login with its Collegian name. `admin audit` lists teacher announce, inspect, mute, kick, and remove rows with times. It does not list student `say` or movement. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Remove disables the account. You can also Remove from the roster table.
 
 Students who type those words hear that only a teacher can use them.
 
@@ -260,6 +260,6 @@ Students who type those words hear that only a teacher can use them.
 
 ## After today
 
-The live courtyard deploys from `main`. Migrations run before start. `/health/ready` must be 200 before class. Backups stay on the teacher: see [`docs/ops/backup-restore.md`](docs/ops/backup-restore.md).
+The live courtyard deploys from `main`. Migrations run before start. `/health/ready` must be 200 before class. Backups stay on the teacher: see [`docs/ops/backup-restore.md`](docs/ops/backup-restore.md). Before a full class, keep the Render **Logs** page open: [`docs/ops/load-test.md`](docs/ops/load-test.md).
 
 For machine install details see [`docs/dev/machine-setup.md`](docs/dev/machine-setup.md). For the live host see [`docs/context/CURRENT.md`](docs/context/CURRENT.md).

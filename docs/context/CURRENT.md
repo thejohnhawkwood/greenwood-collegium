@@ -5,7 +5,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Status
 
 - **Release target:** v0.0 foundation (classic UI 0, twenty-five rooms, look, movement, presence, say, inventory, combat, Ember, Arrival)
-- **Active ticket:** [#18 — Classroom Load Test](https://github.com/thejohnhawkwood/greenwood-collegium/issues/18)
+- **Active ticket:** [#19 — Begin Design Sprint DS-001](https://github.com/thejohnhawkwood/greenwood-collegium/issues/19)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
@@ -15,7 +15,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 2. [`playthrough.md`](../../playthrough.md)
 3. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
 4. ADR-0013 and ADR-0019
-5. PRD Appendix E Ticket 018. Ticket 017 notes: [`docs/dev/render-setup.md`](../dev/render-setup.md), [`docs/ops/backup-restore.md`](../ops/backup-restore.md), ADR-0024.
+5. PRD Appendix E Ticket 019 (DS-001). Ticket 018 notes: [`docs/ops/load-test.md`](../ops/load-test.md), ADR-0025. Do not start 019 unless the owner says next.
 
 ## Forbidden this pass
 
@@ -38,8 +38,8 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 017
+## After Ticket 018
 
-Ticket 017 is the production Blueprint: pre-deploy migrate, `/health/ready`, no memory fallback in production, backup notes.
+Ticket 018 is the 30-client localhost simulation plus crash-safe process logs. Tomorrow's class is the live load test. Do not point the simulation at Render.
 
-Next ticket is **018 — Classroom Load Test**. Do not start it unless the owner says next.
+Next ticket is **019 — DS-001 semantic colour**. Do not start it unless the owner says next.

@@ -45,6 +45,7 @@ import {
   SAY_RATE_WINDOW_MS,
 } from "../application/rate-limit.js";
 import { claimDevCharacter, DEV_START_ROOM_ID } from "../application/session-characters.js";
+import { classroomCommandFields } from "../application/safe-log.js";
 import { sessionSnapshotEvent } from "../application/session-snapshot.js";
 import { parseCookie, SESSION_COOKIE } from "../auth/cookies.js";
 import type { PlayIdentity } from "../auth/service.js";
@@ -244,6 +245,7 @@ export async function attachRealtime(
   io.on("connection", (socket) => {
     socket.emit(SESSION_HELLO_EVENT, sessionHelloSchema.parse({ bootId }));
     void startPlay(socket).catch(() => {
+      app.log.warn({ event: "socket_seat_failed" }, "courtyard could not seat");
       noticeAndDisconnect(socket, "The courtyard could not seat you. Refresh and try again.");
     });
   });
@@ -321,6 +323,17 @@ export async function attachRealtime(
     }
 
     sockets.set(characterId, socket);
+    app.log.info(
+      {
+        event: "socket_connected",
+        characterId,
+        accountId: identity?.accountId,
+        username: identity?.username,
+        role: identity?.role,
+        connected: sockets.size,
+      },
+      "courtyard seat",
+    );
     deliver(sockets, characterId, joined.events, joined.notices);
     bindCommandHandlers(socket, characterId, identity);
   }
@@ -336,6 +349,18 @@ export async function attachRealtime(
       leaveTimers.delete(characterId);
     }
     sockets.set(characterId, socket);
+    app.log.info(
+      {
+        event: "socket_connected",
+        characterId,
+        accountId: identities.get(characterId)?.accountId,
+        username: identities.get(characterId)?.username,
+        role: identities.get(characterId)?.role,
+        connected: sockets.size,
+        resume: true,
+      },
+      "courtyard seat",
+    );
     const runtime = commandRuntime(sequences);
     const snapshot = sessionSnapshotEvent(world, characterId, runtime);
     const look = handleLook(world, { verb: "look", characterId }, runtime);
@@ -377,6 +402,16 @@ export async function attachRealtime(
       if (sockets.get(characterId) !== socket) {
         return;
       }
+      app.log.info(
+        {
+          event: "socket_disconnected",
+          characterId,
+          accountId: identity?.accountId,
+          username: identity?.username,
+          connected: Math.max(0, sockets.size - 1),
+        },
+        "courtyard leave",
+      );
       const occupant = world.characters[characterId];
       const roomId = occupant?.roomId;
       if (identity && options.persistRoom && roomId) {
@@ -417,6 +452,25 @@ export async function attachRealtime(
     payload: unknown,
     ack: ((response: CommandAck) => void) | undefined,
   ): Promise<void> {
+    const started = Date.now();
+    let verb = "unknown";
+    const reply = (ackFn: ((response: CommandAck) => void) | undefined, response: CommandAck) => {
+      app.log.info(
+        classroomCommandFields({
+          commandId: response.commandId,
+          verb,
+          status: response.status,
+          errorCode: response.errorCode,
+          durationMs: Date.now() - started,
+          characterId,
+          accountId: identity?.accountId,
+          username: identity?.username,
+          connected: sockets.size,
+        }),
+        "command",
+      );
+      ackFn?.(response);
+    };
     const parsed = commandRequestSchema.safeParse(payload);
     if (!parsed.success) {
       reply(
@@ -434,12 +488,16 @@ export async function attachRealtime(
 
     const recorded = commandLog.get(characterId, parsed.data.commandId);
     if (recorded) {
+      verb = "replay";
       deliver(sockets, characterId, recorded.events, recorded.notices);
       reply(ack, recorded.ack);
       return;
     }
 
     const intent = parsePlayerCommand(parsed.data.raw, characterId);
+    if (intent) {
+      verb = intent.verb;
+    }
     if (!intent) {
       const rejection = commandAckSchema.parse({
         commandId: parsed.data.commandId,
@@ -458,6 +516,10 @@ export async function attachRealtime(
     }
 
     if (!limiter.allow(`command:${characterId}`, COMMAND_RATE_MAX, COMMAND_RATE_WINDOW_MS)) {
+      app.log.warn(
+        { event: "rate_limited", kind: "command", characterId, connected: sockets.size },
+        "rate limited",
+      );
       reply(
         ack,
         commandAckSchema.parse({
@@ -498,6 +560,10 @@ export async function attachRealtime(
       intent.verb === "say" &&
       !limiter.allow(`say:${characterId}`, SAY_RATE_MAX, SAY_RATE_WINDOW_MS)
     ) {
+      app.log.warn(
+        { event: "rate_limited", kind: "say", characterId, connected: sockets.size },
+        "rate limited",
+      );
       reply(
         ack,
         commandAckSchema.parse({
@@ -798,8 +864,4 @@ function commandRuntime(sequences: Map<string, number>): EngineRuntime {
     },
     random: () => Math.random(),
   };
-}
-
-function reply(ack: ((response: CommandAck) => void) | undefined, response: CommandAck): void {
-  ack?.(response);
 }

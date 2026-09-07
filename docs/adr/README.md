@@ -30,6 +30,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0022](0022-teacher-controls.md) | Teacher classroom commands |
 | [0023](0023-classroom-roster-and-appearances.md) | Classroom batch invites and Collegian appearance |
 | [0024](0024-production-readiness.md) | Production deploy readiness |
+| [0025](0025-classroom-load-logs.md) | Classroom load logs and simulation |
 
 ## Template
 
