@@ -94,6 +94,53 @@ export function allowedOrigins(): string[] {
   return listed;
 }
 
+export function isPrivateLanOrigin(origin: string): boolean {
+  let url: URL;
+  try {
+    url = new URL(origin);
+  } catch {
+    return false;
+  }
+  if (url.protocol !== "http:") {
+    return false;
+  }
+  const host = url.hostname.toLowerCase();
+  if (host === "localhost" || host.endsWith(".local")) {
+    return true;
+  }
+  const parts = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(host);
+  if (!parts) {
+    return false;
+  }
+  const first = Number.parseInt(parts[1] ?? "", 10);
+  const second = Number.parseInt(parts[2] ?? "", 10);
+  const third = Number.parseInt(parts[3] ?? "", 10);
+  const fourth = Number.parseInt(parts[4] ?? "", 10);
+  if ([first, second, third, fourth].some((octet) => Number.isNaN(octet) || octet > 255)) {
+    return false;
+  }
+  if (first === 10 || (first === 192 && second === 168)) {
+    return true;
+  }
+  if (first === 172 && second >= 16 && second <= 31) {
+    return true;
+  }
+  return first === 169 && second === 254;
+}
+
+export function isAllowedBrowserOrigin(
+  origin: string | undefined,
+  production = process.env.NODE_ENV === "production",
+): boolean {
+  if (!origin) {
+    return true;
+  }
+  if (allowedOrigins().includes(origin)) {
+    return true;
+  }
+  return !production && isPrivateLanOrigin(origin);
+}
+
 export async function attachRealtime(
   app: FastifyInstance,
   world: WorldState,
@@ -110,7 +157,13 @@ export async function attachRealtime(
   const limiter = new RateLimiter();
   const io = new Server(app.server, {
     cors: {
-      origin: allowedOrigins(),
+      origin(origin, callback) {
+        if (isAllowedBrowserOrigin(origin)) {
+          callback(null, true);
+          return;
+        }
+        callback(new Error("origin not allowed"), false);
+      },
       credentials: true,
     },
   });

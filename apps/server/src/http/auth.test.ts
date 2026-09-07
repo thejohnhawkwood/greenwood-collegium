@@ -118,6 +118,84 @@ describe("auth HTTP", () => {
       ).json(),
     ).toMatchObject({ error: "account_disabled" });
   });
+
+  it("lets the owner read unused tokens and accepted usernames", async () => {
+    const { auth } = createTestAuth();
+    app = await buildApp();
+    await registerAuthRoutes(app, {
+      auth,
+      allowGuestPlay: false,
+      secureCookies: false,
+      persistence: "memory",
+    });
+
+    const owner = await app.inject({
+      method: "POST",
+      url: "/auth/bootstrap",
+      payload: { token: TEST_BOOTSTRAP_TOKEN, username: "owner", password: "lantern-path" },
+    });
+    const ownerCookie = cookieValue(owner, SESSION_COOKIE);
+
+    const invite = await app.inject({
+      method: "POST",
+      url: "/auth/invites",
+      cookies: { [SESSION_COOKIE]: ownerCookie },
+      payload: { role: "student" },
+    });
+    const token = (invite.json() as { token: string }).token;
+
+    const unused = await app.inject({
+      method: "GET",
+      url: "/auth/classroom",
+      cookies: { [SESSION_COOKIE]: ownerCookie },
+    });
+    expect(unused.statusCode).toBe(200);
+    expect(unused.json()).toMatchObject({
+      persistence: "memory",
+      invites: [{ status: "unused", token, role: "student" }],
+      accounts: [],
+    });
+
+    const accepted = await app.inject({
+      method: "POST",
+      url: "/auth/accept-invite",
+      payload: { token: `  ${token}  `, username: "pip", password: "lantern-path" },
+    });
+    expect(accepted.statusCode).toBe(200);
+    const studentCookie = cookieValue(accepted, SESSION_COOKIE);
+
+    const used = await app.inject({
+      method: "GET",
+      url: "/auth/classroom",
+      cookies: { [SESSION_COOKIE]: ownerCookie },
+    });
+    expect(used.json()).toMatchObject({
+      persistence: "memory",
+      invites: [{ status: "used", username: "pip" }],
+      accounts: [{ username: "pip", role: "student" }],
+    });
+    expect(JSON.stringify(used.json())).not.toContain(token);
+    expect(JSON.stringify(used.json())).not.toContain("lantern-path");
+
+    expect(
+      (
+        await app.inject({
+          method: "GET",
+          url: "/auth/classroom",
+          cookies: { [SESSION_COOKIE]: studentCookie },
+        })
+      ).statusCode,
+    ).toBe(403);
+    expect(
+      (
+        await app.inject({
+          method: "POST",
+          url: "/auth/sign-in",
+          payload: { username: "owner", password: "lantern-path", audience: "student" },
+        })
+      ).json(),
+    ).toMatchObject({ message: "Use the teacher sign-in below." });
+  });
 });
 
 function cookieValue(

@@ -7,22 +7,151 @@ body,
 #root {
   margin: 0;
   min-height: 100%;
+  background: var(--deep);
 }
 
 body {
-  background: var(--moss);
+  background: var(--deep);
   color: var(--ink);
   font-family: var(--font);
+}
+
+.academy-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 18%, #24352b 0%, var(--deep) 62%), var(--deep);
+}
+
+.academy-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.academy-bough {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(22vw, 17.5rem);
+  overflow: hidden;
+  animation: academy-grow 2.8s ease-out both;
+}
+
+.academy-bough-paint {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 720 / 1080;
+}
+
+.academy-bough-paint img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.academy-bough-left {
+  left: 0;
+  -webkit-mask-image: linear-gradient(to right, #000 58%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 58%, transparent 100%);
+}
+
+.academy-bough-left .academy-bough-paint {
+  left: 0;
+}
+
+.academy-bough-right {
+  right: 0;
+  width: min(23vw, 18rem);
+  animation-delay: 0.16s;
+  -webkit-mask-image: linear-gradient(to left, #000 58%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 58%, transparent 100%);
+}
+
+.academy-bough-right .academy-bough-paint {
+  right: 0;
+}
+
+.academy-lantern {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 232, 160, 1) 0%,
+    rgba(255, 176, 70, 0.55) 32%,
+    transparent 72%
+  );
+  box-shadow: 0 0 1.15rem 0.2rem rgba(255, 188, 80, 0.45);
+  mix-blend-mode: screen;
+  animation: academy-lantern-pulse 3.2s ease-in-out infinite;
+}
+
+.academy-arrival {
+  position: absolute;
+  left: 0.35rem;
+  bottom: 0;
+  width: min(56vw, 38rem);
+  z-index: 1;
+  overflow: visible;
+  animation: academy-arrive 2.8s 0.2s ease-out both;
+}
+
+.academy-arrival-paint {
+  position: relative;
+  width: 100%;
+}
+
+.academy-arrival img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: left bottom;
+}
+
+.academy-well {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 48rem;
+  min-height: calc(100vh - 16rem);
+  max-height: calc(100vh - 16rem);
+  margin: 1.25rem auto 14.25rem;
+  padding: 0.35rem;
+  background: linear-gradient(
+    180deg,
+    #3a2a14 0%,
+    var(--brass) 12%,
+    var(--lantern) 50%,
+    var(--brass) 88%,
+    #3a2a14 100%
+  );
+  box-shadow:
+    0 0 0 0.4rem var(--bark),
+    0 1.25rem 2.8rem rgba(0, 0, 0, 0.55);
 }
 
 .client {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  max-width: 48rem;
-  margin: 0 auto;
-  padding: 1.5rem;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  max-width: none;
+  margin: 0;
+  padding: 1.35rem 1.5rem 1.2rem;
   gap: 1rem;
+  background: linear-gradient(180deg, rgba(18, 28, 22, 0.96), var(--well) 18%, var(--well));
 }
 
 .chrome h1 {
@@ -70,18 +199,19 @@ body {
   color: var(--lantern);
 }
 
+.command-label:focus-within .prompt {
+  animation: command-prompt-blink 1s step-end infinite;
+}
+
 .command-label input {
   flex: 1;
   min-width: 0;
   background: transparent;
   border: 0;
   color: inherit;
+  caret-color: var(--lantern);
   font: inherit;
   padding: 0.2rem 0;
-}
-
-.command-label input:disabled {
-  opacity: 0.5;
 }
 
 .command-label input:focus,
@@ -148,4 +278,126 @@ body {
 
 .auth-error {
   margin: 0;
+}
+
+.classroom-roster {
+  margin-top: 0.75rem;
+  max-height: 12rem;
+  overflow: auto;
+  padding-right: 0.35rem;
+}
+
+.classroom-roster h2,
+.classroom-roster h3 {
+  margin: 0.45rem 0 0.25rem;
+  color: var(--lantern);
+  font-weight: 600;
+}
+
+.classroom-roster h2 {
+  font-size: 1rem;
+}
+
+.classroom-roster h3 {
+  font-size: 0.95rem;
+}
+
+.classroom-roster p,
+.classroom-roster li {
+  margin: 0 0 0.35rem;
+}
+
+.classroom-roster ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.classroom-roster input {
+  width: 100%;
+}
+
+@keyframes academy-grow {
+  from {
+    clip-path: inset(62% 0 0 0);
+  }
+
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@keyframes academy-arrive {
+  from {
+    transform: translateY(12%) translateX(-4%);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes academy-lantern-pulse {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: translate(-50%, -50%) scale(0.86);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.22);
+  }
+}
+
+@media (max-width: 52rem) {
+  .academy-bough {
+    width: min(16vw, 8.5rem);
+  }
+
+  .academy-lantern {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .academy-arrival {
+    width: min(72vw, 24rem);
+  }
+
+  .academy-well {
+    margin: 0.75rem 0.75rem 10.5rem;
+    min-height: calc(100vh - 12rem);
+    max-height: calc(100vh - 12rem);
+  }
+
+  .client {
+    padding: 1rem;
+  }
+}
+
+@keyframes command-prompt-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .academy-bough,
+  .academy-arrival {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+
+  .academy-lantern {
+    animation: none;
+    opacity: 0.72;
+    transform: translate(-50%, -50%);
+  }
+
+  .command-label:focus-within .prompt {
+    animation: none;
+  }
 }

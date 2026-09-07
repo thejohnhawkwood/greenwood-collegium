@@ -94,10 +94,15 @@ if (databaseStatus === "unreachable") {
   app.log.error("database connection or migration failed");
 }
 
+if (!process.env.ADMIN_BOOTSTRAP_TOKEN?.trim()) {
+  app.log.warn("ADMIN_BOOTSTRAP_TOKEN is unset; owner bootstrap will reject every token");
+}
+
 await registerAuthRoutes(app, {
   auth,
   allowGuestPlay,
   secureCookies: production,
+  persistence: persistence ? "postgres" : "memory",
 });
 
 app.addHook("onClose", async () => {

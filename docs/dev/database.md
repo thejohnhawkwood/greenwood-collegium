@@ -6,6 +6,8 @@ Ticket 008 added Drizzle, SQL migrations, and account/character repositories.
 
 Accounts, characters, sessions, invites, and unique item instances can be written and read back. Guest play remains in development only. Production sockets require a session.
 
+If `DATABASE_URL` is unset or Postgres is down, the process falls back to memory. Unused invite tokens and classroom accounts then vanish on restart. The teacher roster warns when that happens.
+
 `DATABASE_URL` never goes in Git. Do not paste Render connection strings into chat.
 
 ## Default local tests

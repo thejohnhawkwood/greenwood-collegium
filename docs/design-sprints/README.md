@@ -6,6 +6,7 @@ Each significant interface upgrade starts with a written design sprint. Do not a
 
 | ID | Title | Status |
 |---|---|---|
+| DS-classic-living-frame | Gold CLI living frame | Complete |
 | DS-001 | Semantic colour and message categories | Not started |
 | DS-002 | Persistent player status | Not started |
 | DS-003 | Command assistance and keyboard workflow | Not started |

@@ -33,14 +33,27 @@ export function persistSessionsAndInvites(
       revokedAt: expect.any(Date),
     });
 
+    const student = await accounts.create({
+      username: "pip",
+      passwordHash: "pending",
+      role: "student",
+    });
     const invite = await invites.create({
       tokenHash: `invite-${account.id}`,
       role: "student",
       createdByAccountId: account.id,
       expiresAt: new Date(Date.now() + 60_000),
+      issuedToken: "plain-invite",
     });
-    expect(await invites.consume(invite.id, new Date())).toBe(true);
-    expect(await invites.consume(invite.id, new Date())).toBe(false);
+    expect((await invites.list())[0]).toMatchObject({
+      issuedToken: "plain-invite",
+    });
+    expect(await invites.consume(invite.id, new Date(), student.id)).toBe(true);
+    expect(await invites.consume(invite.id, new Date(), student.id)).toBe(false);
+    expect(await invites.getByTokenHash(`invite-${account.id}`)).toMatchObject({
+      consumedByAccountId: student.id,
+    });
+    expect((await invites.list())[0]?.issuedToken).toBeUndefined();
     expect(await accounts.listByRole("teacher")).toHaveLength(1);
   });
 }
