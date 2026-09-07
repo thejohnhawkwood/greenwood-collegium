@@ -58,10 +58,5 @@ function Bough({
 }
 
 function LanternGlow({ left, top, delay }: { left: string; top: string; delay: string }) {
-  return (
-    <span
-      className="academy-lantern"
-      style={{ left, top, animationDelay: delay }}
-    />
-  );
+  return <span className="academy-lantern" style={{ left, top, animationDelay: delay }} />;
 }

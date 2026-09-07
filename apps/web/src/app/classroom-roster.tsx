@@ -10,8 +10,8 @@ export function ClassroomRoster({ classroom }: { classroom: AuthClassroom }) {
       <h2 id="classroom-roster-heading">Classroom roster</h2>
       {classroom.persistence === "memory" ? (
         <p role="status">
-          This server is using memory. Unused tokens and student accounts vanish when you rebuild
-          or restart. Start local Postgres so they survive.
+          This server is using memory. Unused tokens and student accounts vanish when you rebuild or
+          restart. Start local Postgres so they survive.
         </p>
       ) : (
         <p>Invites and accounts are stored in the classroom database.</p>
