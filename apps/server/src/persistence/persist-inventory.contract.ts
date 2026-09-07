@@ -14,7 +14,7 @@ export function persistInventoryOwnership(
     });
     const first = await characters.create({
       accountId: account.id,
-      name: "Rowan the Hare",
+      name: `Rowan ${crypto.randomUUID().slice(0, 8)}`,
       speciesId: "hare",
       roomId: "lantern-court",
     });

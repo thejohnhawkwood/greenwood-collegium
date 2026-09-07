@@ -1,5 +1,17 @@
 import {
+  formatCharacterName,
+  isKnownGender,
+  isKnownSpecies,
+  listSpecies,
+  reservedCharacterNames,
+  suggestedCharacterNames,
+  characterCreationIntro,
+  CHARACTER_GENDERS,
+} from "@greenwood/content";
+import {
+  DuplicateCharacterNameError,
   DuplicateUsernameError,
+  normalizeCharacterName,
   normalizeUsername,
   type AccountRecord,
   type AccountRepository,
@@ -30,7 +42,13 @@ export type AuthFailureCode =
   | "forbidden"
   | "unauthenticated"
   | "invalid_username"
-  | "weak_password";
+  | "weak_password"
+  | "invalid_character_name"
+  | "duplicate_character_name"
+  | "invalid_species"
+  | "invalid_gender"
+  | "character_exists"
+  | "character_incomplete";
 
 export type AuthFailure = {
   ok: false;
@@ -41,7 +59,7 @@ export type AuthFailure = {
 export type SignedIn = {
   ok: true;
   account: AccountRecord;
-  character: CharacterRecord;
+  character?: CharacterRecord;
   sessionToken: string;
 };
 
@@ -103,10 +121,20 @@ export type AuthService = {
   disableAccount(actorId: string, targetId: string): Promise<{ ok: true } | AuthFailure>;
   resolveSession(
     sessionToken: string,
-  ): Promise<{ account: AccountRecord; character: CharacterRecord } | undefined>;
+  ): Promise<{ account: AccountRecord; character?: CharacterRecord } | undefined>;
   resolvePlayIdentity(sessionToken: string): Promise<PlayIdentity | undefined>;
   issueSocketTicket(accountId: string): Promise<string | undefined>;
   resolveSocketTicket(ticket: string): Promise<PlayIdentity | undefined>;
+  characterOptions(): {
+    intro: string;
+    species: ReadonlyArray<{ id: string; name: string }>;
+    genders: ReadonlyArray<{ id: string; label: string }>;
+  };
+  suggestCharacterName(): Promise<string | undefined>;
+  completeCharacter(
+    accountId: string,
+    input: { name: string; speciesId: string; gender: NonNullable<CharacterRecord["gender"]> },
+  ): Promise<{ ok: true; character: CharacterRecord } | AuthFailure>;
 };
 
 export type AuthServiceDeps = {
@@ -118,10 +146,12 @@ export type AuthServiceDeps = {
   bootstrapToken: string | undefined;
   now?: () => Date;
   startRoomId?: string;
+  random?: () => number;
 };
 
 export function createAuthService(deps: AuthServiceDeps): AuthService {
   const now = deps.now ?? (() => new Date());
+  const random = deps.random ?? Math.random;
   const startRoomId = deps.startRoomId ?? DEFAULT_START_ROOM_ID;
   const socketTickets = new Map<string, { accountId: string; expiresAt: number }>();
 
@@ -143,7 +173,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!(await bootstrapOpen())) {
       return fail("owner_exists", "An owner account already exists.");
     }
-    const created = await createAccountWithCharacter({
+    const created = await createAccount({
       username: input.username,
       password: input.password,
       role: "owner",
@@ -151,7 +181,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!created.ok) {
       return created;
     }
-    return issueSession(created.account, created.character);
+    return issueSession(created.account);
   }
 
   async function signIn(input: {
@@ -176,12 +206,8 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (account.status === "disabled") {
       return fail("account_disabled", "That account is disabled.");
     }
-    const character = await requireCharacter(account.id);
-    if (!character) {
-      return fail("invalid_credentials", "That username or password is not correct.");
-    }
     await deps.accounts.touchSignIn(account.id, now());
-    return issueSession(account, character);
+    return issueSession(account, await findCharacter(account.id));
   }
 
   async function signOut(sessionToken: string): Promise<void> {
@@ -226,7 +252,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!invite || invite.consumedAt || invite.expiresAt.getTime() <= now().getTime()) {
       return fail("invalid_invite", "That invite is not valid.");
     }
-    const created = await createAccountWithCharacter({
+    const created = await createAccount({
       username: input.username,
       password: input.password,
       role: invite.role,
@@ -238,7 +264,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!consumed) {
       return fail("invalid_invite", "That invite is not valid.");
     }
-    return issueSession(created.account, created.character);
+    return issueSession(created.account);
   }
 
   async function listClassroom(actorId: string): Promise<
@@ -320,7 +346,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
 
   async function resolveSession(
     sessionToken: string,
-  ): Promise<{ account: AccountRecord; character: CharacterRecord } | undefined> {
+  ): Promise<{ account: AccountRecord; character?: CharacterRecord } | undefined> {
     const session = await deps.sessions.getByTokenHash(hashToken(sessionToken));
     if (!session || session.revokedAt || session.expiresAt.getTime() <= now().getTime()) {
       return undefined;
@@ -329,16 +355,12 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!account || account.status !== "active") {
       return undefined;
     }
-    const character = await requireCharacter(account.id);
-    if (!character) {
-      return undefined;
-    }
-    return { account, character };
+    return { account, character: await findCharacter(account.id) };
   }
 
   async function resolvePlayIdentity(sessionToken: string): Promise<PlayIdentity | undefined> {
     const resolved = await resolveSession(sessionToken);
-    if (!resolved) {
+    if (!resolved?.character || !isCharacterComplete(resolved.character)) {
       return undefined;
     }
     return playIdentity(resolved.account, resolved.character);
@@ -349,11 +371,91 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!account || account.status !== "active") {
       return undefined;
     }
-    const character = await requireCharacter(account.id);
-    if (!character) {
+    const character = await findCharacter(account.id);
+    if (!character || !isCharacterComplete(character)) {
       return undefined;
     }
     return playIdentity(account, character);
+  }
+
+  function characterOptions() {
+    return {
+      intro: characterCreationIntro(),
+      species: listSpecies(),
+      genders: CHARACTER_GENDERS,
+    };
+  }
+
+  async function suggestCharacterName(): Promise<string | undefined> {
+    const available: string[] = [];
+    for (const candidate of suggestedCharacterNames()) {
+      if (isReservedCharacterName(candidate)) {
+        continue;
+      }
+      if (await deps.characters.getByNormalizedName(candidate)) {
+        continue;
+      }
+      available.push(candidate);
+    }
+    if (available.length === 0) {
+      return undefined;
+    }
+    const index = Math.floor(random() * available.length);
+    return available[index];
+  }
+
+  async function completeCharacter(
+    accountId: string,
+    input: { name: string; speciesId: string; gender: NonNullable<CharacterRecord["gender"]> },
+  ): Promise<{ ok: true; character: CharacterRecord } | AuthFailure> {
+    const account = await deps.accounts.getById(accountId);
+    if (!account || account.status !== "active") {
+      return fail("unauthenticated", "Sign in to continue.");
+    }
+    if (!isKnownSpecies(input.speciesId)) {
+      return fail("invalid_species", "Choose a species from the list.");
+    }
+    if (!input.gender || !isKnownGender(input.gender)) {
+      return fail("invalid_gender", "Choose a gender from the list.");
+    }
+    const givenName = titleCharacterName(input.name);
+    const nameCheck = validateGivenName(givenName);
+    if (nameCheck) {
+      return nameCheck;
+    }
+    const existing = await findCharacter(account.id);
+    if (existing && isCharacterComplete(existing)) {
+      return fail("character_exists", "This account already has a Collegian.");
+    }
+    const taken = await deps.characters.getByNormalizedName(givenName);
+    if (taken && taken.id !== existing?.id) {
+      return fail("duplicate_character_name", "That name is already taken.");
+    }
+    try {
+      if (existing) {
+        const character = await deps.characters.updateCreation(existing.id, {
+          name: givenName,
+          speciesId: input.speciesId,
+          gender: input.gender,
+          creationCompletedAt: now(),
+        });
+        return { ok: true, character };
+      }
+      const character = await deps.characters.create({
+        accountId: account.id,
+        name: givenName,
+        speciesId: input.speciesId,
+        gender: input.gender,
+        roomId: startRoomId,
+        creationCompletedAt: now(),
+      });
+      return { ok: true, character };
+    } catch (error) {
+      if (error instanceof DuplicateCharacterNameError) {
+        return fail("duplicate_character_name", "That name is already taken.");
+      }
+      throw error;
+    }
   }
 
   async function issueSocketTicket(accountId: string): Promise<string | undefined> {
@@ -382,11 +484,11 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     return playIdentityForAccount(row.accountId);
   }
 
-  async function createAccountWithCharacter(input: {
+  async function createAccount(input: {
     username: string;
     password: string;
     role: AccountRecord["role"];
-  }): Promise<{ ok: true; account: AccountRecord; character: CharacterRecord } | AuthFailure> {
+  }): Promise<{ ok: true; account: AccountRecord } | AuthFailure> {
     const username = normalizeUsername(input.username);
     if (!USERNAME_PATTERN.test(username)) {
       return fail("invalid_username", "Usernames use letters, numbers, underscores, or hyphens.");
@@ -400,13 +502,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         passwordHash: await deps.hasher.hash(input.password),
         role: input.role,
       });
-      const character = await deps.characters.create({
-        accountId: account.id,
-        name: displayName(username),
-        speciesId: DEFAULT_SPECIES_ID,
-        roomId: startRoomId,
-      });
-      return { ok: true, account, character };
+      return { ok: true, account };
     } catch (error) {
       if (error instanceof DuplicateUsernameError) {
         return fail("duplicate_username", "That username is already taken.");
@@ -417,7 +513,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
 
   async function issueSession(
     account: AccountRecord,
-    character: CharacterRecord,
+    character?: CharacterRecord,
   ): Promise<SignedIn> {
     const sessionToken = randomToken();
     await deps.sessions.create({
@@ -428,7 +524,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     return { ok: true, account, character, sessionToken };
   }
 
-  async function requireCharacter(accountId: string): Promise<CharacterRecord | undefined> {
+  async function findCharacter(accountId: string): Promise<CharacterRecord | undefined> {
     const [character] = await deps.characters.listByAccountId(accountId);
     if (!character || character.status !== "active") {
       return undefined;
@@ -449,6 +545,9 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     resolvePlayIdentity,
     issueSocketTicket,
     resolveSocketTicket,
+    characterOptions,
+    suggestCharacterName,
+    completeCharacter,
   };
 }
 
@@ -456,15 +555,47 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
   return {
     accountId: account.id,
     characterId: character.id,
-    characterName: character.name,
+    characterName: formatCharacterName(character.name, character.speciesId),
     roomId: character.roomId,
     experience: character.experience,
     level: character.level,
   };
 }
 
-function displayName(username: string): string {
-  return username.charAt(0).toUpperCase() + username.slice(1);
+function isCharacterComplete(character: CharacterRecord): boolean {
+  return character.creationCompletedAt !== undefined && character.gender !== undefined;
+}
+
+function validateGivenName(name: string): AuthFailure | undefined {
+  if (name.includes(" the ")) {
+    return fail(
+      "invalid_character_name",
+      "Enter a given name. The Collegium will add your species.",
+    );
+  }
+  if (isReservedCharacterName(name)) {
+    return fail("invalid_character_name", "Choose a different name. That one is reserved.");
+  }
+  return undefined;
+}
+
+function isReservedCharacterName(name: string): boolean {
+  const needle = normalizeCharacterName(name);
+  return reservedCharacterNames().some((reserved) => normalizeCharacterName(reserved) === needle);
+}
+
+function titleCharacterName(name: string): string {
+  return name
+    .trim()
+    .replace(/\s+/g, " ")
+    .split(/(\s+|-|')/)
+    .map((part) => {
+      if (part === "'" || part === "-" || /^\s+$/.test(part)) {
+        return part;
+      }
+      return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+    })
+    .join("");
 }
 
 function fail(code: AuthFailureCode, message: string): AuthFailure {

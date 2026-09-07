@@ -4,7 +4,11 @@ import { io as ioClient, type Socket } from "socket.io-client";
 import { createDevWorld } from "../application/dev-world.js";
 import { buildApp } from "../app.js";
 import { SESSION_COOKIE } from "../auth/cookies.js";
-import { createTestAuth, TEST_BOOTSTRAP_TOKEN } from "../auth/test-harness.js";
+import {
+  completeTestCharacter,
+  createTestAuth,
+  TEST_BOOTSTRAP_TOKEN,
+} from "../auth/test-harness.js";
 import { registerAuthRoutes } from "../http/auth.js";
 import { attachRealtime } from "./gateway.js";
 
@@ -59,6 +63,7 @@ describe("authenticated socket identity", () => {
     if (!cookie) {
       throw new Error("missing session cookie");
     }
+    await completeTestCharacter(auth, String(boot.json().accountId));
 
     client = ioClient(`http://127.0.0.1:${String(address.port)}`, {
       transports: ["websocket"],
@@ -111,6 +116,7 @@ describe("authenticated socket identity", () => {
     if (!cookie) {
       throw new Error("missing session cookie");
     }
+    await completeTestCharacter(auth, String(boot.json().accountId));
     const ticketResponse = await app.inject({
       method: "GET",
       url: "/auth/socket-ticket",

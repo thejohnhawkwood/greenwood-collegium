@@ -63,7 +63,9 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     {
       create: (input) => characters().create(input),
       getById: (id) => characters().getById(id),
+      getByNormalizedName: (name) => characters().getByNormalizedName(name),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
+      updateCreation: (id, input) => characters().updateCreation(id, input),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
       updateProgress: (id, input) => characters().updateProgress(id, input),
     },
@@ -81,7 +83,9 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     {
       create: (input) => characters().create(input),
       getById: (id) => characters().getById(id),
+      getByNormalizedName: (name) => characters().getByNormalizedName(name),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
+      updateCreation: (id, input) => characters().updateCreation(id, input),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
       updateProgress: (id, input) => characters().updateProgress(id, input),
     },
@@ -111,7 +115,9 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     {
       create: (input) => characters().create(input),
       getById: (id) => characters().getById(id),
+      getByNormalizedName: (name) => characters().getByNormalizedName(name),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
+      updateCreation: (id, input) => characters().updateCreation(id, input),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
       updateProgress: (id, input) => characters().updateProgress(id, input),
     },
@@ -135,7 +141,9 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     {
       create: (input) => characters().create(input),
       getById: (id) => characters().getById(id),
+      getByNormalizedName: (name) => characters().getByNormalizedName(name),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
+      updateCreation: (id, input) => characters().updateCreation(id, input),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
       updateProgress: (id, input) => characters().updateProgress(id, input),
     },

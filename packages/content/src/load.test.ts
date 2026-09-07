@@ -43,7 +43,13 @@ describe("content loader", () => {
     expect(Object.keys(world.rooms)).toHaveLength(25);
     expect(world.rooms[START_ROOM_ID]?.title).toBe("Lantern Court");
     expect(world.rooms[START_ROOM_ID]?.fixtures).toEqual([
-      { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
+      {
+        id: "npc-porter-bramble",
+        name: "Porter Bramble",
+        kind: "npc",
+        examineDescription:
+          "A hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. He watches the courtyard as if every new Collegian were expected.",
+      },
     ]);
     expect(world.rooms["east-gate"]).toBeDefined();
     expect(world.rooms["west-cloister"]?.exits).toEqual([

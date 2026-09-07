@@ -26,6 +26,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0018](0018-ember-presentation.md) | Ember results are decided before presentation |
 | [0019](0019-quest-reward-idempotency.md) | Quest rewards are awarded once and persisted as totals |
 | [0020](0020-teacher-invite-roster.md) | Teacher invite roster |
+| [0021](0021-character-creation.md) | Character creation after sign-in |
 
 ## Template
 

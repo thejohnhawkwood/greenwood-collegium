@@ -8,6 +8,11 @@ first playable package is tagged.
 
 ## [Unreleased]
 
+### Added
+
+- After sign-in, a player hears a narrator introduction and chooses species, gender, and a given name. The classroom username is no longer the character name.
+- `examine porter` describes Porter Bramble. Examine also works on other courtyard fixtures, enemies, and nearby Collegians.
+
 ### Fixed
 
 - Signed-in play fetches a short-lived socket ticket over the session cookie and keeps the game socket on HTTP polling, so Render can drop the websocket upgrade without locking teachers and students out of the courtyard.

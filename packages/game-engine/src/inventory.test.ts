@@ -17,7 +17,14 @@ function courtWithKey(): WorldState {
         longDescription: "Blue lanterns drift.",
         zone: "academy-core",
         exits: [],
-        fixtures: [],
+        fixtures: [
+          {
+            id: "npc-porter-bramble",
+            name: "Porter Bramble",
+            kind: "npc",
+            examineDescription: "A hedgehog in a too-large porter's coat.",
+          },
+        ],
       },
     },
     characters: {
@@ -115,6 +122,25 @@ describe("inventory slice", () => {
       code: "item_not_found",
     });
     expect(keyOf(world).holderCharacterId).toBe("char-rowan");
+  });
+
+  it("examines Porter by first name or full name", () => {
+    const examined = handleExamine(
+      courtWithKey(),
+      { verb: "examine", characterId: "char-rowan", target: "porter" },
+      runtime(),
+    );
+    expect(examined.ok).toBe(true);
+    if (examined.ok) {
+      expect(examined.event.narration).toContain("too-large porter");
+    }
+    expect(
+      handleExamine(
+        courtWithKey(),
+        { verb: "examine", characterId: "char-rowan", target: "Porter Bramble" },
+        runtime(),
+      ).ok,
+    ).toBe(true);
   });
 
   it("examines, lists, and drops a carried item", () => {

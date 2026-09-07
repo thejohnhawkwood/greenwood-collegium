@@ -36,6 +36,13 @@
       "when": 1757271000000,
       "tag": "0004_invite_classroom",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1757273000000,
+      "tag": "0005_character_creation",
+      "breakpoints": true
     }
   ]
 }

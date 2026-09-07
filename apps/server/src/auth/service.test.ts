@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { argon2Hasher } from "./hasher.js";
 import { createAuthService, SOCKET_TICKET_TTL_MS } from "./service.js";
-import { createTestAuth, TEST_BOOTSTRAP_TOKEN } from "./test-harness.js";
+import { completeTestCharacter, createTestAuth, TEST_BOOTSTRAP_TOKEN } from "./test-harness.js";
 
 describe("classroom auth service", () => {
   it("bootstraps an owner, then signs in and out", async () => {
@@ -17,7 +17,11 @@ describe("classroom auth service", () => {
       return;
     }
     expect(created.account.role).toBe("owner");
-    expect(created.character.name).toBe("Rowan");
+    expect(created.character).toBeUndefined();
+    await completeTestCharacter(auth, created.account.id);
+    expect(await auth.resolvePlayIdentity(created.sessionToken)).toMatchObject({
+      characterName: "Rowan the Hare",
+    });
     expect(await auth.bootstrapOpen()).toBe(false);
     expect(
       await auth.bootstrap({
@@ -198,6 +202,47 @@ describe("classroom auth service", () => {
     expect(created.ok).toBe(true);
   });
 
+  it("creates a Collegian that is not the username and can roll a name", async () => {
+    const { auth } = createTestAuth();
+    const owner = await auth.bootstrap({
+      token: TEST_BOOTSTRAP_TOKEN,
+      username: "arbird",
+      password: "lantern-path",
+    });
+    expect(owner.ok).toBe(true);
+    if (!owner.ok) {
+      return;
+    }
+    expect(await auth.issueSocketTicket(owner.account.id)).toBeUndefined();
+    expect(
+      await auth.completeCharacter(owner.account.id, {
+        name: "Porter",
+        speciesId: "hare",
+        gender: "male",
+      }),
+    ).toMatchObject({
+      ok: false,
+      code: "invalid_character_name",
+    });
+    const created = await auth.completeCharacter(owner.account.id, {
+      name: "lumen",
+      speciesId: "otter",
+      gender: "nonbinary",
+    });
+    expect(created).toMatchObject({ ok: true });
+    if (!created.ok) {
+      return;
+    }
+    expect(created.character.name).toBe("Lumen");
+    expect(await auth.resolvePlayIdentity(owner.sessionToken)).toMatchObject({
+      characterName: "Lumen the Otter",
+    });
+    expect(auth.characterOptions().intro).toContain("Greenwood Collegium");
+    const suggested = await auth.suggestCharacterName();
+    expect(suggested).toEqual(expect.any(String));
+    expect(suggested?.toLowerCase()).not.toBe("arbird");
+  });
+
   it("issues a hashed socket ticket that expires", async () => {
     let nowMs = Date.parse("2026-09-07T12:00:00.000Z");
     const { auth } = createTestAuth(() => new Date(nowMs));
@@ -210,11 +255,12 @@ describe("classroom auth service", () => {
     if (!owner.ok) {
       return;
     }
+    await completeTestCharacter(auth, owner.account.id);
     const ticket = await auth.issueSocketTicket(owner.account.id);
     expect(ticket).toEqual(expect.any(String));
     expect(await auth.resolveSocketTicket(ticket ?? "")).toMatchObject({
       accountId: owner.account.id,
-      characterName: "Owner",
+      characterName: "Rowan the Hare",
     });
     expect(await auth.resolveSocketTicket("not-a-ticket")).toBeUndefined();
     nowMs += SOCKET_TICKET_TTL_MS + 1;

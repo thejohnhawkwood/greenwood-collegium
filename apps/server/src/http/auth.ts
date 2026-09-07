@@ -1,6 +1,8 @@
 import {
   authAcceptInviteRequestSchema,
   authBootstrapRequestSchema,
+  authCharacterCreateRequestSchema,
+  authCharacterOptionsSchema,
   authClassroomSchema,
   authCreateInviteRequestSchema,
   authDisableAccountRequestSchema,
@@ -8,7 +10,9 @@ import {
   authSocketTicketSchema,
   authSignInRequestSchema,
   authStatusSchema,
+  authSuggestedNameSchema,
 } from "@greenwood/contracts";
+import { formatCharacterName } from "@greenwood/content";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { RateLimiter } from "../application/rate-limit.js";
 import type { AuthFailure, AuthService, SignedIn } from "../auth/service.js";
@@ -41,6 +45,12 @@ const failureStatus: Record<AuthFailure["code"], number> = {
   unauthenticated: 401,
   invalid_username: 400,
   weak_password: 400,
+  invalid_character_name: 400,
+  duplicate_character_name: 409,
+  invalid_species: 400,
+  invalid_gender: 400,
+  character_exists: 409,
+  character_incomplete: 409,
 };
 
 export async function registerAuthRoutes(
@@ -107,6 +117,54 @@ export async function registerAuthRoutes(
       return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
     }
     return publicSession(session);
+  });
+
+  app.get("/auth/character-options", async (request, reply) => {
+    const session = await sessionFromRequest(deps.auth, request);
+    if (!session) {
+      return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
+    }
+    return authCharacterOptionsSchema.parse(deps.auth.characterOptions());
+  });
+
+  app.post("/auth/suggested-name", async (request, reply) => {
+    if (!rateOk(limiter, request)) {
+      return rateLimited(reply);
+    }
+    const session = await sessionFromRequest(deps.auth, request);
+    if (!session) {
+      return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
+    }
+    const name = await deps.auth.suggestCharacterName();
+    if (!name) {
+      return reply.status(409).send({
+        error: "duplicate_character_name",
+        message: "Type a name of your own. The suggested list is empty.",
+      });
+    }
+    return authSuggestedNameSchema.parse({ name });
+  });
+
+  app.post("/auth/character", async (request, reply) => {
+    if (!rateOk(limiter, request)) {
+      return rateLimited(reply);
+    }
+    const session = await sessionFromRequest(deps.auth, request);
+    if (!session) {
+      return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
+    }
+    const parsed = authCharacterCreateRequestSchema.safeParse(request.body);
+    if (!parsed.success) {
+      return invalidBody(reply);
+    }
+    const result = await deps.auth.completeCharacter(session.account.id, parsed.data);
+    if (!result.ok) {
+      return reply.status(failureStatus[result.code]).send({
+        error: result.code,
+        message: result.message,
+      });
+    }
+    return publicSession({ account: session.account, character: result.character });
   });
 
   app.post("/auth/bootstrap", async (request, reply) => {
@@ -248,14 +306,20 @@ function finishAuth(
 
 function publicSession(session: {
   account: SignedIn["account"];
-  character: SignedIn["character"];
+  character?: SignedIn["character"];
 }) {
+  const complete =
+    session.character?.creationCompletedAt !== undefined && session.character.gender !== undefined;
   return authSessionPublicSchema.parse({
     accountId: session.account.id,
     username: session.account.username,
     role: session.account.role,
-    characterId: session.character.id,
-    characterName: session.character.name,
+    characterComplete: complete,
+    characterId: complete ? session.character?.id : undefined,
+    characterName:
+      complete && session.character
+        ? formatCharacterName(session.character.name, session.character.speciesId)
+        : undefined,
   });
 }
 

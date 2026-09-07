@@ -12,5 +12,12 @@
     { "direction": "west", "toRoomId": "west-cloister" },
     { "direction": "south", "toRoomId": "south-orchard" }
   ],
-  "fixtures": [{ "id": "npc-porter-bramble", "name": "Porter Bramble", "kind": "npc" }]
+  "fixtures": [
+    {
+      "id": "npc-porter-bramble",
+      "name": "Porter Bramble",
+      "kind": "npc",
+      "examineDescription": "A hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. He watches the courtyard as if every new Collegian were expected."
+    }
+  ]
 }

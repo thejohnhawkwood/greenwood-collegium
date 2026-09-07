@@ -30,10 +30,14 @@ export const roomFixtureSchema = z
     id: stableIdSchema,
     name: z.string().min(1),
     kind: z.enum(["npc", "object"]),
+    examineDescription: z.string().min(1).optional(),
   })
   .strict()
   .superRefine((fixture, ctx) => {
     rejectMarkup(fixture.name, "fixture name", ctx);
+    if (fixture.examineDescription) {
+      rejectMarkup(fixture.examineDescription, "examineDescription", ctx);
+    }
   });
 
 export const roomMapSchema = z
