@@ -97,7 +97,7 @@ function ClassicClient({
     {
       id: "notice-start",
       kind: "notice",
-      text: "Type look, say hello, or a direction such as north. Up and down recall earlier commands.",
+      text: "Porter Bramble will greet you in Lantern Court. Type help for the list of words. Up and down recall earlier commands.",
     },
   ]);
   const [draft, setDraft] = useState("");
@@ -258,10 +258,20 @@ function ClassicClient({
                 <button
                   type="button"
                   onClick={() => {
-                    void issueInvite(onInviteOnce, addNotice);
+                    void issueInvite("student", onInviteOnce, addNotice);
                   }}
                 >
-                  Issue invite
+                  Issue student invite
+                </button>
+              ) : null}
+              {me?.role === "owner" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    void issueInvite("teacher", onInviteOnce, addNotice);
+                  }}
+                >
+                  Issue teacher invite
                 </button>
               ) : null}
               <button
@@ -353,6 +363,7 @@ async function signOut(onSignedOut: () => void): Promise<void> {
 }
 
 async function issueInvite(
+  role: "student" | "teacher",
   onInviteOnce: (token: string) => void,
   addNotice: (text: string) => void,
 ): Promise<void> {
@@ -360,7 +371,7 @@ async function issueInvite(
     method: "POST",
     credentials: "same-origin",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ role: "student" }),
+    body: JSON.stringify({ role }),
   });
   const payload: unknown = await response.json().catch(() => undefined);
   const parsed = authInviteCreatedSchema.safeParse(payload);

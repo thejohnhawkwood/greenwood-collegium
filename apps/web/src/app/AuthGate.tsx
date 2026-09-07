@@ -38,12 +38,55 @@ export function AuthGate({
 
   return (
     <section className="auth-gate" aria-labelledby="auth-heading">
-      <h2 id="auth-heading">Sign in</h2>
-      <p>Classroom accounts use an invite. There is no public registration.</p>
+      <h2 id="auth-heading">{bootstrapOpen ? "First-time teacher setup" : "Sign in"}</h2>
+      <p>
+        {bootstrapOpen
+          ? "Create the owner account with the bootstrap token from your local .env file or the Render Environment page. This form disappears after the first owner exists. There is no public registration."
+          : "Classroom accounts use an invite. There is no public registration."}
+      </p>
       {error ? (
         <p className="auth-error" role="alert">
           {error}
         </p>
+      ) : null}
+
+      {bootstrapOpen ? (
+        <form
+          className="auth-form"
+          onSubmit={(event) => {
+            const data = new FormData(event.currentTarget);
+            void submit(event, "/auth/bootstrap", {
+              token: String(data.get("token") ?? ""),
+              username: String(data.get("username") ?? ""),
+              password: String(data.get("password") ?? ""),
+            });
+          }}
+        >
+          <h3>Create the teacher owner</h3>
+          <p>
+            The bootstrap token is a private string you set as ADMIN_BOOTSTRAP_TOKEN. Never paste
+            production tokens into chat, email, or Git.
+          </p>
+          <label>
+            Bootstrap token
+            <input name="token" type="password" autoComplete="off" required />
+          </label>
+          <label>
+            Username
+            <input name="username" autoComplete="username" required />
+          </label>
+          <label>
+            Password
+            <input
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              minLength={10}
+              required
+            />
+          </label>
+          <button type="submit">Create owner</button>
+        </form>
       ) : null}
 
       <form
@@ -100,41 +143,6 @@ export function AuthGate({
         </label>
         <button type="submit">Create account</button>
       </form>
-
-      {bootstrapOpen ? (
-        <form
-          className="auth-form"
-          onSubmit={(event) => {
-            const data = new FormData(event.currentTarget);
-            void submit(event, "/auth/bootstrap", {
-              token: String(data.get("token") ?? ""),
-              username: String(data.get("username") ?? ""),
-              password: String(data.get("password") ?? ""),
-            });
-          }}
-        >
-          <h3>Owner bootstrap</h3>
-          <label>
-            Bootstrap token
-            <input name="token" type="password" autoComplete="off" required />
-          </label>
-          <label>
-            Username
-            <input name="username" autoComplete="username" required />
-          </label>
-          <label>
-            Password
-            <input
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              minLength={10}
-              required
-            />
-          </label>
-          <button type="submit">Create owner</button>
-        </form>
-      ) : null}
 
       {allowGuestPlay && onContinueAsGuest ? (
         <p>

@@ -19,6 +19,7 @@ import {
   PostgresCharacterRepository,
   PostgresInviteRepository,
   PostgresItemRepository,
+  PostgresQuestRepository,
   PostgresSessionRepository,
 } from "./persistence/postgres.js";
 import { attachRealtime } from "./sockets/gateway.js";
@@ -53,6 +54,7 @@ const stores = persistence
         characters: new PostgresCharacterRepository(persistence.db, accounts),
         sessions: new PostgresSessionRepository(persistence.db),
         invites: new PostgresInviteRepository(persistence.db),
+        quests: new PostgresQuestRepository(persistence.db),
       };
     })()
   : createMemoryStores();
@@ -113,6 +115,8 @@ await attachRealtime(app, world, {
   allowGuestPlay,
   resolveSession: (token) => auth.resolvePlayIdentity(token),
   persistRoom: (characterId, roomId) => stores.characters.updateRoom(characterId, roomId),
+  persistProgress: (characterId, input) => stores.characters.updateProgress(characterId, input),
   persistItem,
+  persistQuest: stores.quests,
 });
 await app.listen({ port, host });

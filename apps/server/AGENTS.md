@@ -9,6 +9,7 @@ Fastify process for HTTP and Socket.IO.
 - Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory.
 - Ticket 013 owns combat command dispatch. Socket handlers do not invent combat text or damage.
 - Ticket 014 owns `cast`. Handlers do not invent Ember damage, burning, or presentation.
+- Ticket 015 owns Arrival, `help`, and `quests`. Handlers do not invent Porter speech or award XP twice.
 - Repeat command IDs must return the first result. Authenticated disconnects get a resume grace and `session.snapshot`.
 - Account and character records use repository interfaces. In-memory tests always run. Postgres tests run only with `GREENWOOD_TEST_DATABASE_URL`.
 - Never log `DATABASE_URL`, passwords, session tokens, invite tokens, or read a production dump.

@@ -125,6 +125,20 @@ export {
   type ExperienceGainedPayload,
 } from "./events/progress-experience-gained.js";
 export {
+  formatQuestUpdatedText,
+  questUpdatedEventSchema,
+  questUpdatedPayloadSchema,
+  type QuestUpdatedEvent,
+  type QuestUpdatedPayload,
+} from "./events/quest-updated.js";
+export {
+  formatLevelGainedText,
+  levelGainedEventSchema,
+  levelGainedPayloadSchema,
+  type LevelGainedEvent,
+  type LevelGainedPayload,
+} from "./events/progress-level-gained.js";
+export {
   commandRequestSchema,
   interfaceModeSchema,
   type CommandRequest,

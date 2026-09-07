@@ -1,4 +1,4 @@
-import { index, pgTable, text, timestamp, integer } from "drizzle-orm/pg-core";
+import { index, pgTable, primaryKey, text, timestamp, integer } from "drizzle-orm/pg-core";
 
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
@@ -75,5 +75,24 @@ export const itemInstances = pgTable(
   (table) => [
     index("item_instances_holder_character_id_idx").on(table.holderCharacterId),
     index("item_instances_room_id_idx").on(table.roomId),
+  ],
+);
+
+export const questProgress = pgTable(
+  "quest_progress",
+  {
+    characterId: text("character_id")
+      .notNull()
+      .references(() => characters.id),
+    questId: text("quest_id").notNull(),
+    status: text("status").notNull(),
+    completedObjectives: text("completed_objectives").notNull(),
+    rewardGranted: text("reward_granted").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+  },
+  (table) => [
+    primaryKey({ name: "quest_progress_pk", columns: [table.characterId, table.questId] }),
+    index("quest_progress_character_id_idx").on(table.characterId),
   ],
 );

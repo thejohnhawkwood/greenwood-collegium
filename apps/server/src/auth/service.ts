@@ -49,6 +49,8 @@ export type PlayIdentity = {
   characterId: string;
   characterName: string;
   roomId: string;
+  experience: number;
+  level: number;
 };
 
 export type AuthService = {
@@ -251,6 +253,8 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       characterId: resolved.character.id,
       characterName: resolved.character.name,
       roomId: resolved.character.roomId,
+      experience: resolved.character.experience,
+      level: resolved.character.level,
     };
   }
 

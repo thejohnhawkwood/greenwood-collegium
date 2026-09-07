@@ -8,12 +8,14 @@ import {
 } from "./connection.js";
 import { persistSessionsAndInvites } from "./persist-auth.contract.js";
 import { persistInventoryOwnership } from "./persist-inventory.contract.js";
+import { persistQuestProgressAndExperience } from "./persist-quest.contract.js";
 import { persistAccountAndCharacter } from "./persist.contract.js";
 import {
   PostgresAccountRepository,
   PostgresCharacterRepository,
   PostgresInviteRepository,
   PostgresItemRepository,
+  PostgresQuestRepository,
   PostgresSessionRepository,
 } from "./postgres.js";
 
@@ -26,6 +28,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
   const sessions = () => new PostgresSessionRepository(persistence.db);
   const invites = () => new PostgresInviteRepository(persistence.db);
   const items = () => new PostgresItemRepository(persistence.db);
+  const quests = () => new PostgresQuestRepository(persistence.db);
 
   beforeAll(async () => {
     if (!testDatabaseUrl) {
@@ -34,6 +37,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     persistence = createPersistence(testDatabaseUrl);
     await pingDatabase(persistence);
     await applyMigrations(persistence);
+    await persistence.pool.query("delete from quest_progress");
     await persistence.pool.query("delete from item_instances");
     await persistence.pool.query("delete from sessions");
     await persistence.pool.query("delete from invites");
@@ -61,6 +65,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       getById: (id) => characters().getById(id),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
+      updateProgress: (id, input) => characters().updateProgress(id, input),
     },
   );
 
@@ -78,6 +83,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       getById: (id) => characters().getById(id),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
+      updateProgress: (id, input) => characters().updateProgress(id, input),
     },
     {
       create: (input) => sessions().create(input),
@@ -106,12 +112,35 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       getById: (id) => characters().getById(id),
       listByAccountId: (accountId) => characters().listByAccountId(accountId),
       updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
+      updateProgress: (id, input) => characters().updateProgress(id, input),
     },
     {
       ensurePlacements: (seeds) => items().ensurePlacements(seeds),
       list: () => items().list(),
       claim: (itemId, characterId, roomId) => items().claim(itemId, characterId, roomId),
       release: (itemId, characterId, roomId) => items().release(itemId, characterId, roomId),
+    },
+  );
+
+  persistQuestProgressAndExperience(
+    {
+      create: (input) => accounts().create(input),
+      getById: (id) => accounts().getById(id),
+      getByUsername: (username) => accounts().getByUsername(username),
+      listByRole: (role) => accounts().listByRole(role),
+      updateStatus: (id, status) => accounts().updateStatus(id, status),
+      touchSignIn: (id, at) => accounts().touchSignIn(id, at),
+    },
+    {
+      create: (input) => characters().create(input),
+      getById: (id) => characters().getById(id),
+      listByAccountId: (accountId) => characters().listByAccountId(accountId),
+      updateRoom: (id, roomId) => characters().updateRoom(id, roomId),
+      updateProgress: (id, input) => characters().updateProgress(id, input),
+    },
+    {
+      listByCharacter: (characterId) => quests().listByCharacter(characterId),
+      upsert: (record) => quests().upsert(record),
     },
   );
 });

@@ -54,7 +54,7 @@ copy .env.example .env
 
 On macOS or Git Bash: `cp .env.example .env`.
 
-These values are local placeholders. Do not paste Render `DATABASE_URL`, `SESSION_SECRET`, or `ADMIN_BOOTSTRAP_TOKEN` into this file or into chat. Default tests use in-memory repositories; see `docs/dev/database.md` if you want a local Postgres.
+These values are local placeholders. Do not paste Render `DATABASE_URL`, `SESSION_SECRET`, or `ADMIN_BOOTSTRAP_TOKEN` into this file or into chat. Default tests use in-memory repositories; see `docs/dev/database.md` if you want a local Postgres. Classroom setup, the owner form, and the first quest are in [`playthrough.md`](../../playthrough.md).
 
 ## 5. Install and verify
 

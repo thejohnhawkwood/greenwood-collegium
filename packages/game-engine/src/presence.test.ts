@@ -1,3 +1,4 @@
+import { roomSnapshotEventSchema } from "@greenwood/contracts";
 import { describe, expect, it } from "vitest";
 import { handleJoin, handleLeave } from "./presence.js";
 import type { EngineRuntime, WorldState } from "./state.js";
@@ -39,7 +40,7 @@ describe("presence", () => {
     );
     expect(first.ok).toBe(true);
     if (first.ok) {
-      expect(first.events[0]?.payload.title).toBe("Lantern Court");
+      expect(roomSnapshotEventSchema.parse(first.events[0]).payload.title).toBe("Lantern Court");
       expect(first.notices).toHaveLength(0);
     }
 

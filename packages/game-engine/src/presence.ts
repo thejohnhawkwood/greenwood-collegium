@@ -1,4 +1,5 @@
-import type { RoomSnapshotEvent } from "@greenwood/contracts";
+import type { EventEnvelope } from "@greenwood/contracts";
+import { startArrivalQuest } from "./arrival.js";
 import { activeEncounter, closeEncounter } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
@@ -7,7 +8,7 @@ import type { EngineRuntime, JoinIntent, LeaveIntent, WorldState } from "./state
 
 export type JoinSuccess = {
   ok: true;
-  events: RoomSnapshotEvent[];
+  events: EventEnvelope[];
   notices: OccupantNotice[];
 };
 
@@ -54,6 +55,8 @@ export function handleJoin(
     name: intent.name,
     roomId: room.id,
     discoveredRoomIds: [room.id],
+    experience: intent.experience ?? 0,
+    level: intent.level ?? 1,
   };
   const character = world.characters[intent.characterId];
   if (!character) {
@@ -72,7 +75,7 @@ export function handleJoin(
 
   return {
     ok: true,
-    events: [look.event],
+    events: [look.event, ...startArrivalQuest(world, character.id, runtime)],
     notices: enteredNotices(watchers, character, room.id, runtime),
   };
 }

@@ -6,10 +6,12 @@ Declarative world data. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or ga
 - Ticket 012 owns item templates and placements.
 - Ticket 013 owns enemy templates and placements.
 - Ticket 014 owns spell templates. Ember is the first spell.
+- Ticket 015 owns quest templates. Arrival at the Collegium is the first quest.
 - Add a room by adding `rooms/<id>.json`. The file name must match the stable id.
 - Add an item by adding `items/<id>.json` and a placement in `placements/`.
 - Add an enemy by adding `enemies/<id>.json` and a placement in `enemy-placements/`.
 - Add a spell by adding `spells/<id>.json`.
-- Do not edit TypeScript to register a room, item, enemy, or spell.
+- Add a quest by adding `quests/<id>.json`.
+- Do not edit TypeScript to register a room, item, enemy, spell, or quest.
 - Invalid content fails `pnpm --filter @greenwood/content validate` and process start.
 - Students start in `lantern-court`.
