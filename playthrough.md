@@ -200,7 +200,7 @@ Students can always type `help`. Today the game explains:
 | `north` `south` `east` `west` | Walk, if there is an exit |
 | `take key` | Pick up something you can see |
 | `drop key` | Put a carried item down |
-| `examine porter` | Look closer at a person or thing |
+| `examine porter` or `x porter` | Look closer at a person or thing. The dummy is south. |
 | `inventory` or `i` | What you are carrying |
 | `attack dummy` | Practice fight (South Orchard) |
 | `cast ember dummy` | First spell, during a fight |
@@ -238,8 +238,26 @@ Students can always type `help`. Today the game explains:
 
 ---
 
+## Teacher commands
+
+Signed in as owner or teacher, type these in the same prompt:
+
+```text
+admin announce The lanterns are lit.
+admin inspect lumen
+admin mute lumen 10
+admin kick lumen
+admin audit
+```
+
+`inspect` may use a given name or the login name. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Disable an account from the teacher roster, not from a typed command.
+
+Students who type those words hear that only a teacher can use them.
+
+---
+
 ## After today
 
-Teacher moderation tools (mute, disconnect, disable an account from a classroom panel) are the next product ticket. Until then, the owner can still issue invites and students play in a shared courtyard.
+Render blueprint and production-readiness notes are the next product ticket. The live courtyard already deploys from `main`; that ticket hardens the path so a restart is predictable.
 
 For machine install details see [`docs/dev/machine-setup.md`](docs/dev/machine-setup.md). For the live host see [`docs/context/CURRENT.md`](docs/context/CURRENT.md).

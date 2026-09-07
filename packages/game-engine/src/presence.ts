@@ -53,6 +53,7 @@ export function handleJoin(
   world.characters[intent.characterId] = {
     id: intent.characterId,
     name: intent.name,
+    accountUsername: intent.accountUsername,
     roomId: room.id,
     discoveredRoomIds: [room.id],
     experience: intent.experience ?? 0,

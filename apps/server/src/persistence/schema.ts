@@ -112,3 +112,19 @@ export const questProgress = pgTable(
     index("quest_progress_character_id_idx").on(table.characterId),
   ],
 );
+
+export const auditLog = pgTable(
+  "audit_log",
+  {
+    id: text("id").primaryKey(),
+    at: timestamp("at", { withTimezone: true }).notNull(),
+    actorAccountId: text("actor_account_id")
+      .notNull()
+      .references(() => accounts.id),
+    actorUsername: text("actor_username").notNull(),
+    action: text("action").notNull(),
+    targetName: text("target_name"),
+    detail: text("detail").notNull(),
+  },
+  (table) => [index("audit_log_at_idx").on(table.at)],
+);

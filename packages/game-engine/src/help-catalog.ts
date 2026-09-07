@@ -40,10 +40,10 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
   },
   {
     topic: "examine",
-    aliases: ["examine", "x"],
+    aliases: ["examine", "ex", "x"],
     summary: "Look more closely at a person, object, or item.",
     detail:
-      "examine porter looks at Porter Bramble. You can also examine items you can see or carry.",
+      "examine porter looks at Porter Bramble. x porter does the same. You can examine nearby Collegians, the Practice Dummy in the South Orchard, and items you can see or carry.",
   },
   {
     topic: "inventory",

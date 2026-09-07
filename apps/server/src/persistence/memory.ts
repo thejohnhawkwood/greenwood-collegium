@@ -9,6 +9,8 @@ import {
   type AccountRepository,
   type AccountRole,
   type AccountStatus,
+  type AuditLogRepository,
+  type AuditRecord,
   type CharacterRecord,
   type CharacterRepository,
   type CreateAccountInput,
@@ -327,6 +329,23 @@ export class InMemoryQuestRepository implements QuestProgressRepository {
   }
 }
 
+export class InMemoryAuditRepository implements AuditLogRepository {
+  private readonly rows: AuditRecord[] = [];
+
+  async append(record: Omit<AuditRecord, "id">): Promise<AuditRecord> {
+    const stored: AuditRecord = { ...record, id: crypto.randomUUID() };
+    this.rows.unshift(stored);
+    if (this.rows.length > 200) {
+      this.rows.length = 200;
+    }
+    return stored;
+  }
+
+  async listRecent(limit: number): Promise<AuditRecord[]> {
+    return this.rows.slice(0, Math.max(0, limit));
+  }
+}
+
 export function createMemoryStores() {
   const accounts = new InMemoryAccountRepository();
   const characters = new InMemoryCharacterRepository(accounts);
@@ -334,5 +353,6 @@ export function createMemoryStores() {
   const invites = new InMemoryInviteRepository();
   const items = new InMemoryItemRepository();
   const quests = new InMemoryQuestRepository();
-  return { accounts, characters, sessions, invites, items, quests };
+  const audit = new InMemoryAuditRepository();
+  return { accounts, characters, sessions, invites, items, quests, audit };
 }

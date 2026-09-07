@@ -160,6 +160,23 @@ export interface QuestProgressRepository {
   upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void>;
 }
 
+export type AuditAction = "announce" | "inspect" | "mute" | "kick";
+
+export type AuditRecord = {
+  id: string;
+  at: Date;
+  actorAccountId: string;
+  actorUsername: string;
+  action: AuditAction;
+  targetName?: string;
+  detail: string;
+};
+
+export interface AuditLogRepository {
+  append(record: Omit<AuditRecord, "id">): Promise<AuditRecord>;
+  listRecent(limit: number): Promise<AuditRecord[]>;
+}
+
 export class DuplicateUsernameError extends Error {
   readonly code = "duplicate_username";
 
