@@ -22,6 +22,8 @@ secrets/
 *.sqlite
 *.sqlite3
 *.dump
+*.sql.gz
+*.pgdump
 backups/
 production-exports/
 

@@ -12,9 +12,10 @@ services:
     plan: starter
     branch: main
     autoDeployTrigger: checksPass
-    healthCheckPath: /health/live
+    healthCheckPath: /health/ready
     maxShutdownDelaySeconds: 30
     buildCommand: corepack enable && corepack prepare pnpm@11.25.0 --activate && pnpm install --frozen-lockfile && pnpm build
+    preDeployCommand: pnpm --filter @greenwood/server db:migrate
     startCommand: pnpm --filter @greenwood/server start
     envVars:
       - key: NODE_VERSION

@@ -54,8 +54,8 @@ A copper key glints beneath the water.
 |---|---|
 | Product requirements | Published in [`docs/PRD.md`](docs/PRD.md) |
 | Public GitHub repository | This repository |
-| Playable client | Not started (Ticket 005) |
-| Live deployment | Health-only at https://greenwood-collegium.onrender.com |
+| Playable client | Classic typed courtyard at https://greenwood-collegium.onrender.com |
+| Live deployment | Render Blueprint: Postgres 18, pre-deploy migrate, `/health/ready` |
 | CI | GitHub Actions on pull requests and `main` |
 | Interface generations | Classic UI is the first target |
 
@@ -170,6 +170,8 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability. Do not file pu
 - [Devlog](docs/devlog/)
 - [Machine setup](docs/dev/machine-setup.md)
 - [Render setup](docs/dev/render-setup.md)
+- [Environment variables](docs/dev/environment.md)
+- [Backup and restore](docs/ops/backup-restore.md)
 - [Classroom roles](docs/classroom/roles.md)
 - [Content license (CC BY 4.0)](docs/CONTENT-LICENSE.md)
 - [Architecture notes](docs/architecture/)

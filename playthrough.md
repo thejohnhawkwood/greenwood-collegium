@@ -260,6 +260,6 @@ Students who type those words hear that only a teacher can use them.
 
 ## After today
 
-Render blueprint and production-readiness notes are the next product ticket. The live courtyard already deploys from `main`; that ticket hardens the path so a restart is predictable.
+The live courtyard deploys from `main`. Migrations run before start. `/health/ready` must be 200 before class. Backups stay on the teacher: see [`docs/ops/backup-restore.md`](docs/ops/backup-restore.md).
 
 For machine install details see [`docs/dev/machine-setup.md`](docs/dev/machine-setup.md). For the live host see [`docs/context/CURRENT.md`](docs/context/CURRENT.md).

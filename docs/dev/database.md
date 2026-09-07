@@ -37,4 +37,6 @@ Use a throwaway database. Do not point this variable at Render.
 
 ## Production
 
-Render already injects `DATABASE_URL`. The process applies `drizzle/` migrations on start and pings before treating the database as reachable. `/health/ready` reports ready when that ping succeeds and the content loader accepts the room files.
+Render already injects `DATABASE_URL`. The Blueprint runs `pnpm --filter @greenwood/server db:migrate` before start. The process also applies `drizzle/` migrations on start and pings before treating the database as reachable. Production exits if that ping fails; it does not fall back to memory. `/health/ready` reports ready when that ping succeeds and the content loader accepts the room files.
+
+Backup and restore notes are in [`../ops/backup-restore.md`](../ops/backup-restore.md).

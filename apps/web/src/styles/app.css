@@ -331,12 +331,17 @@ body {
   gap: 0.2rem;
 }
 
-.invite-batch select {
+.invite-batch select,
+.invite-batch input[type="number"] {
   background: var(--panel);
   color: inherit;
   font: inherit;
   border: 1px solid var(--gold);
   padding: 0.35rem 0.5rem;
+}
+
+.invite-batch input[type="number"] {
+  width: 5.5rem;
 }
 
 .classroom-roster {

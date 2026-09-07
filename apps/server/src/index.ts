@@ -5,6 +5,7 @@ import { createDevWorld } from "./application/dev-world.js";
 import { hydrateWorldItems } from "./application/item-state.js";
 import { buildApp } from "./app.js";
 import { registerAuthRoutes } from "./http/auth.js";
+import { productionStartError } from "./persistence/boot.js";
 import {
   closePersistence,
   createPersistence,
@@ -44,6 +45,14 @@ if (databaseUrl) {
   } catch {
     await closePersistence(candidate);
     databaseStatus = "unreachable";
+  }
+}
+
+if (production) {
+  const reason = productionStartError({ databaseUrl, databaseStatus });
+  if (reason) {
+    process.stderr.write(`${reason}\n`);
+    process.exit(1);
   }
 }
 

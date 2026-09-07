@@ -29,6 +29,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0021](0021-character-creation.md) | Character creation after sign-in |
 | [0022](0022-teacher-controls.md) | Teacher classroom commands |
 | [0023](0023-classroom-roster-and-appearances.md) | Classroom batch invites and Collegian appearance |
+| [0024](0024-production-readiness.md) | Production deploy readiness |
 
 ## Template
 
