@@ -1,4 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { emberBurstFixture } from "../fixtures/ember.js";
+import { renderClassicNarration } from "./envelope.js";
+import { renderClassicSegments } from "./segments.js";
 import {
   combatActionResolvedEventSchema,
   formatCombatActionResolvedText,
@@ -53,5 +56,19 @@ describe("combat.action_resolved contract", () => {
 
     expect(formatCombatActionResolvedText(player.payload)).toBe(player.narration);
     expect(formatCombatActionResolvedText(enemy.payload)).toBe(enemy.narration);
+  });
+
+  it("explains Ember from the fixture without using the presentation key", () => {
+    const event = combatActionResolvedEventSchema.parse(emberBurstFixture);
+    const text = renderClassicNarration(event);
+    expect(text).toBe(formatCombatActionResolvedText(event.payload));
+    expect(text).toContain("Ember");
+    expect(text).toContain("Practice Dummy");
+    expect(text).toContain("5");
+    expect(text).toContain("3 remaining");
+    expect(text.toLowerCase()).not.toContain("burst");
+    expect(text.toLowerCase()).not.toContain("animat");
+    expect(event.presentationKey).toBe("ember-burst");
+    expect(renderClassicSegments(event.segments ?? [])).toBe(event.narration);
   });
 });

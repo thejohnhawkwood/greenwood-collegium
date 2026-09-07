@@ -11,3 +11,4 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Ticket 010 owns `session.snapshot` for authenticated resume.
 - Ticket 012 owns `item.taken`, `item.dropped`, and `inventory.updated`.
 - Ticket 013 owns combat start, turn, action, end, and `progress.experience_gained`.
+- Ticket 014 owns Ember, burning, `combat.status_applied`, and the Ember event fixture. Presentation keys do not decide damage.

@@ -1,6 +1,7 @@
 import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import { START_ROOM_ID, type RoomFile } from "./schema.js";
+import type { SpellTemplate } from "./spell-schema.js";
 
 export type ContentIssue = {
   code: string;
@@ -8,6 +9,7 @@ export type ContentIssue = {
   roomId?: string;
   itemId?: string;
   enemyId?: string;
+  spellId?: string;
   fileName?: string;
 };
 
@@ -305,6 +307,40 @@ export function validateBestiary(
         roomId: named.placement.roomId,
         fileName: named.fileName,
       });
+    }
+  }
+
+  return issues;
+}
+
+export type NamedSpell = {
+  fileName: string;
+  template: SpellTemplate;
+};
+
+export function validateSpells(namedSpells: NamedSpell[]): ContentIssue[] {
+  const issues: ContentIssue[] = [];
+  const spellsById = new Map<string, NamedSpell>();
+
+  for (const named of namedSpells) {
+    const stem = named.fileName.replace(/\.json$/u, "");
+    if (stem !== named.template.id) {
+      issues.push({
+        code: "id_filename_mismatch",
+        message: `${named.fileName} must be named ${named.template.id}.json`,
+        spellId: named.template.id,
+        fileName: named.fileName,
+      });
+    }
+    if (spellsById.has(named.template.id)) {
+      issues.push({
+        code: "duplicate_id",
+        message: `duplicate spell template ${named.template.id}`,
+        spellId: named.template.id,
+        fileName: named.fileName,
+      });
+    } else {
+      spellsById.set(named.template.id, named);
     }
   }
 

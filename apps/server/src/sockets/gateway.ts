@@ -8,6 +8,7 @@ import {
 } from "@greenwood/contracts";
 import {
   handleAttack,
+  handleCast,
   handleDrop,
   handleExamine,
   handleInventory,
@@ -263,7 +264,7 @@ export async function attachRealtime(
         commandId: parsed.data.commandId,
         status: "rejected",
         errorCode: "unknown_command",
-        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  attack dummy\n  north\n  south\n  east\n  west`,
+        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  attack dummy\n  cast ember\n  north\n  south\n  east\n  west`,
         resyncRequired: false,
       });
       commandLog.set(characterId, parsed.data.commandId, {
@@ -322,7 +323,9 @@ export async function attachRealtime(
                   ? handleExamine(world, intent, runtime)
                   : intent.verb === "inventory"
                     ? handleInventory(world, intent, runtime)
-                    : handleAttack(world, intent, runtime);
+                    : intent.verb === "attack"
+                      ? handleAttack(world, intent, runtime)
+                      : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({

@@ -33,5 +33,24 @@ export function createDevWorld(): WorldState {
         },
       ]),
     ),
+    spells: Object.fromEntries(
+      Object.values(loaded.spells).map((spell) => [
+        spell.id,
+        {
+          id: spell.id,
+          name: spell.name,
+          school: spell.school,
+          description: spell.description,
+          focusCost: spell.focusCost,
+          targetType: spell.targetType,
+          context: spell.context,
+          damage: spell.damage,
+          burningRounds: spell.burningRounds,
+          burningDamage: spell.burningDamage,
+          presentationKey: spell.presentationKey,
+          helpText: spell.helpText,
+        },
+      ]),
+    ),
   };
 }

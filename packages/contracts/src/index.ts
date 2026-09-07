@@ -103,6 +103,14 @@ export {
   type CombatActionResolvedPayload,
 } from "./events/combat-action-resolved.js";
 export {
+  combatStatusAppliedEventSchema,
+  combatStatusAppliedPayloadSchema,
+  formatCombatStatusAppliedText,
+  type CombatStatusAppliedEvent,
+  type CombatStatusAppliedPayload,
+} from "./events/combat-status-applied.js";
+export { emberBurstFixture } from "./fixtures/ember.js";
+export {
   combatEndedEventSchema,
   combatEndedPayloadSchema,
   formatCombatEndedText,

@@ -1,4 +1,5 @@
 import { parseAttackCommand } from "./parse-attack.js";
+import { parseCastCommand } from "./parse-cast.js";
 import { parseDropCommand } from "./parse-drop.js";
 import { parseExamineCommand } from "./parse-examine.js";
 import { parseInventoryCommand } from "./parse-inventory.js";
@@ -16,6 +17,7 @@ export function parsePlayerCommand(raw: string, characterId: string): PlayerComm
     parseTakeCommand(raw, characterId) ??
     parseDropCommand(raw, characterId) ??
     parseExamineCommand(raw, characterId) ??
+    parseCastCommand(raw, characterId) ??
     parseAttackCommand(raw, characterId) ??
     parseMoveCommand(raw, characterId)
   );

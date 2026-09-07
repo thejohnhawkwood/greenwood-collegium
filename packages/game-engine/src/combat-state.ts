@@ -2,6 +2,7 @@ import type { Character, Encounter, EngineRuntime, WorldState } from "./state.js
 
 export const INFIRMARY_ROOM_ID = "infirmary";
 export const DEFAULT_PLAYER_MAX_HEALTH = 20;
+export const DEFAULT_PLAYER_MAX_FOCUS = 10;
 export const DEFAULT_PLAYER_ATTACK = 4;
 
 export function worldEncounters(world: WorldState): Record<string, Encounter> {
@@ -40,6 +41,8 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
 export function ensurePlayerVitals(character: Character): void {
   character.health ??= DEFAULT_PLAYER_MAX_HEALTH;
   character.maxHealth ??= DEFAULT_PLAYER_MAX_HEALTH;
+  character.focus ??= DEFAULT_PLAYER_MAX_FOCUS;
+  character.maxFocus ??= DEFAULT_PLAYER_MAX_FOCUS;
   character.experience ??= 0;
 }
 
@@ -59,7 +62,7 @@ export function rejectIfInCombat(
   return {
     ok: false,
     code: "in_combat",
-    message: "You are in the middle of a lesson. Type attack to continue.",
+    message: "You are in the middle of a lesson. Type attack or cast ember to continue.",
   };
 }
 
