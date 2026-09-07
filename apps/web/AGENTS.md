@@ -8,7 +8,7 @@ React client. Typed commands are the canonical player interaction.
 - After sign-in, an incomplete account sees the character-creation gate. The client does not invent species, gender, or name authority.
 - Student and teacher sign-in are separate forms. The teacher roster renders `/auth/classroom`. It never invents tokens or shows passwords. The client may choose how many student invites to request. Remove calls `/auth/disable`.
 - Ticket 015 owns the first-time teacher bootstrap copy. The client still does not invent quest or level outcomes.
-- Ticket 010 owns reconnect: ignore already-applied sequences, retry an unacked command with the same id.
+- Ticket 010 owns reconnect: ignore already-applied sequences, retry an unacked command with the same id. A new `session-hello` boot id means the process restarted; forget the stored sequence.
 - React components never contain game rules. Render `event.narration` with `renderClassicNarration`.
 - Do not invent authoritative outcomes from the client.
 - Keep classic mode possible. No Tailwind or component library.

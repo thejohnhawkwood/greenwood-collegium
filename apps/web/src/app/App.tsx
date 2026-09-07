@@ -6,6 +6,8 @@ import {
   eventEnvelopeSchema,
   renderClassicNarration,
   schemaVersion,
+  SESSION_HELLO_EVENT,
+  sessionHelloSchema,
   type AuthClassroom,
   type AuthSessionPublic,
 } from "@greenwood/contracts";
@@ -27,7 +29,15 @@ import { loadSocketTicket } from "./socket-ticket.js";
 import { loadAuthStatus, shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { createCommandRequest } from "./command-request.js";
-import { readStoredSequence, shouldApplyEvent, writeStoredSequence } from "./event-sequence.js";
+import {
+  applyProcessHello,
+  readStoredBootId,
+  readStoredSequence,
+  shouldApplyEvent,
+  shouldResyncAfterAck,
+  writeStoredBootId,
+  writeStoredSequence,
+} from "./event-sequence.js";
 import { pendingAfterAck, type PendingCommand } from "./pending-command.js";
 import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
@@ -158,6 +168,25 @@ function ClassicClient({
       },
     });
     socketRef.current = socket;
+    socket.on(SESSION_HELLO_EVENT, (payload: unknown) => {
+      const parsed = sessionHelloSchema.safeParse(payload);
+      if (!parsed.success) {
+        return;
+      }
+      const next = applyProcessHello(
+        readStoredBootId(sessionStorage),
+        parsed.data.bootId,
+        lastSequenceRef.current,
+      );
+      writeStoredBootId(sessionStorage, next.bootId);
+      if (!next.reset) {
+        return;
+      }
+      lastSequenceRef.current = next.lastSequence;
+      if (me?.characterId) {
+        writeStoredSequence(sessionStorage, me.characterId, next.lastSequence);
+      }
+    });
     socket.on("connect", () => {
       setConnection("connected");
       inputRef.current?.focus();
@@ -287,6 +316,14 @@ function ClassicClient({
         pendingRef.current = pendingAfterAck(pendingRef.current, ack.data.commandId);
         if (ack.data.status === "rejected") {
           addNotice(ack.data.message);
+          return;
+        }
+        if (shouldResyncAfterAck(lastSequenceRef.current, ack.data.eventSequenceEnd)) {
+          lastSequenceRef.current = ack.data.eventSequenceEnd ?? 0;
+          if (me?.characterId) {
+            writeStoredSequence(sessionStorage, me.characterId, lastSequenceRef.current);
+          }
+          addNotice("The courtyard restarted. Type look again.");
         }
       },
     );
