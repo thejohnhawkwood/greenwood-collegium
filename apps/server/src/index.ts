@@ -16,6 +16,7 @@ import { createMemoryStores } from "./persistence/memory.js";
 import { applyMigrations } from "./persistence/migrator.js";
 import {
   PostgresAccountRepository,
+  PostgresAuditRepository,
   PostgresCharacterRepository,
   PostgresInviteRepository,
   PostgresItemRepository,
@@ -55,6 +56,7 @@ const stores = persistence
         sessions: new PostgresSessionRepository(persistence.db),
         invites: new PostgresInviteRepository(persistence.db),
         quests: new PostgresQuestRepository(persistence.db),
+        audit: new PostgresAuditRepository(persistence.db),
       };
     })()
   : createMemoryStores();
@@ -124,5 +126,6 @@ await attachRealtime(app, world, {
   persistProgress: (characterId, input) => stores.characters.updateProgress(characterId, input),
   persistItem,
   persistQuest: stores.quests,
+  auditLog: stores.audit,
 });
 await app.listen({ port, host });

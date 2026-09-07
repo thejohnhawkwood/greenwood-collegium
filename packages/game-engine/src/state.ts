@@ -23,6 +23,7 @@ export type Room = {
 export type Character = {
   id: string;
   name: string;
+  accountUsername?: string;
   roomId: string;
   discoveredRoomIds: string[];
   health?: number;
@@ -156,6 +157,7 @@ export type JoinIntent = {
   characterId: string;
   name: string;
   roomId: string;
+  accountUsername?: string;
   experience?: number;
   level?: number;
 };
@@ -212,6 +214,44 @@ export type QuestsIntent = {
   characterId: string;
 };
 
+export type StaffHelpIntent = {
+  verb: "staff-help";
+  characterId: string;
+};
+
+export type AnnounceIntent = {
+  verb: "announce";
+  characterId: string;
+  text: string;
+};
+
+export type InspectIntent = {
+  verb: "inspect";
+  characterId: string;
+  target: string;
+};
+
+export type MuteIntent = {
+  verb: "mute";
+  characterId: string;
+  target: string;
+  minutes: number;
+};
+
+export type KickIntent = {
+  verb: "kick";
+  characterId: string;
+  target: string;
+};
+
+export type AuditIntent = {
+  verb: "audit";
+  characterId: string;
+};
+
+export type StaffCommand =
+  StaffHelpIntent | AnnounceIntent | InspectIntent | MuteIntent | KickIntent | AuditIntent;
+
 export type PlayerCommand =
   | LookIntent
   | MoveIntent
@@ -223,7 +263,8 @@ export type PlayerCommand =
   | AttackIntent
   | CastIntent
   | HelpIntent
-  | QuestsIntent;
+  | QuestsIntent
+  | StaffCommand;
 
 export type EngineRuntime = {
   now(): Date;

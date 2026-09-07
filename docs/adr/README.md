@@ -27,6 +27,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0019](0019-quest-reward-idempotency.md) | Quest rewards are awarded once and persisted as totals |
 | [0020](0020-teacher-invite-roster.md) | Teacher invite roster |
 | [0021](0021-character-creation.md) | Character creation after sign-in |
+| [0022](0022-teacher-controls.md) | Teacher classroom commands |
 
 ## Template
 

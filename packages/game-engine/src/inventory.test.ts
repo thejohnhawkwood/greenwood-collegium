@@ -37,6 +37,7 @@ function courtWithKey(): WorldState {
       "char-moss": {
         id: "char-moss",
         name: "Moss the Mole",
+        accountUsername: "noelle",
         roomId: "lantern-court",
         discoveredRoomIds: ["lantern-court"],
       },
@@ -141,6 +142,49 @@ describe("inventory slice", () => {
         runtime(),
       ).ok,
     ).toBe(true);
+  });
+
+  it("examines a nearby Collegian by given name or login name", () => {
+    const byName = handleExamine(
+      courtWithKey(),
+      { verb: "examine", characterId: "char-rowan", target: "moss" },
+      runtime(),
+    );
+    expect(byName.ok).toBe(true);
+    if (byName.ok) {
+      expect(byName.event.narration).toContain("Moss the Mole is a Collegian standing nearby.");
+    }
+    const byLogin = handleExamine(
+      courtWithKey(),
+      { verb: "examine", characterId: "char-rowan", target: "noelle" },
+      runtime(),
+    );
+    expect(byLogin.ok).toBe(true);
+    if (byLogin.ok) {
+      expect(byLogin.event.narration).toContain("Moss the Mole");
+    }
+  });
+
+  it("examines a fixture that has no extra description", () => {
+    const world = courtWithKey();
+    const room = world.rooms["lantern-court"];
+    if (!room) {
+      throw new Error("expected lantern court");
+    }
+    room.fixtures.push({
+      id: "npc-quiet-owl",
+      name: "Quiet Owl",
+      kind: "npc",
+    });
+    const examined = handleExamine(
+      world,
+      { verb: "examine", characterId: "char-rowan", target: "owl" },
+      runtime(),
+    );
+    expect(examined.ok).toBe(true);
+    if (examined.ok) {
+      expect(examined.event.narration).toContain("Quiet Owl is here.");
+    }
   });
 
   it("examines, lists, and drops a carried item", () => {

@@ -31,7 +31,9 @@ export { parseCastCommand } from "./parse-cast.js";
 export { parseHelpCommand } from "./parse-help.js";
 export { parseQuestsCommand } from "./parse-quests.js";
 export { parsePlayerCommand } from "./parse-command.js";
-export { SAY_MAX_LENGTH } from "./speech.js";
+export { isStaffCommand, parseStaffCommand } from "./parse-staff.js";
+export { namesMatch } from "./names.js";
+export { SAY_MAX_LENGTH, sanitizeSpeech } from "./speech.js";
 export { itemsHeldBy, itemsInRoom, matchItems, worldItems } from "./items.js";
 export { enemiesInRoom, matchEnemies, worldEnemies } from "./enemies.js";
 export {
@@ -72,6 +74,13 @@ export type {
   LookIntent,
   MoveIntent,
   PlayerCommand,
+  AnnounceIntent,
+  AuditIntent,
+  InspectIntent,
+  KickIntent,
+  MuteIntent,
+  StaffCommand,
+  StaffHelpIntent,
   QuestProgress,
   QuestTemplate,
   QuestsIntent,

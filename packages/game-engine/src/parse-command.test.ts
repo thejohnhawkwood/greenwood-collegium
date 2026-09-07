@@ -10,6 +10,12 @@ describe("parsePlayerCommand", () => {
     expect(parsePlayerCommand("get key", "char-rowan")?.verb).toBe("take");
     expect(parsePlayerCommand("drop key", "char-rowan")?.verb).toBe("drop");
     expect(parsePlayerCommand("examine key", "char-rowan")?.verb).toBe("examine");
+    expect(parsePlayerCommand("x porter", "char-rowan")).toEqual({
+      verb: "examine",
+      characterId: "char-rowan",
+      target: "porter",
+    });
+    expect(parsePlayerCommand("admin announce Lunch.", "char-rowan")?.verb).toBe("announce");
     expect(parsePlayerCommand("inventory", "char-rowan")?.verb).toBe("inventory");
     expect(parsePlayerCommand("i", "char-rowan")?.verb).toBe("inventory");
     expect(parsePlayerCommand("attack dummy", "char-rowan")).toEqual({

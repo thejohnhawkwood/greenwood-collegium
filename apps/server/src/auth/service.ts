@@ -83,6 +83,8 @@ export type PlayIdentity = {
   accountId: string;
   characterId: string;
   characterName: string;
+  username: string;
+  role: AccountRecord["role"];
   roomId: string;
   experience: number;
   level: number;
@@ -556,6 +558,8 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     accountId: account.id,
     characterId: character.id,
     characterName: formatCharacterName(character.name, character.speciesId),
+    username: account.username,
+    role: account.role,
     roomId: character.roomId,
     experience: character.experience,
     level: character.level,

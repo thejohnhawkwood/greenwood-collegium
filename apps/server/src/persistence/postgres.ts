@@ -1,6 +1,14 @@
-import { and, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import { accounts, characters, invites, itemInstances, questProgress, sessions } from "./schema.js";
+import {
+  accounts,
+  auditLog,
+  characters,
+  invites,
+  itemInstances,
+  questProgress,
+  sessions,
+} from "./schema.js";
 import {
   AccountNotFoundError,
   CharacterNotFoundError,
@@ -12,6 +20,9 @@ import {
   type AccountRepository,
   type AccountRole,
   type AccountStatus,
+  type AuditAction,
+  type AuditLogRepository,
+  type AuditRecord,
   type CharacterRecord,
   type CharacterRepository,
   type CreateAccountInput,
@@ -473,6 +484,41 @@ function toInvite(row: typeof invites.$inferSelect): InviteRecord {
     issuedToken: row.issuedToken ?? undefined,
     consumedByAccountId: row.consumedByAccountId ?? undefined,
   };
+}
+
+export class PostgresAuditRepository implements AuditLogRepository {
+  constructor(private readonly db: Database) {}
+
+  async append(record: Omit<AuditRecord, "id">): Promise<AuditRecord> {
+    const stored: AuditRecord = { ...record, id: crypto.randomUUID() };
+    await this.db.insert(auditLog).values({
+      id: stored.id,
+      at: stored.at,
+      actorAccountId: stored.actorAccountId,
+      actorUsername: stored.actorUsername,
+      action: stored.action,
+      targetName: stored.targetName,
+      detail: stored.detail,
+    });
+    return stored;
+  }
+
+  async listRecent(limit: number): Promise<AuditRecord[]> {
+    const rows = await this.db
+      .select()
+      .from(auditLog)
+      .orderBy(desc(auditLog.at))
+      .limit(Math.max(0, limit));
+    return rows.map((row) => ({
+      id: row.id,
+      at: asDate(row.at),
+      actorAccountId: row.actorAccountId,
+      actorUsername: row.actorUsername,
+      action: row.action as AuditAction,
+      targetName: row.targetName ?? undefined,
+      detail: row.detail,
+    }));
+  }
 }
 
 export function isUniqueViolation(error: unknown): boolean {
