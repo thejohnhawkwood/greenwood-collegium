@@ -4,26 +4,27 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **Release target:** v0.0 foundation (classic UI 0, twenty-five rooms, look, movement, presence, say, inventory, combat, Ember)
-- **Active ticket:** [#15 — Quest and Level Slice](https://github.com/thejohnhawkwood/greenwood-collegium/issues/15)
+- **Release target:** v0.0 foundation (classic UI 0, twenty-five rooms, look, movement, presence, say, inventory, combat, Ember, Arrival)
+- **Active ticket:** [#16 — Teacher Controls and Moderation](https://github.com/thejohnhawkwood/greenwood-collegium/issues/16)
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. [`packages/game-engine/AGENTS.md`](../../packages/game-engine/AGENTS.md)
-3. ADR-0018
-4. PRD Appendix E Ticket 015 and section 10.11
+2. [`playthrough.md`](../../playthrough.md)
+3. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
+4. ADR-0013 and ADR-0019
+5. PRD Appendix E Ticket 016 and classroom safety sections
 
 ## Forbidden this pass
 
-- Pasting Render secrets, `DATABASE_URL`, passwords, session tokens, or student data into Git or chat
+- Pasting Render secrets, `DATABASE_URL`, passwords, session tokens, invite tokens, or student data into Git or chat
 - Requesting or accepting a production database dump
 - Enabling public registration
 - Colour, HUD, or glyph presentation
 - Playwright
-- Awarding the same quest reward twice
+- A second admin service or a competing source of game truth
 
 The owner authorized CLI merge after CI is green for this setup stretch.
 
@@ -37,6 +38,6 @@ pnpm test
 pnpm build
 ```
 
-## After Ticket 015
+## After Ticket 016
 
-Next ticket is **016 — Teacher Controls and Moderation**.
+Next ticket is **017 — Render Blueprint and Production Readiness**.
