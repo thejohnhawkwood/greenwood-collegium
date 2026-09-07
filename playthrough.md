@@ -30,6 +30,17 @@ There is no public registration. Students join only with an invite you create.
 
 Start with **A** if this is your first hour. Do **B** before you invite a class. Use **C** for school.
 
+### Kids on other devices at home
+
+`http://127.0.0.1:3000` only works on the computer that is running the server. Phones and other laptops on the same Wi-Fi need this PC’s LAN address.
+
+1. In the repo-root `.env`, set `HOST=0.0.0.0`. Restart the server.
+2. On the teacher PC, run `ipconfig` and copy the Ethernet or Wi-Fi **IPv4 Address** (often `192.168.…`).
+3. On each kid device, same Wi-Fi, open `http://THAT-ADDRESS:3000`.
+4. If Windows asks to allow Node on a Private network, allow it.
+
+The public Render URL is the last deployed `main`, not whatever is running on this laptop.
+
 ---
 
 ## Path A — tonight, guest play
@@ -44,7 +55,7 @@ corepack pnpm install
 corepack pnpm --filter @greenwood/server start
 ```
 
-3. Open http://127.0.0.1:3000
+3. Open http://127.0.0.1:3000 on **this** computer. Other phones and laptops on the house Wi-Fi cannot use 127.0.0.1; that address means “this machine only.”
 4. If you see a sign-in page, click **Continue as guest**. Guest play is allowed only on a local development server, not on the live classroom site.
 5. You should land in **Lantern Court**. Porter Bramble, a hedgehog in a too-large coat, will greet you and name the first words.
 6. Play the Arrival script in [The first quest](#the-first-quest).
@@ -96,19 +107,19 @@ The page heading should say **First-time teacher setup**.
 3. Choose a password of at least 10 characters.
 4. Click **Create owner**.
 
-If the owner form is missing, an owner already exists on this server. Sign in with that account, or restart after wiping local memory (stop the process; memory accounts vanish).
+If the owner form is missing, an owner already exists on this server. Use **Teacher sign-in** (below the student form), or restart after wiping local memory (stop the process; memory accounts vanish).
 
-You are now the owner. That is the teacher/admin account.
+You are now the owner. That is the teacher/admin account. Later visits use **Teacher sign-in**, not the student form.
 
 ### 4. Invite a child
 
-1. Click **Issue student invite**.
-2. A token appears once at the top of the page. Copy it to a scrap of paper or a password manager. Do not screenshot it into a shared chat.
-3. Sign out.
-4. On **Accept an invite**, paste the token, pick a classroom username (not a real legal name), and a password of at least 10 characters.
-5. Click **Create account**.
+1. Stay signed in as the teacher. Click **Issue student invite**.
+2. The token appears in the **Classroom roster** and stays there until the child creates an account. Copy it to a scrap of paper or a password manager. Do not put it on the projector.
+3. In a second browser or private window, open **Accept an invite**. Paste the token, pick a classroom username (not a real legal name), and a password of at least 10 characters.
+4. Click **Create account**.
+5. Refresh or look at the teacher roster: the token disappears, and the child's username is listed. Passwords are never shown.
 
-A second browser, or a private window, lets you stay signed in as teacher while a child accepts the invite.
+If the roster says the server is using memory, every rebuild or restart forgets unused tokens and student accounts. Local Postgres keeps them. A token issued on your laptop will not work on the live Render site, and the reverse is also true.
 
 ### 5. Invite another teacher later
 
@@ -124,7 +135,7 @@ The public hostname is in [`docs/context/CURRENT.md`](docs/context/CURRENT.md). 
 2. Open the public site. Production does **not** offer guest play.
 3. If no owner exists yet, the **First-time teacher setup** form is shown. Use the dashboard token once. The form then disappears forever for that database.
 4. Issue student invites in class. Give each student a token privately. They accept it on the sign-in page.
-5. If the bootstrap form is missing, the owner already exists. Sign in as that owner.
+5. If the bootstrap form is missing, the owner already exists. Use **Teacher sign-in**. The roster on that site lists unused tokens and accepted usernames.
 
 Students keep Arrival progress after refresh because the classroom database stores quest, experience, and level.
 
@@ -210,10 +221,13 @@ Students can always type `help`. Today the game explains:
 
 | What you see | Likely cause | What to do |
 |---|---|---|
+| Kids cannot open 127.0.0.1:3000 | That address is only the teacher computer | On the teacher PC, `HOST` must be `0.0.0.0`. Kids use `http://<this-PC-LAN-IP>:3000` on the same Wi-Fi. Run `ipconfig` and read the Ethernet or Wi-Fi IPv4 address. |
 | Page will not load | Server is not running | Start `corepack pnpm --filter @greenwood/server start` |
 | No **Continue as guest** | You are on production, or signed-in mode | Sign in, or use a local development server |
-| No owner form | An owner already exists | Sign in as that owner |
-| Owner form rejects the token | Token does not match the running process | Confirm `.env` (local) or the Render Environment value (live). Restart after changing `.env` |
+| No owner form | An owner already exists | Use **Teacher sign-in** below the student form |
+| Teacher username rejected on the student form | Owner and teacher accounts use the lower form | Use **Teacher sign-in** |
+| “That invite is not valid.” | Token is from a different server, already used, expired, or lost on a memory restart | Issue a new token on the same host the child will open. Check the teacher roster. |
+| Owner form rejects the token | Token does not match the running process | Confirm `ADMIN_BOOTSTRAP_TOKEN` in the repo-root `.env` (local) or the Render Environment value (live). Restart after changing `.env`. `pnpm start` loads that file. |
 | “Sign in to enter the Collegium.” | Production socket without a session | Accept an invite or sign in first |
 | Arrival does not finish after `north` | They have not typed `look`, `say`, and `take key` yet | Type `quests` and do the remaining line |
 | Progress vanishes after refresh | Guest play, or a memory-only local server that restarted | Use Path B or C with a signed-in account |

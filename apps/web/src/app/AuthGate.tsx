@@ -96,10 +96,12 @@ export function AuthGate({
           void submit(event, "/auth/sign-in", {
             username: String(data.get("username") ?? ""),
             password: String(data.get("password") ?? ""),
+            audience: "student",
           });
         }}
       >
-        <h3>Returning student</h3>
+        <h3>Student sign-in</h3>
+        <p>Students who already accepted an invite use this form.</p>
         <label>
           Username
           <input name="username" autoComplete="username" required />
@@ -108,7 +110,31 @@ export function AuthGate({
           Password
           <input name="password" type="password" autoComplete="current-password" required />
         </label>
-        <button type="submit">Sign in</button>
+        <button type="submit">Sign in as student</button>
+      </form>
+
+      <form
+        className="auth-form"
+        onSubmit={(event) => {
+          const data = new FormData(event.currentTarget);
+          void submit(event, "/auth/sign-in", {
+            username: String(data.get("username") ?? ""),
+            password: String(data.get("password") ?? ""),
+            audience: "staff",
+          });
+        }}
+      >
+        <h3>Teacher sign-in</h3>
+        <p>Use this form for the classroom owner or a teacher account.</p>
+        <label>
+          Username
+          <input name="username" autoComplete="username" required />
+        </label>
+        <label>
+          Password
+          <input name="password" type="password" autoComplete="current-password" required />
+        </label>
+        <button type="submit">Sign in as teacher</button>
       </form>
 
       <form

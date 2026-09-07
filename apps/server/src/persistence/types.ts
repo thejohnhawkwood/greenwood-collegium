@@ -45,6 +45,8 @@ export type InviteRecord = {
   createdAt: Date;
   expiresAt: Date;
   consumedAt?: Date;
+  issuedToken?: string;
+  consumedByAccountId?: string;
 };
 
 export type CreateAccountInput = {
@@ -73,6 +75,7 @@ export type CreateInviteInput = {
   role: InviteRole;
   createdByAccountId: string;
   expiresAt: Date;
+  issuedToken?: string;
 };
 
 export interface AccountRepository {
@@ -102,7 +105,8 @@ export interface SessionRepository {
 export interface InviteRepository {
   create(input: CreateInviteInput): Promise<InviteRecord>;
   getByTokenHash(tokenHash: string): Promise<InviteRecord | undefined>;
-  consume(id: string, at: Date): Promise<boolean>;
+  list(): Promise<InviteRecord[]>;
+  consume(id: string, at: Date, consumedByAccountId?: string): Promise<boolean>;
 }
 
 export type ItemInstanceRecord = {

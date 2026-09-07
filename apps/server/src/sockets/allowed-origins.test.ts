@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { allowedOrigins } from "./gateway.js";
+import { allowedOrigins, isAllowedBrowserOrigin, isPrivateLanOrigin } from "./gateway.js";
 
 describe("allowedOrigins", () => {
   const previousAllowed = process.env.ALLOWED_ORIGINS;
@@ -25,5 +25,19 @@ describe("allowedOrigins", () => {
       "http://localhost:5173",
       "https://greenwood-collegium.onrender.com",
     ]);
+  });
+
+  it("treats RFC1918 http origins as private LAN", () => {
+    expect(isPrivateLanOrigin("http://192.168.50.32:3000")).toBe(true);
+    expect(isPrivateLanOrigin("http://10.0.0.8:3000")).toBe(true);
+    expect(isPrivateLanOrigin("http://172.16.4.2:3000")).toBe(true);
+    expect(isPrivateLanOrigin("https://192.168.50.32:3000")).toBe(false);
+    expect(isPrivateLanOrigin("http://8.8.8.8:3000")).toBe(false);
+  });
+
+  it("allows home-LAN browsers only outside production", () => {
+    expect(isAllowedBrowserOrigin("http://192.168.50.32:3000", false)).toBe(true);
+    expect(isAllowedBrowserOrigin("http://192.168.50.32:3000", true)).toBe(false);
+    expect(isAllowedBrowserOrigin("https://evil.example", false)).toBe(false);
   });
 });

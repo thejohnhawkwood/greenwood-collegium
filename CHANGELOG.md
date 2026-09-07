@@ -8,8 +8,17 @@ first playable package is tagged.
 
 ## [Unreleased]
 
+### Fixed
+
+- The classic command box stays typable during guest play, with a blinking `>` and lantern caret, even while the socket is still connecting.
+- Invite tokens are trimmed on accept, and unused tokens stay on the teacher roster until a student uses them.
+- Local `pnpm start` loads the repo-root `.env`, so the owner bootstrap token matches the file you saved.
+- Development play on the house Wi-Fi: bind `0.0.0.0` and allow private LAN browser origins so kids are not stuck on `127.0.0.1`.
+
 ### Added
 
+- Teacher sign-in below the student form, plus a classroom roster of unused invite tokens and the usernames that accepted them. Passwords are never shown.
+- A living painted frame around the classic gold CLI: oak trunks that reveal upward on both window edges, pulsing lanterns, and a Gwelf / Redwall arrival of student animals in the corner.
 - Ticket 015 Arrival at the Collegium, Porter Bramble's welcome, `help` / `quests`, Level 2, and a teacher playthrough.
 - Ticket 014 Ember, focus, burning, and an `ember-burst` event the classic transcript can explain.
 - Ticket 013 turn-based practice-dummy combat with victory, infirmary defeat, and deterministic rolls.

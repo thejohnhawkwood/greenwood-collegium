@@ -29,6 +29,13 @@
       "when": 1757269000000,
       "tag": "0003_quest_progress",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1757271000000,
+      "tag": "0004_invite_classroom",
+      "breakpoints": true
     }
   ]
 }

@@ -58,6 +58,8 @@ export const invites = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
     consumedAt: timestamp("consumed_at", { withTimezone: true }),
+    issuedToken: text("issued_token"),
+    consumedByAccountId: text("consumed_by_account_id").references(() => accounts.id),
   },
   (table) => [index("invites_created_by_account_id_idx").on(table.createdByAccountId)],
 );

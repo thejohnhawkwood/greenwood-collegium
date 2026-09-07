@@ -44,6 +44,22 @@ export type SignedIn = {
   sessionToken: string;
 };
 
+export type ClassroomInvite = {
+  id: string;
+  role: InviteRole;
+  status: "unused" | "used" | "expired";
+  createdAt: Date;
+  expiresAt: Date;
+  token?: string;
+  username?: string;
+};
+
+export type ClassroomAccount = {
+  username: string;
+  role: Exclude<AccountRecord["role"], "owner">;
+  createdAt: Date;
+};
+
 export type PlayIdentity = {
   accountId: string;
   characterId: string;
@@ -60,7 +76,19 @@ export type AuthService = {
     username: string;
     password: string;
   }): Promise<SignedIn | AuthFailure>;
-  signIn(input: { username: string; password: string }): Promise<SignedIn | AuthFailure>;
+  signIn(input: {
+    username: string;
+    password: string;
+    audience?: "student" | "staff";
+  }): Promise<SignedIn | AuthFailure>;
+  listClassroom(actorId: string): Promise<
+    | {
+        ok: true;
+        invites: ClassroomInvite[];
+        accounts: ClassroomAccount[];
+      }
+    | AuthFailure
+  >;
   signOut(sessionToken: string): Promise<void>;
   createInvite(
     actorId: string,
@@ -103,7 +131,9 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     username: string;
     password: string;
   }): Promise<SignedIn | AuthFailure> {
-    if (!deps.bootstrapToken || !tokensEqual(input.token, deps.bootstrapToken)) {
+    const expected = deps.bootstrapToken?.trim();
+    const provided = input.token.trim();
+    if (!expected || !tokensEqual(provided, expected)) {
       return fail("invalid_bootstrap", "That bootstrap token is not valid.");
     }
     if (!(await bootstrapOpen())) {
@@ -123,6 +153,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
   async function signIn(input: {
     username: string;
     password: string;
+    audience?: "student" | "staff";
   }): Promise<SignedIn | AuthFailure> {
     const account = await deps.accounts.getByUsername(input.username);
     if (!account) {
@@ -131,6 +162,12 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     const matches = await deps.hasher.verify(account.passwordHash, input.password);
     if (!matches) {
       return fail("invalid_credentials", "That username or password is not correct.");
+    }
+    if (input.audience === "student" && account.role !== "student") {
+      return fail("invalid_credentials", "Use the teacher sign-in below.");
+    }
+    if (input.audience === "staff" && account.role === "student") {
+      return fail("invalid_credentials", "Use the student sign-in above.");
     }
     if (account.status === "disabled") {
       return fail("account_disabled", "That account is disabled.");
@@ -171,6 +208,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       role,
       createdByAccountId: actor.id,
       expiresAt,
+      issuedToken: token,
     });
     return { ok: true, token, role, expiresAt };
   }
@@ -180,7 +218,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     username: string;
     password: string;
   }): Promise<SignedIn | AuthFailure> {
-    const invite = await deps.invites.getByTokenHash(hashToken(input.token));
+    const invite = await deps.invites.getByTokenHash(hashToken(input.token.trim()));
     if (!invite || invite.consumedAt || invite.expiresAt.getTime() <= now().getTime()) {
       return fail("invalid_invite", "That invite is not valid.");
     }
@@ -192,11 +230,62 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!created.ok) {
       return created;
     }
-    const consumed = await deps.invites.consume(invite.id, now());
+    const consumed = await deps.invites.consume(invite.id, now(), created.account.id);
     if (!consumed) {
       return fail("invalid_invite", "That invite is not valid.");
     }
     return issueSession(created.account, created.character);
+  }
+
+  async function listClassroom(actorId: string): Promise<
+    | {
+        ok: true;
+        invites: ClassroomInvite[];
+        accounts: ClassroomAccount[];
+      }
+    | AuthFailure
+  > {
+    const actor = await deps.accounts.getById(actorId);
+    if (!actor || actor.status !== "active") {
+      return fail("unauthenticated", "Sign in to continue.");
+    }
+    if (actor.role === "student") {
+      return fail("forbidden", "Students cannot read the classroom roster.");
+    }
+    const [invites, students, teachers] = await Promise.all([
+      deps.invites.list(),
+      deps.accounts.listByRole("student"),
+      deps.accounts.listByRole("teacher"),
+    ]);
+    const usernames = new Map<string, string>();
+    for (const account of [...students, ...teachers]) {
+      usernames.set(account.id, account.username);
+    }
+    return {
+      ok: true,
+      invites: invites.map((invite) => {
+        const expired = invite.expiresAt.getTime() <= now().getTime();
+        const status = invite.consumedAt ? "used" : expired ? "expired" : "unused";
+        return {
+          id: invite.id,
+          role: invite.role,
+          status,
+          createdAt: invite.createdAt,
+          expiresAt: invite.expiresAt,
+          token: status === "unused" ? invite.issuedToken : undefined,
+          username: invite.consumedByAccountId
+            ? usernames.get(invite.consumedByAccountId)
+            : undefined,
+        };
+      }),
+      accounts: [...students, ...teachers]
+        .sort((left, right) => left.username.localeCompare(right.username))
+        .map((account) => ({
+          username: account.username,
+          role: account.role === "teacher" ? ("teacher" as const) : ("student" as const),
+          createdAt: account.createdAt,
+        })),
+    };
   }
 
   async function disableAccount(
@@ -319,6 +408,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     signOut,
     createInvite,
     acceptInvite,
+    listClassroom,
     disableAccount,
     resolveSession,
     resolvePlayIdentity,

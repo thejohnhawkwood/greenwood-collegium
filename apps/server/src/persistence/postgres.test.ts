@@ -94,7 +94,8 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     {
       create: (input) => invites().create(input),
       getByTokenHash: (tokenHash) => invites().getByTokenHash(tokenHash),
-      consume: (id, at) => invites().consume(id, at),
+      list: () => invites().list(),
+      consume: (id, at, consumedByAccountId) => invites().consume(id, at, consumedByAccountId),
     },
   );
 

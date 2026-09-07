@@ -12,4 +12,7 @@ Fastify process for HTTP and Socket.IO.
 - Ticket 015 owns Arrival, `help`, and `quests`. Handlers do not invent Porter speech or award XP twice.
 - Repeat command IDs must return the first result. Authenticated disconnects get a resume grace and `session.snapshot`.
 - Account and character records use repository interfaces. In-memory tests always run. Postgres tests run only with `GREENWOOD_TEST_DATABASE_URL`.
+- Owner and teacher may read unused invite tokens and accepted usernames on `GET /auth/classroom`. Students may not. Passwords never appear in that payload.
 - Never log `DATABASE_URL`, passwords, session tokens, invite tokens, or read a production dump.
+- `pnpm start` loads the repo-root `.env` when that file exists. Do not print secret values.
+- Development may accept private LAN origins so household devices can play. Production may not.

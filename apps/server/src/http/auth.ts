@@ -1,6 +1,7 @@
 import {
   authAcceptInviteRequestSchema,
   authBootstrapRequestSchema,
+  authClassroomSchema,
   authCreateInviteRequestSchema,
   authDisableAccountRequestSchema,
   authSessionPublicSchema,
@@ -25,6 +26,7 @@ export type AuthHttpDependencies = {
   auth: AuthService;
   allowGuestPlay: boolean;
   secureCookies: boolean;
+  persistence?: "memory" | "postgres";
 };
 
 const failureStatus: Record<AuthFailure["code"], number> = {
@@ -52,6 +54,37 @@ export async function registerAuthRoutes(
       signedIn: session !== undefined,
       allowGuestPlay: deps.allowGuestPlay,
       bootstrapOpen: session ? false : await deps.auth.bootstrapOpen(),
+    });
+  });
+
+  app.get("/auth/classroom", async (request, reply) => {
+    const session = await sessionFromRequest(deps.auth, request);
+    if (!session) {
+      return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
+    }
+    const result = await deps.auth.listClassroom(session.account.id);
+    if (!result.ok) {
+      return reply.status(failureStatus[result.code]).send({
+        error: result.code,
+        message: result.message,
+      });
+    }
+    return authClassroomSchema.parse({
+      persistence: deps.persistence ?? "memory",
+      invites: result.invites.map((invite) => ({
+        id: invite.id,
+        role: invite.role,
+        status: invite.status,
+        createdAt: invite.createdAt.toISOString(),
+        expiresAt: invite.expiresAt.toISOString(),
+        token: invite.token,
+        username: invite.username,
+      })),
+      accounts: result.accounts.map((account) => ({
+        username: account.username,
+        role: account.role,
+        createdAt: account.createdAt.toISOString(),
+      })),
     });
   });
 

@@ -89,6 +89,115 @@ describe("classroom auth service", () => {
     });
   });
 
+  it("keeps unused invite tokens on the teacher roster and hides them after accept", async () => {
+    const { auth } = createTestAuth();
+    const owner = await auth.bootstrap({
+      token: TEST_BOOTSTRAP_TOKEN,
+      username: "owner",
+      password: "lantern-path",
+    });
+    expect(owner.ok).toBe(true);
+    if (!owner.ok) {
+      return;
+    }
+
+    const invite = await auth.createInvite(owner.account.id, "student");
+    expect(invite.ok).toBe(true);
+    if (!invite.ok) {
+      return;
+    }
+
+    const roster = await auth.listClassroom(owner.account.id);
+    expect(roster.ok).toBe(true);
+    if (!roster.ok) {
+      return;
+    }
+    expect(roster.invites).toEqual([
+      expect.objectContaining({
+        status: "unused",
+        token: invite.token,
+        role: "student",
+      }),
+    ]);
+
+    const student = await auth.acceptInvite({
+      token: `  ${invite.token}  `,
+      username: "pip",
+      password: "lantern-path",
+    });
+    expect(student.ok).toBe(true);
+    if (!student.ok) {
+      return;
+    }
+
+    const after = await auth.listClassroom(owner.account.id);
+    expect(after.ok).toBe(true);
+    if (!after.ok) {
+      return;
+    }
+    expect(after.invites[0]).toMatchObject({
+      status: "used",
+      username: "pip",
+    });
+    expect(after.invites[0]?.token).toBeUndefined();
+    expect(after.accounts).toEqual([expect.objectContaining({ username: "pip", role: "student" })]);
+    expect(await auth.listClassroom(student.account.id)).toMatchObject({
+      ok: false,
+      code: "forbidden",
+    });
+  });
+
+  it("sends owner and teacher to the staff sign-in", async () => {
+    const { auth } = createTestAuth();
+    const owner = await auth.bootstrap({
+      token: TEST_BOOTSTRAP_TOKEN,
+      username: "owner",
+      password: "lantern-path",
+    });
+    expect(owner.ok).toBe(true);
+    if (!owner.ok) {
+      return;
+    }
+    expect(
+      await auth.signIn({ username: "owner", password: "lantern-path", audience: "student" }),
+    ).toMatchObject({
+      ok: false,
+      code: "invalid_credentials",
+      message: "Use the teacher sign-in below.",
+    });
+    expect(
+      await auth.signIn({ username: "owner", password: "lantern-path", audience: "staff" }),
+    ).toMatchObject({ ok: true });
+
+    const invite = await auth.createInvite(owner.account.id, "student");
+    expect(invite.ok).toBe(true);
+    if (!invite.ok) {
+      return;
+    }
+    await auth.acceptInvite({
+      token: invite.token,
+      username: "pip",
+      password: "lantern-path",
+    });
+    expect(
+      await auth.signIn({ username: "pip", password: "lantern-path", audience: "staff" }),
+    ).toMatchObject({
+      ok: false,
+      code: "invalid_credentials",
+      message: "Use the student sign-in above.",
+    });
+  });
+
+  it("accepts a bootstrap token with surrounding whitespace", async () => {
+    const { auth } = createTestAuth();
+    const created = await auth.bootstrap({
+      token: `  ${TEST_BOOTSTRAP_TOKEN}  `,
+      username: "rowan",
+      password: "lantern-path",
+    });
+    expect(created.ok).toBe(true);
+  });
+
   it("rejects a wrong bootstrap token without creating an owner", async () => {
     const { auth } = createTestAuth();
     expect(

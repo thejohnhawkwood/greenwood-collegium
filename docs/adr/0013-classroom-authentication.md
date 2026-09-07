@@ -11,7 +11,8 @@ Ticket 009 must replace temporary identity in production. Public registration st
 ## Decision
 
 - Owner bootstrap uses `ADMIN_BOOTSTRAP_TOKEN` once. Students join only with a one-time invite.
-- Passwords are Argon2id. Session and invite secrets are opaque tokens; only SHA-256 hashes are stored.
+- Passwords are Argon2id. Session secrets are opaque tokens; only SHA-256 hashes are stored.
+- Unused classroom invite plaintext is recoverable by owner and teacher until consume. After consume, only the hash remains. See ADR-0020.
 - The session cookie is `HttpOnly`, `SameSite=Lax`, and `Secure` in production. The client never supplies account, role, or character authority.
 - `NODE_ENV=production` refuses guest sockets. Development and tests keep the four-guest pool.
 - Repositories stay dual: in-memory for unit tests, Postgres when `GREENWOOD_TEST_DATABASE_URL` or `DATABASE_URL` is set.

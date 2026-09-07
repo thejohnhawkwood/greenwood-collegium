@@ -5,11 +5,16 @@ import {
   eventEnvelopeSchema,
   renderClassicNarration,
   schemaVersion,
+  type AuthClassroom,
   type AuthSessionPublic,
 } from "@greenwood/contracts";
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { io, type Socket } from "socket.io-client";
+import { AcademyFrame } from "./academy-frame.js";
 import { AuthGate } from "./AuthGate.js";
+import { loadClassroom } from "./classroom-data.js";
+import { ClassroomRoster } from "./classroom-roster.js";
+import { DISCONNECTED_COMMAND_NOTICE, SOCKET_TRANSPORTS, canSendCommand } from "./command-input.js";
 import { loadAuthStatus, shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { createCommandRequest } from "./command-request.js";
@@ -22,7 +27,6 @@ export function App() {
   const [status, setStatus] = useState<AuthStatus | undefined>();
   const [me, setMe] = useState<AuthSessionPublic | undefined>();
   const [forceGate, setForceGate] = useState(false);
-  const [inviteOnce, setInviteOnce] = useState("");
   const showGate = status !== undefined && shouldShowAuthGate(status, forceGate);
 
   useEffect(() => {
@@ -31,59 +35,58 @@ export function App() {
 
   if (status === undefined) {
     return (
-      <main className="client">
-        <p>Loading the Collegium.</p>
-      </main>
+      <AcademyFrame>
+        <main className="client">
+          <p>Loading the Collegium.</p>
+        </main>
+      </AcademyFrame>
     );
   }
 
   if (showGate) {
     return (
-      <main className="client">
-        <header className="chrome">
-          <h1>{APP_TITLE}</h1>
-        </header>
-        <AuthGate
-          bootstrapOpen={status.bootstrapOpen}
-          allowGuestPlay={status.allowGuestPlay}
-          onSignedIn={() => {
-            setForceGate(false);
-            void refreshAuth(setStatus, setMe);
-          }}
-          onContinueAsGuest={status.allowGuestPlay ? () => setForceGate(false) : undefined}
-        />
-      </main>
+      <AcademyFrame>
+        <main className="client">
+          <header className="chrome">
+            <h1>{APP_TITLE}</h1>
+          </header>
+          <AuthGate
+            bootstrapOpen={status.bootstrapOpen}
+            allowGuestPlay={status.allowGuestPlay}
+            onSignedIn={() => {
+              setForceGate(false);
+              void refreshAuth(setStatus, setMe);
+            }}
+            onContinueAsGuest={status.allowGuestPlay ? () => setForceGate(false) : undefined}
+          />
+        </main>
+      </AcademyFrame>
     );
   }
 
   return (
-    <ClassicClient
-      key={me?.accountId ?? "guest"}
-      status={status}
-      me={me}
-      inviteOnce={inviteOnce}
-      onInviteOnce={setInviteOnce}
-      onShowGate={() => setForceGate(true)}
-      onSignedOut={() => {
-        setInviteOnce("");
-        void refreshAuth(setStatus, setMe);
-      }}
-    />
+    <AcademyFrame>
+      <ClassicClient
+        key={me?.accountId ?? "guest"}
+        status={status}
+        me={me}
+        onShowGate={() => setForceGate(true)}
+        onSignedOut={() => {
+          void refreshAuth(setStatus, setMe);
+        }}
+      />
+    </AcademyFrame>
   );
 }
 
 function ClassicClient({
   status,
   me,
-  inviteOnce,
-  onInviteOnce,
   onShowGate,
   onSignedOut,
 }: {
   status: AuthStatus;
   me: AuthSessionPublic | undefined;
-  inviteOnce: string;
-  onInviteOnce: (token: string) => void;
   onShowGate: () => void;
   onSignedOut: () => void;
 }) {
@@ -104,11 +107,13 @@ function ClassicClient({
   const [history, setHistory] = useState<string[]>([]);
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState("");
+  const [classroom, setClassroom] = useState<AuthClassroom | undefined>();
+  const canInvite = me?.role === "owner" || me?.role === "teacher";
 
   useEffect(() => {
     const socket = io({
       path: "/socket.io",
-      transports: ["websocket"],
+      transports: [...SOCKET_TRANSPORTS],
       withCredentials: true,
       auth: () => ({ lastSequence: lastSequenceRef.current }),
     });
@@ -163,11 +168,30 @@ function ClassicClient({
   }, [me]);
 
   useEffect(() => {
+    if (!canInvite) {
+      return;
+    }
+    let cancelled = false;
+    void loadClassroom().then((next) => {
+      if (!cancelled) {
+        setClassroom(next);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [canInvite, me?.accountId]);
+
+  useEffect(() => {
     const log = logRef.current;
     if (log) {
       log.scrollTop = log.scrollHeight;
     }
   }, [lines]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   function addNotice(text: string) {
     setLines((current) =>
@@ -183,7 +207,11 @@ function ClassicClient({
     event.preventDefault();
     const socket = socketRef.current;
     const raw = inputValue;
-    if (!socket || connection !== "connected" || raw.trim().length === 0) {
+    if (raw.trim().length === 0) {
+      return;
+    }
+    if (!socket || !canSendCommand(connection, raw)) {
+      addNotice(DISCONNECTED_COMMAND_NOTICE);
       return;
     }
 
@@ -237,8 +265,6 @@ function ClassicClient({
     setInputValue(recalled.value);
   }
 
-  const canInvite = me?.role === "owner" || me?.role === "teacher";
-
   return (
     <main className="client" onClick={() => inputRef.current?.focus()}>
       <header className="chrome">
@@ -258,7 +284,7 @@ function ClassicClient({
                 <button
                   type="button"
                   onClick={() => {
-                    void issueInvite("student", onInviteOnce, addNotice);
+                    void issueInvite("student", setClassroom, addNotice);
                   }}
                 >
                   Issue student invite
@@ -268,7 +294,7 @@ function ClassicClient({
                 <button
                   type="button"
                   onClick={() => {
-                    void issueInvite("teacher", onInviteOnce, addNotice);
+                    void issueInvite("teacher", setClassroom, addNotice);
                   }}
                 >
                   Issue teacher invite
@@ -289,14 +315,7 @@ function ClassicClient({
             </button>
           )}
         </p>
-        {inviteOnce ? (
-          <p>
-            <label>
-              Invite token (shown once)
-              <input readOnly value={inviteOnce} />
-            </label>
-          </p>
-        ) : null}
+        {canInvite && classroom ? <ClassroomRoster classroom={classroom} /> : null}
       </header>
       <div
         ref={logRef}
@@ -329,7 +348,6 @@ function ClassicClient({
             autoCorrect="off"
             spellCheck={false}
             autoFocus
-            disabled={connection !== "connected"}
             aria-label="Command"
           />
         </label>
@@ -364,7 +382,7 @@ async function signOut(onSignedOut: () => void): Promise<void> {
 
 async function issueInvite(
   role: "student" | "teacher",
-  onInviteOnce: (token: string) => void,
+  onClassroom: (classroom: AuthClassroom | undefined) => void,
   addNotice: (text: string) => void,
 ): Promise<void> {
   const response = await fetch("/auth/invites", {
@@ -379,5 +397,5 @@ async function issueInvite(
     addNotice("The invite could not be created.");
     return;
   }
-  onInviteOnce(parsed.data.token);
+  onClassroom(await loadClassroom());
 }

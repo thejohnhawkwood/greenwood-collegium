@@ -202,8 +202,13 @@ export class PostgresInviteRepository implements InviteRepository {
       createdByAccountId: input.createdByAccountId,
       createdAt: new Date(),
       expiresAt: input.expiresAt,
+      issuedToken: input.issuedToken,
     };
-    await this.db.insert(invites).values(record);
+    await this.db.insert(invites).values({
+      ...record,
+      issuedToken: input.issuedToken,
+      consumedByAccountId: null,
+    });
     return record;
   }
 
@@ -216,10 +221,21 @@ export class PostgresInviteRepository implements InviteRepository {
     return row ? toInvite(row) : undefined;
   }
 
-  async consume(id: string, at: Date): Promise<boolean> {
+  async list(): Promise<InviteRecord[]> {
+    const rows = await this.db.select().from(invites);
+    return rows
+      .map(toInvite)
+      .sort((left, right) => right.createdAt.getTime() - left.createdAt.getTime());
+  }
+
+  async consume(id: string, at: Date, consumedByAccountId?: string): Promise<boolean> {
     const [row] = await this.db
       .update(invites)
-      .set({ consumedAt: at })
+      .set({
+        consumedAt: at,
+        issuedToken: null,
+        consumedByAccountId: consumedByAccountId ?? null,
+      })
       .where(and(eq(invites.id, id), isNull(invites.consumedAt)))
       .returning({ id: invites.id });
     return row !== undefined;
@@ -405,6 +421,8 @@ function toInvite(row: typeof invites.$inferSelect): InviteRecord {
     createdAt: asDate(row.createdAt),
     expiresAt: asDate(row.expiresAt),
     consumedAt: row.consumedAt ? asDate(row.consumedAt) : undefined,
+    issuedToken: row.issuedToken ?? undefined,
+    consumedByAccountId: row.consumedByAccountId ?? undefined,
   };
 }
 

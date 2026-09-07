@@ -186,6 +186,7 @@ export class InMemoryInviteRepository implements InviteRepository {
       createdByAccountId: input.createdByAccountId,
       createdAt: new Date(),
       expiresAt: input.expiresAt,
+      issuedToken: input.issuedToken,
     };
     this.byId.set(record.id, record);
     return record;
@@ -195,12 +196,23 @@ export class InMemoryInviteRepository implements InviteRepository {
     return [...this.byId.values()].find((invite) => invite.tokenHash === tokenHash);
   }
 
-  async consume(id: string, at: Date): Promise<boolean> {
+  async list(): Promise<InviteRecord[]> {
+    return [...this.byId.values()].sort(
+      (left, right) => right.createdAt.getTime() - left.createdAt.getTime(),
+    );
+  }
+
+  async consume(id: string, at: Date, consumedByAccountId?: string): Promise<boolean> {
     const invite = this.byId.get(id);
     if (!invite || invite.consumedAt) {
       return false;
     }
-    this.byId.set(id, { ...invite, consumedAt: at });
+    this.byId.set(id, {
+      ...invite,
+      consumedAt: at,
+      issuedToken: undefined,
+      consumedByAccountId,
+    });
     return true;
   }
 }
