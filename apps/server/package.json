@@ -8,6 +8,7 @@
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
     "start": "node --env-file-if-exists=../../.env dist/index.js",
+    "db:migrate": "node --env-file-if-exists=../../.env dist/migrate.js",
     "db:generate": "drizzle-kit generate --config drizzle.config.ts"
   },
   "dependencies": {

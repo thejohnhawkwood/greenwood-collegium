@@ -28,7 +28,9 @@ import {
 import { loadSocketTicket } from "./socket-ticket.js";
 import { loadAuthStatus, shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
+import { shouldFocusCommandInput } from "./command-focus.js";
 import { createCommandRequest } from "./command-request.js";
+import { parseInviteCount } from "./invite-count.js";
 import {
   applyProcessHello,
   readStoredBootId,
@@ -151,7 +153,7 @@ function ClassicClient({
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [classroom, setClassroom] = useState<AuthClassroom | undefined>();
-  const [inviteCount, setInviteCount] = useState(8);
+  const inviteCountRef = useRef<HTMLInputElement | null>(null);
   const canInvite = me?.role === "owner" || me?.role === "teacher";
 
   useEffect(() => {
@@ -349,7 +351,14 @@ function ClassicClient({
   }
 
   return (
-    <main className="client" onClick={() => inputRef.current?.focus()}>
+    <main
+      className="client"
+      onClick={(event) => {
+        if (shouldFocusCommandInput(event.target)) {
+          inputRef.current?.focus();
+        }
+      }}
+    >
       <header className="chrome">
         <h1>{APP_TITLE}</h1>
         <p className="meta">
@@ -366,27 +375,34 @@ function ClassicClient({
               {canInvite ? (
                 <span className="invite-batch">
                   <label>
-                    Number of students
-                    <select
-                      value={inviteCount}
-                      onChange={(event) => {
-                        setInviteCount(Number.parseInt(event.target.value, 10));
-                      }}
-                    >
-                      {Array.from(
-                        { length: STUDENT_INVITE_BATCH_MAX },
-                        (_, index) => index + 1,
-                      ).map((count) => (
-                        <option key={count} value={count}>
-                          {count}
-                        </option>
-                      ))}
-                    </select>
+                    Number of students (1–30)
+                    <input
+                      ref={inviteCountRef}
+                      type="number"
+                      name="studentInviteCount"
+                      min={1}
+                      max={STUDENT_INVITE_BATCH_MAX}
+                      defaultValue={8}
+                      aria-describedby="invite-count-hint"
+                    />
                   </label>
+                  <span id="invite-count-hint" className="visually-hidden">
+                    Enter how many unused student tokens to create, from 1 to{" "}
+                    {STUDENT_INVITE_BATCH_MAX}.
+                  </span>
                   <button
                     type="button"
                     onClick={() => {
-                      void issueInvite("student", inviteCount, setClassroom, addNotice);
+                      void issueInvite(
+                        "student",
+                        parseInviteCount(
+                          inviteCountRef.current?.value ?? "8",
+                          STUDENT_INVITE_BATCH_MAX,
+                          8,
+                        ),
+                        setClassroom,
+                        addNotice,
+                      );
                     }}
                   >
                     Issue student invites

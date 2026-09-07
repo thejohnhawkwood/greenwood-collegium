@@ -15,6 +15,7 @@ Fastify process for HTTP and Socket.IO.
 - Account and character records use repository interfaces. In-memory tests always run. Postgres tests run only with `GREENWOOD_TEST_DATABASE_URL`.
 - Owner and teacher may read unused invite tokens, accepted usernames, and Collegian names on `GET /auth/classroom`. Students may not. Passwords never appear in that payload. Teachers may issue a batch of unused student tokens.
 - Ticket 016 owns classroom commands. Socket handlers check owner/teacher from the session, apply mute and kick, and append an audit row. They do not invent announce text beyond the validated plain-text line. Never log session tokens, invite tokens, or socket tickets.
+- Production requires a reachable Postgres. Do not fall back to memory when `NODE_ENV=production`. `pnpm --filter @greenwood/server db:migrate` is the pre-deploy migration command.
 - Never log `DATABASE_URL`, passwords, session tokens, invite tokens, socket tickets, or read a production dump.
 - `pnpm start` loads the repo-root `.env` when that file exists. Do not print secret values.
 - Development may accept private LAN origins so household devices can play. Production may not.

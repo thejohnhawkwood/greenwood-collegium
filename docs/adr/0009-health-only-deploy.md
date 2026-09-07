@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Accepted. Ticket 017 / [ADR-0024](0024-production-readiness.md) moves the production traffic health check to `/health/ready`.
 
 ## Context
 

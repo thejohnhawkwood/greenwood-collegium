@@ -2,7 +2,7 @@
 
 Human-only. Agents do not create Render resources or handle production secrets.
 
-This applies the root `render.yaml` after Ticket 001 is on `main`. The result is a health-only Web Service and a persistent Postgres 18 database. There is no game yet.
+This applies the root `render.yaml`. Ticket 017 is the production-ready Blueprint: paid web service, persistent Postgres 18, pre-deploy migrations, and a `/health/ready` check. Environment names are in [`environment.md`](environment.md). Backups are in [`../ops/backup-restore.md`](../ops/backup-restore.md).
 
 Official docs: [Render Blueprints](https://render.com/docs/infrastructure-as-code).
 
@@ -35,13 +35,19 @@ If any click fails, stop. Do not create a second database by hand or paste `DATA
 14. After the first deploy starts, note the public hostname `https://<name>.onrender.com`.
 15. Ticket 004: `ALLOWED_ORIGINS` should include the public `https://….onrender.com` origin. The process also allows `RENDER_EXTERNAL_URL` automatically.
 16. Wait until the deploy is live.
-17. Open `https://<service>.onrender.com/` — after Ticket 004, expect the look proof page when `apps/web/dist` was built. Health routes stay on the same origin.
-18. Open `https://<service>.onrender.com/health/live` — expect HTTP 200 and JSON status ok.
-19. Open `https://<service>.onrender.com/health/ready` — after Ticket 011 expect HTTP 200 when the database pings and room JSON loads. After Ticket 009 the public page requires sign-in. Use `ADMIN_BOOTSTRAP_TOKEN` from the Render dashboard only; never paste it into Git or chat.
+17. Open `https://<service>.onrender.com/` — expect the sign-in gate. Health routes stay on the same origin.
+18. Open `https://<service>.onrender.com/health/live` — expect HTTP 200 and JSON status ok. This only proves the process is up.
+19. Open `https://<service>.onrender.com/health/ready` — expect HTTP 200 when the database pings and room JSON loads. Render uses this path before shifting traffic. A 503 means do not seat the class yet.
 20. Open `https://<service>.onrender.com/version` — expect a safe version payload, no secrets.
 21. Put **only** the public hostname into `docs/context/CURRENT.md`. Open a small docs PR if needed. Never commit connection strings.
 
-## If health/live fails
+## After each deploy
+
+1. Confirm the pre-deploy command `pnpm --filter @greenwood/server db:migrate` succeeded.
+2. Confirm `/health/ready` is 200 on the public hostname.
+3. Sign in as the teacher and type `look`. A restart must keep accounts and unused tokens.
+
+## If health/ready or health/live fails
 
 - Read the Render deploy logs (build command and start command).
 - Confirm CI passed on the commit Render deployed (`autoDeployTrigger` is `checksPass`).

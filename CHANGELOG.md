@@ -10,6 +10,14 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 017 production Blueprint: pre-deploy `db:migrate`, Render health check on `/health/ready`, environment names, and human-only backup notes. Production refuses to start without Postgres.
+
+### Changed
+
+- The student invite count is a number field, not a dropdown, so the painted frame cannot close the list before a teacher picks 24 or 30.
+
+### Added
+
 - Teachers can issue 1–30 student invite tokens at once, see each student's Collegian name on the roster, and remove a login from the roster or with `admin roster` / `admin remove`.
 - Look and examine describe people from species and gender. Porter and the Practice Dummy have worn, specific looks.
 
