@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Fixed
 
+- Live play opens the game socket on HTTP polling first so the session cookie survives Render's websocket upgrade.
 - The classic command box stays typable during guest play, with a blinking `>` and lantern caret, even while the socket is still connecting.
 - Invite tokens are trimmed on accept, and unused tokens stay on the teacher roster until a student uses them.
 - Local `pnpm start` loads the repo-root `.env`, so the owner bootstrap token matches the file you saved.

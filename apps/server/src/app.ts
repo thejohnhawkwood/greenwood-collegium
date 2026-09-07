@@ -4,7 +4,7 @@ import { registerVersionRoutes } from "./http/version.js";
 import { registerWebClient } from "./http/web-client.js";
 
 export async function buildApp(health?: HealthDependencies) {
-  const app = Fastify({ logger: true });
+  const app = Fastify({ logger: true, trustProxy: true });
   await registerHealthRoutes(app, health);
   await registerVersionRoutes(app);
   await registerWebClient(app);

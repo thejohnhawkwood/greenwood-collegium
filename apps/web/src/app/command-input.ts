@@ -1,4 +1,4 @@
-export const SOCKET_TRANSPORTS = ["websocket", "polling"] as const;
+export const SOCKET_TRANSPORTS = ["polling", "websocket"] as const;
 
 export const DISCONNECTED_COMMAND_NOTICE =
   "The courtyard is not connected yet. Wait for Connection: connected, then press Enter.";

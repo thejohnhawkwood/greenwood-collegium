@@ -114,6 +114,7 @@ function ClassicClient({
     const socket = io({
       path: "/socket.io",
       transports: [...SOCKET_TRANSPORTS],
+      upgrade: true,
       withCredentials: true,
       auth: () => ({ lastSequence: lastSequenceRef.current }),
     });
@@ -132,16 +133,22 @@ function ClassicClient({
     socket.on("disconnect", () => {
       setConnection("disconnected");
     });
+    let connectErrorShown = false;
     socket.on("connect_error", (error) => {
-      if (error.message.includes("sign_in_required")) {
-        setLines((current) =>
-          appendTranscript(current, {
-            id: crypto.randomUUID(),
-            kind: "notice",
-            text: "Sign in to enter the Collegium.",
-          }),
-        );
+      if (connectErrorShown) {
+        return;
       }
+      connectErrorShown = true;
+      const text = error.message.includes("sign_in_required")
+        ? "Sign in to enter the Collegium."
+        : "The courtyard could not connect. Refresh once. If it stays disconnected, wait a moment and try again.";
+      setLines((current) =>
+        appendTranscript(current, {
+          id: crypto.randomUUID(),
+          kind: "notice",
+          text,
+        }),
+      );
     });
     socket.on("event", (payload: unknown) => {
       const parsed = eventEnvelopeSchema.safeParse(payload);
