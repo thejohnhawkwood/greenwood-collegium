@@ -1,6 +1,6 @@
 import { and, eq, isNull } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import { accounts, characters, invites, itemInstances, sessions } from "./schema.js";
+import { accounts, characters, invites, itemInstances, questProgress, sessions } from "./schema.js";
 import {
   AccountNotFoundError,
   DuplicateUsernameError,
@@ -20,6 +20,8 @@ import {
   type ItemInstanceRecord,
   type ItemInstanceRepository,
   type ItemPlacementSeed,
+  type QuestProgressRecord,
+  type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
 } from "./types.js";
@@ -140,6 +142,13 @@ export class PostgresCharacterRepository implements CharacterRepository {
     await this.db
       .update(characters)
       .set({ roomId, updatedAt: new Date() })
+      .where(eq(characters.id, id));
+  }
+
+  async updateProgress(id: string, input: { experience: number; level: number }): Promise<void> {
+    await this.db
+      .update(characters)
+      .set({ experience: input.experience, level: input.level, updatedAt: new Date() })
       .where(eq(characters.id, id));
   }
 }
@@ -278,6 +287,44 @@ export class PostgresItemRepository implements ItemInstanceRepository {
   }
 }
 
+export class PostgresQuestRepository implements QuestProgressRepository {
+  constructor(private readonly db: Database) {}
+
+  async listByCharacter(characterId: string): Promise<QuestProgressRecord[]> {
+    const rows = await this.db
+      .select()
+      .from(questProgress)
+      .where(eq(questProgress.characterId, characterId));
+    return rows.map(toQuest);
+  }
+
+  async upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void> {
+    const now = new Date();
+    const completedObjectives = JSON.stringify(record.completedObjectiveIds);
+    const rewardGranted = record.rewardGranted ? "true" : "false";
+    await this.db
+      .insert(questProgress)
+      .values({
+        characterId: record.characterId,
+        questId: record.questId,
+        status: record.status,
+        completedObjectives,
+        rewardGranted,
+        createdAt: now,
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: [questProgress.characterId, questProgress.questId],
+        set: {
+          status: record.status,
+          completedObjectives,
+          rewardGranted,
+          updatedAt: now,
+        },
+      });
+  }
+}
+
 function asDate(value: Date | string): Date {
   return value instanceof Date ? value : new Date(value);
 }
@@ -328,6 +375,22 @@ function toItem(row: typeof itemInstances.$inferSelect): ItemInstanceRecord {
     templateId: row.templateId,
     roomId: row.roomId ?? undefined,
     holderCharacterId: row.holderCharacterId ?? undefined,
+    createdAt: asDate(row.createdAt),
+    updatedAt: asDate(row.updatedAt),
+  };
+}
+
+function toQuest(row: typeof questProgress.$inferSelect): QuestProgressRecord {
+  const parsed: unknown = JSON.parse(row.completedObjectives);
+  const completedObjectiveIds = Array.isArray(parsed)
+    ? parsed.filter((value): value is string => typeof value === "string")
+    : [];
+  return {
+    characterId: row.characterId,
+    questId: row.questId,
+    status: row.status === "completed" ? "completed" : "active",
+    completedObjectiveIds,
+    rewardGranted: row.rewardGranted === "true",
     createdAt: asDate(row.createdAt),
     updatedAt: asDate(row.updatedAt),
   };

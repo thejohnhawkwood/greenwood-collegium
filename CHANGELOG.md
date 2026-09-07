@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Ticket 015 Arrival at the Collegium, Porter Bramble's welcome, `help` / `quests`, Level 2, and a teacher playthrough.
 - Ticket 014 Ember, focus, burning, and an `ember-burst` event the classic transcript can explain.
 - Ticket 013 turn-based practice-dummy combat with victory, infirmary defeat, and deterministic rolls.
 - Ticket 012 unique item instances, take/drop/examine/inventory, and an ownership claim.

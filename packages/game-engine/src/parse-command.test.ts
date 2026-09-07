@@ -32,6 +32,13 @@ describe("parsePlayerCommand", () => {
       characterId: "char-rowan",
       spell: "ember",
     });
+    expect(parsePlayerCommand("help", "char-rowan")?.verb).toBe("help");
+    expect(parsePlayerCommand("help look", "char-rowan")).toEqual({
+      verb: "help",
+      characterId: "char-rowan",
+      topic: "look",
+    });
+    expect(parsePlayerCommand("quests", "char-rowan")?.verb).toBe("quests");
     expect(parsePlayerCommand("dance", "char-rowan")).toBeNull();
   });
 });

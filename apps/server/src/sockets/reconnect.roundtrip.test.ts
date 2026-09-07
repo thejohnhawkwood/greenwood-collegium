@@ -70,9 +70,7 @@ describe("authenticated reconnection", () => {
     const replay = await command(second, "cmd-north-1", "north");
     expect(replay.ack).toMatchObject({ commandId: "cmd-north-1", status: "accepted" });
     const look = await command(second, "cmd-look-resume", "look");
-    expect(
-      roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(look.events.at(-1))).payload.title,
-    ).toBe("Lantern Court");
+    expect(roomTitle(look.events)).toBe("Lantern Court");
   });
 });
 
@@ -116,4 +114,14 @@ async function command(
   });
   client.off("event", onEvent);
   return { ack, events };
+}
+
+function roomTitle(events: unknown[]): string {
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    const parsed = eventEnvelopeSchema.safeParse(events[index]);
+    if (parsed.success && parsed.data.type === "room.snapshot") {
+      return roomSnapshotEventSchema.parse(parsed.data).payload.title;
+    }
+  }
+  throw new Error("missing room.snapshot");
 }

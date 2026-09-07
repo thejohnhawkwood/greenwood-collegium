@@ -1,6 +1,7 @@
 import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import type { RoomFile } from "./schema.js";
+import type { QuestTemplate } from "./quest-schema.js";
 import type { SpellTemplate } from "./spell-schema.js";
 
 export type LoadedRoom = {
@@ -54,12 +55,28 @@ export type LoadedSpell = {
   helpText: string;
 };
 
+export type LoadedQuest = {
+  id: string;
+  title: string;
+  introNarration: string;
+  reminderNarration: string;
+  experienceReward: number;
+  objectives: Array<{
+    id: string;
+    kind: "look" | "say" | "take" | "visit";
+    label: string;
+    itemTemplateId?: string;
+    roomId?: string;
+  }>;
+};
+
 export type LoadedWorld = {
   rooms: Record<string, LoadedRoom>;
   characters: Record<string, never>;
   items: Record<string, LoadedItem>;
   enemies: Record<string, LoadedEnemy>;
   spells: Record<string, LoadedSpell>;
+  quests: Record<string, LoadedQuest>;
 };
 
 export function toWorldState(
@@ -70,6 +87,7 @@ export function toWorldState(
     enemies?: EnemyTemplate[];
     enemyPlacements?: EnemyPlacement[];
     spells?: SpellTemplate[];
+    quests?: QuestTemplate[];
   } = {
     templates: [],
     placements: [],
@@ -146,11 +164,29 @@ export function toWorldState(
       helpText: spell.helpText,
     };
   }
+  const quests: Record<string, LoadedQuest> = {};
+  for (const quest of catalog.quests ?? []) {
+    quests[quest.id] = {
+      id: quest.id,
+      title: quest.title,
+      introNarration: quest.introNarration,
+      reminderNarration: quest.reminderNarration,
+      experienceReward: quest.experienceReward,
+      objectives: quest.objectives.map((objective) => ({
+        id: objective.id,
+        kind: objective.kind,
+        label: objective.label,
+        itemTemplateId: objective.itemTemplateId,
+        roomId: objective.roomId,
+      })),
+    };
+  }
   return {
     rooms: loaded,
     characters: {},
     items,
     enemies,
     spells,
+    quests,
   };
 }

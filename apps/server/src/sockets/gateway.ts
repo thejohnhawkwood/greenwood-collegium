@@ -7,18 +7,23 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import {
+  applyQuestProgress,
   handleAttack,
   handleCast,
   handleDrop,
   handleExamine,
+  handleHelp,
   handleInventory,
   handleJoin,
   handleLeave,
   handleLook,
   handleMove,
+  handleQuests,
   handleSay,
   handleTake,
+  listQuestRecords,
   parsePlayerCommand,
+  progressQuests,
   revertDrop,
   revertTake,
   type EngineRuntime,
@@ -49,6 +54,28 @@ export type RealtimeOptions = {
   persistItem?: {
     claim(itemId: string, characterId: string, roomId: string): Promise<boolean>;
     release(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+  };
+  persistProgress?: (
+    characterId: string,
+    input: { experience: number; level: number },
+  ) => Promise<void>;
+  persistQuest?: {
+    listByCharacter(characterId: string): Promise<
+      Array<{
+        characterId: string;
+        questId: string;
+        status: "active" | "completed";
+        completedObjectiveIds: string[];
+        rewardGranted: boolean;
+      }>
+    >;
+    upsert(record: {
+      characterId: string;
+      questId: string;
+      status: "active" | "completed";
+      completedObjectiveIds: string[];
+      rewardGranted: boolean;
+    }): Promise<void>;
   };
 };
 
@@ -120,6 +147,10 @@ export async function attachRealtime(
   });
 
   io.on("connection", (socket) => {
+    void startPlay(socket);
+  });
+
+  async function startPlay(socket: Socket): Promise<void> {
     const identity = socket.data.identity as PlayIdentity | undefined;
     const claimed = identity
       ? {
@@ -134,6 +165,14 @@ export async function attachRealtime(
     }
 
     const characterId = claimed.id;
+    if (identity && options.persistQuest) {
+      applyQuestProgress(
+        world,
+        characterId,
+        await options.persistQuest.listByCharacter(characterId),
+      );
+    }
+
     const present = world.characters[characterId];
     if (identity && present) {
       resumeAuthenticated(socket, characterId);
@@ -149,6 +188,8 @@ export async function attachRealtime(
         characterId,
         name: claimed.name,
         roomId: "roomId" in claimed ? claimed.roomId : DEV_START_ROOM_ID,
+        experience: identity?.experience,
+        level: identity?.level,
       },
       runtime,
     );
@@ -162,10 +203,14 @@ export async function attachRealtime(
       return;
     }
 
+    if (identity && (options.persistRoom || options.persistProgress || options.persistQuest)) {
+      await persistAuthenticatedProgress(characterId);
+    }
+
     sockets.set(characterId, socket);
     deliver(sockets, characterId, joined.events, joined.notices);
     bindCommandHandlers(socket, characterId, identity);
-  });
+  }
 
   function resumeAuthenticated(socket: Socket, characterId: string): void {
     const previous = sockets.get(characterId);
@@ -183,6 +228,27 @@ export async function attachRealtime(
     const look = handleLook(world, { verb: "look", characterId }, runtime);
     const events = look.ok ? [snapshot, look.event] : [snapshot];
     deliver(sockets, characterId, events, []);
+  }
+
+  async function persistAuthenticatedProgress(characterId: string): Promise<void> {
+    const character = world.characters[characterId];
+    if (!character) {
+      return;
+    }
+    if (options.persistRoom) {
+      await options.persistRoom(characterId, character.roomId);
+    }
+    if (options.persistProgress) {
+      await options.persistProgress(characterId, {
+        experience: character.experience ?? 0,
+        level: character.level ?? 1,
+      });
+    }
+    if (options.persistQuest) {
+      for (const record of listQuestRecords(world, characterId)) {
+        await options.persistQuest.upsert(record);
+      }
+    }
   }
 
   function bindCommandHandlers(
@@ -264,7 +330,7 @@ export async function attachRealtime(
         commandId: parsed.data.commandId,
         status: "rejected",
         errorCode: "unknown_command",
-        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  attack dummy\n  cast ember\n  north\n  south\n  east\n  west`,
+        message: `I do not recognize "${parsed.data.raw.trim()}."\n\nDid you mean:\n  help\n  quests\n  look\n  say\n  inventory\n  take\n  drop\n  examine\n  attack dummy\n  cast ember\n  north\n  south\n  east\n  west`,
         resyncRequired: false,
       });
       commandLog.set(characterId, parsed.data.commandId, {
@@ -323,9 +389,13 @@ export async function attachRealtime(
                   ? handleExamine(world, intent, runtime)
                   : intent.verb === "inventory"
                     ? handleInventory(world, intent, runtime)
-                    : intent.verb === "attack"
-                      ? handleAttack(world, intent, runtime)
-                      : handleCast(world, intent, runtime);
+                    : intent.verb === "help"
+                      ? handleHelp(world, intent, runtime)
+                      : intent.verb === "quests"
+                        ? handleQuests(world, intent, runtime)
+                        : intent.verb === "attack"
+                          ? handleAttack(world, intent, runtime)
+                          : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -389,7 +459,26 @@ export async function attachRealtime(
       }
     }
 
-    const events = "events" in result ? result.events : [result.event];
+    const extra =
+      intent.verb === "look" ||
+      intent.verb === "say" ||
+      intent.verb === "take" ||
+      intent.verb === "move"
+        ? progressQuests(world, { characterId, kind: intent.verb }, runtime)
+        : [];
+    if (
+      identity &&
+      (intent.verb === "look" ||
+        intent.verb === "say" ||
+        intent.verb === "take" ||
+        intent.verb === "move" ||
+        intent.verb === "attack" ||
+        intent.verb === "cast")
+    ) {
+      await persistAuthenticatedProgress(characterId);
+    }
+
+    const events = [...("events" in result ? result.events : [result.event]), ...extra];
     const notices = "notices" in result ? result.notices : [];
     const delivered = deliver(sockets, characterId, events, notices);
     const first = delivered[0];

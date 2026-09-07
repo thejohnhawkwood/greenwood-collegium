@@ -52,5 +52,18 @@ export function createDevWorld(): WorldState {
         },
       ]),
     ),
+    questTemplates: Object.fromEntries(
+      Object.values(loaded.quests).map((quest) => [
+        quest.id,
+        {
+          id: quest.id,
+          title: quest.title,
+          introNarration: quest.introNarration,
+          reminderNarration: quest.reminderNarration,
+          experienceReward: quest.experienceReward,
+          objectives: quest.objectives.map((objective) => ({ ...objective })),
+        },
+      ]),
+    ),
   };
 }

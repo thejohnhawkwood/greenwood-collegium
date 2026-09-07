@@ -89,6 +89,7 @@ export interface CharacterRepository {
   getById(id: string): Promise<CharacterRecord | undefined>;
   listByAccountId(accountId: string): Promise<CharacterRecord[]>;
   updateRoom(id: string, roomId: string): Promise<void>;
+  updateProgress(id: string, input: { experience: number; level: number }): Promise<void>;
 }
 
 export interface SessionRepository {
@@ -124,6 +125,21 @@ export interface ItemInstanceRepository {
   list(): Promise<ItemInstanceRecord[]>;
   claim(itemId: string, characterId: string, roomId: string): Promise<boolean>;
   release(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+}
+
+export type QuestProgressRecord = {
+  characterId: string;
+  questId: string;
+  status: "active" | "completed";
+  completedObjectiveIds: string[];
+  rewardGranted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export interface QuestProgressRepository {
+  listByCharacter(characterId: string): Promise<QuestProgressRecord[]>;
+  upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void>;
 }
 
 export class DuplicateUsernameError extends Error {

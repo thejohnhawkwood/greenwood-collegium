@@ -1,0 +1,32 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "arrival-at-the-collegium",
+  "title": "Arrival at the Collegium",
+  "introNarration": "A hedgehog in a too-large porter's coat bustles out from the lanterns, quills neatly combed, a brass whistle bouncing on a ribbon.\n\n\"Welcome, new Collegian! I am Porter Bramble, and I have been waiting for someone just your height.\"\n\n\"The courtyard is a talking place. Type look to see it properly. Type say hello so I know you arrived. There is a small copper key on the stones — type take key when you are ready. When you have it, walk north into the Great Hall.\"\n\n\"If you forget a word, type help. Type quests to see your first task: Arrival at the Collegium.\"",
+  "reminderNarration": "Porter Bramble nods from the lanterns. \"Still finding your feet? Type help if a word slips, or quests to see Arrival at the Collegium.\"",
+  "experienceReward": 10,
+  "objectives": [
+    {
+      "id": "look",
+      "kind": "look",
+      "label": "Look around Lantern Court"
+    },
+    {
+      "id": "speak",
+      "kind": "say",
+      "label": "Say hello so Porter knows you arrived"
+    },
+    {
+      "id": "take",
+      "kind": "take",
+      "label": "Take the small copper key",
+      "itemTemplateId": "small-copper-key"
+    },
+    {
+      "id": "arrive",
+      "kind": "visit",
+      "label": "Walk north to the Great Hall",
+      "roomId": "great-hall"
+    }
+  ]
+}

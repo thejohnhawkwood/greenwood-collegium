@@ -17,6 +17,8 @@ import {
   type ItemInstanceRecord,
   type ItemInstanceRepository,
   type ItemPlacementSeed,
+  type QuestProgressRecord,
+  type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
 } from "./types.js";
@@ -119,6 +121,19 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       return;
     }
     this.byId.set(id, { ...character, roomId, updatedAt: new Date() });
+  }
+
+  async updateProgress(id: string, input: { experience: number; level: number }): Promise<void> {
+    const character = this.byId.get(id);
+    if (!character) {
+      return;
+    }
+    this.byId.set(id, {
+      ...character,
+      experience: input.experience,
+      level: input.level,
+      updatedAt: new Date(),
+    });
   }
 }
 
@@ -242,11 +257,32 @@ export class InMemoryItemRepository implements ItemInstanceRepository {
   }
 }
 
+export class InMemoryQuestRepository implements QuestProgressRepository {
+  private readonly byKey = new Map<string, QuestProgressRecord>();
+
+  async listByCharacter(characterId: string): Promise<QuestProgressRecord[]> {
+    return [...this.byKey.values()].filter((record) => record.characterId === characterId);
+  }
+
+  async upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void> {
+    const key = `${record.characterId}:${record.questId}`;
+    const previous = this.byKey.get(key);
+    const now = new Date();
+    this.byKey.set(key, {
+      ...record,
+      completedObjectiveIds: [...record.completedObjectiveIds],
+      createdAt: previous?.createdAt ?? now,
+      updatedAt: now,
+    });
+  }
+}
+
 export function createMemoryStores() {
   const accounts = new InMemoryAccountRepository();
   const characters = new InMemoryCharacterRepository(accounts);
   const sessions = new InMemorySessionRepository();
   const invites = new InMemoryInviteRepository();
   const items = new InMemoryItemRepository();
-  return { accounts, characters, sessions, invites, items };
+  const quests = new InMemoryQuestRepository();
+  return { accounts, characters, sessions, invites, items, quests };
 }

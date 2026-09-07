@@ -83,8 +83,8 @@ describe("move socket round trip", () => {
     expect(north.ack).toMatchObject({
       commandId: "cmd-north-1",
       status: "accepted",
-      eventSequenceStart: 2,
-      eventSequenceEnd: 3,
+      eventSequenceStart: 4,
+      eventSequenceEnd: 6,
     });
     const discovered = mapDiscoveredEventSchema.parse(eventEnvelopeSchema.parse(north.events[0]));
     const hall = roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(north.events[1]));

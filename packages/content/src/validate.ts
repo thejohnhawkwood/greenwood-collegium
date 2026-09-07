@@ -1,6 +1,7 @@
 import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import { START_ROOM_ID, type RoomFile } from "./schema.js";
+import type { QuestTemplate } from "./quest-schema.js";
 import type { SpellTemplate } from "./spell-schema.js";
 
 export type ContentIssue = {
@@ -10,6 +11,7 @@ export type ContentIssue = {
   itemId?: string;
   enemyId?: string;
   spellId?: string;
+  questId?: string;
   fileName?: string;
 };
 
@@ -341,6 +343,71 @@ export function validateSpells(namedSpells: NamedSpell[]): ContentIssue[] {
       });
     } else {
       spellsById.set(named.template.id, named);
+    }
+  }
+
+  return issues;
+}
+
+export type NamedQuest = {
+  fileName: string;
+  template: QuestTemplate;
+};
+
+export function validateQuests(
+  namedRooms: NamedRoom[],
+  namedTemplates: NamedTemplate[],
+  namedQuests: NamedQuest[],
+): ContentIssue[] {
+  const issues: ContentIssue[] = [];
+  const roomIds = new Set(namedRooms.map((named) => named.room.id));
+  const itemTemplateIds = new Set(namedTemplates.map((named) => named.template.id));
+  const questsById = new Map<string, NamedQuest>();
+
+  for (const named of namedQuests) {
+    const stem = named.fileName.replace(/\.json$/u, "");
+    if (stem !== named.template.id) {
+      issues.push({
+        code: "id_filename_mismatch",
+        message: `${named.fileName} must be named ${named.template.id}.json`,
+        questId: named.template.id,
+        fileName: named.fileName,
+      });
+    }
+    if (questsById.has(named.template.id)) {
+      issues.push({
+        code: "duplicate_id",
+        message: `duplicate quest template ${named.template.id}`,
+        questId: named.template.id,
+        fileName: named.fileName,
+      });
+    } else {
+      questsById.set(named.template.id, named);
+    }
+
+    for (const objective of named.template.objectives) {
+      if (objective.kind === "visit" && objective.roomId && !roomIds.has(objective.roomId)) {
+        issues.push({
+          code: "missing_reference",
+          message: `${named.template.id} visits unknown room ${objective.roomId}`,
+          questId: named.template.id,
+          roomId: objective.roomId,
+          fileName: named.fileName,
+        });
+      }
+      if (
+        objective.kind === "take" &&
+        objective.itemTemplateId &&
+        !itemTemplateIds.has(objective.itemTemplateId)
+      ) {
+        issues.push({
+          code: "unknown_item_template",
+          message: `${named.template.id} takes unknown template ${objective.itemTemplateId}`,
+          questId: named.template.id,
+          itemId: objective.itemTemplateId,
+          fileName: named.fileName,
+        });
+      }
     }
   }
 

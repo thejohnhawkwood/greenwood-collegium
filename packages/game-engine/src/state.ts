@@ -29,7 +29,34 @@ export type Character = {
   focus?: number;
   maxFocus?: number;
   experience?: number;
+  level?: number;
   encounterId?: string;
+};
+
+export type QuestObjectiveKind = "look" | "say" | "take" | "visit";
+
+export type QuestObjective = {
+  id: string;
+  kind: QuestObjectiveKind;
+  label: string;
+  itemTemplateId?: string;
+  roomId?: string;
+};
+
+export type QuestTemplate = {
+  id: string;
+  title: string;
+  introNarration: string;
+  reminderNarration: string;
+  experienceReward: number;
+  objectives: QuestObjective[];
+};
+
+export type QuestProgress = {
+  questId: string;
+  status: "active" | "completed";
+  completedObjectiveIds: string[];
+  rewardGranted: boolean;
 };
 
 export type StatusEffect = {
@@ -102,6 +129,8 @@ export type WorldState = {
   enemies?: Record<string, EnemySpawn>;
   encounters?: Record<string, Encounter>;
   spells?: Record<string, SpellTemplate>;
+  questTemplates?: Record<string, QuestTemplate>;
+  quests?: Record<string, Record<string, QuestProgress>>;
 };
 
 export type LookIntent = {
@@ -126,6 +155,8 @@ export type JoinIntent = {
   characterId: string;
   name: string;
   roomId: string;
+  experience?: number;
+  level?: number;
 };
 
 export type LeaveIntent = {
@@ -169,6 +200,17 @@ export type CastIntent = {
   target?: string;
 };
 
+export type HelpIntent = {
+  verb: "help";
+  characterId: string;
+  topic?: string;
+};
+
+export type QuestsIntent = {
+  verb: "quests";
+  characterId: string;
+};
+
 export type PlayerCommand =
   | LookIntent
   | MoveIntent
@@ -178,7 +220,9 @@ export type PlayerCommand =
   | ExamineIntent
   | InventoryIntent
   | AttackIntent
-  | CastIntent;
+  | CastIntent
+  | HelpIntent
+  | QuestsIntent;
 
 export type EngineRuntime = {
   now(): Date;

@@ -72,6 +72,11 @@ describe("content loader", () => {
       presentationKey: "ember-burst",
     });
     expect(Object.keys(world.spells)).toHaveLength(1);
+    expect(world.quests["arrival-at-the-collegium"]).toMatchObject({
+      title: "Arrival at the Collegium",
+      experienceReward: 10,
+    });
+    expect(Object.keys(world.quests)).toHaveLength(1);
   });
 
   it("loads an extra room file without a code change", () => {

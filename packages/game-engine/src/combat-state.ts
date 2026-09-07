@@ -44,6 +44,7 @@ export function ensurePlayerVitals(character: Character): void {
   character.focus ??= DEFAULT_PLAYER_MAX_FOCUS;
   character.maxFocus ??= DEFAULT_PLAYER_MAX_FOCUS;
   character.experience ??= 0;
+  character.level ??= 1;
 }
 
 export type InCombatFailure = {

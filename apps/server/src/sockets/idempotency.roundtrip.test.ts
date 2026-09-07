@@ -48,9 +48,7 @@ describe("command idempotency", () => {
     });
 
     const look = await command(client, "cmd-look-1", "look");
-    expect(
-      roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(look.events.at(-1))).payload.title,
-    ).toBe("Lantern Court");
+    expect(roomTitle(look.events)).toBe("Lantern Court");
   });
 });
 
@@ -80,4 +78,14 @@ async function command(
   );
   client.off("event", onEvent);
   return { ack, events };
+}
+
+function roomTitle(events: unknown[]): string {
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    const parsed = eventEnvelopeSchema.safeParse(events[index]);
+    if (parsed.success && parsed.data.type === "room.snapshot") {
+      return roomSnapshotEventSchema.parse(parsed.data).payload.title;
+    }
+  }
+  throw new Error("missing room.snapshot");
 }

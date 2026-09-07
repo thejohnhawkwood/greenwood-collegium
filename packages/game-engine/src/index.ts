@@ -9,6 +9,16 @@ export { handleExamine } from "./examine.js";
 export { handleInventory } from "./inventory.js";
 export { handleAttack } from "./attack.js";
 export { handleCast } from "./cast.js";
+export { handleHelp } from "./help.js";
+export { handleQuests } from "./quests.js";
+export {
+  ARRIVAL_QUEST_ID,
+  applyQuestProgress,
+  listQuestRecords,
+  progressQuests,
+  startArrivalQuest,
+} from "./arrival.js";
+export { levelForExperience } from "./progression.js";
 export { parseLookCommand } from "./parse-look.js";
 export { parseMoveCommand } from "./parse-move.js";
 export { parseSayCommand } from "./parse-say.js";
@@ -18,6 +28,8 @@ export { parseExamineCommand } from "./parse-examine.js";
 export { parseInventoryCommand } from "./parse-inventory.js";
 export { parseAttackCommand } from "./parse-attack.js";
 export { parseCastCommand } from "./parse-cast.js";
+export { parseHelpCommand } from "./parse-help.js";
+export { parseQuestsCommand } from "./parse-quests.js";
 export { parsePlayerCommand } from "./parse-command.js";
 export { SAY_MAX_LENGTH } from "./speech.js";
 export { itemsHeldBy, itemsInRoom, matchItems, worldItems } from "./items.js";
@@ -39,6 +51,8 @@ export type { ExamineFailure, ExamineResult, ExamineSuccess } from "./examine.js
 export type { InventoryFailure, InventoryResult, InventorySuccess } from "./inventory.js";
 export type { AttackFailure, AttackResult, AttackSuccess } from "./attack.js";
 export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
+export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
+export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
 export type {
@@ -50,6 +64,7 @@ export type {
   EnemySpawn,
   EngineRuntime,
   ExamineIntent,
+  HelpIntent,
   InventoryIntent,
   ItemInstance,
   JoinIntent,
@@ -57,6 +72,9 @@ export type {
   LookIntent,
   MoveIntent,
   PlayerCommand,
+  QuestProgress,
+  QuestTemplate,
+  QuestsIntent,
   Room,
   RoomExit,
   RoomFixture,

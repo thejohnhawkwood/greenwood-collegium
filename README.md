@@ -59,7 +59,7 @@ A copper key glints beneath the water.
 | CI | GitHub Actions on pull requests and `main` |
 | Interface generations | Classic UI is the first target |
 
-Implementation follows the ticket sequence in [Appendix E of the PRD](docs/PRD.md#appendix-e-initial-implementation-ticket-sequence). Ticket 001 is the empty monorepo scaffold. Start every session from [`docs/context/CURRENT.md`](docs/context/CURRENT.md).
+Implementation follows the ticket sequence in [Appendix E of the PRD](docs/PRD.md#appendix-e-initial-implementation-ticket-sequence). Ticket 001 is the empty monorepo scaffold. Start every session from [`docs/context/CURRENT.md`](docs/context/CURRENT.md). Teachers setting up a class or a family playtest should start from [`playthrough.md`](playthrough.md).
 
 ```text
 pnpm install

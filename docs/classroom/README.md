@@ -1,5 +1,7 @@
 # Classroom operations
 
+Start with the teacher playthrough: [`playthrough.md`](../../playthrough.md).
+
 Public documents about how the game is used in class belong here: rules summaries, projector notes, and teacher-facing feature explanations.
 
 Keep private operational material out of Git:
