@@ -39,6 +39,7 @@ export const itemPlacementSchema = z
     id: stableIdSchema,
     templateId: stableIdSchema,
     roomId: stableIdSchema,
+    starterPerCharacter: z.boolean().optional(),
   })
   .strict();
 

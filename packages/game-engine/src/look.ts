@@ -9,6 +9,7 @@ import {
 } from "@greenwood/contracts";
 import { enemiesInRoom } from "./enemies.js";
 import { itemsInRoom } from "./items.js";
+import { ensureCharacterStarterItems } from "./starter-items.js";
 import type { Character, EngineRuntime, LookIntent, Room, WorldState } from "./state.js";
 
 export type LookSuccess = {
@@ -47,6 +48,7 @@ export function handleLook(
     };
   }
 
+  ensureCharacterStarterItems(world, character.id);
   const payload = snapshotPayload(room, world, character);
   const narration = formatRoomSnapshotText(payload);
   const segments = snapshotSegments(payload);
@@ -101,7 +103,7 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
         kind: "npc" as const,
         description: enemy.lookDescription,
       })),
-      ...itemsInRoom(world, room.id).map((item) => ({
+      ...itemsInRoom(world, room.id, looker.id).map((item) => ({
         id: item.id,
         name: item.name,
         kind: "object" as const,

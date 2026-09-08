@@ -9,6 +9,7 @@ Declarative world data. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or ga
 - Ticket 015 owns quest templates. Arrival at the Collegium is the first quest.
 - Add a room by adding `rooms/<id>.json`. The file name must match the stable id.
 - Add an item by adding `items/<id>.json` and a placement in `placements/`.
+- `starterPerCharacter: true` on a placement is a per-Collegian recipe, not one shared instance. The Arrival copper key uses this. The moss-bound primer does not.
 - Add an enemy by adding `enemies/<id>.json` and a placement in `enemy-placements/`.
 - Add a spell by adding `spells/<id>.json`.
 - Add a quest by adding `quests/<id>.json`.

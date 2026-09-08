@@ -6,7 +6,7 @@ Fastify process for HTTP and Socket.IO.
 - Ignore client-supplied account, role, or character fields. Production sockets require a completed Collegian plus a session cookie or a short-lived server-issued socket ticket. Development and tests may still assign an unused in-memory guest.
 - Validate command payloads with Zod before calling engine handlers.
 - Persist critical mutations before acknowledging success (Ticket 008+).
-- Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory.
+- Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory. Persist a personal Arrival key with `ensurePlacements` before that take can `claim`.
 - Ticket 013 owns combat command dispatch. Socket handlers do not invent combat text or damage.
 - Ticket 014 owns `cast`. Handlers do not invent Ember damage, burning, or presentation.
 - Ticket 015 owns Arrival, `help`, and `quests`. Handlers do not invent Porter speech or award XP twice.

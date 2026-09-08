@@ -2,5 +2,6 @@
   "$schema": "../schemas/placement.schema.json",
   "id": "item-copper-key-lantern-court",
   "templateId": "small-copper-key",
-  "roomId": "lantern-court"
+  "roomId": "lantern-court",
+  "starterPerCharacter": true
 }

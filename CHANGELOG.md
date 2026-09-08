@@ -8,6 +8,10 @@ first playable package is tagged.
 
 ## [Unreleased]
 
+### Fixed
+
+- Each Collegian now receives their own Small Copper Key in Lantern Court, so thirty students can all finish Arrival. The library primer is still one unique book.
+
 ### Added
 
 - Class-day handoff for a school laptop and a visiting teacher: play on Render, edit on `class-2026-09-08`, merge after the period.
