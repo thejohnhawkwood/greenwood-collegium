@@ -56,12 +56,17 @@ describe("content loader", () => {
     expect(world.rooms["west-cloister"]?.exits).toEqual([
       { direction: "east", toRoomId: START_ROOM_ID },
     ]);
-    expect(world.items["item-copper-key-lantern-court"]).toMatchObject({
-      templateId: "small-copper-key",
-      name: "Small Copper Key",
-      roomId: START_ROOM_ID,
-    });
-    expect(Object.keys(world.items)).toHaveLength(2);
+    expect(world.items["item-copper-key-lantern-court"]).toBeUndefined();
+    expect(world.starterPlacements).toEqual([
+      expect.objectContaining({
+        id: "item-copper-key-lantern-court",
+        templateId: "small-copper-key",
+        name: "Small Copper Key",
+        roomId: START_ROOM_ID,
+      }),
+    ]);
+    expect(world.itemTemplates["small-copper-key"]?.name).toBe("Small Copper Key");
+    expect(Object.keys(world.items)).toHaveLength(1);
     expect(world.enemies["enemy-practice-dummy-south-orchard"]).toMatchObject({
       templateId: "practice-dummy",
       name: "Practice Dummy",

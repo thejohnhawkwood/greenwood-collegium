@@ -68,7 +68,7 @@ describe("inventory socket round trip", () => {
     }
   });
 
-  it("lets one student take the copper key and refuses the second", async () => {
+  it("lets each student take their own copper key", async () => {
     app = await buildApp();
     await attachRealtime(app, createDevWorld());
     await app.listen({ port: 0, host: "127.0.0.1" });
@@ -94,11 +94,12 @@ describe("inventory socket round trip", () => {
     );
 
     second = await connectClient(address.port);
-    const blocked = await emitCommand(second, "cmd-take-key-too", "take key");
-    expect(blocked).toMatchObject({
-      status: "rejected",
-      errorCode: "item_not_found",
-    });
+    const secondTakeEvent = nextEventOfType(second, "item.taken");
+    const secondTaken = await emitCommand(second, "cmd-take-key-too", "take key");
+    expect(secondTaken).toMatchObject({ status: "accepted", message: "take" });
+    expect(
+      itemTakenEventSchema.parse(eventEnvelopeSchema.parse(await secondTakeEvent)).narration,
+    ).toBe("You take the Small Copper Key.");
 
     const bagEvent = nextEventOfType(first, "inventory.updated");
     const bag = await emitCommand(first, "cmd-inv", "inventory");

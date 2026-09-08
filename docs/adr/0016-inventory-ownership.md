@@ -17,4 +17,4 @@ Ticket 012 must stop two students from taking the same unique item. Inventory ow
 
 ## Consequences
 
-A second `take key` fails. Restart restores authenticated ownership from `item_instances`. Stackable items and equipment remain later tickets.
+A second take of the same unique instance still fails. The Arrival copper key is a classroom exception: each Collegian receives a personal copy ([ADR-0026](0026-per-collegian-starter-items.md)). The moss-bound primer remains one world instance. Restart restores authenticated ownership from `item_instances`. Stackable items, destruction, and regeneration remain later tickets.

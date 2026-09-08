@@ -119,6 +119,20 @@ export type Encounter = {
   effects: StatusEffect[];
 };
 
+export type ItemTemplateRecord = {
+  id: string;
+  name: string;
+  examineDescription: string;
+};
+
+export type StarterItemPlacement = {
+  id: string;
+  templateId: string;
+  name: string;
+  examineDescription: string;
+  roomId: string;
+};
+
 export type ItemInstance = {
   id: string;
   templateId: string;
@@ -126,12 +140,15 @@ export type ItemInstance = {
   examineDescription: string;
   roomId?: string;
   holderCharacterId?: string;
+  availableToCharacterId?: string;
 };
 
 export type WorldState = {
   rooms: Record<string, Room>;
   characters: Record<string, Character>;
   items?: Record<string, ItemInstance>;
+  itemTemplates?: Record<string, ItemTemplateRecord>;
+  starterPlacements?: StarterItemPlacement[];
   enemies?: Record<string, EnemySpawn>;
   encounters?: Record<string, Encounter>;
   spells?: Record<string, SpellTemplate>;

@@ -20,6 +20,10 @@
     "roomId": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "starterPerCharacter": {
+      "type": "boolean",
+      "description": "Do not seed one shared instance. Each Collegian receives a personal copy on first look or take."
     }
   }
 }

@@ -183,7 +183,7 @@ What should happen:
 2. **help look** explains `look` in more detail. The same pattern works for `say`, `take`, `north`, and the other listed words.
 3. **look** describes Lantern Court. This is the first Arrival objective. The automatic first glance when you connect does **not** count; they must type `look`.
 4. **say hello** lets Porter (and anyone else in the courtyard) hear them.
-5. **take key** picks up the Small Copper Key on the stones.
+5. **take key** picks up that Collegian's Small Copper Key on the stones. Every student gets their own; the first hand does not empty the courtyard.
 6. **north** walks into the Great Hall and finishes Arrival.
 7. They should see about **10 experience**, **Level 2**, and `quests` should say Arrival is completed.
 8. Typing `look` or `say hello` again must **not** grant a second reward.

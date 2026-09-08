@@ -6,6 +6,7 @@ import {
 } from "@greenwood/contracts";
 import { enemiesInRoom } from "./enemies.js";
 import { itemsHeldBy, itemsInRoom } from "./items.js";
+import { ensureCharacterStarterItems } from "./starter-items.js";
 import { namesMatch } from "./names.js";
 import type { Character, EngineRuntime, ExamineIntent, WorldState } from "./state.js";
 
@@ -43,6 +44,7 @@ export function handleExamine(
     };
   }
 
+  ensureCharacterStarterItems(world, character.id);
   const room = world.rooms[character.roomId];
   const nearby: ExamineTarget[] = [
     ...(room?.fixtures ?? []).map((fixture) => ({
@@ -58,13 +60,14 @@ export function handleExamine(
       name: enemy.name,
       description: enemy.examineDescription ?? enemy.lookDescription,
     })),
-    ...[...itemsInRoom(world, character.roomId), ...itemsHeldBy(world, character.id)].map(
-      (item) => ({
-        id: item.id,
-        name: item.name,
-        description: item.examineDescription,
-      }),
-    ),
+    ...[
+      ...itemsInRoom(world, character.roomId, character.id),
+      ...itemsHeldBy(world, character.id),
+    ].map((item) => ({
+      id: item.id,
+      name: item.name,
+      description: item.examineDescription,
+    })),
     ...Object.values(world.characters)
       .filter((other) => other.roomId === character.roomId && other.id !== character.id)
       .map((other) => ({

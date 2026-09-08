@@ -73,10 +73,26 @@ export type LoadedQuest = {
   }>;
 };
 
+export type LoadedItemTemplate = {
+  id: string;
+  name: string;
+  examineDescription: string;
+};
+
+export type LoadedStarterPlacement = {
+  id: string;
+  templateId: string;
+  name: string;
+  examineDescription: string;
+  roomId: string;
+};
+
 export type LoadedWorld = {
   rooms: Record<string, LoadedRoom>;
   characters: Record<string, never>;
   items: Record<string, LoadedItem>;
+  itemTemplates: Record<string, LoadedItemTemplate>;
+  starterPlacements: LoadedStarterPlacement[];
   enemies: Record<string, LoadedEnemy>;
   spells: Record<string, LoadedSpell>;
   quests: Record<string, LoadedQuest>;
@@ -118,10 +134,29 @@ export function toWorldState(
     };
   }
   const templates = new Map(catalog.templates.map((template) => [template.id, template]));
+  const itemTemplates: Record<string, LoadedItemTemplate> = {};
+  for (const template of catalog.templates) {
+    itemTemplates[template.id] = {
+      id: template.id,
+      name: template.name,
+      examineDescription: template.examineDescription,
+    };
+  }
   const items: Record<string, LoadedItem> = {};
+  const starterPlacements: LoadedStarterPlacement[] = [];
   for (const placement of catalog.placements) {
     const template = templates.get(placement.templateId);
     if (!template) {
+      continue;
+    }
+    if (placement.starterPerCharacter) {
+      starterPlacements.push({
+        id: placement.id,
+        templateId: template.id,
+        name: template.name,
+        examineDescription: template.examineDescription,
+        roomId: placement.roomId,
+      });
       continue;
     }
     items[placement.id] = {
@@ -191,6 +226,8 @@ export function toWorldState(
     rooms: loaded,
     characters: {},
     items,
+    itemTemplates,
+    starterPlacements,
     enemies,
     spells,
     quests,

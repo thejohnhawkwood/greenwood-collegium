@@ -7,8 +7,23 @@ export function worldItems(world: WorldState): Record<string, ItemInstance> {
   return world.items;
 }
 
-export function itemsInRoom(world: WorldState, roomId: string): ItemInstance[] {
-  return Object.values(worldItems(world)).filter((item) => item.roomId === roomId);
+export function itemsInRoom(
+  world: WorldState,
+  roomId: string,
+  viewerCharacterId?: string,
+): ItemInstance[] {
+  return Object.values(worldItems(world)).filter((item) => {
+    if (item.roomId !== roomId) {
+      return false;
+    }
+    if (
+      item.availableToCharacterId !== undefined &&
+      item.availableToCharacterId !== viewerCharacterId
+    ) {
+      return false;
+    }
+    return true;
+  });
 }
 
 export function itemsHeldBy(world: WorldState, characterId: string): ItemInstance[] {

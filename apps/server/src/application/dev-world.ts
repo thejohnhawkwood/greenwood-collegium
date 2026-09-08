@@ -18,6 +18,17 @@ export function createDevWorld(): WorldState {
         },
       ]),
     ),
+    itemTemplates: Object.fromEntries(
+      Object.values(loaded.itemTemplates).map((template) => [
+        template.id,
+        {
+          id: template.id,
+          name: template.name,
+          examineDescription: template.examineDescription,
+        },
+      ]),
+    ),
+    starterPlacements: loaded.starterPlacements.map((placement) => ({ ...placement })),
     enemies: Object.fromEntries(
       Object.values(loaded.enemies).map((enemy) => [
         enemy.id,

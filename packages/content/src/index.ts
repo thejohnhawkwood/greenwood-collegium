@@ -41,8 +41,10 @@ export {
   toWorldState,
   type LoadedEnemy,
   type LoadedItem,
+  type LoadedItemTemplate,
   type LoadedQuest,
   type LoadedRoom,
   type LoadedSpell,
+  type LoadedStarterPlacement,
   type LoadedWorld,
 } from "./world.js";

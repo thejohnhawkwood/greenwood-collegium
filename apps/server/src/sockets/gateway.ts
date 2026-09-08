@@ -36,6 +36,7 @@ import { describeCollegian } from "@greenwood/content";
 import type { FastifyInstance } from "fastify";
 import { Server, type Socket } from "socket.io";
 import { CommandLog } from "../application/command-log.js";
+import { persistCharacterStarterItems } from "../application/item-state.js";
 import { handleStaffCommand, muteRejection } from "../application/moderation.js";
 import {
   COMMAND_RATE_MAX,
@@ -76,6 +77,9 @@ export type RealtimeOptions = {
   resolveSocketTicket?: (ticket: string) => Promise<PlayIdentity | undefined>;
   persistRoom?: (characterId: string, roomId: string) => Promise<void>;
   persistItem?: {
+    ensurePlacements?(
+      seeds: ReadonlyArray<{ id: string; templateId: string; roomId: string }>,
+    ): Promise<void>;
     claim(itemId: string, characterId: string, roomId: string): Promise<boolean>;
     release(itemId: string, characterId: string, roomId: string): Promise<boolean>;
   };
@@ -282,6 +286,7 @@ export async function attachRealtime(
       const appearance = describeCollegian(identity.speciesId, identity.gender);
       present.lookDescription = appearance.look;
       present.examineDescription = appearance.examine;
+      await persistStarterCopies(characterId, identity);
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
       return;
@@ -318,6 +323,7 @@ export async function attachRealtime(
       return;
     }
 
+    await persistStarterCopies(characterId, identity);
     if (identity && (options.persistRoom || options.persistProgress || options.persistQuest)) {
       await persistAuthenticatedProgress(characterId);
     }
@@ -366,6 +372,17 @@ export async function attachRealtime(
     const look = handleLook(world, { verb: "look", characterId }, runtime);
     const events = look.ok ? [snapshot, look.event] : [snapshot];
     deliver(sockets, characterId, events, []);
+  }
+
+  async function persistStarterCopies(
+    characterId: string,
+    identity: PlayIdentity | undefined,
+  ): Promise<void> {
+    const persistStarters =
+      identity && options.persistItem?.ensurePlacements
+        ? { ensurePlacements: options.persistItem.ensurePlacements }
+        : undefined;
+    await persistCharacterStarterItems(world, characterId, persistStarters);
   }
 
   async function persistAuthenticatedProgress(characterId: string): Promise<void> {
@@ -657,6 +674,8 @@ export async function attachRealtime(
       reply(ack, accepted);
       return;
     }
+
+    await persistStarterCopies(characterId, identity);
 
     const result =
       intent.verb === "look"

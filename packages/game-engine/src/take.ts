@@ -10,6 +10,7 @@ import {
 } from "@greenwood/contracts";
 import { rejectIfInCombat } from "./combat-state.js";
 import { itemsHeldBy, itemsInRoom, matchItems } from "./items.js";
+import { ensureCharacterStarterItems } from "./starter-items.js";
 import { charactersInRoom } from "./occupants.js";
 import type { OccupantNotice } from "./presence-events.js";
 import type { EngineRuntime, ItemInstance, TakeIntent, WorldState } from "./state.js";
@@ -69,7 +70,8 @@ export function handleTake(
     return blocked;
   }
 
-  const matches = matchItems(itemsInRoom(world, room.id), intent.target);
+  ensureCharacterStarterItems(world, character.id);
+  const matches = matchItems(itemsInRoom(world, room.id, character.id), intent.target);
   if (matches.length === 0) {
     return {
       ok: false,

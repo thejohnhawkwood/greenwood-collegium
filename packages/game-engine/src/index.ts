@@ -35,6 +35,12 @@ export { isStaffCommand, parseStaffCommand } from "./parse-staff.js";
 export { namesMatch } from "./names.js";
 export { SAY_MAX_LENGTH, sanitizeSpeech } from "./speech.js";
 export { itemsHeldBy, itemsInRoom, matchItems, worldItems } from "./items.js";
+export {
+  availableToCharacterId,
+  characterHasStarterTemplate,
+  ensureCharacterStarterItems,
+  starterInstanceId,
+} from "./starter-items.js";
 export { enemiesInRoom, matchEnemies, worldEnemies } from "./enemies.js";
 export {
   DEFAULT_PLAYER_ATTACK,
@@ -69,6 +75,7 @@ export type {
   HelpIntent,
   InventoryIntent,
   ItemInstance,
+  ItemTemplateRecord,
   JoinIntent,
   LeaveIntent,
   LookIntent,
@@ -91,6 +98,7 @@ export type {
   RoomFixture,
   SayIntent,
   SpellTemplate,
+  StarterItemPlacement,
   TakeIntent,
   WorldState,
 } from "./state.js";

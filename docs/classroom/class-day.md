@@ -133,7 +133,7 @@ You will be standing at the front. One `class-2026-09-08` branch is easy to find
 1. Confirm https://greenwood-collegium.onrender.com/health/ready shows `{"status":"ok"}`.
 2. Sign in as teacher. Issue unused student invites if needed. Hand tokens privately — not on the projector.
 3. Keep the Render **Logs** tab on a side screen. See [`docs/ops/load-test.md`](../ops/load-test.md).
-4. Students: accept invite → Collegian form → Lantern Court → Arrival (`help`, `look`, `say hello`, `take key`, `north`). Full script: [`playthrough.md`](../../playthrough.md).
+4. Students: accept invite → Collegian form → Lantern Court → Arrival (`help`, `look`, `say hello`, `take key`, `north`). Each Collegian has their own copper key. Full script: [`playthrough.md`](../../playthrough.md).
 5. When someone notices a real problem, write it down, then fix it on `class-2026-09-08` on the laptop. The live site will not show that fix until you merge after class.
 
 ---

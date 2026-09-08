@@ -65,15 +65,16 @@ function courtWorld(): WorldState {
       },
     },
     characters: {},
-    items: {
-      "item-copper-key-lantern-court": {
+    items: {},
+    starterPlacements: [
+      {
         id: "item-copper-key-lantern-court",
         templateId: "small-copper-key",
         name: "Small Copper Key",
         examineDescription: "The bow is worn smooth.",
         roomId: "lantern-court",
       },
-    },
+    ],
     questTemplates: { [ARRIVAL_QUEST_ID]: arrivalTemplate },
   };
 }
@@ -199,5 +200,44 @@ describe("Arrival at the Collegium", () => {
     expect(progressQuests(world, { characterId: "char-rowan", kind: "say" }, clock)).toEqual([]);
     expect(progressQuests(world, { characterId: "char-rowan", kind: "move" }, clock)).toEqual([]);
     expect(world.characters["char-rowan"]?.experience).toBe(10);
+  });
+
+  it("lets two Collegians each take a key and finish the take objective", () => {
+    const world = courtWorld();
+    const clock = runtime();
+    expect(
+      handleJoin(
+        world,
+        {
+          verb: "join",
+          characterId: "char-rowan",
+          name: "Rowan the Hare",
+          roomId: "lantern-court",
+        },
+        clock,
+      ).ok,
+    ).toBe(true);
+    expect(
+      handleJoin(
+        world,
+        { verb: "join", characterId: "char-moss", name: "Moss the Mole", roomId: "lantern-court" },
+        clock,
+      ).ok,
+    ).toBe(true);
+
+    expect(
+      handleTake(world, { verb: "take", characterId: "char-rowan", target: "key" }, clock).ok,
+    ).toBe(true);
+    expect(
+      handleTake(world, { verb: "take", characterId: "char-moss", target: "key" }, clock).ok,
+    ).toBe(true);
+    const rowanTake = questUpdatedEventSchema.parse(
+      progressQuests(world, { characterId: "char-rowan", kind: "take" }, clock)[0],
+    );
+    const mossTake = questUpdatedEventSchema.parse(
+      progressQuests(world, { characterId: "char-moss", kind: "take" }, clock)[0],
+    );
+    expect(rowanTake.payload.completedObjectives).toContain("Take the small copper key");
+    expect(mossTake.payload.completedObjectives).toContain("Take the small copper key");
   });
 });
