@@ -12,7 +12,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. [`playthrough.md`](../../playthrough.md)
+2. Class tomorrow: [`../classroom/class-day.md`](../classroom/class-day.md) and [`playthrough.md`](../../playthrough.md)
 3. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
 4. ADR-0013 and ADR-0019
 5. PRD Appendix E Ticket 019 (DS-001). Ticket 018 notes: [`docs/ops/load-test.md`](../ops/load-test.md), ADR-0025. Do not start 019 unless the owner says next.
@@ -40,6 +40,6 @@ pnpm build
 
 ## After Ticket 018
 
-Ticket 018 is the 30-client localhost simulation plus crash-safe process logs. Tomorrow's class is the live load test. Do not point the simulation at Render.
+Ticket 018 is the 30-client localhost simulation plus crash-safe process logs. The next school period is the live load test. Do not point the simulation at Render. Edit on `class-2026-09-08`. Do not merge to `main` while the class is connected.
 
 Next ticket is **019 — DS-001 semantic colour**. Do not start it unless the owner says next.

@@ -10,6 +10,7 @@ first playable package is tagged.
 
 ### Added
 
+- Class-day handoff for a school laptop and a visiting teacher: play on Render, edit on `class-2026-09-08`, merge after the period.
 - Ticket 018: a 30-client localhost load simulation, command-verb process logs, and crash lines that redact database URLs. Chat text is not logged.
 - Ticket 017 production Blueprint: pre-deploy `db:migrate`, Render health check on `/health/ready`, environment names, and human-only backup notes. Production refuses to start without Postgres.
 

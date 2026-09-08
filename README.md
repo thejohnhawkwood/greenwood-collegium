@@ -4,12 +4,18 @@ A browser-based, persistent, multiplayer text role-playing game inspired by clas
 
 This repository is public and open source. It is also a classroom artifact: the Git history, issues, design records, tests, and interface generations are meant to show real iterative software development.
 
-**Current public version:** not yet released (repository foundation)  
+**Current public version:** classic courtyard (UI 0) on Render; not a numbered game release  
 **Product owner:** Philip Bird  
 **Primary setting:** St. Joseph's Collegiate, Brooks, Alberta  
 **License:** [MIT](LICENSE) for code; [CC BY 4.0](docs/CONTENT-LICENSE.md) for original world text and educational documentation
 
 > **Privacy:** This repository never stores student records, real chat logs, production database exports, passwords, or tokens. Gameplay names are fictional or classroom-approved pseudonyms.
+
+### If you are a teacher
+
+1. Students play at **https://greenwood-collegium.onrender.com** (sign-in only; no guest).
+2. Walk the first hour from [`playthrough.md`](playthrough.md) — start at **If you are a visiting teacher tomorrow**.
+3. To clone this repo on a school laptop and record in-class fixes, use [`docs/classroom/class-day.md`](docs/classroom/class-day.md). Keep `main` for the live site. Work on `class-2026-09-08` during the period. Merge after the bell.
 
 ---
 
@@ -59,7 +65,7 @@ A copper key glints beneath the water.
 | CI | GitHub Actions on pull requests and `main` |
 | Interface generations | Classic UI is the first target |
 
-Implementation follows the ticket sequence in [Appendix E of the PRD](docs/PRD.md#appendix-e-initial-implementation-ticket-sequence). Ticket 001 is the empty monorepo scaffold. Start every session from [`docs/context/CURRENT.md`](docs/context/CURRENT.md). Teachers setting up a class or a family playtest should start from [`playthrough.md`](playthrough.md).
+Implementation follows the ticket sequence in [Appendix E of the PRD](docs/PRD.md#appendix-e-initial-implementation-ticket-sequence). Ticket 001 is the empty monorepo scaffold. Start every coding session from [`docs/context/CURRENT.md`](docs/context/CURRENT.md). Teachers start from [`playthrough.md`](playthrough.md). A class that will also change the code the same day uses [`docs/classroom/class-day.md`](docs/classroom/class-day.md).
 
 ```text
 pnpm install
@@ -173,6 +179,7 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability. Do not file pu
 - [Environment variables](docs/dev/environment.md)
 - [Backup and restore](docs/ops/backup-restore.md)
 - [Classroom load test](docs/ops/load-test.md)
+- [Class-day handoff (school laptop and branching)](docs/classroom/class-day.md)
 - [Classroom roles](docs/classroom/roles.md)
 - [Content license (CC BY 4.0)](docs/CONTENT-LICENSE.md)
 - [Architecture notes](docs/architecture/)

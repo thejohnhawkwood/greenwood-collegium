@@ -8,6 +8,24 @@ You do not need to be a programmer. You do need to be comfortable with a termina
 
 ---
 
+## If you are a visiting teacher tomorrow
+
+You are Path **C**. Students open the live site. You do not install Node unless you plan to change the code.
+
+1. Confirm https://greenwood-collegium.onrender.com/health/ready returns `{"status":"ok"}`.
+2. Open https://greenwood-collegium.onrender.com
+3. **Teacher sign-in** (lower form). There is no guest button on the live site.
+4. If you can issue invites: give each student one unused token **privately**. They use **Accept an invite**, then pick a classroom username (not a legal name) and finish the Collegian form.
+5. Teach Arrival: `help`, `look`, `say hello`, `take key`, `north`. Details below.
+6. Optional: `south` twice, then `attack dummy` or `cast ember dummy`.
+7. If the courtyard wobbles, keep Render **Logs** open. See [`docs/ops/load-test.md`](docs/ops/load-test.md).
+
+If you will also **edit the repo during class**, stop here and follow [`docs/classroom/class-day.md`](docs/classroom/class-day.md). Play stays on the live URL. Code stays on branch `class-2026-09-08`. Do not merge to `main` until the class has left — a deploy restarts the game.
+
+---
+
+---
+
 ## What you will have at the end
 
 - A running game in the browser
@@ -261,5 +279,7 @@ Students who type those words hear that only a teacher can use them.
 ## After today
 
 The live courtyard deploys from `main`. Migrations run before start. `/health/ready` must be 200 before class. Backups stay on the teacher: see [`docs/ops/backup-restore.md`](docs/ops/backup-restore.md). Before a full class, keep the Render **Logs** page open: [`docs/ops/load-test.md`](docs/ops/load-test.md).
+
+In-class code changes: [`docs/classroom/class-day.md`](docs/classroom/class-day.md). Branch `class-2026-09-08`. Merge after the bell.
 
 For machine install details see [`docs/dev/machine-setup.md`](docs/dev/machine-setup.md). For the live host see [`docs/context/CURRENT.md`](docs/context/CURRENT.md).

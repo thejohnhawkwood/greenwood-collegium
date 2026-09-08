@@ -1,6 +1,8 @@
-# Machine setup (desktop and work laptop)
+# Machine setup (desktop, work laptop, school laptop)
 
 Both machines clone the same GitHub repository. They must use the same Node and pnpm versions. They must **not** share a production `.env`.
+
+If tomorrow is a class and you only need Git plus a branch for feedback, [`docs/classroom/class-day.md`](../classroom/class-day.md) is enough. This page is the full local-server setup.
 
 ## What you need
 
