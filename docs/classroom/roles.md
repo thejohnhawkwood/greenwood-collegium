@@ -9,6 +9,7 @@ The Greenwood Collegium is managed by the teacher. Students may play, write, tes
 - Reviews and merges pull requests.
 - Operates Render. Agents do not receive production secrets.
 - Decides when a design sprint may start.
+- On a class day, follows [`class-day.md`](class-day.md): students on Render, edits on a dated class branch.
 
 ## Student player
 
