@@ -10,7 +10,28 @@ import {
   TEST_BOOTSTRAP_TOKEN,
 } from "../auth/test-harness.js";
 import { registerAuthRoutes } from "../http/auth.js";
+import type { ItemPlacementSeed } from "../persistence/types.js";
 import { attachRealtime } from "./gateway.js";
+
+class PostgresStyleItemRepository {
+  readonly seeds: ItemPlacementSeed[] = [];
+
+  async ensurePlacements(seeds: readonly ItemPlacementSeed[]): Promise<void> {
+    this.seeds.push(...seeds);
+  }
+
+  async list(): Promise<never[]> {
+    return [];
+  }
+
+  async claim(): Promise<boolean> {
+    return false;
+  }
+
+  async release(): Promise<boolean> {
+    return false;
+  }
+}
 
 describe("authenticated socket identity", () => {
   let app: Awaited<ReturnType<typeof buildApp>> | undefined;
@@ -150,5 +171,63 @@ describe("authenticated socket identity", () => {
     expect(ack).toMatchObject({ status: "accepted" });
     const event = roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(await eventPromise));
     expect(event.payload.title).toBe("Lantern Court");
+  });
+
+  it("seats a signed-in Collegian when persistItem is a class instance", async () => {
+    const { auth } = createTestAuth();
+    const persistItem = new PostgresStyleItemRepository();
+    app = await buildApp();
+    await registerAuthRoutes(app, { auth, allowGuestPlay: false, secureCookies: false });
+    await attachRealtime(app, createDevWorld(), {
+      allowGuestPlay: false,
+      resolveSession: (token) => auth.resolvePlayIdentity(token),
+      persistItem,
+    });
+    await app.listen({ port: 0, host: "127.0.0.1" });
+    const address = app.server.address();
+    if (!address || typeof address === "string") {
+      throw new Error("expected a TCP address");
+    }
+
+    const boot = await app.inject({
+      method: "POST",
+      url: "/auth/bootstrap",
+      payload: { token: TEST_BOOTSTRAP_TOKEN, username: "Rowan", password: "lantern-path" },
+    });
+    const cookie = boot.cookies.find((entry) => entry.name === SESSION_COOKIE);
+    if (!cookie) {
+      throw new Error("missing session cookie");
+    }
+    await completeTestCharacter(auth, String(boot.json().accountId));
+
+    client = ioClient(`http://127.0.0.1:${String(address.port)}`, {
+      transports: ["polling"],
+      upgrade: false,
+      extraHeaders: { Cookie: `${SESSION_COOKIE}=${cookie.value}` },
+    });
+    const seated = await new Promise<string>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        reject(new Error("signed-in Collegian was not seated"));
+      }, 1000);
+      client?.once("disconnect", () => {
+        clearTimeout(timer);
+        reject(new Error("socket_seat_failed"));
+      });
+      client?.on("event", (payload: unknown) => {
+        const parsed = eventEnvelopeSchema.safeParse(payload);
+        if (parsed.success && parsed.data.type === "room.snapshot") {
+          clearTimeout(timer);
+          resolve(parsed.data.narration);
+        }
+      });
+    });
+
+    expect(seated).toContain("Lantern Court");
+    expect(persistItem.seeds).toEqual([
+      expect.objectContaining({
+        templateId: "small-copper-key",
+        roomId: "lantern-court",
+      }),
+    ]);
   });
 });
