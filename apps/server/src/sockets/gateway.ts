@@ -47,7 +47,7 @@ import {
   SAY_RATE_WINDOW_MS,
 } from "../application/rate-limit.js";
 import { claimDevCharacter, DEV_START_ROOM_ID } from "../application/session-characters.js";
-import { classroomCommandFields } from "../application/safe-log.js";
+import { classroomCommandFields, safeErrorMessage } from "../application/safe-log.js";
 import { sessionSnapshotEvent } from "../application/session-snapshot.js";
 import { parseCookie, SESSION_COOKIE } from "../auth/cookies.js";
 import type { PlayIdentity } from "../auth/service.js";
@@ -275,8 +275,11 @@ export async function attachRealtime(
 
   io.on("connection", (socket) => {
     socket.emit(SESSION_HELLO_EVENT, sessionHelloSchema.parse({ bootId }));
-    void runExclusive(() => startPlay(socket)).catch(() => {
-      app.log.warn({ event: "socket_seat_failed" }, "courtyard could not seat");
+    void runExclusive(() => startPlay(socket)).catch((error: unknown) => {
+      app.log.warn(
+        { event: "socket_seat_failed", message: safeErrorMessage(error) },
+        "courtyard could not seat",
+      );
       noticeAndDisconnect(socket, "The courtyard could not seat you. Refresh and try again.");
     });
   });
@@ -413,11 +416,13 @@ export async function attachRealtime(
     characterId: string,
     identity: PlayIdentity | undefined,
   ): Promise<void> {
-    const persistStarters =
-      identity && options.persistItem?.ensurePlacements
-        ? { ensurePlacements: options.persistItem.ensurePlacements }
-        : undefined;
-    await persistCharacterStarterItems(world, characterId, persistStarters);
+    const items = identity ? options.persistItem : undefined;
+    const ensurePlacements = items?.ensurePlacements?.bind(items);
+    await persistCharacterStarterItems(
+      world,
+      characterId,
+      ensurePlacements ? { ensurePlacements } : undefined,
+    );
   }
 
   async function persistAuthenticatedProgress(characterId: string): Promise<void> {
