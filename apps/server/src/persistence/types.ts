@@ -177,6 +177,22 @@ export interface AuditLogRepository {
   listRecent(limit: number): Promise<AuditRecord[]>;
 }
 
+export type ChatRecord = {
+  id: string;
+  at: Date;
+  characterId: string;
+  accountId?: string;
+  username?: string;
+  characterName: string;
+  roomId: string;
+  text: string;
+};
+
+export interface ChatLogRepository {
+  append(record: Omit<ChatRecord, "id">): Promise<ChatRecord>;
+  listRecent(limit: number): Promise<ChatRecord[]>;
+}
+
 export class DuplicateUsernameError extends Error {
   readonly code = "duplicate_username";
 

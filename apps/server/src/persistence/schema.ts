@@ -113,6 +113,21 @@ export const questProgress = pgTable(
   ],
 );
 
+export const chatLog = pgTable(
+  "chat_log",
+  {
+    id: text("id").primaryKey(),
+    at: timestamp("at", { withTimezone: true }).notNull(),
+    characterId: text("character_id").notNull(),
+    accountId: text("account_id").references(() => accounts.id),
+    username: text("username"),
+    characterName: text("character_name").notNull(),
+    roomId: text("room_id").notNull(),
+    text: text("text").notNull(),
+  },
+  (table) => [index("chat_log_at_idx").on(table.at)],
+);
+
 export const auditLog = pgTable(
   "audit_log",
   {

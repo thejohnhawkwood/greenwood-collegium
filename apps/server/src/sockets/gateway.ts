@@ -1,4 +1,5 @@
 import {
+  chatSaidPayloadSchema,
   commandAckSchema,
   commandRequestSchema,
   eventEnvelopeSchema,
@@ -50,7 +51,7 @@ import { classroomCommandFields, safeErrorMessage } from "../application/safe-lo
 import { sessionSnapshotEvent } from "../application/session-snapshot.js";
 import { parseCookie, SESSION_COOKIE } from "../auth/cookies.js";
 import type { PlayIdentity } from "../auth/service.js";
-import type { AuditLogRepository } from "../persistence/types.js";
+import type { AuditLogRepository, ChatLogRepository } from "../persistence/types.js";
 
 export const DEFAULT_RECONNECT_GRACE_MS = 10_000;
 
@@ -93,6 +94,7 @@ export type RealtimeOptions = {
     actorAccountId: string,
     username: string,
   ) => Promise<{ ok: true } | { ok: false; message: string }>;
+  persistChat?: ChatLogRepository;
   persistQuest?: {
     listByCharacter(characterId: string): Promise<
       Array<{
@@ -774,6 +776,29 @@ export async function attachRealtime(
       intent.verb === "move"
         ? progressQuests(world, { characterId, kind: intent.verb }, runtime)
         : [];
+    if (intent.verb === "say" && options.persistChat && result.ok && "events" in result) {
+      const payload = chatSaidPayloadSchema.safeParse(result.events[0]?.payload);
+      const speaker = world.characters[characterId];
+      if (payload.success && speaker) {
+        try {
+          await options.persistChat.append({
+            at: runtime.now(),
+            characterId,
+            accountId: identity?.accountId,
+            username: identity?.username,
+            characterName: speaker.name,
+            roomId: payload.data.roomId,
+            text: payload.data.text,
+          });
+        } catch (error) {
+          app.log.warn(
+            { event: "chat_log_failed", message: safeErrorMessage(error) },
+            "chat log",
+          );
+        }
+      }
+    }
+
     if (
       identity &&
       (intent.verb === "look" ||

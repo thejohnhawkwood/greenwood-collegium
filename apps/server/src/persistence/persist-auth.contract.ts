@@ -53,7 +53,7 @@ export function persistSessionsAndInvites(
     expect(await invites.getByTokenHash(`invite-${account.id}`)).toMatchObject({
       consumedByAccountId: student.id,
     });
-    expect((await invites.list())[0]?.issuedToken).toBeUndefined();
+    expect((await invites.list())[0]?.issuedToken).toBe("plain-invite");
     expect(await accounts.listByRole("teacher")).toHaveLength(1);
   });
 }

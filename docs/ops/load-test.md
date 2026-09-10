@@ -14,7 +14,7 @@ Structured lines (no chat text, no tokens, no `DATABASE_URL`):
 
 - `event=process_listening` — the courtyard accepted traffic
 - `event=socket_connected` / `socket_disconnected` — seat count
-- `event=command` — verb, accepted or rejected, duration in ms
+- `event=command` — verb, accepted or rejected, duration in ms. `say` is the verb only; spoken text is on the teacher roster chat table.
 - `event=rate_limited` — a student is sending too fast
 - `event=uncaught_exception` / `unhandled_rejection` — crash. The message is redacted if it contained a database URL
 

@@ -11,6 +11,8 @@ import {
   type AccountStatus,
   type AuditLogRepository,
   type AuditRecord,
+  type ChatLogRepository,
+  type ChatRecord,
   type CharacterRecord,
   type CharacterRepository,
   type CreateAccountInput,
@@ -28,6 +30,7 @@ import {
   type SessionRepository,
   type UpdateCharacterCreationInput,
 } from "./types.js";
+import { chatRetentionCutoff } from "../application/chat-retention.js";
 
 export class InMemoryAccountRepository implements AccountRepository {
   private readonly byId = new Map<string, AccountRecord>();
@@ -250,7 +253,6 @@ export class InMemoryInviteRepository implements InviteRepository {
     this.byId.set(id, {
       ...invite,
       consumedAt: at,
-      issuedToken: undefined,
       consumedByAccountId,
     });
     return true;
@@ -329,6 +331,27 @@ export class InMemoryQuestRepository implements QuestProgressRepository {
   }
 }
 
+export class InMemoryChatRepository implements ChatLogRepository {
+  private readonly rows: ChatRecord[] = [];
+
+  async append(record: Omit<ChatRecord, "id">): Promise<ChatRecord> {
+    const stored: ChatRecord = { ...record, id: crypto.randomUUID() };
+    this.rows.unshift(stored);
+    const cutoff = chatRetentionCutoff();
+    for (let index = this.rows.length - 1; index >= 0; index -= 1) {
+      const row = this.rows[index];
+      if (row && row.at.getTime() < cutoff.getTime()) {
+        this.rows.splice(index, 1);
+      }
+    }
+    return stored;
+  }
+
+  async listRecent(limit: number): Promise<ChatRecord[]> {
+    return this.rows.slice(0, Math.max(0, limit));
+  }
+}
+
 export class InMemoryAuditRepository implements AuditLogRepository {
   private readonly rows: AuditRecord[] = [];
 
@@ -354,5 +377,6 @@ export function createMemoryStores() {
   const items = new InMemoryItemRepository();
   const quests = new InMemoryQuestRepository();
   const audit = new InMemoryAuditRepository();
-  return { accounts, characters, sessions, invites, items, quests, audit };
+  const chat = new InMemoryChatRepository();
+  return { accounts, characters, sessions, invites, items, quests, audit, chat };
 }

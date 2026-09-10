@@ -197,13 +197,14 @@ describe("auth HTTP", () => {
   });
 
   it("lets the owner read unused tokens and accepted usernames", async () => {
-    const { auth } = createTestAuth();
+    const { auth, chat } = createTestAuth();
     app = await buildApp();
     await registerAuthRoutes(app, {
       auth,
       allowGuestPlay: false,
       secureCookies: false,
       persistence: "memory",
+      chat,
     });
 
     const owner = await app.inject({
@@ -248,10 +249,25 @@ describe("auth HTTP", () => {
     });
     expect(used.json()).toMatchObject({
       persistence: "memory",
-      invites: [{ status: "used", username: "pip" }],
+      invites: [{ status: "used", username: "pip", token }],
       accounts: [{ username: "pip", role: "student" }],
     });
-    expect(JSON.stringify(used.json())).not.toContain(token);
+    await chat.append({
+      at: new Date("2026-09-09T16:00:00.000Z"),
+      characterId: "char-pip",
+      username: "pip",
+      characterName: "Pip the Sparrow",
+      roomId: "lantern-court",
+      text: "hello courtyard",
+    });
+    const withChat = await app.inject({
+      method: "GET",
+      url: "/auth/classroom",
+      cookies: { [SESSION_COOKIE]: ownerCookie },
+    });
+    expect(withChat.json()).toMatchObject({
+      chat: [{ username: "pip", characterName: "Pip the Sparrow", text: "hello courtyard" }],
+    });
     expect(JSON.stringify(used.json())).not.toContain("lantern-path");
 
     expect(

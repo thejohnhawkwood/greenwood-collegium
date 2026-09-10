@@ -25,7 +25,7 @@ first playable package is tagged.
 
 ### Added
 
-- Teachers can issue 1–30 student invite tokens at once, see each student's Collegian name on the roster, and remove a login from the roster or with `admin roster` / `admin remove`.
+- Teachers can issue 1–200 student invite tokens at once, download unused tokens as a text file or the class list as CSV, see each student's Collegian name on the roster, and remove a login from the roster or with `admin roster` / `admin remove`.
 - Look and examine describe people from species and gender. Porter and the Practice Dummy have worn, specific looks.
 
 ### Changed

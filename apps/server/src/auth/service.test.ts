@@ -142,8 +142,8 @@ describe("classroom auth service", () => {
     expect(after.invites[0]).toMatchObject({
       status: "used",
       username: "pip",
+      token: invite.token,
     });
-    expect(after.invites[0]?.token).toBeUndefined();
     expect(after.accounts).toEqual([
       expect.objectContaining({ username: "pip", role: "student", status: "active" }),
     ]);
@@ -158,6 +158,11 @@ describe("classroom auth service", () => {
       expect(named.accounts[0]).toMatchObject({
         username: "pip",
         characterName: "Pip the Squirrel",
+      });
+      expect(named.invites[0]).toMatchObject({
+        username: "pip",
+        characterName: "Pip the Squirrel",
+        token: invite.token,
       });
     }
     expect(await auth.listClassroom(student.account.id)).toMatchObject({
@@ -189,6 +194,10 @@ describe("classroom auth service", () => {
     if (roster.ok) {
       expect(roster.invites.filter((invite) => invite.status === "unused")).toHaveLength(3);
     }
+    expect(await auth.createInvite(owner.account.id, "student", 201)).toMatchObject({
+      ok: false,
+      code: "invalid_invite",
+    });
   });
 
   it("sends owner and teacher to the staff sign-in", async () => {

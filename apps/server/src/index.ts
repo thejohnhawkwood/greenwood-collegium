@@ -19,6 +19,7 @@ import { applyMigrations } from "./persistence/migrator.js";
 import {
   PostgresAccountRepository,
   PostgresAuditRepository,
+  PostgresChatRepository,
   PostgresCharacterRepository,
   PostgresInviteRepository,
   PostgresItemRepository,
@@ -67,6 +68,7 @@ const stores = persistence
         invites: new PostgresInviteRepository(persistence.db),
         quests: new PostgresQuestRepository(persistence.db),
         audit: new PostgresAuditRepository(persistence.db),
+        chat: new PostgresChatRepository(persistence.db),
       };
     })()
   : createMemoryStores();
@@ -115,6 +117,7 @@ await registerAuthRoutes(app, {
   allowGuestPlay,
   secureCookies: production,
   persistence: persistence ? "postgres" : "memory",
+  chat: stores.chat,
 });
 
 app.addHook("onClose", async () => {
@@ -136,6 +139,7 @@ await attachRealtime(app, world, {
   persistProgress: (characterId, input) => stores.characters.updateProgress(characterId, input),
   persistItem,
   persistQuest: stores.quests,
+  persistChat: stores.chat,
   auditLog: stores.audit,
   listClassroom: async (actorAccountId) => {
     const result = await auth.listClassroom(actorAccountId);

@@ -1,3 +1,4 @@
+import { STUDENT_INVITE_BATCH_MAX } from "@greenwood/contracts";
 import {
   formatCharacterName,
   isKnownGender,
@@ -249,8 +250,11 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (role === "teacher" && count !== 1) {
       return fail("forbidden", "Issue teacher invites one at a time.");
     }
-    if (!Number.isInteger(count) || count < 1 || count > 30) {
-      return fail("invalid_invite", "Choose between 1 and 30 student invites.");
+    if (!Number.isInteger(count) || count < 1 || count > STUDENT_INVITE_BATCH_MAX) {
+      return fail(
+        "invalid_invite",
+        `Choose between 1 and ${String(STUDENT_INVITE_BATCH_MAX)} student invites.`,
+      );
     }
     const tokens: string[] = [];
     const expiresAt = new Date(now().getTime() + INVITE_TTL_MS);
@@ -267,7 +271,10 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     }
     const token = tokens[0];
     if (!token) {
-      return fail("invalid_invite", "Choose between 1 and 30 student invites.");
+      return fail(
+        "invalid_invite",
+        `Choose between 1 and ${String(STUDENT_INVITE_BATCH_MAX)} student invites.`,
+      );
     }
     return { ok: true, token, tokens, role, expiresAt };
   }
@@ -339,7 +346,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
           status,
           createdAt: invite.createdAt,
           expiresAt: invite.expiresAt,
-          token: status === "unused" ? invite.issuedToken : undefined,
+          token: invite.issuedToken,
           username: invite.consumedByAccountId
             ? usernames.get(invite.consumedByAccountId)
             : undefined,

@@ -37,6 +37,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     persistence = createPersistence(testDatabaseUrl);
     await pingDatabase(persistence);
     await applyMigrations(persistence);
+    await persistence.pool.query("delete from chat_log");
     await persistence.pool.query("delete from quest_progress");
     await persistence.pool.query("delete from item_instances");
     await persistence.pool.query("delete from sessions");

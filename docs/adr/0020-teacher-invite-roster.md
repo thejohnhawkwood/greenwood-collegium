@@ -10,10 +10,10 @@ Invite secrets are hashed (ADR-0013). Teachers lose the plaintext after the one-
 
 ## Decision
 
-- Unused classroom invite tokens remain readable by owner and teacher accounts until the invite is consumed or expires.
-- After consume, the plaintext token is deleted. Only the hash and the accepting username remain.
+- Classroom invite tokens remain readable by owner and teacher accounts so a paper class list can be matched to a login and Collegian name.
+- After consume, the token cannot create another account. The plaintext stays on the invite row for the teacher roster.
 - Passwords are never stored in recoverable form and never appear in the roster.
-- The roster is an authenticated HTTP read. The client does not invent account or invite state.
+- The roster is an authenticated HTTP read. The client does not invent account or invite state. Invites accepted before this change may have no saved token.
 
 ## Consequences
 

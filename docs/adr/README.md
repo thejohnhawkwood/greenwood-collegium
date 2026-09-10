@@ -32,6 +32,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0024](0024-production-readiness.md) | Production deploy readiness |
 | [0025](0025-classroom-load-logs.md) | Classroom load logs and simulation |
 | [0026](0026-per-collegian-starter-items.md) | Per-Collegian Arrival keys |
+| [0027](0027-classroom-chat-log.md) | Classroom chat log |
 
 ## Template
 

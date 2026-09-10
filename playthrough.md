@@ -133,10 +133,10 @@ You are now the owner. Finish the Collegian form (species, gender, name) before 
 ### 4. Invite a child
 
 1. Stay signed in as the teacher. Choose **Number of students**, then click **Issue student invites**.
-2. The unused tokens appear in the **Classroom roster**. Copy them onto your class list. Do not put tokens on the projector.
+2. The unused tokens appear in the **Classroom roster**. Use **Download unused tokens** for a text file, or **Download class list** for a CSV of token, login, and Collegian. You can issue up to 200 student invites in one batch. Do not put tokens on the projector.
 3. In a second browser or private window, open **Accept an invite**. Paste one token, pick a classroom username (not a real legal name), and a password of at least 10 characters.
 4. Click **Create account**.
-5. After the child finishes a Collegian, the roster shows their login beside the name they picked. Passwords are never shown. **Remove** disables that login.
+5. After the child finishes a Collegian, the roster table shows that invite token, their login, and the Collegian name on one row. Room `say` lines appear in the chat table under the roster. Passwords are never shown. **Remove** disables that login.
 
 If the roster says the server is using memory, every rebuild or restart forgets unused tokens and student accounts. Local Postgres keeps them. A token issued on your laptop will not work on the live Render site, and the reverse is also true.
 
@@ -270,7 +270,7 @@ admin remove noelle
 admin audit
 ```
 
-`inspect` and `remove` may use a given name or the login name. `admin roster` lists unused tokens and each login with its Collegian name. `admin audit` lists teacher announce, inspect, mute, kick, and remove rows with times. It does not list student `say` or movement. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Remove disables the account. You can also Remove from the roster table.
+`inspect` and `remove` may use a given name or the login name. `admin roster` lists invite token, login, and Collegian name on one line. The roster page also shows a room chat table. `admin audit` lists teacher announce, inspect, mute, kick, and remove rows with times. It does not list student movement. Mute lasts until the minutes run out or the server restarts. Kick closes that connection; they can sign in again. Remove disables the account. You can also Remove from the roster table.
 
 Students who type those words hear that only a teacher can use them.
 

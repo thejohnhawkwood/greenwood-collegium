@@ -1,8 +1,9 @@
-import { and, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNull, lt, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import {
   accounts,
   auditLog,
+  chatLog,
   characters,
   invites,
   itemInstances,
@@ -23,6 +24,8 @@ import {
   type AuditAction,
   type AuditLogRepository,
   type AuditRecord,
+  type ChatLogRepository,
+  type ChatRecord,
   type CharacterRecord,
   type CharacterRepository,
   type CreateAccountInput,
@@ -40,6 +43,7 @@ import {
   type SessionRepository,
   type UpdateCharacterCreationInput,
 } from "./types.js";
+import { chatRetentionCutoff } from "../application/chat-retention.js";
 
 type Database = NodePgDatabase;
 
@@ -291,7 +295,6 @@ export class PostgresInviteRepository implements InviteRepository {
       .update(invites)
       .set({
         consumedAt: at,
-        issuedToken: null,
         consumedByAccountId: consumedByAccountId ?? null,
       })
       .where(and(eq(invites.id, id), isNull(invites.consumedAt)))
@@ -517,6 +520,44 @@ export class PostgresAuditRepository implements AuditLogRepository {
       action: row.action as AuditAction,
       targetName: row.targetName ?? undefined,
       detail: row.detail,
+    }));
+  }
+}
+
+export class PostgresChatRepository implements ChatLogRepository {
+  constructor(private readonly db: Database) {}
+
+  async append(record: Omit<ChatRecord, "id">): Promise<ChatRecord> {
+    const stored: ChatRecord = { ...record, id: crypto.randomUUID() };
+    await this.db.insert(chatLog).values({
+      id: stored.id,
+      at: stored.at,
+      characterId: stored.characterId,
+      accountId: stored.accountId ?? null,
+      username: stored.username ?? null,
+      characterName: stored.characterName,
+      roomId: stored.roomId,
+      text: stored.text,
+    });
+    await this.db.delete(chatLog).where(lt(chatLog.at, chatRetentionCutoff()));
+    return stored;
+  }
+
+  async listRecent(limit: number): Promise<ChatRecord[]> {
+    const rows = await this.db
+      .select()
+      .from(chatLog)
+      .orderBy(desc(chatLog.at))
+      .limit(Math.max(0, limit));
+    return rows.map((row) => ({
+      id: row.id,
+      at: asDate(row.at),
+      characterId: row.characterId,
+      accountId: row.accountId ?? undefined,
+      username: row.username ?? undefined,
+      characterName: row.characterName,
+      roomId: row.roomId,
+      text: row.text,
     }));
   }
 }

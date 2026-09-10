@@ -16,6 +16,7 @@ import { formatCharacterName } from "@greenwood/content";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { RateLimiter } from "../application/rate-limit.js";
 import type { AuthFailure, AuthService, SignedIn } from "../auth/service.js";
+import type { ChatLogRepository } from "../persistence/types.js";
 import { SESSION_TTL_MS } from "../auth/service.js";
 import {
   expiredSessionCookie,
@@ -32,6 +33,7 @@ export type AuthHttpDependencies = {
   allowGuestPlay: boolean;
   secureCookies: boolean;
   persistence?: "memory" | "postgres";
+  chat?: ChatLogRepository;
 };
 
 const failureStatus: Record<AuthFailure["code"], number> = {
@@ -80,6 +82,7 @@ export async function registerAuthRoutes(
         message: result.message,
       });
     }
+    const chat = deps.chat ? await deps.chat.listRecent(100) : [];
     return authClassroomSchema.parse({
       persistence: deps.persistence ?? "memory",
       invites: result.invites.map((invite) => ({
@@ -99,6 +102,14 @@ export async function registerAuthRoutes(
         status: account.status,
         createdAt: account.createdAt.toISOString(),
         characterName: account.characterName,
+      })),
+      chat: chat.map((line) => ({
+        id: line.id,
+        at: line.at.toISOString(),
+        username: line.username,
+        characterName: line.characterName,
+        roomId: line.roomId,
+        text: line.text,
       })),
     });
   });

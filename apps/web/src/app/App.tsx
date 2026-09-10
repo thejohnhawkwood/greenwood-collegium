@@ -17,7 +17,13 @@ import { AcademyFrame } from "./academy-frame.js";
 import { AuthGate } from "./AuthGate.js";
 import { CharacterGate } from "./CharacterGate.js";
 import { shouldShowCharacterGate } from "./character-gate.js";
-import { loadClassroom } from "./classroom-data.js";
+import {
+  downloadTextFile,
+  loadClassroom,
+  rosterCsv,
+  unusedStudentTokenText,
+  unusedStudentTokens,
+} from "./classroom-data.js";
 import { ClassroomRoster } from "./classroom-roster.js";
 import {
   DISCONNECTED_COMMAND_NOTICE,
@@ -236,13 +242,16 @@ function ClassicClient({
           text: renderClassicNarration(parsed.data),
         }),
       );
+      if (canInvite && parsed.data.type === "chat.said") {
+        void loadClassroom().then(setClassroom);
+      }
     });
 
     return () => {
       socket.close();
       socketRef.current = null;
     };
-  }, [me]);
+  }, [me, canInvite]);
 
   useEffect(() => {
     if (!canInvite) {
@@ -375,7 +384,7 @@ function ClassicClient({
               {canInvite ? (
                 <span className="invite-batch">
                   <label>
-                    Number of students (1–30)
+                    Number of students (1–{STUDENT_INVITE_BATCH_MAX})
                     <input
                       ref={inviteCountRef}
                       type="number"
@@ -406,6 +415,37 @@ function ClassicClient({
                     }}
                   >
                     Issue student invites
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!classroom || unusedStudentTokens(classroom).length === 0}
+                    onClick={() => {
+                      if (!classroom) {
+                        return;
+                      }
+                      downloadTextFile(
+                        "greenwood-student-tokens.txt",
+                        unusedStudentTokenText(classroom),
+                      );
+                    }}
+                  >
+                    Download unused tokens
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!classroom}
+                    onClick={() => {
+                      if (!classroom) {
+                        return;
+                      }
+                      downloadTextFile(
+                        "greenwood-classroom-roster.csv",
+                        rosterCsv(classroom),
+                        "text/csv",
+                      );
+                    }}
+                  >
+                    Download class list
                   </button>
                 </span>
               ) : null}

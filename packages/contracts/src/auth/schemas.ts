@@ -31,7 +31,7 @@ export const authAcceptInviteRequestSchema = z.object({
   password: passwordSchema,
 });
 
-export const STUDENT_INVITE_BATCH_MAX = 30;
+export const STUDENT_INVITE_BATCH_MAX = 200;
 
 export const authCreateInviteRequestSchema = z.object({
   role: z.enum(["student", "teacher"]).default("student"),
@@ -128,10 +128,20 @@ export const authClassroomAccountSchema = z.object({
   characterName: z.string().optional(),
 });
 
+export const authClassroomChatSchema = z.object({
+  id: z.string(),
+  at: z.string(),
+  username: z.string().optional(),
+  characterName: z.string(),
+  roomId: z.string(),
+  text: z.string(),
+});
+
 export const authClassroomSchema = z.object({
   persistence: z.enum(["memory", "postgres"]),
   invites: z.array(authClassroomInviteSchema),
   accounts: z.array(authClassroomAccountSchema),
+  chat: z.array(authClassroomChatSchema).default([]),
 });
 
 export type AuthBootstrapRequest = z.infer<typeof authBootstrapRequestSchema>;
@@ -151,3 +161,4 @@ export type AuthInviteCreated = z.infer<typeof authInviteCreatedSchema>;
 export type AuthClassroom = z.infer<typeof authClassroomSchema>;
 export type AuthClassroomInvite = z.infer<typeof authClassroomInviteSchema>;
 export type AuthClassroomAccount = z.infer<typeof authClassroomAccountSchema>;
+export type AuthClassroomChat = z.infer<typeof authClassroomChatSchema>;

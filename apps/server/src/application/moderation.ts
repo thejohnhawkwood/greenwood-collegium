@@ -21,9 +21,9 @@ export const STAFF_HELP_TEXT = [
   "  admin remove <username>",
   "  admin audit",
   "",
-  "admin roster lists unused tokens and each login with its Collegian name.",
+  "admin roster lists invite token, login, and Collegian name on one table.",
   "admin audit lists teacher actions (announce, inspect, mute, kick, remove) with times.",
-  "It does not list student say or movement.",
+  "Student say is on the teacher roster chat table, not in this audit.",
 ].join("\n");
 
 export type StaffSuccess = {
@@ -344,18 +344,27 @@ async function formatRoster(context: StaffContext): Promise<string> {
   if (!classroom) {
     return "The classroom roster is empty.";
   }
-  const unused = classroom.invites
-    .filter((invite) => invite.status === "unused" && invite.token)
-    .map((invite) => `  ${invite.role}  ${invite.token}`);
-  const accounts = classroom.accounts.map((account) => {
-    const collegian = account.characterName ?? "not finished";
-    return `  ${account.username}  ${collegian}  ${account.role}  ${account.status}`;
+  const linked = new Set(
+    classroom.invites
+      .map((invite) => invite.username?.toLowerCase())
+      .filter((username): username is string => Boolean(username)),
+  );
+  const inviteLines = classroom.invites.map((invite) => {
+    const token = invite.token ?? "(not saved)";
+    const login = invite.username ?? "—";
+    const collegian = invite.characterName ?? "—";
+    return `  ${token}  ${login}  ${collegian}  ${invite.role}  ${invite.status}`;
   });
+  const extraLines = classroom.accounts
+    .filter((account) => !linked.has(account.username.toLowerCase()))
+    .map((account) => {
+      const collegian = account.characterName ?? "not finished";
+      return `  —  ${account.username}  ${collegian}  ${account.role}  ${account.status}`;
+    });
+  const lines = [...inviteLines, ...extraLines];
   return [
-    "Unused invite tokens:",
-    ...(unused.length > 0 ? unused : ["  (none)"]),
-    "Logins and Collegian names:",
-    ...(accounts.length > 0 ? accounts : ["  (none)"]),
+    "Invite token  Login  Collegian  Role  Status",
+    ...(lines.length > 0 ? lines : ["  (none)"]),
   ].join("\n");
 }
 
