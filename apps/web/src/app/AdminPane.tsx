@@ -1,4 +1,5 @@
 import {
+  STUDENT_INVITE_BATCH_MAX,
   auditPageSchema,
   authClassroomSchema,
   authInviteCreatedSchema,
@@ -8,6 +9,12 @@ import {
   type AuthSessionPublic,
   type ModerationAction,
 } from "@greenwood/contracts";
+import {
+  downloadTextFile,
+  rosterCsv,
+  unusedStudentTokenText,
+  unusedStudentTokens,
+} from "./classroom-data.js";
 import { useEffect, useRef, useState } from "react";
 import { adminRequest, requestMessage } from "./admin-api.js";
 import { SpeechLog } from "./SpeechLog.js";
@@ -153,11 +160,11 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
               }}
             >
               <label>
-                Number of students
+                Number of students (1–{STUDENT_INVITE_BATCH_MAX})
                 <input
                   type="number"
                   min={1}
-                  max={30}
+                  max={STUDENT_INVITE_BATCH_MAX}
                   required
                   value={count}
                   onChange={(event) => setCount(Number(event.target.value))}
@@ -167,6 +174,39 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
                 Generate student invites
               </button>
             </form>
+            <p className="roster-actions">
+              <button
+                type="button"
+                disabled={!classroom || unusedStudentTokens(classroom).length === 0}
+                onClick={() => {
+                  if (!classroom) {
+                    return;
+                  }
+                  downloadTextFile(
+                    "greenwood-student-tokens.txt",
+                    unusedStudentTokenText(classroom),
+                  );
+                }}
+              >
+                Download unused tokens
+              </button>
+              <button
+                type="button"
+                disabled={!classroom}
+                onClick={() => {
+                  if (!classroom) {
+                    return;
+                  }
+                  downloadTextFile(
+                    "greenwood-classroom-roster.csv",
+                    rosterCsv(classroom),
+                    "text/csv",
+                  );
+                }}
+              >
+                Download class list
+              </button>
+            </p>
             {me.role === "owner" ? (
               <button
                 type="button"

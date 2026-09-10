@@ -22,7 +22,7 @@ import {
   type SessionRepository,
 } from "../persistence/types.js";
 import type { PasswordHasher } from "./hasher.js";
-import type { NameReview } from "@greenwood/contracts";
+import { STUDENT_INVITE_BATCH_MAX, type NameReview } from "@greenwood/contracts";
 import type { ModerationRepository, ModerationState } from "../persistence/moderation-types.js";
 import { nameReview } from "../application/name-review.js";
 import { hashToken, randomToken, tokensEqual } from "./tokens.js";
@@ -268,8 +268,11 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (role === "teacher" && count !== 1) {
       return fail("forbidden", "Issue teacher invites one at a time.");
     }
-    if (!Number.isInteger(count) || count < 1 || count > 30) {
-      return fail("invalid_invite", "Choose between 1 and 30 student invites.");
+    if (!Number.isInteger(count) || count < 1 || count > STUDENT_INVITE_BATCH_MAX) {
+      return fail(
+        "invalid_invite",
+        `Choose between 1 and ${String(STUDENT_INVITE_BATCH_MAX)} student invites.`,
+      );
     }
     const tokens: string[] = [];
     const expiresAt = new Date(now().getTime() + INVITE_TTL_MS);
@@ -286,7 +289,10 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     }
     const token = tokens[0];
     if (!token) {
-      return fail("invalid_invite", "Choose between 1 and 30 student invites.");
+      return fail(
+        "invalid_invite",
+        `Choose between 1 and ${String(STUDENT_INVITE_BATCH_MAX)} student invites.`,
+      );
     }
     return { ok: true, token, tokens, role, expiresAt };
   }

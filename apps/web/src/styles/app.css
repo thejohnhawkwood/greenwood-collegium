@@ -305,6 +305,12 @@ body {
   opacity: 0.55;
   cursor: default;
 }
+.admin-pane .roster-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.55rem 0 0.75rem;
+}
 .admin-pane a {
   color: var(--text-npc);
 }

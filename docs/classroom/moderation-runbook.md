@@ -16,10 +16,12 @@ the preview, review a fresh preview first. No live reset was executed by the age
 
 ## Associate each student privately
 
-Under **Roster → Unused invites**, each token has a **Permanent reference**. Put that
-reference beside the real student's name in your private class list outside this
-repository. Give that student the corresponding token. After redemption the reference
-stays beside the login and character in the roster; the secret token disappears.
+Under **Roster → Unused invites**, each token has a **Permanent reference**. You can
+also **Download unused tokens** as a text file or **Download class list** as CSV.
+You may generate up to 200 student invites in one batch. Put the reference beside
+the real student's name in your private class list outside this repository. Give
+that student the corresponding token. After redemption the reference stays beside
+the login and character in the roster; the secret token disappears.
 Search the roster by login, character, or reference. Names and IDs are selectable.
 Do not put real names into the game's login/name fields or upload a class list.
 

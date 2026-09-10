@@ -189,6 +189,10 @@ describe("classroom auth service", () => {
     if (roster.ok) {
       expect(roster.invites.filter((invite) => invite.status === "unused")).toHaveLength(3);
     }
+    expect(await auth.createInvite(owner.account.id, "student", 201)).toMatchObject({
+      ok: false,
+      code: "invalid_invite",
+    });
   });
 
   it("sends owner and teacher to the staff sign-in", async () => {

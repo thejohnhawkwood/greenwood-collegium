@@ -32,7 +32,7 @@ export const authAcceptInviteRequestSchema = z.object({
   password: passwordSchema,
 });
 
-export const STUDENT_INVITE_BATCH_MAX = 30;
+export const STUDENT_INVITE_BATCH_MAX = 200;
 
 export const authCreateInviteRequestSchema = z.object({
   role: z.enum(["student", "teacher"]).default("student"),

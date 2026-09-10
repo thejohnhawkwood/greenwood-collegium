@@ -132,8 +132,8 @@ You are now the owner. Finish the Collegian form (species, gender, name) before 
 
 ### 4. Invite a child
 
-1. Stay signed in as the teacher. Choose **Number of students**, then click **Issue student invites**.
-2. The unused tokens appear in the **Classroom roster**. Copy them onto your class list. Do not put tokens on the projector.
+1. Stay signed in as the teacher. Open **Teacher controls → Roster**. Choose **Number of students** (up to 200), then click **Generate student invites**.
+2. Use **Download unused tokens** for a text file, or **Download class list** for a CSV. Unused tokens also appear under **Unused invites**. Do not put tokens on the projector.
 3. In a second browser or private window, open **Accept an invite**. Paste one token, pick a classroom username (not a real legal name), and a password of at least 10 characters.
 4. Click **Create account**.
 5. After the child finishes a Collegian, the roster shows their login beside the name they picked. Passwords are never shown. **Remove** disables that login.
