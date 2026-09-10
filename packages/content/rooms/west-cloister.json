@@ -2,10 +2,26 @@
   "$schema": "../schemas/room.schema.json",
   "id": "west-cloister",
   "title": "West Cloister",
-  "shortDescription": "A mossy covered walk beside the court.",
-  "longDescription": "Stone arches frame a quiet walk.\nMoss holds the rain in small bright beads.",
+  "shortDescription": "Rain-dark arches frame a walk of moss and old promises.",
+  "longDescription": "Stone arches shelter a narrow walk beside the court. Moss holds the rain in bright beads, and the worn paving dips where generations of Collegians have paused to watch the weather.\nA promise mosaic fills a shallow niche: hands, paws, wings, and leaves fitted from mismatched pieces of pottery. No two tiles are quite alike, yet the circle holds.",
   "zone": "academy-core",
-  "map": { "x": -1, "y": 0 },
-  "exits": [{ "direction": "east", "toRoomId": "lantern-court" }],
-  "fixtures": []
+  "map": {
+    "x": -1,
+    "y": 0
+  },
+  "exits": [
+    {
+      "direction": "east",
+      "toRoomId": "lantern-court"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-promise-mosaic",
+      "name": "Promise Mosaic",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The small tiles make an unbroken ring around the words: 'We care for what we share.' A cracked blue piece has been repaired with pale mortar instead of replaced. Its break remains visible, and the whole pattern is stronger around it."
+    }
+  ]
 }

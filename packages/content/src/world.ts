@@ -18,6 +18,7 @@ export type LoadedRoom = {
     id: string;
     name: string;
     kind: "npc" | "object";
+    dialogue?: string;
     examineDescription?: string;
     lookDescription?: string;
   }>;
@@ -63,13 +64,17 @@ export type LoadedQuest = {
   title: string;
   introNarration: string;
   reminderNarration: string;
+  giverNpcId?: string;
+  completionNarration?: string;
   experienceReward: number;
   objectives: Array<{
     id: string;
-    kind: "look" | "say" | "take" | "visit";
+    kind: "look" | "say" | "take" | "visit" | "examine" | "talk";
     label: string;
     itemTemplateId?: string;
     roomId?: string;
+    targetId?: string;
+    requires?: string[];
   }>;
 };
 
@@ -128,6 +133,7 @@ export function toWorldState(
         id: fixture.id,
         name: fixture.name,
         kind: fixture.kind,
+        dialogue: fixture.dialogue,
         examineDescription: fixture.examineDescription,
         lookDescription: fixture.lookDescription,
       })),
@@ -212,6 +218,8 @@ export function toWorldState(
       title: quest.title,
       introNarration: quest.introNarration,
       reminderNarration: quest.reminderNarration,
+      giverNpcId: quest.giverNpcId,
+      completionNarration: quest.completionNarration,
       experienceReward: quest.experienceReward,
       objectives: quest.objectives.map((objective) => ({
         id: objective.id,
@@ -219,6 +227,8 @@ export function toWorldState(
         label: objective.label,
         itemTemplateId: objective.itemTemplateId,
         roomId: objective.roomId,
+        targetId: objective.targetId,
+        requires: objective.requires ? [...objective.requires] : undefined,
       })),
     };
   }

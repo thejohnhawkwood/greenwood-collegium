@@ -45,7 +45,10 @@ export function handleQuests(
   }
   const narration =
     lines.length === 0 ? "You have no tasks yet." : ["Your tasks:", ...lines].join("\n");
-  return { ok: true, event: systemNotice(character.id, narration, runtime) };
+  return {
+    ok: true,
+    event: { ...systemNotice(character.id, narration, runtime), presentationKey: "quest.journal" },
+  };
 }
 
 function formatQuestStatus(template: QuestTemplate, progress: QuestProgress): string {

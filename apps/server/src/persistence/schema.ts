@@ -7,7 +7,43 @@ import {
   timestamp,
   integer,
   uniqueIndex,
+  jsonb,
+  boolean,
+  serial,
 } from "drizzle-orm/pg-core";
+import type { ModerationState } from "./moderation-types.js";
+
+export const moderationState = pgTable("moderation_state", {
+  accountId: text("account_id")
+    .primaryKey()
+    .references(() => accounts.id, { onDelete: "cascade" }),
+  value: jsonb("value").$type<ModerationState>().notNull(),
+});
+export const classroomSettings = pgTable("classroom_settings", {
+  id: text("id").primaryKey(),
+  chatPaused: boolean("chat_paused").notNull().default(false),
+});
+export const speechLog = pgTable(
+  "speech_log",
+  {
+    id: serial("id").primaryKey(),
+    occurredAt: timestamp("occurred_at", { withTimezone: true }).notNull(),
+    day: text("day").notNull(),
+    accountId: text("account_id").notNull(),
+    characterId: text("character_id").notNull(),
+    commandId: text("command_id").notNull(),
+    username: text("username").notNull(),
+    characterName: text("character_name").notNull(),
+    inviteReference: text("invite_reference"),
+    roomId: text("room_id").notNull(),
+    content: text("content").notNull(),
+  },
+  (table) => [
+    uniqueIndex("speech_log_command_idx").on(table.accountId, table.commandId),
+    index("speech_log_day_id_idx").on(table.day, table.id),
+    index("speech_log_occurred_at_idx").on(table.occurredAt),
+  ],
+);
 
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),

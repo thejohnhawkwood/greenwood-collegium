@@ -2,15 +2,38 @@
   "$schema": "../schemas/room.schema.json",
   "id": "east-gate",
   "title": "East Gate",
-  "shortDescription": "An oak gate opening toward the meadow.",
-  "longDescription": "Iron hinges hold a wide oak gate.\nThe meadow wind carries the smell of wet grass.",
+  "shortDescription": "A broad oak gate opens toward a clover-bright meadow.",
+  "longDescription": "The oak gate stands between pillars threaded with honeysuckle. Iron swallows perch along its hinges; one has been polished bright by the touch of arriving travellers.\nMeadow air brings the smell of rain and clover. A wayboard points north to the Porter Lodge, south to the dormitories, and west toward the blue lanterns of the court.",
   "zone": "academy-core",
-  "map": { "x": 1, "y": 0 },
+  "map": {
+    "x": 1,
+    "y": 0
+  },
   "exits": [
-    { "direction": "west", "toRoomId": "lantern-court" },
-    { "direction": "east", "toRoomId": "east-meadow" },
-    { "direction": "north", "toRoomId": "porter-lodge" },
-    { "direction": "south", "toRoomId": "dormitory-oak" }
+    {
+      "direction": "west",
+      "toRoomId": "lantern-court"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "east-meadow"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "porter-lodge"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "dormitory-oak"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "object-wayboard",
+      "name": "Wayboard",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The carved arrows are unusually legible. NORTH: Porter Lodge, then east for the Infirmary. SOUTH: Oak and Willow dormitories. WEST: Lantern Court. EAST: East Meadow. Below them, Porter has written: 'Lost is a place everyone visits. Ask for directions.'"
+    }
+  ]
 }

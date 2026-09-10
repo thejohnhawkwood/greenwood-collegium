@@ -2,15 +2,46 @@
   "$schema": "../schemas/room.schema.json",
   "id": "great-hall",
   "title": "Great Hall",
-  "shortDescription": "A high oak hall lit by hanging lanterns.",
-  "longDescription": "Long tables run beneath oak beams.\nSchool banners hang between the lanterns.",
+  "shortDescription": "Six bright banners hang above tables built around living oaks.",
+  "longDescription": "Living oak columns spread into a roof of beams and leaves, holding the Great Hall like cupped hands. Long tables bear the marks of ink pots, hot mugs, and one memorable attempt to carve a perfect circle.\nBanners for Ember, Thorn, Veil, Stars, Stone, and Steel stir above the lanterns. At the high table, Headmaster Alder studies an acorn-shaped tuning fork with a puzzled smile.",
   "zone": "academy-core",
-  "map": { "x": 0, "y": 1 },
+  "map": {
+    "x": 0,
+    "y": 1
+  },
   "exits": [
-    { "direction": "south", "toRoomId": "lantern-court" },
-    { "direction": "north", "toRoomId": "north-quad" },
-    { "direction": "east", "toRoomId": "lecture-theatre" },
-    { "direction": "west", "toRoomId": "library-stacks" }
+    {
+      "direction": "south",
+      "toRoomId": "lantern-court"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "north-quad"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "lecture-theatre"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "library-stacks"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "npc-headmaster-alder",
+      "name": "Headmaster Alder",
+      "lookDescription": "A silver-browed stag with an ink-stained cuff and an attentive tilt to his ears. Try talk alder.",
+      "examineDescription": "Alder's green robe has been carefully patched at the elbows. An acorn tuning fork peeks from one pocket; the other appears to contain an alarming number of folded questions. He listens all the way to the end of a sentence.",
+      "dialogue": "\"Welcome. I collect questions; answers are welcome too, when they have evidence.\" Alder holds the tuning fork by its stem. \"The school has been humming below our feet. I would rather understand a mystery than frighten everyone with a guess.\"",
+      "kind": "npc"
+    },
+    {
+      "id": "object-school-banners",
+      "name": "School Banners",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Ember shows a sheltered flame; Thorn, a leaf opening through a thorny branch; Veil, a silver moth; Stars, a clear constellation; Stone, a patient arch; Steel, a blade laid flat in an open hand. Beneath all six: 'Learn well. Use wisely. Leave room for others.'"
+    }
+  ]
 }

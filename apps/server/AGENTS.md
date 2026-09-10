@@ -18,5 +18,7 @@ Fastify process for HTTP and Socket.IO.
 - Production requires a reachable Postgres. Do not fall back to memory when `NODE_ENV=production`. `pnpm --filter @greenwood/server db:migrate` is the pre-deploy migration command.
 - Process logs may include command verb, status, duration, and connected count. Never log raw command text, `say` lines, tickets, cookies, or `DATABASE_URL`. The 30-client load simulation stays on localhost.
 - Never log `DATABASE_URL`, passwords, session tokens, invite tokens, socket tickets, or read a production dump.
+- ADR-0027 requires exact-name approval before student play, persistent account restrictions, and server checks on every authenticated command. Auth mutations, classroom mutations, joins, and commands share one operation queue in the single-instance server.
+- Persist accepted authenticated `say` once before broadcasting. Store six months of staff-only speech in PostgreSQL, with Alberta day selection; never put speech in process logs or repo files. Student resets preserve retained speech snapshots and staff accounts.
 - `pnpm start` loads the repo-root `.env` when that file exists. Do not print secret values.
 - Development may accept private LAN origins so household devices can play. Production may not.

@@ -1,9 +1,11 @@
+import type { EventEnvelope } from "@greenwood/contracts";
 export type TranscriptKind = "command" | "narration" | "notice";
 
 export type TranscriptLine = {
   id: string;
   kind: TranscriptKind;
   text: string;
+  event?: EventEnvelope;
 };
 
 export function appendTranscript(

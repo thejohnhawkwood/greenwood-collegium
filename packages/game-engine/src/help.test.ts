@@ -69,6 +69,7 @@ describe("help and quests", () => {
       expect(listed.event.narration).toContain("say —");
       expect(listed.event.narration).toContain("help —");
       expect(listed.event.narration).toContain("quests —");
+      expect(listed.event.narration).toContain("talk —");
     }
 
     const topic = handleHelp(
@@ -90,6 +91,12 @@ describe("help and quests", () => {
     if (unknown.ok) {
       expect(unknown.event.narration).toContain("I do not have help for dance");
     }
+    const talk = handleHelp(
+      world(),
+      { verb: "help", characterId: "char-rowan", topic: "talk" },
+      runtime(),
+    );
+    expect(talk.ok && talk.event.narration).toContain("talk to Porter Bramble");
   });
 
   it("lists Arrival progress", () => {
@@ -97,6 +104,7 @@ describe("help and quests", () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.event.narration).toContain("Arrival at the Collegium (active)");
+      expect(result.event.presentationKey).toBe("quest.journal");
       expect(result.event.narration).toContain("Look around Lantern Court");
       expect(result.event.narration).toContain("Say hello so Porter knows you arrived");
     }

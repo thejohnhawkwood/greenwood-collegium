@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { nameReviewSchema } from "./moderation.js";
 
 export const usernameSchema = z
   .string()
@@ -67,6 +68,7 @@ export const authCharacterNameSchema = z
   .regex(/^[A-Za-z][A-Za-z '-]*$/);
 
 export const authCharacterCreateRequestSchema = z.object({
+  username: usernameSchema.optional(),
   name: authCharacterNameSchema,
   speciesId: z.string().min(1).max(32),
   gender: authCharacterGenderSchema,
@@ -88,6 +90,8 @@ export const authCharacterOptionsSchema = z.object({
 });
 
 export const authSessionPublicSchema = z.object({
+  nameReview: nameReviewSchema.optional(),
+  timeoutUntil: z.string().optional(),
   accountId: z.string(),
   username: z.string(),
   role: accountRoleSchema,
@@ -109,6 +113,8 @@ export const authErrorSchema = z.object({
 });
 
 export const authClassroomInviteSchema = z.object({
+  accountId: z.string().optional(),
+  characterId: z.string().optional(),
   id: z.string(),
   role: z.enum(["student", "teacher"]),
   status: z.enum(["unused", "used", "expired"]),
@@ -120,6 +126,11 @@ export const authClassroomInviteSchema = z.object({
 });
 
 export const authClassroomAccountSchema = z.object({
+  characterId: z.string().optional(),
+  inviteReference: z.string().optional(),
+  nameReview: nameReviewSchema.optional(),
+  mutedUntil: z.string().optional(),
+  timeoutUntil: z.string().optional(),
   accountId: z.string(),
   username: z.string(),
   role: z.enum(["student", "teacher"]),
@@ -129,6 +140,7 @@ export const authClassroomAccountSchema = z.object({
 });
 
 export const authClassroomSchema = z.object({
+  chatPaused: z.boolean().default(false),
   persistence: z.enum(["memory", "postgres"]),
   invites: z.array(authClassroomInviteSchema),
   accounts: z.array(authClassroomAccountSchema),

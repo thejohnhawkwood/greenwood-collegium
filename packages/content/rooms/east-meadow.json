@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "east-meadow",
   "title": "East Meadow",
-  "shortDescription": "Open grass beyond the east gate.",
-  "longDescription": "The grass runs toward a low hedge.\nBees work the clover in the warm light.",
+  "shortDescription": "Bees stitch the clover beneath a wide, unhurried sky.",
+  "longDescription": "Grass bends in silver-green waves around islands of clover. Beyond a low hedge, the sky seems large enough to hold every question the school has ever asked.\nA bee skep sits in a patch of sunlight, busy with small purposeful journeys. The gate remains plainly visible to the west; even an excellent daydream need not lose its way home.",
   "zone": "grounds",
   "unmapped": true,
-  "exits": [{ "direction": "west", "toRoomId": "east-gate" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "east-gate"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-bee-skep",
+      "name": "Bee Skep",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "You watch from a respectful distance. Bees return dusted with pollen, disappearing into the woven hive while others depart. A tiny sign says: 'Quiet observers welcome. The bees are working.' The sweetest part of the meadow is mostly somebody else's hard work."
+    }
+  ]
 }

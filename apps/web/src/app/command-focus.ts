@@ -1,4 +1,4 @@
-const INTERACTIVE = "a, button, input, select, textarea, label, option";
+const INTERACTIVE = 'a, button, input, select, textarea, label, option, [role="log"]';
 
 export type ClosestTarget = {
   closest(selectors: string): unknown;

@@ -93,7 +93,12 @@ function chatEvent(
           { kind: "text" as const, text: quoted },
         ]
       : [
-          { kind: "actor" as const, id: payload.speakerId, text: payload.speakerName },
+          {
+            kind: "actor" as const,
+            entityKind: "player" as const,
+            id: payload.speakerId,
+            text: payload.speakerName,
+          },
           { kind: "text" as const, text: " says, " },
           { kind: "text" as const, text: quoted },
         ];

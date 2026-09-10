@@ -43,14 +43,16 @@ describe("content loader", () => {
     expect(Object.keys(world.rooms)).toHaveLength(25);
     expect(world.rooms[START_ROOM_ID]?.title).toBe("Lantern Court");
     expect(world.rooms[START_ROOM_ID]?.fixtures).toEqual([
-      {
+      expect.objectContaining({
         id: "npc-porter-bramble",
         name: "Porter Bramble",
         kind: "npc",
         lookDescription: "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
         examineDescription:
           "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. His eyes are kind and busy. He watches the courtyard as if every new Collegian were expected.",
-      },
+        dialogue: expect.stringContaining("talk quill"),
+      }),
+      expect.objectContaining({ id: "object-noticeboard", kind: "object" }),
     ]);
     expect(world.rooms["east-gate"]).toBeDefined();
     expect(world.rooms["west-cloister"]?.exits).toEqual([
@@ -88,7 +90,7 @@ describe("content loader", () => {
       title: "Arrival at the Collegium",
       experienceReward: 10,
     });
-    expect(Object.keys(world.quests)).toHaveLength(1);
+    expect(Object.keys(world.quests)).toHaveLength(4);
   });
 
   it("loads an extra room file without a code change", () => {

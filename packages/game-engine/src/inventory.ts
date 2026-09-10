@@ -43,6 +43,15 @@ export function handleInventory(
     })),
   };
   const event = inventoryUpdatedEventSchema.parse({
+    segments: payload.items.length
+      ? [
+          { kind: "text", text: "You are carrying:" },
+          ...payload.items.flatMap((item) => [
+            { kind: "text" as const, text: "\n  " },
+            { kind: "item" as const, id: item.itemId, text: item.name },
+          ]),
+        ]
+      : undefined,
     eventId: runtime.nextEventId(),
     sequence: runtime.nextSequence(character.id),
     schemaVersion,

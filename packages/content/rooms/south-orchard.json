@@ -2,15 +2,46 @@
   "$schema": "../schemas/room.schema.json",
   "id": "south-orchard",
   "title": "South Orchard",
-  "shortDescription": "Rows of apple trees below the court.",
-  "longDescription": "Low apple trees stand in careful rows.\nFallen blossom gathers along the path.",
+  "shortDescription": "Low apple boughs shelter a well-used practice clearing.",
+  "longDescription": "Apple trees stand in friendly, crooked rows around a patch of springy grass. Fallen blossom collects along the paths, and last year's windfalls have become somebody else's breakfast.\nInstructor Flint keeps watch over the Practice Dummy, whose straw hat has survived more lessons than anyone can explain. A practice rules board leans against a basket of wooden swords.",
   "zone": "grounds",
-  "map": { "x": 0, "y": -1 },
+  "map": {
+    "x": 0,
+    "y": -1
+  },
   "exits": [
-    { "direction": "north", "toRoomId": "lantern-court" },
-    { "direction": "south", "toRoomId": "river-landing" },
-    { "direction": "west", "toRoomId": "herb-garden" },
-    { "direction": "east", "toRoomId": "pottery-shed" }
+    {
+      "direction": "north",
+      "toRoomId": "lantern-court"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "river-landing"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "herb-garden"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "pottery-shed"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "npc-instructor-flint",
+      "name": "Instructor Flint",
+      "lookDescription": "A wiry hare with a whistle, a wooden sword, and a hat full of apple blossom. Try talk flint.",
+      "examineDescription": "Flint has one bent ear and an expression of cheerful concentration. Her practice sword is nicked from demonstrations, not duels. She keeps the clearing open and the path to the Infirmary firmly in mind.",
+      "dialogue": "\"Feet steady. Eyes open. Pride in your pocket.\" Flint gestures to the straw target. \"Type attack dummy to begin. During practice, attack continues; cast ember dummy uses focus for Ember. Finish the practice bout before moving on. If you are defeated, you recover in the Infirmary. Other Collegians are partners, never targets.\"",
+      "kind": "npc"
+    },
+    {
+      "id": "object-practice-rules",
+      "name": "Practice Rules",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "'Ask before borrowing equipment. Aim only at the Practice Dummy. Stop when someone needs help. A practice defeat sends you to the Infirmary.' Flint has added: 'Winning teaches one thing. Paying attention teaches several.' Try talk flint for the practice commands."
+    }
+  ]
 }

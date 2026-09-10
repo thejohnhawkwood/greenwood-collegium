@@ -12,6 +12,7 @@ import type { Character, EngineRuntime, ExamineIntent, WorldState } from "./stat
 
 export type ExamineSuccess = {
   ok: true;
+  targetId: string;
   event: EventEnvelope;
 };
 
@@ -24,6 +25,8 @@ export type ExamineFailure = {
 export type ExamineResult = ExamineSuccess | ExamineFailure;
 
 type ExamineTarget = {
+  entityKind?: "npc" | "player";
+  item?: boolean;
   id: string;
   name: string;
   description: string;
@@ -49,6 +52,8 @@ export function handleExamine(
   const nearby: ExamineTarget[] = [
     ...(room?.fixtures ?? []).map((fixture) => ({
       id: fixture.id,
+      entityKind: fixture.kind === "npc" ? ("npc" as const) : undefined,
+      item: fixture.kind === "object",
       name: fixture.name,
       description:
         fixture.examineDescription ??
@@ -57,6 +62,7 @@ export function handleExamine(
     })),
     ...enemiesInRoom(world, character.roomId).map((enemy) => ({
       id: enemy.id,
+      entityKind: "npc" as const,
       name: enemy.name,
       description: enemy.examineDescription ?? enemy.lookDescription,
     })),
@@ -65,6 +71,7 @@ export function handleExamine(
       ...itemsHeldBy(world, character.id),
     ].map((item) => ({
       id: item.id,
+      item: true,
       name: item.name,
       description: item.examineDescription,
     })),
@@ -72,6 +79,7 @@ export function handleExamine(
       .filter((other) => other.roomId === character.roomId && other.id !== character.id)
       .map((other) => ({
         id: other.id,
+        entityKind: "player" as const,
         name: other.name,
         aliases: other.accountUsername ? [other.accountUsername] : undefined,
         description:
@@ -109,7 +117,12 @@ export function handleExamine(
 
   const narration = `${target.name}\n\n${target.description}`;
   const segments = [
-    { kind: "actor" as const, id: target.id, text: target.name },
+    {
+      kind: target.item ? ("item" as const) : ("actor" as const),
+      entityKind: target.entityKind,
+      id: target.id,
+      text: target.name,
+    },
     { kind: "text" as const, text: `\n\n${target.description}` },
   ];
   if (renderClassicSegments(segments) !== narration) {
@@ -131,7 +144,7 @@ export function handleExamine(
     },
   });
 
-  return { ok: true, event };
+  return { ok: true, event, targetId: target.id };
 }
 
 function matchExamineTargets(

@@ -46,11 +46,11 @@ export function enteredNotices(
     const narration = formatEntityEnteredText(payload);
     const segments = fromDirection
       ? [
-          { kind: "actor" as const, id: actor.id, text: actor.name },
+          { kind: "actor" as const, entityKind: "player" as const, id: actor.id, text: actor.name },
           { kind: "text" as const, text: ` arrives from the ${fromDirection}.` },
         ]
       : [
-          { kind: "actor" as const, id: actor.id, text: actor.name },
+          { kind: "actor" as const, entityKind: "player" as const, id: actor.id, text: actor.name },
           { kind: "text" as const, text: " arrives." },
         ];
     if (renderClassicSegments(segments) !== narration) {
@@ -89,11 +89,11 @@ export function leftNotices(
     const narration = formatEntityLeftText(payload);
     const segments = direction
       ? [
-          { kind: "actor" as const, id: actor.id, text: actor.name },
+          { kind: "actor" as const, entityKind: "player" as const, id: actor.id, text: actor.name },
           { kind: "text" as const, text: ` leaves ${direction}.` },
         ]
       : [
-          { kind: "actor" as const, id: actor.id, text: actor.name },
+          { kind: "actor" as const, entityKind: "player" as const, id: actor.id, text: actor.name },
           { kind: "text" as const, text: " has left." },
         ];
     if (renderClassicSegments(segments) !== narration) {

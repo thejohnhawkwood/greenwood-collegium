@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "scriptorium",
   "title": "Scriptorium",
-  "shortDescription": "Desks set for careful copying.",
-  "longDescription": "Slanted desks wait with clean paper.\nA pot of ink sits capped beside the blotter.",
+  "shortDescription": "Ink, lamplight, and careful mistakes inhabit the copying desks.",
+  "longDescription": "Slanted desks stand in a row beneath broad windows, each with a sand shaker and a capped ink pot. The air smells of paper, lamp oil, and the patient work of putting one good word after another.\nAn ink blotter on the nearest desk carries a reversed impression of a bird's wing. A trail of blue music notes wanders off the edge of the practice sheet.",
   "zone": "studies",
   "unmapped": true,
-  "exits": [{ "direction": "east", "toRoomId": "library-stacks" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "east",
+      "toRoomId": "library-stacks"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-ink-blotter",
+      "name": "Ink Blotter",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "In the little desk mirror, the blotter's backwards writing becomes readable: 'Lantern wren: three notes, brightest at dusk.' A pencilled arrow says 'Music Loft - compare the melody.' The missing field-guide page was taken to study its song, not to hide it."
+    }
+  ]
 }

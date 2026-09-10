@@ -14,6 +14,7 @@ import {
   handleCast,
   handleDrop,
   handleExamine,
+  handleTalk,
   handleHelp,
   handleInventory,
   handleJoin,
@@ -51,6 +52,8 @@ import { sessionSnapshotEvent } from "../application/session-snapshot.js";
 import { parseCookie, SESSION_COOKIE } from "../auth/cookies.js";
 import type { PlayIdentity } from "../auth/service.js";
 import type { AuditLogRepository } from "../persistence/types.js";
+import type { ClassroomService } from "../application/classroom.js";
+import { createOperationQueue, type RunExclusive } from "../application/operation-queue.js";
 
 export const DEFAULT_RECONNECT_GRACE_MS = 10_000;
 
@@ -71,6 +74,8 @@ export type ClassroomReadModel = {
 };
 
 export type RealtimeOptions = {
+  classroom?: ClassroomService;
+  runExclusive?: RunExclusive;
   allowGuestPlay?: boolean;
   reconnectGraceMs?: number;
   resolveSession?: (token: string) => Promise<PlayIdentity | undefined>;
@@ -183,6 +188,7 @@ export async function attachRealtime(
   await app.ready();
 
   const allowGuestPlay = options.allowGuestPlay ?? true;
+  const runExclusive = options.runExclusive ?? createOperationQueue();
   const reconnectGraceMs = options.reconnectGraceMs ?? DEFAULT_RECONNECT_GRACE_MS;
   const sequences = new Map<string, number>();
   const sockets = new Map<string, Socket>();
@@ -204,8 +210,29 @@ export async function attachRealtime(
       credentials: true,
     },
   });
+  const unsubscribe = options.classroom?.subscribe((change) => {
+    for (const [characterId, identity] of identities) {
+      if (!change.accountIds.includes(identity.accountId)) continue;
+      sockets.get(characterId)?.emit("moderation-changed", {
+        message: change.message,
+        refreshSession: change.refreshSession ?? false,
+      });
+      if (change.disconnect) kickCharacter(characterId);
+    }
+    if (change.characterIds) {
+      for (const [id, item] of Object.entries(world.items ?? {})) {
+        if (
+          change.characterIds.includes(item.holderCharacterId ?? "") ||
+          change.characterIds.includes(item.availableToCharacterId ?? "")
+        )
+          delete world.items?.[id];
+      }
+      for (const id of change.characterIds) delete world.quests?.[id];
+    }
+  });
 
   app.addHook("onClose", async () => {
+    unsubscribe?.();
     for (const timer of leaveTimers.values()) {
       clearTimeout(timer);
     }
@@ -248,7 +275,7 @@ export async function attachRealtime(
 
   io.on("connection", (socket) => {
     socket.emit(SESSION_HELLO_EVENT, sessionHelloSchema.parse({ bootId }));
-    void startPlay(socket).catch(() => {
+    void runExclusive(() => startPlay(socket)).catch(() => {
       app.log.warn({ event: "socket_seat_failed" }, "courtyard could not seat");
       noticeAndDisconnect(socket, "The courtyard could not seat you. Refresh and try again.");
     });
@@ -256,6 +283,14 @@ export async function attachRealtime(
 
   async function startPlay(socket: Socket): Promise<void> {
     const identity = socket.data.identity as PlayIdentity | undefined;
+    if (!socket.connected) return;
+    if (identity && options.classroom) {
+      const denied = await options.classroom.access(identity);
+      if (denied) {
+        noticeAndDisconnect(socket, denied);
+        return;
+      }
+    }
     const claimed = identity
       ? {
           id: identity.characterId,
@@ -412,7 +447,20 @@ export async function attachRealtime(
     identity: PlayIdentity | undefined,
   ): void {
     socket.on("command", (payload: unknown, ack?: (response: CommandAck) => void) => {
-      void handleCommand(characterId, identity, payload, ack);
+      void runExclusive(async () => {
+        if (!socket.connected || sockets.get(characterId) !== socket) return;
+        await handleCommand(characterId, identity, payload, ack);
+      }).catch(() => {
+        app.log.error({ event: "command_failed" }, "command could not be completed");
+        const request = commandRequestSchema.safeParse(payload);
+        ack?.({
+          commandId: request.success ? request.data.commandId : "invalid",
+          status: "rejected",
+          errorCode: "unavailable",
+          message: "The command could not be completed. Please try again.",
+          resyncRequired: false,
+        });
+      });
     });
 
     socket.on("disconnect", () => {
@@ -503,10 +551,24 @@ export async function attachRealtime(
       return;
     }
 
+    if (identity && options.classroom) {
+      const denied = await options.classroom.access(identity);
+      if (denied) {
+        reply(ack, {
+          commandId: parsed.data.commandId,
+          status: "rejected",
+          errorCode: "forbidden",
+          message: denied,
+          resyncRequired: false,
+        });
+        kickCharacter(characterId);
+        return;
+      }
+    }
     const recorded = commandLog.get(characterId, parsed.data.commandId);
     if (recorded) {
       verb = "replay";
-      deliver(sockets, characterId, recorded.events, recorded.notices);
+      deliver(sockets, characterId, recorded.events, []);
       reply(ack, recorded.ack);
       return;
     }
@@ -551,6 +613,19 @@ export async function attachRealtime(
     }
 
     if (intent.verb === "say") {
+      if (identity && options.classroom) {
+        const denied = await options.classroom.access(identity, true);
+        if (denied) {
+          reply(ack, {
+            commandId: parsed.data.commandId,
+            status: "rejected",
+            errorCode: "forbidden",
+            message: denied,
+            resyncRequired: false,
+          });
+          return;
+        }
+      }
       const until = mutedUntil.get(characterId);
       if (until !== undefined && until > Date.now()) {
         const rejection = commandAckSchema.parse({
@@ -597,6 +672,16 @@ export async function attachRealtime(
     const runtime = commandRuntime(sequences);
     if (isStaffCommand(intent)) {
       const staff = await handleStaffCommand(intent, {
+        persistMute:
+          identity && options.classroom
+            ? (accountId, minutes) =>
+                options.classroom!.moderate(identity.accountId, {
+                  action: "mute",
+                  accountId,
+                  minutes,
+                  reason: "Classroom command",
+                })
+            : undefined,
         world,
         actorId: characterId,
         identity,
@@ -690,15 +775,17 @@ export async function attachRealtime(
                 ? handleDrop(world, intent, runtime)
                 : intent.verb === "examine"
                   ? handleExamine(world, intent, runtime)
-                  : intent.verb === "inventory"
-                    ? handleInventory(world, intent, runtime)
-                    : intent.verb === "help"
-                      ? handleHelp(world, intent, runtime)
-                      : intent.verb === "quests"
-                        ? handleQuests(world, intent, runtime)
-                        : intent.verb === "attack"
-                          ? handleAttack(world, intent, runtime)
-                          : handleCast(world, intent, runtime);
+                  : intent.verb === "talk"
+                    ? handleTalk(world, intent, runtime)
+                    : intent.verb === "inventory"
+                      ? handleInventory(world, intent, runtime)
+                      : intent.verb === "help"
+                        ? handleHelp(world, intent, runtime)
+                        : intent.verb === "quests"
+                          ? handleQuests(world, intent, runtime)
+                          : intent.verb === "attack"
+                            ? handleAttack(world, intent, runtime)
+                            : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -762,12 +849,44 @@ export async function attachRealtime(
       }
     }
 
+    const resultEvents = "events" in result ? result.events : [result.event];
+    if (identity && options.classroom && intent.verb === "say") {
+      const speech = resultEvents.find((event) => event.type === "chat.said");
+      if (!speech) throw new Error("Speech event missing");
+      const inserted = await options.classroom.recordSpeech(
+        identity,
+        parsed.data.commandId,
+        speech,
+      );
+      if (!inserted) {
+        reply(ack, {
+          commandId: parsed.data.commandId,
+          status: "accepted",
+          message: "Speech already recorded.",
+          resyncRequired: false,
+        });
+        return;
+      }
+    }
+
     const extra =
       intent.verb === "look" ||
       intent.verb === "say" ||
       intent.verb === "take" ||
-      intent.verb === "move"
-        ? progressQuests(world, { characterId, kind: intent.verb }, runtime)
+      intent.verb === "move" ||
+      intent.verb === "examine"
+        ? progressQuests(
+            world,
+            {
+              characterId,
+              kind: intent.verb,
+              targetId:
+                "targetId" in result && typeof result.targetId === "string"
+                  ? result.targetId
+                  : undefined,
+            },
+            runtime,
+          )
         : [];
     if (
       identity &&
@@ -775,13 +894,15 @@ export async function attachRealtime(
         intent.verb === "say" ||
         intent.verb === "take" ||
         intent.verb === "move" ||
+        intent.verb === "examine" ||
+        intent.verb === "talk" ||
         intent.verb === "attack" ||
         intent.verb === "cast")
     ) {
       await persistAuthenticatedProgress(characterId);
     }
 
-    const events = [...("events" in result ? result.events : [result.event]), ...extra];
+    const events = [...resultEvents, ...extra];
     const notices = "notices" in result ? result.notices : [];
     const delivered = deliver(sockets, characterId, events, notices);
     const first = delivered[0];

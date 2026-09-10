@@ -2,13 +2,27 @@
   "$schema": "../schemas/room.schema.json",
   "id": "porter-lodge",
   "title": "Porter Lodge",
-  "shortDescription": "A small lodge beside the east gate.",
-  "longDescription": "A kettle sits on a black stove.\nKeys hang from a numbered board.",
+  "shortDescription": "A ticking kettle keeps company with a regiment of labelled keys.",
+  "longDescription": "A black stove warms a room barely wider than its collection of coats. The kettle mutters to itself, and a chair holds a cushion shaped by many years of well-earned sitting.\nKeys hang from a numbered board beside a parcel shelf. A brass whistle lies on the desk under a note: 'Spare. The other one is probably around my neck.'",
   "zone": "lodgings",
   "unmapped": true,
   "exits": [
-    { "direction": "south", "toRoomId": "east-gate" },
-    { "direction": "east", "toRoomId": "infirmary" }
+    {
+      "direction": "south",
+      "toRoomId": "east-gate"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "infirmary"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "object-key-board",
+      "name": "Key Board",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Each hook has a neat label. One reads 'Spare key to spare-key cupboard', followed by a smaller, firmer note: 'Do not put this INSIDE the spare-key cupboard.' The lowest hooks are empty, ready for new Collegians' beginnings."
+    }
+  ]
 }

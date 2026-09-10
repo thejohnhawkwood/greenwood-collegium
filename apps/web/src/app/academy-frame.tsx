@@ -18,9 +18,9 @@ export const RIGHT_LANTERNS = [
 
 export const ARRIVAL_LANTERN = { left: "54.2%", top: "73.4%", delay: "0.4s" } as const;
 
-export function AcademyFrame({ children }: { children: ReactNode }) {
+export function AcademyFrame({ children, sidebar }: { children: ReactNode; sidebar?: ReactNode }) {
   return (
-    <div className="academy-shell">
+    <div className={`academy-shell${sidebar ? " has-admin" : ""}`}>
       <div className="academy-art" aria-hidden="true">
         <Bough className="academy-bough-left" src={FRAME_BOUGH_LEFT} lanterns={LEFT_LANTERNS} />
         <Bough className="academy-bough-right" src={FRAME_BOUGH_RIGHT} lanterns={RIGHT_LANTERNS} />
@@ -31,7 +31,10 @@ export function AcademyFrame({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
-      <div className="academy-well">{children}</div>
+      <div className="academy-layout">
+        <div className="academy-well">{children}</div>
+        {sidebar}
+      </div>
     </div>
   );
 }

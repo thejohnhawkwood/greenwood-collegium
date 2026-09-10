@@ -42,6 +42,7 @@ export type StaffFailure = {
 export type StaffResult = StaffSuccess | StaffFailure;
 
 export type StaffContext = {
+  persistMute?: (accountId: string, minutes: number) => Promise<void>;
   world: WorldState;
   actorId: string;
   identity: PlayIdentity | undefined;
@@ -168,17 +169,21 @@ export async function handleStaffCommand(
   }
 
   const targetIdentity = context.identities.get(target.id);
-  if (targetIdentity?.role === "owner" && context.identity?.role !== "owner") {
+  if (targetIdentity && targetIdentity.role !== "student") {
     return {
       ok: false,
       code: "forbidden",
-      message: "Teachers cannot mute or kick the owner.",
+      message: "Staff accounts are protected. Choose a student.",
     };
   }
 
   if (intent.verb === "mute") {
-    context.mutedUntil.set(target.id, context.now().getTime() + intent.minutes * 60_000);
-    await writeAudit(context, "mute", target.name, `${String(intent.minutes)} minutes`);
+    if (context.persistMute && targetIdentity) {
+      await context.persistMute(targetIdentity.accountId, intent.minutes);
+    } else {
+      context.mutedUntil.set(target.id, context.now().getTime() + intent.minutes * 60_000);
+      await writeAudit(context, "mute", target.name, `${String(intent.minutes)} minutes`);
+    }
     return {
       ok: true,
       events: [

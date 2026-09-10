@@ -72,6 +72,12 @@ describe("handleLook", () => {
     expect(text).toContain("Rowan the Hare — A hare doe in a travel cloak");
     expect(text).toContain("Exits: north, east, west");
     expect(text).not.toContain("Moss the Mole");
+    expect(event.segments).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ text: "Porter Bramble", entityKind: "npc" }),
+        expect.objectContaining({ text: "Rowan the Hare", entityKind: "player" }),
+      ]),
+    );
   });
 
   it("hides the looking character from You see", () => {

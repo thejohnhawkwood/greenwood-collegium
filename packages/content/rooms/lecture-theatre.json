@@ -2,13 +2,27 @@
   "$schema": "../schemas/room.schema.json",
   "id": "lecture-theatre",
   "title": "Lecture Theatre",
-  "shortDescription": "Tiered benches facing a slate board.",
-  "longDescription": "Wooden benches rise in quiet tiers.\nChalk dust hangs in a shaft of window light.",
+  "shortDescription": "Chalk constellations climb above tiers of polished benches.",
+  "longDescription": "Curved benches rise around a lectern worn smooth at the corners. High windows lay bars of light across drifting chalk dust, giving the impression that somebody has diagrammed the sunshine.\nOn the blackboard, six different explanations of the same falling apple compete for space. One small sentence has been circled twice.",
   "zone": "studies",
   "unmapped": true,
   "exits": [
-    { "direction": "west", "toRoomId": "great-hall" },
-    { "direction": "north", "toRoomId": "refectory" }
+    {
+      "direction": "west",
+      "toRoomId": "great-hall"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "refectory"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "object-blackboard",
+      "name": "Blackboard",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "'What did you notice, and what makes you think so?' The apple diagrams offer heat, roots, illusion, stars, stone, and a very practical catching hand. A note from Alder says: 'An unanswered question is not a failed lesson. It is tomorrow's beginning.'"
+    }
+  ]
 }

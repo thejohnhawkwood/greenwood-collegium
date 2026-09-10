@@ -2,15 +2,35 @@
   "$schema": "../schemas/room.schema.json",
   "id": "north-quad",
   "title": "North Quad",
-  "shortDescription": "A grass square behind the Great Hall.",
-  "longDescription": "Four paths cross a square of clipped grass.\nThe clock tower ticks above the north wall.",
+  "shortDescription": "Four paths meet around a sundial that refuses to hurry.",
+  "longDescription": "Clipped grass makes a green square between the school's taller buildings. Four gravel paths meet at a sundial whose carved snail looks rather pleased with the speed of things.\nClockwork ticks from the east. A stray musical phrase drifts from the west, and the observatory's copper roof shines to the north like a leaf after rain.",
   "zone": "academy-core",
   "unmapped": true,
   "exits": [
-    { "direction": "south", "toRoomId": "great-hall" },
-    { "direction": "north", "toRoomId": "observatory" },
-    { "direction": "east", "toRoomId": "clock-tower" },
-    { "direction": "west", "toRoomId": "music-loft" }
+    {
+      "direction": "south",
+      "toRoomId": "great-hall"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "observatory"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "clock-tower"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "music-loft"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "object-snail-sundial",
+      "name": "Snail Sundial",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The snail's shell is marked with the hours. Its inscription reads: 'Arriving thoughtfully is still arriving.' Someone has wedged a pebble beside the number four and labelled it 'Approximately biscuit time.' The shadow refuses to confirm this."
+    }
+  ]
 }

@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "clock-tower",
   "title": "Clock Tower",
-  "shortDescription": "A winding stair beneath the clock.",
-  "longDescription": "The stair turns around a timber post.\nEach landing shows a little more of the quad.",
+  "shortDescription": "Patient gears count the hours beneath an empty bell frame.",
+  "longDescription": "The stair coils around a timber spine polished by generations of paws and hands. Brass gears turn with the solemn concentration of beetles; every seventh tooth has been painted blue by someone who clearly lost count.\nAbove the clock face hangs an empty bell frame. Wind moves through its ropes, but the deep humming comes from the timber beneath your feet.",
   "zone": "academy-core",
   "unmapped": true,
-  "exits": [{ "direction": "west", "toRoomId": "north-quad" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "north-quad"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-empty-bell-frame",
+      "name": "Empty Bell Frame",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The bell frame has neither bell nor clapper. Its ropes are dry and still. Pressing a hand to the supporting oak, you feel three slow pulses rise from below. Whatever makes the sound, it is not a bell swinging in this tower."
+    }
+  ]
 }

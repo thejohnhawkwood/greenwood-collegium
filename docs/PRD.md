@@ -11,6 +11,31 @@
 **Primary development environment:** Cursor with Grok 4.6, Extra High reasoning, Fast mode  
 **Primary deployment target:** Render  
 
+## Owner amendment — September 10, 2026
+
+This amendment takes precedence over conflicting requirements in the original draft below.
+The owner confirmed that iteration may replace the classic interface; a separate UI 0
+or `interface classic` mode is no longer required. Typed commands, complete plain-text
+narration, keyboard access, and meaning that does not depend on colour remain required.
+See [ADR-0028](adr/0028-semantic-transcript.md) and
+[DS-001](design-sprints/ds-001-classroom-readability.md).
+
+Classroom admission now requires teacher approval of both login and character name
+before student play. A staff-only right-hand pane provides invites, reference/account/
+character mapping, approval, mute, timeout, disable/restore, character removal, and
+realm-wide student chat pause. Accepted player `say` is retained privately for six
+calendar months, browsable by Alberta day and exportable by staff. A full owner-issued
+student reset deletes student accounts, characters, progress, sessions and old student
+invites while preserving staff and retained speech. The teacher keeps real student
+identities and their reference mapping outside the app and repository.
+See [ADR-0027](adr/0027-classroom-moderation.md) for storage and enforcement decisions.
+
+The owner also requested a content pass within the existing map: richer descriptions
+for all 25 rooms, six speaking staff NPCs including Porter, examinable discoveries,
+and three additional investigation quests. The map and exits remain unchanged.
+See [the adventure guide](content/adventures.md) and
+[ADR-0029](adr/0029-authored-npc-adventures.md).
+
 ---
 
 ## Table of Contents

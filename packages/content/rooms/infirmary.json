@@ -2,10 +2,31 @@
   "$schema": "../schemas/room.schema.json",
   "id": "infirmary",
   "title": "Infirmary",
-  "shortDescription": "White beds and a cabinet of clean bandages.",
-  "longDescription": "Two neat beds face a bright window.\nA cabinet holds bandages and a jar of honey.",
+  "shortDescription": "Honey-coloured light warms clean beds and folded blankets.",
+  "longDescription": "Sunlight falls through linen curtains onto two neatly made beds. The room smells of soap, rosemary, and warm beeswax; even the cabinet doors seem to close softly.\nHealer Fen folds a bandage with the care another person might give a map. A painted breathing wheel hangs where anyone resting can see it.",
   "zone": "lodgings",
   "unmapped": true,
-  "exits": [{ "direction": "west", "toRoomId": "porter-lodge" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "porter-lodge"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-healer-fen",
+      "name": "Healer Fen",
+      "lookDescription": "An otter with rolled sleeves, gentle paws, and a very orderly bandage basket. Try talk fen.",
+      "examineDescription": "Fen's apron is spotless except for a small embroidered fish. He has the reassuring habit of putting down whatever he is holding when someone speaks. A label on his honey jar says 'For tea, not experiments'.",
+      "dialogue": "\"Rest and ask for help when you need it. Nobody earns extra courage by pretending not to hurt.\" Fen glances at a pot of moonmint. \"Helping Tansy? Those roots need air as well as water. Clear the drainage and use a clean jug; never add mysterious potions to an unhappy plant.\"",
+      "kind": "npc"
+    },
+    {
+      "id": "object-breathing-wheel",
+      "name": "Breathing Wheel",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The wheel shows a leaf opening, resting, and closing. Around its edge: 'Sit if you need to. Breathe at your own pace. Tell someone when you are hurt.' A pencilled addition says: 'Courage includes asking for help.'"
+    }
+  ]
 }

@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "dormitory-willow",
   "title": "Willow Dormitory",
-  "shortDescription": "A quieter dorm under willow shade.",
-  "longDescription": "Willow branches brush the window glass.\nThe beds are made and the floor is swept.",
+  "shortDescription": "Willow shadows lace a quiet room of green quilts.",
+  "longDescription": "Willow branches comb the window glass, drawing moving lines across neatly folded green quilts. A low table holds a repaired lantern, a bowl of smooth river stones, and a stack of letters waiting for imaginary adventures.\nBeside the window, a dream mobile turns in the draught. Its paper stars make almost no sound.",
   "zone": "lodgings",
   "unmapped": true,
-  "exits": [{ "direction": "west", "toRoomId": "dormitory-oak" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "dormitory-oak"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-dream-mobile",
+      "name": "Dream Mobile",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Each folded star carries a small hope: 'Learn one brave thing.' 'Make room at the table.' 'Find out where the moon goes in puddles.' The lowest star has been left blank. You turn it gently and watch the whole constellation find its balance."
+    }
+  ]
 }

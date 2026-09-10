@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "river-landing",
   "title": "River Landing",
-  "shortDescription": "A wooden landing on the slow river.",
-  "longDescription": "A flat boat is tied to a worn post.\nThe river slides past willow roots.",
+  "shortDescription": "Willow roots hold a little landing above the slow brown river.",
+  "longDescription": "River water slips around willow roots with a sound like pages being turned. A flat-bottomed boat rests against the landing, its painter tied in an impressively elaborate knot.\nSilver rings spread where insects touch the surface. A flood marker stands beside the post, its bright bands recording days when the river felt much taller.",
   "zone": "grounds",
   "unmapped": true,
-  "exits": [{ "direction": "north", "toRoomId": "south-orchard" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "south-orchard"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-flood-marker",
+      "name": "Flood Marker",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Blue, green, and copper bands record old high-water marks. A carved instruction says: 'When the river rises, move the books before the furniture.' Beneath it, someone has added: 'And the biscuits before the books?' A firm line has been drawn through that suggestion."
+    }
+  ]
 }

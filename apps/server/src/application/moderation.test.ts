@@ -81,6 +81,26 @@ function student(): PlayIdentity {
 }
 
 describe("classroom moderation", () => {
+  it("protects all staff accounts from typed mute and kick", async () => {
+    for (const role of ["owner", "teacher"] as const) {
+      for (const verb of ["mute", "kick"] as const) {
+        const result = await handleStaffCommand(
+          { verb, characterId: "char-teacher", target: "Lumen", minutes: 5 },
+          {
+            world: world(),
+            actorId: "char-teacher",
+            identity: teacher(),
+            runtime: runtime(),
+            onlineCharacterIds: ["char-teacher", "char-student"],
+            mutedUntil: new Map(),
+            identities: new Map([["char-student", { ...student(), role }]]),
+            now: () => new Date(),
+          },
+        );
+        expect(result).toMatchObject({ ok: false, code: "forbidden" });
+      }
+    }
+  });
   it("explains that audit is the teacher action log, not student say", async () => {
     const empty = await handleStaffCommand(
       { verb: "audit", characterId: "char-teacher" },

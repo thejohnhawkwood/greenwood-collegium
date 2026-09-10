@@ -16,6 +16,7 @@ export const semanticKindSchema = z.enum([
 ]);
 
 export const semanticSegmentSchema = z.object({
+  entityKind: z.enum(["npc", "player"]).optional(),
   kind: semanticKindSchema,
   text: z.string().min(1),
   id: z.string().min(1).optional(),

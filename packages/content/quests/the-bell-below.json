@@ -1,0 +1,37 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-bell-below",
+  "title": "The Bell Below",
+  "giverNpcId": "npc-headmaster-alder",
+  "experienceReward": 15,
+  "introNarration": "Alder sets down his tuning fork. \"A deep bell sounds beneath the school, yet the old abbey bell was taken away long ago. Will you help me separate an observation from a rumour? Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder. Stay on our familiar paths; the answers we need are here.\"",
+  "reminderNarration": "Alder counts the leads on three fingers. \"Clock Tower: north then east from this hall. Archive Cellar: west then north. Quiet Chapel: south, south, west, west. Examine the Empty Bell Frame, Bell Ledger, and Listening Stone, then talk alder here. Type quests for your checklist.\"",
+  "completionNarration": "You describe the empty frame, the keeper's record, and the three pulses in the chapel root. Alder rests the tuning fork against the oak table. For a moment, its thin note gathers a deeper companion. \"The bell is gone, but the living wood remembers its welcome. That explains how a note reaches us. What first wakes it is a question for another day.\" He smiles. \"A mystery becomes kinder when we know which parts are true.\"",
+  "objectives": [
+    {
+      "id": "check-frame",
+      "kind": "examine",
+      "targetId": "object-empty-bell-frame",
+      "label": "Examine the Empty Bell Frame in the Clock Tower (east of North Quad)"
+    },
+    {
+      "id": "read-ledger",
+      "kind": "examine",
+      "targetId": "object-bell-ledger",
+      "label": "Examine the Bell Ledger in the Archive Cellar (north of Library Stacks)"
+    },
+    {
+      "id": "listen",
+      "kind": "examine",
+      "targetId": "object-listening-stone",
+      "label": "Examine the Listening Stone in the Quiet Chapel (west of Herb Garden)"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-headmaster-alder",
+      "requires": ["check-frame", "read-ledger", "listen"],
+      "label": "After all three clues, talk alder in the Great Hall"
+    }
+  ]
+}

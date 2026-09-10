@@ -108,8 +108,26 @@
         "lookDescription": {
           "type": "string",
           "minLength": 1
+        },
+        "dialogue": {
+          "type": "string",
+          "minLength": 1
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["dialogue"]
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "npc"
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

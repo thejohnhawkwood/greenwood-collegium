@@ -32,6 +32,9 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0024](0024-production-readiness.md) | Production deploy readiness |
 | [0025](0025-classroom-load-logs.md) | Classroom load logs and simulation |
 | [0026](0026-per-collegian-starter-items.md) | Per-Collegian Arrival keys |
+| [0027](0027-classroom-moderation.md) | Classroom approval, moderation and semester speech |
+| [0028](0028-semantic-transcript.md) | One evolving semantic transcript; supersedes classic UI retention |
+| [0029](0029-authored-npc-adventures.md) | Authored NPC conversations and personal investigation quests |
 
 ## Template
 

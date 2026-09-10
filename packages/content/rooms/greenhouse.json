@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "greenhouse",
   "title": "Greenhouse",
-  "shortDescription": "Warm glass and trays of seedlings.",
-  "longDescription": "Sunlight fills the glass roof.\nSeedlings stand in damp trays along the bench.",
+  "shortDescription": "Warm glass shelters bright seedlings and one unhappy bed.",
+  "longDescription": "Condensation beads on panes patched in amber and green. Vines climb strings toward the rafters, and something among the tomatoes smells faintly of toasted bread.\nMost seedlings stand straight, but one seedling tray droops in a puddle. A small wooden frog beside it bears the hopeful instruction: 'Please investigate before adding more water.'",
   "zone": "grounds",
   "unmapped": true,
-  "exits": [{ "direction": "south", "toRoomId": "herb-garden" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "herb-garden"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-seedling-tray",
+      "name": "Seedling Tray",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The leaves droop, but the soil is already glossy with water. Lifting the tray's edge reveals a drainage hole plugged with clay. Tansy's labels identify moonmint: a plant that likes damp roots, not a private swimming pool. You note the blocked hole without disturbing the young roots."
+    }
+  ]
 }

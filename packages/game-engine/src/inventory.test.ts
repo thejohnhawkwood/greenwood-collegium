@@ -137,6 +137,7 @@ describe("inventory slice", () => {
     expect(examined.ok).toBe(true);
     if (examined.ok) {
       expect(examined.event.narration).toContain("too-large porter");
+      expect(examined.event.segments?.[0]).toMatchObject({ entityKind: "npc" });
     }
     expect(
       handleExamine(
@@ -156,6 +157,7 @@ describe("inventory slice", () => {
     expect(byName.ok).toBe(true);
     if (byName.ok) {
       expect(byName.event.narration).toContain("earth-brown velveteen");
+      expect(byName.event.segments?.[0]).toMatchObject({ entityKind: "player" });
     }
     const byLogin = handleExamine(
       courtWithKey(),
@@ -205,12 +207,19 @@ describe("inventory slice", () => {
     expect(examined.ok).toBe(true);
     if (examined.ok) {
       expect(examined.event.narration).toContain("The bow is worn smooth.");
+      expect(examined.event.segments?.[0]).toMatchObject({ kind: "item" });
     }
 
     const bag = handleInventory(world, { verb: "inventory", characterId: "char-rowan" }, clock);
     expect(bag.ok).toBe(true);
     if (bag.ok) {
       expect(bag.event.narration).toContain("Small Copper Key");
+      expect(bag.event.segments).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ kind: "item", text: "Small Copper Key" }),
+        ]),
+      );
+      expect(bag.event.segments?.map((segment) => segment.text).join("")).toBe(bag.event.narration);
     }
 
     const dropped = handleDrop(

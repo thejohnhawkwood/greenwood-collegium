@@ -165,18 +165,236 @@ body {
   opacity: 0.75;
 }
 
+.transcript-region {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 12rem;
+}
+
 .transcript {
   flex: 1;
+  min-width: 0;
   overflow: auto;
-  min-height: 12rem;
   border-left: 3px solid var(--lantern);
   padding-left: 1rem;
+  padding-bottom: 2.5rem;
+  overflow-wrap: anywhere;
+}
+
+.transcript-latest {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.35rem;
+  background: var(--well);
+  color: var(--ink);
+  border: 1px solid var(--lantern);
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.transcript:focus-visible,
+.transcript-latest:focus-visible {
+  outline: 2px solid var(--lantern);
+  outline-offset: 2px;
 }
 
 .line {
+  color: var(--text-narration);
   margin: 0 0 0.75rem;
   white-space: pre-wrap;
   font: inherit;
+}
+
+.semantic-narration {
+  color: var(--text-narration);
+}
+.semantic-item {
+  color: var(--text-item);
+}
+.semantic-combat {
+  color: var(--text-combat);
+}
+.semantic-npc {
+  color: var(--text-npc);
+}
+.semantic-player {
+  color: var(--text-player);
+}
+.semantic-quest {
+  color: var(--text-quest);
+}
+.semantic-label {
+  font-size: 0.8em;
+  font-weight: 600;
+}
+.semantic-role {
+  font-size: 0.72em;
+}
+
+.has-admin .academy-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 25rem);
+  gap: 1.25rem;
+  height: calc(100vh - 2.5rem);
+  margin: 1.25rem 1.25rem 1.25rem max(1.25rem, 8vw);
+}
+.has-admin .academy-well {
+  margin: 0;
+  min-height: 0;
+  max-height: none;
+  max-width: none;
+}
+.has-admin .academy-bough-right {
+  display: none;
+}
+.admin-pane {
+  min-height: 0;
+  overflow: auto;
+  padding: 1rem;
+  color: var(--ink);
+  background: var(--well);
+  border: 1px solid var(--brass);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.admin-pane summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+.admin-disclosure > summary {
+  color: var(--lantern);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.admin-pane h3 {
+  color: var(--lantern);
+  margin: 1rem 0 0.5rem;
+}
+.admin-pane h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+.admin-pane label {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.55rem 0;
+}
+.admin-pane input,
+.admin-pane select,
+.admin-pane button {
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.45rem;
+  font: inherit;
+  background: var(--well);
+  color: var(--ink);
+  border: 1px solid var(--lantern);
+}
+.admin-pane input,
+.admin-pane select {
+  width: 100%;
+}
+.admin-pane button {
+  cursor: pointer;
+}
+.admin-pane button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.admin-pane a {
+  color: var(--text-npc);
+}
+.admin-pane :is(button, input, select, summary, a):focus-visible {
+  outline: 2px solid var(--text-player);
+  outline-offset: 2px;
+}
+.admin-pane option {
+  background: var(--well);
+  color: var(--ink);
+}
+.admin-pane .admin-check {
+  display: flex;
+  align-items: center;
+}
+.admin-check input {
+  width: auto;
+}
+.admin-hint {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-narration);
+}
+.admin-tabs,
+.admin-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.admin-tabs button[aria-pressed="true"] {
+  color: var(--text-quest);
+  border-bottom: 3px solid var(--text-quest);
+}
+.admin-account {
+  border-top: 1px solid var(--brass);
+  padding: 0.8rem 0;
+  margin: 0.5rem 0;
+}
+.admin-reference {
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
+}
+.admin-reset {
+  border-top: 1px solid var(--text-combat);
+  margin-top: 1.5rem;
+}
+.admin-reset > summary {
+  color: var(--text-combat);
+}
+.speech-entries {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+.speech-entries li {
+  border-top: 1px solid var(--brass);
+  padding: 0.75rem 0;
+}
+.speech-entries time {
+  font-size: 0.8rem;
+  color: var(--text-narration);
+}
+.speech-entries strong {
+  color: var(--text-player);
+}
+.speech-text,
+.admin-audit {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+}
+
+@media (max-width: 52rem) {
+  .has-admin.academy-shell {
+    height: auto;
+    overflow: auto;
+  }
+  .has-admin .academy-layout {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: 0.75rem;
+  }
+  .has-admin .academy-well {
+    height: 70vh;
+    min-height: 24rem;
+  }
+  .admin-pane {
+    max-height: 65vh;
+  }
 }
 
 .line-command,
@@ -300,6 +518,13 @@ body {
   color: inherit;
   font: inherit;
   padding: 0.35rem 0.7rem;
+}
+
+.auth-form select,
+.auth-form select option {
+  background-color: var(--well);
+  color: var(--ink);
+  color-scheme: dark;
 }
 
 .auth-error {

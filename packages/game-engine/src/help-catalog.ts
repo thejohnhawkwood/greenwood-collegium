@@ -46,6 +46,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       "examine porter looks at Porter Bramble. x porter does the same. Look and examine also describe nearby Collegians. The Practice Dummy is a well-worn straw target in the South Orchard.",
   },
   {
+    topic: "talk",
+    aliases: ["talk"],
+    summary: "Talk to a nearby member of staff and discover quests.",
+    detail:
+      "talk porter (or talk to Porter Bramble) starts a private, written conversation with a nearby NPC. Talk to Librarian Quill, Groundskeeper Tansy, or Headmaster Alder for a quest. Examine the named clues, then return and talk again. Type quests for your checklist. Use say to speak to other Collegians.",
+  },
+  {
     topic: "inventory",
     aliases: ["inventory", "i"],
     summary: "List what you are carrying.",
@@ -75,7 +82,8 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     topic: "quests",
     aliases: ["quest", "quests"],
     summary: "Show your current tasks.",
-    detail: "quests lists Arrival at the Collegium and what is still left to do.",
+    detail:
+      "quests lists your active and completed tasks, with a checklist of discoveries. Talk to staff to find more quests. Return and talk to the quest giver after investigating the named clues.",
   },
 ];
 

@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "music-loft",
   "title": "Music Loft",
-  "shortDescription": "A loft of stands and quiet instruments.",
-  "longDescription": "Music stands wait in a loose circle.\nA covered harp leans against the wall.",
+  "shortDescription": "Strings and sunbeams share a little room above the quad.",
+  "longDescription": "Music stands gather in a loose circle beneath the sloping roof. A covered harp makes a tent of blue velvet, while a kettle-shaped drum waits with the patient air of someone used to being misunderstood.\nA folded page props up the foot of one wobbly stand. On its exposed corner, a tiny painted bird seems to be singing directly at the floor.",
   "zone": "studies",
   "unmapped": true,
-  "exits": [{ "direction": "east", "toRoomId": "north-quad" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "east",
+      "toRoomId": "north-quad"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-folded-page",
+      "name": "Folded Page",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "You ease the page into view without upsetting the stand. It is the missing lantern-wren entry: a bird whose throat glows softly while it sings. On the back, someone has written, 'Borrowed to copy the tune. Then the stand wobbled. I meant to return it.' You memorise the location and the apology for Quill; the fragile sheet stays safe beneath its clip."
+    }
+  ]
 }

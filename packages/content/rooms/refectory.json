@@ -2,13 +2,27 @@
   "$schema": "../schemas/room.schema.json",
   "id": "refectory",
   "title": "Refectory",
-  "shortDescription": "Long tables set for school meals.",
-  "longDescription": "Plates are stacked at the end of each table.\nThe smell of bread comes from the north door.",
+  "shortDescription": "Fresh bread perfumes a bright room built for making room.",
+  "longDescription": "Long tables shine with beeswax under strings of paper leaves. Plates are stacked at one end, and the smell of fresh bread keeps drawing everyone's attention toward the kitchen door.\nAt the nearest table, a place card marks an empty seat. The bench has been repaired with a plank of lighter wood, proof that being worn out is not always the end of usefulness.",
   "zone": "lodgings",
   "unmapped": true,
   "exits": [
-    { "direction": "south", "toRoomId": "lecture-theatre" },
-    { "direction": "north", "toRoomId": "kitchens" }
+    {
+      "direction": "south",
+      "toRoomId": "lecture-theatre"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "kitchens"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "object-place-card",
+      "name": "Place Card",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The card reads: 'This seat is for whoever needs one.' On the back, in several different hands: 'Pass the bread.' 'Learn a new name.' 'Let quiet people be quiet.' Someone has drawn a smiling turnip in the remaining space."
+    }
+  ]
 }

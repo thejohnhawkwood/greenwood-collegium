@@ -113,6 +113,21 @@ export class PostgresAccountRepository implements AccountRepository {
       throw new AccountNotFoundError(id);
     }
   }
+
+  async rename(id: string, username: string): Promise<AccountRecord> {
+    try {
+      const [row] = await this.db
+        .update(accounts)
+        .set({ username: normalizeUsername(username), updatedAt: new Date() })
+        .where(eq(accounts.id, id))
+        .returning();
+      if (!row) throw new AccountNotFoundError(id);
+      return toAccount(row);
+    } catch (error) {
+      if (isUniqueViolation(error)) throw new DuplicateUsernameError(username);
+      throw error;
+    }
+  }
 }
 
 export class PostgresCharacterRepository implements CharacterRepository {

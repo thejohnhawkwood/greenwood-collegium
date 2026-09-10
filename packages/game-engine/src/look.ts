@@ -125,6 +125,7 @@ function snapshotSegments(payload: RoomSnapshotPayload): SemanticSegment[] {
       segments.push({ kind: "text", text: "\n  " });
       segments.push({
         kind: entity.kind === "object" ? "item" : "actor",
+        entityKind: entity.kind === "object" ? undefined : entity.kind,
         id: entity.id,
         text: entity.name,
       });

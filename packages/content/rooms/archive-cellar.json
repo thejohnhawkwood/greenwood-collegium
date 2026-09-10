@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "archive-cellar",
   "title": "Archive Cellar",
-  "shortDescription": "A cool cellar of labelled boxes.",
-  "longDescription": "Stone steps lead to labelled boxes.\nThe air smells of paper and dry earth.",
+  "shortDescription": "Cool roots cradle the school's paper memory.",
+  "longDescription": "Steps descend between roots thick as sleeping dragons. Labelled boxes sit above the damp on little wooden feet, and lavender sachets keep the moths diplomatically employed elsewhere.\nA brass reading lamp lights a bell ledger on a sloping stand. Beneath the shelves, the roots carry a faint vibration that you feel through your soles before you hear it.",
   "zone": "studies",
   "unmapped": true,
-  "exits": [{ "direction": "south", "toRoomId": "library-stacks" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "library-stacks"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-bell-ledger",
+      "name": "Bell Ledger",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The ledger records that the old abbey bell was removed long ago. A later keeper added: 'Its cradle was cut from the same living oak as the Collegium's foundation. On still evenings the roots answer a note, though no bell hangs here.' Three small circles mark the margin."
+    }
+  ]
 }

@@ -8,4 +8,10 @@
   --brass: #8a5a22;
   --bark: #2a1c0c;
   --font: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+  --text-narration: #d5d9d7;
+  --text-item: #8ddb95;
+  --text-combat: #ff9292;
+  --text-npc: #95caff;
+  --text-player: #9fe4ed;
+  --text-quest: #f0cf80;
 }

@@ -2,14 +2,39 @@
   "$schema": "../schemas/room.schema.json",
   "id": "herb-garden",
   "title": "Herb Garden",
-  "shortDescription": "Raised beds of mint and thyme.",
-  "longDescription": "Raised beds hold mint, thyme, and sage.\nA slate label names each plant in careful letters.",
+  "shortDescription": "Fragrant paths wind between neatly labelled beds.",
+  "longDescription": "Mint, thyme, and sage crowd raised beds edged with old roof tiles. A bumblebee bumps into a lavender head, considers the matter, and tries again with more dignity.\nGroundskeeper Tansy kneels beside a row of slate labels, her apron full of twine. The greenhouse glints to the north, while rosemary leads the path west toward the Quiet Chapel.",
   "zone": "grounds",
   "unmapped": true,
   "exits": [
-    { "direction": "east", "toRoomId": "south-orchard" },
-    { "direction": "north", "toRoomId": "greenhouse" },
-    { "direction": "west", "toRoomId": "quiet-chapel" }
+    {
+      "direction": "east",
+      "toRoomId": "south-orchard"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "greenhouse"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "quiet-chapel"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "npc-groundskeeper-tansy",
+      "name": "Groundskeeper Tansy",
+      "lookDescription": "A badger in muddy boots, sorting seed packets by smell. Try talk tansy.",
+      "examineDescription": "Tansy's apron holds twine, a trowel, and a sandwich wrapped so carefully it might be a rare seed. Soil darkens the creases of her paws. She notices which plants you step around before she notices your shoes.",
+      "dialogue": "\"The trick with living things is to look before you fix.\" Tansy brushes soil from a slate label. \"Especially if your first idea is more water. My first idea used to be more water. We lost a cactus that way.\"",
+      "kind": "npc"
+    },
+    {
+      "id": "object-slate-labels",
+      "name": "Slate Labels",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Tansy's careful lettering names each plant and what it needs. Moonmint: damp soil, free drainage, patient attention. Rosemary: sun and restraint. Mint: a pot of its own, unless you wish to have a garden consisting entirely of mint."
+    }
+  ]
 }

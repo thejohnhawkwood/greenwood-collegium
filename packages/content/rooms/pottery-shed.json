@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "pottery-shed",
   "title": "Pottery Shed",
-  "shortDescription": "A shed of wheels and drying cups.",
-  "longDescription": "Clay-spattered wheels face the orchard light.\nCups dry on a rack above the sink.",
+  "shortDescription": "Clay freckles the wheels, the benches, and almost everything else.",
+  "longDescription": "Pottery wheels face the orchard light, surrounded by clay footprints and ambitious unfinished bowls. Cups dry on a rack above the sink, each one a slightly different answer to the question of what a cup should be.\nA watering jug rests beside a lump of grey clay. The jug wears a painted rain cloud; its spout wears something much less useful.",
   "zone": "grounds",
   "unmapped": true,
-  "exits": [{ "direction": "west", "toRoomId": "south-orchard" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "south-orchard"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-watering-jug",
+      "name": "Watering Jug",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "A collar of drying clay blocks most of the spout, and crumbs have fallen into the water inside. A workshop note reads: 'This jug is for rinsing clay tools. Please do not borrow it for the greenhouse.' Grey flecks match those caught in the seedling tray's drainage hole."
+    }
+  ]
 }

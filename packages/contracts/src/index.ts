@@ -1,4 +1,5 @@
 export { schemaVersion, schemaVersionSchema } from "./schema-version.js";
+export * from "./auth/moderation.js";
 export {
   eventAudienceSchema,
   eventTypeSchema,

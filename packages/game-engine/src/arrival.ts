@@ -22,11 +22,12 @@ import { systemNotice } from "./system-notice.js";
 
 export const ARRIVAL_QUEST_ID = "arrival-at-the-collegium";
 
-export type QuestTriggerKind = "look" | "say" | "take" | "move";
+export type QuestTriggerKind = "look" | "say" | "take" | "move" | "examine" | "talk";
 
 export type QuestTrigger = {
   characterId: string;
   kind: QuestTriggerKind;
+  targetId?: string;
 };
 
 export type QuestProgressRecord = {
@@ -70,7 +71,16 @@ export function startArrivalQuest(
   characterId: string,
   runtime: EngineRuntime,
 ): EventEnvelope[] {
-  const template = world.questTemplates?.[ARRIVAL_QUEST_ID];
+  return startQuest(world, characterId, ARRIVAL_QUEST_ID, runtime);
+}
+
+export function startQuest(
+  world: WorldState,
+  characterId: string,
+  questId: string,
+  runtime: EngineRuntime,
+): EventEnvelope[] {
+  const template = world.questTemplates?.[questId];
   if (!template) {
     return [];
   }
@@ -116,7 +126,8 @@ export function progressQuests(
     const newlyCompleted = template.objectives.filter(
       (objective) =>
         !progress.completedObjectiveIds.includes(objective.id) &&
-        objectiveMatches(world, character, objective, trigger.kind),
+        (objective.requires ?? []).every((id) => progress.completedObjectiveIds.includes(id)) &&
+        objectiveMatches(world, character, objective, trigger),
     );
     if (newlyCompleted.length === 0) {
       continue;
@@ -159,8 +170,17 @@ function objectiveMatches(
   world: WorldState,
   character: Character,
   objective: QuestObjective,
-  kind: QuestTriggerKind,
+  trigger: QuestTrigger,
 ): boolean {
+  const { kind } = trigger;
+  if (objective.roomId && character.roomId !== objective.roomId) return false;
+  if (objective.kind === "examine" || objective.kind === "talk") {
+    return (
+      kind === objective.kind &&
+      Boolean(objective.targetId) &&
+      trigger.targetId === objective.targetId
+    );
+  }
   if (objective.kind === "look") {
     return kind === "look";
   }
@@ -208,7 +228,12 @@ function questUpdatedEvent(
     type: "quest.updated",
     occurredAt: runtime.now().toISOString(),
     audience: "character",
-    narration: formatQuestUpdatedText(payload),
+    narration: [
+      formatQuestUpdatedText(payload),
+      ...(progress?.status === "completed" && template.completionNarration
+        ? [template.completionNarration]
+        : []),
+    ].join("\n\n"),
     payload,
   });
 }

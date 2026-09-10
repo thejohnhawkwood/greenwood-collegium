@@ -72,6 +72,8 @@ export function createDevWorld(): WorldState {
           title: quest.title,
           introNarration: quest.introNarration,
           reminderNarration: quest.reminderNarration,
+          giverNpcId: quest.giverNpcId,
+          completionNarration: quest.completionNarration,
           experienceReward: quest.experienceReward,
           objectives: quest.objectives.map((objective) => ({ ...objective })),
         },

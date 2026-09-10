@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "quiet-chapel",
   "title": "Quiet Chapel",
-  "shortDescription": "A small chapel with unstained benches.",
-  "longDescription": "Plain benches face a narrow window.\nSomeone left a sprig of rosemary on the sill.",
+  "shortDescription": "Rosemary and coloured light fill a small place for stillness.",
+  "longDescription": "Plain benches face a narrow window of green and honey-coloured glass. A sprig of rosemary rests on the sill, and the hush feels offered rather than demanded.\nNear the floor, a smooth listening stone touches an exposed oak root. Three worn circles mark its surface. Here the low note beneath the school is almost clear enough to hum.",
   "zone": "grounds",
   "unmapped": true,
-  "exits": [{ "direction": "east", "toRoomId": "herb-garden" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "east",
+      "toRoomId": "herb-garden"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-listening-stone",
+      "name": "Listening Stone",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "You rest your palm on the cool stone and wait. Three low pulses travel through the oak root: one, a pause, then two together. The window gives no answering rattle. A carving says: 'The bell is gone. The welcome remains.' You have heard an echo in living wood, not footsteps or a creature below."
+    }
+  ]
 }

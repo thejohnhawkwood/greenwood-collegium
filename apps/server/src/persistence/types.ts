@@ -91,6 +91,7 @@ export type CreateInviteInput = {
 };
 
 export interface AccountRepository {
+  rename(id: string, username: string): Promise<AccountRecord>;
   create(input: CreateAccountInput): Promise<AccountRecord>;
   getById(id: string): Promise<AccountRecord | undefined>;
   getByUsername(username: string): Promise<AccountRecord | undefined>;
@@ -160,7 +161,22 @@ export interface QuestProgressRepository {
   upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void>;
 }
 
-export type AuditAction = "announce" | "inspect" | "mute" | "kick" | "remove";
+export type AuditAction =
+  | "announce"
+  | "inspect"
+  | "mute"
+  | "kick"
+  | "remove"
+  | "approve"
+  | "reject"
+  | "timeout"
+  | "unmute"
+  | "end-timeout"
+  | "disable"
+  | "restore"
+  | "remove-character"
+  | "chat-pause"
+  | "reset-students";
 
 export type AuditRecord = {
   id: string;

@@ -2,7 +2,8 @@
 
 ## Status
 
-Accepted
+Accepted; process-local mute and roster placement superseded by
+[ADR-0027](0027-classroom-moderation.md), September 10, 2026.
 
 ## Context
 

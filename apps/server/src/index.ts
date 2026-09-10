@@ -26,6 +26,13 @@ import {
   PostgresSessionRepository,
 } from "./persistence/postgres.js";
 import { attachRealtime } from "./sockets/gateway.js";
+import {
+  PostgresClassroomResetRepository,
+  PostgresModerationRepository,
+} from "./persistence/moderation-postgres.js";
+import { createClassroomService } from "./application/classroom.js";
+import { createOperationQueue } from "./application/operation-queue.js";
+import { registerClassroomRoutes } from "./http/classroom.js";
 
 const port = Number.parseInt(process.env.PORT ?? "3000", 10);
 const host = process.env.HOST ?? "0.0.0.0";
@@ -67,6 +74,8 @@ const stores = persistence
         invites: new PostgresInviteRepository(persistence.db),
         quests: new PostgresQuestRepository(persistence.db),
         audit: new PostgresAuditRepository(persistence.db),
+        moderation: new PostgresModerationRepository(persistence.db),
+        reset: new PostgresClassroomResetRepository(persistence.db),
       };
     })()
   : createMemoryStores();
@@ -76,6 +85,8 @@ const auth = createAuthService({
   hasher: argon2Hasher,
   bootstrapToken: process.env.ADMIN_BOOTSTRAP_TOKEN,
 });
+const runExclusive = createOperationQueue();
+const classroom = createClassroomService({ ...stores, auth });
 
 let world;
 try {
@@ -111,13 +122,34 @@ if (!process.env.ADMIN_BOOTSTRAP_TOKEN?.trim()) {
 }
 
 await registerAuthRoutes(app, {
+  runExclusive,
+  chatPaused: () => stores.moderation.chatPaused(),
+  onDisabled: async (nameOrId) => {
+    const account =
+      (await stores.accounts.getById(nameOrId)) ?? (await stores.accounts.getByUsername(nameOrId));
+    if (account) classroom.notifyDisabled(account.id);
+  },
   auth,
   allowGuestPlay,
   secureCookies: production,
   persistence: persistence ? "postgres" : "memory",
 });
+await registerClassroomRoutes(app, { auth, classroom, runExclusive });
+await classroom.prune();
+const retentionTimer = setInterval(
+  () => {
+    void classroom
+      .prune()
+      .catch(() =>
+        app.log.error({ event: "speech_retention_failed" }, "speech retention cleanup failed"),
+      );
+  },
+  60 * 60 * 1000,
+);
+retentionTimer.unref();
 
 app.addHook("onClose", async () => {
+  clearInterval(retentionTimer);
   if (persistence) {
     await closePersistence(persistence);
   }
@@ -129,6 +161,8 @@ if (persistItem) {
 }
 
 await attachRealtime(app, world, {
+  classroom,
+  runExclusive,
   allowGuestPlay,
   resolveSession: (token) => auth.resolvePlayIdentity(token),
   resolveSocketTicket: (ticket) => auth.resolveSocketTicket(ticket),
@@ -143,6 +177,10 @@ await attachRealtime(app, world, {
   },
   disableAccount: async (actorAccountId, username) => {
     const result = await auth.disableAccountByUsername(actorAccountId, username);
+    if (result.ok) {
+      const account = await stores.accounts.getByUsername(username);
+      if (account) classroom.notifyDisabled(account.id);
+    }
     return result.ok ? { ok: true } : { ok: false, message: result.message };
   },
 });

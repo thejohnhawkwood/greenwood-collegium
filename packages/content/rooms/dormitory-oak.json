@@ -2,13 +2,27 @@
   "$schema": "../schemas/room.schema.json",
   "id": "dormitory-oak",
   "title": "Oak Dormitory",
-  "shortDescription": "A long room of oak bunks.",
-  "longDescription": "Oak bunks stand in two quiet rows.\nEach trunk has a name painted on the lid.",
+  "shortDescription": "Patchwork quilts and oak beams promise a sturdy night's sleep.",
+  "longDescription": "Broad bunks fit around an oak trunk that continues politely through the ceiling. Patchwork quilts turn each bed into a little country of its own, and paper acorns label the empty trunks.\nA sock puppet presides over the common shelf. Rain taps the windows with the confidence of a visitor who knows there will be tea.",
   "zone": "lodgings",
   "unmapped": true,
   "exits": [
-    { "direction": "north", "toRoomId": "east-gate" },
-    { "direction": "east", "toRoomId": "dormitory-willow" }
+    {
+      "direction": "north",
+      "toRoomId": "east-gate"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "dormitory-willow"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "object-sock-puppet",
+      "name": "Sock Puppet",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "A knitted dragon wears a bottle-cap crown. Its stitched notice reads: 'Dormitory Keeper of Lost Things. Please return what you borrow. Especially my other sock.' A smaller note welcomes new Collegians to add a story, once they have one."
+    }
+  ]
 }

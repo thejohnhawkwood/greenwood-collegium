@@ -1,0 +1,37 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "a-little-room-to-grow",
+  "title": "A Little Room to Grow",
+  "giverNpcId": "npc-groundskeeper-tansy",
+  "experienceReward": 10,
+  "introNarration": "Tansy shows you a sketch of drooping moonmint. \"My greenhouse bed is unhappy. Before we change anything, examine the Seedling Tray in the Greenhouse north of here, and the Watering Jug in the Pottery Shed east of the South Orchard. Then talk fen in the Infirmary for advice. Come back and talk tansy when you have all three observations.\"",
+  "reminderNarration": "\"Look for the cause, not just the droop,\" Tansy says. \"Examine the Seedling Tray and the Watering Jug, and talk fen in the Infirmary. From Lantern Court, reach Fen by going east, north, east. Return here and talk tansy. Your quests list keeps the notes.\"",
+  "completionNarration": "You describe the soaked soil, blocked drainage, and clay-rinsing jug, then pass along Fen's advice. Tansy lays out a clean jug and a slender tool for clearing the tray. \"A little room for air. That was what the roots needed.\" She writes your findings on the garden checklist. \"You have the beginnings of a gardener: you noticed before you meddled.\"",
+  "objectives": [
+    {
+      "id": "inspect-tray",
+      "kind": "examine",
+      "targetId": "object-seedling-tray",
+      "label": "Examine the Seedling Tray in the Greenhouse (north of Herb Garden)"
+    },
+    {
+      "id": "inspect-jug",
+      "kind": "examine",
+      "targetId": "object-watering-jug",
+      "label": "Examine the Watering Jug in the Pottery Shed (east of South Orchard)"
+    },
+    {
+      "id": "ask-fen",
+      "kind": "talk",
+      "targetId": "npc-healer-fen",
+      "label": "Talk fen in the Infirmary (from Lantern Court: east, north, east)"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-groundskeeper-tansy",
+      "requires": ["inspect-tray", "inspect-jug", "ask-fen"],
+      "label": "After gathering all three observations, talk tansy in Herb Garden"
+    }
+  ]
+}

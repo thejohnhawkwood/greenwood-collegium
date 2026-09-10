@@ -30,12 +30,19 @@ export const roomFixtureSchema = z
     id: stableIdSchema,
     name: z.string().min(1),
     kind: z.enum(["npc", "object"]),
+    dialogue: z.string().min(1).optional(),
     examineDescription: z.string().min(1).optional(),
     lookDescription: z.string().min(1).optional(),
   })
   .strict()
   .superRefine((fixture, ctx) => {
     rejectMarkup(fixture.name, "fixture name", ctx);
+    if (fixture.dialogue) {
+      rejectMarkup(fixture.dialogue, "dialogue", ctx);
+      if (fixture.kind !== "npc") {
+        ctx.addIssue({ code: "custom", message: "only NPC fixtures can have dialogue" });
+      }
+    }
     if (fixture.examineDescription) {
       rejectMarkup(fixture.examineDescription, "examineDescription", ctx);
     }

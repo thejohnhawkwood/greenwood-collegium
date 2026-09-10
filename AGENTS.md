@@ -13,7 +13,7 @@ Read `docs/PRD.md` and any relevant ADRs before editing.
 5. The game engine has no Web, database, or framework dependency.
 6. All external input is validated.
 7. All significant game events include plain text.
-8. Classic interface compatibility may not be removed.
+8. Preserve complete plain-text narration and typed commands. A separate classic UI is not required (owner decision, September 10, 2026; ADR-0028).
 9. No new dependency without rationale.
 10. No schema change without a migration.
 11. No secret or production data may be read, logged, or committed.

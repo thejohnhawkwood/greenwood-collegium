@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted
+Superseded in part by [ADR-0028](0028-semantic-transcript.md), September 10, 2026.
+The original decision below is historical. The owner removed the separate classic
+UI requirement; typed commands, plain narration, and accessibility remain required.
 
 ## Context
 

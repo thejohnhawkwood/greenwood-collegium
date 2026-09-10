@@ -22,6 +22,9 @@ import {
   type SessionRepository,
 } from "../persistence/types.js";
 import type { PasswordHasher } from "./hasher.js";
+import type { NameReview } from "@greenwood/contracts";
+import type { ModerationRepository, ModerationState } from "../persistence/moderation-types.js";
+import { nameReview } from "../application/name-review.js";
 import { hashToken, randomToken, tokensEqual } from "./tokens.js";
 
 export const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
@@ -64,6 +67,8 @@ export type SignedIn = {
 };
 
 export type ClassroomInvite = {
+  accountId?: string;
+  characterId?: string;
   id: string;
   role: InviteRole;
   status: "unused" | "used" | "expired";
@@ -75,6 +80,11 @@ export type ClassroomInvite = {
 };
 
 export type ClassroomAccount = {
+  characterId?: string;
+  inviteReference?: string;
+  nameReview?: NameReview;
+  mutedUntil?: string;
+  timeoutUntil?: string;
   accountId: string;
   username: string;
   role: Exclude<AccountRecord["role"], "owner">;
@@ -97,6 +107,9 @@ export type PlayIdentity = {
 };
 
 export type AuthService = {
+  reviewStatus(accountId: string): Promise<NameReview>;
+  moderationState(accountId: string): Promise<ModerationState>;
+  recheckPlayIdentity(accountId: string): Promise<PlayIdentity | undefined>;
   bootstrapOpen(): Promise<boolean>;
   bootstrap(input: {
     token: string;
@@ -145,11 +158,17 @@ export type AuthService = {
   suggestCharacterName(): Promise<string | undefined>;
   completeCharacter(
     accountId: string,
-    input: { name: string; speciesId: string; gender: NonNullable<CharacterRecord["gender"]> },
+    input: {
+      username?: string;
+      name: string;
+      speciesId: string;
+      gender: NonNullable<CharacterRecord["gender"]>;
+    },
   ): Promise<{ ok: true; character: CharacterRecord } | AuthFailure>;
 };
 
 export type AuthServiceDeps = {
+  moderation: ModerationRepository;
   accounts: AccountRepository;
   characters: CharacterRepository;
   sessions: SessionRepository;
@@ -320,10 +339,17 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       left.username.localeCompare(right.username),
     );
     const names = new Map<string, string>();
+    const characterIds = new Map<string, string>();
+    const states = new Map<string, ModerationState>();
+    const reviews = new Map<string, NameReview>();
     const usernames = new Map<string, string>();
     for (const account of listed) {
       usernames.set(account.id, account.username);
       const [character] = await deps.characters.listByAccountId(account.id);
+      const state = await deps.moderation.get(account.id);
+      states.set(account.id, state);
+      reviews.set(account.id, nameReview(account, character, state));
+      if (character) characterIds.set(account.id, character.id);
       if (character && isCharacterComplete(character)) {
         names.set(account.id, formatCharacterName(character.name, character.speciesId));
       }
@@ -335,6 +361,10 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         const status = invite.consumedAt ? "used" : expired ? "expired" : "unused";
         return {
           id: invite.id,
+          accountId: invite.consumedByAccountId,
+          characterId: invite.consumedByAccountId
+            ? characterIds.get(invite.consumedByAccountId)
+            : undefined,
           role: invite.role,
           status,
           createdAt: invite.createdAt,
@@ -351,6 +381,11 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       accounts: listed.map((account) => ({
         accountId: account.id,
         username: account.username,
+        characterId: characterIds.get(account.id),
+        inviteReference: invites.find((invite) => invite.consumedByAccountId === account.id)?.id,
+        nameReview: reviews.get(account.id),
+        mutedUntil: states.get(account.id)?.mutedUntil,
+        timeoutUntil: states.get(account.id)?.timeoutUntil,
         role: account.role === "teacher" ? ("teacher" as const) : ("student" as const),
         status: account.status,
         createdAt: account.createdAt,
@@ -415,7 +450,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!resolved?.character || !isCharacterComplete(resolved.character)) {
       return undefined;
     }
-    return playIdentity(resolved.account, resolved.character);
+    return playIdentityForAccount(resolved.account.id);
   }
 
   async function playIdentityForAccount(accountId: string): Promise<PlayIdentity | undefined> {
@@ -427,6 +462,12 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (!character || !isCharacterComplete(character)) {
       return undefined;
     }
+    const state = await deps.moderation.get(accountId);
+    if (
+      nameReview(account, character, state).status !== "approved" ||
+      (state.timeoutUntil && Date.parse(state.timeoutUntil) > now().getTime())
+    )
+      return undefined;
     return playIdentity(account, character);
   }
 
@@ -458,7 +499,12 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
 
   async function completeCharacter(
     accountId: string,
-    input: { name: string; speciesId: string; gender: NonNullable<CharacterRecord["gender"]> },
+    input: {
+      username?: string;
+      name: string;
+      speciesId: string;
+      gender: NonNullable<CharacterRecord["gender"]>;
+    },
   ): Promise<{ ok: true; character: CharacterRecord } | AuthFailure> {
     const account = await deps.accounts.getById(accountId);
     if (!account || account.status !== "active") {
@@ -476,7 +522,12 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       return nameCheck;
     }
     const existing = await findCharacter(account.id);
-    if (existing && isCharacterComplete(existing)) {
+    if (
+      existing &&
+      isCharacterComplete(existing) &&
+      (account.role !== "student" ||
+        nameReview(account, existing, await deps.moderation.get(accountId)).status === "approved")
+    ) {
       return fail("character_exists", "This account already has a Collegian.");
     }
     const taken = await deps.characters.getByNormalizedName(givenName);
@@ -484,12 +535,23 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       return fail("duplicate_character_name", "That name is already taken.");
     }
     try {
+      if (input.username !== undefined) {
+        if (!USERNAME_PATTERN.test(normalizeUsername(input.username)))
+          return fail(
+            "invalid_username",
+            "Use 3–32 letters, numbers, underscores, or hyphens for the login.",
+          );
+        await deps.accounts.rename(account.id, input.username);
+      }
+      const submittedAt = new Date(
+        Math.max(now().getTime(), (existing?.creationCompletedAt?.getTime() ?? 0) + 1),
+      );
       if (existing) {
         const character = await deps.characters.updateCreation(existing.id, {
           name: givenName,
           speciesId: input.speciesId,
           gender: input.gender,
-          creationCompletedAt: now(),
+          creationCompletedAt: submittedAt,
         });
         return { ok: true, character };
       }
@@ -499,10 +561,12 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         speciesId: input.speciesId,
         gender: input.gender,
         roomId: startRoomId,
-        creationCompletedAt: now(),
+        creationCompletedAt: submittedAt,
       });
       return { ok: true, character };
     } catch (error) {
+      if (error instanceof DuplicateUsernameError)
+        return fail("duplicate_username", "That login is already taken.");
       if (error instanceof DuplicateCharacterNameError) {
         return fail("duplicate_character_name", "That name is already taken.");
       }
@@ -585,6 +649,14 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
   }
 
   return {
+    moderationState: (accountId) => deps.moderation.get(accountId),
+    recheckPlayIdentity: playIdentityForAccount,
+    reviewStatus: async (accountId) => {
+      const account = await deps.accounts.getById(accountId);
+      return account
+        ? nameReview(account, await findCharacter(accountId), await deps.moderation.get(accountId))
+        : { status: "unsubmitted" };
+    },
     bootstrapOpen,
     bootstrap,
     signIn,

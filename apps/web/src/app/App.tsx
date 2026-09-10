@@ -1,24 +1,27 @@
 import {
-  STUDENT_INVITE_BATCH_MAX,
-  authInviteCreatedSchema,
-  authSessionPublicSchema,
+  moderationNoticeSchema,
   commandAckSchema,
   eventEnvelopeSchema,
   renderClassicNarration,
-  schemaVersion,
   SESSION_HELLO_EVENT,
   sessionHelloSchema,
-  type AuthClassroom,
   type AuthSessionPublic,
 } from "@greenwood/contracts";
-import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 import { io, type Socket } from "socket.io-client";
 import { AcademyFrame } from "./academy-frame.js";
 import { AuthGate } from "./AuthGate.js";
 import { CharacterGate } from "./CharacterGate.js";
 import { shouldShowCharacterGate } from "./character-gate.js";
-import { loadClassroom } from "./classroom-data.js";
-import { ClassroomRoster } from "./classroom-roster.js";
+
 import {
   DISCONNECTED_COMMAND_NOTICE,
   SOCKET_TRANSPORTS,
@@ -26,11 +29,12 @@ import {
   canSendCommand,
 } from "./command-input.js";
 import { loadSocketTicket } from "./socket-ticket.js";
-import { loadAuthStatus, shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
+import { shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
+import { loadAuthSession } from "./auth-session.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 import { createCommandRequest } from "./command-request.js";
-import { parseInviteCount } from "./invite-count.js";
+
 import {
   applyProcessHello,
   readStoredBootId,
@@ -43,22 +47,68 @@ import {
 import { pendingAfterAck, type PendingCommand } from "./pending-command.js";
 import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
+import { GameTranscript } from "./GameTranscript.js";
+import { AdminPane } from "./AdminPane.js";
+import { ApprovalGate } from "./ApprovalGate.js";
 
 export function App() {
   const [status, setStatus] = useState<AuthStatus | undefined>();
   const [me, setMe] = useState<AuthSessionPublic | undefined>();
   const [forceGate, setForceGate] = useState(false);
+  const [authError, setAuthError] = useState("");
+  const refresh = useCallback(async () => {
+    try {
+      const next = await loadAuthSession();
+      setStatus(next.status);
+      setMe(next.me);
+      setAuthError("");
+    } catch {
+      setAuthError("The session check could not connect. Check your connection and try again.");
+    }
+  }, []);
   const showGate = status !== undefined && shouldShowAuthGate(status, forceGate);
+  const waiting =
+    me !== undefined && (me.nameReview?.status === "pending" || Boolean(me.timeoutUntil));
+  const sidebar =
+    me && (me.role === "owner" || me.role === "teacher") ? <AdminPane me={me} /> : undefined;
+  const authNotice = authError ? (
+    <div>
+      <p role="alert">{authError}</p>
+      <button type="button" onClick={() => void refresh()}>
+        Retry session check
+      </button>
+    </div>
+  ) : null;
 
   useEffect(() => {
-    void refreshAuth(setStatus, setMe);
-  }, []);
+    const initial = setTimeout(() => void refresh(), 0);
+    return () => clearTimeout(initial);
+  }, [refresh]);
+  useEffect(() => {
+    if (!waiting) return;
+    const timer = setInterval(() => void refresh(), 3_000);
+    return () => clearInterval(timer);
+  }, [waiting, refresh]);
 
   if (status === undefined) {
     return (
       <AcademyFrame>
+        <main className="client">{authNotice ?? <p>Loading the Collegium.</p>}</main>
+      </AcademyFrame>
+    );
+  }
+
+  if (me && waiting) {
+    return (
+      <AcademyFrame sidebar={sidebar}>
         <main className="client">
-          <p>Loading the Collegium.</p>
+          <h1>{APP_TITLE}</h1>
+          {authNotice}
+          <ApprovalGate
+            me={me}
+            onRefresh={() => void refresh()}
+            onSignOut={() => void signOut(() => void refresh())}
+          />
         </main>
       </AcademyFrame>
     );
@@ -66,19 +116,22 @@ export function App() {
 
   if (me && shouldShowCharacterGate(me)) {
     return (
-      <AcademyFrame>
+      <AcademyFrame sidebar={sidebar}>
         <main className="client">
           <header className="chrome">
             <h1>{APP_TITLE}</h1>
             <p className="meta">Signed in as {me.username}.</p>
+            {authNotice}
           </header>
           <CharacterGate
+            needsApproval={me.role === "student"}
+            reviewReason={me.nameReview?.reason}
             username={me.username}
             onReady={() => {
-              void refreshAuth(setStatus, setMe);
+              void refresh();
             }}
             onSignedOut={() => {
-              void refreshAuth(setStatus, setMe);
+              void refresh();
             }}
           />
         </main>
@@ -98,48 +151,55 @@ export function App() {
             allowGuestPlay={status.allowGuestPlay}
             onSignedIn={() => {
               setForceGate(false);
-              void refreshAuth(setStatus, setMe);
+              void refresh();
             }}
             onContinueAsGuest={status.allowGuestPlay ? () => setForceGate(false) : undefined}
           />
+          {authNotice}
         </main>
       </AcademyFrame>
     );
   }
 
   return (
-    <AcademyFrame>
-      <ClassicClient
+    <AcademyFrame sidebar={sidebar}>
+      <PlayClient
         key={me?.accountId ?? "guest"}
         status={status}
         me={me}
+        authNotice={authNotice}
         onShowGate={() => setForceGate(true)}
         onSignedOut={() => {
-          void refreshAuth(setStatus, setMe);
+          void refresh();
         }}
       />
     </AcademyFrame>
   );
 }
 
-function ClassicClient({
+function PlayClient({
   status,
   me,
   onShowGate,
   onSignedOut,
+  authNotice,
 }: {
   status: AuthStatus;
   me: AuthSessionPublic | undefined;
   onShowGate: () => void;
   onSignedOut: () => void;
+  authNotice: ReactNode;
 }) {
   const socketRef = useRef<Socket | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const logRef = useRef<HTMLDivElement | null>(null);
   const lastSequenceRef = useRef(
     me?.characterId ? readStoredSequence(sessionStorage, me.characterId) : 0,
   );
   const pendingRef = useRef<PendingCommand | undefined>(undefined);
+  const sessionChanged = useRef(onSignedOut);
+  useEffect(() => {
+    sessionChanged.current = onSignedOut;
+  }, [onSignedOut]);
   const [connection, setConnection] = useState("disconnected");
   const [lines, setLines] = useState<TranscriptLine[]>([
     {
@@ -152,9 +212,6 @@ function ClassicClient({
   const [history, setHistory] = useState<string[]>([]);
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState("");
-  const [classroom, setClassroom] = useState<AuthClassroom | undefined>();
-  const inviteCountRef = useRef<HTMLInputElement | null>(null);
-  const canInvite = me?.role === "owner" || me?.role === "teacher";
 
   useEffect(() => {
     const socket = io({
@@ -170,6 +227,18 @@ function ClassicClient({
       },
     });
     socketRef.current = socket;
+    socket.on("moderation-changed", (payload: unknown) => {
+      const parsed = moderationNoticeSchema.safeParse(payload);
+      if (!parsed.success) return;
+      setLines((current) =>
+        appendTranscript(current, {
+          id: crypto.randomUUID(),
+          kind: "notice",
+          text: parsed.data.message,
+        }),
+      );
+      if (parsed.data.refreshSession) sessionChanged.current();
+    });
     socket.on(SESSION_HELLO_EVENT, (payload: unknown) => {
       const parsed = sessionHelloSchema.safeParse(payload);
       if (!parsed.success) {
@@ -234,6 +303,7 @@ function ClassicClient({
           id: parsed.data.eventId,
           kind: "narration",
           text: renderClassicNarration(parsed.data),
+          event: parsed.data,
         }),
       );
     });
@@ -243,28 +313,6 @@ function ClassicClient({
       socketRef.current = null;
     };
   }, [me]);
-
-  useEffect(() => {
-    if (!canInvite) {
-      return;
-    }
-    let cancelled = false;
-    void loadClassroom().then((next) => {
-      if (!cancelled) {
-        setClassroom(next);
-      }
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [canInvite, me?.accountId]);
-
-  useEffect(() => {
-    const log = logRef.current;
-    if (log) {
-      log.scrollTop = log.scrollHeight;
-    }
-  }, [lines]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -361,8 +409,9 @@ function ClassicClient({
     >
       <header className="chrome">
         <h1>{APP_TITLE}</h1>
+        {authNotice}
         <p className="meta">
-          Connection: {connection}. Schema {schemaVersion}. Classic UI 0.{" "}
+          Connection: {connection}. Living transcript.{" "}
           {me
             ? `Signed in as ${me.username}.`
             : status.allowGuestPlay
@@ -372,53 +421,6 @@ function ClassicClient({
         <p className="auth-actions">
           {me ? (
             <>
-              {canInvite ? (
-                <span className="invite-batch">
-                  <label>
-                    Number of students (1–30)
-                    <input
-                      ref={inviteCountRef}
-                      type="number"
-                      name="studentInviteCount"
-                      min={1}
-                      max={STUDENT_INVITE_BATCH_MAX}
-                      defaultValue={8}
-                      aria-describedby="invite-count-hint"
-                    />
-                  </label>
-                  <span id="invite-count-hint" className="visually-hidden">
-                    Enter how many unused student tokens to create, from 1 to{" "}
-                    {STUDENT_INVITE_BATCH_MAX}.
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      void issueInvite(
-                        "student",
-                        parseInviteCount(
-                          inviteCountRef.current?.value ?? "8",
-                          STUDENT_INVITE_BATCH_MAX,
-                          8,
-                        ),
-                        setClassroom,
-                        addNotice,
-                      );
-                    }}
-                  >
-                    Issue student invites
-                  </button>
-                </span>
-              ) : null}
-              {me?.role === "owner" ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    void issueInvite("teacher", 1, setClassroom, addNotice);
-                  }}
-                >
-                  Issue teacher invite
-                </button>
-              ) : null}
               <button
                 type="button"
                 onClick={() => {
@@ -434,28 +436,8 @@ function ClassicClient({
             </button>
           )}
         </p>
-        {canInvite && classroom ? (
-          <ClassroomRoster
-            classroom={classroom}
-            onRemove={(username) => {
-              void removeStudent(username, setClassroom, addNotice);
-            }}
-          />
-        ) : null}
       </header>
-      <div
-        ref={logRef}
-        className="transcript"
-        role="log"
-        aria-live="polite"
-        aria-relevant="additions"
-      >
-        {lines.map((line) => (
-          <pre key={line.id} className={`line line-${line.kind}`}>
-            {line.kind === "command" ? `> ${line.text}` : line.text}
-          </pre>
-        ))}
-      </div>
+      <GameTranscript lines={lines} />
       <form className="command-form" onSubmit={submitCommand}>
         <label className="command-label">
           <span className="prompt" aria-hidden="true">
@@ -482,68 +464,7 @@ function ClassicClient({
   );
 }
 
-async function refreshAuth(
-  setStatus: (status: AuthStatus) => void,
-  setMe: (me: AuthSessionPublic | undefined) => void,
-): Promise<void> {
-  const next = await loadAuthStatus();
-  setStatus(next);
-  if (!next.signedIn) {
-    setMe(undefined);
-    return;
-  }
-  const response = await fetch("/auth/me", { credentials: "same-origin" });
-  if (!response.ok) {
-    setMe(undefined);
-    return;
-  }
-  const parsed = authSessionPublicSchema.safeParse(await response.json());
-  setMe(parsed.success ? parsed.data : undefined);
-}
-
 async function signOut(onSignedOut: () => void): Promise<void> {
   await fetch("/auth/sign-out", { method: "POST", credentials: "same-origin" });
   onSignedOut();
-}
-
-async function removeStudent(
-  username: string,
-  onClassroom: (classroom: AuthClassroom | undefined) => void,
-  addNotice: (text: string) => void,
-): Promise<void> {
-  if (!window.confirm(`Disable ${username}? They will not be able to sign in.`)) {
-    return;
-  }
-  const response = await fetch("/auth/disable", {
-    method: "POST",
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username }),
-  });
-  if (!response.ok) {
-    addNotice("That account could not be removed.");
-    return;
-  }
-  onClassroom(await loadClassroom());
-}
-
-async function issueInvite(
-  role: "student" | "teacher",
-  count: number,
-  onClassroom: (classroom: AuthClassroom | undefined) => void,
-  addNotice: (text: string) => void,
-): Promise<void> {
-  const response = await fetch("/auth/invites", {
-    method: "POST",
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ role, count }),
-  });
-  const payload: unknown = await response.json().catch(() => undefined);
-  const parsed = authInviteCreatedSchema.safeParse(payload);
-  if (!response.ok || !parsed.success) {
-    addNotice("The invite could not be created.");
-    return;
-  }
-  onClassroom(await loadClassroom());
 }

@@ -2,14 +2,39 @@
   "$schema": "../schemas/room.schema.json",
   "id": "library-stacks",
   "title": "Library Stacks",
-  "shortDescription": "Tall shelves of cloth-bound books.",
-  "longDescription": "Narrow aisles run between tall oak shelves.\nBookplates name students from many years.",
+  "shortDescription": "Tall shelves shelter the papery hush of a thousand journeys.",
+  "longDescription": "Oak shelves lean around the room's living branches, their ladders sliding on brass rails. Cloth bookmarks hang from open volumes like bright tongues, and a little clock ticks much more quietly than seems mechanically reasonable.\nLibrarian Quill sorts a stack of field guides beneath a green-shaded lamp. One book lies open beside the borrowing register, with an awkward gap between its pages.",
   "zone": "studies",
   "unmapped": true,
   "exits": [
-    { "direction": "east", "toRoomId": "great-hall" },
-    { "direction": "west", "toRoomId": "scriptorium" },
-    { "direction": "north", "toRoomId": "archive-cellar" }
+    {
+      "direction": "east",
+      "toRoomId": "great-hall"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "scriptorium"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "archive-cellar"
+    }
   ],
-  "fixtures": []
+  "fixtures": [
+    {
+      "id": "npc-librarian-quill",
+      "name": "Librarian Quill",
+      "lookDescription": "A tawny owl balancing spectacles, three bookmarks, and considerable patience. Try talk quill.",
+      "examineDescription": "Quill wears half-moon spectacles on a ribbon and a waistcoat with pockets exactly the size of library cards. A feather behind one ear is labelled 'Not a pen'. Her sternest expression is reserved for folded page corners.",
+      "dialogue": "\"Books may travel. Their pages should generally travel together.\" Quill closes a field guide with one finger marking a gap. \"If something has gone astray, we begin by finding out what happened. Blame is a poor bookmark.\"",
+      "kind": "npc"
+    },
+    {
+      "id": "object-borrowing-register",
+      "name": "Borrowing Register",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Beside 'A Small Guide to Remarkable Woodland Birds', the register reads: 'Missing: the page about the lantern wren. Last copied in the Scriptorium; last heard about in the Music Loft.' Quill has added: 'Mistakes may be mended. Please bring explanations, not accusations.'"
+    }
+  ]
 }

@@ -10,6 +10,11 @@ import { persistSessionsAndInvites } from "./persist-auth.contract.js";
 import { persistInventoryOwnership } from "./persist-inventory.contract.js";
 import { persistQuestProgressAndExperience } from "./persist-quest.contract.js";
 import { persistAccountAndCharacter } from "./persist.contract.js";
+import { persistModeration } from "./persist-moderation.contract.js";
+import {
+  PostgresClassroomResetRepository,
+  PostgresModerationRepository,
+} from "./moderation-postgres.js";
 import {
   PostgresAccountRepository,
   PostgresCharacterRepository,
@@ -37,6 +42,8 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     persistence = createPersistence(testDatabaseUrl);
     await pingDatabase(persistence);
     await applyMigrations(persistence);
+    await persistence.pool.query("delete from speech_log");
+    await persistence.pool.query("delete from classroom_settings");
     await persistence.pool.query("delete from quest_progress");
     await persistence.pool.query("delete from item_instances");
     await persistence.pool.query("delete from sessions");
@@ -53,6 +60,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
 
   persistAccountAndCharacter(
     {
+      rename: (id, username) => accounts().rename(id, username),
       create: (input) => accounts().create(input),
       getById: (id) => accounts().getById(id),
       getByUsername: (username) => accounts().getByUsername(username),
@@ -73,6 +81,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
 
   persistSessionsAndInvites(
     {
+      rename: (id, username) => accounts().rename(id, username),
       create: (input) => accounts().create(input),
       getById: (id) => accounts().getById(id),
       getByUsername: (username) => accounts().getByUsername(username),
@@ -105,6 +114,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
 
   persistInventoryOwnership(
     {
+      rename: (id, username) => accounts().rename(id, username),
       create: (input) => accounts().create(input),
       getById: (id) => accounts().getById(id),
       getByUsername: (username) => accounts().getByUsername(username),
@@ -131,6 +141,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
 
   persistQuestProgressAndExperience(
     {
+      rename: (id, username) => accounts().rename(id, username),
       create: (input) => accounts().create(input),
       getById: (id) => accounts().getById(id),
       getByUsername: (username) => accounts().getByUsername(username),
@@ -152,4 +163,14 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       upsert: (record) => quests().upsert(record),
     },
   );
+  persistModeration(() => ({
+    accounts: accounts(),
+    characters: characters(),
+    sessions: sessions(),
+    invites: invites(),
+    items: items(),
+    quests: quests(),
+    moderation: new PostgresModerationRepository(persistence.db),
+    reset: new PostgresClassroomResetRepository(persistence.db),
+  }));
 });

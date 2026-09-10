@@ -363,6 +363,11 @@ export function validateQuests(
   const roomIds = new Set(namedRooms.map((named) => named.room.id));
   const itemTemplateIds = new Set(namedTemplates.map((named) => named.template.id));
   const questsById = new Map<string, NamedQuest>();
+  const fixtures = new Map(
+    namedRooms.flatMap(({ room }) =>
+      room.fixtures.map((fixture) => [fixture.id, { fixture, roomId: room.id }] as const),
+    ),
+  );
 
   for (const named of namedQuests) {
     const stem = named.fileName.replace(/\.json$/u, "");
@@ -385,8 +390,33 @@ export function validateQuests(
       questsById.set(named.template.id, named);
     }
 
+    const giver = named.template.giverNpcId ? fixtures.get(named.template.giverNpcId) : undefined;
+    if (named.template.giverNpcId && (giver?.fixture.kind !== "npc" || !giver.fixture.dialogue)) {
+      issues.push({
+        code: "missing_reference",
+        message: `${named.template.id} needs a speaking NPC giver: ${named.template.giverNpcId}`,
+        questId: named.template.id,
+        fileName: named.fileName,
+      });
+    }
     for (const objective of named.template.objectives) {
-      if (objective.kind === "visit" && objective.roomId && !roomIds.has(objective.roomId)) {
+      if (objective.kind === "examine" || objective.kind === "talk") {
+        const target = objective.targetId ? fixtures.get(objective.targetId) : undefined;
+        if (
+          !target ||
+          (objective.kind === "talk" &&
+            (target.fixture.kind !== "npc" || !target.fixture.dialogue)) ||
+          (objective.roomId && target.roomId !== objective.roomId)
+        ) {
+          issues.push({
+            code: "missing_reference",
+            message: `${named.template.id} has an unavailable ${objective.kind} target: ${objective.targetId ?? "missing"}`,
+            questId: named.template.id,
+            fileName: named.fileName,
+          });
+        }
+      }
+      if (objective.roomId && !roomIds.has(objective.roomId)) {
         issues.push({
           code: "missing_reference",
           message: `${named.template.id} visits unknown room ${objective.roomId}`,

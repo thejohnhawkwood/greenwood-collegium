@@ -7,12 +7,20 @@ import {
 import { useEffect, useState, type FormEvent } from "react";
 
 export type CharacterGateProps = {
+  needsApproval?: boolean;
+  reviewReason?: string;
   username: string;
   onReady: () => void;
   onSignedOut: () => void;
 };
 
-export function CharacterGate({ username, onReady, onSignedOut }: CharacterGateProps) {
+export function CharacterGate({
+  username,
+  onReady,
+  onSignedOut,
+  needsApproval,
+  reviewReason,
+}: CharacterGateProps) {
   const [options, setOptions] = useState<AuthCharacterOptions | undefined>();
   const [name, setName] = useState("");
   const [error, setError] = useState("");
@@ -61,6 +69,7 @@ export function CharacterGate({ username, onReady, onSignedOut }: CharacterGateP
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        username: needsApproval ? String(data.get("username") ?? username) : undefined,
         name: String(data.get("name") ?? ""),
         speciesId: String(data.get("speciesId") ?? ""),
         gender: String(data.get("gender") ?? ""),
@@ -86,6 +95,13 @@ export function CharacterGate({ username, onReady, onSignedOut }: CharacterGateP
       <p>
         Your classroom login is <strong>{username}</strong>. That is not your character name.
       </p>
+      {needsApproval ? (
+        <p>
+          Your teacher will approve both names before you enter. Player speech is recorded for
+          teacher review for six months.
+        </p>
+      ) : null}
+      {reviewReason ? <p role="alert">Please try again: {reviewReason}</p> : null}
       {error ? (
         <p className="auth-error" role="alert">
           {error}
@@ -93,6 +109,20 @@ export function CharacterGate({ username, onReady, onSignedOut }: CharacterGateP
       ) : null}
       {options ? (
         <form className="auth-form" onSubmit={(event) => void submit(event)}>
+          {needsApproval ? (
+            <label>
+              Classroom login
+              <input
+                name="username"
+                defaultValue={username}
+                minLength={3}
+                maxLength={32}
+                pattern="[A-Za-z0-9][A-Za-z0-9_-]*"
+                required
+                autoComplete="username"
+              />
+            </label>
+          ) : null}
           <label>
             Species
             <select name="speciesId" required defaultValue={options.species[0]?.id ?? ""}>
@@ -137,7 +167,9 @@ export function CharacterGate({ username, onReady, onSignedOut }: CharacterGateP
               Suggest a name
             </button>
           </p>
-          <button type="submit">Enter the Collegium</button>
+          <button type="submit">
+            {needsApproval ? "Submit names for approval" : "Enter the Collegium"}
+          </button>
         </form>
       ) : null}
       <p>

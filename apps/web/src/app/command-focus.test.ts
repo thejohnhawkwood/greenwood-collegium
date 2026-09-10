@@ -7,4 +7,12 @@ describe("command focus", () => {
     expect(shouldFocusCommandInput({ closest: () => null })).toBe(true);
     expect(shouldFocusCommandInput(null)).toBe(true);
   });
+
+  it("does not steal focus when clicking or selecting earlier transcript text", () => {
+    expect(
+      shouldFocusCommandInput({
+        closest: (selectors) => (selectors.includes('[role="log"]') ? {} : null),
+      }),
+    ).toBe(false);
+  });
 });

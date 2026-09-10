@@ -2,15 +2,30 @@
   "$schema": "../schemas/room.schema.json",
   "id": "lantern-court",
   "title": "Lantern Court",
-  "shortDescription": "A circular courtyard under drifting blue lanterns.",
-  "longDescription": "Ancient oak branches arch over a circular courtyard.\nBlue lanterns drift between the leaves.",
+  "shortDescription": "Blue lanterns drift beneath the welcoming arms of an ancient oak.",
+  "longDescription": "Ancient oak branches arch over a circular courtyard paved with warm, uneven stones. Blue lanterns drift between the leaves like stars that have come down to listen.\nPorter Bramble keeps a cheerful watch beside a noticeboard crowded with curling paper. Footpaths lead toward the hall, the orchard, the cloister, and the gate; somewhere below their roots, a low note seems to answer the wind.",
   "zone": "academy-core",
-  "map": { "x": 0, "y": 0 },
+  "map": {
+    "x": 0,
+    "y": 0
+  },
   "exits": [
-    { "direction": "north", "toRoomId": "great-hall" },
-    { "direction": "east", "toRoomId": "east-gate" },
-    { "direction": "west", "toRoomId": "west-cloister" },
-    { "direction": "south", "toRoomId": "south-orchard" }
+    {
+      "direction": "north",
+      "toRoomId": "great-hall"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "east-gate"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "west-cloister"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "south-orchard"
+    }
   ],
   "fixtures": [
     {
@@ -18,7 +33,15 @@
       "name": "Porter Bramble",
       "kind": "npc",
       "lookDescription": "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
-      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. His eyes are kind and busy. He watches the courtyard as if every new Collegian were expected."
+      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. His eyes are kind and busy. He watches the courtyard as if every new Collegian were expected.",
+      "dialogue": "\"There you are! I was just expecting someone with a question.\" Bramble straightens his whistle. \"North for the Great Hall: talk alder there, or go west from the hall and talk quill in the Library Stacks. For Tansy, go south from this court, then west to the Herb Garden. Type talk followed by a name, and quests to see your tasks. No need to shout; most mysteries have perfectly good ears.\""
+    },
+    {
+      "id": "object-noticeboard",
+      "name": "Noticeboard",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "NEED A FIRST ADVENTURE? Talk to Porter for directions. Librarian Quill seeks careful readers in the Library Stacks, west of the Great Hall. Groundskeeper Tansy needs observant helpers in the Herb Garden, west of the South Orchard. Headmaster Alder is listening for an impossible bell in the Great Hall.\nTry talk porter. Examine named objects with examine or x. Type quests for your checklist."
     }
   ]
 }

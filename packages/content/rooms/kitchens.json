@@ -2,10 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "kitchens",
   "title": "Kitchens",
-  "shortDescription": "A warm kitchen of pans and bread tins.",
-  "longDescription": "Copper pans hang above a scrubbed table.\nBread tins cool beside the oven door.",
+  "shortDescription": "Copper pans catch the glow of an industrious oven.",
+  "longDescription": "The oven gives a steady, companionable roar. Copper pans hang in shining ranks above a flour-dusted table, and a row of bread tins cools beneath a cloth patched with embroidered turnips.\nA recipe slate leans against a bowl big enough to bathe a very small dragon. Somewhere behind the pantry door, a spoon falls with tremendous importance.",
   "zone": "lodgings",
   "unmapped": true,
-  "exits": [{ "direction": "south", "toRoomId": "refectory" }],
-  "fixtures": []
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "refectory"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-recipe-slate",
+      "name": "Recipe Slate",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The slate reads: 'Collegium soup: vegetables, water, herbs, and enough for the unexpected guest.' Underneath: 'Taste before adding salt. Ask before taking ingredients. Compliments to the washing-up crew count as compliments to the cook.'"
+    }
+  ]
 }

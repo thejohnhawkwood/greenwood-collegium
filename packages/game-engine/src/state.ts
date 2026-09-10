@@ -7,6 +7,7 @@ export type RoomFixture = {
   id: string;
   name: string;
   kind: "npc" | "object";
+  dialogue?: string;
   examineDescription?: string;
   lookDescription?: string;
 };
@@ -38,7 +39,7 @@ export type Character = {
   encounterId?: string;
 };
 
-export type QuestObjectiveKind = "look" | "say" | "take" | "visit";
+export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";
 
 export type QuestObjective = {
   id: string;
@@ -46,6 +47,8 @@ export type QuestObjective = {
   label: string;
   itemTemplateId?: string;
   roomId?: string;
+  targetId?: string;
+  requires?: string[];
 };
 
 export type QuestTemplate = {
@@ -53,6 +56,8 @@ export type QuestTemplate = {
   title: string;
   introNarration: string;
   reminderNarration: string;
+  giverNpcId?: string;
+  completionNarration?: string;
   experienceReward: number;
   objectives: QuestObjective[];
 };
@@ -208,6 +213,12 @@ export type ExamineIntent = {
   target: string;
 };
 
+export type TalkIntent = {
+  verb: "talk";
+  characterId: string;
+  target: string;
+};
+
 export type InventoryIntent = {
   verb: "inventory";
   characterId: string;
@@ -300,6 +311,7 @@ export type PlayerCommand =
   | TakeIntent
   | DropIntent
   | ExamineIntent
+  | TalkIntent
   | InventoryIntent
   | AttackIntent
   | CastIntent

@@ -28,8 +28,17 @@ import {
   type SessionRepository,
   type UpdateCharacterCreationInput,
 } from "./types.js";
+import {
+  InMemoryClassroomResetRepository,
+  InMemoryModerationRepository,
+} from "./moderation-memory.js";
 
 export class InMemoryAccountRepository implements AccountRepository {
+  deleteForReset(predicate: (record: AccountRecord) => boolean): void {
+    for (const [id, record] of this.byId) {
+      if (predicate(record)) this.byId.delete(id);
+    }
+  }
   private readonly byId = new Map<string, AccountRecord>();
 
   async create(input: CreateAccountInput): Promise<AccountRecord> {
@@ -77,6 +86,17 @@ export class InMemoryAccountRepository implements AccountRepository {
     return updated;
   }
 
+  async rename(id: string, username: string): Promise<AccountRecord> {
+    const current = await this.getById(id);
+    if (!current) throw new AccountNotFoundError(id);
+    const normalized = normalizeUsername(username);
+    const taken = await this.getByUsername(normalized);
+    if (taken && taken.id !== id) throw new DuplicateUsernameError(normalized);
+    const updated = { ...current, username: normalized, updatedAt: new Date() };
+    this.byId.set(id, updated);
+    return updated;
+  }
+
   async touchSignIn(id: string, at: Date): Promise<void> {
     const account = this.byId.get(id);
     if (!account) {
@@ -87,6 +107,11 @@ export class InMemoryAccountRepository implements AccountRepository {
 }
 
 export class InMemoryCharacterRepository implements CharacterRepository {
+  deleteForReset(predicate: (record: CharacterRecord) => boolean): void {
+    for (const [id, record] of this.byId) {
+      if (predicate(record)) this.byId.delete(id);
+    }
+  }
   private readonly byId = new Map<string, CharacterRecord>();
 
   constructor(private readonly accounts: AccountRepository) {}
@@ -178,6 +203,11 @@ export class InMemoryCharacterRepository implements CharacterRepository {
 }
 
 export class InMemorySessionRepository implements SessionRepository {
+  deleteForReset(predicate: (record: SessionRecord) => boolean): void {
+    for (const [id, record] of this.byId) {
+      if (predicate(record)) this.byId.delete(id);
+    }
+  }
   private readonly byId = new Map<string, SessionRecord>();
 
   async create(input: CreateSessionInput): Promise<SessionRecord> {
@@ -216,6 +246,11 @@ export class InMemorySessionRepository implements SessionRepository {
 }
 
 export class InMemoryInviteRepository implements InviteRepository {
+  deleteForReset(predicate: (record: InviteRecord) => boolean): void {
+    for (const [id, record] of this.byId) {
+      if (predicate(record)) this.byId.delete(id);
+    }
+  }
   private readonly byId = new Map<string, InviteRecord>();
 
   async create(input: CreateInviteInput): Promise<InviteRecord> {
@@ -258,6 +293,11 @@ export class InMemoryInviteRepository implements InviteRepository {
 }
 
 export class InMemoryItemRepository implements ItemInstanceRepository {
+  deleteForReset(predicate: (record: ItemInstanceRecord) => boolean): void {
+    for (const [id, record] of this.byId) {
+      if (predicate(record)) this.byId.delete(id);
+    }
+  }
   private readonly byId = new Map<string, ItemInstanceRecord>();
 
   async ensurePlacements(seeds: readonly ItemPlacementSeed[]): Promise<void> {
@@ -310,6 +350,11 @@ export class InMemoryItemRepository implements ItemInstanceRepository {
 }
 
 export class InMemoryQuestRepository implements QuestProgressRepository {
+  deleteForReset(predicate: (record: QuestProgressRecord) => boolean): void {
+    for (const [id, record] of this.byKey) {
+      if (predicate(record)) this.byKey.delete(id);
+    }
+  }
   private readonly byKey = new Map<string, QuestProgressRecord>();
 
   async listByCharacter(characterId: string): Promise<QuestProgressRecord[]> {
@@ -354,5 +399,15 @@ export function createMemoryStores() {
   const items = new InMemoryItemRepository();
   const quests = new InMemoryQuestRepository();
   const audit = new InMemoryAuditRepository();
-  return { accounts, characters, sessions, invites, items, quests, audit };
+  const moderation = new InMemoryModerationRepository();
+  const reset = new InMemoryClassroomResetRepository({
+    accounts,
+    characters,
+    sessions,
+    invites,
+    items,
+    quests,
+    moderation,
+  });
+  return { accounts, characters, sessions, invites, items, quests, audit, moderation, reset };
 }

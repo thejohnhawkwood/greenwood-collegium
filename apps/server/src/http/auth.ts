@@ -15,6 +15,8 @@ import {
 import { formatCharacterName } from "@greenwood/content";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { RateLimiter } from "../application/rate-limit.js";
+import { createOperationQueue, type RunExclusive } from "../application/operation-queue.js";
+import { hashToken } from "../auth/tokens.js";
 import type { AuthFailure, AuthService, SignedIn } from "../auth/service.js";
 import { SESSION_TTL_MS } from "../auth/service.js";
 import {
@@ -28,6 +30,9 @@ export const AUTH_RATE_MAX = 5;
 export const AUTH_RATE_WINDOW_MS = 10_000;
 
 export type AuthHttpDependencies = {
+  runExclusive?: RunExclusive;
+  chatPaused?: () => Promise<boolean>;
+  onDisabled?: (usernameOrId: string) => Promise<void>;
   auth: AuthService;
   allowGuestPlay: boolean;
   secureCookies: boolean;
@@ -58,6 +63,18 @@ export async function registerAuthRoutes(
   deps: AuthHttpDependencies,
 ): Promise<void> {
   const limiter = new RateLimiter();
+  const runExclusive = deps.runExclusive ?? createOperationQueue();
+  function post(
+    path: string,
+    handler: (request: FastifyRequest, reply: FastifyReply) => Promise<unknown>,
+  ) {
+    app.post(path, (request, reply) => runExclusive(() => handler(request, reply)));
+  }
+  app.addHook("onSend", async (request, reply, payload) => {
+    if (request.url.startsWith("/auth/") || request.url.startsWith("/admin/"))
+      reply.header("Cache-Control", "no-store");
+    return payload;
+  });
 
   app.get("/auth/status", async (request) => {
     const session = await sessionFromRequest(deps.auth, request);
@@ -81,8 +98,10 @@ export async function registerAuthRoutes(
       });
     }
     return authClassroomSchema.parse({
+      chatPaused: (await deps.chatPaused?.()) ?? false,
       persistence: deps.persistence ?? "memory",
       invites: result.invites.map((invite) => ({
+        ...invite,
         id: invite.id,
         role: invite.role,
         status: invite.status,
@@ -93,6 +112,7 @@ export async function registerAuthRoutes(
         characterName: invite.characterName,
       })),
       accounts: result.accounts.map((account) => ({
+        ...account,
         accountId: account.accountId,
         username: account.username,
         role: account.role,
@@ -120,7 +140,7 @@ export async function registerAuthRoutes(
     if (!session) {
       return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
     }
-    return publicSession(session);
+    return publicSession(deps.auth, session);
   });
 
   app.get("/auth/character-options", async (request, reply) => {
@@ -131,7 +151,7 @@ export async function registerAuthRoutes(
     return authCharacterOptionsSchema.parse(deps.auth.characterOptions());
   });
 
-  app.post("/auth/suggested-name", async (request, reply) => {
+  post("/auth/suggested-name", async (request, reply) => {
     if (!rateOk(limiter, request)) {
       return rateLimited(reply);
     }
@@ -149,7 +169,7 @@ export async function registerAuthRoutes(
     return authSuggestedNameSchema.parse({ name });
   });
 
-  app.post("/auth/character", async (request, reply) => {
+  post("/auth/character", async (request, reply) => {
     if (!rateOk(limiter, request)) {
       return rateLimited(reply);
     }
@@ -168,10 +188,14 @@ export async function registerAuthRoutes(
         message: result.message,
       });
     }
-    return publicSession({ account: session.account, character: result.character });
+    const refreshed = await sessionFromRequest(deps.auth, request);
+    return publicSession(deps.auth, {
+      account: refreshed?.account ?? session.account,
+      character: result.character,
+    });
   });
 
-  app.post("/auth/bootstrap", async (request, reply) => {
+  post("/auth/bootstrap", async (request, reply) => {
     if (!rateOk(limiter, request)) {
       return rateLimited(reply);
     }
@@ -183,7 +207,7 @@ export async function registerAuthRoutes(
     return finishAuth(app, deps, reply, result, "bootstrap");
   });
 
-  app.post("/auth/sign-in", async (request, reply) => {
+  post("/auth/sign-in", async (request, reply) => {
     if (!rateOk(limiter, request)) {
       return rateLimited(reply);
     }
@@ -195,7 +219,7 @@ export async function registerAuthRoutes(
     return finishAuth(app, deps, reply, result, "sign_in");
   });
 
-  app.post("/auth/sign-out", async (request, reply) => {
+  post("/auth/sign-out", async (request, reply) => {
     const token = parseCookie(request.headers.cookie, SESSION_COOKIE);
     if (token) {
       await deps.auth.signOut(token);
@@ -205,7 +229,7 @@ export async function registerAuthRoutes(
     return { ok: true as const };
   });
 
-  app.post("/auth/invites", async (request, reply) => {
+  post("/auth/invites", async (request, reply) => {
     const actor = await sessionFromRequest(deps.auth, request);
     if (!actor) {
       return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
@@ -242,7 +266,7 @@ export async function registerAuthRoutes(
     };
   });
 
-  app.post("/auth/accept-invite", async (request, reply) => {
+  post("/auth/accept-invite", async (request, reply) => {
     if (!rateOk(limiter, request)) {
       return rateLimited(reply);
     }
@@ -254,7 +278,7 @@ export async function registerAuthRoutes(
     return finishAuth(app, deps, reply, result, "accept_invite");
   });
 
-  app.post("/auth/disable", async (request, reply) => {
+  post("/auth/disable", async (request, reply) => {
     const actor = await sessionFromRequest(deps.auth, request);
     if (!actor) {
       return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
@@ -281,6 +305,7 @@ export async function registerAuthRoutes(
       },
       "account disabled",
     );
+    await deps.onDisabled?.(parsed.data.username ?? parsed.data.accountId ?? "");
     return { ok: true as const };
   });
 }
@@ -317,16 +342,22 @@ function finishAuth(
       maxAgeSec: SESSION_TTL_MS / 1000,
     }),
   );
-  return publicSession(result);
+  return publicSession(deps.auth, result);
 }
 
-function publicSession(session: {
-  account: SignedIn["account"];
-  character?: SignedIn["character"];
-}) {
+async function publicSession(
+  auth: AuthService,
+  session: {
+    account: SignedIn["account"];
+    character?: SignedIn["character"];
+  },
+) {
   const complete =
     session.character?.creationCompletedAt !== undefined && session.character.gender !== undefined;
+  const timeoutUntil = (await auth.moderationState(session.account.id)).timeoutUntil;
   return authSessionPublicSchema.parse({
+    nameReview: await auth.reviewStatus(session.account.id),
+    timeoutUntil: timeoutUntil && Date.parse(timeoutUntil) > Date.now() ? timeoutUntil : undefined,
     accountId: session.account.id,
     username: session.account.username,
     role: session.account.role,
@@ -340,7 +371,25 @@ function publicSession(session: {
 }
 
 function rateOk(limiter: RateLimiter, request: FastifyRequest): boolean {
-  return limiter.allow(`auth:${request.ip}`, AUTH_RATE_MAX, AUTH_RATE_WINDOW_MS);
+  // Keep per-login protection without making a shared school IP a five-pupil limit.
+  if (!limiter.allow(`auth-ip:${request.ip}`, 180, AUTH_RATE_WINDOW_MS)) return false;
+  const body = request.body;
+  const characterRequest =
+    request.routeOptions.url === "/auth/character" ||
+    request.routeOptions.url === "/auth/suggested-name";
+  const key = characterRequest
+    ? (parseCookie(request.headers.cookie, SESSION_COOKIE) ?? request.ip)
+    : typeof body === "object" &&
+        body !== null &&
+        "username" in body &&
+        typeof body.username === "string"
+      ? body.username.trim().toLowerCase().slice(0, 32)
+      : request.ip;
+  return limiter.allow(
+    `auth:${request.routeOptions.url}:${hashToken(key)}`,
+    AUTH_RATE_MAX,
+    AUTH_RATE_WINDOW_MS,
+  );
 }
 
 function rateLimited(reply: FastifyReply) {
