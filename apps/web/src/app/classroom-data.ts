@@ -60,11 +60,7 @@ export function rosterCsv(classroom: AuthClassroom): string {
   return `${[header, ...unused, ...accounts].join("\n")}\n`;
 }
 
-export function downloadTextFile(
-  filename: string,
-  content: string,
-  type = "text/plain",
-): void {
+export function downloadTextFile(filename: string, content: string, type = "text/plain"): void {
   const blob = new Blob([content], { type: `${type};charset=utf-8` });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");

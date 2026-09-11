@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  rosterCsv,
-  unusedInvites,
-  unusedStudentTokenText,
-  usedInvites,
-} from "./classroom-data.js";
+import { rosterCsv, unusedInvites, unusedStudentTokenText, usedInvites } from "./classroom-data.js";
 import type { AuthClassroom } from "@greenwood/contracts";
 
 const classroom: AuthClassroom = {
