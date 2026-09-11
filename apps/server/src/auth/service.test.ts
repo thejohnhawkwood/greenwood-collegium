@@ -93,7 +93,7 @@ describe("classroom auth service", () => {
     });
   });
 
-  it("keeps unused invite tokens on the teacher roster and hides them after accept", async () => {
+  it("keeps invite tokens on the teacher roster after accept so names can be joined", async () => {
     const { auth } = createTestAuth();
     const owner = await auth.bootstrap({
       token: TEST_BOOTSTRAP_TOKEN,
@@ -142,8 +142,9 @@ describe("classroom auth service", () => {
     expect(after.invites[0]).toMatchObject({
       status: "used",
       username: "pip",
+      token: invite.token,
     });
-    expect(after.invites[0]?.token).toBeUndefined();
+    expect(after.invites[0]?.tokenHash).toBeTruthy();
     expect(after.accounts).toEqual([
       expect.objectContaining({ username: "pip", role: "student", status: "active" }),
     ]);

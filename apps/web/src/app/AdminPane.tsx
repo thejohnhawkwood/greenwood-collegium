@@ -11,6 +11,7 @@ import {
 } from "@greenwood/contracts";
 import {
   downloadTextFile,
+  matchPrivateClassList,
   rosterCsv,
   unusedStudentTokenText,
   unusedStudentTokens,
@@ -206,6 +207,40 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
               >
                 Download class list
               </button>
+            </p>
+            <label>
+              Match private class list
+              <input
+                type="file"
+                accept=".csv,text/csv"
+                disabled={!classroom || busy}
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  event.target.value = "";
+                  if (!file || !classroom) {
+                    return;
+                  }
+                  void file.text().then(async (text) => {
+                    const result = await matchPrivateClassList(classroom, text);
+                    if (!result.ok) {
+                      setMessage(result.message);
+                      return;
+                    }
+                    downloadTextFile(
+                      "greenwood-name-username-collegian.csv",
+                      result.csv,
+                      "text/csv",
+                    );
+                    setMessage(
+                      `Private class list matched: ${String(result.matched)} joined, ${String(result.unused)} unused, ${String(result.unmatched)} not on this roster.`,
+                    );
+                  });
+                }}
+              />
+            </label>
+            <p className="admin-hint">
+              Stays on this computer. Use your mailed student_name,invite_token CSV. The game never
+              stores legal names; this builds your local name, username, and Collegian sheet.
             </p>
             {me.role === "owner" ? (
               <button

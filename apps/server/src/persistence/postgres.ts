@@ -306,7 +306,6 @@ export class PostgresInviteRepository implements InviteRepository {
       .update(invites)
       .set({
         consumedAt: at,
-        issuedToken: null,
         consumedByAccountId: consumedByAccountId ?? null,
       })
       .where(and(eq(invites.id, id), isNull(invites.consumedAt)))

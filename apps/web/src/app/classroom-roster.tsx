@@ -83,7 +83,8 @@ export function ClassroomRoster({
         </table>
       )}
       <p>
-        Passwords are never shown. Unused tokens stay here so you can copy them onto a class list.
+        Passwords are never shown. Download class list keeps the invite token so your private
+        name list can stay joined to username and Collegian. Legal names stay off this server.
       </p>
     </section>
   );

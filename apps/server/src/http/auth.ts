@@ -108,6 +108,7 @@ export async function registerAuthRoutes(
         createdAt: invite.createdAt.toISOString(),
         expiresAt: invite.expiresAt.toISOString(),
         token: invite.token,
+        tokenHash: invite.tokenHash,
         username: invite.username,
         characterName: invite.characterName,
       })),

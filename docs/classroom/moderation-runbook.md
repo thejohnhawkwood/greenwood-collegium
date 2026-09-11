@@ -18,12 +18,13 @@ the preview, review a fresh preview first. No live reset was executed by the age
 
 Under **Roster → Unused invites**, each token has a **Permanent reference**. You can
 also **Download unused tokens** as a text file or **Download class list** as CSV.
-You may generate up to 200 student invites in one batch. Put the reference beside
-the real student's name in your private class list outside this repository. Give
-that student the corresponding token. After redemption the reference stays beside
-the login and character in the roster; the secret token disappears.
-Search the roster by login, character, or reference. Names and IDs are selectable.
-Do not put real names into the game's login/name fields or upload a class list.
+You may generate up to 200 student invites in one batch. Put the real student's
+name beside the token in your private class list outside this repository. Give
+that student the corresponding token. After redemption the teacher download still
+keeps the token, hash, username, and Collegian. Use **Match private class list**
+to join those locally; the file is not sent to the server. Do not put real names
+into the game's login or Collegian fields.
+Search the roster by username, character, or reference. Names and IDs are selectable.
 
 ## Admit and moderate
 

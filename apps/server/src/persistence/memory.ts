@@ -285,7 +285,6 @@ export class InMemoryInviteRepository implements InviteRepository {
     this.byId.set(id, {
       ...invite,
       consumedAt: at,
-      issuedToken: undefined,
       consumedByAccountId,
     });
     return true;

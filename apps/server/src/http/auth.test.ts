@@ -248,10 +248,10 @@ describe("auth HTTP", () => {
     });
     expect(used.json()).toMatchObject({
       persistence: "memory",
-      invites: [{ status: "used", username: "pip" }],
+      invites: [{ status: "used", username: "pip", token }],
       accounts: [{ username: "pip", role: "student" }],
     });
-    expect(JSON.stringify(used.json())).not.toContain(token);
+    expect(JSON.stringify(used.json())).toContain(token);
     expect(JSON.stringify(used.json())).not.toContain("lantern-path");
 
     expect(

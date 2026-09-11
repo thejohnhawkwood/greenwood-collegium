@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { rosterCsv, unusedInvites, unusedStudentTokenText, usedInvites } from "./classroom-data.js";
+import {
+  matchPrivateClassList,
+  rosterCsv,
+  sha256Hex,
+  unusedInvites,
+  unusedStudentTokenText,
+  usedInvites,
+} from "./classroom-data.js";
 import type { AuthClassroom } from "@greenwood/contracts";
 
 const classroom: AuthClassroom = {
@@ -52,13 +59,53 @@ describe("classroom roster helpers", () => {
     expect(unusedStudentTokenText(classroom)).toBe("keep-this\n");
   });
 
-  it("writes usernames on the class list csv", () => {
-    expect(rosterCsv(classroom)).toBe(
+  it("writes usernames and used tokens on the class list csv", async () => {
+    const usedHash = await sha256Hex("used-secret");
+    const withHash: AuthClassroom = {
+      ...classroom,
+      invites: classroom.invites.map((invite) =>
+        invite.id === "taken" ? { ...invite, token: "used-secret", tokenHash: usedHash } : invite,
+      ),
+    };
+    expect(rosterCsv(withHash)).toBe(
       [
-        "username,collegian,role,status,invite_token,invite_reference",
-        ",,student,unused,keep-this,open",
-        "pip,Pip the Sparrow,student,active,,taken",
-        "arbird,,teacher,active,,",
+        "username,collegian,role,status,invite_token,invite_token_hash,invite_reference",
+        ",,student,unused,keep-this,,open",
+        `pip,Pip the Sparrow,student,active,used-secret,${usedHash},taken`,
+        "arbird,,teacher,active,,,",
+        "",
+      ].join("\n"),
+    );
+  });
+
+  it("joins a private name list to username and Collegian by token or hash", async () => {
+    const usedHash = await sha256Hex("used-secret");
+    const withHash: AuthClassroom = {
+      ...classroom,
+      invites: classroom.invites.map((invite) =>
+        invite.id === "taken" ? { ...invite, tokenHash: usedHash } : invite,
+      ),
+    };
+    const result = await matchPrivateClassList(
+      withHash,
+      [
+        "student_name,email,invite_token",
+        "Pip Example,pip@school.test,used-secret",
+        "Open Seat,open@school.test,keep-this",
+        "",
+      ].join("\n"),
+    );
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+    expect(result.matched).toBe(1);
+    expect(result.unused).toBe(1);
+    expect(result.csv).toBe(
+      [
+        "student_name,username,collegian,email,note",
+        "Pip Example,pip,Pip the Sparrow,pip@school.test,joined",
+        "Open Seat,,,open@school.test,invite still unused",
         "",
       ].join("\n"),
     );

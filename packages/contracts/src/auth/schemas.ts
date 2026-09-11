@@ -121,6 +121,7 @@ export const authClassroomInviteSchema = z.object({
   createdAt: z.string(),
   expiresAt: z.string(),
   token: z.string().optional(),
+  tokenHash: z.string().optional(),
   username: z.string().optional(),
   characterName: z.string().optional(),
 });

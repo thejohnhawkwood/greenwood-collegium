@@ -96,7 +96,7 @@ describe("classroom admission and controls", () => {
     if (!roster.ok) throw new Error(roster.message);
     const invite = roster.invites.find((row) => row.accountId === s.student.account.id);
     const account = roster.accounts.find((row) => row.accountId === s.student.account.id);
-    expect(invite?.token).toBeUndefined();
+    expect(invite?.token).toBe(s.batch.token);
     expect(invite?.characterId).toBe(s.character.id);
     expect(account?.inviteReference).toBe(invite?.id);
     expect(account?.characterName).toBe("Hazel the Mouse");

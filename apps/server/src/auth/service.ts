@@ -75,6 +75,7 @@ export type ClassroomInvite = {
   createdAt: Date;
   expiresAt: Date;
   token?: string;
+  tokenHash?: string;
   username?: string;
   characterName?: string;
 };
@@ -375,7 +376,8 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
           status,
           createdAt: invite.createdAt,
           expiresAt: invite.expiresAt,
-          token: status === "unused" ? invite.issuedToken : undefined,
+          token: invite.issuedToken,
+          tokenHash: invite.tokenHash,
           username: invite.consumedByAccountId
             ? usernames.get(invite.consumedByAccountId)
             : undefined,
