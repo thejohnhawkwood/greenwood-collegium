@@ -254,7 +254,7 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
                 ))}
             </details>
             <label>
-              Find login, character, or reference
+              Find username, character, or reference
               <input
                 type="search"
                 value={search}

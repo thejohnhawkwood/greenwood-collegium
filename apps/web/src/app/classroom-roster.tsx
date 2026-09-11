@@ -51,7 +51,7 @@ export function ClassroomRoster({
           <caption className="visually-hidden">Classroom logins and Collegian names</caption>
           <thead>
             <tr>
-              <th scope="col">Login</th>
+              <th scope="col">Username</th>
               <th scope="col">Collegian</th>
               <th scope="col">Role</th>
               <th scope="col">Status</th>

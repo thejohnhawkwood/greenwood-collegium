@@ -32,6 +32,13 @@ const classroom: AuthClassroom = {
       characterName: "Pip the Sparrow",
       inviteReference: "taken",
     },
+    {
+      accountId: "acct-owner",
+      username: "arbird",
+      role: "teacher",
+      status: "active",
+      createdAt: "2026-09-06T00:00:00.000Z",
+    },
   ],
 };
 
@@ -45,12 +52,13 @@ describe("classroom roster helpers", () => {
     expect(unusedStudentTokenText(classroom)).toBe("keep-this\n");
   });
 
-  it("writes the class list as csv", () => {
+  it("writes usernames on the class list csv", () => {
     expect(rosterCsv(classroom)).toBe(
       [
-        "invite_token,invite_reference,login,collegian,role,status",
-        "keep-this,open,,,student,unused",
-        ",taken,pip,Pip the Sparrow,student,active",
+        "username,collegian,role,status,invite_token,invite_reference",
+        ",,student,unused,keep-this,open",
+        "pip,Pip the Sparrow,student,active,,taken",
+        "arbird,,teacher,active,,",
         "",
       ].join("\n"),
     );

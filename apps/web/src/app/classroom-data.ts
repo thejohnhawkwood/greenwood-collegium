@@ -36,28 +36,40 @@ function csvCell(value: string): string {
 }
 
 export function rosterCsv(classroom: AuthClassroom): string {
-  const header = "invite_token,invite_reference,login,collegian,role,status";
-  const unused = unusedInvites(classroom).map((invite) =>
-    [
-      csvCell(invite.token ?? ""),
+  const header = "username,collegian,role,status,invite_token,invite_reference";
+  const listed = new Set<string>();
+  const inviteRows = classroom.invites.map((invite) => {
+    const account = classroom.accounts.find(
+      (candidate) =>
+        candidate.inviteReference === invite.id ||
+        (invite.username !== undefined && candidate.username === invite.username),
+    );
+    const username = account?.username ?? invite.username ?? "";
+    if (username) {
+      listed.add(username);
+    }
+    return [
+      csvCell(username),
+      csvCell(account?.characterName ?? invite.characterName ?? ""),
+      csvCell(account?.role ?? invite.role),
+      csvCell(account?.status ?? invite.status),
+      csvCell(invite.status === "unused" ? (invite.token ?? "") : ""),
       csvCell(invite.id),
-      csvCell(invite.username ?? ""),
-      csvCell(invite.characterName ?? ""),
-      csvCell(invite.role),
-      csvCell(invite.status),
-    ].join(","),
-  );
-  const accounts = classroom.accounts.map((account) =>
-    [
-      "",
-      csvCell(account.inviteReference ?? ""),
-      csvCell(account.username),
-      csvCell(account.characterName ?? ""),
-      csvCell(account.role),
-      csvCell(account.status),
-    ].join(","),
-  );
-  return `${[header, ...unused, ...accounts].join("\n")}\n`;
+    ].join(",");
+  });
+  const extraAccounts = classroom.accounts
+    .filter((account) => !listed.has(account.username))
+    .map((account) =>
+      [
+        csvCell(account.username),
+        csvCell(account.characterName ?? ""),
+        csvCell(account.role),
+        csvCell(account.status),
+        "",
+        csvCell(account.inviteReference ?? ""),
+      ].join(","),
+    );
+  return `${[header, ...inviteRows, ...extraAccounts].join("\n")}\n`;
 }
 
 export function downloadTextFile(filename: string, content: string, type = "text/plain"): void {
