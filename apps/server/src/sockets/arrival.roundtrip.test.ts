@@ -110,7 +110,9 @@ describe("arrival socket round trip", () => {
 
     expect((await emitCommand(client, "cmd-look", "look")).status).toBe("accepted");
     expect((await emitCommand(client, "cmd-say", "say hello")).status).toBe("accepted");
-    expect((await emitCommand(client, "cmd-take", "take key")).status).toBe("accepted");
+    expect((await emitCommand(client, "cmd-take", "take Small Copper Key")).status).toBe(
+      "accepted",
+    );
     expect((await emitCommand(client, "cmd-north", "north")).status).toBe("accepted");
 
     const completed = [...events].reverse().find((event) => event.type === "quest.updated");

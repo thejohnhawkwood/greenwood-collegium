@@ -4,10 +4,14 @@ import {
   renderClassicSegments,
   schemaVersion,
   type ChatSaidEvent,
+  type EventEnvelope,
 } from "@greenwood/contracts";
+import { fixturesVisibleTo } from "./arrival-guide.js";
+import { conversationChoice, formatDialogueNode, treeNode } from "./conversation.js";
 import { charactersInRoom } from "./occupants.js";
 import { sanitizeSpeech, SAY_MAX_LENGTH } from "./speech.js";
 import type { EngineRuntime, SayIntent, WorldState } from "./state.js";
+import { systemNotice } from "./system-notice.js";
 
 export type ChatNotice = {
   characterId: string;
@@ -16,7 +20,7 @@ export type ChatNotice = {
 
 export type SaySuccess = {
   ok: true;
-  events: ChatSaidEvent[];
+  events: Array<ChatSaidEvent | EventEnvelope>;
   notices: ChatNotice[];
 };
 
@@ -45,6 +49,11 @@ export function handleSay(world: WorldState, intent: SayIntent, runtime: EngineR
       code: "room_not_found",
       message: `The room "${character.roomId}" is missing.`,
     };
+  }
+
+  const reply = replyToOpenConversation(world, character.id, intent.text, runtime);
+  if (reply) {
+    return { ok: true, events: [reply], notices: [] };
   }
 
   const text = sanitizeSpeech(intent.text);
@@ -119,4 +128,39 @@ function chatEvent(
     segments,
     payload,
   } satisfies ChatSaidEvent);
+}
+
+function replyToOpenConversation(
+  world: WorldState,
+  characterId: string,
+  spoken: string,
+  runtime: EngineRuntime,
+): EventEnvelope | undefined {
+  const character = world.characters[characterId];
+  const open = character?.openConversation;
+  if (!character || !open) {
+    return undefined;
+  }
+  const npc = fixturesVisibleTo(world, character).find((fixture) => fixture.id === open.npcId);
+  const tree = npc?.dialogueTree;
+  const current = tree ? treeNode(tree, open.nodeId) : undefined;
+  if (!npc || !tree || !current) {
+    character.openConversation = undefined;
+    return undefined;
+  }
+  const choice = conversationChoice(current, spoken);
+  if (!choice) {
+    return undefined;
+  }
+  if (!choice.next) {
+    character.openConversation = undefined;
+    return systemNotice(character.id, `${npc.name}\n\nVery well.`, runtime);
+  }
+  const next = treeNode(tree, choice.next);
+  if (!next) {
+    character.openConversation = undefined;
+    return systemNotice(character.id, `${npc.name}\n\nThat is all for now.`, runtime);
+  }
+  character.openConversation = { npcId: npc.id, nodeId: choice.next };
+  return systemNotice(character.id, formatDialogueNode(npc.name, next), runtime);
 }

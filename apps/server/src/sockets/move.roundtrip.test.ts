@@ -84,25 +84,42 @@ describe("move socket round trip", () => {
       commandId: "cmd-north-1",
       status: "accepted",
       eventSequenceStart: 4,
-      eventSequenceEnd: 6,
     });
     const discovered = mapDiscoveredEventSchema.parse(eventEnvelopeSchema.parse(north.events[0]));
-    const hall = roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(north.events[1]));
+    const hall = roomSnapshotEventSchema.parse(
+      eventEnvelopeSchema.parse(north.events.find((event) => {
+        const parsed = eventEnvelopeSchema.safeParse(event);
+        return parsed.success && parsed.data.type === "room.snapshot";
+      })),
+    );
     expect(discovered.payload.title).toBe("Great Hall");
     expect(hall.payload.title).toBe("Great Hall");
+    expect(
+      north.events.some((event) => {
+        const parsed = eventEnvelopeSchema.safeParse(event);
+        return parsed.success && parsed.data.narration.includes("walks with you");
+      }),
+    ).toBe(true);
 
     const south = await emitCommand(client, "cmd-south-1", "south", 2);
     expect(south.ack).toMatchObject({ status: "accepted" });
-    expect(
-      roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(south.events[0])).payload.title,
-    ).toBe("Lantern Court");
+    const southLook = south.events.find((event) => {
+      const parsed = eventEnvelopeSchema.safeParse(event);
+      return parsed.success && parsed.data.type === "room.snapshot";
+    });
+    expect(roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(southLook)).payload.title).toBe(
+      "Lantern Court",
+    );
 
     const west = await emitCommand(client, "cmd-west-1", "west", 3);
     expect(west.ack).toMatchObject({ status: "accepted", message: "west" });
-    expect(west.events).toHaveLength(2);
-    expect(
-      roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(west.events[1])).payload.title,
-    ).toBe("West Cloister");
+    const westLook = west.events.find((event) => {
+      const parsed = eventEnvelopeSchema.safeParse(event);
+      return parsed.success && parsed.data.type === "room.snapshot";
+    });
+    expect(roomSnapshotEventSchema.parse(eventEnvelopeSchema.parse(westLook)).payload.title).toBe(
+      "West Cloister",
+    );
 
     const blocked = await emitCommand(client, "cmd-south-2", "south", 5);
     expect(blocked.ack).toMatchObject({

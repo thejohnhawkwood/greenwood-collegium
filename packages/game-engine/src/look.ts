@@ -7,6 +7,8 @@ import {
   type RoomSnapshotPayload,
   type SemanticSegment,
 } from "@greenwood/contracts";
+import { ARRIVAL_KEY_TEMPLATE_ID } from "./arrival-guide.js";
+import { fixturesVisibleTo } from "./arrival-guide.js";
 import { enemiesInRoom } from "./enemies.js";
 import { itemsInRoom } from "./items.js";
 import { ensureCharacterStarterItems } from "./starter-items.js";
@@ -91,7 +93,7 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
     zone: room.zone,
     exits: room.exits.map((exit) => ({ direction: exit.direction, toRoomId: exit.toRoomId })),
     visible: [
-      ...room.fixtures.map((fixture) => ({
+      ...fixturesVisibleTo(world, looker).map((fixture) => ({
         id: fixture.id,
         name: fixture.name,
         kind: fixture.kind,
@@ -107,6 +109,8 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
         id: item.id,
         name: item.name,
         kind: "object" as const,
+        description:
+          item.templateId === ARRIVAL_KEY_TEMPLATE_ID ? "held by Porter Bramble" : undefined,
       })),
       ...otherPlayers,
     ],

@@ -8,6 +8,8 @@ export {
   listSpecies,
   reservedCharacterNames,
   speciesName,
+  speciesProficiencyTable,
+  speciesWeaponProficiency,
   suggestedCharacterNames,
   type CharacterGenderId,
 } from "./character-creation.js";

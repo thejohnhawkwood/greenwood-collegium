@@ -32,9 +32,40 @@
       "id": "npc-porter-bramble",
       "name": "Porter Bramble",
       "kind": "npc",
-      "lookDescription": "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
-      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. His eyes are kind and busy. He watches the courtyard as if every new Collegian were expected.",
-      "dialogue": "\"There you are! I was just expecting someone with a question.\" Bramble straightens his whistle. \"North for the Great Hall: talk alder there, or go west from the hall and talk quill in the Library Stacks. For Tansy, go south from this court, then west to the Herb Garden. Type talk followed by a name, and quests to see your tasks. No need to shout; most mysteries have perfectly good ears.\""
+      "lookDescription": "A hedgehog porter in a too-large coat, brass whistle on a ribbon, Small Copper Key in his paw.",
+      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. He holds a Small Copper Key for new Collegians. Type take Small Copper Key — all three words — if Arrival is still your task.",
+      "dialogue": "\"This is a school. We train woodland students to face real dangers in the Greenwood. Typed commands are how you learn. Type look, say hello, take Small Copper Key, then north to reach the Great Hall. Type talk porter and answer with say 1 or say 2 if you want more.\"",
+      "dialogueTree": {
+        "start": "school",
+        "nodes": {
+          "school": {
+            "text": "\"The Collegium is a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "Why does the Greenwood matter?", "next": "greenwood" },
+              { "say": "3", "label": "I am ready to walk.", "next": "ready" }
+            ]
+          },
+          "commands": {
+            "text": "\"Type look to see Lantern Court. Type say hello. Type take Small Copper Key — all three words. Then type north to reach the Great Hall.\"",
+            "choices": [
+              { "say": "1", "label": "Repeat the school’s purpose.", "next": "school" },
+              { "say": "yes", "label": "I understand.", "next": "ready" },
+              { "say": "no", "label": "Say that again more slowly.", "next": "commands" }
+            ]
+          },
+          "greenwood": {
+            "text": "\"Outside these lanterns the wood is not a storybook. Students train here first, so they are not surprised later.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "I am ready.", "next": "ready" }
+            ]
+          },
+          "ready": {
+            "text": "\"Good. Stay with me through Arrival. Type take Small Copper Key if you have not, then type north to reach the Great Hall.\""
+          }
+        }
+      }
     },
     {
       "id": "object-noticeboard",

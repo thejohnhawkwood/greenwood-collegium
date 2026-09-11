@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "practice-staff",
+  "name": "Practice Staff",
+  "shortDescription": "A balanced practice staff.",
+  "examineDescription": "Ash wood, worn smooth at the grip. Heavier than it looks until it sits right in the paws.",
+  "category": "weapon",
+  "itemType": "staff",
+  "training": true,
+  "unique": true
+}

@@ -23,6 +23,7 @@ import {
   handleMove,
   handleQuests,
   handleSay,
+  handleStats,
   handleTake,
   listQuestRecords,
   isStaffCommand,
@@ -324,6 +325,7 @@ export async function attachRealtime(
       const appearance = describeCollegian(identity.speciesId, identity.gender);
       present.lookDescription = appearance.look;
       present.examineDescription = appearance.examine;
+      present.speciesId = identity.speciesId;
       await persistStarterCopies(characterId, identity);
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
@@ -348,6 +350,9 @@ export async function attachRealtime(
         examineDescription: appearance.examine,
         experience: identity?.experience,
         level: identity?.level,
+        speciesId:
+          identity?.speciesId ??
+          ("speciesId" in claimed ? claimed.speciesId : undefined),
       },
       runtime,
     );
@@ -786,9 +791,11 @@ export async function attachRealtime(
                       ? handleInventory(world, intent, runtime)
                       : intent.verb === "help"
                         ? handleHelp(world, intent, runtime)
-                        : intent.verb === "quests"
-                          ? handleQuests(world, intent, runtime)
-                          : intent.verb === "attack"
+                    : intent.verb === "quests"
+                      ? handleQuests(world, intent, runtime)
+                      : intent.verb === "stats"
+                        ? handleStats(world, intent, runtime)
+                      : intent.verb === "attack"
                             ? handleAttack(world, intent, runtime)
                             : handleCast(world, intent, runtime);
 
@@ -819,7 +826,13 @@ export async function attachRealtime(
       await options.persistRoom(characterId, result.roomId);
     }
 
-    if (identity && options.persistItem && result.ok && "itemId" in result) {
+    if (
+      identity &&
+      options.persistItem &&
+      result.ok &&
+      "itemId" in result &&
+      (!("persist" in result) || result.persist !== false)
+    ) {
       const persisted =
         intent.verb === "take"
           ? await options.persistItem.claim(result.itemId, characterId, result.roomId)

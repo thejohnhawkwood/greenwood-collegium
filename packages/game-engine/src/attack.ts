@@ -4,6 +4,7 @@ import {
   nextRoll,
   rollAttackDamage,
 } from "./combat-state.js";
+import { attackFitModifier } from "./equipment.js";
 import {
   actionEvent,
   concludeRound,
@@ -35,7 +36,11 @@ export function handleAttack(
   const events: CombatEvent[] = prepared.started
     ? openingEvents(character, encounter, runtime)
     : [];
-  const playerDamage = rollAttackDamage(DEFAULT_PLAYER_ATTACK, nextRoll(runtime));
+  const playerDamage = Math.max(
+    1,
+    rollAttackDamage(DEFAULT_PLAYER_ATTACK, nextRoll(runtime)) +
+      attackFitModifier(world, character),
+  );
   encounter.enemy.health = Math.max(0, encounter.enemy.health - playerDamage);
   events.push(
     actionEvent(

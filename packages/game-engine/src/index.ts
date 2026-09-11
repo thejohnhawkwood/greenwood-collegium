@@ -15,6 +15,8 @@ export { handleAttack } from "./attack.js";
 export { handleCast } from "./cast.js";
 export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
+export { handleStats } from "./stats.js";
+export { parseStatsCommand } from "./parse-stats.js";
 export {
   ARRIVAL_QUEST_ID,
   applyQuestProgress,
@@ -38,7 +40,13 @@ export { parsePlayerCommand } from "./parse-command.js";
 export { isStaffCommand, parseStaffCommand } from "./parse-staff.js";
 export { namesMatch } from "./names.js";
 export { SAY_MAX_LENGTH, sanitizeSpeech } from "./speech.js";
-export { itemsHeldBy, itemsInRoom, matchItems, worldItems } from "./items.js";
+export { itemsHeldBy, itemsInRoom, matchItems, resolveTypedItems, worldItems } from "./items.js";
+export {
+  ARRIVAL_KEY_NAME,
+  ARRIVAL_KEY_TEMPLATE_ID,
+  PORTER_NPC_ID,
+  arrivalQuestActive,
+} from "./arrival-guide.js";
 export {
   availableToCharacterId,
   characterHasStarterTemplate,
@@ -65,6 +73,7 @@ export type { AttackFailure, AttackResult, AttackSuccess } from "./attack.js";
 export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
 export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
 export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
+export type { StatsFailure, StatsResult, StatsSuccess } from "./stats.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
 export type {
@@ -97,6 +106,7 @@ export type {
   QuestProgress,
   QuestTemplate,
   QuestsIntent,
+  StatsIntent,
   Room,
   RoomExit,
   RoomFixture,

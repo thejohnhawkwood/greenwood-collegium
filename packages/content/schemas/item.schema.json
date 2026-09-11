@@ -26,7 +26,13 @@
       "minLength": 1
     },
     "category": {
-      "enum": ["key", "book", "ordinary"]
+      "enum": ["key", "book", "weapon", "ordinary"]
+    },
+    "itemType": {
+      "enum": ["key", "book", "weapon", "sword", "staff", "sling", "ordinary"]
+    },
+    "training": {
+      "type": "boolean"
     },
     "unique": {
       "const": true

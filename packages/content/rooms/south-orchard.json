@@ -3,7 +3,7 @@
   "id": "south-orchard",
   "title": "South Orchard",
   "shortDescription": "Low apple boughs shelter a well-used practice clearing.",
-  "longDescription": "Apple trees stand in friendly, crooked rows around a patch of springy grass. Fallen blossom collects along the paths, and last year's windfalls have become somebody else's breakfast.\nInstructor Flint keeps watch over the Practice Dummy, whose straw hat has survived more lessons than anyone can explain. A practice rules board leans against a basket of wooden swords.",
+  "longDescription": "Apple trees stand in friendly, crooked rows around a patch of springy grass. Fallen blossom collects along the paths, and last year's windfalls have become somebody else's breakfast.\nInstructor Flint keeps watch over the Practice Dummy, whose straw hat has survived more lessons than anyone can explain. A Practice Sword, Practice Staff, and Practice Sling wait on the training rack. A practice rules board leans against the basket.",
   "zone": "grounds",
   "map": {
     "x": 0,
@@ -33,7 +33,50 @@
       "name": "Instructor Flint",
       "lookDescription": "A wiry hare with a whistle, a wooden sword, and a hat full of apple blossom. Try talk flint.",
       "examineDescription": "Flint has one bent ear and an expression of cheerful concentration. Her practice sword is nicked from demonstrations, not duels. She keeps the clearing open and the path to the Infirmary firmly in mind.",
-      "dialogue": "\"Feet steady. Eyes open. Pride in your pocket.\" Flint gestures to the straw target. \"Type attack dummy to begin. During practice, attack continues; cast ember dummy uses focus for Ember. Finish the practice bout before moving on. If you are defeated, you recover in the Infirmary. Other Collegians are partners, never targets.\"",
+      "dialogue": "\"Which weapon do you want to try? Type take Practice Sword, take Practice Staff, or take Practice Sling. If more than one weapon is in reach, name it in full. Then type attack dummy. Other Collegians are partners, never targets.\"",
+      "dialogueTree": {
+        "start": "ask",
+        "nodes": {
+          "ask": {
+            "text": "\"Which weapon do you want to try? The sword, the staff, or the sling. Type take Practice Sword, take Practice Staff, or take Practice Sling. A good fit steadies the paw. A poor fit feels unwieldy — we can talk about why.\"",
+            "choices": [
+              { "say": "1", "label": "Why does a weapon fit?", "next": "fit" },
+              { "say": "2", "label": "How do I practice?", "next": "practice" },
+              { "say": "3", "label": "I will try another weapon.", "next": "switch" }
+            ]
+          },
+          "fit": {
+            "text": "\"Each species has one proficiency. Hare and fox like the sword. Badger and mole like the staff. Mouse and squirrel like the sling. A fit adds a little strength. A poor fit takes a little away.\"",
+            "choices": [
+              { "say": "1", "label": "How do I practice?", "next": "practice" },
+              { "say": "yes", "label": "I will try a better fit.", "next": "switch" },
+              { "say": "no", "label": "I will keep what I have.", "next": "keep" }
+            ]
+          },
+          "practice": {
+            "text": "\"Type attack dummy to begin. During the lesson, attack continues. cast ember dummy spends focus. Finish before you walk away. If you fall, you wake in the Infirmary.\"",
+            "choices": [
+              { "say": "1", "label": "Why does a weapon fit?", "next": "fit" },
+              { "say": "2", "label": "I understand.", "next": "keep" }
+            ]
+          },
+          "misfit": {
+            "text": "\"That weapon is a poor fit for your kind. It will feel unwieldy, and your strikes will be a little weaker. Talk with me, or try another from the rack.\"",
+            "choices": [
+              { "say": "1", "label": "Why does a weapon fit?", "next": "fit" },
+              { "say": "2", "label": "I will switch.", "next": "switch" },
+              { "say": "yes", "label": "Show me the better choice.", "next": "switch" },
+              { "say": "no", "label": "I will keep it anyway.", "next": "keep" }
+            ]
+          },
+          "switch": {
+            "text": "\"Good. Type take Practice Sword, take Practice Staff, or take Practice Sling — the full name. If you type take weapon I will make you choose which one.\""
+          },
+          "keep": {
+            "text": "\"As you wish. Feet steady. Eyes open. Pride in your pocket.\""
+          }
+        }
+      },
       "kind": "npc"
     },
     {

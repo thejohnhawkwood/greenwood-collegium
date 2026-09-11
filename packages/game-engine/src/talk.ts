@@ -1,5 +1,7 @@
 import { type EventEnvelope } from "@greenwood/contracts";
+import { fixturesVisibleTo } from "./arrival-guide.js";
 import { progressQuests, startQuest } from "./arrival.js";
+import { formatDialogueNode, startNode } from "./conversation.js";
 import { namesMatch } from "./names.js";
 import type { EngineRuntime, TalkIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -22,10 +24,10 @@ export function handleTalk(
       message: "Your character is not in the realm.",
     };
   }
-  const matches = (world.rooms[character.roomId]?.fixtures ?? []).filter(
+  const matches = fixturesVisibleTo(world, character).filter(
     (fixture) =>
       fixture.kind === "npc" &&
-      fixture.dialogue &&
+      (fixture.dialogue || fixture.dialogueTree) &&
       namesMatch(fixture.name, fixture.id, intent.target),
   );
   if (matches.length > 1) {
@@ -36,18 +38,27 @@ export function handleTalk(
     };
   }
   const npc = matches[0];
-  if (!npc?.dialogue) {
+  if (!npc || (!npc.dialogue && !npc.dialogueTree)) {
     return {
       ok: false,
       code: "npc_not_found",
       message: `There is nobody called "${intent.target}" to talk to here. Type look to see who is nearby, or say to speak to other Collegians.`,
     };
   }
-  const greeting = systemNotice(character.id, `${npc.name}\n\n${npc.dialogue}`, runtime);
-  greeting.segments = [
-    { kind: "actor", entityKind: "npc", id: npc.id, text: npc.name },
-    { kind: "text", text: `\n\n${npc.dialogue}` },
-  ];
+  const opened = npc.dialogueTree ? startNode(npc.dialogueTree) : undefined;
+  const spoken = opened
+    ? formatDialogueNode(npc.name, opened.node)
+    : `${npc.name}\n\n${npc.dialogue ?? ""}`;
+  if (opened) {
+    character.openConversation = { npcId: npc.id, nodeId: opened.id };
+  }
+  const greeting = systemNotice(character.id, spoken, runtime);
+  if (!opened) {
+    greeting.segments = [
+      { kind: "actor", entityKind: "npc", id: npc.id, text: npc.name },
+      { kind: "text", text: `\n\n${npc.dialogue ?? ""}` },
+    ];
+  }
   const events: EventEnvelope[] = [greeting];
   const givenQuests = Object.values(world.questTemplates ?? {}).filter(
     (quest) => quest.giverNpcId === npc.id,

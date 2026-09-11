@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "practice-sling",
+  "name": "Practice Sling",
+  "shortDescription": "A leather practice sling.",
+  "examineDescription": "A short leather sling with a soft practice stone. Meant for aim, not for the orchard walls.",
+  "category": "weapon",
+  "itemType": "sling",
+  "training": true,
+  "unique": true
+}

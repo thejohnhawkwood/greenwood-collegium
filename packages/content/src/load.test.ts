@@ -47,10 +47,10 @@ describe("content loader", () => {
         id: "npc-porter-bramble",
         name: "Porter Bramble",
         kind: "npc",
-        lookDescription: "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
-        examineDescription:
-          "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. His eyes are kind and busy. He watches the courtyard as if every new Collegian were expected.",
-        dialogue: expect.stringContaining("talk quill"),
+        lookDescription:
+          "A hedgehog porter in a too-large coat, brass whistle on a ribbon, Small Copper Key in his paw.",
+        examineDescription: expect.stringContaining("Small Copper Key"),
+        dialogue: expect.stringContaining("school"),
       }),
       expect.objectContaining({ id: "object-noticeboard", kind: "object" }),
     ]);
@@ -68,7 +68,7 @@ describe("content loader", () => {
       }),
     ]);
     expect(world.itemTemplates["small-copper-key"]?.name).toBe("Small Copper Key");
-    expect(Object.keys(world.items)).toHaveLength(1);
+    expect(Object.keys(world.items)).toHaveLength(4);
     expect(world.enemies["enemy-practice-dummy-south-orchard"]).toMatchObject({
       templateId: "practice-dummy",
       name: "Practice Dummy",

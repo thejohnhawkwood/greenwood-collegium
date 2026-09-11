@@ -60,6 +60,7 @@ export function handleJoin(
     discoveredRoomIds: [room.id],
     experience: intent.experience ?? 0,
     level: intent.level ?? 1,
+    speciesId: intent.speciesId,
   };
   const character = world.characters[intent.characterId];
   if (!character) {

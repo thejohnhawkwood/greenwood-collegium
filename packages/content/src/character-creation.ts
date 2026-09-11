@@ -2,9 +2,13 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
+export const WEAPON_PROFICIENCIES = ["sword", "staff", "sling"] as const;
+export type WeaponProficiency = (typeof WEAPON_PROFICIENCIES)[number];
+
 const speciesSchema = z.object({
   id: z.string().regex(/^[a-z][a-z0-9-]*$/),
   name: z.string().min(1),
+  weaponProficiency: z.enum(WEAPON_PROFICIENCIES),
 });
 
 const namesSchema = z.object({
@@ -74,7 +78,17 @@ export function characterCreationIntro(): string {
 }
 
 export function listSpecies(): ReadonlyArray<{ id: string; name: string }> {
-  return SPECIES;
+  return SPECIES.map((species) => ({ id: species.id, name: species.name }));
+}
+
+export function speciesWeaponProficiency(speciesId: string): WeaponProficiency | undefined {
+  return SPECIES.find((species) => species.id === speciesId)?.weaponProficiency;
+}
+
+export function speciesProficiencyTable(): Record<string, WeaponProficiency> {
+  return Object.fromEntries(
+    SPECIES.map((species) => [species.id, species.weaponProficiency]),
+  ) as Record<string, WeaponProficiency>;
 }
 
 export function speciesName(speciesId: string): string | undefined {

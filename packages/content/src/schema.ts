@@ -25,12 +25,55 @@ export const roomExitSchema = z
   })
   .strict();
 
+const dialogueChoiceSchema = z
+  .object({
+    say: z.string().min(1),
+    label: z.string().min(1),
+    next: z.string().min(1).optional(),
+  })
+  .strict();
+
+const dialogueNodeSchema = z
+  .object({
+    text: z.string().min(1),
+    choices: z.array(dialogueChoiceSchema).optional(),
+  })
+  .strict();
+
+export const dialogueTreeSchema = z
+  .object({
+    start: z.string().min(1),
+    nodes: z.record(z.string(), dialogueNodeSchema),
+  })
+  .strict()
+  .superRefine((tree, ctx) => {
+    if (!tree.nodes[tree.start]) {
+      ctx.addIssue({ code: "custom", message: "dialogue tree is missing its start node" });
+    }
+    rejectMarkup(tree.start, "dialogue start", ctx);
+    for (const [id, node] of Object.entries(tree.nodes)) {
+      rejectMarkup(id, "dialogue node id", ctx);
+      rejectMarkup(node.text, "dialogue text", ctx);
+      for (const choice of node.choices ?? []) {
+        rejectMarkup(choice.say, "dialogue choice", ctx);
+        rejectMarkup(choice.label, "dialogue label", ctx);
+        if (choice.next && !tree.nodes[choice.next]) {
+          ctx.addIssue({
+            code: "custom",
+            message: `dialogue choice points at missing node ${choice.next}`,
+          });
+        }
+      }
+    }
+  });
+
 export const roomFixtureSchema = z
   .object({
     id: stableIdSchema,
     name: z.string().min(1),
     kind: z.enum(["npc", "object"]),
     dialogue: z.string().min(1).optional(),
+    dialogueTree: dialogueTreeSchema.optional(),
     examineDescription: z.string().min(1).optional(),
     lookDescription: z.string().min(1).optional(),
   })
@@ -42,6 +85,9 @@ export const roomFixtureSchema = z
       if (fixture.kind !== "npc") {
         ctx.addIssue({ code: "custom", message: "only NPC fixtures can have dialogue" });
       }
+    }
+    if (fixture.dialogueTree && fixture.kind !== "npc") {
+      ctx.addIssue({ code: "custom", message: "only NPC fixtures can have dialogue trees" });
     }
     if (fixture.examineDescription) {
       rejectMarkup(fixture.examineDescription, "examineDescription", ctx);

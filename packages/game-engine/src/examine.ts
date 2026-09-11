@@ -4,8 +4,9 @@ import {
   schemaVersion,
   type EventEnvelope,
 } from "@greenwood/contracts";
+import { fixturesVisibleTo } from "./arrival-guide.js";
 import { enemiesInRoom } from "./enemies.js";
-import { itemsHeldBy, itemsInRoom } from "./items.js";
+import { itemTypeWord, itemsHeldBy, itemsInRoom, whichItemMessage } from "./items.js";
 import { ensureCharacterStarterItems } from "./starter-items.js";
 import { namesMatch } from "./names.js";
 import type { Character, EngineRuntime, ExamineIntent, WorldState } from "./state.js";
@@ -48,9 +49,8 @@ export function handleExamine(
   }
 
   ensureCharacterStarterItems(world, character.id);
-  const room = world.rooms[character.roomId];
   const nearby: ExamineTarget[] = [
-    ...(room?.fixtures ?? []).map((fixture) => ({
+    ...fixturesVisibleTo(world, character).map((fixture) => ({
       id: fixture.id,
       entityKind: fixture.kind === "npc" ? ("npc" as const) : undefined,
       item: fixture.kind === "object",
@@ -98,11 +98,21 @@ export function handleExamine(
     };
   }
   if (matches.length > 1) {
-    const names = matches.map((target) => target.name).join(", ");
+    const itemMatches = matches.filter((target) => target.item);
+    const typeWord =
+      itemMatches.length === matches.length
+        ? itemTypeWord({
+            itemType: intent.target.trim().toLowerCase(),
+            category: intent.target.trim().toLowerCase(),
+          })
+        : "item";
     return {
       ok: false,
       code: "item_ambiguous",
-      message: `Which did you mean: ${names}?`,
+      message:
+        itemMatches.length === matches.length
+          ? whichItemMessage("examine", typeWord, matches)
+          : `Which did you mean: ${matches.map((target) => target.name).join(", ")}?`,
     };
   }
 

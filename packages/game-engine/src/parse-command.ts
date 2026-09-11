@@ -11,12 +11,14 @@ import { parseSayCommand } from "./parse-say.js";
 import { parseStaffCommand } from "./parse-staff.js";
 import { parseTakeCommand } from "./parse-take.js";
 import { parseTalkCommand } from "./parse-talk.js";
+import { parseStatsCommand } from "./parse-stats.js";
 import type { PlayerCommand } from "./state.js";
 
 export function parsePlayerCommand(raw: string, characterId: string): PlayerCommand | null {
   return (
     parseHelpCommand(raw, characterId) ??
     parseQuestsCommand(raw, characterId) ??
+    parseStatsCommand(raw, characterId) ??
     parseLookCommand(raw, characterId) ??
     parseSayCommand(raw, characterId) ??
     parseStaffCommand(raw, characterId) ??

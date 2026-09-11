@@ -11,7 +11,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["look", "l"],
     summary: "Describe the room you are in.",
     detail:
-      "look describes the room, people, objects, items on the ground, and exits. Type look after you arrive so you can see what Porter mentioned.",
+      "look describes the room, people, objects, items on the ground, and exits. Type look after you arrive so you can see what Porter mentioned. where and place reprint the same room.",
   },
   {
     topic: "say",
@@ -30,7 +30,8 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     topic: "take",
     aliases: ["take", "get"],
     summary: "Pick up something you can see.",
-    detail: "take key picks up a matching item in the room. Example: take key",
+    detail:
+      "take Small Copper Key picks up that item. If more than one key or weapon is visible, the game asks which one and names the full take command. Arrival only accepts the full key name.",
   },
   {
     topic: "drop",
@@ -50,7 +51,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["talk"],
     summary: "Talk to a nearby member of staff and discover quests.",
     detail:
-      "talk porter (or talk to Porter Bramble) starts a private, written conversation with a nearby NPC. Talk to Librarian Quill, Groundskeeper Tansy, or Headmaster Alder for a quest. Examine the named clues, then return and talk again. Type quests for your checklist. Use say to speak to other Collegians.",
+      "talk porter (or talk to Porter Bramble) starts a private, written conversation with a nearby NPC. If the staff offer choices, type say 1, say 2, say 3, say yes, or say no. Talk to Librarian Quill, Groundskeeper Tansy, or Headmaster Alder for a quest. Type quests for your checklist. Use say to speak to other Collegians.",
   },
   {
     topic: "inventory",
@@ -77,6 +78,19 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["help"],
     summary: "List commands, or explain one word.",
     detail: "help lists every command the Collegium understands today. help look explains look.",
+  },
+  {
+    topic: "where",
+    aliases: ["where", "place"],
+    summary: "Reprint the room you are in.",
+    detail:
+      "where and place reprint the current room title and description, the same truth as look.",
+  },
+  {
+    topic: "stats",
+    aliases: ["stats"],
+    summary: "Show health, location, and what you hold.",
+    detail: "stats prints your health, the room title, and the item in your hand.",
   },
   {
     topic: "quests",

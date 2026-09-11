@@ -23,7 +23,9 @@ export const itemTemplateSchema = z
     name: z.string().min(1),
     shortDescription: z.string().min(1),
     examineDescription: z.string().min(1),
-    category: z.enum(["key", "book", "ordinary"]),
+    category: z.enum(["key", "book", "weapon", "ordinary"]),
+    itemType: z.enum(["key", "book", "weapon", "sword", "staff", "sling", "ordinary"]).optional(),
+    training: z.boolean().optional(),
     unique: z.literal(true).default(true),
   })
   .strict()
@@ -31,6 +33,17 @@ export const itemTemplateSchema = z
     rejectMarkup(item.name, "name", ctx);
     rejectMarkup(item.shortDescription, "shortDescription", ctx);
     rejectMarkup(item.examineDescription, "examineDescription", ctx);
+    const primitive =
+      item.itemType ?? (item.category === "weapon" ? undefined : item.category);
+    if (item.category === "weapon" && !item.itemType) {
+      ctx.addIssue({ code: "custom", message: "weapon items must declare itemType" });
+    }
+    if (primitive && !item.name.toLowerCase().includes(primitive)) {
+      ctx.addIssue({
+        code: "custom",
+        message: `item name must include its type word "${primitive}"`,
+      });
+    }
   });
 
 export const itemPlacementSchema = z

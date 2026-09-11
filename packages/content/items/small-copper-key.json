@@ -5,5 +5,6 @@
   "shortDescription": "A small copper key.",
   "examineDescription": "The bow is worn smooth by many pockets.\nA faint green stain marks the bit.",
   "category": "key",
+  "itemType": "key",
   "unique": true
 }

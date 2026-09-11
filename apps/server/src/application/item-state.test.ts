@@ -13,6 +13,9 @@ describe("item-state starter copies", () => {
   it("seeds only shared room items from a fresh world", () => {
     const world = createDevWorld();
     expect(itemSeedsFromWorld(world).map((seed) => seed.id)).toEqual([
+      "item-practice-sling-south-orchard",
+      "item-practice-staff-south-orchard",
+      "item-practice-sword-south-orchard",
       "item-primer-library-stacks",
     ]);
   });

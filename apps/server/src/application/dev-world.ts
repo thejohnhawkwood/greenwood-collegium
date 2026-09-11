@@ -15,6 +15,9 @@ export function createDevWorld(): WorldState {
           name: item.name,
           examineDescription: item.examineDescription,
           roomId: item.roomId,
+          category: item.category,
+          itemType: item.itemType,
+          training: item.training,
         },
       ]),
     ),
@@ -25,6 +28,9 @@ export function createDevWorld(): WorldState {
           id: template.id,
           name: template.name,
           examineDescription: template.examineDescription,
+          category: template.category,
+          itemType: template.itemType,
+          training: template.training,
         },
       ]),
     ),
@@ -79,5 +85,6 @@ export function createDevWorld(): WorldState {
         },
       ]),
     ),
+    speciesProficiencies: { ...loaded.speciesProficiencies },
   };
 }

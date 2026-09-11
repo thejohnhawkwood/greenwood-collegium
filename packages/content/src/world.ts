@@ -1,3 +1,4 @@
+import { speciesProficiencyTable } from "./character-creation.js";
 import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import type { RoomFile } from "./schema.js";
@@ -21,6 +22,10 @@ export type LoadedRoom = {
     dialogue?: string;
     examineDescription?: string;
     lookDescription?: string;
+    dialogueTree?: {
+      start: string;
+      nodes: Record<string, { text: string; choices?: Array<{ say: string; label: string; next?: string }> }>;
+    };
   }>;
 };
 
@@ -30,6 +35,9 @@ export type LoadedItem = {
   name: string;
   examineDescription: string;
   roomId: string;
+  category?: "key" | "book" | "weapon" | "ordinary";
+  itemType?: string;
+  training?: boolean;
 };
 
 export type LoadedEnemy = {
@@ -82,6 +90,9 @@ export type LoadedItemTemplate = {
   id: string;
   name: string;
   examineDescription: string;
+  category?: "key" | "book" | "weapon" | "ordinary";
+  itemType?: string;
+  training?: boolean;
 };
 
 export type LoadedStarterPlacement = {
@@ -90,6 +101,8 @@ export type LoadedStarterPlacement = {
   name: string;
   examineDescription: string;
   roomId: string;
+  category?: "key" | "book" | "weapon" | "ordinary";
+  itemType?: string;
 };
 
 export type LoadedWorld = {
@@ -101,6 +114,7 @@ export type LoadedWorld = {
   enemies: Record<string, LoadedEnemy>;
   spells: Record<string, LoadedSpell>;
   quests: Record<string, LoadedQuest>;
+  speciesProficiencies: Record<string, string>;
 };
 
 export function toWorldState(
@@ -136,6 +150,7 @@ export function toWorldState(
         dialogue: fixture.dialogue,
         examineDescription: fixture.examineDescription,
         lookDescription: fixture.lookDescription,
+        dialogueTree: fixture.dialogueTree,
       })),
     };
   }
@@ -146,6 +161,9 @@ export function toWorldState(
       id: template.id,
       name: template.name,
       examineDescription: template.examineDescription,
+      category: template.category,
+      itemType: template.itemType,
+      training: template.training,
     };
   }
   const items: Record<string, LoadedItem> = {};
@@ -162,6 +180,8 @@ export function toWorldState(
         name: template.name,
         examineDescription: template.examineDescription,
         roomId: placement.roomId,
+        category: template.category,
+        itemType: template.itemType,
       });
       continue;
     }
@@ -171,6 +191,9 @@ export function toWorldState(
       name: template.name,
       examineDescription: template.examineDescription,
       roomId: placement.roomId,
+      category: template.category,
+      itemType: template.itemType,
+      training: template.training,
     };
   }
   const enemyTemplates = new Map(
@@ -241,5 +264,6 @@ export function toWorldState(
     enemies,
     spells,
     quests,
+    speciesProficiencies: speciesProficiencyTable(),
   };
 }

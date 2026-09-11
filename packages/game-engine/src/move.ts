@@ -3,12 +3,15 @@ import {
   mapDiscoveredEventSchema,
   renderClassicSegments,
   schemaVersion,
+  type EventEnvelope,
   type MapDiscoveredEvent,
   type RoomSnapshotEvent,
 } from "@greenwood/contracts";
+import { arrivalQuestActive, arrivalWalkNarration } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
+import { systemNotice } from "./system-notice.js";
 import {
   arrivalDirection,
   enteredNotices,
@@ -19,7 +22,7 @@ import type { EngineRuntime, MoveIntent, Room, WorldState } from "./state.js";
 
 export type MoveSuccess = {
   ok: true;
-  events: Array<MapDiscoveredEvent | RoomSnapshotEvent>;
+  events: Array<MapDiscoveredEvent | RoomSnapshotEvent | EventEnvelope>;
   notices: OccupantNotice[];
 };
 
@@ -81,10 +84,13 @@ export function handleMove(
   character.roomId = destination.id;
   const arrivals = charactersInRoom(world, destination.id, character.id);
 
-  const events: Array<MapDiscoveredEvent | RoomSnapshotEvent> = [];
+  const events: Array<MapDiscoveredEvent | RoomSnapshotEvent | EventEnvelope> = [];
   if (!character.discoveredRoomIds.includes(destination.id)) {
     character.discoveredRoomIds.push(destination.id);
     events.push(discoveryEvent(destination, runtime, character.id));
+  }
+  if (arrivalQuestActive(world, character.id)) {
+    events.push(systemNotice(character.id, arrivalWalkNarration(destination.title), runtime));
   }
 
   const look = handleLook(world, { verb: "look", characterId: character.id }, runtime);

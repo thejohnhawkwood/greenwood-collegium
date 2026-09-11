@@ -25,18 +25,18 @@ const arrivalTemplate: QuestTemplate = {
   reminderNarration: "Porter Bramble nods. Type help or quests.",
   experienceReward: 10,
   objectives: [
-    { id: "look", kind: "look", label: "Look around Lantern Court" },
-    { id: "speak", kind: "say", label: "Say hello so Porter knows you arrived" },
+    { id: "look", kind: "look", label: "Look around Lantern Court. Type look to see Lantern Court." },
+    { id: "speak", kind: "say", label: "Say hello so Porter knows you arrived." },
     {
       id: "take",
       kind: "take",
-      label: "Take the small copper key",
+      label: "Take the Small Copper Key from Porter. Type take Small Copper Key.",
       itemTemplateId: "small-copper-key",
     },
     {
       id: "arrive",
       kind: "visit",
-      label: "Walk north to the Great Hall",
+      label: "Type north to reach the Great Hall.",
       roomId: "great-hall",
     },
   ],
@@ -156,7 +156,7 @@ describe("Arrival at the Collegium", () => {
     expect(looked.ok).toBe(true);
     const afterLook = progressQuests(world, { characterId: "char-rowan", kind: "look" }, clock);
     expect(questUpdatedEventSchema.parse(afterLook[0]).payload.completedObjectives).toEqual([
-      "Look around Lantern Court",
+      "Look around Lantern Court. Type look to see Lantern Court.",
     ]);
 
     const said = handleSay(world, { verb: "say", characterId: "char-rowan", text: "hello" }, clock);
@@ -167,7 +167,7 @@ describe("Arrival at the Collegium", () => {
 
     const taken = handleTake(
       world,
-      { verb: "take", characterId: "char-rowan", target: "key" },
+      { verb: "take", characterId: "char-rowan", target: "Small Copper Key" },
       clock,
     );
     expect(taken.ok).toBe(true);
@@ -226,10 +226,10 @@ describe("Arrival at the Collegium", () => {
     ).toBe(true);
 
     expect(
-      handleTake(world, { verb: "take", characterId: "char-rowan", target: "key" }, clock).ok,
+      handleTake(world, { verb: "take", characterId: "char-rowan", target: "Small Copper Key" }, clock).ok,
     ).toBe(true);
     expect(
-      handleTake(world, { verb: "take", characterId: "char-moss", target: "key" }, clock).ok,
+      handleTake(world, { verb: "take", characterId: "char-moss", target: "Small Copper Key" }, clock).ok,
     ).toBe(true);
     const rowanTake = questUpdatedEventSchema.parse(
       progressQuests(world, { characterId: "char-rowan", kind: "take" }, clock)[0],
@@ -237,7 +237,11 @@ describe("Arrival at the Collegium", () => {
     const mossTake = questUpdatedEventSchema.parse(
       progressQuests(world, { characterId: "char-moss", kind: "take" }, clock)[0],
     );
-    expect(rowanTake.payload.completedObjectives).toContain("Take the small copper key");
-    expect(mossTake.payload.completedObjectives).toContain("Take the small copper key");
+    expect(rowanTake.payload.completedObjectives).toContain(
+      "Take the Small Copper Key from Porter. Type take Small Copper Key.",
+    );
+    expect(mossTake.payload.completedObjectives).toContain(
+      "Take the Small Copper Key from Porter. Type take Small Copper Key.",
+    );
   });
 });

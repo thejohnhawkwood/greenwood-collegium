@@ -54,6 +54,8 @@ export function ensureCharacterStarterItems(
       examineDescription: placement.examineDescription,
       roomId: placement.roomId,
       availableToCharacterId: characterId,
+      category: placement.category,
+      itemType: placement.itemType,
     };
     items[id] = instance;
     created.push(instance);

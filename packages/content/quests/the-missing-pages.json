@@ -5,27 +5,27 @@
   "giverNpcId": "npc-librarian-quill",
   "experienceReward": 10,
   "introNarration": "Quill opens A Small Guide to Remarkable Woodland Birds. \"The lantern-wren entry is missing. Read the Ink Blotter in the Scriptorium, west of these stacks, and the Folded Page in the Music Loft, west of the North Quad. Please examine both, then come back and talk quill. Leave the fragile page where it is; tell me where to collect it. We need a careful reader, not a tug-of-war.\"",
-  "reminderNarration": "Quill taps the gap in the field guide. \"Examine the Ink Blotter in the Scriptorium and the Folded Page in the Music Loft. Then talk quill here. Type quests to check your notes.\"",
+  "reminderNarration": "Quill taps the gap in the field guide. \"Examine the Ink Blotter in the Scriptorium and the Folded Page in the Music Loft. Then talk quill here. Type west to reach the Scriptorium. Type west to reach the Music Loft from the North Quad. Type east to reach Library Stacks. Type quests to check your notes.\"",
   "completionNarration": "Quill listens to your account of the copied birdsong and the wobbly music stand. \"An unfinished errand, then, not a thief.\" She writes down where to collect the page and prepares a proper wooden wedge for the stand. \"You found the missing words without inventing an accusation. That is good scholarship.\"",
   "objectives": [
     {
       "id": "read-blotter",
       "kind": "examine",
       "targetId": "object-ink-blotter",
-      "label": "Examine the Ink Blotter in the Scriptorium (west of Library Stacks)"
+      "label": "Examine the Ink Blotter in the Scriptorium (west of Library Stacks). Type west to reach the Scriptorium."
     },
     {
       "id": "find-page",
       "kind": "examine",
       "targetId": "object-folded-page",
-      "label": "Examine the Folded Page in the Music Loft (west of North Quad)"
+      "label": "Examine the Folded Page in the Music Loft (west of North Quad). Type west to reach the Music Loft."
     },
     {
       "id": "report",
       "kind": "talk",
       "targetId": "npc-librarian-quill",
       "requires": ["read-blotter", "find-page"],
-      "label": "After both discoveries, talk quill in Library Stacks"
+      "label": "After both discoveries, talk quill in Library Stacks. Type east to reach Library Stacks."
     }
   ]
 }

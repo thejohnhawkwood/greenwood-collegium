@@ -1,13 +1,13 @@
 [
-  { "id": "mouse", "name": "Mouse" },
-  { "id": "hare", "name": "Hare" },
-  { "id": "badger", "name": "Badger" },
-  { "id": "otter", "name": "Otter" },
-  { "id": "squirrel", "name": "Squirrel" },
-  { "id": "mole", "name": "Mole" },
-  { "id": "hedgehog", "name": "Hedgehog" },
-  { "id": "fox", "name": "Fox" },
-  { "id": "stoat", "name": "Stoat" },
-  { "id": "owl", "name": "Owl" },
-  { "id": "toad", "name": "Toad" }
+  { "id": "mouse", "name": "Mouse", "weaponProficiency": "sling" },
+  { "id": "hare", "name": "Hare", "weaponProficiency": "sword" },
+  { "id": "badger", "name": "Badger", "weaponProficiency": "staff" },
+  { "id": "otter", "name": "Otter", "weaponProficiency": "staff" },
+  { "id": "squirrel", "name": "Squirrel", "weaponProficiency": "sling" },
+  { "id": "mole", "name": "Mole", "weaponProficiency": "staff" },
+  { "id": "hedgehog", "name": "Hedgehog", "weaponProficiency": "staff" },
+  { "id": "fox", "name": "Fox", "weaponProficiency": "sword" },
+  { "id": "stoat", "name": "Stoat", "weaponProficiency": "sword" },
+  { "id": "owl", "name": "Owl", "weaponProficiency": "sling" },
+  { "id": "toad", "name": "Toad", "weaponProficiency": "staff" }
 ]

@@ -45,6 +45,14 @@ describe("parsePlayerCommand", () => {
       topic: "look",
     });
     expect(parsePlayerCommand("quests", "char-rowan")?.verb).toBe("quests");
+    expect(parsePlayerCommand("take", "char-rowan")).toEqual({
+      verb: "take",
+      characterId: "char-rowan",
+      target: "",
+    });
+    expect(parsePlayerCommand("where", "char-rowan")?.verb).toBe("look");
+    expect(parsePlayerCommand("place", "char-rowan")?.verb).toBe("look");
+    expect(parsePlayerCommand("stats", "char-rowan")?.verb).toBe("stats");
     expect(parsePlayerCommand("dance", "char-rowan")).toBeNull();
   });
 });

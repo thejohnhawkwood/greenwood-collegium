@@ -87,7 +87,7 @@ describe("inventory socket round trip", () => {
     ).toContain("Small Copper Key");
 
     const takeEvent = nextEventOfType(first, "item.taken");
-    const taken = await emitCommand(first, "cmd-take-key", "take key");
+    const taken = await emitCommand(first, "cmd-take-key", "take Small Copper Key");
     expect(taken).toMatchObject({ status: "accepted", message: "take" });
     expect(itemTakenEventSchema.parse(eventEnvelopeSchema.parse(await takeEvent)).narration).toBe(
       "You take the Small Copper Key.",
@@ -95,7 +95,7 @@ describe("inventory socket round trip", () => {
 
     second = await connectClient(address.port);
     const secondTakeEvent = nextEventOfType(second, "item.taken");
-    const secondTaken = await emitCommand(second, "cmd-take-key-too", "take key");
+    const secondTaken = await emitCommand(second, "cmd-take-key-too", "take Small Copper Key");
     expect(secondTaken).toMatchObject({ status: "accepted", message: "take" });
     expect(
       itemTakenEventSchema.parse(eventEnvelopeSchema.parse(await secondTakeEvent)).narration,

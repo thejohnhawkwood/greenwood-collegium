@@ -9,7 +9,7 @@ import {
   type ItemDroppedEvent,
 } from "@greenwood/contracts";
 import { rejectIfInCombat } from "./combat-state.js";
-import { itemsHeldBy, matchItems } from "./items.js";
+import { itemsHeldBy, resolveTypedItems, whichItemMessage } from "./items.js";
 import { charactersInRoom } from "./occupants.js";
 import type { OccupantNotice } from "./presence-events.js";
 import type { DropIntent, EngineRuntime, ItemInstance, WorldState } from "./state.js";
@@ -64,31 +64,23 @@ export function handleDrop(
     return blocked;
   }
 
-  const matches = matchItems(itemsHeldBy(world, character.id), intent.target);
-  if (matches.length === 0) {
+  const resolved = resolveTypedItems(itemsHeldBy(world, character.id), intent.target);
+  if (resolved.status === "none") {
     return {
       ok: false,
       code: "item_not_found",
       message: `You are not carrying "${intent.target}".`,
     };
   }
-  if (matches.length > 1) {
-    const names = matches.map((item) => item.name).join(", ");
+  if (resolved.status === "many") {
     return {
       ok: false,
       code: "item_ambiguous",
-      message: `Which did you mean: ${names}?`,
+      message: whichItemMessage("drop", resolved.typeWord, resolved.items),
     };
   }
 
-  const item = matches[0];
-  if (!item) {
-    return {
-      ok: false,
-      code: "item_not_found",
-      message: `You are not carrying "${intent.target}".`,
-    };
-  }
+  const item = resolved.item;
 
   item.holderCharacterId = undefined;
   item.roomId = room.id;

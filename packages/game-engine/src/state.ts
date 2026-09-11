@@ -3,11 +3,28 @@ export type RoomExit = {
   toRoomId: string;
 };
 
+export type DialogueChoice = {
+  say: string;
+  label: string;
+  next?: string;
+};
+
+export type DialogueNode = {
+  text: string;
+  choices?: DialogueChoice[];
+};
+
+export type DialogueTree = {
+  start: string;
+  nodes: Record<string, DialogueNode>;
+};
+
 export type RoomFixture = {
   id: string;
   name: string;
   kind: "npc" | "object";
   dialogue?: string;
+  dialogueTree?: DialogueTree;
   examineDescription?: string;
   lookDescription?: string;
 };
@@ -20,6 +37,11 @@ export type Room = {
   zone: string;
   exits: RoomExit[];
   fixtures: RoomFixture[];
+};
+
+export type OpenConversation = {
+  npcId: string;
+  nodeId: string;
 };
 
 export type Character = {
@@ -37,6 +59,9 @@ export type Character = {
   experience?: number;
   level?: number;
   encounterId?: string;
+  speciesId?: string;
+  equippedItemId?: string;
+  openConversation?: OpenConversation;
 };
 
 export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";
@@ -124,10 +149,15 @@ export type Encounter = {
   effects: StatusEffect[];
 };
 
+export type ItemCategory = "key" | "book" | "weapon" | "ordinary";
+
 export type ItemTemplateRecord = {
   id: string;
   name: string;
   examineDescription: string;
+  category?: ItemCategory;
+  itemType?: string;
+  training?: boolean;
 };
 
 export type StarterItemPlacement = {
@@ -136,6 +166,8 @@ export type StarterItemPlacement = {
   name: string;
   examineDescription: string;
   roomId: string;
+  category?: ItemCategory;
+  itemType?: string;
 };
 
 export type ItemInstance = {
@@ -146,6 +178,9 @@ export type ItemInstance = {
   roomId?: string;
   holderCharacterId?: string;
   availableToCharacterId?: string;
+  category?: ItemCategory;
+  itemType?: string;
+  training?: boolean;
 };
 
 export type WorldState = {
@@ -159,6 +194,7 @@ export type WorldState = {
   spells?: Record<string, SpellTemplate>;
   questTemplates?: Record<string, QuestTemplate>;
   quests?: Record<string, Record<string, QuestProgress>>;
+  speciesProficiencies?: Record<string, string>;
 };
 
 export type LookIntent = {
@@ -188,6 +224,7 @@ export type JoinIntent = {
   examineDescription?: string;
   experience?: number;
   level?: number;
+  speciesId?: string;
 };
 
 export type LeaveIntent = {
@@ -245,6 +282,11 @@ export type HelpIntent = {
 
 export type QuestsIntent = {
   verb: "quests";
+  characterId: string;
+};
+
+export type StatsIntent = {
+  verb: "stats";
   characterId: string;
 };
 
@@ -317,11 +359,10 @@ export type PlayerCommand =
   | CastIntent
   | HelpIntent
   | QuestsIntent
+  | StatsIntent
   | StaffCommand;
 
 export type EngineRuntime = {
   now(): Date;
   nextEventId(): string;
-  nextSequence(characterId: string): number;
-  random?(): number;
-};
+  nextSequence(chara
