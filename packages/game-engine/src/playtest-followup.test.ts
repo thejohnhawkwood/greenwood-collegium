@@ -174,7 +174,11 @@ function syntheticWorld(): WorldState {
         reminderNarration: "Type take Small Copper Key, then north to reach the Great Hall.",
         experienceReward: 10,
         objectives: [
-          { id: "look", kind: "look", label: "Look around Lantern Court. Type look to see Lantern Court." },
+          {
+            id: "look",
+            kind: "look",
+            label: "Look around Lantern Court. Type look to see Lantern Court.",
+          },
           { id: "speak", kind: "say", label: "Say hello so Porter knows you arrived." },
           {
             id: "take",
@@ -182,7 +186,12 @@ function syntheticWorld(): WorldState {
             label: "Type take Small Copper Key.",
             itemTemplateId: "small-copper-key",
           },
-          { id: "arrive", kind: "visit", label: "Type north to reach the Great Hall.", roomId: "great-hall" },
+          {
+            id: "arrive",
+            kind: "visit",
+            label: "Type north to reach the Great Hall.",
+            roomId: "great-hall",
+          },
         ],
       },
     },
@@ -214,16 +223,20 @@ describe("playtest follow-up synthetic Collegian", () => {
     expect(looked.ok && looked.event.narration).toContain("held by Porter Bramble");
     progressQuests(world, { characterId: "char-rowan", kind: "look" }, clock);
 
-    expect(handleSay(world, { verb: "say", characterId: "char-rowan", text: "hello" }, clock).ok).toBe(
-      true,
-    );
+    expect(
+      handleSay(world, { verb: "say", characterId: "char-rowan", text: "hello" }, clock).ok,
+    ).toBe(true);
     progressQuests(world, { characterId: "char-rowan", kind: "say" }, clock);
 
     const bare = handleTake(world, { verb: "take", characterId: "char-rowan", target: "" }, clock);
     expect(bare).toMatchObject({ ok: false, code: "item_not_found" });
     expect(bare.ok === false && bare.message).toContain("take Small Copper Key");
 
-    const shortcut = handleTake(world, { verb: "take", characterId: "char-rowan", target: "key" }, clock);
+    const shortcut = handleTake(
+      world,
+      { verb: "take", characterId: "char-rowan", target: "key" },
+      clock,
+    );
     expect(shortcut.ok).toBe(false);
     if (!shortcut.ok) {
       expect(shortcut.message).toContain("take Small Copper Key");
@@ -247,7 +260,11 @@ describe("playtest follow-up synthetic Collegian", () => {
     expect(stats.ok && stats.event.narration).toContain("Location: Lantern Court");
     expect(stats.ok && stats.event.narration).toContain("Small Copper Key");
 
-    const north = handleMove(world, { verb: "move", characterId: "char-rowan", direction: "north" }, clock);
+    const north = handleMove(
+      world,
+      { verb: "move", characterId: "char-rowan", direction: "north" },
+      clock,
+    );
     expect(north.ok).toBe(true);
     if (north.ok) {
       expect(north.events.some((event) => event.narration.includes("walks with you"))).toBe(true);
@@ -264,10 +281,16 @@ describe("playtest follow-up synthetic Collegian", () => {
     );
     expect(orchard.ok).toBe(true);
     if (orchard.ok) {
-      expect(orchard.events.some((event) => event.narration.includes("walks with you"))).toBe(false);
+      expect(orchard.events.some((event) => event.narration.includes("walks with you"))).toBe(
+        false,
+      );
     }
 
-    const which = handleTake(world, { verb: "take", characterId: "char-rowan", target: "weapon" }, clock);
+    const which = handleTake(
+      world,
+      { verb: "take", characterId: "char-rowan", target: "weapon" },
+      clock,
+    );
     expect(which.ok).toBe(false);
     if (!which.ok) {
       expect(which.message).toContain("Which weapon?");
@@ -306,13 +329,21 @@ describe("playtest follow-up synthetic Collegian", () => {
       expect(replied.events[0]?.narration).toContain("Hares prefer the sword");
     }
 
-    const roomSpeech = handleSay(world, { verb: "say", characterId: "char-rowan", text: "hello" }, clock);
+    const roomSpeech = handleSay(
+      world,
+      { verb: "say", characterId: "char-rowan", text: "hello" },
+      clock,
+    );
     expect(roomSpeech.ok).toBe(true);
     if (roomSpeech.ok) {
       expect(roomSpeech.events[0]?.type).toBe("chat.said");
     }
 
-    const talked = handleTalk(world, { verb: "talk", characterId: "char-rowan", target: "flint" }, clock);
+    const talked = handleTalk(
+      world,
+      { verb: "talk", characterId: "char-rowan", target: "flint" },
+      clock,
+    );
     expect(talked.ok).toBe(true);
     if (talked.ok) {
       expect(talked.events[0]?.narration).toContain("Type say 1");

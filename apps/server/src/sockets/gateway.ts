@@ -350,9 +350,7 @@ export async function attachRealtime(
         examineDescription: appearance.examine,
         experience: identity?.experience,
         level: identity?.level,
-        speciesId:
-          identity?.speciesId ??
-          ("speciesId" in claimed ? claimed.speciesId : undefined),
+        speciesId: identity?.speciesId ?? ("speciesId" in claimed ? claimed.speciesId : undefined),
       },
       runtime,
     );
@@ -791,13 +789,13 @@ export async function attachRealtime(
                       ? handleInventory(world, intent, runtime)
                       : intent.verb === "help"
                         ? handleHelp(world, intent, runtime)
-                    : intent.verb === "quests"
-                      ? handleQuests(world, intent, runtime)
-                      : intent.verb === "stats"
-                        ? handleStats(world, intent, runtime)
-                      : intent.verb === "attack"
-                            ? handleAttack(world, intent, runtime)
-                            : handleCast(world, intent, runtime);
+                        : intent.verb === "quests"
+                          ? handleQuests(world, intent, runtime)
+                          : intent.verb === "stats"
+                            ? handleStats(world, intent, runtime)
+                            : intent.verb === "attack"
+                              ? handleAttack(world, intent, runtime)
+                              : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -821,7 +819,9 @@ export async function attachRealtime(
       options.persistRoom &&
       result.ok &&
       "outcome" in result &&
-      result.outcome === "defeat"
+      result.outcome === "defeat" &&
+      "roomId" in result &&
+      typeof result.roomId === "string"
     ) {
       await options.persistRoom(characterId, result.roomId);
     }
@@ -831,6 +831,9 @@ export async function attachRealtime(
       options.persistItem &&
       result.ok &&
       "itemId" in result &&
+      typeof result.itemId === "string" &&
+      "roomId" in result &&
+      typeof result.roomId === "string" &&
       (!("persist" in result) || result.persist !== false)
     ) {
       const persisted =

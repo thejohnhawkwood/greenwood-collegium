@@ -24,7 +24,10 @@ export type LoadedRoom = {
     lookDescription?: string;
     dialogueTree?: {
       start: string;
-      nodes: Record<string, { text: string; choices?: Array<{ say: string; label: string; next?: string }> }>;
+      nodes: Record<
+        string,
+        { text: string; choices?: Array<{ say: string; label: string; next?: string }> }
+      >;
     };
   }>;
 };

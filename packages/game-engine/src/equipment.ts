@@ -7,13 +7,16 @@ export function equippedWeaponType(world: WorldState, character: Character): str
   }
   const item = Object.values(world.items ?? {}).find(
     (candidate) =>
-      candidate.id === character.equippedItemId || candidate.templateId === character.equippedItemId,
+      candidate.id === character.equippedItemId ||
+      candidate.templateId === character.equippedItemId,
   );
   if (item) {
     return item.itemType ?? (item.category === "weapon" ? itemTypeWord(item) : undefined);
   }
   const template = world.itemTemplates?.[character.equippedItemId];
-  return template?.itemType ?? (template?.category === "weapon" ? itemTypeWord(template) : undefined);
+  return (
+    template?.itemType ?? (template?.category === "weapon" ? itemTypeWord(template) : undefined)
+  );
 }
 
 export function speciesWeaponFit(

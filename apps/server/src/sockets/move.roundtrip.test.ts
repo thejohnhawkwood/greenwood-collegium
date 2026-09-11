@@ -87,10 +87,12 @@ describe("move socket round trip", () => {
     });
     const discovered = mapDiscoveredEventSchema.parse(eventEnvelopeSchema.parse(north.events[0]));
     const hall = roomSnapshotEventSchema.parse(
-      eventEnvelopeSchema.parse(north.events.find((event) => {
-        const parsed = eventEnvelopeSchema.safeParse(event);
-        return parsed.success && parsed.data.type === "room.snapshot";
-      })),
+      eventEnvelopeSchema.parse(
+        north.events.find((event) => {
+          const parsed = eventEnvelopeSchema.safeParse(event);
+          return parsed.success && parsed.data.type === "room.snapshot";
+        }),
+      ),
     );
     expect(discovered.payload.title).toBe("Great Hall");
     expect(hall.payload.title).toBe("Great Hall");

@@ -43,10 +43,7 @@ export function matchItems(candidates: readonly ItemInstance[], target: string):
   });
 }
 
-export function itemTypeWord(item: {
-  category?: string;
-  itemType?: string;
-}): string {
+export function itemTypeWord(item: { category?: string; itemType?: string }): string {
   if (item.itemType) {
     return item.itemType.toLowerCase();
   }

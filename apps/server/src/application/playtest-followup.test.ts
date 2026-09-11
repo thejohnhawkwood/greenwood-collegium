@@ -87,7 +87,11 @@ describe("synthetic Collegian on bundled content", () => {
       true,
     );
 
-    const failed = handleTake(world, { verb: "take", characterId: "char-rowan", target: "key" }, clock);
+    const failed = handleTake(
+      world,
+      { verb: "take", characterId: "char-rowan", target: "key" },
+      clock,
+    );
     expect(failed.ok).toBe(false);
     if (!failed.ok) {
       expect(failed.message).toContain("take Small Copper Key");
@@ -108,7 +112,11 @@ describe("synthetic Collegian on bundled content", () => {
 
     run(world, "char-rowan", "south", clock);
     run(world, "char-rowan", "south", clock);
-    const which = handleTake(world, { verb: "take", characterId: "char-rowan", target: "weapon" }, clock);
+    const which = handleTake(
+      world,
+      { verb: "take", characterId: "char-rowan", target: "weapon" },
+      clock,
+    );
     expect(which.ok).toBe(false);
     if (!which.ok) {
       expect(which.message).toContain("Which weapon?");
@@ -119,9 +127,11 @@ describe("synthetic Collegian on bundled content", () => {
     const staff = run(world, "char-rowan", "take Practice Staff", clock);
     expect(staff.some((event) => event.narration.includes("unwieldy"))).toBe(true);
     const tree = run(world, "char-rowan", "say 1", clock);
-    expect(tree.some((event) => event.narration.includes("proficiency") || event.narration.includes("sword"))).toBe(
-      true,
-    );
+    expect(
+      tree.some(
+        (event) => event.narration.includes("proficiency") || event.narration.includes("sword"),
+      ),
+    ).toBe(true);
     const flint = run(world, "char-rowan", "talk flint", clock);
     expect(flint.some((event) => event.narration.includes("Type say"))).toBe(true);
   });

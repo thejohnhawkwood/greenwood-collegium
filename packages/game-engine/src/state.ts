@@ -365,4 +365,6 @@ export type PlayerCommand =
 export type EngineRuntime = {
   now(): Date;
   nextEventId(): string;
-  nextSequence(chara
+  nextSequence(characterId: string): number;
+  random?(): number;
+};

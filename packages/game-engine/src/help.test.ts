@@ -33,7 +33,11 @@ function world(): WorldState {
         reminderNarration: "Still here.",
         experienceReward: 10,
         objectives: [
-          { id: "look", kind: "look", label: "Look around Lantern Court. Type look to see Lantern Court." },
+          {
+            id: "look",
+            kind: "look",
+            label: "Look around Lantern Court. Type look to see Lantern Court.",
+          },
           { id: "speak", kind: "say", label: "Say hello so Porter knows you arrived." },
         ],
       },
@@ -107,7 +111,9 @@ describe("help and quests", () => {
     if (result.ok) {
       expect(result.event.narration).toContain("Arrival at the Collegium (active)");
       expect(result.event.presentationKey).toBe("quest.journal");
-      expect(result.event.narration).toContain("Look around Lantern Court. Type look to see Lantern Court.");
+      expect(result.event.narration).toContain(
+        "Look around Lantern Court. Type look to see Lantern Court.",
+      );
       expect(result.event.narration).toContain("Say hello so Porter knows you arrived.");
     }
   });
