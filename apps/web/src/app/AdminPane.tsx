@@ -12,7 +12,7 @@ import {
 import {
   downloadTextFile,
   givenNameFromCollegian,
-  isActiveClassroomStudent,
+  isInPlayAccount,
   rosterCsv,
   unusedStudentTokenText,
   unusedStudentTokens,
@@ -85,7 +85,7 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
       value?.toLowerCase().includes(search.toLowerCase()),
     ),
   );
-  const activeStudents = (classroom?.accounts ?? []).filter(isActiveClassroomStudent);
+  const activeStudents = (classroom?.accounts ?? []).filter(isInPlayAccount);
 
   return (
     <aside className="admin-pane" aria-label="Teacher administration">
@@ -129,10 +129,10 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
         </nav>
         {tab === "Active" ? (
           <section aria-labelledby="active-students-heading">
-            <h3 id="active-students-heading">Active students</h3>
+            <h3 id="active-students-heading">In play now</h3>
             <p className="admin-hint">
-              Students with a Collegian. Rooms are the last place they entered. Remove disables the
-              login. Mute and timeout use the duration below each name.
+              Collegians with a live courtyard connection. Rooms come from where they are standing
+              now. A closed tab drops off this list. Mute and timeout are for students only.
             </p>
             {activeStudents.length ? (
               activeStudents.map((account) => (
@@ -144,7 +144,7 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
                 />
               ))
             ) : (
-              <p>No active students with a Collegian yet.</p>
+              <p>No one is in the courtyard right now.</p>
             )}
           </section>
         ) : null}
@@ -400,7 +400,7 @@ export function ActiveStudentCard({
         {account.username} → {account.characterName ?? "Character not submitted"}
       </h4>
       <p className="admin-hint">
-        {account.roomTitle ?? "Room not recorded yet"}
+        {account.role} · {account.roomTitle ?? "Room not recorded yet"}
         {account.mutedUntil
           ? ` · muted until ${new Date(account.mutedUntil).toLocaleString()}`
           : ""}
@@ -408,43 +408,57 @@ export function ActiveStudentCard({
           ? ` · timeout until ${new Date(account.timeoutUntil).toLocaleString()}`
           : ""}
       </p>
-      <label>
-        Reason / feedback
-        <input value={reason} maxLength={300} onChange={(event) => setReason(event.target.value)} />
-      </label>
-      <DurationSelect minutes={minutes} onChange={setMinutes} />
-      <div className="admin-buttons">
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() =>
-            void act({ action: "mute", accountId: account.accountId, minutes, reason })
-          }
-        >
-          Mute
-        </button>
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() =>
-            void act({ action: "timeout", accountId: account.accountId, minutes, reason })
-          }
-        >
-          Timeout
-        </button>
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() => {
-            if (
-              window.confirm(`${account.username}: Disable this account and remove them from play?`)
-            )
-              void act({ action: "disable", accountId: account.accountId, reason });
-          }}
-        >
-          Remove
-        </button>
-      </div>
+      {account.role === "student" ? (
+        <>
+          <label>
+            Reason / feedback
+            <input
+              value={reason}
+              maxLength={300}
+              onChange={(event) => setReason(event.target.value)}
+            />
+          </label>
+          <DurationSelect minutes={minutes} onChange={setMinutes} />
+          <div className="admin-buttons">
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() =>
+                void act({ action: "mute", accountId: account.accountId, minutes, reason })
+              }
+            >
+              Mute
+            </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() =>
+                void act({ action: "timeout", accountId: account.accountId, minutes, reason })
+              }
+            >
+              Timeout
+            </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => {
+                if (
+                  window.confirm(
+                    `${account.username}: Disable this account and remove them from play?`,
+                  )
+                )
+                  void act({ action: "disable", accountId: account.accountId, reason });
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        </>
+      ) : (
+        <p className="admin-hint">
+          Staff accounts stay on this list while you are in the courtyard.
+        </p>
+      )}
     </article>
   );
 }

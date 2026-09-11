@@ -59,6 +59,36 @@ import { createOperationQueue, type RunExclusive } from "../application/operatio
 
 export const DEFAULT_RECONNECT_GRACE_MS = 10_000;
 
+export type InPlaySeat = {
+  characterId: string;
+  accountId?: string;
+  roomId?: string;
+  roomTitle?: string;
+};
+
+export function echoInPlay(
+  sockets: Iterable<[string, { connected: boolean }]>,
+  identities: Map<string, { accountId: string }>,
+  world: {
+    characters: Record<string, { roomId?: string } | undefined>;
+    rooms: Record<string, { title?: string } | undefined>;
+  },
+): InPlaySeat[] {
+  const seats: InPlaySeat[] = [];
+  for (const [characterId, socket] of sockets) {
+    if (!socket.connected) continue;
+    const occupant = world.characters[characterId];
+    const roomId = occupant?.roomId;
+    seats.push({
+      characterId,
+      accountId: identities.get(characterId)?.accountId,
+      roomId,
+      roomTitle: roomId ? (world.rooms[roomId]?.title ?? roomId) : undefined,
+    });
+  }
+  return seats;
+}
+
 export type ClassroomReadModel = {
   invites: Array<{
     status: "unused" | "used" | "expired";
@@ -96,6 +126,7 @@ export type RealtimeOptions = {
   ) => Promise<void>;
   auditLog?: AuditLogRepository;
   listClassroom?: (actorAccountId: string) => Promise<ClassroomReadModel | undefined>;
+  bindInPlay?: (listInPlay: () => InPlaySeat[]) => void;
   disableAccount?: (
     actorAccountId: string,
     username: string,
@@ -983,6 +1014,7 @@ export async function attachRealtime(
     targetSocket?.disconnect(true);
   }
 
+  options.bindInPlay?.(() => echoInPlay(sockets, identities, world));
   return io;
 }
 

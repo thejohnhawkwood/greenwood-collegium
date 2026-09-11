@@ -145,9 +145,12 @@ describe("classroom auth service", () => {
       token: invite.token,
     });
     expect(after.invites[0]?.tokenHash).toBeTruthy();
-    expect(after.accounts).toEqual([
-      expect.objectContaining({ username: "pip", role: "student", status: "active" }),
-    ]);
+    expect(after.accounts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ username: "pip", role: "student", status: "active" }),
+        expect.objectContaining({ username: "owner", role: "teacher" }),
+      ]),
+    );
     await completeTestCharacter(auth, student.account.id, {
       name: "Pip",
       speciesId: "squirrel",
@@ -156,7 +159,7 @@ describe("classroom auth service", () => {
     const named = await auth.listClassroom(owner.account.id);
     expect(named.ok).toBe(true);
     if (named.ok) {
-      expect(named.accounts[0]).toMatchObject({
+      expect(named.accounts.find((row) => row.username === "pip")).toMatchObject({
         username: "pip",
         characterName: "Pip the Squirrel",
         roomId: "lantern-court",

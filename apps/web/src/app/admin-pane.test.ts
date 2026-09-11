@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { AuthSessionPublic } from "@greenwood/contracts";
 import { ActiveStudentCard, AdminPane } from "./AdminPane.js";
-import { givenNameFromCollegian, isActiveClassroomStudent } from "./classroom-data.js";
+import { givenNameFromCollegian, isInPlayAccount } from "./classroom-data.js";
 import { AcademyFrame } from "./academy-frame.js";
 import { ApprovalGate } from "./ApprovalGate.js";
 import { shouldShowCharacterGate } from "./character-gate.js";
@@ -34,10 +34,10 @@ describe("teacher and approval presentation", () => {
     expect(html).toContain("Roster");
     expect(html).toContain("Transcript");
   });
-  it("treats active students with a Collegian as the Active tab list", () => {
+  it("treats only live courtyard seats as the Active tab list", () => {
     expect(givenNameFromCollegian("Hazel the Mouse")).toBe("Hazel");
     expect(
-      isActiveClassroomStudent({
+      isInPlayAccount({
         accountId: "fixture",
         username: "pip",
         role: "student",
@@ -46,15 +46,19 @@ describe("teacher and approval presentation", () => {
         characterId: "char-1",
         characterName: "Hazel the Mouse",
         roomTitle: "Lantern Court",
+        inPlay: true,
       }),
     ).toBe(true);
     expect(
-      isActiveClassroomStudent({
+      isInPlayAccount({
         accountId: "fixture",
         username: "pip",
         role: "student",
         status: "active",
         createdAt: "2026-09-11T00:00:00.000Z",
+        characterId: "char-1",
+        characterName: "Hazel the Mouse",
+        roomTitle: "Lantern Court",
       }),
     ).toBe(false);
     const active = renderToStaticMarkup(

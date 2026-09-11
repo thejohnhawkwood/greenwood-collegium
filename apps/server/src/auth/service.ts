@@ -344,12 +344,13 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     if (actor.role === "student") {
       return fail("forbidden", "Students cannot read the classroom roster.");
     }
-    const [invites, students, teachers] = await Promise.all([
+    const [invites, students, teachers, owners] = await Promise.all([
       deps.invites.list(),
       deps.accounts.listByRole("student"),
       deps.accounts.listByRole("teacher"),
+      deps.accounts.listByRole("owner"),
     ]);
-    const listed = [...students, ...teachers].sort((left, right) =>
+    const listed = [...students, ...teachers, ...owners].sort((left, right) =>
       left.username.localeCompare(right.username),
     );
     const names = new Map<string, string>();
@@ -408,7 +409,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         nameReview: reviews.get(account.id),
         mutedUntil: states.get(account.id)?.mutedUntil,
         timeoutUntil: states.get(account.id)?.timeoutUntil,
-        role: account.role === "teacher" ? ("teacher" as const) : ("student" as const),
+        role: account.role === "student" ? ("student" as const) : ("teacher" as const),
         status: account.status,
         createdAt: account.createdAt,
         characterName: names.get(account.id),

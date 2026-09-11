@@ -4,8 +4,8 @@ import {
   type AuthClassroomAccount,
 } from "@greenwood/contracts";
 
-export function isActiveClassroomStudent(account: AuthClassroomAccount): boolean {
-  return account.role === "student" && account.status === "active" && Boolean(account.characterId);
+export function isInPlayAccount(account: AuthClassroomAccount): boolean {
+  return account.inPlay === true;
 }
 
 export function givenNameFromCollegian(characterName: string | undefined): string {

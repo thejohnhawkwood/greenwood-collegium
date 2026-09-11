@@ -108,6 +108,7 @@ describe("classroom HTTP boundaries", () => {
       characterId: expect.any(String),
       roomId: "lantern-court",
       roomTitle: "Lantern Court",
+      inPlay: false,
     });
     const renamed = await s.app.inject({
       method: "POST",

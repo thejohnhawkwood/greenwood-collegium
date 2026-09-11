@@ -140,6 +140,7 @@ export const authClassroomAccountSchema = z.object({
   characterName: z.string().optional(),
   roomId: z.string().optional(),
   roomTitle: z.string().optional(),
+  inPlay: z.boolean().optional(),
 });
 
 export const authClassroomSchema = z.object({

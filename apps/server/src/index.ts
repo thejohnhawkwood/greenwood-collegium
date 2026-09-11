@@ -25,7 +25,7 @@ import {
   PostgresQuestRepository,
   PostgresSessionRepository,
 } from "./persistence/postgres.js";
-import { attachRealtime } from "./sockets/gateway.js";
+import { attachRealtime, type InPlaySeat } from "./sockets/gateway.js";
 import {
   PostgresClassroomResetRepository,
   PostgresModerationRepository,
@@ -121,6 +121,7 @@ if (!process.env.ADMIN_BOOTSTRAP_TOKEN?.trim()) {
   app.log.warn("ADMIN_BOOTSTRAP_TOKEN is unset; owner bootstrap will reject every token");
 }
 
+const inPlay = { list: (): InPlaySeat[] => [] };
 await registerAuthRoutes(app, {
   runExclusive,
   chatPaused: () => stores.moderation.chatPaused(),
@@ -133,6 +134,7 @@ await registerAuthRoutes(app, {
   allowGuestPlay,
   secureCookies: production,
   persistence: persistence ? "postgres" : "memory",
+  listInPlay: () => inPlay.list(),
 });
 await registerClassroomRoutes(app, { auth, classroom, runExclusive });
 await classroom.prune();
@@ -174,6 +176,9 @@ await attachRealtime(app, world, {
   listClassroom: async (actorAccountId) => {
     const result = await auth.listClassroom(actorAccountId);
     return result.ok ? result : undefined;
+  },
+  bindInPlay: (listInPlay) => {
+    inPlay.list = listInPlay;
   },
   disableAccount: async (actorAccountId, username) => {
     const result = await auth.disableAccountByUsername(actorAccountId, username);

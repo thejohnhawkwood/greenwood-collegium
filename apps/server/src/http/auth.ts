@@ -18,6 +18,7 @@ import { RateLimiter } from "../application/rate-limit.js";
 import { createOperationQueue, type RunExclusive } from "../application/operation-queue.js";
 import { hashToken } from "../auth/tokens.js";
 import type { AuthFailure, AuthService, SignedIn } from "../auth/service.js";
+import type { InPlaySeat } from "../sockets/gateway.js";
 import { SESSION_TTL_MS } from "../auth/service.js";
 import {
   expiredSessionCookie,
@@ -37,7 +38,36 @@ export type AuthHttpDependencies = {
   allowGuestPlay: boolean;
   secureCookies: boolean;
   persistence?: "memory" | "postgres";
+  listInPlay?: () => InPlaySeat[];
 };
+
+export function applyInPlay<
+  T extends {
+    accountId: string;
+    characterId?: string;
+    roomId?: string;
+    roomTitle?: string;
+  },
+>(
+  accounts: T[],
+  seats: InPlaySeat[],
+): Array<T & { inPlay: boolean; roomId?: string; roomTitle?: string }> {
+  const byCharacter = new Map(seats.map((seat) => [seat.characterId, seat]));
+  const byAccount = new Map(
+    seats.flatMap((seat) => (seat.accountId ? [[seat.accountId, seat] as const] : [])),
+  );
+  return accounts.map((account) => {
+    const seat =
+      (account.characterId ? byCharacter.get(account.characterId) : undefined) ??
+      byAccount.get(account.accountId);
+    return {
+      ...account,
+      inPlay: Boolean(seat),
+      roomId: seat?.roomId ?? account.roomId,
+      roomTitle: seat?.roomTitle ?? account.roomTitle,
+    };
+  });
+}
 
 const failureStatus: Record<AuthFailure["code"], number> = {
   invalid_bootstrap: 401,
@@ -112,15 +142,18 @@ export async function registerAuthRoutes(
         username: invite.username,
         characterName: invite.characterName,
       })),
-      accounts: result.accounts.map((account) => ({
-        ...account,
-        accountId: account.accountId,
-        username: account.username,
-        role: account.role,
-        status: account.status,
-        createdAt: account.createdAt.toISOString(),
-        characterName: account.characterName,
-      })),
+      accounts: applyInPlay(
+        result.accounts.map((account) => ({
+          ...account,
+          accountId: account.accountId,
+          username: account.username,
+          role: account.role,
+          status: account.status,
+          createdAt: account.createdAt.toISOString(),
+          characterName: account.characterName,
+        })),
+        deps.listInPlay?.() ?? [],
+      ),
     });
   });
 

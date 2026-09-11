@@ -6,7 +6,7 @@ import {
   createTestAuth,
   TEST_BOOTSTRAP_TOKEN,
 } from "../auth/test-harness.js";
-import { registerAuthRoutes } from "./auth.js";
+import { applyInPlay, registerAuthRoutes } from "./auth.js";
 
 describe("auth HTTP", () => {
   let app: Awaited<ReturnType<typeof buildApp>> | undefined;
@@ -230,7 +230,7 @@ describe("auth HTTP", () => {
     expect(unused.json()).toMatchObject({
       persistence: "memory",
       invites: [{ status: "unused", token, role: "student" }],
-      accounts: [],
+      accounts: [{ username: "owner", role: "teacher" }],
     });
 
     const accepted = await app.inject({
@@ -249,7 +249,10 @@ describe("auth HTTP", () => {
     expect(used.json()).toMatchObject({
       persistence: "memory",
       invites: [{ status: "used", username: "pip", token }],
-      accounts: [{ username: "pip", role: "student" }],
+      accounts: expect.arrayContaining([
+        expect.objectContaining({ username: "pip", role: "student", inPlay: false }),
+        expect.objectContaining({ username: "owner", role: "teacher" }),
+      ]),
     });
     expect(JSON.stringify(used.json())).toContain(token);
     expect(JSON.stringify(used.json())).not.toContain("lantern-path");
@@ -272,6 +275,39 @@ describe("auth HTTP", () => {
         })
       ).json(),
     ).toMatchObject({ message: "Use the teacher sign-in below." });
+  });
+
+  it("marks only live courtyard seats as in play", () => {
+    expect(
+      applyInPlay(
+        [
+          {
+            accountId: "acct-live",
+            characterId: "char-live",
+            roomId: "lantern-court",
+            roomTitle: "Lantern Court",
+          },
+          { accountId: "acct-away", characterId: "char-away" },
+        ],
+        [
+          {
+            characterId: "char-live",
+            accountId: "acct-live",
+            roomId: "great-hall",
+            roomTitle: "Great Hall",
+          },
+        ],
+      ),
+    ).toEqual([
+      {
+        accountId: "acct-live",
+        characterId: "char-live",
+        inPlay: true,
+        roomId: "great-hall",
+        roomTitle: "Great Hall",
+      },
+      { accountId: "acct-away", characterId: "char-away", inPlay: false },
+    ]);
   });
 });
 
