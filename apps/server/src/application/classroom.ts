@@ -155,6 +155,21 @@ export function createClassroomService(deps: ClassroomDeps) {
     } else if (action.action === "kick") {
       disconnect = true;
       message = "Your teacher has disconnected you from the realm.";
+    } else if (action.action === "rename-character") {
+      const renamed = await deps.auth.renameCharacter(target.id, action.name);
+      if (!renamed.ok) {
+        throw new ClassroomError(
+          renamed.code === "duplicate_character_name" ? 409 : 400,
+          renamed.message,
+        );
+      }
+      const review = await deps.auth.reviewStatus(target.id);
+      if (!review.revision) {
+        throw new ClassroomError(409, "That Collegian could not be renamed.");
+      }
+      state.review = { revision: review.revision, status: "approved" };
+      disconnect = true;
+      message = `Your teacher changed your Collegian name to ${renamed.characterName}.`;
     }
     // A separate audit outage must not leave a removed character in the live world.
     // The caller still receives an error and must refresh before retrying.

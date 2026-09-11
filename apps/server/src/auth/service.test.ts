@@ -159,6 +159,8 @@ describe("classroom auth service", () => {
       expect(named.accounts[0]).toMatchObject({
         username: "pip",
         characterName: "Pip the Squirrel",
+        roomId: "lantern-court",
+        roomTitle: "Lantern Court",
       });
     }
     expect(await auth.listClassroom(student.account.id)).toMatchObject({

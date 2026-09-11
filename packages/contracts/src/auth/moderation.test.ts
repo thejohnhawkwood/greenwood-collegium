@@ -22,6 +22,20 @@ describe("moderation request boundaries", () => {
     expect(
       moderationActionSchema.safeParse({ action: "promote-owner", accountId: "fixture" }).success,
     ).toBe(false);
+    expect(
+      moderationActionSchema.safeParse({
+        action: "rename-character",
+        accountId: "fixture",
+        name: "Fern",
+      }).success,
+    ).toBe(true);
+    expect(
+      moderationActionSchema.safeParse({
+        action: "rename-character",
+        accountId: "fixture",
+        name: "Fern the Hare",
+      }).success,
+    ).toBe(false);
   });
   it("requires explicit reset wording and validates pagination", () => {
     expect(resetRequestSchema.safeParse({ revision: "r", confirmation: "yes" }).success).toBe(

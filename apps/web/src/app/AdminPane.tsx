@@ -83,6 +83,7 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
       value?.toLowerCase().includes(search.toLowerCase()),
     ),
   );
+  const activeStudents = (classroom?.accounts ?? []).filter(isActiveClassroomStudent);
 
   return (
     <aside className="admin-pane" aria-label="Teacher administration">
@@ -108,7 +109,7 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
             (classroom ? `${pending.length} names waiting for review.` : "Loading classroom…")}
         </p>
         <nav className="admin-tabs" aria-label="Teacher sections">
-          {["Approvals", "Roster", "Speech", "History"].map((name) => (
+          {["Active", "Approvals", "Roster", "Speech", "History"].map((name) => (
             <button
               key={name}
               type="button"
@@ -116,10 +117,35 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
               onClick={() => setTab(name)}
             >
               {name}
-              {name === "Approvals" ? ` (${pending.length})` : ""}
+              {name === "Approvals"
+                ? ` (${pending.length})`
+                : name === "Active"
+                  ? ` (${activeStudents.length})`
+                  : ""}
             </button>
           ))}
         </nav>
+        {tab === "Active" ? (
+          <section aria-labelledby="active-students-heading">
+            <h3 id="active-students-heading">Active students</h3>
+            <p className="admin-hint">
+              Students with a Collegian. Rooms are the last place they entered. Remove disables the
+              login. Mute and timeout use the duration below each name.
+            </p>
+            {activeStudents.length ? (
+              activeStudents.map((account) => (
+                <ActiveStudentCard
+                  key={account.accountId}
+                  account={account}
+                  busy={busy}
+                  act={action}
+                />
+              ))
+            ) : (
+              <p>No active students with a Collegian yet.</p>
+            )}
+          </section>
+        ) : null}
         {tab === "Approvals" ? (
           <section aria-labelledby="approval-queue-heading">
             <h3 id="approval-queue-heading">Name approval</h3>
@@ -329,6 +355,108 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
   );
 }
 
+export function isActiveClassroomStudent(account: AuthClassroomAccount): boolean {
+  return account.role === "student" && account.status === "active" && Boolean(account.characterId);
+}
+
+export function givenNameFromCollegian(characterName: string | undefined): string {
+  if (!characterName) return "";
+  const marker = " the ";
+  const index = characterName.lastIndexOf(marker);
+  return index > 0 ? characterName.slice(0, index) : characterName;
+}
+
+function DurationSelect({
+  minutes,
+  onChange,
+}: {
+  minutes: number;
+  onChange: (minutes: number) => void;
+}) {
+  return (
+    <label>
+      Duration
+      <select value={minutes} onChange={(event) => onChange(Number(event.target.value))}>
+        {[1, 5, 10, 30, 60, 1440].map((value) => (
+          <option key={value} value={value}>
+            {value < 60 ? `${value} minutes` : value === 60 ? "1 hour" : "1 day"}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+export function ActiveStudentCard({
+  account,
+  busy,
+  act,
+}: {
+  account: AuthClassroomAccount;
+  busy: boolean;
+  act: (action: ModerationAction) => Promise<void>;
+}) {
+  const [reason, setReason] = useState("");
+  const [minutes, setMinutes] = useState(10);
+  return (
+    <article className="admin-account">
+      <h4>
+        {account.username} → {account.characterName ?? "Character not submitted"}
+      </h4>
+      <p className="admin-hint">
+        {account.roomTitle ?? "Room not recorded yet"}
+        {account.mutedUntil ? ` · muted until ${new Date(account.mutedUntil).toLocaleString()}` : ""}
+        {account.timeoutUntil
+          ? ` · timeout until ${new Date(account.timeoutUntil).toLocaleString()}`
+          : ""}
+      </p>
+      <label>
+        Reason / feedback
+        <input
+          value={reason}
+          maxLength={300}
+          onChange={(event) => setReason(event.target.value)}
+        />
+      </label>
+      <DurationSelect minutes={minutes} onChange={setMinutes} />
+      <div className="admin-buttons">
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() =>
+            void act({ action: "mute", accountId: account.accountId, minutes, reason })
+          }
+        >
+          Mute
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() =>
+            void act({ action: "timeout", accountId: account.accountId, minutes, reason })
+          }
+        >
+          Timeout
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => {
+            if (
+              window.confirm(
+                `${account.username}: Disable this account and remove them from play?`,
+              )
+            )
+              void act({ action: "disable", accountId: account.accountId, reason });
+          }}
+        >
+          Remove
+        </button>
+      </div>
+    </article>
+  );
+}
+
 function AccountCard({
   account,
   approval = false,
@@ -342,6 +470,12 @@ function AccountCard({
 }) {
   const [reason, setReason] = useState("");
   const [minutes, setMinutes] = useState(10);
+  const [collegianName, setCollegianName] = useState(() =>
+    givenNameFromCollegian(account.characterName),
+  );
+  useEffect(() => {
+    setCollegianName(givenNameFromCollegian(account.characterName));
+  }, [account.characterName]);
   function confirmAction(action: "disable" | "remove-character") {
     const description =
       action === "disable"
@@ -384,6 +518,38 @@ function AccountCard({
               onChange={(event) => setReason(event.target.value)}
             />
           </label>
+          {!approval && account.characterId ? (
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                void act({
+                  action: "rename-character",
+                  accountId: account.accountId,
+                  name: collegianName,
+                  reason,
+                });
+              }}
+            >
+              <label>
+                Collegian given name
+                <input
+                  value={collegianName}
+                  maxLength={24}
+                  minLength={2}
+                  required
+                  autoComplete="off"
+                  onChange={(event) => setCollegianName(event.target.value)}
+                />
+              </label>
+              <p className="admin-hint">
+                Enter a given name. The Collegium adds the species. The student reconnects with the
+                new name.
+              </p>
+              <button disabled={busy || !collegianName.trim()} type="submit">
+                Change Collegian name
+              </button>
+            </form>
+          ) : null}
           {approval && account.nameReview?.revision ? (
             <div className="admin-buttons">
               <button
@@ -422,19 +588,7 @@ function AccountCard({
               {account.timeoutUntil ? (
                 <p>Timeout ends: {new Date(account.timeoutUntil).toLocaleString()}</p>
               ) : null}
-              <label>
-                Duration
-                <select
-                  value={minutes}
-                  onChange={(event) => setMinutes(Number(event.target.value))}
-                >
-                  {[1, 5, 10, 30, 60, 1440].map((value) => (
-                    <option key={value} value={value}>
-                      {value < 60 ? `${value} minutes` : value === 60 ? "1 hour" : "1 day"}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <DurationSelect minutes={minutes} onChange={setMinutes} />
               <div className="admin-buttons">
                 {(["mute", "timeout"] as const).map((action) => (
                   <button

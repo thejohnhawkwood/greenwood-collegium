@@ -2,7 +2,12 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { AuthSessionPublic } from "@greenwood/contracts";
-import { AdminPane } from "./AdminPane.js";
+import {
+  ActiveStudentCard,
+  AdminPane,
+  givenNameFromCollegian,
+  isActiveClassroomStudent,
+} from "./AdminPane.js";
 import { AcademyFrame } from "./academy-frame.js";
 import { ApprovalGate } from "./ApprovalGate.js";
 import { shouldShowCharacterGate } from "./character-gate.js";
@@ -29,7 +34,53 @@ describe("teacher and approval presentation", () => {
     expect(html).toContain("has-admin");
     expect(html).toContain('aria-label="Teacher administration"');
     expect(html).toContain("Pause student chat");
+    expect(html).toContain("Active");
+    expect(html).toContain("Roster");
     expect(html).toContain("Transcript");
+  });
+  it("treats active students with a Collegian as the Active tab list", () => {
+    expect(givenNameFromCollegian("Hazel the Mouse")).toBe("Hazel");
+    expect(
+      isActiveClassroomStudent({
+        accountId: "fixture",
+        username: "pip",
+        role: "student",
+        status: "active",
+        createdAt: "2026-09-11T00:00:00.000Z",
+        characterId: "char-1",
+        characterName: "Hazel the Mouse",
+        roomTitle: "Lantern Court",
+      }),
+    ).toBe(true);
+    expect(
+      isActiveClassroomStudent({
+        accountId: "fixture",
+        username: "pip",
+        role: "student",
+        status: "active",
+        createdAt: "2026-09-11T00:00:00.000Z",
+      }),
+    ).toBe(false);
+    const active = renderToStaticMarkup(
+      createElement(ActiveStudentCard, {
+        busy: false,
+        act: async () => undefined,
+        account: {
+          accountId: "fixture",
+          username: "pip",
+          role: "student",
+          status: "active",
+          createdAt: "2026-09-11T00:00:00.000Z",
+          characterId: "char-1",
+          characterName: "Hazel the Mouse",
+          roomTitle: "Lantern Court",
+        },
+      }),
+    );
+    expect(active).toContain("Lantern Court");
+    expect(active).toContain("Mute");
+    expect(active).toContain("Timeout");
+    expect(active).toContain("Remove");
   });
   it("shows submitted names and retention information while waiting outside the realm", () => {
     const html = renderToStaticMarkup(

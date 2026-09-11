@@ -48,6 +48,20 @@ export const moderationActionSchema = z.discriminatedUnion("action", [
     accountId: target,
     reason,
   }),
+  z.object({
+    action: z.literal("rename-character"),
+    accountId: target,
+    name: z
+      .string()
+      .trim()
+      .min(2)
+      .max(24)
+      .regex(/^[A-Za-z][A-Za-z '-]*$/)
+      .refine((value) => !value.includes(" the "), {
+        message: "Enter a given name. The Collegium will add the species.",
+      }),
+    reason,
+  }),
   z.object({ action: z.literal("chat-pause"), paused: z.boolean(), reason }),
 ]);
 export type ModerationAction = z.infer<typeof moderationActionSchema>;

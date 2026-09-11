@@ -3,6 +3,7 @@ import {
   isKnownGender,
   isKnownSpecies,
   listSpecies,
+  loadBundledWorld,
   reservedCharacterNames,
   suggestedCharacterNames,
   characterCreationIntro,
@@ -92,6 +93,8 @@ export type ClassroomAccount = {
   status: AccountRecord["status"];
   createdAt: Date;
   characterName?: string;
+  roomId?: string;
+  roomTitle?: string;
 };
 
 export type PlayIdentity = {
@@ -166,6 +169,10 @@ export type AuthService = {
       gender: NonNullable<CharacterRecord["gender"]>;
     },
   ): Promise<{ ok: true; character: CharacterRecord } | AuthFailure>;
+  renameCharacter(
+    accountId: string,
+    name: string,
+  ): Promise<{ ok: true; characterName: string } | AuthFailure>;
 };
 
 export type AuthServiceDeps = {
@@ -347,6 +354,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     );
     const names = new Map<string, string>();
     const characterIds = new Map<string, string>();
+    const rooms = new Map<string, { roomId: string; roomTitle: string }>();
     const states = new Map<string, ModerationState>();
     const reviews = new Map<string, NameReview>();
     const usernames = new Map<string, string>();
@@ -356,7 +364,13 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       const state = await deps.moderation.get(account.id);
       states.set(account.id, state);
       reviews.set(account.id, nameReview(account, character, state));
-      if (character) characterIds.set(account.id, character.id);
+      if (character) {
+        characterIds.set(account.id, character.id);
+        rooms.set(account.id, {
+          roomId: character.roomId,
+          roomTitle: titleForRoom(character.roomId),
+        });
+      }
       if (character && isCharacterComplete(character)) {
         names.set(account.id, formatCharacterName(character.name, character.speciesId));
       }
@@ -398,6 +412,8 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         status: account.status,
         createdAt: account.createdAt,
         characterName: names.get(account.id),
+        roomId: rooms.get(account.id)?.roomId,
+        roomTitle: rooms.get(account.id)?.roomTitle,
       })),
     };
   }
@@ -582,6 +598,46 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     }
   }
 
+  async function renameCharacter(
+    accountId: string,
+    name: string,
+  ): Promise<{ ok: true; characterName: string } | AuthFailure> {
+    const account = await deps.accounts.getById(accountId);
+    if (!account) {
+      return fail("unauthenticated", "That account is not available.");
+    }
+    const existing = await findCharacter(account.id);
+    if (!existing || !isCharacterComplete(existing) || !existing.gender) {
+      return fail("character_incomplete", "This student does not have a Collegian to rename.");
+    }
+    const givenName = titleCharacterName(name);
+    const nameCheck = validateGivenName(givenName);
+    if (nameCheck) {
+      return nameCheck;
+    }
+    const taken = await deps.characters.getByNormalizedName(givenName);
+    if (taken && taken.id !== existing.id) {
+      return fail("duplicate_character_name", "That name is already taken.");
+    }
+    try {
+      const character = await deps.characters.updateCreation(existing.id, {
+        name: givenName,
+        speciesId: existing.speciesId,
+        gender: existing.gender,
+        creationCompletedAt: existing.creationCompletedAt ?? now(),
+      });
+      return {
+        ok: true,
+        characterName: formatCharacterName(character.name, character.speciesId),
+      };
+    } catch (error) {
+      if (error instanceof DuplicateCharacterNameError) {
+        return fail("duplicate_character_name", "That name is already taken.");
+      }
+      throw error;
+    }
+  }
+
   async function issueSocketTicket(accountId: string): Promise<string | undefined> {
     if (!(await playIdentityForAccount(accountId))) {
       return undefined;
@@ -681,6 +737,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     characterOptions,
     suggestCharacterName,
     completeCharacter,
+    renameCharacter,
   };
 }
 
@@ -737,4 +794,26 @@ function titleCharacterName(name: string): string {
 
 function fail(code: AuthFailureCode, message: string): AuthFailure {
   return { ok: false, code, message };
+}
+
+let bundledRoomTitles: Map<string, string> | undefined;
+
+function titleForRoom(roomId: string): string {
+  if (!bundledRoomTitles) {
+    try {
+      bundledRoomTitles = new Map(
+        Object.values(loadBundledWorld().rooms).map((room) => [room.id, room.title]),
+      );
+    } catch {
+      bundledRoomTitles = new Map();
+    }
+  }
+  return (
+    bundledRoomTitles.get(roomId) ??
+    roomId
+      .split("-")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ")
+  );
 }

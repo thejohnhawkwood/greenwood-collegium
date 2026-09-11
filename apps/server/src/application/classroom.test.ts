@@ -100,6 +100,49 @@ describe("classroom admission and controls", () => {
     expect(invite?.characterId).toBe(s.character.id);
     expect(account?.inviteReference).toBe(invite?.id);
     expect(account?.characterName).toBe("Hazel the Mouse");
+    expect(account?.roomId).toBe("lantern-court");
+    expect(account?.roomTitle).toBe("Lantern Court");
+  });
+
+  it("lets a teacher change a Collegian name and keeps the student approved", async () => {
+    const s = await setup();
+    await s.classroom.moderate(s.owner.account.id, {
+      action: "approve",
+      accountId: s.student.account.id,
+      revision: (await s.auth.reviewStatus(s.student.account.id)).revision ?? "",
+    });
+    await s.classroom.moderate(s.owner.account.id, {
+      action: "rename-character",
+      accountId: s.student.account.id,
+      name: "Fern",
+      reason: "Classroom roster",
+    });
+    expect((await s.auth.reviewStatus(s.student.account.id)).status).toBe("approved");
+    const roster = await s.auth.listClassroom(s.owner.account.id);
+    if (!roster.ok) throw new Error(roster.message);
+    expect(roster.accounts.find((row) => row.accountId === s.student.account.id)).toMatchObject({
+      characterName: "Fern the Mouse",
+    });
+    const other = await s.auth.acceptInvite({
+      token: s.batch.tokens[1] ?? "",
+      username: "other",
+      password: "fictional-password",
+    });
+    if (!other.ok) throw new Error(other.message);
+    const otherCharacter = await s.auth.completeCharacter(other.account.id, {
+      name: "Nettle",
+      speciesId: "hedgehog",
+      gender: "male",
+    });
+    if (!otherCharacter.ok) throw new Error(otherCharacter.message);
+    await expect(
+      s.classroom.moderate(s.owner.account.id, {
+        action: "rename-character",
+        accountId: s.student.account.id,
+        name: "Nettle",
+        reason: "",
+      }),
+    ).rejects.toMatchObject({ status: 409 });
   });
 
   it("enforces mute, timeout, early release, and chat pause across reconstructed services", async () => {

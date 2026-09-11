@@ -175,6 +175,7 @@ export type AuditAction =
   | "disable"
   | "restore"
   | "remove-character"
+  | "rename-character"
   | "chat-pause"
   | "reset-students";
 

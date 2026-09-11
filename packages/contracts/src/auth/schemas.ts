@@ -138,6 +138,8 @@ export const authClassroomAccountSchema = z.object({
   status: z.enum(["active", "disabled"]),
   createdAt: z.string(),
   characterName: z.string().optional(),
+  roomId: z.string().optional(),
+  roomTitle: z.string().optional(),
 });
 
 export const authClassroomSchema = z.object({

@@ -106,6 +106,20 @@ describe("classroom HTTP boundaries", () => {
       nameReview: { status: "approved" },
       inviteReference: expect.any(String),
       characterId: expect.any(String),
+      roomId: "lantern-court",
+      roomTitle: "Lantern Court",
+    });
+    const renamed = await s.app.inject({
+      method: "POST",
+      url: "/admin/action",
+      cookies: s.staffCookie,
+      payload: { action: "rename-character", accountId: s.student.account.id, name: "Fern" },
+    });
+    expect(renamed.statusCode).toBe(200);
+    const afterRename = await s.app.inject({ url: "/auth/classroom", cookies: s.staffCookie });
+    expect(afterRename.json().accounts[0]).toMatchObject({
+      characterName: "Fern the Mouse",
+      nameReview: { status: "approved" },
     });
     expect(roster.body).not.toContain("fictional-password");
   });
