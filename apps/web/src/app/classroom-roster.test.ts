@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  matchPrivateClassList,
   rosterCsv,
   sha256Hex,
   unusedInvites,
@@ -73,39 +72,6 @@ describe("classroom roster helpers", () => {
         ",,student,unused,keep-this,,open",
         `pip,Pip the Sparrow,student,active,used-secret,${usedHash},taken`,
         "arbird,,teacher,active,,,",
-        "",
-      ].join("\n"),
-    );
-  });
-
-  it("joins a private name list to username and Collegian by token or hash", async () => {
-    const usedHash = await sha256Hex("used-secret");
-    const withHash: AuthClassroom = {
-      ...classroom,
-      invites: classroom.invites.map((invite) =>
-        invite.id === "taken" ? { ...invite, tokenHash: usedHash } : invite,
-      ),
-    };
-    const result = await matchPrivateClassList(
-      withHash,
-      [
-        "student_name,email,invite_token",
-        "Pip Example,pip@school.test,used-secret",
-        "Open Seat,open@school.test,keep-this",
-        "",
-      ].join("\n"),
-    );
-    expect(result.ok).toBe(true);
-    if (!result.ok) {
-      return;
-    }
-    expect(result.matched).toBe(1);
-    expect(result.unused).toBe(1);
-    expect(result.csv).toBe(
-      [
-        "student_name,username,collegian,email,note",
-        "Pip Example,pip,Pip the Sparrow,pip@school.test,joined",
-        "Open Seat,,,open@school.test,invite still unused",
         "",
       ].join("\n"),
     );

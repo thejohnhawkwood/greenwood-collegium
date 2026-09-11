@@ -21,9 +21,9 @@ also **Download unused tokens** as a text file or **Download class list** as CSV
 You may generate up to 200 student invites in one batch. Put the real student's
 name beside the token in your private class list outside this repository. Give
 that student the corresponding token. After redemption the teacher download still
-keeps the token, hash, username, and Collegian. Use **Match private class list**
-to join those locally; the file is not sent to the server. Do not put real names
-into the game's login or Collegian fields.
+keeps the token, hash, username, and Collegian so you can join your private name
+list locally. Do not put real names into the game's login or Collegian fields,
+and do not upload a class list to the server.
 Search the roster by username, character, or reference. Names and IDs are selectable.
 
 ## Admit and moderate
