@@ -49,8 +49,7 @@ export async function sha256Hex(value: string): Promise<string> {
 }
 
 export function rosterCsv(classroom: AuthClassroom): string {
-  const header =
-    "username,collegian,role,status,invite_token,invite_token_hash,invite_reference";
+  const header = "username,collegian,role,status,invite_token,invite_token_hash,invite_reference";
   const listed = new Set<string>();
   const inviteRows = classroom.invites.map((invite) => {
     const account = accountForInvite(classroom, invite);
