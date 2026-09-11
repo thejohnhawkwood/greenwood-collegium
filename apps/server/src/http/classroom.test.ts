@@ -146,7 +146,12 @@ describe("classroom HTTP boundaries", () => {
     expect(exported.headers["content-type"]).toContain("text/plain");
     expect(exported.headers["content-disposition"]).toContain("attachment");
     expect(exported.body).toContain("great-hall");
+    expect(exported.body).toContain("Hazel");
+    expect(exported.body).toContain("pupil");
     expect(exported.body).toContain("Fictional text stays text");
+    expect(exported.body).not.toContain("invite ");
+    expect(exported.body).not.toContain(s.student.account.id);
+    expect(exported.body).not.toContain("fictional-character");
     const preview = await s.app.inject({ url: "/admin/reset-preview", cookies: s.staffCookie });
     expect(
       (

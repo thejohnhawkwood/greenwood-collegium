@@ -110,7 +110,7 @@ function DaySpeech({ day }: { day: string }) {
       <a href={`/admin/speech/export?day=${encodeURIComponent(day)}`} download>
         Export this day as text
       </a>
-      <p className="admin-hint">Keep exports and your student mapping outside the repository.</p>
+      <p className="admin-hint">Exports list Collegian, username, room, and the spoken line.</p>
       {error ? <p role="alert">{error}</p> : null}
       <ol className="speech-entries" aria-label="Recorded player speech">
         {records.map((row) => (
@@ -122,19 +122,10 @@ function DaySpeech({ day }: { day: string }) {
             </time>{" "}
             <strong>{row.characterName}</strong>
             <div className="admin-hint">
-              {row.roomId} · login {row.username}
+              {row.username}
+              {row.roomId ? ` · ${row.roomId}` : ""}
             </div>
             <p className="speech-text">{row.text}</p>
-            <details>
-              <summary>Account and invite reference</summary>
-              <p className="admin-reference">
-                Invite: {row.inviteReference ?? "None"}
-                <br />
-                Account: {row.accountId}
-                <br />
-                Character: {row.characterId}
-              </p>
-            </details>
           </li>
         ))}
       </ol>

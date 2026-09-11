@@ -93,7 +93,7 @@ export async function registerClassroomRoutes(
       while (true) {
         const page = await deps.classroom.speech(actorId, { ...query, after });
         for (const row of page.records) {
-          yield `${row.occurredAt} | ${row.roomId} | ${row.characterName} | login ${row.username} | invite ${row.inviteReference ?? "none"} | account ${row.accountId} | character ${row.characterId}\n  ${row.text}\n\n`;
+          yield `${row.occurredAt} | ${row.roomId} | ${row.characterName} | ${row.username}\n  ${row.text}\n\n`;
           after = row.id;
         }
         if (!page.hasMore) break;
