@@ -34,7 +34,7 @@ const arrivalTemplate: QuestTemplate = {
     {
       id: "take",
       kind: "take",
-      label: "Take the Small Copper Key from Porter. Type take Small Copper Key.",
+      label: "Take the Small Copper Key from Porter. Type take key.",
       itemTemplateId: "small-copper-key",
     },
     {
@@ -206,6 +206,34 @@ describe("Arrival at the Collegium", () => {
     expect(world.characters["char-rowan"]?.experience).toBe(10);
   });
 
+  it("announces the step just finished, not a later template objective", () => {
+    const world = courtWorld();
+    const clock = runtime();
+    expect(
+      handleJoin(
+        world,
+        {
+          verb: "join",
+          characterId: "char-rowan",
+          name: "Rowan the Hare",
+          roomId: "lantern-court",
+        },
+        clock,
+      ).ok,
+    ).toBe(true);
+    handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    progressQuests(world, { characterId: "char-rowan", kind: "look" }, clock);
+    expect(
+      handleTake(world, { verb: "take", characterId: "char-rowan", target: "key" }, clock).ok,
+    ).toBe(true);
+    progressQuests(world, { characterId: "char-rowan", kind: "take" }, clock);
+    handleSay(world, { verb: "say", characterId: "char-rowan", text: "hello" }, clock);
+    const afterSay = progressQuests(world, { characterId: "char-rowan", kind: "say" }, clock);
+    expect(afterSay[0]?.narration).toContain("Say hello so Porter knows you arrived.");
+    expect(afterSay[0]?.narration).toContain("3/4");
+    expect(afterSay[0]?.narration).not.toContain("Type take key");
+  });
+
   it("lets two Collegians each take a key and finish the take objective", () => {
     const world = courtWorld();
     const clock = runtime();
@@ -250,10 +278,10 @@ describe("Arrival at the Collegium", () => {
       progressQuests(world, { characterId: "char-moss", kind: "take" }, clock)[0],
     );
     expect(rowanTake.payload.completedObjectives).toContain(
-      "Take the Small Copper Key from Porter. Type take Small Copper Key.",
+      "Take the Small Copper Key from Porter. Type take key.",
     );
     expect(mossTake.payload.completedObjectives).toContain(
-      "Take the Small Copper Key from Porter. Type take Small Copper Key.",
+      "Take the Small Copper Key from Porter. Type take key.",
     );
   });
 });

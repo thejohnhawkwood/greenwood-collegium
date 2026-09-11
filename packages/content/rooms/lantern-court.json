@@ -32,9 +32,9 @@
       "id": "npc-porter-bramble",
       "name": "Porter Bramble",
       "kind": "npc",
-      "lookDescription": "A hedgehog porter in a too-large coat, brass whistle on a ribbon, Small Copper Key in his paw.",
-      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon. He holds a Small Copper Key for new Collegians. Type take Small Copper Key — all three words — if Arrival is still your task.",
-      "dialogue": "\"This is a school. We train woodland students to face real dangers in the Greenwood. Typed commands are how you learn. Type look, say hello, take Small Copper Key, then north to reach the Great Hall. Type talk porter and answer with say 1 or say 2 if you want more.\"",
+      "lookDescription": "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
+      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon.",
+      "dialogue": "\"This is a school. We train woodland students to face real dangers in the Greenwood. Typed commands are how you learn. Type look, say hello, take key, then north to reach the Great Hall. Type talk porter and answer with say 1 or say 2 if you want more.\"",
       "dialogueTree": {
         "start": "school",
         "nodes": {
@@ -47,7 +47,7 @@
             ]
           },
           "commands": {
-            "text": "\"Type look to see Lantern Court. Type say hello. Type take Small Copper Key — all three words. Then type north to reach the Great Hall.\"",
+            "text": "\"Type look to see Lantern Court. Type say hello. Type take key. Then type north to reach the Great Hall.\"",
             "choices": [
               { "say": "1", "label": "Repeat the school’s purpose.", "next": "school" },
               { "say": "yes", "label": "I understand.", "next": "ready" },
@@ -62,7 +62,47 @@
             ]
           },
           "ready": {
-            "text": "\"Good. Stay with me through Arrival. Type take Small Copper Key if you have not, then type north to reach the Great Hall.\""
+            "text": "\"Good. Stay with me through Arrival. Type take key if you have not, then type north to reach the Great Hall. I will mention this again in the next room. I always do.\""
+          },
+          "nag-look": {
+            "text": "\"A new room, and you still have not typed look. I described it. That does not count. Type look. I will walk. I will ask again.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "I am working on it.", "next": "nag-persist" },
+              { "say": "3", "label": "Please stop following me.", "next": "nag-persist" }
+            ]
+          },
+          "nag-speak": {
+            "text": "\"Fresh stones. Same problem. I have not heard say hello. The roll is empty next to your name. Type say hello. I can wait. I have waited through worse weather than you.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "I am working on it.", "next": "nag-persist" },
+              { "say": "3", "label": "Please stop following me.", "next": "nag-persist" }
+            ]
+          },
+          "nag-take": {
+            "text": "\"Do you see my paw? The key is still in it. Type take key. I will mention this in the next doorway. And the one after that. I am a porter. Nagging is in the coat.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "I am working on it.", "next": "nag-persist" },
+              { "say": "3", "label": "Please stop following me.", "next": "nag-persist" }
+            ]
+          },
+          "nag-arrive": {
+            "text": "\"This is a fine room. It is not the Great Hall. From Lantern Court, type north. I will trot. I will whistle. I will not get bored. You might.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "I am working on it.", "next": "nag-persist" },
+              { "say": "3", "label": "Please stop following me.", "next": "nag-persist" }
+            ]
+          },
+          "nag-persist": {
+            "text": "\"Stop following you? No. Arrival is not finished. I am wonderfully patient. Type say 1 if you want the commands again.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "yes", "label": "Fine. Tell me again.", "next": "commands" },
+              { "say": "no", "label": "I will type it myself.", "next": "ready" }
+            ]
           }
         }
       }

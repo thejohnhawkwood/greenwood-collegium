@@ -17,7 +17,22 @@ export function conversationChoice(node: DialogueNode, spoken: string): Dialogue
   if (needle.length === 0) {
     return undefined;
   }
-  return (node.choices ?? []).find((choice) => choice.say.toLowerCase() === needle);
+  return (node.choices ?? []).find((choice) => choiceMatchesSpoken(choice, needle));
+}
+
+function choiceMatchesSpoken(choice: DialogueChoice, needle: string): boolean {
+  const token = choice.say.trim().toLowerCase();
+  if (needle === token) {
+    return true;
+  }
+  if (choice.label.trim().toLowerCase() === needle) {
+    return true;
+  }
+  if (!needle.startsWith(token)) {
+    return false;
+  }
+  const rest = needle.slice(token.length);
+  return /^[\s:.\-—–]/.test(rest);
 }
 
 export function treeNode(tree: DialogueTree, nodeId: string): DialogueNode | undefined {

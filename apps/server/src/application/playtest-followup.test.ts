@@ -83,24 +83,12 @@ describe("synthetic Collegian on bundled content", () => {
       return;
     }
     expect(joined.events.some((event) => event.narration.includes("school"))).toBe(true);
-    expect(joined.events.some((event) => event.narration.includes("take Small Copper Key"))).toBe(
-      true,
-    );
-
-    const failed = handleTake(
-      world,
-      { verb: "take", characterId: "char-rowan", target: "key" },
-      clock,
-    );
-    expect(failed.ok).toBe(false);
-    if (!failed.ok) {
-      expect(failed.message).toContain("take Small Copper Key");
-    }
+    expect(joined.events.some((event) => event.narration.includes("take key"))).toBe(true);
 
     const events = [
       ...run(world, "char-rowan", "look", clock),
       ...run(world, "char-rowan", "say hello", clock),
-      ...run(world, "char-rowan", "take Small Copper Key", clock),
+      ...run(world, "char-rowan", "take key", clock),
       ...run(world, "char-rowan", "where", clock),
       ...run(world, "char-rowan", "stats", clock),
       ...run(world, "char-rowan", "north", clock),

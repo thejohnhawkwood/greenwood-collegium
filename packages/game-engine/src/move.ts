@@ -7,7 +7,11 @@ import {
   type MapDiscoveredEvent,
   type RoomSnapshotEvent,
 } from "@greenwood/contracts";
-import { arrivalQuestActive, arrivalWalkNarration } from "./arrival-guide.js";
+import {
+  arrivalQuestActive,
+  arrivalWalkNarration,
+  promptPorterAfterMove,
+} from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
@@ -98,6 +102,10 @@ export function handleMove(
     return look;
   }
   events.push(look.event);
+  const nag = promptPorterAfterMove(world, character, destination.id, runtime);
+  if (nag) {
+    events.push(nag);
+  }
 
   return {
     ok: true,

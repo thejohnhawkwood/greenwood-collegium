@@ -208,9 +208,9 @@ function questUpdatedEvent(
     questId: template.id,
     title: template.title,
     status: progress?.status ?? "active",
-    completedObjectives: template.objectives
-      .filter((objective) => completedIds.includes(objective.id))
-      .map((objective) => objective.label),
+    completedObjectives: completedIds
+      .map((id) => template.objectives.find((objective) => objective.id === id)?.label)
+      .filter((label): label is string => Boolean(label)),
     remainingObjectives: remainingObjectives(
       template,
       progress ?? {

@@ -2,8 +2,8 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "arrival-at-the-collegium",
   "title": "Arrival at the Collegium",
-  "introNarration": "A hedgehog in a too-large porter's coat bustles out from the lanterns, quills neatly combed, a brass whistle bouncing on a ribbon.\n\n\"Welcome, new Collegian! I am Porter Bramble. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn.\"\n\n\"Walk with me. Type look to see Lantern Court. Type say hello so I know you arrived. I am holding a Small Copper Key for you. Type take Small Copper Key — all three words — when you are ready. Then type north to reach the Great Hall.\"\n\n\"If you forget a word, type help. Type quests to see your first task: Arrival at the Collegium.\"",
-  "reminderNarration": "Porter Bramble stays at your side. \"Still finding your feet? Type look to see Lantern Court. Type say hello. Type take Small Copper Key. Type north to reach the Great Hall. Type help if a word slips, or quests to see Arrival at the Collegium.\"",
+  "introNarration": "A hedgehog in a too-large porter's coat bustles out from the lanterns, quills neatly combed, a brass whistle bouncing on a ribbon.\n\n\"Welcome, new Collegian! I am Porter Bramble. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn.\"\n\n\"Walk with me. Type look to see Lantern Court. Type say hello so I know you arrived. I am holding a Small Copper Key for you. Type take key when you are ready. Then type north to reach the Great Hall.\"\n\n\"If you forget a word, type help. Type quests to see your first task: Arrival at the Collegium.\"",
+  "reminderNarration": "Porter Bramble stays at your side. \"Still finding your feet? Type look to see Lantern Court. Type say hello. Type take key. Type north to reach the Great Hall. Type help if a word slips, or quests to see Arrival at the Collegium.\"",
   "experienceReward": 10,
   "objectives": [
     {
@@ -19,7 +19,7 @@
     {
       "id": "take",
       "kind": "take",
-      "label": "Take the Small Copper Key from Porter. Type take Small Copper Key.",
+      "label": "Take the Small Copper Key from Porter. Type take key.",
       "itemTemplateId": "small-copper-key"
     },
     {

@@ -31,7 +31,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["take", "get"],
     summary: "Pick up something you can see.",
     detail:
-      "take Small Copper Key picks up that item. If more than one key or weapon is visible, the game asks which one and names the full take command. Arrival only accepts the full key name.",
+      "take key picks up a matching item you can see. If more than one key or weapon is visible, the game asks which one and names the full take command.",
   },
   {
     topic: "drop",
@@ -89,8 +89,15 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
   {
     topic: "stats",
     aliases: ["stats"],
-    summary: "Show health, location, and what you hold.",
-    detail: "stats prints your health, the room title, and the item in your hand.",
+    summary: "Show health, location, and what you have equipped.",
+    detail: "stats prints your health, the room title, and the item you have equipped.",
+  },
+  {
+    topic: "equip",
+    aliases: ["equip", "wield"],
+    summary: "Hold a carried item or a practice weapon.",
+    detail:
+      "equip sword (or wield Practice Sword) sets what you hold. take on a practice weapon also equips it. stats shows the equipped item.",
   },
   {
     topic: "quests",

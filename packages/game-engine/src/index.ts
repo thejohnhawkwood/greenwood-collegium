@@ -17,6 +17,8 @@ export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
 export { handleStats } from "./stats.js";
 export { parseStatsCommand } from "./parse-stats.js";
+export { handleEquip } from "./equip.js";
+export { parseEquipCommand } from "./parse-equip.js";
 export {
   ARRIVAL_QUEST_ID,
   applyQuestProgress,
@@ -74,6 +76,7 @@ export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
 export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
 export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
 export type { StatsFailure, StatsResult, StatsSuccess } from "./stats.js";
+export type { EquipFailure, EquipResult, EquipSuccess } from "./equip.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
 export type {
@@ -106,6 +109,7 @@ export type {
   QuestProgress,
   QuestTemplate,
   QuestsIntent,
+  EquipIntent,
   StatsIntent,
   Room,
   RoomExit,

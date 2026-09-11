@@ -5,6 +5,7 @@ import { handleLook } from "./look.js";
 import { handleMove } from "./move.js";
 import { handleSay } from "./say.js";
 import { handleStats } from "./stats.js";
+import { handleEquip } from "./equip.js";
 import { handleTake } from "./take.js";
 import { handleTalk } from "./talk.js";
 import { parsePlayerCommand } from "./parse-command.js";
@@ -52,7 +53,14 @@ function syntheticWorld(): WorldState {
                   ],
                 },
                 commands: {
-                  text: "Type take Small Copper Key, then north to reach the Great Hall.",
+                  text: "Type take key, then north to reach the Great Hall.",
+                },
+                "nag-take": {
+                  text: "Do you see my paw? Type take key. I will mention this in the next doorway.",
+                  choices: [
+                    { say: "1", label: "What should I type?", next: "commands" },
+                    { say: "3", label: "Please stop following me.", next: "school" },
+                  ],
                 },
               },
             },
@@ -170,8 +178,8 @@ function syntheticWorld(): WorldState {
         id: ARRIVAL_QUEST_ID,
         title: "Arrival at the Collegium",
         introNarration:
-          "This is a school. Type look, say hello, take Small Copper Key, then north to reach the Great Hall. Type help if a word slips.",
-        reminderNarration: "Type take Small Copper Key, then north to reach the Great Hall.",
+          "This is a school. Type look, say hello, take key, then north to reach the Great Hall. Type help if a word slips.",
+        reminderNarration: "Type take key, then north to reach the Great Hall.",
         experienceReward: 10,
         objectives: [
           {
@@ -183,7 +191,7 @@ function syntheticWorld(): WorldState {
           {
             id: "take",
             kind: "take",
-            label: "Type take Small Copper Key.",
+            label: "Type take key.",
             itemTemplateId: "small-copper-key",
           },
           {
@@ -228,27 +236,36 @@ describe("playtest follow-up synthetic Collegian", () => {
     ).toBe(true);
     progressQuests(world, { characterId: "char-rowan", kind: "say" }, clock);
 
+    const wander = handleMove(
+      world,
+      { verb: "move", characterId: "char-rowan", direction: "south" },
+      clock,
+    );
+    expect(wander.ok).toBe(true);
+    if (wander.ok) {
+      expect(wander.events.some((event) => event.narration.includes("walks with you"))).toBe(true);
+      expect(wander.events.some((event) => event.narration.includes("Type say 1"))).toBe(true);
+      expect(wander.events.some((event) => event.narration.includes("Type take key"))).toBe(true);
+    }
+    expect(world.characters["char-rowan"]?.openConversation).toEqual({
+      npcId: "npc-porter-bramble",
+      nodeId: "nag-take",
+    });
+    handleMove(world, { verb: "move", characterId: "char-rowan", direction: "north" }, clock);
+
     const bare = handleTake(world, { verb: "take", characterId: "char-rowan", target: "" }, clock);
     expect(bare).toMatchObject({ ok: false, code: "item_not_found" });
-    expect(bare.ok === false && bare.message).toContain("take Small Copper Key");
+    expect(bare.ok === false && bare.message).toContain("take key");
 
-    const shortcut = handleTake(
+    const taken = handleTake(
       world,
       { verb: "take", characterId: "char-rowan", target: "key" },
       clock,
     );
-    expect(shortcut.ok).toBe(false);
-    if (!shortcut.ok) {
-      expect(shortcut.message).toContain("take Small Copper Key");
-    }
-
-    const taken = handleTake(
-      world,
-      { verb: "take", characterId: "char-rowan", target: "Small Copper Key" },
-      clock,
-    );
     expect(taken.ok).toBe(true);
     progressQuests(world, { characterId: "char-rowan", kind: "take" }, clock);
+    const afterTake = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    expect(afterTake.ok && afterTake.event.narration).not.toContain("Small Copper Key");
 
     expect(parsePlayerCommand("where", "char-rowan")?.verb).toBe("look");
     const where = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
@@ -269,6 +286,7 @@ describe("playtest follow-up synthetic Collegian", () => {
     if (north.ok) {
       expect(north.events.some((event) => event.narration.includes("walks with you"))).toBe(true);
       expect(north.events.some((event) => event.narration.includes("Great Hall"))).toBe(true);
+      expect(north.events.some((event) => event.narration.includes("Type say 1"))).toBe(false);
     }
     progressQuests(world, { characterId: "char-rowan", kind: "move" }, clock);
     expect(world.quests?.["char-rowan"]?.[ARRIVAL_QUEST_ID]?.status).toBe("completed");
@@ -309,7 +327,9 @@ describe("playtest follow-up synthetic Collegian", () => {
       expect(sword.events[0]?.narration).toContain("feels right in your hand");
     }
     expect(world.items?.["item-practice-sword-south-orchard"]?.roomId).toBe("south-orchard");
-    expect(world.characters["char-rowan"]?.equippedItemId).toBe("practice-sword");
+    expect(world.characters["char-rowan"]?.equippedItemId).toBe(
+      "item-practice-sword-south-orchard",
+    );
 
     const staff = handleTake(
       world,
@@ -348,5 +368,30 @@ describe("playtest follow-up synthetic Collegian", () => {
     if (talked.ok) {
       expect(talked.events[0]?.narration).toContain("Type say 1");
     }
+
+    const numbered = handleSay(
+      world,
+      { verb: "say", characterId: "char-rowan", text: "1 - Why does a weapon fit?" },
+      clock,
+    );
+    expect(numbered.ok).toBe(true);
+    if (numbered.ok) {
+      expect(numbered.events[0]?.type).toBe("system.notice");
+      expect(numbered.events[0]?.narration).toContain("Hares prefer the sword");
+    }
+
+    const equipped = handleEquip(
+      world,
+      { verb: "equip", characterId: "char-rowan", target: "sword" },
+      clock,
+    );
+    expect(equipped.ok).toBe(true);
+    if (equipped.ok) {
+      expect(equipped.event.narration).toContain("You equip the Practice Sword");
+      expect(equipped.event.narration).toContain("feels right");
+    }
+    expect(world.characters["char-rowan"]?.equippedItemId).toBe(
+      "item-practice-sword-south-orchard",
+    );
   });
 });

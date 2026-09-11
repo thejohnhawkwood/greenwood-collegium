@@ -46,7 +46,7 @@ export function handleStats(
   const narration = [
     `Health: ${String(health)}/${String(maxHealth)}`,
     `Location: ${room.title}`,
-    `Held: ${held}`,
+    `Equipped: ${held}`,
   ].join("\n");
   return { ok: true, event: systemNotice(character.id, narration, runtime) };
 }

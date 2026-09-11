@@ -14,11 +14,10 @@ import {
   PORTER_TAKE_HINT,
   arrivalNeedsTake,
   fixturesVisibleTo,
-  isExactArrivalKeyName,
 } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
 import { formatDialogueNode, misfitNodeId, treeNode } from "./conversation.js";
-import { speciesWeaponFit, weaponFeelLine } from "./equipment.js";
+import { setEquippedItem, speciesWeaponFit, weaponFeelLine } from "./equipment.js";
 import { itemsHeldBy, itemsInRoom, resolveTypedItems, whichItemMessage } from "./items.js";
 import { ensureCharacterStarterItems } from "./starter-items.js";
 import { charactersInRoom } from "./occupants.js";
@@ -92,15 +91,8 @@ export function handleTake(
     return { ok: false, code: "item_not_found", message: "Take what?" };
   }
 
-  if (blocksArrivalKeyShortcut(world, character.id, target, visible)) {
-    return { ok: false, code: "item_not_found", message: PORTER_TAKE_HINT };
-  }
-
   const resolved = resolveTypedItems(visible, target);
   if (resolved.status === "none") {
-    if (arrivalNeedsTake(world, character.id) && looksLikeKeyAttempt(target)) {
-      return { ok: false, code: "item_not_found", message: PORTER_TAKE_HINT };
-    }
     return {
       ok: false,
       code: "item_not_found",
@@ -222,29 +214,6 @@ function isArrivalKey(item: ItemInstance): boolean {
   return item.templateId === ARRIVAL_KEY_TEMPLATE_ID;
 }
 
-function looksLikeKeyAttempt(target: string): boolean {
-  return /\bkeys?\b/iu.test(target) || /cooper/iu.test(target);
-}
-
-function blocksArrivalKeyShortcut(
-  world: WorldState,
-  characterId: string,
-  target: string,
-  visible: readonly ItemInstance[],
-): boolean {
-  if (!arrivalNeedsTake(world, characterId)) {
-    return false;
-  }
-  if (isExactArrivalKeyName(target)) {
-    return false;
-  }
-  if (looksLikeKeyAttempt(target)) {
-    return true;
-  }
-  const resolved = resolveTypedItems(visible, target);
-  return resolved.status === "one" && isArrivalKey(resolved.item);
-}
-
 function equipTrainingWeapon(
   world: WorldState,
   characterId: string,
@@ -260,7 +229,7 @@ function equipTrainingWeapon(
       message: `I do not recognize character "${characterId}".`,
     };
   }
-  character.equippedItemId = item.templateId;
+  setEquippedItem(character, item);
   const fit = speciesWeaponFit(world, character, item);
   const lines = [`You take the ${item.name}.`, "", weaponFeelLine(item, fit)];
   if (fit === "misfit") {

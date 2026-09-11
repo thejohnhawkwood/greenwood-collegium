@@ -13,4 +13,12 @@ describe("parseSayCommand", () => {
   it("accepts a bare say as empty speech", () => {
     expect(parseSayCommand("SAY", "char-rowan")?.text).toBe("");
   });
+
+  it("treats a bare dialogue number as say", () => {
+    expect(parseSayCommand("1", "char-rowan")).toEqual({
+      verb: "say",
+      characterId: "char-rowan",
+      text: "1",
+    });
+  });
 });

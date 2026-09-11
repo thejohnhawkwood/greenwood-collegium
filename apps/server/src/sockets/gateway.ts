@@ -24,6 +24,7 @@ import {
   handleQuests,
   handleSay,
   handleStats,
+  handleEquip,
   handleTake,
   listQuestRecords,
   isStaffCommand,
@@ -793,9 +794,11 @@ export async function attachRealtime(
                           ? handleQuests(world, intent, runtime)
                           : intent.verb === "stats"
                             ? handleStats(world, intent, runtime)
-                            : intent.verb === "attack"
-                              ? handleAttack(world, intent, runtime)
-                              : handleCast(world, intent, runtime);
+                            : intent.verb === "equip"
+                              ? handleEquip(world, intent, runtime)
+                              : intent.verb === "attack"
+                                ? handleAttack(world, intent, runtime)
+                                : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -873,26 +876,27 @@ export async function attachRealtime(
     const resultEvents = "events" in result ? result.events : [result.event];
     if (identity && options.classroom && intent.verb === "say") {
       const speech = resultEvents.find((event) => event.type === "chat.said");
-      if (!speech) throw new Error("Speech event missing");
-      const inserted = await options.classroom.recordSpeech(
-        identity,
-        parsed.data.commandId,
-        speech,
-      );
-      if (!inserted) {
-        reply(ack, {
-          commandId: parsed.data.commandId,
-          status: "accepted",
-          message: "Speech already recorded.",
-          resyncRequired: false,
-        });
-        return;
+      if (speech) {
+        const inserted = await options.classroom.recordSpeech(
+          identity,
+          parsed.data.commandId,
+          speech,
+        );
+        if (!inserted) {
+          reply(ack, {
+            commandId: parsed.data.commandId,
+            status: "accepted",
+            message: "Speech already recorded.",
+            resyncRequired: false,
+          });
+          return;
+        }
       }
     }
 
     const extra =
       intent.verb === "look" ||
-      intent.verb === "say" ||
+      (intent.verb === "say" && resultEvents.some((event) => event.type === "chat.said")) ||
       intent.verb === "take" ||
       intent.verb === "move" ||
       intent.verb === "examine"
@@ -917,6 +921,7 @@ export async function attachRealtime(
         intent.verb === "move" ||
         intent.verb === "examine" ||
         intent.verb === "talk" ||
+        intent.verb === "equip" ||
         intent.verb === "attack" ||
         intent.verb === "cast")
     ) {

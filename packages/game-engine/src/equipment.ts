@@ -45,6 +45,16 @@ export function weaponFeelLine(item: ItemInstance, fit: "fit" | "misfit" | "none
   return `You try the ${item.name}.`;
 }
 
+export function setEquippedItem(character: Character, item: ItemInstance): void {
+  character.equippedItemId = item.id;
+}
+
+export function clearEquippedIfMatching(character: Character, item: ItemInstance): void {
+  if (character.equippedItemId === item.id || character.equippedItemId === item.templateId) {
+    character.equippedItemId = undefined;
+  }
+}
+
 export function attackFitModifier(world: WorldState, character: Character): number {
   const proficiency = character.speciesId
     ? world.speciesProficiencies?.[character.speciesId]

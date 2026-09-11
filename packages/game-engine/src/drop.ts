@@ -9,6 +9,7 @@ import {
   type ItemDroppedEvent,
 } from "@greenwood/contracts";
 import { rejectIfInCombat } from "./combat-state.js";
+import { clearEquippedIfMatching } from "./equipment.js";
 import { itemsHeldBy, resolveTypedItems, whichItemMessage } from "./items.js";
 import { charactersInRoom } from "./occupants.js";
 import type { OccupantNotice } from "./presence-events.js";
@@ -81,6 +82,7 @@ export function handleDrop(
   }
 
   const item = resolved.item;
+  clearEquippedIfMatching(character, item);
 
   item.holderCharacterId = undefined;
   item.roomId = room.id;

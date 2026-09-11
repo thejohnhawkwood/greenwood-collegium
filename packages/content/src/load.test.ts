@@ -47,9 +47,8 @@ describe("content loader", () => {
         id: "npc-porter-bramble",
         name: "Porter Bramble",
         kind: "npc",
-        lookDescription:
-          "A hedgehog porter in a too-large coat, brass whistle on a ribbon, Small Copper Key in his paw.",
-        examineDescription: expect.stringContaining("Small Copper Key"),
+        lookDescription: "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
+        examineDescription: expect.stringContaining("too-large porter's coat"),
         dialogue: expect.stringContaining("school"),
       }),
       expect.objectContaining({ id: "object-noticeboard", kind: "object" }),

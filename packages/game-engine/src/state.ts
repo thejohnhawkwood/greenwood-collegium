@@ -290,6 +290,12 @@ export type StatsIntent = {
   characterId: string;
 };
 
+export type EquipIntent = {
+  verb: "equip";
+  characterId: string;
+  target: string;
+};
+
 export type StaffHelpIntent = {
   verb: "staff-help";
   characterId: string;
@@ -360,6 +366,7 @@ export type PlayerCommand =
   | HelpIntent
   | QuestsIntent
   | StatsIntent
+  | EquipIntent
   | StaffCommand;
 
 export type EngineRuntime = {
