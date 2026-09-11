@@ -2,12 +2,8 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { AuthSessionPublic } from "@greenwood/contracts";
-import {
-  ActiveStudentCard,
-  AdminPane,
-  givenNameFromCollegian,
-  isActiveClassroomStudent,
-} from "./AdminPane.js";
+import { ActiveStudentCard, AdminPane } from "./AdminPane.js";
+import { givenNameFromCollegian, isActiveClassroomStudent } from "./classroom-data.js";
 import { AcademyFrame } from "./academy-frame.js";
 import { ApprovalGate } from "./ApprovalGate.js";
 import { shouldShowCharacterGate } from "./character-gate.js";

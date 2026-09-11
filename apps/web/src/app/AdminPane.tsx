@@ -11,6 +11,8 @@ import {
 } from "@greenwood/contracts";
 import {
   downloadTextFile,
+  givenNameFromCollegian,
+  isActiveClassroomStudent,
   rosterCsv,
   unusedStudentTokenText,
   unusedStudentTokens,
@@ -288,7 +290,12 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
               />
             </label>
             {accounts.map((account) => (
-              <AccountCard key={account.accountId} account={account} busy={busy} act={action} />
+              <AccountCard
+                key={`${account.accountId}:${account.characterName ?? ""}`}
+                account={account}
+                busy={busy}
+                act={action}
+              />
             ))}
             {me.role === "owner" ? (
               <details className="admin-reset">
@@ -355,17 +362,6 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
   );
 }
 
-export function isActiveClassroomStudent(account: AuthClassroomAccount): boolean {
-  return account.role === "student" && account.status === "active" && Boolean(account.characterId);
-}
-
-export function givenNameFromCollegian(characterName: string | undefined): string {
-  if (!characterName) return "";
-  const marker = " the ";
-  const index = characterName.lastIndexOf(marker);
-  return index > 0 ? characterName.slice(0, index) : characterName;
-}
-
 function DurationSelect({
   minutes,
   onChange,
@@ -405,18 +401,16 @@ export function ActiveStudentCard({
       </h4>
       <p className="admin-hint">
         {account.roomTitle ?? "Room not recorded yet"}
-        {account.mutedUntil ? ` · muted until ${new Date(account.mutedUntil).toLocaleString()}` : ""}
+        {account.mutedUntil
+          ? ` · muted until ${new Date(account.mutedUntil).toLocaleString()}`
+          : ""}
         {account.timeoutUntil
           ? ` · timeout until ${new Date(account.timeoutUntil).toLocaleString()}`
           : ""}
       </p>
       <label>
         Reason / feedback
-        <input
-          value={reason}
-          maxLength={300}
-          onChange={(event) => setReason(event.target.value)}
-        />
+        <input value={reason} maxLength={300} onChange={(event) => setReason(event.target.value)} />
       </label>
       <DurationSelect minutes={minutes} onChange={setMinutes} />
       <div className="admin-buttons">
@@ -443,9 +437,7 @@ export function ActiveStudentCard({
           disabled={busy}
           onClick={() => {
             if (
-              window.confirm(
-                `${account.username}: Disable this account and remove them from play?`,
-              )
+              window.confirm(`${account.username}: Disable this account and remove them from play?`)
             )
               void act({ action: "disable", accountId: account.accountId, reason });
           }}
@@ -473,9 +465,6 @@ function AccountCard({
   const [collegianName, setCollegianName] = useState(() =>
     givenNameFromCollegian(account.characterName),
   );
-  useEffect(() => {
-    setCollegianName(givenNameFromCollegian(account.characterName));
-  }, [account.characterName]);
   function confirmAction(action: "disable" | "remove-character") {
     const description =
       action === "disable"

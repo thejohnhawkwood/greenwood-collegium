@@ -1,4 +1,19 @@
-import { authClassroomSchema, type AuthClassroom } from "@greenwood/contracts";
+import {
+  authClassroomSchema,
+  type AuthClassroom,
+  type AuthClassroomAccount,
+} from "@greenwood/contracts";
+
+export function isActiveClassroomStudent(account: AuthClassroomAccount): boolean {
+  return account.role === "student" && account.status === "active" && Boolean(account.characterId);
+}
+
+export function givenNameFromCollegian(characterName: string | undefined): string {
+  if (!characterName) return "";
+  const marker = " the ";
+  const index = characterName.lastIndexOf(marker);
+  return index > 0 ? characterName.slice(0, index) : characterName;
+}
 
 export async function loadClassroom(): Promise<AuthClassroom | undefined> {
   const response = await fetch("/auth/classroom", { credentials: "same-origin" });
