@@ -27,8 +27,8 @@
     {
       "id": "npc-groundskeeper-tansy",
       "name": "Groundskeeper Tansy",
-      "lookDescription": "A badger in muddy boots, sorting seed packets by smell. Try talk tansy.",
-      "examineDescription": "Tansy's apron holds twine, a trowel, and a sandwich wrapped so carefully it might be a rare seed. Soil darkens the creases of her paws. She notices which plants you step around before she notices your shoes.",
+      "lookDescription": "A broad badger in muddy boots and a scarred leather apron, seed pouches at her belt. Try talk tansy.",
+      "examineDescription": "Tansy's claws are dark with soil and her apron has been patched with whatever leather would hold. She sorts seeds by smell, and she notices which plants you crush before she notices your manners.",
       "dialogue": "\"The trick with living things is to look before you fix.\" Tansy brushes soil from a slate label. \"Especially if your first idea is more water. My first idea used to be more water. We lost a cactus that way.\"",
       "kind": "npc"
     },

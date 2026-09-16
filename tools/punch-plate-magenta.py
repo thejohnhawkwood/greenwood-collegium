@@ -10,6 +10,8 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 TARGETS = [
     ROOT / "apps" / "web" / "public" / "art" / "characters" / "npcs",
+    ROOT / "apps" / "web" / "public" / "art" / "characters" / "looks",
+    ROOT / "apps" / "web" / "public" / "art" / "characters" / "bodies",
     ROOT / "apps" / "web" / "public" / "art" / "objects",
 ]
 
@@ -17,8 +19,8 @@ TARGETS = [
 def is_key(red: int, green: int, blue: int, alpha: int) -> bool:
     if alpha < 8:
         return False
-    # Generated plates often used ~ (238, 49, 115), slightly greener than #DB0068.
-    if red >= 150 and green <= 72 and blue >= 70 and red - green >= 90 and blue > green + 10:
+    # Generated plates use several magentas: #EE3173, #DB0068, and pink-purple leftovers.
+    if red >= 140 and green <= 100 and blue >= 55 and red - green >= 55 and blue + 20 >= green:
         return True
     return red >= 130 and green <= 40 and blue >= 50 and red - green >= 80
 

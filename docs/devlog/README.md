@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-16 — Redwall-leaning staff and Collegian plates](2026-09-16-redwall-plates.md)
 - [2026-09-16 — Instructor Flint, veteran hare](2026-09-16-flint-redwall.md)
 - [2026-09-16 — Semantic colour close-out and lobby travel](2026-09-16-lobby-and-colour.md)
 - [2026-09-16 — Play-shell tokens and Collegian chrome](2026-09-16-play-shell-tokens.md)

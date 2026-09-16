@@ -7,7 +7,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 - **Release target:** v0.0 foundation (twenty-five rooms, look, movement, travel, presence, say, inventory, combat, Ember, Arrival)
 - **Shipped slices:** DS-001 semantic colour (ADR-0028), DS-002 play shell (ADR-0030), DS-003 world-map fog (ADR-0031), DS-004 painted catalog (ADR-0032), DS-005 lobby travel (ADR-0033). Typed commands stay canonical.
 - **Active follow-up:** confirm the live Render deploy. Do not start a new interface sprint unless the owner names it.
-- **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header). Instructor Flint is a veteran hare, not a nursery bunny. Click a token for the commands that work on it.
+- **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header). Staff plates lean Redwall; Porter stays friendly. Collegian looks are capable first-years. Click a token for the commands that work on it.
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 

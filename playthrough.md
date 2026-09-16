@@ -76,7 +76,7 @@ corepack pnpm --filter @greenwood/server start
 3. Open http://127.0.0.1:3000 on **this** computer. Other phones and laptops on the house Wi-Fi cannot use 127.0.0.1; that address means “this machine only.”
 4. If you see a sign-in page, click **Continue as guest**. Guest play is allowed only on a local development server, not on the live classroom site.
 5. If you created an account, finish the Collegian form first. Guests skip that step.
-6. You should land in **Lantern Court**. Porter Bramble, a hedgehog in a too-large coat, will greet you and name the first words. `examine porter` looks at him more closely.
+6. You should land in **Lantern Court**. Porter Bramble, a sturdy hedgehog in a worn brown coat, will greet you and name the first words. `examine porter` looks at him more closely.
 7. Play the Arrival script in [The first quest](#the-first-quest).
 8. Up to four guests can play on one local server at once. A fifth connection is refused.
 

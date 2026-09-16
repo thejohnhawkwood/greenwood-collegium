@@ -52,7 +52,7 @@ export function porterCompanionFixture(world: WorldState): RoomFixture {
     lookDescription:
       "Porter Bramble walks with you, brass whistle ready, determined not to lose you.",
     examineDescription:
-      "Porter stays at your side until Arrival is finished. He is a hedgehog in a too-large coat, and he will mention the next command in every doorway.",
+      "Porter stays at your side until Arrival is finished. He is a sturdy hedgehog in a worn brown coat, and he will mention the next command in every doorway.",
     dialogue:
       authored?.dialogue ??
       '"This is a school. We train woodland students to face real dangers in the Greenwood. Typed commands are how you learn."',

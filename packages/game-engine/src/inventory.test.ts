@@ -22,7 +22,7 @@ function courtWithKey(): WorldState {
             id: "npc-porter-bramble",
             name: "Porter Bramble",
             kind: "npc",
-            examineDescription: "A hedgehog in a too-large porter's coat.",
+            examineDescription: "A sturdy hedgehog in a worn brown porter's coat.",
           },
         ],
       },
@@ -136,7 +136,7 @@ describe("inventory slice", () => {
     );
     expect(examined.ok).toBe(true);
     if (examined.ok) {
-      expect(examined.event.narration).toContain("too-large porter");
+      expect(examined.event.narration).toContain("worn brown porter");
       expect(examined.event.segments?.[0]).toMatchObject({ entityKind: "npc" });
     }
     expect(

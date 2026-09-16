@@ -32,8 +32,8 @@
       "id": "npc-porter-bramble",
       "name": "Porter Bramble",
       "kind": "npc",
-      "lookDescription": "A hedgehog porter in a too-large coat, brass whistle on a ribbon.",
-      "examineDescription": "Porter Bramble is a hedgehog in a too-large porter's coat, quills neatly combed, a brass whistle bouncing on a ribbon.",
+      "lookDescription": "A sturdy hedgehog porter in a worn brown coat, brass whistle on a leather cord. Try talk porter.",
+      "examineDescription": "Bramble's coat has seen weather and still looks ready for the next arrival. His quills are tidy, his whistle is for calling help, and he greets you as if the Collegium has been waiting.",
       "dialogue": "\"This is a school. We train woodland students to face real dangers in the Greenwood. Typed commands are how you learn. Type look, say hello, take key, then north to reach the Great Hall. Type talk porter and answer with say 1 or say 2 if you want more.\"",
       "dialogueTree": {
         "start": "school",

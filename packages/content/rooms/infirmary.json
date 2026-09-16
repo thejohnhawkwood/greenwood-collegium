@@ -19,8 +19,8 @@
     {
       "id": "npc-healer-fen",
       "name": "Healer Fen",
-      "lookDescription": "An otter with rolled sleeves, gentle paws, and a very orderly bandage basket. Try talk fen.",
-      "examineDescription": "Fen's apron is spotless except for a small embroidered fish. He has the reassuring habit of putting down whatever he is holding when someone speaks. A label on his honey jar says 'For tea, not experiments'.",
+      "lookDescription": "A river otter in a work-stained apron, sleeves rolled, a kit of clean bandages at his hip. Try talk fen.",
+      "examineDescription": "Fen's paws are steady and his apron has been washed more times than it has stayed clean. The honey is for wounds as much as tea. He puts down his work when you speak, and he will tell you if you are being foolish.",
       "dialogue": "\"Rest and ask for help when you need it. Nobody earns extra courage by pretending not to hurt.\" Fen glances at a pot of moonmint. \"Helping Tansy? Those roots need air as well as water. Clear the drainage and use a clean jug; never add mysterious potions to an unhappy plant.\"",
       "kind": "npc"
     },
