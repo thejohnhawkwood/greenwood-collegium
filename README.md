@@ -140,12 +140,12 @@ Major interface upgrades start with a written design sprint, not a direct coding
 
 Planned first sprints:
 
-- DS-001 Semantic colour and message categories
-- DS-002 Persistent player status
-- DS-003 Command assistance and keyboard workflow
-- DS-004 Bag and equipment panel
+- DS-001 Semantic colour and message categories (complete)
+- DS-002 Persistent player status (complete)
+- DS-003 Command assistance and keyboard workflow (complete)
+- DS-004 Bag and equipment panel (complete)
 - DS-005 Quest tracker and journal
-- DS-006 Discovered-world minimap
+- DS-006 Discovered-world minimap (complete)
 - DS-007 Combat frame
 - DS-008 Ember text effect
 - DS-009 Magic-school visual grammars

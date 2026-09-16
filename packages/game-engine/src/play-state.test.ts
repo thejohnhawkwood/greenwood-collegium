@@ -17,7 +17,22 @@ function fixture(): WorldState {
         longDescription: "A quiet court.",
         zone: "academy",
         exits: [{ direction: "north", toRoomId: "hall" }],
-        fixtures: [],
+        fixtures: [
+          {
+            id: "npc-porter-bramble",
+            name: "Porter Bramble",
+            kind: "npc",
+            dialogueTree: {
+              start: "greet",
+              nodes: {
+                greet: {
+                  text: "Why a weapon, I wonder?",
+                  choices: [{ say: "1", label: "Why does a weapon fit?" }],
+                },
+              },
+            },
+          },
+        ],
       },
       hall: {
         id: "hall",
@@ -55,6 +70,8 @@ function fixture(): WorldState {
         experience: 130,
         roomId: "court",
         discoveredRoomIds: ["court"],
+        equippedItemId: "item-sword",
+        openConversation: { npcId: "npc-porter-bramble", nodeId: "greet" },
       },
       peer: {
         id: "peer",
@@ -71,6 +88,23 @@ function fixture(): WorldState {
         name: "Hidden occupant",
         roomId: "hall",
         discoveredRoomIds: ["hall"],
+      },
+    },
+    items: {
+      "item-sword": {
+        id: "item-sword",
+        templateId: "practice-sword",
+        name: "Practice Sword",
+        examineDescription: "A wooden blade.",
+        holderCharacterId: "self",
+        category: "weapon",
+      },
+      "item-hidden": {
+        id: "item-hidden",
+        templateId: "hidden-gold",
+        name: "Unseen treasure",
+        examineDescription: "Hidden gold.",
+        holderCharacterId: "distant",
       },
     },
   };
@@ -97,8 +131,11 @@ describe("visual play projection", () => {
       experience: 130,
       visual: { speciesId: "fox", gender: "female", appearance: { clothing: "indigo" } },
     });
-    expect(snapshot?.room.visible).toHaveLength(1);
-    expect(snapshot?.room.visible[0]?.visual).toMatchObject({
+    expect(snapshot?.room.visible.map((entity) => entity.id)).toEqual([
+      "npc-porter-bramble",
+      "peer",
+    ]);
+    expect(snapshot?.room.visible.find((entity) => entity.id === "peer")?.visual).toMatchObject({
       speciesId: "mole",
       gender: "male",
       appearance: { palette: "ash" },
@@ -118,6 +155,15 @@ describe("visual play projection", () => {
       { id: "hall", x: 0, y: 1, state: "unknown" },
     ]);
     expect(snapshot?.minimap.paths).toEqual([{ from: "court", to: "hall" }]);
+    expect(snapshot?.conversation).toEqual({
+      npcId: "npc-porter-bramble",
+      npcName: "Porter Bramble",
+      prompt: "Why a weapon, I wonder?",
+      choices: [{ say: "1", label: "Why does a weapon fit?" }],
+    });
+    expect(snapshot?.bag).toEqual([
+      { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
+    ]);
     expect(snapshot?.peers).toEqual([]);
     expect(createPlayState(world, "self", { presentIds: ["peer"] })?.peers).toEqual([
       expect.objectContaining({ name: "Moss", roomTitle: "Court" }),

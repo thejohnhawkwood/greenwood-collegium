@@ -6,13 +6,22 @@ import { SemanticNarration } from "./SemanticNarration.js";
 export function GameTranscript({
   lines,
   label = "Game transcript",
+  followToken,
 }: {
   lines: readonly TranscriptLine[];
   label?: string;
+  followToken?: number;
 }) {
   const logRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef(new TranscriptScroll());
   const [unread, setUnread] = useState(false);
+
+  useLayoutEffect(() => {
+    const log = logRef.current;
+    if (log && followToken) {
+      setUnread(scrollRef.current.jumpToLatest(log));
+    }
+  }, [followToken]);
 
   useLayoutEffect(() => {
     const log = logRef.current;

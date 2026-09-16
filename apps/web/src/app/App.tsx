@@ -34,6 +34,7 @@ import {
 import { loadSocketTicket } from "./socket-ticket.js";
 import { shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { loadAuthSession } from "./auth-session.js";
+import { completeCommand, completionCandidates, reminderWords } from "./command-assist.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 import { createCommandRequest } from "./command-request.js";
@@ -213,7 +214,7 @@ function PlayClient({
     {
       id: "notice-start",
       kind: "notice",
-      text: "Porter Bramble will greet you in Lantern Court. Type help for the list of words. Up and down recall earlier commands.",
+      text: "Porter Bramble will greet you in Lantern Court. Type help for the list of words. Tab completes a word. Up and down recall earlier commands.",
     },
   ]);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
@@ -223,6 +224,7 @@ function PlayClient({
   const [history, setHistory] = useState<string[]>([]);
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState("");
+  const [followToken, setFollowToken] = useState(0);
 
   useEffect(() => {
     const socket = io({
@@ -387,6 +389,7 @@ function PlayClient({
       setInputValue("");
     }
 
+    setFollowToken((current) => current + 1);
     socket.emit(
       "command",
       createCommandRequest(commandId, raw, lastSequenceRef.current),
@@ -414,7 +417,22 @@ function PlayClient({
     inputRef.current?.focus();
   }
 
+  function fillCommand(raw: string) {
+    setInputValue(raw);
+    setDraft(raw);
+    setHistoryCursor(null);
+    inputRef.current?.focus();
+  }
+
   function onCommandKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      const completed = completeCommand(inputValue, completionCandidates(playState));
+      setInputValue(completed.value);
+      setDraft(completed.value);
+      setHistoryCursor(null);
+      return;
+    }
     if (event.key !== "ArrowUp" && event.key !== "ArrowDown") {
       return;
     }
@@ -470,12 +488,8 @@ function PlayClient({
         onCloseWorldMap={() => setWorldMapOpen(false)}
         onMove={(direction) => sendCommand(direction, true)}
         onSend={(raw) => sendCommand(raw)}
-        onCommand={(raw) => {
-          setInputValue(raw);
-          setDraft(raw);
-          setHistoryCursor(null);
-          inputRef.current?.focus();
-        }}
+        onCommand={fillCommand}
+        followToken={followToken}
       />
       <CollegiumLobby
         open={lobbyOpen}
@@ -486,33 +500,52 @@ function PlayClient({
           setLobbyOpen(false);
         }}
       />
-      <form className="command-form" onSubmit={submitCommand}>
-        <label className="command-label">
-          <span className="prompt" aria-hidden="true">
-            ❯
-          </span>
-          <input
-            ref={inputRef}
-            id="play-command"
-            placeholder="Type a command… look, say hello, help"
-            value={inputValue}
-            onChange={(event) => {
-              setHistoryCursor(null);
-              setDraft(event.target.value);
-              setInputValue(event.target.value);
-            }}
-            onKeyDown={onCommandKeyDown}
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck={false}
-            autoFocus
-            aria-label="Command"
-          />
-        </label>
-        <button type="submit" disabled={connection !== "connected" || !inputValue.trim()}>
-          Send <span aria-hidden="true">↵</span>
-        </button>
-      </form>
+      <div className="command-dock">
+        <nav className="command-reminders" aria-label="Command words">
+          {reminderWords(playState).map((entry) => (
+            <button
+              key={entry.word}
+              type="button"
+              onClick={() => {
+                if (entry.send) {
+                  sendCommand(entry.word);
+                  return;
+                }
+                fillCommand(`${entry.word} `);
+              }}
+            >
+              {entry.word}
+            </button>
+          ))}
+        </nav>
+        <form className="command-form" onSubmit={submitCommand}>
+          <label className="command-label">
+            <span className="prompt" aria-hidden="true">
+              ❯
+            </span>
+            <input
+              ref={inputRef}
+              id="play-command"
+              placeholder="Type a command… Tab completes a word"
+              value={inputValue}
+              onChange={(event) => {
+                setHistoryCursor(null);
+                setDraft(event.target.value);
+                setInputValue(event.target.value);
+              }}
+              onKeyDown={onCommandKeyDown}
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
+              autoFocus
+              aria-label="Command"
+            />
+          </label>
+          <button type="submit" disabled={connection !== "connected" || !inputValue.trim()}>
+            Send <span aria-hidden="true">↵</span>
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

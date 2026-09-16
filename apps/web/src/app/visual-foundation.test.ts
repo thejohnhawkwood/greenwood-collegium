@@ -7,6 +7,7 @@ import { CharacterPortrait } from "./CharacterPortrait.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
+import { BagPanel } from "./BagPanel.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
 import { presenceActions } from "./presence-actions.js";
@@ -27,7 +28,18 @@ const state: PlayState = {
     level: 2,
     experience: 125,
     inCombat: true,
+    equipped: "Practice Sword",
   },
+  conversation: {
+    npcId: "npc-porter-bramble",
+    npcName: "Porter Bramble",
+    prompt: "Why a weapon, I wonder?",
+    choices: [{ say: "1", label: "Why does a weapon fit?" }],
+  },
+  bag: [
+    { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
+    { id: "item-key", name: "Small Copper Key", equipped: false },
+  ],
   peers: [],
   minimap: {
     rooms: [
@@ -187,6 +199,19 @@ describe("visual foundation", () => {
     expect(html).toContain("People and objects in this room");
     expect(html).toContain("Key Board, object");
     expect(html).toContain("/art/objects/object-key-board.png");
+    expect(html).toContain("Talking with Porter Bramble");
+    expect(html).toContain("Why does a weapon fit?");
+    expect(html).toContain("Why a weapon, I wonder?");
+    expect(
+      renderToStaticMarkup(
+        createElement(BagPanel, {
+          open: true,
+          state,
+          onClose: () => {},
+          onSend: () => {},
+        }),
+      ),
+    ).toMatch(/Bag and equipment[\s\S]*Practice Sword[\s\S]*Small Copper Key[\s\S]*Equip/);
     expect(
       shouldFocusCommandInput({
         closest: (selectors) => (selectors.includes("[tabindex]") ? {} : null),

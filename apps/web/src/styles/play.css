@@ -588,6 +588,47 @@
   z-index: 2;
   pointer-events: none;
 }
+.conversation-stage {
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 5.1rem;
+  z-index: 3;
+  max-height: 46%;
+  overflow: auto;
+  padding: 0.55rem 0.7rem 0.65rem;
+  border: 1px solid #7c7950;
+  border-radius: 8px;
+  background: #10281df2;
+  box-shadow: 0 8px 20px #0007;
+}
+.conversation-speaker {
+  margin: 0 0 0.25rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ead2a0;
+}
+.conversation-prompt {
+  margin: 0 0 0.5rem;
+  font:
+    0.82rem/1.45 Georgia,
+    serif;
+  color: #f3ebd4;
+}
+.conversation-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.conversation-choices button {
+  min-height: 28px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.72rem;
+  color: #eee3c3;
+  background: #20352b;
+  border: 1px solid #50634e;
+}
 .presence-zoom {
   position: absolute;
   top: 0.7rem;
@@ -680,7 +721,8 @@
   border: 1px solid #50634e;
 }
 .settings-overlay,
-.world-map-overlay {
+.world-map-overlay,
+.bag-overlay {
   position: fixed;
   inset: 0;
   z-index: 20;
@@ -688,6 +730,57 @@
   place-items: center;
   padding: 1rem;
   background: #0c161280;
+}
+.bag-dialog {
+  width: min(28rem, 100%);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 0.8rem 1rem 1rem;
+  border: 1px solid #50634e;
+  border-radius: 10px;
+  background: #14271f;
+}
+.bag-group {
+  margin-top: 0.7rem;
+}
+.bag-group h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: #ead2a0;
+}
+.bag-group ul {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bag-group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #3d5140;
+  border-radius: 6px;
+  background: #10281d;
+}
+.bag-group small {
+  display: block;
+  margin-top: 0.15rem;
+  color: #c2cbb4;
+  font-size: 0.62rem;
+  text-transform: capitalize;
+}
+.bag-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.bag-actions button {
+  min-height: 26px;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
 }
 .settings-dialog {
   width: min(24rem, 100%);
@@ -850,13 +943,32 @@
   font-size: 0.62rem;
   color: #bac8b6;
 }
+.command-dock {
+  flex-shrink: 0;
+  border-top: 1px solid #485a3f;
+  background: #192d22;
+}
+.command-reminders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0.4rem 1rem 0;
+}
+.command-reminders button {
+  min-height: 24px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.65rem;
+  color: #ead2a0;
+  background: #20352b;
+  border: 1px solid #50634e;
+}
 .play-client .command-form {
   display: flex;
   flex-shrink: 0;
   gap: 0.6rem;
-  border-top: 1px solid #485a3f;
-  padding: 0.75rem 1rem;
-  background: #192d22;
+  border-top: 0;
+  padding: 0.45rem 1rem 0.75rem;
+  background: transparent;
   margin: 0;
 }
 .play-client .command-label {

@@ -55,5 +55,28 @@ export const playStateSchema = z.object({
       }),
     )
     .default([]),
+  conversation: z
+    .object({
+      npcId: z.string().min(1),
+      npcName: z.string().min(1),
+      prompt: z.string().min(1),
+      choices: z.array(
+        z.object({
+          say: z.string().min(1),
+          label: z.string().min(1),
+        }),
+      ),
+    })
+    .optional(),
+  bag: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        name: z.string().min(1),
+        equipped: z.boolean(),
+        category: z.string().min(1).optional(),
+      }),
+    )
+    .default([]),
 });
 export type PlayState = z.infer<typeof playStateSchema>;

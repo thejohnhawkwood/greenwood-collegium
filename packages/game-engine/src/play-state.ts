@@ -9,8 +9,11 @@ import {
   DEFAULT_PLAYER_MAX_HEALTH,
   DEFAULT_PLAYER_MAX_FOCUS,
 } from "./combat-state.js";
+import { fixturesVisibleTo } from "./arrival-guide.js";
+import { treeNode } from "./conversation.js";
+import { itemsHeldBy } from "./items.js";
 import { snapshotPayload } from "./look.js";
-import type { WorldState } from "./state.js";
+import type { Character, WorldState } from "./state.js";
 
 /** Read-only projection. No accounts, hidden rooms, or other players' private stats. */
 export function createPlayState(
@@ -91,5 +94,31 @@ export function createPlayState(
           },
         ];
       }),
+    conversation: conversationSnapshot(world, character),
+    bag: itemsHeldBy(world, character.id).map((item) => ({
+      id: item.id,
+      name: item.name,
+      equipped:
+        character.equippedItemId === item.id || character.equippedItemId === item.templateId,
+      ...(item.category && item.category !== "ordinary" ? { category: item.category } : {}),
+    })),
   });
+}
+
+function conversationSnapshot(world: WorldState, character: Character) {
+  const open = character.openConversation;
+  if (!open) {
+    return undefined;
+  }
+  const npc = fixturesVisibleTo(world, character).find((fixture) => fixture.id === open.npcId);
+  const node = npc?.dialogueTree ? treeNode(npc.dialogueTree, open.nodeId) : undefined;
+  if (!npc || !node) {
+    return undefined;
+  }
+  return {
+    npcId: npc.id,
+    npcName: npc.name,
+    prompt: node.text,
+    choices: (node.choices ?? []).map((choice) => ({ say: choice.say, label: choice.label })),
+  };
 }

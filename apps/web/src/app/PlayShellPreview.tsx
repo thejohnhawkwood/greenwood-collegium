@@ -17,7 +17,21 @@ const previewState: PlayState = {
     level: 2,
     experience: 20,
     inCombat: false,
+    equipped: "Practice Sword",
   },
+  conversation: {
+    npcId: "npc-porter-bramble",
+    npcName: "Porter Bramble",
+    prompt: "Why a weapon, I wonder?",
+    choices: [
+      { say: "1", label: "Why does a weapon fit a first-year?" },
+      { say: "2", label: "I will put it back." },
+    ],
+  },
+  bag: [
+    { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
+    { id: "item-key", name: "Small Copper Key", equipped: false },
+  ],
   peers: [
     {
       id: "peer",

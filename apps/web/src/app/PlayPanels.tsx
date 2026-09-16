@@ -1,5 +1,8 @@
 import type { PlayState } from "@greenwood/contracts";
+import { useState } from "react";
+import { BagPanel } from "./BagPanel.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
+import { ConversationStage } from "./ConversationStage.js";
 import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
@@ -26,6 +29,7 @@ export function PlayPanels({
   onCloseWorldMap,
   connection,
   error,
+  followToken,
 }: {
   state?: PlayState;
   lines: readonly TranscriptLine[];
@@ -37,7 +41,9 @@ export function PlayPanels({
   onCloseWorldMap: () => void;
   connection: string;
   error: string;
+  followToken?: number;
 }) {
+  const [bagOpen, setBagOpen] = useState(false);
   const room = state?.room;
   const character = state?.character;
   const speech = lines.filter((line) => line.event?.type === "chat.said");
@@ -94,10 +100,16 @@ export function PlayPanels({
               </dd>
             </dl>
             <div className="character-actions">
-              <button type="button" onClick={() => onCommand("inventory")}>
+              <button
+                type="button"
+                onClick={() => {
+                  setBagOpen(true);
+                  onSend("inventory");
+                }}
+              >
                 Inventory
               </button>
-              <button type="button" onClick={() => onCommand("quests")}>
+              <button type="button" onClick={() => onSend("quests")}>
                 Quests
               </button>
             </div>
@@ -157,20 +169,25 @@ export function PlayPanels({
                 }))}
                 onSend={onSend}
               />
+              <ConversationStage conversation={state?.conversation} onSend={onSend} />
             </div>
           </section>
           <div className="reading-panes">
             <section className="play-panel story-panel" aria-labelledby="story-heading">
               <div className="panel-heading">
                 <h2 id="story-heading">Around you & story</h2>
-                <button type="button" onClick={() => onCommand("look")}>
+                <button type="button" onClick={() => onSend("look")}>
                   Look ↗
                 </button>
-                <button type="button" onClick={() => onCommand("help")}>
+                <button type="button" onClick={() => onSend("help")}>
                   Help ↗
                 </button>
               </div>
-              <GameTranscript lines={story} label="Around you and story" />
+              <GameTranscript
+                lines={story}
+                label="Around you and story"
+                followToken={followToken}
+              />
             </section>
           </div>
         </div>
@@ -202,9 +219,10 @@ export function PlayPanels({
         open={worldMapOpen}
         state={state}
         onClose={onCloseWorldMap}
-        onPrepareMove={(direction) => onCommand(`go ${direction}`)}
+        onPrepareMove={(direction) => onMove(direction)}
         onTravel={(title) => onSend(`travel ${title}`)}
       />
+      <BagPanel open={bagOpen} state={state} onClose={() => setBagOpen(false)} onSend={onSend} />
     </div>
   );
 }
