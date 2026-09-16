@@ -188,9 +188,9 @@ describe("school hearth after a choice", () => {
     expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.status).toBe("completed");
     expect(realm.characters["char-rowan"]?.experience).toBe(20);
     expect(realm.characters["char-rowan"]?.level).toBe(3);
-    expect(reported.ok && reported.events.some((event) => event.narration.includes("cast strike"))).toBe(
-      true,
-    );
+    expect(
+      reported.ok && reported.events.some((event) => event.narration.includes("cast strike")),
+    ).toBe(true);
     handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "south" }, clock);
     expect(
       handleCast(

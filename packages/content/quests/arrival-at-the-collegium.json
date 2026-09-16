@@ -2,7 +2,7 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "arrival-at-the-collegium",
   "title": "Arrival at the Collegium",
-  "introNarration": "A sturdy hedgehog in a worn porter's coat steps out from the lanterns, whistle on a leather cord, quills neat as a roll-call.",
+  "introNarration": "A sturdy hedgehog in a worn porter's coat steps out from the lanterns, whistle on a leather cord, quills neat as a roll-call. Porter Bramble names the first words: look, then help.",
   "reminderNarration": "Porter Bramble stays at your side until Arrival is finished.",
   "experienceReward": 10,
   "objectives": [

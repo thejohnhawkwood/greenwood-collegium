@@ -139,8 +139,10 @@ describe("adventure persistence and private dialogue", () => {
     );
     expect((await auth.resolvePlayIdentity(boot.sessionToken))?.experience).toBe(10);
     await command(completed.client, "quests");
+    expect(completed.events.some((event) => event.presentationKey === "quest.journal")).toBe(true);
     expect(
-      completed.events.some((event) => event.narration.includes("The Missing Pages (completed)")),
+      completed.events.some((event) => event.narration.includes("You review your tasks.")),
     ).toBe(true);
+    expect((await progress())?.status).toBe("completed");
   });
 });

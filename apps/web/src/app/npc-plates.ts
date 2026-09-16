@@ -31,7 +31,9 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-practice-dummy-south-orchard": "practice-dummy",
 };
 
+const NPC_ART_REV = "owl-1";
+
 export function npcArtSrc(id: string): string | undefined {
   const plate = NPC_PLATE_ALIASES[id];
-  return plate ? `/art/characters/npcs/${plate}.png` : undefined;
+  return plate ? `/art/characters/npcs/${plate}.png?v=${NPC_ART_REV}` : undefined;
 }

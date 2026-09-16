@@ -37,7 +37,7 @@ describe("bundled examine targets", () => {
     const looked = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
     expect(looked.ok).toBe(true);
     if (looked.ok) {
-      expect(looked.event.narration).toContain("Porter Bramble — A hedgehog porter");
+      expect(looked.event.narration).toContain("Porter Bramble — A sturdy hedgehog porter");
     }
 
     const porter = handleExamine(
@@ -47,7 +47,7 @@ describe("bundled examine targets", () => {
     );
     expect(porter.ok).toBe(true);
     if (porter.ok) {
-      expect(porter.event.narration).toContain("hedgehog");
+      expect(porter.event.narration).toContain("whistle is for calling help");
     }
 
     const dummyInCourt = handleExamine(

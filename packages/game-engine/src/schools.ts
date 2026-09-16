@@ -74,9 +74,7 @@ export function openSchoolGift(
   if (!gift) {
     return [];
   }
-  return [
-    systemNotice(character.id, `Your School gift opens. Type ${gift.helpText}.`, runtime),
-  ];
+  return [systemNotice(character.id, `Your School gift opens. Type ${gift.helpText}.`, runtime)];
 }
 
 export function openSchoolMentor(world: WorldState, character: Character): void {

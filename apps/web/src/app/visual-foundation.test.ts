@@ -360,7 +360,7 @@ describe("visual foundation", () => {
     expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
-      "/art/characters/npcs/practice-dummy.png",
+      "/art/characters/npcs/practice-dummy.png?v=owl-1",
     );
     expect(objectArtSrc("item-copper-key-lantern-court", "Small Copper Key")).toBe(
       "/art/objects/small-copper-key.png",

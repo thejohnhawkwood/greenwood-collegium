@@ -73,9 +73,7 @@ export function createPlayState(
         (character.level ?? 1) >= 3
           ? (() => {
               const gift = schoolGift(world, character);
-              return gift
-                ? { id: gift.id, name: gift.name, helpText: gift.helpText }
-                : undefined;
+              return gift ? { id: gift.id, name: gift.name, helpText: gift.helpText } : undefined;
             })()
           : undefined,
     },

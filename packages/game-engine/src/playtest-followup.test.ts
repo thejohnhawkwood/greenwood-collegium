@@ -245,9 +245,7 @@ describe("playtest follow-up synthetic Collegian", () => {
     if (wander.ok) {
       expect(wander.events.some((event) => event.narration.includes("walks with you"))).toBe(true);
       expect(wander.events.some((event) => event.narration.includes("Type say 1"))).toBe(false);
-      expect(wander.events.some((event) => event.narration.includes("speaks with you"))).toBe(
-        true,
-      );
+      expect(wander.events.some((event) => event.narration.includes("speaks with you"))).toBe(true);
     }
     expect(world.characters["char-rowan"]?.openConversation).toEqual({
       npcId: "npc-porter-bramble",

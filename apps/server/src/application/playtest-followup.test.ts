@@ -101,9 +101,12 @@ describe("synthetic Collegian on bundled content", () => {
     expect(events.some((event) => event.narration.includes("Health:"))).toBe(true);
     expect(events.some((event) => event.narration.includes("walks with you"))).toBe(true);
     expect(world.quests?.["char-rowan"]?.[ARRIVAL_QUEST_ID]?.status).toBe("completed");
+    expect(world.characters["char-rowan"]?.roomId).toBe("headmaster-study");
 
+    run(world, "char-rowan", "down", clock);
     run(world, "char-rowan", "south", clock);
     run(world, "char-rowan", "south", clock);
+    expect(world.characters["char-rowan"]?.roomId).toBe("south-orchard");
     const which = handleTake(
       world,
       { verb: "take", characterId: "char-rowan", target: "weapon" },

@@ -24,7 +24,8 @@ const lanternCourtWorld = (): WorldState => ({
           id: "npc-porter-bramble",
           name: "Porter Bramble",
           kind: "npc",
-          lookDescription: "A sturdy hedgehog porter in a worn brown coat, brass whistle on a leather cord. Try talk porter.",
+          lookDescription:
+            "A sturdy hedgehog porter in a worn brown coat, brass whistle on a leather cord. Try talk porter.",
         },
       ],
     },
