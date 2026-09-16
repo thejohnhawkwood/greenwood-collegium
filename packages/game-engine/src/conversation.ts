@@ -1,15 +1,11 @@
 import type { DialogueChoice, DialogueNode, DialogueTree, RoomFixture } from "./state.js";
 
 export function formatDialogueNode(npcName: string, node: DialogueNode): string {
-  const lines = [npcName, "", node.text];
-  const choices = node.choices ?? [];
-  if (choices.length > 0) {
-    lines.push("");
-    for (const choice of choices) {
-      lines.push(`Type say ${choice.say} — ${choice.label}`);
-    }
-  }
-  return lines.join("\n");
+  return [npcName, "", node.text].join("\n");
+}
+
+export function dialogueBeat(npcName: string): string {
+  return `${npcName} speaks with you.`;
 }
 
 export function conversationChoice(node: DialogueNode, spoken: string): DialogueChoice | undefined {

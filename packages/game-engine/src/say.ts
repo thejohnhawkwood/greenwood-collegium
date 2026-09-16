@@ -7,7 +7,7 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
-import { conversationChoice, formatDialogueNode, treeNode } from "./conversation.js";
+import { conversationChoice, dialogueBeat, treeNode } from "./conversation.js";
 import { charactersInRoom } from "./occupants.js";
 import { sanitizeSpeech, SAY_MAX_LENGTH } from "./speech.js";
 import type { EngineRuntime, SayIntent, WorldState } from "./state.js";
@@ -141,6 +141,9 @@ function replyToOpenConversation(
   if (!character || !open) {
     return undefined;
   }
+  if (!open.nodeId) {
+    return undefined;
+  }
   const npc = fixturesVisibleTo(world, character).find((fixture) => fixture.id === open.npcId);
   const tree = npc?.dialogueTree;
   const current = tree ? treeNode(tree, open.nodeId) : undefined;
@@ -154,13 +157,13 @@ function replyToOpenConversation(
   }
   if (!choice.next) {
     character.openConversation = undefined;
-    return systemNotice(character.id, `${npc.name}\n\nVery well.`, runtime);
+    return systemNotice(character.id, dialogueBeat(npc.name), runtime);
   }
   const next = treeNode(tree, choice.next);
   if (!next) {
     character.openConversation = undefined;
-    return systemNotice(character.id, `${npc.name}\n\nThat is all for now.`, runtime);
+    return systemNotice(character.id, dialogueBeat(npc.name), runtime);
   }
   character.openConversation = { npcId: npc.id, nodeId: choice.next };
-  return systemNotice(character.id, formatDialogueNode(npc.name, next), runtime);
+  return systemNotice(character.id, dialogueBeat(npc.name), runtime);
 }

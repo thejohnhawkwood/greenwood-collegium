@@ -82,8 +82,12 @@ describe("synthetic Collegian on bundled content", () => {
     if (!joined.ok) {
       return;
     }
-    expect(joined.events.some((event) => event.narration.includes("school"))).toBe(true);
-    expect(joined.events.some((event) => event.narration.includes("take key"))).toBe(true);
+    expect(joined.events.some((event) => event.narration.includes("hedgehog"))).toBe(true);
+    expect(joined.events.some((event) => event.narration.includes("Type say"))).toBe(false);
+    expect(world.characters["char-rowan"]?.openConversation).toEqual({
+      npcId: "npc-porter-bramble",
+      nodeId: "welcome",
+    });
 
     const events = [
       ...run(world, "char-rowan", "look", clock),
@@ -115,12 +119,10 @@ describe("synthetic Collegian on bundled content", () => {
     const staff = run(world, "char-rowan", "take Practice Staff", clock);
     expect(staff.some((event) => event.narration.includes("unwieldy"))).toBe(true);
     const tree = run(world, "char-rowan", "say 1", clock);
-    expect(
-      tree.some(
-        (event) => event.narration.includes("proficiency") || event.narration.includes("sword"),
-      ),
-    ).toBe(true);
+    expect(tree.some((event) => event.narration.includes("speaks with you"))).toBe(true);
+    expect(tree.some((event) => event.narration.includes("Type say"))).toBe(false);
     const flint = run(world, "char-rowan", "talk flint", clock);
-    expect(flint.some((event) => event.narration.includes("Type say"))).toBe(true);
+    expect(flint.some((event) => event.narration.includes("Type say"))).toBe(false);
+    expect(flint.some((event) => event.narration.includes("speaks with you"))).toBe(true);
   });
 });

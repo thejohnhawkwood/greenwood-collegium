@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { conversationChoice } from "./conversation.js";
+import { conversationChoice, formatDialogueNode } from "./conversation.js";
 import type { DialogueNode } from "./state.js";
 
 const node: DialogueNode = {
@@ -17,5 +17,7 @@ describe("conversationChoice", () => {
     expect(conversationChoice(node, "1 — Why does a weapon fit?")?.next).toBe("fit");
     expect(conversationChoice(node, "Why does a weapon fit?")?.next).toBe("fit");
     expect(conversationChoice(node, "hello")).toBeUndefined();
+    expect(formatDialogueNode("Flint", node)).toBe("Flint\n\nWhich weapon?");
+    expect(formatDialogueNode("Flint", node)).not.toContain("Type say");
   });
 });

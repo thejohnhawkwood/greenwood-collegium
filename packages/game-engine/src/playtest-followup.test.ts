@@ -244,8 +244,10 @@ describe("playtest follow-up synthetic Collegian", () => {
     expect(wander.ok).toBe(true);
     if (wander.ok) {
       expect(wander.events.some((event) => event.narration.includes("walks with you"))).toBe(true);
-      expect(wander.events.some((event) => event.narration.includes("Type say 1"))).toBe(true);
-      expect(wander.events.some((event) => event.narration.includes("Type take key"))).toBe(true);
+      expect(wander.events.some((event) => event.narration.includes("Type say 1"))).toBe(false);
+      expect(wander.events.some((event) => event.narration.includes("speaks with you"))).toBe(
+        true,
+      );
     }
     expect(world.characters["char-rowan"]?.openConversation).toEqual({
       npcId: "npc-porter-bramble",
@@ -346,7 +348,8 @@ describe("playtest follow-up synthetic Collegian", () => {
     expect(replied.ok).toBe(true);
     if (replied.ok) {
       expect(replied.events[0]?.type).toBe("system.notice");
-      expect(replied.events[0]?.narration).toContain("Hares prefer the sword");
+      expect(replied.events[0]?.narration).toContain("speaks with you");
+      expect(replied.events[0]?.narration).not.toContain("Type say");
     }
 
     const roomSpeech = handleSay(
@@ -366,7 +369,8 @@ describe("playtest follow-up synthetic Collegian", () => {
     );
     expect(talked.ok).toBe(true);
     if (talked.ok) {
-      expect(talked.events[0]?.narration).toContain("Type say 1");
+      expect(talked.events[0]?.narration).toContain("speaks with you");
+      expect(talked.events[0]?.narration).not.toContain("Type say");
     }
 
     const numbered = handleSay(
@@ -377,7 +381,8 @@ describe("playtest follow-up synthetic Collegian", () => {
     expect(numbered.ok).toBe(true);
     if (numbered.ok) {
       expect(numbered.events[0]?.type).toBe("system.notice");
-      expect(numbered.events[0]?.narration).toContain("Hares prefer the sword");
+      expect(numbered.events[0]?.narration).toContain("speaks with you");
+      expect(numbered.events[0]?.narration).not.toContain("Type say");
     }
 
     const equipped = handleEquip(

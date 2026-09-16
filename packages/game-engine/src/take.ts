@@ -16,7 +16,7 @@ import {
   fixturesVisibleTo,
 } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
-import { formatDialogueNode, misfitNodeId, treeNode } from "./conversation.js";
+import { misfitNodeId, treeNode } from "./conversation.js";
 import { setEquippedItem, speciesWeaponFit, weaponFeelLine } from "./equipment.js";
 import { itemsHeldBy, itemsInRoom, resolveTypedItems, whichItemMessage } from "./items.js";
 import { ensureCharacterStarterItems } from "./starter-items.js";
@@ -233,12 +233,9 @@ function equipTrainingWeapon(
   const fit = speciesWeaponFit(world, character, item);
   const lines = [`You take the ${item.name}.`, "", weaponFeelLine(item, fit)];
   if (fit === "misfit") {
-    const treeText = openFlintMisfit(world, character);
+    openFlintMisfit(world, character);
     lines.push("");
-    lines.push(
-      treeText ??
-        'Instructor Flint clicks her tongue. "That is a poor fit. Type talk flint if you want to learn why."',
-    );
+    lines.push("Instructor Flint watches the poor fit.");
   }
   return {
     ok: true,
@@ -252,7 +249,7 @@ function equipTrainingWeapon(
 
 function openFlintMisfit(
   world: WorldState,
-  character: { id: string; openConversation?: { npcId: string; nodeId: string } },
+  character: { id: string; openConversation?: { npcId: string; nodeId?: string } },
 ): string | undefined {
   const actor = world.characters[character.id];
   if (!actor) {
@@ -271,5 +268,5 @@ function openFlintMisfit(
     return undefined;
   }
   character.openConversation = { npcId: "npc-instructor-flint", nodeId };
-  return formatDialogueNode(flint?.name ?? "Instructor Flint", node);
+  return flint?.name;
 }

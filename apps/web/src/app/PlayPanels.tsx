@@ -2,7 +2,7 @@ import type { PlayState } from "@greenwood/contracts";
 import { useState } from "react";
 import { BagPanel } from "./BagPanel.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
-import { conversationFromStory } from "./conversation-from-story.js";
+import { isDialogueMenuText } from "./conversation-from-story.js";
 import { ConversationStage } from "./ConversationStage.js";
 import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
@@ -48,8 +48,10 @@ export function PlayPanels({
   const room = state?.room;
   const character = state?.character;
   const speech = lines.filter((line) => line.event?.type === "chat.said");
-  const story = lines.filter((line) => line.event?.type !== "chat.said");
-  const conversation = state?.conversation ?? conversationFromStory(story);
+  const story = lines.filter(
+    (line) => line.event?.type !== "chat.said" && !isDialogueMenuText(line.text),
+  );
+  const conversation = state?.conversation;
   return (
     <div className="play-scroll">
       {error ? (

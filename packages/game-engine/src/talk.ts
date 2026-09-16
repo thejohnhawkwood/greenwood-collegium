@@ -1,7 +1,7 @@
 import { type EventEnvelope } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { progressQuests, startQuest } from "./arrival.js";
-import { formatDialogueNode, startNode } from "./conversation.js";
+import { dialogueBeat, startNode } from "./conversation.js";
 import { namesMatch } from "./names.js";
 import type { EngineRuntime, TalkIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -46,20 +46,8 @@ export function handleTalk(
     };
   }
   const opened = npc.dialogueTree ? startNode(npc.dialogueTree) : undefined;
-  const spoken = opened
-    ? formatDialogueNode(npc.name, opened.node)
-    : `${npc.name}\n\n${npc.dialogue ?? ""}`;
-  if (opened) {
-    character.openConversation = { npcId: npc.id, nodeId: opened.id };
-  }
-  const greeting = systemNotice(character.id, spoken, runtime);
-  if (!opened) {
-    greeting.segments = [
-      { kind: "actor", entityKind: "npc", id: npc.id, text: npc.name },
-      { kind: "text", text: `\n\n${npc.dialogue ?? ""}` },
-    ];
-  }
-  const events: EventEnvelope[] = [greeting];
+  character.openConversation = opened ? { npcId: npc.id, nodeId: opened.id } : { npcId: npc.id };
+  const events: EventEnvelope[] = [systemNotice(character.id, dialogueBeat(npc.name), runtime)];
   const givenQuests = Object.values(world.questTemplates ?? {}).filter(
     (quest) => quest.giverNpcId === npc.id,
   );

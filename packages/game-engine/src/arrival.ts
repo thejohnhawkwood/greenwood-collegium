@@ -8,6 +8,7 @@ import {
   schemaVersion,
   type EventEnvelope,
 } from "@greenwood/contracts";
+import { ARRIVAL_QUEST_ID, openPorterArrival } from "./arrival-guide.js";
 import { itemsHeldBy } from "./items.js";
 import { levelForExperience } from "./progression.js";
 import type {
@@ -20,7 +21,7 @@ import type {
 } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
-export const ARRIVAL_QUEST_ID = "arrival-at-the-collegium";
+export { ARRIVAL_QUEST_ID } from "./arrival-guide.js";
 
 export type QuestTriggerKind = "look" | "say" | "take" | "move" | "examine" | "talk";
 
@@ -89,6 +90,7 @@ export function startQuest(
     return [];
   }
   if (existing?.status === "active") {
+    openArrivalSpeech(world, characterId, template.id, true);
     return [systemNotice(characterId, template.reminderNarration, runtime)];
   }
   writeProgress(world, characterId, {
@@ -97,6 +99,7 @@ export function startQuest(
     completedObjectiveIds: [],
     rewardGranted: false,
   });
+  openArrivalSpeech(world, characterId, template.id, false);
   return [
     systemNotice(characterId, template.introNarration, runtime),
     questUpdatedEvent(
@@ -106,6 +109,21 @@ export function startQuest(
       runtime,
     ),
   ];
+}
+
+function openArrivalSpeech(
+  world: WorldState,
+  characterId: string,
+  questId: string,
+  reminding: boolean,
+): void {
+  if (questId !== ARRIVAL_QUEST_ID) {
+    return;
+  }
+  const character = world.characters[characterId];
+  if (character) {
+    openPorterArrival(world, character, reminding);
+  }
 }
 
 export function progressQuests(

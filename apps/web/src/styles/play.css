@@ -590,17 +590,19 @@
 }
 .conversation-stage {
   position: absolute;
-  left: 0.7rem;
-  right: 0.7rem;
+  left: 50%;
+  right: auto;
   bottom: 5.1rem;
-  z-index: 4;
-  max-height: 52%;
+  z-index: 5;
+  width: min(36rem, calc(100% - 1.4rem));
+  max-height: 58%;
   overflow: auto;
-  padding: 0.65rem 0.8rem 0.75rem;
+  padding: 0.7rem 0.85rem 0.8rem;
+  transform: translateX(-50%);
   border: 1px solid #ead2a0;
   border-radius: 8px;
-  background: #10281df5;
-  box-shadow: 0 8px 20px #0007;
+  background: #10281df7;
+  box-shadow: 0 10px 28px #0008;
 }
 .conversation-speaker {
   margin: 0 0 0.25rem;

@@ -1,4 +1,4 @@
-import { eventEnvelopeSchema, renderClassicSegments } from "@greenwood/contracts";
+import { eventEnvelopeSchema } from "@greenwood/contracts";
 import { describe, expect, it } from "vitest";
 import { applyQuestProgress, listQuestRecords, progressQuests } from "./arrival.js";
 import { parsePlayerCommand } from "./parse-command.js";
@@ -103,8 +103,8 @@ describe("authored NPC conversations", () => {
       expect(event.audience).toBe("character");
     }
     const greeting = result.events[0];
-    expect(greeting?.segments?.[0]).toMatchObject({ kind: "actor", entityKind: "npc" });
-    expect(renderClassicSegments(greeting?.segments ?? [])).toBe(greeting?.narration);
+    expect(greeting?.narration).toBe("Reader Wren speaks with you.");
+    expect(world.characters.rowan?.openConversation).toEqual({ npcId: "npc-reader" });
     const again = talk();
     expect(again.ok && again.events.map((event) => event.narration)).toContain(
       "Read the note first.",

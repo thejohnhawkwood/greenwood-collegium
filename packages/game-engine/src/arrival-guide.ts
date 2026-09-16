@@ -1,10 +1,10 @@
 import type { EventEnvelope } from "@greenwood/contracts";
-import { ARRIVAL_QUEST_ID } from "./arrival.js";
-import { formatDialogueNode, treeNode } from "./conversation.js";
+import { dialogueBeat, startNode, treeNode } from "./conversation.js";
 import { worldItems } from "./items.js";
 import type { Character, EngineRuntime, RoomFixture, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
+export const ARRIVAL_QUEST_ID = "arrival-at-the-collegium";
 export const ARRIVAL_KEY_TEMPLATE_ID = "small-copper-key";
 export const ARRIVAL_KEY_NAME = "Small Copper Key";
 export const PORTER_NPC_ID = "npc-porter-bramble";
@@ -41,6 +41,24 @@ export function nextArrivalCoach(world: WorldState, characterId: string): string
     return 'Porter Bramble points north. "Type north to reach the Great Hall."';
   }
   return undefined;
+}
+
+export function openPorterArrival(
+  world: WorldState,
+  character: Character,
+  reminding: boolean,
+): void {
+  const porter = fixturesVisibleTo(world, character).find(
+    (fixture) => fixture.id === PORTER_NPC_ID,
+  );
+  const tree = porter?.dialogueTree;
+  if (!porter || !tree) {
+    return;
+  }
+  const nodeId = reminding ? porterNagNodeId(world, character.id, tree) : startNode(tree)?.id;
+  if (nodeId) {
+    character.openConversation = { npcId: porter.id, nodeId };
+  }
 }
 
 export function porterCompanionFixture(world: WorldState): RoomFixture {
@@ -94,7 +112,7 @@ export function promptPorterAfterMove(
   const node = tree && nodeId ? treeNode(tree, nodeId) : undefined;
   if (porter && tree && node && nodeId) {
     character.openConversation = { npcId: porter.id, nodeId };
-    return systemNotice(character.id, formatDialogueNode(porter.name, node), runtime);
+    return systemNotice(character.id, dialogueBeat(porter.name), runtime);
   }
   const coach = nextArrivalCoach(world, character.id);
   if (!coach) {

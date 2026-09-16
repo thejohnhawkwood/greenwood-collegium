@@ -36,8 +36,16 @@
       "examineDescription": "Bramble's coat has seen weather and still looks ready for the next arrival. His quills are tidy, his whistle is for calling help, and he greets you as if the Collegium has been waiting.",
       "dialogue": "\"This is a school. We train woodland students to face real dangers in the Greenwood. Typed commands are how you learn. Type look, say hello, take key, then north to reach the Great Hall. Type talk porter and answer with say 1 or say 2 if you want more.\"",
       "dialogueTree": {
-        "start": "school",
+        "start": "welcome",
         "nodes": {
+          "welcome": {
+            "text": "\"Welcome, new Collegian! I am Porter Bramble. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn. Walk with me through Arrival.\"",
+            "choices": [
+              { "say": "1", "label": "What should I type first?", "next": "commands" },
+              { "say": "2", "label": "Why does the Greenwood matter?", "next": "greenwood" },
+              { "say": "3", "label": "I am ready to walk.", "next": "ready" }
+            ]
+          },
           "school": {
             "text": "\"The Collegium is a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn.\"",
             "choices": [

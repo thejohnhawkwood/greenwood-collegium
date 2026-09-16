@@ -20,9 +20,8 @@ import type { EngineRuntime, QuestTemplate, WorldState } from "./state.js";
 const arrivalTemplate: QuestTemplate = {
   id: ARRIVAL_QUEST_ID,
   title: "Arrival at the Collegium",
-  introNarration:
-    "Porter Bramble bustles from the lanterns. Type look, say hello, take key, then north. Type help if a word slips.",
-  reminderNarration: "Porter Bramble nods. Type help or quests.",
+  introNarration: "Porter Bramble bustles from the lanterns.",
+  reminderNarration: "Porter Bramble stays at your side.",
   experienceReward: 10,
   objectives: [
     {
@@ -112,7 +111,7 @@ describe("Arrival at the Collegium", () => {
       "quest.updated",
     ]);
     expect(joined.events[1]?.narration).toContain("Porter Bramble");
-    expect(joined.events[1]?.narration).toContain("help");
+    expect(joined.events[1]?.narration).not.toContain("Type look");
     const started = questUpdatedEventSchema.parse(joined.events[2]);
     expect(started.payload.completedObjectives).toEqual([]);
     expect(world.quests?.["char-rowan"]?.[ARRIVAL_QUEST_ID]?.completedObjectiveIds).toEqual([]);
@@ -132,7 +131,7 @@ describe("Arrival at the Collegium", () => {
     ]);
     const reminder = startArrivalQuest(world, "char-rowan", clock);
     expect(reminder).toHaveLength(1);
-    expect(reminder[0]?.narration).toContain("Type help or quests");
+    expect(reminder[0]?.narration).toContain("stays at your side");
 
     applyQuestProgress(world, "char-moss", [
       {

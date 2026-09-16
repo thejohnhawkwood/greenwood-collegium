@@ -1,6 +1,6 @@
 import type { EventEnvelope } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
-import { formatDialogueNode, misfitNodeId, treeNode } from "./conversation.js";
+import { misfitNodeId, treeNode } from "./conversation.js";
 import { setEquippedItem, speciesWeaponFit, weaponFeelLine } from "./equipment.js";
 import { itemsHeldBy, itemsInRoom, resolveTypedItems, whichItemMessage } from "./items.js";
 import type { EngineRuntime, EquipIntent, ItemInstance, WorldState } from "./state.js";
@@ -60,10 +60,9 @@ export function handleEquip(
   const fit = speciesWeaponFit(world, character, item);
   const lines = [`You equip the ${item.name}.`, "", weaponFeelLine(item, fit)];
   if (fit === "misfit") {
-    const treeText = openFlintMisfit(world, character.id);
-    if (treeText) {
+    if (openFlintMisfit(world, character.id)) {
       lines.push("");
-      lines.push(treeText);
+      lines.push("Instructor Flint watches the poor fit.");
     }
   }
   return { ok: true, event: systemNotice(character.id, lines.join("\n"), runtime) };
@@ -86,23 +85,23 @@ function equipCandidates(world: WorldState, characterId: string, roomId: string)
   return merged;
 }
 
-function openFlintMisfit(world: WorldState, characterId: string): string | undefined {
+function openFlintMisfit(world: WorldState, characterId: string): boolean {
   const character = world.characters[characterId];
   if (!character) {
-    return undefined;
+    return false;
   }
   const flint = fixturesVisibleTo(world, character).find(
     (fixture) => fixture.id === "npc-instructor-flint",
   );
   const tree = flint?.dialogueTree;
   if (!tree) {
-    return undefined;
+    return false;
   }
   const nodeId = misfitNodeId(tree) ?? tree.start;
   const node = treeNode(tree, nodeId);
   if (!node) {
-    return undefined;
+    return false;
   }
   character.openConversation = { npcId: "npc-instructor-flint", nodeId };
-  return formatDialogueNode(flint?.name ?? "Instructor Flint", node);
+  return true;
 }

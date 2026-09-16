@@ -44,7 +44,7 @@ export type Room = {
 
 export type OpenConversation = {
   npcId: string;
-  nodeId: string;
+  nodeId?: string;
 };
 
 export type Character = {

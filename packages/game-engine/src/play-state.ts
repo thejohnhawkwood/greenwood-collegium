@@ -111,15 +111,20 @@ function conversationSnapshot(world: WorldState, character: Character) {
     return undefined;
   }
   const npc = fixtureForTalk(world, character, open.npcId);
-  const node = npc?.dialogueTree ? treeNode(npc.dialogueTree, open.nodeId) : undefined;
-  if (!npc || !node) {
+  if (!npc) {
+    return undefined;
+  }
+  const node =
+    open.nodeId && npc.dialogueTree ? treeNode(npc.dialogueTree, open.nodeId) : undefined;
+  const prompt = node?.text ?? npc.dialogue;
+  if (!prompt) {
     return undefined;
   }
   return {
     npcId: npc.id,
     npcName: npc.name,
-    prompt: node.text,
-    choices: (node.choices ?? []).map((choice) => ({ say: choice.say, label: choice.label })),
+    prompt,
+    choices: (node?.choices ?? []).map((choice) => ({ say: choice.say, label: choice.label })),
   };
 }
 

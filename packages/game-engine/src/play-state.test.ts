@@ -196,6 +196,20 @@ describe("visual play projection", () => {
     const moved = fixture();
     moved.characters.self!.roomId = "hall";
     expect(createPlayState(moved, "self")?.conversation?.npcName).toBe("Porter Bramble");
+    const linear = fixture();
+    linear.rooms.court!.fixtures[0] = {
+      id: "npc-wren",
+      name: "Reader Wren",
+      kind: "npc",
+      dialogue: "Notice before you guess.",
+    };
+    linear.characters.self!.openConversation = { npcId: "npc-wren" };
+    expect(createPlayState(linear, "self")?.conversation).toEqual({
+      npcId: "npc-wren",
+      npcName: "Reader Wren",
+      prompt: "Notice before you guess.",
+      choices: [],
+    });
   });
   it("restores saved discovery on join and writes a map that never names fogged rooms", () => {
     const world = fixture();

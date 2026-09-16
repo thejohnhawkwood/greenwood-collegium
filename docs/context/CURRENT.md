@@ -6,7 +6,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 - **Release target:** v0.0 foundation (twenty-five rooms, look, movement, travel, presence, say, inventory, combat, Ember, Arrival)
 - **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-006 minimap. Typed commands stay canonical.
-- **Active follow-up:** confirm the live Render deploy. Talk to Porter and use the painted reply buttons. Alt+L look, Alt+S say, Inventory for the bag. Do not start DS-005 or DS-007 unless the owner names it.
+- **Active follow-up:** confirm live Arrival. Porter’s welcome and replies sit on the painting. The story log should stay look/move description. Do not start DS-005 or DS-007 unless the owner names it.
 - **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header). The preview now shows a conversation stage and bag items.
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
