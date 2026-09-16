@@ -3,6 +3,7 @@ import type { Character, WorldState } from "./state.js";
 
 export const VITAL_TICK_AMOUNT = 1;
 export const COURTYARD_WELL_ID = "object-courtyard-well";
+export const ORCHARD_APPLES_ID = "object-orchard-apples";
 
 export function restoreCharacterVitals(character: Character): boolean {
   ensurePlayerVitals(character);

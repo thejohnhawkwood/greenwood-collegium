@@ -12,12 +12,16 @@ export { handleBye } from "./bye.js";
 export { parseByeCommand } from "./parse-bye.js";
 export { handleDrink } from "./drink.js";
 export { parseDrinkCommand } from "./parse-drink.js";
+export { handleEat } from "./eat.js";
+export { parseEatCommand } from "./parse-eat.js";
 export type { TalkResult } from "./talk.js";
 export type { ByeResult } from "./bye.js";
 export type { DrinkResult } from "./drink.js";
+export type { EatResult } from "./eat.js";
 export type { TalkIntent } from "./state.js";
 export {
   COURTYARD_WELL_ID,
+  ORCHARD_APPLES_ID,
   VITAL_TICK_AMOUNT,
   restoreCharacterVitals,
   tickCharacterVitals,

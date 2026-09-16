@@ -87,6 +87,15 @@ describe("parsePlayerCommand", () => {
       verb: "drink",
       characterId: "char-rowan",
     });
+    expect(parsePlayerCommand("eat apple", "char-rowan")).toEqual({
+      verb: "eat",
+      characterId: "char-rowan",
+      target: "apple",
+    });
+    expect(parsePlayerCommand("eat", "char-rowan")).toEqual({
+      verb: "eat",
+      characterId: "char-rowan",
+    });
     expect(parsePlayerCommand("dance", "char-rowan")).toBeNull();
   });
 });

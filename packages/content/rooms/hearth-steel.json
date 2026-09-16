@@ -43,6 +43,9 @@
           },
           "go": {
             "text": "\"Look the anvil. Then find the orchard. I will be here.\""
+          },
+          "lessons-done": {
+            "text": "\"You have looked. You have stood in the orchard. Steel has your name, and your kit is open. Alder waits in the High Study with a question about the bell below.\""
           }
         }
       }

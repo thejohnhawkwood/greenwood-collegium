@@ -94,6 +94,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       "drink well (or sip) at the Courtyard Well in Lantern Court restores health and focus. A little of each also returns every few seconds while you are not in a fight.",
   },
   {
+    topic: "eat",
+    aliases: ["eat", "nibble", "taste"],
+    summary: "Eat fallen apples to restore health and focus.",
+    detail:
+      "eat apple (or nibble) at the Fallen Apples in the South Orchard restores health and focus. Drink from the courtyard well if you are in Lantern Court instead.",
+  },
+  {
     topic: "stats",
     aliases: ["stats"],
     summary: "Show health, location, and what you have equipped.",

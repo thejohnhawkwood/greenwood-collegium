@@ -80,6 +80,7 @@ describe("help and quests", () => {
       expect(listed.event.narration).toContain("travel —");
       expect(listed.event.narration).toContain("equip —");
       expect(listed.event.narration).toContain("drink —");
+      expect(listed.event.narration).toContain("eat —");
     }
 
     const topic = handleHelp(

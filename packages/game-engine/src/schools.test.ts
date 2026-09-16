@@ -65,7 +65,10 @@ function world(): WorldState {
             dialogue: "Train.",
             dialogueTree: {
               start: "welcome",
-              nodes: { welcome: { text: "Find Flint, then return." } },
+              nodes: {
+                welcome: { text: "Find Flint, then return." },
+                "lessons-done": { text: "Steel has your name. Your kit is open." },
+              },
             },
           },
           {
@@ -141,6 +144,21 @@ function world(): WorldState {
           },
         ],
       },
+      "the-bell-below": {
+        id: "the-bell-below",
+        title: "The Bell Below",
+        introNarration: "Alder names the bell below.",
+        reminderNarration: "Examine the three clues, then talk alder.",
+        experienceReward: 10,
+        objectives: [
+          {
+            id: "talk-alder",
+            kind: "talk",
+            label: "Talk alder.",
+            targetId: "npc-headmaster-alder",
+          },
+        ],
+      },
     },
   };
 }
@@ -186,6 +204,11 @@ describe("school hearth after a choice", () => {
     );
     expect(reported.ok).toBe(true);
     expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.status).toBe("completed");
+    expect(realm.quests?.["char-rowan"]?.["the-bell-below"]?.status).toBe("active");
+    expect(realm.characters["char-rowan"]?.openConversation).toEqual({
+      npcId: "npc-mentor-edge",
+      nodeId: "lessons-done",
+    });
     expect(realm.characters["char-rowan"]?.experience).toBe(20);
     expect(realm.characters["char-rowan"]?.level).toBe(3);
     expect(
@@ -193,6 +216,9 @@ describe("school hearth after a choice", () => {
     ).toBe(true);
     expect(
       reported.ok && reported.events.some((event) => event.narration.includes("High Study")),
+    ).toBe(true);
+    expect(
+      reported.ok && reported.events.some((event) => event.narration.includes("bell below")),
     ).toBe(true);
     handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "south" }, clock);
     expect(

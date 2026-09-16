@@ -85,6 +85,13 @@
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
       "examineDescription": "'Ask before borrowing equipment. Aim only at the Practice Dummy. Stop when someone needs help. A practice defeat sends you to the Infirmary.' Flint has added: 'Winning teaches one thing. Paying attention teaches several.' Try talk flint for the practice commands."
+    },
+    {
+      "id": "object-orchard-apples",
+      "name": "Fallen Apples",
+      "kind": "object",
+      "lookDescription": "A few sound windfalls rest in the grass. Type eat apple to restore health and focus.",
+      "examineDescription": "The apples are tart and honest. Eat one after a lesson. Type eat apple. The courtyard well is for drinking."
     }
   ]
 }

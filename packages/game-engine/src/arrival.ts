@@ -9,7 +9,7 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import { ARRIVAL_QUEST_ID, openPorterArrival } from "./arrival-guide.js";
-import { summonToHeadmaster } from "./headmaster.js";
+import { BELL_BELOW_QUEST_ID, summonToHeadmaster } from "./headmaster.js";
 import { itemsHeldBy } from "./items.js";
 import { levelForExperience } from "./progression.js";
 import type {
@@ -177,6 +177,7 @@ export function progressQuests(
             );
           }
         }
+        events.push(...startQuest(world, character.id, BELL_BELOW_QUEST_ID, runtime));
         events.push(
           systemNotice(
             character.id,

@@ -19,6 +19,8 @@ export const COMMAND_WORDS = [
   "drop",
   "drink",
   "sip",
+  "eat",
+  "nibble",
   "examine",
   "ex",
   "x",

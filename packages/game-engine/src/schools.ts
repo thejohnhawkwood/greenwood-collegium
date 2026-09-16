@@ -1,7 +1,15 @@
 import type { EventEnvelope } from "@greenwood/contracts";
 import { progressQuests, startQuest } from "./arrival.js";
+import { firstLessonsComplete } from "./headmaster.js";
 import { handleLook } from "./look.js";
-import type { Character, EngineRuntime, SchoolId, SpellTemplate, WorldState } from "./state.js";
+import type {
+  Character,
+  EngineRuntime,
+  RoomFixture,
+  SchoolId,
+  SpellTemplate,
+  WorldState,
+} from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export const SCHOOL_IDS = ["ember", "thorn", "veil", "stars", "stone", "steel"] as const;
@@ -89,6 +97,24 @@ export function openSchoolGift(
   }
   const help = kit.map((spell) => spell.helpText).join(", ");
   return [systemNotice(character.id, `Your School kit opens. Type ${help}.`, runtime)];
+}
+
+export const MENTOR_DONE_NODE = "lessons-done";
+
+export function resolveMentorSpeechNode(
+  world: WorldState,
+  character: Character,
+  npc: RoomFixture,
+): string | undefined {
+  const tree = npc.dialogueTree;
+  if (!tree) {
+    return undefined;
+  }
+  const isMentor = SCHOOL_IDS.some((school) => SCHOOL_MENTOR_ID[school] === npc.id);
+  if (isMentor && firstLessonsComplete(world, character) && tree.nodes[MENTOR_DONE_NODE]) {
+    return MENTOR_DONE_NODE;
+  }
+  return tree.nodes[tree.start] ? tree.start : undefined;
 }
 
 export function openSchoolMentor(world: WorldState, character: Character): void {

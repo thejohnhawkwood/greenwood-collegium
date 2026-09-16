@@ -16,6 +16,7 @@ import {
   handleAttack,
   handleBye,
   handleDrink,
+  handleEat,
   tickCharacterVitals,
   handleCast,
   handleDrop,
@@ -884,7 +885,9 @@ export async function attachRealtime(
                                       ? handleBye(world, intent, runtime)
                                       : intent.verb === "drink"
                                         ? handleDrink(world, intent, runtime)
-                                        : handleCast(world, intent, runtime);
+                                        : intent.verb === "eat"
+                                          ? handleEat(world, intent, runtime)
+                                          : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({

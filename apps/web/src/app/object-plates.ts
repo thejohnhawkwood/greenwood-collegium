@@ -45,6 +45,7 @@ const PLACEMENT_ALIASES: Record<string, string> = {
   "object-stars-wheel": "object-star-wheel",
   "object-stone-keystone": "object-promise-mosaic",
   "object-steel-anvil": "object-practice-rules",
+  "object-orchard-apples": "object-seedling-tray",
   "object-stair-rope": "object-empty-bell-frame",
   "object-silk-thread": "object-listening-stone",
   "object-caught-lantern": "object-dream-mobile",

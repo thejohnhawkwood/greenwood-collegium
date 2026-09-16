@@ -9,6 +9,7 @@ import {
   HEADMASTER_NPC_ID,
   resolveAlderSpeechNode,
 } from "./headmaster.js";
+import { resolveMentorSpeechNode } from "./schools.js";
 import { namesMatch } from "./names.js";
 import type { EngineRuntime, TalkIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -53,11 +54,13 @@ export function handleTalk(
     };
   }
   const opened = npc.dialogueTree ? startNode(npc.dialogueTree) : undefined;
-  const alderNode =
+  const speechNode =
     npc.id === HEADMASTER_NPC_ID
       ? resolveAlderSpeechNode(npc.dialogueTree, world, character)
-      : opened?.id;
-  character.openConversation = alderNode ? { npcId: npc.id, nodeId: alderNode } : { npcId: npc.id };
+      : (resolveMentorSpeechNode(world, character, npc) ?? opened?.id);
+  character.openConversation = speechNode
+    ? { npcId: npc.id, nodeId: speechNode }
+    : { npcId: npc.id };
   const events: EventEnvelope[] = [systemNotice(character.id, dialogueBeat(npc.name), runtime)];
   const givenQuests = Object.values(world.questTemplates ?? {}).filter(
     (quest) => quest.giverNpcId === npc.id,
@@ -96,6 +99,11 @@ export function handleTalk(
   const bellDone = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID]?.status === "completed";
   if (npc.id === HEADMASTER_NPC_ID && (wakes?.status === "completed" || (bellDone && !wakes))) {
     const nextNode = resolveAlderSpeechNode(npc.dialogueTree, world, character);
+    if (nextNode) {
+      character.openConversation = { npcId: npc.id, nodeId: nextNode };
+    }
+  } else if (npc.id !== HEADMASTER_NPC_ID) {
+    const nextNode = resolveMentorSpeechNode(world, character, npc);
     if (nextNode) {
       character.openConversation = { npcId: npc.id, nodeId: nextNode };
     }

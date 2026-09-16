@@ -367,6 +367,12 @@ describe("visual foundation", () => {
     expect(objectArtSrc("item-copper-key-lantern-court", "Small Copper Key")).toBe(
       "/art/objects/small-copper-key.png",
     );
+    expect(objectArtSrc("object-courtyard-well", "Courtyard Well")).toBe(
+      "/art/objects/object-courtyard-well.png",
+    );
+    expect(objectArtSrc("object-orchard-apples", "Fallen Apples")).toBe(
+      "/art/objects/object-seedling-tray.png",
+    );
     expect(html).toContain("Moss, Collegian");
     const menu = renderToStaticMarkup(
       createElement(PresenceMenu, {
@@ -399,6 +405,13 @@ describe("visual foundation", () => {
         kind: "object",
       }).map((action) => action.label),
     ).toEqual(["Examine", "Drink"]);
+    expect(
+      presenceActions({
+        id: "object-orchard-apples",
+        name: "Fallen Apples",
+        kind: "object",
+      }).map((action) => action.label),
+    ).toEqual(["Examine", "Eat"]);
     const itemMenu = renderToStaticMarkup(
       createElement(PresenceMenu, {
         person: { id: "item-practice-sword-south-orchard", name: "Practice Sword", kind: "object" },

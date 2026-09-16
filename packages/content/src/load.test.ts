@@ -104,6 +104,22 @@ describe("content loader", () => {
       experienceReward: 10,
     });
     expect(Object.keys(world.quests)).toHaveLength(11);
+    expect(world.rooms["south-orchard"]?.fixtures.map((fixture) => fixture.id)).toContain(
+      "object-orchard-apples",
+    );
+    for (const mentorId of [
+      "npc-mentor-cinder",
+      "npc-mentor-briar",
+      "npc-mentor-mist",
+      "npc-mentor-lumen",
+      "npc-mentor-quern",
+      "npc-mentor-edge",
+    ]) {
+      const mentor = Object.values(world.rooms)
+        .flatMap((room) => room.fixtures)
+        .find((fixture) => fixture.id === mentorId);
+      expect(mentor?.dialogueTree?.nodes["lessons-done"]?.text).toContain("kit is open");
+    }
   });
 
   it("loads an extra room file without a code change", () => {
