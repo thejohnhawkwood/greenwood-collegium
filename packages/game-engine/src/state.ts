@@ -4,10 +4,13 @@ export type RoomExit = {
   toRoomId: string;
 };
 
+export type SchoolId = "ember" | "thorn" | "veil" | "stars" | "stone" | "steel";
+
 export type DialogueChoice = {
   say: string;
   label: string;
   next?: string;
+  school?: SchoolId;
 };
 
 export type DialogueNode = {
@@ -67,6 +70,7 @@ export type Character = {
   gender?: "female" | "male";
   equippedItemId?: string;
   openConversation?: OpenConversation;
+  schoolId?: SchoolId;
 };
 
 export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";

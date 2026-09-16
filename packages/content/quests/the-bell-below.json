@@ -2,7 +2,6 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "the-bell-below",
   "title": "The Bell Below",
-  "giverNpcId": "npc-headmaster-alder",
   "experienceReward": 15,
   "introNarration": "Alder sets down his tuning fork. \"A deep bell sounds beneath the school, yet the old abbey bell was taken away long ago. Will you help me separate an observation from a rumour? Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder. Stay on our familiar paths; the answers we need are here.\"",
   "reminderNarration": "Alder counts the leads on three fingers. \"Type east to reach the Clock Tower. Type north to reach the Archive Cellar. Type west to reach the Quiet Chapel. Type south to reach the Great Hall. Examine the Empty Bell Frame, Bell Ledger, and Listening Stone, then talk alder here. Type quests for your checklist.\"",

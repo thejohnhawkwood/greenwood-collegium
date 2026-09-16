@@ -8,6 +8,7 @@ import {
 } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { conversationChoice, dialogueBeat, treeNode } from "./conversation.js";
+import { isSchoolId } from "./schools.js";
 import { charactersInRoom } from "./occupants.js";
 import { sanitizeSpeech, SAY_MAX_LENGTH } from "./speech.js";
 import type { EngineRuntime, SayIntent, WorldState } from "./state.js";
@@ -154,6 +155,9 @@ function replyToOpenConversation(
   const choice = conversationChoice(current, spoken);
   if (!choice) {
     return undefined;
+  }
+  if (choice.school && isSchoolId(choice.school) && !character.schoolId) {
+    character.schoolId = choice.school;
   }
   if (!choice.next) {
     character.openConversation = undefined;

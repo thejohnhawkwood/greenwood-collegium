@@ -30,6 +30,7 @@ const dialogueChoiceSchema = z
     say: z.string().min(1),
     label: z.string().min(1),
     next: z.string().min(1).optional(),
+    school: z.enum(["ember", "thorn", "veil", "stars", "stone", "steel"]).optional(),
   })
   .strict();
 

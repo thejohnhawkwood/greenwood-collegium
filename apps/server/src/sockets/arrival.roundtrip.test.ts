@@ -143,8 +143,6 @@ describe("arrival socket round trip", () => {
 
     const listed = await emitCommand(client, "cmd-quests", "quests");
     expect(listed.status).toBe("accepted");
-    expect(
-      events.some((event) => event.narration.includes("Arrival at the Collegium (completed)")),
-    ).toBe(true);
+    expect(events.some((event) => event.narration.includes("You review your tasks."))).toBe(true);
   });
 });

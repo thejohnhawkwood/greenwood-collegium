@@ -36,6 +36,7 @@ const OBJECT_PLATE_ALIASES: Record<string, string> = Object.fromEntries(
 );
 
 const PLACEMENT_ALIASES: Record<string, string> = {
+  "object-school-chart": "object-school-banners",
   "item-copper-key-lantern-court": "small-copper-key",
   "item-practice-sword-south-orchard": "practice-sword",
   "item-practice-staff-south-orchard": "practice-staff",

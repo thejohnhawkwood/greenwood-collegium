@@ -1,0 +1,99 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "headmaster-study",
+  "title": "The High Study",
+  "shortDescription": "Moonlight and lamplight share a high oak room that does not hurry its guests.",
+  "longDescription": "The High Study sits above the Great Hall like a held breath. Oak beams take the moonlight from a round window. A carved owl dais faces six small School banners. Ledgers wait in stacks. A tuning fork lies on the blotter, still as a threat.\nHeadmaster Alder does not smile first. The room smells of ink, dust, and old feathers.",
+  "zone": "academy-core",
+  "unmapped": true,
+  "exits": [
+    {
+      "direction": "down",
+      "toRoomId": "great-hall"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-headmaster-alder",
+      "name": "Headmaster Alder",
+      "kind": "npc",
+      "lookDescription": "An ancient snowy owl in a patched green robe, one yellow eye fierce, a scar across the other, a tuning fork at his belt. Try talk alder.",
+      "examineDescription": "Alder's facial disc is white as a judge's ruff. The scar is old. The robe is mended at the elbows. He listens to the end of a sentence, and the questions in his pocket are not all gentle.",
+      "dialogue": "\"The Collegium trains woodland students. Choose a School. The bell below can wait until you are ready to stand with others.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Alder. You will not find a house here. You will find a School. Ember, Thorns, the Veil, Stars, Stone, and Steel. Each is a craft. Pick one. The hearths open when you have chosen. The thing that tolls beneath us is not a lesson for the unschooled.\"",
+            "choices": [
+              {
+                "say": "1",
+                "label": "School of Ember",
+                "next": "chosen-ember",
+                "school": "ember"
+              },
+              {
+                "say": "2",
+                "label": "School of Thorns",
+                "next": "chosen-thorn",
+                "school": "thorn"
+              },
+              {
+                "say": "3",
+                "label": "School of the Veil",
+                "next": "chosen-veil",
+                "school": "veil"
+              },
+              {
+                "say": "4",
+                "label": "School of Stars",
+                "next": "chosen-stars",
+                "school": "stars"
+              },
+              {
+                "say": "5",
+                "label": "School of Stone",
+                "next": "chosen-stone",
+                "school": "stone"
+              },
+              {
+                "say": "6",
+                "label": "School of Steel",
+                "next": "chosen-steel",
+                "school": "steel"
+              }
+            ]
+          },
+          "chosen-ember": {
+            "text": "\"Ember. Fire that is held, not spilled. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
+          },
+          "chosen-thorn": {
+            "text": "\"Thorns. Growth that knows how to guard itself. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
+          },
+          "chosen-veil": {
+            "text": "\"The Veil. What is unseen still acts. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
+          },
+          "chosen-stars": {
+            "text": "\"Stars. Light that names a path. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
+          },
+          "chosen-stone": {
+            "text": "\"Stone. Patience that does not yield. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
+          },
+          "chosen-steel": {
+            "text": "\"Steel. A blade kept flat until it is needed. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
+          },
+          "already-chosen": {
+            "text": "\"You have a School. The hearths will call you when first lessons are ready. The bell can wait until you can stand with others. Down, if you must wander.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-school-chart",
+      "name": "School Chart",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Ember: a sheltered flame. Thorns: a leaf opening through a thorny branch. Veil: a silver moth. Stars: a clear constellation. Stone: a patient arch. Steel: a blade laid flat in an open hand. Beneath all six: Learn well. Use wisely. Leave room for others."
+    }
+  ]
+}

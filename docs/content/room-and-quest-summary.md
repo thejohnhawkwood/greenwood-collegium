@@ -1,7 +1,7 @@
 # Room and quest reference
 
 Developer-facing inventory of the September 10, 2026 content release. The JSON files
-linked below remain the source of truth. This pass keeps the existing 25 room IDs,
+linked below remain the source of truth. This pass keeps the existing campus rooms plus the unmapped High Study.
 exits, zones, and map positions, enriches every description, and adds permanent
 examinable discoveries. There are six speaking staff NPCs and four quests including
 the original Arrival tutorial.
@@ -88,10 +88,20 @@ Bees stitch the clover beneath a wide, unhurried sky.
 Six bright banners hang above tables built around living oaks.
 
 - Source: [room JSON](../../packages/content/rooms/great-hall.json).
-- Exits: south → `lantern-court`; north → `north-quad`; east → `lecture-theatre`; west → `library-stacks`.
-- NPCs: Headmaster Alder (`npc-headmaster-alder`).
+- Exits: south → `lantern-court`; north → `north-quad`; east → `lecture-theatre`; west → `library-stacks`; up → `headmaster-study`.
+- NPCs: none. Alder waits in the High Study.
 - Discoveries: School Banners (`object-school-banners`).
-- Quest roles: [Arrival at the Collegium](#arrival-at-the-collegium), [The Bell Below](#the-bell-below).
+- Quest roles: [Arrival at the Collegium](#arrival-at-the-collegium).
+
+### The High Study — `headmaster-study`
+
+Moonlight and lamplight share a high oak room that does not hurry its guests.
+
+- Source: [room JSON](../../packages/content/rooms/headmaster-study.json).
+- Unmapped. Forced landing after Arrival. Exit: down → `great-hall`.
+- NPCs: Headmaster Alder (`npc-headmaster-alder`), recast as an old fierce snowy owl.
+- Discoveries: School Chart (`object-school-chart`).
+- Quest roles: school selection. [The Bell Below](#the-bell-below) is gated until later.
 
 ### Greenhouse — `greenhouse`
 
@@ -311,7 +321,7 @@ Resolution: the original tutorial teaches looking, speaking, taking a personal k
 ### The Bell Below
 
 - Stable ID: `the-bell-below`; source: [quest JSON](../../packages/content/quests/the-bell-below.json).
-- Starts: talk to `npc-headmaster-alder` in `great-hall`.
+- Starts: gated. Alder no longer gives this on first talk. The High Study is the briefing room.
 - Reward: **15 experience**, once per character.
 
 Objectives:

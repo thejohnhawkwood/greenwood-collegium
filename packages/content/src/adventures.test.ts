@@ -23,7 +23,7 @@ describe("adventure content", () => {
   it("offers six speaking staff and discoveries in every existing room", () => {
     const world = loadBundledWorld();
     const rooms = Object.values(world.rooms);
-    expect(rooms).toHaveLength(25);
+    expect(rooms).toHaveLength(26);
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );
@@ -40,7 +40,6 @@ describe("adventure content", () => {
     const adventures = Object.values(world.quests).filter((quest) => quest.giverNpcId);
     expect(adventures.map((quest) => quest.id).sort()).toEqual([
       "a-little-room-to-grow",
-      "the-bell-below",
       "the-missing-pages",
     ]);
     for (const quest of adventures) {

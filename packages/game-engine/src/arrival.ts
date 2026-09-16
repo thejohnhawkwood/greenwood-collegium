@@ -9,6 +9,7 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import { ARRIVAL_QUEST_ID, openPorterArrival } from "./arrival-guide.js";
+import { summonToHeadmaster } from "./headmaster.js";
 import { itemsHeldBy } from "./items.js";
 import { levelForExperience } from "./progression.js";
 import type {
@@ -156,6 +157,9 @@ export function progressQuests(
       progress.status = "completed";
       events.push(questUpdatedEvent(character.id, template, progress, runtime));
       events.push(...awardQuestReward(character, template, progress, runtime));
+      if (template.id === ARRIVAL_QUEST_ID) {
+        events.push(...summonToHeadmaster(world, character, runtime));
+      }
     } else {
       events.push(questUpdatedEvent(character.id, template, progress, runtime));
     }

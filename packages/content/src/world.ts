@@ -28,7 +28,15 @@ export type LoadedRoom = {
       start: string;
       nodes: Record<
         string,
-        { text: string; choices?: Array<{ say: string; label: string; next?: string }> }
+        {
+          text: string;
+          choices?: Array<{
+            say: string;
+            label: string;
+            next?: string;
+            school?: "ember" | "thorn" | "veil" | "stars" | "stone" | "steel";
+          }>;
+        }
       >;
     };
   }>;

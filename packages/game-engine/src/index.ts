@@ -129,3 +129,5 @@ export type {
   WorldState,
 } from "./state.js";
 export { createPlayState } from "./play-state.js";
+export { HEADMASTER_NPC_ID, HEADMASTER_STUDY_ID, summonToHeadmaster } from "./headmaster.js";
+export { SCHOOL_IDS, isSchoolId } from "./schools.js";

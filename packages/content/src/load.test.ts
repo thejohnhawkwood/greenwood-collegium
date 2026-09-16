@@ -40,7 +40,7 @@ describe("content loader", () => {
 
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(25);
+    expect(Object.keys(world.rooms)).toHaveLength(26);
     expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
     expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
     const charted = Object.values(world.rooms).filter((room) => room.map);
@@ -58,7 +58,8 @@ describe("content loader", () => {
         id: "npc-porter-bramble",
         name: "Porter Bramble",
         kind: "npc",
-        lookDescription: "A sturdy hedgehog porter in a worn brown coat, brass whistle on a leather cord. Try talk porter.",
+        lookDescription:
+          "A sturdy hedgehog porter in a worn brown coat, brass whistle on a leather cord. Try talk porter.",
         examineDescription: expect.stringContaining("whistle is for calling help"),
         dialogue: expect.stringContaining("school"),
       }),
@@ -122,7 +123,7 @@ describe("content loader", () => {
     });
 
     const world = loadWorldFromDirectory(directory);
-    expect(Object.keys(world.rooms)).toHaveLength(26);
+    expect(Object.keys(world.rooms)).toHaveLength(27);
     expect(world.rooms["extra-nook"]?.title).toBe("Extra Nook");
   });
 

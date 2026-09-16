@@ -3,7 +3,7 @@
   "id": "great-hall",
   "title": "Great Hall",
   "shortDescription": "Six bright banners hang above tables built around living oaks.",
-  "longDescription": "Living oak columns spread into a roof of beams and leaves, holding the Great Hall like cupped hands. Long tables bear the marks of ink pots, hot mugs, and one memorable attempt to carve a perfect circle.\nBanners for Ember, Thorn, Veil, Stars, Stone, and Steel stir above the lanterns. At the high table, Headmaster Alder studies an acorn-shaped tuning fork with a puzzled smile.",
+  "longDescription": "Living oak columns spread into a roof of beams and leaves, holding the Great Hall like cupped hands. Long tables bear the marks of ink pots, hot mugs, and one memorable attempt to carve a perfect circle.\nBanners for Ember, Thorns, Veil, Stars, Stone, and Steel stir above the lanterns. A steep stair climbs to the High Study. The high table is empty; Alder does not wait in the hall.",
   "zone": "academy-core",
   "map": {
     "x": 0,
@@ -25,17 +25,13 @@
     {
       "direction": "west",
       "toRoomId": "library-stacks"
+    },
+    {
+      "direction": "up",
+      "toRoomId": "headmaster-study"
     }
   ],
   "fixtures": [
-    {
-      "id": "npc-headmaster-alder",
-      "name": "Headmaster Alder",
-      "lookDescription": "A silver-browed stag in a patched green robe, ink on one cuff, a tuning fork at his belt. Try talk alder.",
-      "examineDescription": "Alder's antlers are scored from years of low doorways. The robe is mended at the elbows. He listens to the end of a sentence, and the questions in his pocket are not all gentle.",
-      "dialogue": "\"Welcome. I collect questions; answers are welcome too, when they have evidence.\" Alder holds the tuning fork by its stem. \"The school has been humming below our feet. I would rather understand a mystery than frighten everyone with a guess.\"",
-      "kind": "npc"
-    },
     {
       "id": "object-school-banners",
       "name": "School Banners",
