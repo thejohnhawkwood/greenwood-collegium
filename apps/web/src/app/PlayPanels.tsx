@@ -154,22 +154,24 @@ export function PlayPanels({
                 World map
               </button>
             </div>
-            <Minimap state={state} />
-            <nav className="exit-buttons" aria-label="Compass movement">
-              {room?.exits.map((exit) => (
-                <button
-                  key={exit.direction}
-                  type="button"
-                  title={`Move ${exit.direction}`}
-                  aria-label={`Move ${exit.direction}`}
-                  disabled={connection !== "connected"}
-                  data-direction={exit.direction}
-                  onClick={() => onMove(exit.direction)}
-                >
-                  {directionLetters[exit.direction] ?? exit.direction.slice(0, 1).toUpperCase()}
-                </button>
-              ))}
-            </nav>
+            <div className="local-map-body">
+              <Minimap state={state} />
+              <nav className="exit-buttons" aria-label="Compass movement">
+                {room?.exits.map((exit) => (
+                  <button
+                    key={exit.direction}
+                    type="button"
+                    title={`Move ${exit.direction}`}
+                    aria-label={`Move ${exit.direction}`}
+                    disabled={connection !== "connected"}
+                    data-direction={exit.direction}
+                    onClick={() => onMove(exit.direction)}
+                  >
+                    {directionLetters[exit.direction] ?? exit.direction.slice(0, 1).toUpperCase()}
+                  </button>
+                ))}
+              </nav>
+            </div>
             {room && !room.exits.length ? <p className="small-copy">No visible exits.</p> : null}
           </section>
         </aside>

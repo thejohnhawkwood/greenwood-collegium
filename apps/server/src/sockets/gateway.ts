@@ -14,6 +14,7 @@ import {
   applyQuestProgress,
   createPlayState,
   handleAttack,
+  handleBye,
   handleCast,
   handleDrop,
   handleExamine,
@@ -865,7 +866,9 @@ export async function attachRealtime(
                                   ? handleAttack(world, intent, runtime)
                                   : intent.verb === "travel"
                                     ? handleTravel(world, intent, runtime)
-                                    : handleCast(world, intent, runtime);
+                                    : intent.verb === "bye"
+                                      ? handleBye(world, intent, runtime)
+                                      : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({

@@ -291,6 +291,10 @@ describe("classroom auth service", () => {
     const suggested = await auth.suggestCharacterName();
     expect(suggested).toEqual(expect.any(String));
     expect(suggested?.toLowerCase()).not.toBe("arbird");
+    const foxName = await auth.suggestCharacterName({ speciesId: "fox", gender: "male" });
+    expect(foxName).toEqual(expect.any(String));
+    expect(foxName).toMatch(/ /);
+    expect(foxName?.length).toBeLessThanOrEqual(24);
   });
 
   it("issues a hashed socket ticket that expires", async () => {

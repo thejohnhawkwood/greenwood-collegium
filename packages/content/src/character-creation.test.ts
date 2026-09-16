@@ -20,6 +20,17 @@ describe("character creation content", () => {
     expect(formatCharacterName("Lumen", "otter")).toBe("Lumen the Otter");
     expect(characterCreationIntro()).toContain("Greenwood Collegium");
     expect(suggestedCharacterNames().length).toBeGreaterThan(10);
+    expect(suggestedCharacterNames("fox", "male").some((name) => name.includes(" "))).toBe(true);
+    expect(
+      suggestedCharacterNames("fox", "male").some((name) => /Reynard|Tod|Brush/.test(name)),
+    ).toBe(true);
+    expect(suggestedCharacterNames("otter", "female").every((name) => name.length <= 24)).toBe(
+      true,
+    );
+    for (const species of listSpecies()) {
+      expect(suggestedCharacterNames(species.id, "female").length).toBeGreaterThan(10);
+      expect(suggestedCharacterNames(species.id, "male").length).toBeGreaterThan(10);
+    }
     expect(CHARACTER_GENDERS.map((gender) => gender.id)).toEqual(["female", "male"]);
     expect(isKnownGender("nonbinary")).toBe(false);
     expect(describeCollegian("otter", "female").look).toContain("otter");

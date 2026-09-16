@@ -20,14 +20,18 @@ export function handOverlap(count: number): number {
   return -38;
 }
 
+export function conversationKey(conversation?: PlayState["conversation"]): string | undefined {
+  if (!conversation) {
+    return undefined;
+  }
+  return `${conversation.npcId}:${conversation.prompt}`;
+}
+
 export function forcedPresenceId(
   people: readonly PresencePerson[],
-  conversation?: PlayState["conversation"],
+  _conversation?: PlayState["conversation"],
   inCombat?: boolean,
 ): string | undefined {
-  if (conversation?.npcId) {
-    return conversation.npcId;
-  }
   if (inCombat) {
     return people.find((person) => isHostile(person))?.id;
   }
@@ -62,22 +66,32 @@ export function PresenceAvatars({
 }) {
   const forcedId = forcedPresenceId(people, conversation, inCombat);
   const [pickedId, setPickedId] = useState<string | null>(null);
-  const openId = forcedId ?? pickedId;
+  const [closedKey, setClosedKey] = useState<string | null>(null);
+  const openConversationKey = conversationKey(conversation);
+  const visibleConversation =
+    conversation && closedKey !== openConversationKey ? conversation : undefined;
+  const openId = forcedId ?? pickedId ?? (visibleConversation ? visibleConversation.npcId : null);
   useEffect(() => {
     if (!openId || forcedId) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setPickedId(null);
+      if (event.key === "Escape") {
+        if (visibleConversation) {
+          setClosedKey(openConversationKey ?? null);
+          onSend("bye");
+          return;
+        }
+        setPickedId(null);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [openId, forcedId]);
+  }, [openId, forcedId, visibleConversation, openConversationKey, onSend]);
   const openPerson =
     people.find((person) => person.id === openId) ??
-    (conversation && conversation.npcId === openId
-      ? { id: conversation.npcId, name: conversation.npcName, kind: "npc" as const }
+    (visibleConversation && visibleConversation.npcId === openId
+      ? { id: visibleConversation.npcId, name: visibleConversation.npcName, kind: "npc" as const }
       : undefined);
-  const talking = Boolean(conversation && openPerson && conversation.npcId === openPerson.id);
-  if (!people.length && !conversation) return null;
+  if (!people.length && !visibleConversation) return null;
   const overlap = handOverlap(people.length);
   return (
     <div className="presence-layer">
@@ -88,20 +102,31 @@ export function PresenceAvatars({
           aria-live="polite"
         >
           <PresenceZoom person={openPerson} />
-          {talking && conversation ? (
-            <ConversationStage conversation={conversation} onSend={onSend} />
-          ) : (
-            <PresenceMenu
-              person={openPerson}
-              gift={gift}
-              gifts={gifts}
-              onSend={onSend}
-              onClose={() => {
-                if (!forcedId) setPickedId(null);
-              }}
-            />
-          )}
+          <PresenceMenu
+            person={openPerson}
+            gift={gift}
+            gifts={gifts}
+            onSend={(command) => {
+              if (command.startsWith("talk ")) {
+                setClosedKey(null);
+              }
+              onSend(command);
+            }}
+            onClose={() => {
+              if (!forcedId) setPickedId(null);
+            }}
+          />
         </div>
+      ) : null}
+      {visibleConversation ? (
+        <ConversationStage
+          conversation={visibleConversation}
+          onSend={onSend}
+          onClose={() => {
+            setClosedKey(openConversationKey ?? null);
+            onSend("bye");
+          }}
+        />
       ) : null}
       {people.length ? (
         <div

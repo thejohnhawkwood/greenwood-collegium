@@ -8,7 +8,10 @@ export { handleDrop, revertDrop } from "./drop.js";
 export { handleExamine } from "./examine.js";
 export { handleTalk } from "./talk.js";
 export { parseTalkCommand } from "./parse-talk.js";
+export { handleBye } from "./bye.js";
+export { parseByeCommand } from "./parse-bye.js";
 export type { TalkResult } from "./talk.js";
+export type { ByeResult } from "./bye.js";
 export type { TalkIntent } from "./state.js";
 export { handleInventory } from "./inventory.js";
 export { handleAttack } from "./attack.js";
@@ -87,6 +90,7 @@ export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
 export type {
   AttackIntent,
+  ByeIntent,
   CastIntent,
   Character,
   DropIntent,

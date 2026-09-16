@@ -11,9 +11,16 @@ const speciesSchema = z.object({
   weaponProficiency: z.enum(WEAPON_PROFICIENCIES),
 });
 
+const speciesNamePoolSchema = z.object({
+  female: z.array(z.string().min(1)).min(1),
+  male: z.array(z.string().min(1)).min(1),
+  surnames: z.array(z.string().min(1)).min(1),
+});
+
 const namesSchema = z.object({
   reserved: z.array(z.string().min(1)),
   suggested: z.array(z.string().min(1)).min(1),
+  bySpecies: z.record(z.string(), speciesNamePoolSchema),
 });
 
 const introSchema = z.object({
@@ -64,6 +71,9 @@ for (const species of SPECIES) {
   if (!APPEARANCES[species.id]) {
     throw new Error(`Missing appearance text for species "${species.id}".`);
   }
+  if (!NAMES.bySpecies[species.id]) {
+    throw new Error(`Missing suggested names for species "${species.id}".`);
+  }
 }
 
 export const CHARACTER_GENDERS = [
@@ -107,8 +117,27 @@ export function reservedCharacterNames(): readonly string[] {
   return NAMES.reserved;
 }
 
-export function suggestedCharacterNames(): readonly string[] {
-  return NAMES.suggested;
+export function suggestedCharacterNames(speciesId?: string, gender?: string): readonly string[] {
+  const pool = speciesId ? NAMES.bySpecies[speciesId] : undefined;
+  if (!pool) {
+    return NAMES.suggested;
+  }
+  const given =
+    gender === "female"
+      ? pool.female
+      : gender === "male"
+        ? pool.male
+        : [...pool.female, ...pool.male];
+  const names: string[] = [];
+  for (const first of given) {
+    for (const surname of pool.surnames) {
+      const full = `${first} ${surname}`;
+      if (full.length >= 2 && full.length <= 24) {
+        names.push(full);
+      }
+    }
+  }
+  return names.length > 0 ? names : NAMES.suggested;
 }
 
 export function formatCharacterName(givenName: string, speciesId: string): string {

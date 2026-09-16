@@ -51,7 +51,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["talk"],
     summary: "Talk to a nearby member of staff and discover quests.",
     detail:
-      "talk porter (or talk to Porter Bramble) starts a private, written conversation with a nearby NPC. If the staff offer choices, type say 1, say 2, say 3, say yes, or say no. Talk to Librarian Quill, Groundskeeper Tansy, or Headmaster Alder for a quest. Type quests for your checklist. Use say to speak to other Collegians.",
+      "talk porter (or talk to Porter Bramble) starts a private, written conversation with a nearby NPC. If the staff offer choices, type say 1, say 2, say 3, say yes, or say no. Type bye or use Close to step back and click other things in the room. Talk to Librarian Quill, Groundskeeper Tansy, or Headmaster Alder for a quest. Type quests for your checklist. Use say to speak to other Collegians.",
   },
   {
     topic: "inventory",

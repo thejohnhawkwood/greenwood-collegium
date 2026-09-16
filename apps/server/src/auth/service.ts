@@ -165,7 +165,10 @@ export type AuthService = {
     species: ReadonlyArray<{ id: string; name: string }>;
     genders: ReadonlyArray<{ id: string; label: string }>;
   };
-  suggestCharacterName(): Promise<string | undefined>;
+  suggestCharacterName(input?: {
+    speciesId?: string;
+    gender?: string;
+  }): Promise<string | undefined>;
   completeCharacter(
     accountId: string,
     input: {
@@ -511,22 +514,31 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     };
   }
 
-  async function suggestCharacterName(): Promise<string | undefined> {
-    const available: string[] = [];
-    for (const candidate of suggestedCharacterNames()) {
-      if (isReservedCharacterName(candidate)) {
-        continue;
+  async function suggestCharacterName(input?: {
+    speciesId?: string;
+    gender?: string;
+  }): Promise<string | undefined> {
+    const pools = [
+      suggestedCharacterNames(input?.speciesId, input?.gender),
+      suggestedCharacterNames(),
+    ];
+    for (const candidates of pools) {
+      const available: string[] = [];
+      for (const candidate of candidates) {
+        if (isReservedCharacterName(candidate)) {
+          continue;
+        }
+        if (await deps.characters.getByNormalizedName(candidate)) {
+          continue;
+        }
+        available.push(candidate);
       }
-      if (await deps.characters.getByNormalizedName(candidate)) {
-        continue;
+      if (available.length > 0) {
+        const index = Math.floor(random() * available.length);
+        return available[index];
       }
-      available.push(candidate);
     }
-    if (available.length === 0) {
-      return undefined;
-    }
-    const index = Math.floor(random() * available.length);
-    return available[index];
+    return undefined;
   }
 
   async function completeCharacter(

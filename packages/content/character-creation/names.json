@@ -62,5 +62,62 @@
     "Orla",
     "Pell",
     "Rindle"
-  ]
+  ],
+  "bySpecies": {
+    "mouse": {
+      "female": ["Pippa", "Nib", "Mira", "Crumble", "Tansy", "Wisp"],
+      "male": ["Pip", "Nibbin", "Crumb", "Whisk", "Cotter", "Pell"],
+      "surnames": ["Thimble", "Crumb", "Nibble", "Rindle", "Sedge", "Wicket"]
+    },
+    "hare": {
+      "female": ["Clover", "Fleet", "Orla", "Thistle", "Lark", "Dew"],
+      "male": ["Thump", "Fleet", "Bram", "Hareton", "Skip", "Rowan"],
+      "surnames": ["Meadow", "Leap", "Thicket", "Longleg", "Clover", "Down"]
+    },
+    "badger": {
+      "female": ["Stripe", "Setta", "Mound", "Briar", "Hollin", "Tess"],
+      "male": ["Brock", "Stripe", "Sett", "Mound", "Gruff", "Bram"],
+      "surnames": ["Sett", "Burrow", "Stripe", "Loam", "Hollow", "Thicket"]
+    },
+    "otter": {
+      "female": ["Reed", "Ripple", "Brook", "Lumen", "Nix", "Pearl"],
+      "male": ["Reed", "Holt", "Brook", "Ripple", "Finn", "Tallow"],
+      "surnames": ["Holt", "Ripple", "Brook", "Reed", "Current", "Wade"]
+    },
+    "squirrel": {
+      "female": ["Acorn", "Hazel", "Skip", "Nutmeg", "Tansy", "Briar"],
+      "male": ["Oak", "Acorn", "Skip", "Hazelton", "Bram", "Pell"],
+      "surnames": ["Oak", "Nutmeg", "Pine", "Acorn", "Branch", "Cone"]
+    },
+    "mole": {
+      "female": ["Loam", "Mira", "Cinder", "Tunnela", "Pell", "Dusk"],
+      "male": ["Tunnel", "Clod", "Diggory", "Loam", "Burrow", "Pell"],
+      "surnames": ["Burrow", "Loam", "Tunnel", "Mound", "Darkdown", "Clod"]
+    },
+    "hedgehog": {
+      "female": ["Bristle", "Prue", "Quilla", "Thistle", "Orla", "Nim"],
+      "male": ["Bristle", "Prickle", "Quill", "Thistle", "Bram", "Pell"],
+      "surnames": ["Thicket", "Bramblett", "Quill", "Spine", "Gorse", "Bur"]
+    },
+    "fox": {
+      "female": ["Vixen", "Russet", "Ember", "Gleam", "Tawny", "Sable"],
+      "male": ["Reynard", "Tod", "Russet", "Ember", "Gleam", "Bram"],
+      "surnames": ["Brush", "Redfern", "Gleam", "Hollow", "Tod", "Ember"]
+    },
+    "stoat": {
+      "female": ["Swift", "Ermine", "Dash", "Nim", "Sable", "Wisp"],
+      "male": ["Swift", "Dash", "Ermine", "Flick", "Bram", "Pell"],
+      "surnames": ["Winter", "Swift", "Ermine", "Dash", "White", "Flick"]
+    },
+    "owl": {
+      "female": ["Luna", "Vigil", "Athena", "Dusk", "Hespera", "Wisp"],
+      "male": ["Hoot", "Vigil", "Bough", "Dusk", "Kestrel", "Loden"],
+      "surnames": ["Bough", "Night", "Vigil", "Perch", "Hollow", "Dusk"]
+    },
+    "toad": {
+      "female": ["Lily", "Puddle", "Moss", "Nettle", "Orla", "Pearl"],
+      "male": ["Puddle", "Bog", "Moss", "Reed", "Pell", "Tallow"],
+      "surnames": ["Marsh", "Puddle", "Bog", "Lily", "Fenbank", "Reed"]
+    }
+  }
 }

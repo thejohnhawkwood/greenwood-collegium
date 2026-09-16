@@ -453,10 +453,27 @@ describe("visual foundation", () => {
         prompt: "Why a weapon, I wonder?",
         choices: [{ say: "1", label: "Why does a weapon fit?" }],
       }),
-    ).toBe("npc-porter-bramble");
-    const forced = renderToStaticMarkup(
+    ).toBeUndefined();
+    expect(
+      forcedPresenceId(
+        [
+          { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
+          {
+            id: "enemy-practice-dummy-south-orchard",
+            name: "Practice Dummy",
+            kind: "npc",
+          },
+        ],
+        undefined,
+        true,
+      ),
+    ).toBe("enemy-practice-dummy-south-orchard");
+    const talking = renderToStaticMarkup(
       createElement(PresenceAvatars, {
-        people: [{ id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" }],
+        people: [
+          { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
+          { id: "item-copper-key-lantern-court", name: "Small Copper Key", kind: "object" },
+        ],
         conversation: {
           npcId: "npc-porter-bramble",
           npcName: "Porter Bramble",
@@ -466,10 +483,12 @@ describe("visual foundation", () => {
         onSend: () => {},
       }),
     );
-    expect(forced).toContain("Talking with Porter Bramble");
-    expect(forced).toContain("Why a weapon, I wonder?");
-    expect(forced).toContain("Why does a weapon fit?");
-    expect(forced).toContain('data-forced="true"');
+    expect(talking).toContain("Talking with Porter Bramble");
+    expect(talking).toContain("Why a weapon, I wonder?");
+    expect(talking).toContain("Why does a weapon fit?");
+    expect(talking).toContain("Close conversation");
+    expect(talking).toContain("Small Copper Key, object");
+    expect(talking).not.toContain('data-forced="true"');
   });
   it("lists known destinations and present Collegians in the lobby", () => {
     const html = renderToStaticMarkup(

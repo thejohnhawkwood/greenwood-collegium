@@ -2,6 +2,7 @@ import { eventEnvelopeSchema } from "@greenwood/contracts";
 import { describe, expect, it } from "vitest";
 import { applyQuestProgress, listQuestRecords, progressQuests } from "./arrival.js";
 import { parsePlayerCommand } from "./parse-command.js";
+import { handleBye } from "./bye.js";
 import { handleTalk } from "./talk.js";
 import type { EngineRuntime, WorldState } from "./state.js";
 
@@ -157,5 +158,19 @@ describe("authored NPC conversations", () => {
     expect(repeated.ok && repeated.events).toHaveLength(1);
     expect(progressQuests(world, trigger, runtime)).toEqual([]);
     expect(rowan.experience).toBe(10);
+  });
+
+  it("closes an open conversation with bye", () => {
+    const { world, runtime, talk } = setup();
+    expect(talk().ok).toBe(true);
+    expect(world.characters.rowan?.openConversation).toBeDefined();
+    const closed = handleBye(world, { verb: "bye", characterId: "rowan" }, runtime);
+    expect(closed.ok).toBe(true);
+    expect(closed.ok && closed.event.narration).toContain("step back");
+    expect(world.characters.rowan?.openConversation).toBeUndefined();
+    expect(handleBye(world, { verb: "bye", characterId: "rowan" }, runtime)).toMatchObject({
+      ok: false,
+      code: "no_conversation",
+    });
   });
 });

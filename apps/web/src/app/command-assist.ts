@@ -21,6 +21,8 @@ export const COMMAND_WORDS = [
   "ex",
   "x",
   "talk",
+  "bye",
+  "goodbye",
   "inventory",
   "i",
   "attack",

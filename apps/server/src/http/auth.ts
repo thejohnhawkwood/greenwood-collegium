@@ -11,6 +11,7 @@ import {
   authSocketTicketSchema,
   authSignInRequestSchema,
   authStatusSchema,
+  authSuggestedNameRequestSchema,
   authSuggestedNameSchema,
 } from "@greenwood/contracts";
 import { formatCharacterName } from "@greenwood/content";
@@ -29,6 +30,7 @@ import {
 } from "../auth/cookies.js";
 
 export const AUTH_RATE_MAX = 5;
+export const AUTH_SUGGEST_RATE_MAX = 40;
 export const AUTH_RATE_WINDOW_MS = 10_000;
 
 export type AuthHttpDependencies = {
@@ -195,7 +197,8 @@ export async function registerAuthRoutes(
     if (!session) {
       return reply.status(401).send({ error: "unauthenticated", message: "Sign in to continue." });
     }
-    const name = await deps.auth.suggestCharacterName();
+    const parsed = authSuggestedNameRequestSchema.safeParse(request.body ?? {});
+    const name = await deps.auth.suggestCharacterName(parsed.success ? parsed.data : undefined);
     if (!name) {
       return reply.status(409).send({
         error: "duplicate_character_name",
@@ -428,9 +431,11 @@ function rateOk(limiter: RateLimiter, request: FastifyRequest): boolean {
         typeof body.username === "string"
       ? body.username.trim().toLowerCase().slice(0, 32)
       : request.ip;
+  const max =
+    request.routeOptions.url === "/auth/suggested-name" ? AUTH_SUGGEST_RATE_MAX : AUTH_RATE_MAX;
   return limiter.allow(
     `auth:${request.routeOptions.url}:${hashToken(key)}`,
-    AUTH_RATE_MAX,
+    max,
     AUTH_RATE_WINDOW_MS,
   );
 }

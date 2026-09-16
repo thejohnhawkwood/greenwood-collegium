@@ -70,6 +70,10 @@ describe("parsePlayerCommand", () => {
       characterId: "char-rowan",
       text: "1",
     });
+    expect(parsePlayerCommand("bye", "char-rowan")).toEqual({
+      verb: "bye",
+      characterId: "char-rowan",
+    });
     expect(parsePlayerCommand("dance", "char-rowan")).toBeNull();
   });
 });

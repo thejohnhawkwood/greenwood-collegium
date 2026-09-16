@@ -277,6 +277,11 @@ export type TalkIntent = {
   target: string;
 };
 
+export type ByeIntent = {
+  verb: "bye";
+  characterId: string;
+};
+
 export type InventoryIntent = {
   verb: "inventory";
   characterId: string;
@@ -392,6 +397,7 @@ export type PlayerCommand =
   | DropIntent
   | ExamineIntent
   | TalkIntent
+  | ByeIntent
   | InventoryIntent
   | AttackIntent
   | CastIntent

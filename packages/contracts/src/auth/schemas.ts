@@ -77,8 +77,8 @@ export const authCharacterCreateRequestSchema = z.object({
 });
 
 export const authSuggestedNameRequestSchema = z.object({
-  speciesId: z.string().min(1).max(32),
-  gender: authCharacterGenderSchema,
+  speciesId: z.string().min(1).max(32).optional(),
+  gender: authCharacterGenderSchema.optional(),
 });
 
 export const authSuggestedNameSchema = z.object({
