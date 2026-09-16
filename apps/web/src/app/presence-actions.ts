@@ -23,14 +23,16 @@ export function isTakeable(person: PresencePerson): boolean {
 }
 
 /** Commands the engine will accept for this token. Typed words stay canonical. */
-export function presenceActions(person: PresencePerson): PresenceAction[] {
+export function presenceActions(
+  person: PresencePerson,
+  gift?: { id: string; name: string },
+): PresenceAction[] {
   const examine = { label: "Examine", command: `examine ${person.name}` };
   if (isHostile(person)) {
-    return [
-      examine,
-      { label: "Attack", command: `attack ${person.name}` },
-      { label: "Cast Ember", command: `cast ember ${person.name}` },
-    ];
+    const cast = gift
+      ? { label: `Cast ${gift.name}`, command: `cast ${gift.id} ${person.name}` }
+      : { label: "Cast Ember", command: `cast ember ${person.name}` };
+    return [examine, { label: "Attack", command: `attack ${person.name}` }, cast];
   }
   if (isTakeable(person)) {
     return [examine, { label: "Take", command: `take ${person.name}` }];

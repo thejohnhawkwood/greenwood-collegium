@@ -13,6 +13,7 @@ import { fixturesVisibleTo, porterCompanionFixture, PORTER_NPC_ID } from "./arri
 import { treeNode } from "./conversation.js";
 import { itemsHeldBy } from "./items.js";
 import { snapshotPayload } from "./look.js";
+import { schoolGift } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
 /** Read-only projection. No accounts, hidden rooms, or other players' private stats. */
@@ -67,6 +68,16 @@ export function createPlayState(
       experience: character.experience ?? 0,
       inCombat: Boolean(activeEncounter(world, characterId)),
       equipped,
+      schoolId: character.schoolId,
+      gift:
+        (character.level ?? 1) >= 3
+          ? (() => {
+              const gift = schoolGift(world, character);
+              return gift
+                ? { id: gift.id, name: gift.name, helpText: gift.helpText }
+                : undefined;
+            })()
+          : undefined,
     },
     // Older world fixtures omit these collections. The shared look helpers lazily
     // initialise them, so isolate that initialisation from this read-only projection.

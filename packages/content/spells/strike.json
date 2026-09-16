@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "strike",
+  "name": "Strike",
+  "school": "steel",
+  "description": "A clean taught cut. It does not linger. It lands.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 6,
+  "minLevel": 3,
+  "presentationKey": "steel-strike",
+  "helpText": "cast strike"
+}

@@ -49,11 +49,13 @@ export function PresenceAvatars({
   people,
   conversation,
   inCombat,
+  gift,
   onSend,
 }: {
   people: readonly PresencePerson[];
   conversation?: PlayState["conversation"];
   inCombat?: boolean;
+  gift?: PlayState["character"]["gift"];
   onSend: (command: string) => void;
 }) {
   const forcedId = forcedPresenceId(people, conversation, inCombat);
@@ -89,6 +91,7 @@ export function PresenceAvatars({
           ) : (
             <PresenceMenu
               person={openPerson}
+              gift={gift}
               onSend={onSend}
               onClose={() => {
                 if (!forcedId) setPickedId(null);
@@ -170,16 +173,18 @@ export function PresenceZoom({ person }: { person: PresencePerson }) {
 
 export function PresenceMenu({
   person,
+  gift,
   onSend,
   onClose,
 }: {
   person: PresencePerson;
+  gift?: { id: string; name: string };
   onSend: (command: string) => void;
   onClose: () => void;
 }) {
   return (
     <div className="presence-menu" role="menu" aria-label={`${person.name} actions`}>
-      {presenceActions(person).map((action) => (
+      {presenceActions(person, gift).map((action) => (
         <button
           key={action.label}
           type="button"

@@ -16,7 +16,7 @@ export type CastFailure =
   | CombatFailure
   | {
       ok: false;
-      code: "missing_spell" | "unknown_spell" | "not_enough_focus";
+      code: "missing_spell" | "unknown_spell" | "not_enough_focus" | "gift_locked";
       message: string;
     };
 export type CastResult = CastSuccess | CastFailure;
@@ -50,6 +50,21 @@ export function handleCast(
       ok: false,
       code: "character_not_found",
       message: `I do not recognize character "${intent.characterId}".`,
+    };
+  }
+  const locked = (spell.minLevel ?? 1) >= 3;
+  if (locked && (!character.schoolId || character.schoolId !== spell.school)) {
+    return {
+      ok: false,
+      code: "gift_locked",
+      message: "That gift belongs to another School.",
+    };
+  }
+  if (locked && (character.level ?? 1) < (spell.minLevel ?? 3)) {
+    return {
+      ok: false,
+      code: "gift_locked",
+      message: "Your School gift opens at the third year-mark.",
     };
   }
   ensurePlayerVitals(character);
@@ -111,7 +126,7 @@ export function handleCast(
       ],
     }),
   );
-  if (encounter.enemy.health > 0) {
+  if (encounter.enemy.health > 0 && spell.burningRounds && spell.burningDamage) {
     events.push(
       applyBurning(encounter, spell.burningRounds, spell.burningDamage, runtime, character.id),
     );

@@ -65,6 +65,7 @@ export function createDevWorld(): WorldState {
           damage: spell.damage,
           burningRounds: spell.burningRounds,
           burningDamage: spell.burningDamage,
+          minLevel: spell.minLevel,
           presentationKey: spell.presentationKey,
           helpText: spell.helpText,
         },

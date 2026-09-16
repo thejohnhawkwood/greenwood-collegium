@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "shade",
+  "name": "Shade",
+  "school": "veil",
+  "description": "A cold fold of shadow that finds the unguarded side.",
+  "focusCost": 4,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 5,
+  "minLevel": 3,
+  "presentationKey": "shade-fold",
+  "helpText": "cast shade"
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "azimuth",
+  "name": "Azimuth",
+  "school": "stars",
+  "description": "A measured point of light that lands where it was named.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 5,
+  "minLevel": 3,
+  "presentationKey": "azimuth-point",
+  "helpText": "cast azimuth"
+}

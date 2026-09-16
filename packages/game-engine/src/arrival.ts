@@ -160,6 +160,17 @@ export function progressQuests(
       if (template.id === ARRIVAL_QUEST_ID) {
         events.push(...summonToHeadmaster(world, character, runtime));
       }
+      if (template.id.startsWith("first-lessons-") && (character.level ?? 1) >= 3) {
+        const gifts = Object.values(world.spells ?? {}).filter(
+          (spell) => spell.school === character.schoolId,
+        );
+        const gift = gifts.find((spell) => (spell.minLevel ?? 1) >= 3) ?? gifts[0];
+        if (gift) {
+          events.push(
+            systemNotice(character.id, `Your School gift opens. Type ${gift.helpText}.`, runtime),
+          );
+        }
+      }
     } else {
       events.push(questUpdatedEvent(character.id, template, progress, runtime));
     }

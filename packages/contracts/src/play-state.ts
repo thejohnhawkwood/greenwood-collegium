@@ -39,6 +39,14 @@ export const playStateSchema = z.object({
     experience: z.number().int().nonnegative(),
     inCombat: z.boolean(),
     equipped: z.string().optional(),
+    schoolId: z.enum(["ember", "thorn", "veil", "stars", "stone", "steel"]).optional(),
+    gift: z
+      .object({
+        id: z.string().min(1),
+        name: z.string().min(1),
+        helpText: z.string().min(1),
+      })
+      .optional(),
   }),
   room: roomSnapshotPayloadSchema,
   minimap: z.object({

@@ -6,7 +6,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 - **Release target:** v0.0 foundation (thirty-two mapped rooms plus the unmapped High Study, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools)
 - **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-005 quest journal popup, DS-006 minimap. Typed commands stay canonical.
-- **Active follow-up:** Slice B hearths and first lessons. After a School pick, the Collegian lands in that hearth. Slice C is level-3 School gifts.
+- **Active follow-up:** Slice C School gifts. Ember remains orchard practice. At level 3, each School opens Ember, Briar, Shade, Azimuth, Keystone, or Strike.
 - **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header).
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)

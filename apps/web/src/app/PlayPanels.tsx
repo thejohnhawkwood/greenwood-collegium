@@ -202,6 +202,7 @@ export function PlayPanels({
                 }))}
                 conversation={conversation}
                 inCombat={character?.inCombat}
+                gift={character?.gift}
                 onSend={onSend}
               />
             </div>

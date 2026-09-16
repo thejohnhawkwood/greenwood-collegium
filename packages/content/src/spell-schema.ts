@@ -27,8 +27,9 @@ export const spellTemplateSchema = z
     targetType: z.literal("enemy"),
     context: z.literal("encounter"),
     damage: z.number().int().positive(),
-    burningRounds: z.number().int().positive(),
-    burningDamage: z.number().int().positive(),
+    burningRounds: z.number().int().positive().optional(),
+    burningDamage: z.number().int().positive().optional(),
+    minLevel: z.number().int().positive().optional(),
     presentationKey: z.string().min(1),
     helpText: z.string().min(1),
   })

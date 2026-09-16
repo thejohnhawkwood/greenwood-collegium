@@ -132,9 +132,11 @@ export { createPlayState } from "./play-state.js";
 export { HEADMASTER_NPC_ID, HEADMASTER_STUDY_ID, summonToHeadmaster } from "./headmaster.js";
 export {
   SCHOOL_FIRST_LESSONS_ID,
+  SCHOOL_GIFT_ID,
   SCHOOL_HEARTH_ID,
   SCHOOL_IDS,
   SCHOOL_MENTOR_ID,
   isSchoolId,
+  schoolGift,
   sendToSchoolHearth,
 } from "./schools.js";

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "briar",
+  "name": "Briar",
+  "school": "thorn",
+  "description": "Living thorns lash a foe and cling.",
+  "focusCost": 4,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "burningRounds": 2,
+  "burningDamage": 1,
+  "minLevel": 3,
+  "presentationKey": "briar-lash",
+  "helpText": "cast briar"
+}

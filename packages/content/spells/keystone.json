@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "keystone",
+  "name": "Keystone",
+  "school": "stone",
+  "description": "A short, heavy blow that treats a foe like a failing wall.",
+  "focusCost": 5,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 6,
+  "minLevel": 3,
+  "presentationKey": "keystone-blow",
+  "helpText": "cast keystone"
+}

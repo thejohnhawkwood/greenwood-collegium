@@ -120,8 +120,9 @@ export type SpellTemplate = {
   targetType: "enemy";
   context: "encounter";
   damage: number;
-  burningRounds: number;
-  burningDamage: number;
+  burningRounds?: number;
+  burningDamage?: number;
+  minLevel?: number;
   presentationKey: string;
   helpText: string;
 };

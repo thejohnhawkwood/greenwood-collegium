@@ -71,7 +71,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["cast"],
     summary: "Cast a known spell during a fight.",
     detail:
-      "cast ember dummy spends focus and scorches the Practice Dummy. Ember also leaves burning.",
+      "cast ember dummy still works as orchard practice. At the third year-mark your School gift opens: Ember, Briar, Shade, Azimuth, Keystone, or Strike.",
   },
   {
     topic: "help",

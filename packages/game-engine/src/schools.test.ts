@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { progressQuests } from "./arrival.js";
+import { handleCast } from "./cast.js";
 import { handleMove } from "./move.js";
 import { handleSay } from "./say.js";
 import { handleTalk } from "./talk.js";
 import { handleJoin } from "./presence.js";
-import type { EngineRuntime, WorldState } from "./state.js";
+import type { EngineRuntime, SpellTemplate, WorldState } from "./state.js";
 
 function runtime(): EngineRuntime {
   let sequence = 0;
@@ -87,6 +88,33 @@ function world(): WorldState {
     },
     characters: {},
     items: {},
+    enemies: {
+      "enemy-practice-dummy-south-orchard": {
+        id: "enemy-practice-dummy-south-orchard",
+        templateId: "practice-dummy",
+        name: "Practice Dummy",
+        examineDescription: "Straw.",
+        roomId: "south-orchard",
+        maxHealth: 8,
+        attack: 1,
+        experience: 1,
+      },
+    },
+    spells: {
+      strike: {
+        id: "strike",
+        name: "Strike",
+        school: "steel",
+        description: "A clean cut.",
+        focusCost: 3,
+        targetType: "enemy",
+        context: "encounter",
+        damage: 6,
+        minLevel: 3,
+        presentationKey: "steel-strike",
+        helpText: "cast strike",
+      } satisfies SpellTemplate,
+    },
     questTemplates: {
       "first-lessons-steel": {
         id: "first-lessons-steel",
@@ -124,7 +152,14 @@ describe("school hearth after a choice", () => {
     expect(
       handleJoin(
         realm,
-        { verb: "join", characterId: "char-rowan", name: "Rowan", roomId: "headmaster-study" },
+        {
+          verb: "join",
+          characterId: "char-rowan",
+          name: "Rowan",
+          roomId: "headmaster-study",
+          experience: 10,
+          level: 2,
+        },
         clock,
       ).ok,
     ).toBe(true);
@@ -151,7 +186,44 @@ describe("school hearth after a choice", () => {
     );
     expect(reported.ok).toBe(true);
     expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.status).toBe("completed");
-    expect(realm.characters["char-rowan"]?.experience).toBe(10);
-    expect(realm.characters["char-rowan"]?.level).toBe(2);
+    expect(realm.characters["char-rowan"]?.experience).toBe(20);
+    expect(realm.characters["char-rowan"]?.level).toBe(3);
+    expect(reported.ok && reported.events.some((event) => event.narration.includes("cast strike"))).toBe(
+      true,
+    );
+    handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "south" }, clock);
+    expect(
+      handleCast(
+        realm,
+        { verb: "cast", characterId: "char-rowan", spell: "strike", target: "dummy" },
+        clock,
+      ).ok,
+    ).toBe(true);
+  });
+
+  it("keeps a School gift locked until the third year-mark", () => {
+    const realm = world();
+    const clock = runtime();
+    expect(
+      handleJoin(
+        realm,
+        {
+          verb: "join",
+          characterId: "char-rowan",
+          name: "Rowan",
+          roomId: "south-orchard",
+          schoolId: "steel",
+          level: 2,
+        },
+        clock,
+      ).ok,
+    ).toBe(true);
+    expect(
+      handleCast(
+        realm,
+        { verb: "cast", characterId: "char-rowan", spell: "strike", target: "dummy" },
+        clock,
+      ),
+    ).toMatchObject({ ok: false, code: "gift_locked" });
   });
 });

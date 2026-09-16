@@ -74,8 +74,9 @@ export type LoadedSpell = {
   targetType: "enemy";
   context: "encounter";
   damage: number;
-  burningRounds: number;
-  burningDamage: number;
+  burningRounds?: number;
+  burningDamage?: number;
+  minLevel?: number;
   presentationKey: string;
   helpText: string;
 };
@@ -245,6 +246,7 @@ export function toWorldState(
       damage: spell.damage,
       burningRounds: spell.burningRounds,
       burningDamage: spell.burningDamage,
+      minLevel: spell.minLevel,
       presentationKey: spell.presentationKey,
       helpText: spell.helpText,
     };

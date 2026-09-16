@@ -96,7 +96,8 @@ describe("content loader", () => {
       burningRounds: 2,
       presentationKey: "ember-burst",
     });
-    expect(Object.keys(world.spells)).toHaveLength(1);
+    expect(Object.keys(world.spells)).toHaveLength(6);
+    expect(world.spells.strike).toMatchObject({ name: "Strike", school: "steel", minLevel: 3 });
     expect(world.quests["arrival-at-the-collegium"]).toMatchObject({
       title: "Arrival at the Collegium",
       experienceReward: 10,
