@@ -1,23 +1,68 @@
 import type { EventEnvelope } from "@greenwood/contracts";
 import { handleLook } from "./look.js";
-import type { Character, EngineRuntime, WorldState } from "./state.js";
+import type { Character, DialogueTree, EngineRuntime, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export const HEADMASTER_NPC_ID = "npc-headmaster-alder";
 export const HEADMASTER_STUDY_ID = "headmaster-study";
+export const BELL_BELOW_QUEST_ID = "the-bell-below";
 
-export function alderSpeechNode(character: Character): string {
-  return character.schoolId ? "already-chosen" : "welcome";
+export function firstLessonsComplete(world: WorldState, character: Character): boolean {
+  if (!character.schoolId) {
+    return false;
+  }
+  return (
+    world.quests?.[character.id]?.[`first-lessons-${character.schoolId}`]?.status === "completed"
+  );
+}
+
+export function alderSpeechNode(world: WorldState, character: Character): string {
+  if (!character.schoolId) {
+    return "welcome";
+  }
+  const bell = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID];
+  if (bell?.status === "completed") {
+    return "bell-done";
+  }
+  if (bell?.status === "active") {
+    return "bell-active";
+  }
+  if (firstLessonsComplete(world, character)) {
+    return "offer-bell";
+  }
+  return "already-chosen";
+}
+
+export function resolveAlderSpeechNode(
+  tree: DialogueTree | undefined,
+  world: WorldState,
+  character: Character,
+): string | undefined {
+  if (!tree) {
+    return undefined;
+  }
+  const preferred = alderSpeechNode(world, character);
+  if (tree.nodes[preferred]) {
+    return preferred;
+  }
+  if (character.schoolId && tree.nodes["already-chosen"]) {
+    return "already-chosen";
+  }
+  if (tree.nodes[tree.start]) {
+    return tree.start;
+  }
+  return undefined;
 }
 
 export function openAlderStudy(world: WorldState, character: Character): void {
   const alder = world.rooms[HEADMASTER_STUDY_ID]?.fixtures.find(
     (fixture) => fixture.id === HEADMASTER_NPC_ID,
   );
-  if (!alder?.dialogueTree?.nodes[alderSpeechNode(character)]) {
+  const nodeId = resolveAlderSpeechNode(alder?.dialogueTree, world, character);
+  if (!alder || !nodeId) {
     return;
   }
-  character.openConversation = { npcId: alder.id, nodeId: alderSpeechNode(character) };
+  character.openConversation = { npcId: alder.id, nodeId };
 }
 
 export function summonToHeadmaster(

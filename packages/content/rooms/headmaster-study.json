@@ -83,7 +83,24 @@
             "text": "\"Steel. A blade kept flat until it is needed. Your hearth is not open yet. Down returns you to the Great Hall. Do not waste the hours.\""
           },
           "already-chosen": {
-            "text": "\"You have a School. The hearths will call you when first lessons are ready. The bell can wait until you can stand with others. Down, if you must wander.\""
+            "text": "\"You have a School. Finish first lessons at your hearth. The bell can wait until you can stand with others. Down, if you must wander.\""
+          },
+          "offer-bell": {
+            "text": "\"You have a School, and first lessons have your name. A deep bell sounds beneath us, yet the old abbey bell was taken away long ago. Will you help me separate an observation from a rumour? Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder here.\"",
+            "choices": [
+              { "say": "1", "label": "I will examine the three places.", "next": "bell-active" },
+              { "say": "2", "label": "What am I listening for?", "next": "bell-why" }
+            ]
+          },
+          "bell-why": {
+            "text": "\"The living wood remembers a welcome. I want to know which parts of the sound are true before we invent a cause. Down to the Great Hall. The Clock Tower is east of the North Quad. The ledger is north of Library Stacks. The listening stone is west of the Herb Garden.\"",
+            "choices": [{ "say": "1", "label": "I will go.", "next": "bell-active" }]
+          },
+          "bell-active": {
+            "text": "\"Down returns you to the Great Hall. Examine the Empty Bell Frame, the Bell Ledger, and the Listening Stone. Then talk alder here.\""
+          },
+          "bell-done": {
+            "text": "\"The wood remembers. That is enough for today. Go to class.\""
           }
         }
       }

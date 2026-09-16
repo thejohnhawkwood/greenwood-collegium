@@ -2,7 +2,12 @@ import { type EventEnvelope } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { progressQuests, startQuest } from "./arrival.js";
 import { dialogueBeat, startNode } from "./conversation.js";
-import { alderSpeechNode, HEADMASTER_NPC_ID } from "./headmaster.js";
+import {
+  BELL_BELOW_QUEST_ID,
+  firstLessonsComplete,
+  HEADMASTER_NPC_ID,
+  resolveAlderSpeechNode,
+} from "./headmaster.js";
 import { namesMatch } from "./names.js";
 import type { EngineRuntime, TalkIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -48,8 +53,8 @@ export function handleTalk(
   }
   const opened = npc.dialogueTree ? startNode(npc.dialogueTree) : undefined;
   const alderNode =
-    npc.id === HEADMASTER_NPC_ID && npc.dialogueTree?.nodes[alderSpeechNode(character)]
-      ? alderSpeechNode(character)
+    npc.id === HEADMASTER_NPC_ID
+      ? resolveAlderSpeechNode(npc.dialogueTree, world, character)
       : opened?.id;
   character.openConversation = alderNode ? { npcId: npc.id, nodeId: alderNode } : { npcId: npc.id };
   const events: EventEnvelope[] = [systemNotice(character.id, dialogueBeat(npc.name), runtime)];
@@ -63,6 +68,14 @@ export function handleTalk(
       started.add(quest.id);
     }
   }
+  const offerBell =
+    npc.id === HEADMASTER_NPC_ID &&
+    firstLessonsComplete(world, character) &&
+    !world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID];
+  if (offerBell) {
+    events.push(...startQuest(world, character.id, BELL_BELOW_QUEST_ID, runtime));
+    started.add(BELL_BELOW_QUEST_ID);
+  }
   events.push(
     ...progressQuests(
       world,
@@ -70,10 +83,24 @@ export function handleTalk(
       runtime,
     ),
   );
+  if (
+    npc.id === HEADMASTER_NPC_ID &&
+    world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID]?.status === "completed"
+  ) {
+    const nextNode = resolveAlderSpeechNode(npc.dialogueTree, world, character);
+    if (nextNode) {
+      character.openConversation = { npcId: npc.id, nodeId: nextNode };
+    }
+  }
   for (const quest of givenQuests) {
     if (!started.has(quest.id) && world.quests?.[character.id]?.[quest.id]?.status === "active") {
       events.push(systemNotice(character.id, quest.reminderNarration, runtime));
     }
+  }
+  const bell = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID];
+  const bellTemplate = world.questTemplates?.[BELL_BELOW_QUEST_ID];
+  if (npc.id === HEADMASTER_NPC_ID && !offerBell && bell?.status === "active" && bellTemplate) {
+    events.push(systemNotice(character.id, bellTemplate.reminderNarration, runtime));
   }
   return { ok: true, npcId: npc.id, events };
 }

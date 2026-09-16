@@ -191,6 +191,9 @@ describe("school hearth after a choice", () => {
     expect(
       reported.ok && reported.events.some((event) => event.narration.includes("cast strike")),
     ).toBe(true);
+    expect(
+      reported.ok && reported.events.some((event) => event.narration.includes("High Study")),
+    ).toBe(true);
     handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "south" }, clock);
     expect(
       handleCast(

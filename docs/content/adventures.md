@@ -24,9 +24,10 @@ Three new quests are available alongside Arrival at the Collegium:
 - **A Little Room to Grow:** Go south, west from Lantern Court, then `talk tansy`.
   Examine the Seedling Tray in the Greenhouse and the Watering Jug in the Pottery
   Shed; `talk fen` in the Infirmary for advice. Return to Tansy. Reward: 10 experience.
-- **The Bell Below:** Go north from Lantern Court and `talk alder`. Investigate
-  the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar,
-  and the Listening Stone in the Quiet Chapel. Return to Alder. Reward: 15 experience.
+- **The Bell Below:** After first lessons, type `up` from the Great Hall and
+  `talk alder`. Investigate the Empty Bell Frame in the Clock Tower, the Bell
+  Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel.
+  Return to Alder in the High Study. Reward: 15 experience.
 
 Accept a quest before investigating its clues. Clues can be investigated in any
 order, but the final conversation counts only after all the required discoveries.

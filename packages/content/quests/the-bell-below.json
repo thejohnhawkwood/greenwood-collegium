@@ -4,7 +4,7 @@
   "title": "The Bell Below",
   "experienceReward": 15,
   "introNarration": "Alder sets down his tuning fork. \"A deep bell sounds beneath the school, yet the old abbey bell was taken away long ago. Will you help me separate an observation from a rumour? Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder. Stay on our familiar paths; the answers we need are here.\"",
-  "reminderNarration": "Alder counts the leads on three fingers. \"Type east to reach the Clock Tower. Type north to reach the Archive Cellar. Type west to reach the Quiet Chapel. Type south to reach the Great Hall. Examine the Empty Bell Frame, Bell Ledger, and Listening Stone, then talk alder here. Type quests for your checklist.\"",
+  "reminderNarration": "Alder counts the leads on three fingers. \"Down returns you to the Great Hall. Type east from the North Quad to reach the Clock Tower. Type north from Library Stacks to reach the Archive Cellar. Type west from the Herb Garden to reach the Quiet Chapel. Examine the Empty Bell Frame, Bell Ledger, and Listening Stone, then talk alder here in the High Study. Type quests for your checklist.\"",
   "completionNarration": "You describe the empty frame, the keeper's record, and the three pulses in the chapel root. Alder rests the tuning fork against the oak table. For a moment, its thin note gathers a deeper companion. \"The bell is gone, but the living wood remembers its welcome. That explains how a note reaches us. What first wakes it is a question for another day.\" He smiles. \"A mystery becomes kinder when we know which parts are true.\"",
   "objectives": [
     {
@@ -30,7 +30,7 @@
       "kind": "talk",
       "targetId": "npc-headmaster-alder",
       "requires": ["check-frame", "read-ledger", "listen"],
-      "label": "After all three clues, talk alder in the Great Hall. Type south to reach the Great Hall."
+      "label": "After all three clues, talk alder in the High Study. Type up from the Great Hall."
     }
   ]
 }

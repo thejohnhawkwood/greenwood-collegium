@@ -100,7 +100,7 @@ Moonlight and lamplight share a high oak room that does not hurry its guests.
 - Unmapped. Forced landing after Arrival. Exit: down → `great-hall`.
 - NPCs: Headmaster Alder (`npc-headmaster-alder`), recast as an old fierce snowy owl.
 - Discoveries: School Chart (`object-school-chart`).
-- Quest roles: school selection. [The Bell Below](#the-bell-below) is gated until later.
+- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons.
 
 ### Hall of Schools — `hall-of-schools`
 
@@ -405,7 +405,7 @@ Resolution: the student sees their hearth, finds Flint’s orchard, and reports 
 ### The Bell Below
 
 - Stable ID: `the-bell-below`; source: [quest JSON](../../packages/content/quests/the-bell-below.json).
-- Starts: gated. Alder no longer gives this on first talk. The High Study is the briefing room.
+- Starts: talk Alder in the High Study after that School's first-lessons quest is complete.
 - Reward: **15 experience**, once per character.
 
 Objectives:
@@ -413,7 +413,7 @@ Objectives:
 - `check-frame` — `examine`: Examine the Empty Bell Frame in the Clock Tower (east of North Quad). Target: fixture `object-empty-bell-frame` in `clock-tower`.
 - `read-ledger` — `examine`: Examine the Bell Ledger in the Archive Cellar (north of Library Stacks). Target: fixture `object-bell-ledger` in `archive-cellar`.
 - `listen` — `examine`: Examine the Listening Stone in the Quiet Chapel (west of Herb Garden). Target: fixture `object-listening-stone` in `quiet-chapel`.
-- `report` — `talk`: After all three clues, talk alder in the Great Hall. Target: fixture `npc-headmaster-alder` in `great-hall`. Requires: `check-frame`, `read-ledger`, `listen`.
+- `report` — `talk`: After all three clues, talk alder in the High Study. Target: fixture `npc-headmaster-alder` in `headmaster-study`. Requires: `check-frame`, `read-ledger`, `listen`.
 
 Resolution: the old bell is absent, but a connected living oak carries its remembered note. The evidence explains the sound's path while leaving the cause of its awakening for later content.
 
