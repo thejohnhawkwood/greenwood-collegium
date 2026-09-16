@@ -282,6 +282,12 @@ export type ByeIntent = {
   characterId: string;
 };
 
+export type DrinkIntent = {
+  verb: "drink";
+  characterId: string;
+  target?: string;
+};
+
 export type InventoryIntent = {
   verb: "inventory";
   characterId: string;
@@ -398,6 +404,7 @@ export type PlayerCommand =
   | ExamineIntent
   | TalkIntent
   | ByeIntent
+  | DrinkIntent
   | InventoryIntent
   | AttackIntent
   | CastIntent

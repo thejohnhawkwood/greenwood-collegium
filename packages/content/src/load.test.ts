@@ -64,6 +64,7 @@ describe("content loader", () => {
         dialogue: expect.stringContaining("school"),
       }),
       expect.objectContaining({ id: "object-noticeboard", kind: "object" }),
+      expect.objectContaining({ id: "object-courtyard-well", kind: "object" }),
     ]);
     expect(world.rooms["east-gate"]).toBeDefined();
     expect(world.rooms["west-cloister"]?.exits).toEqual([

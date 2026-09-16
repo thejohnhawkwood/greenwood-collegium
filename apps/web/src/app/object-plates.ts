@@ -1,5 +1,6 @@
 export const OBJECT_PLATE_FILES = [
   "object-noticeboard",
+  "object-courtyard-well",
   "object-school-banners",
   "object-borrowing-register",
   "object-breathing-wheel",

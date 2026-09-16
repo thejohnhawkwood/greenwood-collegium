@@ -44,6 +44,9 @@ export function presenceActions(
     return [examine, { label: "Take", command: `take ${person.name}` }];
   }
   if (person.kind === "object") {
+    if (person.id === "object-courtyard-well" || /well/i.test(person.name)) {
+      return [examine, { label: "Drink", command: `drink ${person.name}` }];
+    }
     return [examine];
   }
   if (person.kind === "npc") {

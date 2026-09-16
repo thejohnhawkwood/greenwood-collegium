@@ -87,6 +87,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       "where and place reprint the current room title and description, the same truth as look.",
   },
   {
+    topic: "drink",
+    aliases: ["drink", "sip"],
+    summary: "Drink from the courtyard well to restore health and focus.",
+    detail:
+      "drink well (or sip) at the Courtyard Well in Lantern Court restores health and focus. A little of each also returns every few seconds while you are not in a fight.",
+  },
+  {
     topic: "stats",
     aliases: ["stats"],
     summary: "Show health, location, and what you have equipped.",

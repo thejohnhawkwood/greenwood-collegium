@@ -15,6 +15,8 @@ import {
   createPlayState,
   handleAttack,
   handleBye,
+  handleDrink,
+  tickCharacterVitals,
   handleCast,
   handleDrop,
   handleExamine,
@@ -273,7 +275,19 @@ export async function attachRealtime(
     }
   });
 
+  const vitalTimer = setInterval(() => {
+    void runExclusive(async () => {
+      const changed = tickCharacterVitals(world);
+      for (const id of changed) {
+        const snapshot = createPlayState(world, id, { presentIds: [...sockets.keys()] });
+        if (snapshot) sockets.get(id)?.emit(PLAY_STATE_EVENT, snapshot);
+      }
+    }).catch(() => undefined);
+  }, 10_000);
+  vitalTimer.unref();
+
   app.addHook("onClose", async () => {
+    clearInterval(vitalTimer);
     unsubscribe?.();
     for (const timer of leaveTimers.values()) {
       clearTimeout(timer);
@@ -868,7 +882,9 @@ export async function attachRealtime(
                                     ? handleTravel(world, intent, runtime)
                                     : intent.verb === "bye"
                                       ? handleBye(world, intent, runtime)
-                                      : handleCast(world, intent, runtime);
+                                      : intent.verb === "drink"
+                                        ? handleDrink(world, intent, runtime)
+                                        : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({

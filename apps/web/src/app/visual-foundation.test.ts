@@ -387,9 +387,17 @@ describe("visual foundation", () => {
       }),
     );
     expect(objectMenu).toContain("Examine");
+    expect(objectMenu).not.toContain("Drink");
     expect(objectMenu).not.toContain("Talk");
     expect(objectMenu).not.toContain("Take");
     expect(objectMenu).not.toContain("Attack");
+    expect(
+      presenceActions({
+        id: "object-courtyard-well",
+        name: "Courtyard Well",
+        kind: "object",
+      }).map((action) => action.label),
+    ).toEqual(["Examine", "Drink"]);
     const itemMenu = renderToStaticMarkup(
       createElement(PresenceMenu, {
         person: { id: "item-practice-sword-south-orchard", name: "Practice Sword", kind: "object" },

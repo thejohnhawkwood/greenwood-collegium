@@ -10,9 +10,18 @@ export { handleTalk } from "./talk.js";
 export { parseTalkCommand } from "./parse-talk.js";
 export { handleBye } from "./bye.js";
 export { parseByeCommand } from "./parse-bye.js";
+export { handleDrink } from "./drink.js";
+export { parseDrinkCommand } from "./parse-drink.js";
 export type { TalkResult } from "./talk.js";
 export type { ByeResult } from "./bye.js";
+export type { DrinkResult } from "./drink.js";
 export type { TalkIntent } from "./state.js";
+export {
+  COURTYARD_WELL_ID,
+  VITAL_TICK_AMOUNT,
+  restoreCharacterVitals,
+  tickCharacterVitals,
+} from "./recover.js";
 export { handleInventory } from "./inventory.js";
 export { handleAttack } from "./attack.js";
 export { handleCast } from "./cast.js";
@@ -91,6 +100,7 @@ export type { OccupantNotice } from "./presence-events.js";
 export type {
   AttackIntent,
   ByeIntent,
+  DrinkIntent,
   CastIntent,
   Character,
   DropIntent,

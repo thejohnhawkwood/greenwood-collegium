@@ -77,7 +77,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a unique painted plate for every clickable room object and takeable item", () => {
-    expect(OBJECT_PLATE_FILES).toHaveLength(30);
+    expect(OBJECT_PLATE_FILES).toHaveLength(31);
     for (const id of OBJECT_PLATE_FILES) {
       const path = join(artRoot, "objects", `${id}.png`);
       expect(existsSync(path)).toBe(true);
