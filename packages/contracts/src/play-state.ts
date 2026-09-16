@@ -45,5 +45,15 @@ export const playStateSchema = z.object({
     rooms: z.array(mapRoomSchema),
     paths: z.array(z.object({ from: z.string(), to: z.string() })),
   }),
+  peers: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        name: z.string().min(1),
+        visual: characterVisualSchema,
+        roomTitle: z.string().min(1).optional(),
+      }),
+    )
+    .default([]),
 });
 export type PlayState = z.infer<typeof playStateSchema>;

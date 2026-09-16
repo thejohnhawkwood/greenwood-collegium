@@ -2,7 +2,7 @@
 
 ## Status and owner decisions
 
-Implemented locally; awaiting the next classroom playtest. Owner: Philip Bird.
+Complete in the play shell. Awaiting the next classroom playtest. Owner: Philip Bird.
 Related backlog: issue #19. The owner confirmed September 10, 2026 that iteration may
 replace the classic UI, accepting the proposed semantic palette and non-colour labels.
 No separate UI 0 is required. [ADR-0028](../adr/0028-semantic-transcript.md) supersedes
@@ -26,7 +26,8 @@ marking semantic categories should help students follow both conversation and ga
 - Give native selects and their options explicit dark backgrounds and light text.
 - Use light grey for narration/room descriptions, green for interactable items and
   command segments, red for combat, light blue for NPCs, a distinct light blue for
-  players, and gold for quest events and journals. Visible NPC/PC and category labels
+  players, gold for quest events and journals, and lilac for system notices
+  (`[SYSTEM]`, including travel and map discovery). Visible NPC/PC and category labels
   make distinctions available without relying on colour alone.
 - Use engine-provided semantic metadata. Segment text must reproduce narration exactly
   or the client falls back to plain narration. Never infer categories from student speech.

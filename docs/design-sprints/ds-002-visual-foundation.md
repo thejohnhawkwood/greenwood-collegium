@@ -100,7 +100,7 @@ Deferred after Cycle A: persistent exploration map, realm lobby, player travel,
 room-specific art, class selection, equipment art, new mobs, quests and group
 combat (Cycles B–D). Cycle B later added the persisted world map; see
 [ds-003](ds-003-world-map.md) and [ADR-0031](../adr/0031-world-map-fog.md).
-Lobby travel remains deferred.
+Lobby travel is [ds-005](ds-005-lobby-travel.md) and [ADR-0033](../adr/0033-lobby-travel.md).
 
 Future art direction: retain the current placeholders until original painted woodland
 assets are authored. Use digital watercolor/gouache, soft natural light and expressive

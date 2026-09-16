@@ -9,6 +9,7 @@ export function eventTone(event: EventEnvelope): SemanticTone {
   if (event.type.startsWith("combat.")) return "combat";
   if (event.type.startsWith("quest.") || event.presentationKey === "quest.journal") return "quest";
   if (event.type.startsWith("item.") || event.type === "inventory.updated") return "item";
+  if (event.type.startsWith("system.") || event.type === "map.discovered") return "system";
   return "narration";
 }
 export function segmentTone(segment: SemanticSegment): SemanticTone {

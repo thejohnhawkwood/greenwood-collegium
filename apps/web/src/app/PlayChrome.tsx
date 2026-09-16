@@ -8,6 +8,7 @@ export function PlayChrome({
   settingsOpen,
   onOpenSettings,
   onCloseSettings,
+  onOpenLobby,
   onShowGate,
   onSignOut,
   authNotice,
@@ -18,6 +19,7 @@ export function PlayChrome({
   settingsOpen: boolean;
   onOpenSettings: () => void;
   onCloseSettings: () => void;
+  onOpenLobby?: () => void;
   onShowGate: () => void;
   onSignOut: () => void;
   authNotice: ReactNode;
@@ -47,6 +49,11 @@ export function PlayChrome({
             <h1>{APP_TITLE}</h1>
           </div>
         </div>
+        {onOpenLobby ? (
+          <button type="button" onClick={onOpenLobby}>
+            Lobby
+          </button>
+        ) : null}
         <button
           type="button"
           className="icon-button"

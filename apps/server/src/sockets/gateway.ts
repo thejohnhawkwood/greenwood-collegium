@@ -25,6 +25,7 @@ import {
   handleLook,
   handleMap,
   handleMove,
+  handleTravel,
   handleQuests,
   handleSay,
   handleStats,
@@ -852,7 +853,9 @@ export async function attachRealtime(
                                 ? handleEquip(world, intent, runtime)
                                 : intent.verb === "attack"
                                   ? handleAttack(world, intent, runtime)
-                                  : handleCast(world, intent, runtime);
+                                  : intent.verb === "travel"
+                                    ? handleTravel(world, intent, runtime)
+                                    : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -966,7 +969,12 @@ export async function attachRealtime(
             },
             runtime,
           )
-        : [];
+        : intent.verb === "travel"
+          ? [
+              ...progressQuests(world, { characterId, kind: "look" }, runtime),
+              ...progressQuests(world, { characterId, kind: "move" }, runtime),
+            ]
+          : [];
     if (
       identity &&
       (intent.verb === "look" ||
@@ -977,7 +985,8 @@ export async function attachRealtime(
         intent.verb === "talk" ||
         intent.verb === "equip" ||
         intent.verb === "attack" ||
-        intent.verb === "cast")
+        intent.verb === "cast" ||
+        intent.verb === "travel")
     ) {
       await persistAuthenticatedProgress(characterId);
     }
@@ -1050,7 +1059,7 @@ export async function attachRealtime(
     // this read model neither consumes a game sequence nor repeats narration.
     const recipients = new Set([actorId, ...notices.map((notice) => notice.characterId)]);
     for (const id of recipients) {
-      const snapshot = createPlayState(world, id);
+      const snapshot = createPlayState(world, id, { presentIds: [...sockets.keys()] });
       if (snapshot) sockets.get(id)?.emit(PLAY_STATE_EVENT, snapshot);
     }
     return delivered;

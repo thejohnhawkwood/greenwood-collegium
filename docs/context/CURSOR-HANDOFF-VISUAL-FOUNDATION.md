@@ -1,8 +1,8 @@
 # Cursor handoff: visual foundation and navigation
 
 Updated September 16, 2026. Cycles A–B and the painted catalog are on `main`.
-This is a continuation brief, not authorization to start DS-001 colour or lobby
-travel.
+DS-001 colour and S5 lobby travel are implemented. This is a continuation brief,
+not authorization to start another interface sprint.
 
 ## Start here
 
@@ -10,6 +10,9 @@ The play shell now uses painted rooms, Collegian looks, unique NPC plates, and
 unique object plates. Clicking an NPC or object zooms the full punched artwork
 to Collegian-portrait size in the top-left of the room painting. Health and
 Focus overlay the Collegian frame. Minimap and NESW stay visible on desktop.
+The transcript uses semantic colour with COMBAT, QUEST, ITEM, SYSTEM, NPC, and
+PC labels. After connect, a lobby desk lists visited destinations and present
+peers; `travel` / `journey` follows discovered paths.
 
 **Shipped on `main` through `6619f08` plus the current plate-zoom pass.** Render
 deploys `main` to https://greenwood-collegium.onrender.com.
@@ -109,7 +112,10 @@ Beatrix Potter are atmosphere only.
 
 ## Focused file map
 
-- UI composition, command submission: `apps/web/src/app/App.tsx`, `PlayPanels.tsx`.
+- UI composition, command submission: `apps/web/src/app/App.tsx`, `PlayPanels.tsx`,
+  `CollegiumLobby.tsx`.
+- Colour: `semantic-narration.ts`, `SemanticNarration.tsx`, `tokens.css`.
+- Travel: `packages/game-engine/src/travel.ts`, `parse-travel.ts`.
 - Map/scene/portraits: `Minimap.tsx`, `RoomScene.tsx`, `CharacterPortrait.tsx`,
   `PresenceAvatars.tsx`, `npc-plates.ts`, `object-plates.ts`,
   `appearance-description.ts` in the same directory.
@@ -238,9 +244,9 @@ single-command reconnect tests.
 
 ## Suggested first response in Cursor
 
-“I’ve read the visual-foundation handoff. The implementation is local on
-`codex/visual-foundation`, not deployed. I’ll preserve the unrelated classroom
-documents and work only on your requested next step.”
+“I’ve read the visual-foundation handoff. Colour and lobby travel are in the
+repo. I’ll preserve the unrelated classroom documents and work only on your
+requested next step.”
 
 Then do the requested step. Do not spend the owner's remaining budget rebuilding
 this handoff or automatically replaying every check.

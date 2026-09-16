@@ -21,7 +21,7 @@ Open `/?rooms=1`. Then walk from Lantern Court and compare the plate to `look`.
 
 ## Next
 See [play-shell tokens](2026-09-16-play-shell-tokens.md). Lobby travel (S5)
-remains later.
+is [lobby-and-colour](2026-09-16-lobby-and-colour.md).
 
 ## Open questions
 A few plates still lean tidy. Retake any room that feels generic in class.

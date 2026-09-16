@@ -39,13 +39,15 @@ See [the adventure guide](content/adventures.md) and
 On September 15, the owner selected Cycle A (S0–S2) of the Coding 9 visual-first
 handoff: a responsive visual play shell and persisted appearance shared across
 creation, paper doll and avatars. Preserve commands, complete narration and
-classroom moderation. Persistent exploration maps, lobby/travel and later game
-systems remain subsequent slices. See [ADR-0030](adr/0030-visual-foundation.md) and
+classroom moderation. Persistent exploration maps and lobby travel later shipped
+as Cycles B and C. Later game systems remain subsequent slices. See
+[ADR-0030](adr/0030-visual-foundation.md) and
 [the Cycle A guide](design-sprints/ds-002-visual-foundation.md).
 
 The same day, Cycle B (S4) added a canonical 25-room world map with fog of war,
 persisted discovery, a student World map panel and a `map` command. Unvisited
-room titles stay off the client. Lobby travel (S5) remains later. See
+room titles stay off the client. Lobby travel (S5) is
+[ADR-0033](adr/0033-lobby-travel.md). See
 [ADR-0031](adr/0031-world-map-fog.md) and
 [the Cycle B map notes](design-sprints/ds-003-world-map.md).
 

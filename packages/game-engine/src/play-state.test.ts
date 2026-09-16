@@ -118,6 +118,13 @@ describe("visual play projection", () => {
       { id: "hall", x: 0, y: 1, state: "unknown" },
     ]);
     expect(snapshot?.minimap.paths).toEqual([{ from: "court", to: "hall" }]);
+    expect(snapshot?.peers).toEqual([]);
+    expect(createPlayState(world, "self", { presentIds: ["peer"] })?.peers).toEqual([
+      expect.objectContaining({ name: "Moss", roomTitle: "Court" }),
+    ]);
+    expect(
+      createPlayState(world, "self", { presentIds: ["distant"] })?.peers[0]?.roomTitle,
+    ).toBeUndefined();
     expect(world).toEqual(before);
   });
   it("replaces the room and occupants after movement, and handles legacy saves or missing characters", () => {

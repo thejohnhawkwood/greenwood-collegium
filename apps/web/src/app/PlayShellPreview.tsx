@@ -1,6 +1,7 @@
 import { DEFAULT_APPEARANCE, type PlayState } from "@greenwood/contracts";
 import { useState } from "react";
 import { AcademyFrame } from "./academy-frame.js";
+import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
 
@@ -17,6 +18,14 @@ const previewState: PlayState = {
     experience: 20,
     inCombat: false,
   },
+  peers: [
+    {
+      id: "peer",
+      name: "Moss",
+      visual: { speciesId: "mole", appearance: DEFAULT_APPEARANCE },
+      roomTitle: "Porter Lodge",
+    },
+  ],
   minimap: {
     rooms: [
       { id: "porter-lodge", title: "Porter Lodge", x: 0, y: 0, state: "current" },
@@ -55,6 +64,8 @@ const previewState: PlayState = {
 
 export function PlayShellPreview() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [lobbyOpen, setLobbyOpen] = useState(true);
+  const [worldMapOpen, setWorldMapOpen] = useState(false);
   return (
     <AcademyFrame playing>
       <main className="client play-client">
@@ -65,21 +76,35 @@ export function PlayShellPreview() {
           settingsOpen={settingsOpen}
           onOpenSettings={() => setSettingsOpen(true)}
           onCloseSettings={() => setSettingsOpen(false)}
+          onOpenLobby={() => setLobbyOpen(true)}
           onShowGate={() => {}}
           onSignOut={() => {}}
           authNotice={null}
         />
         <PlayPanels
           state={previewState}
-          lines={[{ id: "look", kind: "narration", text: "Healer Fen waits nearby." }]}
+          lines={[
+            { id: "look", kind: "narration", text: "Healer Fen waits nearby." },
+            {
+              id: "travel",
+              kind: "narration",
+              text: "[SYSTEM] You follow the known paths to Lantern Court.",
+            },
+          ]}
           onCommand={() => {}}
           onSend={() => {}}
           onMove={() => {}}
-          worldMapOpen={false}
-          onOpenWorldMap={() => {}}
-          onCloseWorldMap={() => {}}
+          worldMapOpen={worldMapOpen}
+          onOpenWorldMap={() => setWorldMapOpen(true)}
+          onCloseWorldMap={() => setWorldMapOpen(false)}
           connection="connected"
           error=""
+        />
+        <CollegiumLobby
+          open={lobbyOpen}
+          state={previewState}
+          onEnter={() => setLobbyOpen(false)}
+          onTravel={() => setLobbyOpen(false)}
         />
       </main>
     </AcademyFrame>

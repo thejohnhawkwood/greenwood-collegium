@@ -55,6 +55,11 @@ describe("parsePlayerCommand", () => {
     expect(parsePlayerCommand("stats", "char-rowan")?.verb).toBe("stats");
     expect(parsePlayerCommand("map", "char-rowan")?.verb).toBe("map");
     expect(parsePlayerCommand("chart", "char-rowan")?.verb).toBe("map");
+    expect(parsePlayerCommand("travel Library Stacks", "char-rowan")).toEqual({
+      verb: "travel",
+      characterId: "char-rowan",
+      target: "Library Stacks",
+    });
     expect(parsePlayerCommand("equip sword", "char-rowan")).toEqual({
       verb: "equip",
       characterId: "char-rowan",

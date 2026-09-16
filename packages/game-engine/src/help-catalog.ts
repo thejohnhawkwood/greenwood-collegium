@@ -100,6 +100,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       "equip sword (or wield Practice Sword) sets what you hold. take on a practice weapon also equips it. stats shows the equipped item.",
   },
   {
+    topic: "travel",
+    aliases: ["travel", "journey"],
+    summary: "Follow known paths to a room you have already visited.",
+    detail:
+      "travel Library Stacks (or journey west cloister) moves you along rooms you have already found. Fogged names stay hidden. You cannot travel during combat.",
+  },
+  {
     topic: "map",
     aliases: ["map", "chart"],
     summary: "Read your explored rooms and how much of the Collegium remains in fog.",

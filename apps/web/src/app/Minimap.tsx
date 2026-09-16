@@ -7,10 +7,12 @@ export function Minimap({
   state,
   size = "compact",
   onPrepareMove,
+  onTravel,
 }: {
   state?: PlayState;
   size?: MapSize;
   onPrepareMove?: (direction: string) => void;
+  onTravel?: (title: string) => void;
 }) {
   const patternId = useId();
   const rooms = (state?.minimap.rooms ?? []).map((room) => ({ ...room, y: -room.y }));
@@ -57,7 +59,9 @@ export function Minimap({
         })}
         {rooms.map((room) => {
           const direction = state?.room.exits.find((exit) => exit.toRoomId === room.id)?.direction;
-          const canPrepare = size === "world" && room.state !== "unknown" && direction;
+          const canTravel = size === "world" && room.state === "explored" && room.title;
+          const canPrepare =
+            size === "world" && room.state !== "unknown" && direction && !canTravel;
           return (
             <g key={room.id}>
               <title>
@@ -65,7 +69,7 @@ export function Minimap({
                   ? "Unexplored"
                   : `${room.title ?? "Explored"}${room.state === "current" ? " — You are here" : ""}`}
               </title>
-              {canPrepare ? (
+              {canTravel || canPrepare ? (
                 <rect
                   className="map-cell-button"
                   x={room.x - 0.16}
@@ -76,12 +80,15 @@ export function Minimap({
                   fill="transparent"
                   role="button"
                   tabIndex={0}
-                  aria-label={`Prepare go ${direction}`}
-                  onClick={() => onPrepareMove?.(direction)}
+                  aria-label={canTravel ? `Travel to ${room.title}` : `Prepare go ${direction}`}
+                  onClick={() =>
+                    canTravel ? onTravel?.(room.title!) : onPrepareMove?.(direction!)
+                  }
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      onPrepareMove?.(direction);
+                      if (canTravel) onTravel?.(room.title!);
+                      else onPrepareMove?.(direction!);
                     }
                   }}
                 />
@@ -170,11 +177,13 @@ export function WorldMapDialog({
   state,
   onClose,
   onPrepareMove,
+  onTravel,
 }: {
   open: boolean;
   state?: PlayState;
   onClose: () => void;
   onPrepareMove?: (direction: string) => void;
+  onTravel?: (title: string) => void;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -201,9 +210,9 @@ export function WorldMapDialog({
           </button>
         </div>
         <p className="small-copy">
-          Fog hides names you have not earned. A neighbouring explored room prepares a go command.
+          Fog hides names you have not earned. An explored room sends travel along known paths.
         </p>
-        <Minimap state={state} size="world" onPrepareMove={onPrepareMove} />
+        <Minimap state={state} size="world" onPrepareMove={onPrepareMove} onTravel={onTravel} />
       </div>
     </div>
   );

@@ -13,7 +13,11 @@ import { snapshotPayload } from "./look.js";
 import type { WorldState } from "./state.js";
 
 /** Read-only projection. No accounts, hidden rooms, or other players' private stats. */
-export function createPlayState(world: WorldState, characterId: string): PlayState | undefined {
+export function createPlayState(
+  world: WorldState,
+  characterId: string,
+  options?: { presentIds?: readonly string[] },
+): PlayState | undefined {
   const character = world.characters[characterId];
   const room = character && world.rooms[character.roomId];
   if (!character || !room) return undefined;
@@ -68,5 +72,24 @@ export function createPlayState(world: WorldState, characterId: string): PlaySta
       { ...world, items: world.items ?? {}, enemies: world.enemies ?? {} },
       character,
     ),
+    peers: (options?.presentIds ?? [])
+      .filter((id) => id !== characterId)
+      .flatMap((id) => {
+        const other = world.characters[id];
+        if (!other) return [];
+        const theirRoom = world.rooms[other.roomId];
+        return [
+          {
+            id: other.id,
+            name: other.name,
+            visual: {
+              speciesId: other.speciesId ?? "unknown",
+              gender: resolveVisualGender(other.gender),
+              appearance: resolveAppearance(other.appearance),
+            },
+            ...(theirRoom && discovered.has(theirRoom.id) ? { roomTitle: theirRoom.title } : {}),
+          },
+        ];
+      }),
   });
 }

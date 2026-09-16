@@ -19,6 +19,8 @@ export { handleStats } from "./stats.js";
 export { parseStatsCommand } from "./parse-stats.js";
 export { handleMap } from "./map.js";
 export { parseMapCommand } from "./parse-map.js";
+export { handleTravel } from "./travel.js";
+export { parseTravelCommand } from "./parse-travel.js";
 export { handleEquip } from "./equip.js";
 export { parseEquipCommand } from "./parse-equip.js";
 export {
@@ -79,6 +81,7 @@ export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
 export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
 export type { StatsFailure, StatsResult, StatsSuccess } from "./stats.js";
 export type { MapFailure, MapResult, MapSuccess } from "./map.js";
+export type { TravelFailure, TravelResult, TravelSuccess } from "./travel.js";
 export type { EquipFailure, EquipResult, EquipSuccess } from "./equip.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
@@ -114,6 +117,7 @@ export type {
   QuestsIntent,
   EquipIntent,
   MapIntent,
+  TravelIntent,
   StatsIntent,
   Room,
   RoomExit,

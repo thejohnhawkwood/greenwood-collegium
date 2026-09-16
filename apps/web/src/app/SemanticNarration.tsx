@@ -3,7 +3,7 @@ import { eventTone, safeSegments, segmentTone } from "./semantic-narration.js";
 
 export function SemanticNarration({ event }: { event: EventEnvelope }) {
   const tone = eventTone(event);
-  const wholeMessage = tone === "combat" || tone === "quest";
+  const wholeMessage = tone === "combat" || tone === "quest" || tone === "system";
   const label =
     tone === "combat"
       ? "COMBAT"
@@ -11,7 +11,9 @@ export function SemanticNarration({ event }: { event: EventEnvelope }) {
         ? "QUEST"
         : tone === "item"
           ? "ITEM"
-          : undefined;
+          : tone === "system"
+            ? "SYSTEM"
+            : undefined;
   return (
     <span className={`semantic-${wholeMessage ? tone : "narration"}`}>
       {label ? <span className="semantic-label">[{label}] </span> : null}

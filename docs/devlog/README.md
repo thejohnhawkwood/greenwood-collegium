@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-16 — Semantic colour close-out and lobby travel](2026-09-16-lobby-and-colour.md)
 - [2026-09-16 — Play-shell tokens and Collegian chrome](2026-09-16-play-shell-tokens.md)
 - [2026-09-16 — Finished Collegium room plates](2026-09-16-room-plates.md)
 - [2026-09-07 — Per-Collegian Arrival key](2026-09-07-per-collegian-key.md)

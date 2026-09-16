@@ -8,7 +8,7 @@ Each significant interface upgrade starts with a written design sprint. Do not a
 |---|---|---|
 | DS-classic-living-frame | Gold CLI living frame | Complete |
 | DS-playtest-followup | Arrival guide after playtest | Implemented locally |
-| DS-001 | Semantic colour and message categories | Not started |
+| DS-001 | Semantic colour and message categories | Complete |
 | DS-002 | Persistent player status | Not started |
 | DS-003 | Command assistance and keyboard workflow | Not started |
 | DS-004 | Bag and equipment panel | Not started |
@@ -23,8 +23,11 @@ Visual-first cycles (Coding 9 Define handoff) are recorded separately:
 
 | Guide | Scope |
 |---|---|
+| [ds-001-classroom-readability.md](ds-001-classroom-readability.md) | Semantic colour and transcript labels |
 | [ds-002-visual-foundation.md](ds-002-visual-foundation.md) | Cycle A play shell and saved appearance |
 | [ds-003-world-map.md](ds-003-world-map.md) | Cycle B canonical map and fog of war |
+| [ds-004-painted-catalog.md](ds-004-painted-catalog.md) | Painted Collegians, rooms, NPC and object plates |
+| [ds-005-lobby-travel.md](ds-005-lobby-travel.md) | Cycle C lobby desk and discovered-path travel |
 
 ## Template
 

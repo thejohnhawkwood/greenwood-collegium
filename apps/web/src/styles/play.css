@@ -1318,6 +1318,58 @@
 .world-map-dialog .panel-heading {
   margin: 0 0 0.4rem;
 }
+.lobby-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #0c161280;
+}
+.lobby-dialog {
+  width: min(36rem, 100%);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 0.8rem 1rem 1rem;
+  border: 1px solid #50634e;
+  border-radius: 10px;
+  background: #14271f;
+}
+.lobby-self {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: center;
+  margin: 0.6rem 0 1rem;
+}
+.lobby-self .portrait-mat {
+  margin: 0;
+}
+.lobby-self .character-portrait {
+  height: 160px;
+}
+.lobby-destinations,
+.lobby-peers {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.4rem 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+.lobby-peers li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.lobby-peers .character-portrait {
+  width: 42px;
+  height: 50px;
+}
+.lobby-peers small {
+  display: block;
+  color: #b9c6b4;
+}
 .minimap figcaption,
 .minimap details {
   font-size: 0.65rem;

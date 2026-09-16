@@ -52,6 +52,7 @@ import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PlayChrome } from "./PlayChrome.js";
+import { CollegiumLobby } from "./CollegiumLobby.js";
 import { AdminPane } from "./AdminPane.js";
 import { ApprovalGate } from "./ApprovalGate.js";
 
@@ -216,6 +217,7 @@ function PlayClient({
     },
   ]);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
+  const [lobbyOpen, setLobbyOpen] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [draft, setDraft] = useState("");
   const [history, setHistory] = useState<string[]>([]);
@@ -451,6 +453,7 @@ function PlayClient({
         settingsOpen={settingsOpen}
         onOpenSettings={() => setSettingsOpen(true)}
         onCloseSettings={() => setSettingsOpen(false)}
+        onOpenLobby={() => setLobbyOpen(true)}
         onShowGate={onShowGate}
         onSignOut={() => {
           void signOut(onSignedOut);
@@ -472,6 +475,15 @@ function PlayClient({
           setDraft(raw);
           setHistoryCursor(null);
           inputRef.current?.focus();
+        }}
+      />
+      <CollegiumLobby
+        open={lobbyOpen}
+        state={playState}
+        onEnter={() => setLobbyOpen(false)}
+        onTravel={(title) => {
+          sendCommand(`travel ${title}`);
+          setLobbyOpen(false);
         }}
       />
       <form className="command-form" onSubmit={submitCommand}>

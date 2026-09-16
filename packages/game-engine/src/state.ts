@@ -309,6 +309,12 @@ export type MapIntent = {
   characterId: string;
 };
 
+export type TravelIntent = {
+  verb: "travel";
+  characterId: string;
+  target: string;
+};
+
 export type StaffHelpIntent = {
   verb: "staff-help";
   characterId: string;
@@ -381,6 +387,7 @@ export type PlayerCommand =
   | StatsIntent
   | EquipIntent
   | MapIntent
+  | TravelIntent
   | StaffCommand;
 
 export type EngineRuntime = {

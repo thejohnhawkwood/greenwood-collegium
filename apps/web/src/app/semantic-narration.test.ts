@@ -33,9 +33,18 @@ describe("semantic transcript", () => {
     expect(eventTone({ ...event, type: "system.notice", presentationKey: "quest.journal" })).toBe(
       "quest",
     );
+    expect(eventTone({ ...event, type: "system.notice" })).toBe("system");
+    expect(eventTone({ ...event, type: "map.discovered" })).toBe("system");
     expect(eventTone({ ...event, type: "chat.said", narration: "combat quest Key Porter" })).toBe(
       "narration",
     );
+    const system = renderToStaticMarkup(
+      createElement(SemanticNarration, {
+        event: { ...event, type: "system.notice", narration: "The courtyard is quiet." },
+      }),
+    );
+    expect(system).toContain("[SYSTEM]");
+    expect(system).toContain("semantic-system");
   });
   it("falls back to intact narration if semantic segments are absent or inconsistent", () => {
     expect(safeSegments({ ...event, segments: undefined })).toEqual([
@@ -78,6 +87,7 @@ describe("semantic transcript", () => {
       "text-npc",
       "text-player",
       "text-quest",
+      "text-system",
     ])
       expect((luminance(colour(token)) + 0.05) / (background + 0.05)).toBeGreaterThanOrEqual(4.5);
   });

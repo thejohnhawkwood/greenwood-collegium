@@ -225,6 +225,9 @@ body {
 .semantic-quest {
   color: var(--text-quest);
 }
+.semantic-system {
+  color: var(--text-system);
+}
 .semantic-label {
   font-size: 0.8em;
   font-weight: 600;

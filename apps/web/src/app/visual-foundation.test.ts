@@ -5,6 +5,7 @@ import { DEFAULT_APPEARANCE, snapAppearanceValue, type PlayState } from "@greenw
 import { AppearanceEditor } from "./AppearanceEditor.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
+import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
@@ -26,6 +27,7 @@ const state: PlayState = {
     experience: 125,
     inCombat: true,
   },
+  peers: [],
   minimap: {
     rooms: [
       { id: "court", title: "Court", x: 0, y: 0, state: "current" },
@@ -104,6 +106,7 @@ describe("visual foundation", () => {
     );
     expect(world).toContain("Court (you)");
     expect(world).toContain("Hall");
+    expect(world).toContain("Travel to Hall");
     expect(world).toContain("North ↑");
     expect(renderToStaticMarkup(createElement(Minimap, {}))).toContain("No charted rooms here yet");
   });
@@ -318,5 +321,36 @@ describe("visual foundation", () => {
     );
     expect(zoom).toContain("Full artwork of Headmaster Alder");
     expect(zoom).toContain("/art/characters/npcs/npc-headmaster-alder.png");
+  });
+  it("lists known destinations and present Collegians in the lobby", () => {
+    const html = renderToStaticMarkup(
+      createElement(CollegiumLobby, {
+        open: true,
+        state: {
+          ...state,
+          peers: [
+            {
+              id: "peer",
+              name: "Moss",
+              visual: { speciesId: "mole", appearance: DEFAULT_APPEARANCE },
+              roomTitle: "Court",
+            },
+          ],
+          minimap: {
+            rooms: [
+              { id: "court", title: "Court", x: 0, y: 0, state: "current" },
+              { id: "hall", title: "Hall", x: 0, y: 1, state: "explored" },
+            ],
+            paths: [{ from: "court", to: "hall" }],
+          },
+        },
+        onEnter: () => {},
+        onTravel: () => {},
+      }),
+    );
+    expect(html).toContain("Collegium lobby");
+    expect(html).toContain("Hall");
+    expect(html).toContain("Moss");
+    expect(html).toContain("Enter the Collegium");
   });
 });

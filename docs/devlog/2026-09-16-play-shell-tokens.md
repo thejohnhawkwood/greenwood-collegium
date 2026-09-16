@@ -31,8 +31,8 @@ Open `/?shell=1` and click Headmaster Alder. Then walk the live Great Hall and
 compare the zoomed plate to `examine alder`.
 
 ## Next
-Human confirm the live Render deploy. Do not start DS-001 colour or lobby
-travel (S5) unless the owner names that work.
+Human confirm the live Render deploy. DS-001 colour and lobby travel shipped
+in [lobby-and-colour](2026-09-16-lobby-and-colour.md).
 
 ## Open questions
 A few object plates still include incidental text from generation. Retake any

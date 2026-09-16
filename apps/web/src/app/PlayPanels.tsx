@@ -203,6 +203,7 @@ export function PlayPanels({
         state={state}
         onClose={onCloseWorldMap}
         onPrepareMove={(direction) => onCommand(`go ${direction}`)}
+        onTravel={(title) => onSend(`travel ${title}`)}
       />
     </div>
   );
