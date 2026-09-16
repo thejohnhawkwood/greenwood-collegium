@@ -167,12 +167,17 @@
   padding: 0.55rem 0.7rem 0.7rem;
   scrollbar-color: #637959 #14221b;
 }
+@media (min-width: 961px) {
+  .play-scroll {
+    overflow: hidden;
+  }
+}
 .play-grid {
   display: grid;
   grid-template-columns: 250px minmax(0, 1fr) 240px;
   gap: 0.7rem;
   height: 100%;
-  min-height: 580px;
+  min-height: 0;
 }
 .play-panel {
   border: 1px solid #3c503e;
@@ -211,16 +216,19 @@
 .character-aside {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.45rem;
+  height: 100%;
   min-height: 0;
+  overflow: hidden;
 }
 .paper-doll {
   flex-shrink: 0;
   text-align: center;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.45rem;
 }
 .portrait-mat {
-  margin: 0.45rem 0.7rem 0.15rem;
+  position: relative;
+  margin: 0.35rem 0.7rem 0.1rem;
   border-radius: 10px;
   border: 1px solid #536245;
   background: radial-gradient(ellipse at 50% 30%, #4e6150, #203c2d 60%, #192d22);
@@ -233,7 +241,7 @@
   aspect-ratio: 2 / 3;
 }
 .portrait-mat .character-portrait {
-  height: 300px;
+  height: 236px;
 }
 .portrait-mat .portrait-stack {
   inset: -6% -36% 2% -36%;
@@ -302,9 +310,9 @@
   display: block;
 }
 .paper-doll h3 {
-  margin: 0.5rem 0.65rem 0.25rem;
+  margin: 0.35rem 0.65rem 0.1rem;
   font:
-    500 1.1rem Georgia,
+    500 1.05rem Georgia,
     serif;
   color: #ece0c0;
   overflow-wrap: anywhere;
@@ -317,9 +325,9 @@
 }
 .equipment-caption {
   font-size: 0.72rem;
-  margin: 0.8rem 0.7rem;
+  margin: 0.4rem 0.7rem;
   border-top: 1px solid #384a39;
-  padding-top: 0.65rem;
+  padding-top: 0.4rem;
 }
 .equipment-caption dt {
   color: #b9c6b4;
@@ -341,20 +349,38 @@
   padding: 0.12rem 0.35rem;
   min-height: 22px;
 }
-.paper-doll .vitals {
+.paper-doll .vitals,
+.portrait-vitals {
   flex-direction: column;
   align-items: stretch;
-  margin: 0.35rem 0.65rem 0.15rem;
-  padding: 0.35rem 0.45rem;
-  background: #10281dcc;
 }
-.paper-doll .vital {
+.paper-doll .vital,
+.portrait-vitals .vital {
   width: 100%;
 }
+.portrait-vitals {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 1.1rem 0.45rem 0.4rem;
+  background: linear-gradient(180deg, transparent, #0c1a14f0 42%);
+  color: #eee3c3;
+  pointer-events: none;
+}
+.portrait-vitals .combat-state {
+  align-self: center;
+}
 .local-map {
-  overflow: auto;
-  flex: 1;
-  min-height: 220px;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   text-align: center;
   background: radial-gradient(ellipse at 50% 10%, #263b2c, #16251e 80%);
 }
@@ -562,8 +588,9 @@
   bottom: 0.55rem;
   z-index: 2;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
   transform: translateX(-50%);
   max-width: calc(100% - 1.2rem);
 }
@@ -582,6 +609,9 @@
 }
 .play-client .presence-avatar.npc {
   border-color: #8eb4d4;
+}
+.play-client .presence-avatar.object {
+  border-color: #d4b77c;
 }
 .presence-avatar .character-portrait,
 .presence-plate {
@@ -737,10 +767,12 @@
   color: var(--text-item);
 }
 .play-client .transcript-region {
+  flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 .play-client .transcript {
+  overflow: auto;
   border: 0;
   padding: 0.8rem 0.8rem 2.5rem;
   font:
@@ -1035,29 +1067,23 @@
 }
 @media (min-width: 721px) and (max-height: 820px) {
   .play-grid {
-    min-height: 500px;
+    min-height: 0;
   }
   .portrait-mat .character-portrait {
-    height: 210px;
+    height: 188px;
   }
   .paper-doll {
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.35rem;
   }
   .equipment-caption {
-    margin: 0.4rem 0.7rem;
-    padding-top: 0.4rem;
+    margin: 0.3rem 0.7rem;
+    padding-top: 0.3rem;
   }
   .local-map {
-    min-height: 185px;
-  }
-  .compass-face {
-    display: none;
-  }
-  .compass-location {
-    margin-top: 0.8rem;
+    min-height: 0;
   }
   .room-column {
-    grid-template-rows: minmax(300px, 1.25fr) minmax(180px, 1fr);
+    grid-template-rows: minmax(280px, 1.25fr) minmax(160px, 1fr);
   }
 }
 @container play (max-width: 960px) {
@@ -1067,7 +1093,7 @@
     height: auto;
   }
   .portrait-mat .character-portrait {
-    height: 220px;
+    height: 200px;
   }
   .character-aside {
     grid-row: 1 / 3;
@@ -1232,13 +1258,17 @@
 }
 
 .minimap {
-  margin: 0.6rem 0;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0.3rem 0.4rem;
   color: #789a87;
 }
 .minimap svg {
   display: block;
   width: 100%;
-  height: 135px;
+  height: 100%;
+  min-height: 108px;
   background: #12251f;
   border: 1px solid #647254;
   border-radius: 8px;
@@ -1301,33 +1331,17 @@
 }
 
 @media (min-width: 721px) and (max-height: 820px) {
-  .portrait-mat .character-portrait {
-    height: 200px;
-  }
   .portrait-mat {
-    margin-top: 0.35rem;
-  }
-  .paper-doll {
-    padding-bottom: 0.35rem;
-  }
-  .paper-doll h3 {
     margin-top: 0.25rem;
   }
-  .minimap {
-    margin: 0.3rem 0.4rem;
+  .paper-doll h3 {
+    margin-top: 0.2rem;
   }
   .minimap svg {
-    height: 88px;
+    min-height: 88px;
   }
   .local-map .panel-heading {
     padding: 0.35rem 0.7rem;
-  }
-  .local-map .compass-location {
-    margin: 0.3rem;
-  }
-  .local-map .compass-note {
-    margin: 0.2rem;
-    font-size: 0.6rem;
   }
 }
 .builder-page .creation-layout {

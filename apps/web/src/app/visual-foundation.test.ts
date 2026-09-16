@@ -9,6 +9,7 @@ import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PresenceAvatars, PresenceMenu } from "./PresenceAvatars.js";
 import { npcArtSrc } from "./npc-plates.js";
+import { objectArtSrc } from "./object-plates.js";
 import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 
@@ -50,6 +51,11 @@ const state: PlayState = {
         id: "npc-porter-bramble",
         name: "Porter Bramble",
         kind: "npc",
+      },
+      {
+        id: "object-key-board",
+        name: "Key Board",
+        kind: "object",
       },
     ],
   },
@@ -159,7 +165,9 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain('max="20" value="8"');
+    expect(html).toContain("portrait-vitals");
     expect(html).toContain("In combat");
+    expect(html).toContain("Level 2 · 125 XP");
     expect(html).toContain("Complete plain text room description.");
     expect(html).toContain('aria-label="Around you and story"');
     expect(html).toContain('aria-label="Room speech"');
@@ -172,7 +180,9 @@ describe("visual foundation", () => {
     expect(html).toContain("/art/rooms/court.png");
     expect(html).toContain("Moss");
     expect(html).toContain("Porter Bramble");
-    expect(html).toContain("People in this room");
+    expect(html).toContain("People and objects in this room");
+    expect(html).toContain("Key Board, object");
+    expect(html).toContain("/art/objects/object-key-board.png");
     expect(
       shouldFocusCommandInput({
         closest: (selectors) => (selectors.includes("[tabindex]") ? {} : null),
@@ -276,6 +286,9 @@ describe("visual foundation", () => {
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
       "/art/characters/npcs/practice-dummy.png",
     );
+    expect(objectArtSrc("item-copper-key-lantern-court", "Small Copper Key")).toBe(
+      "/art/objects/small-copper-key.png",
+    );
     expect(html).toContain("Moss, Collegian");
     const menu = renderToStaticMarkup(
       createElement(PresenceMenu, {
@@ -288,5 +301,15 @@ describe("visual foundation", () => {
     expect(menu).toContain("Talk");
     expect(menu).toContain("Ask to duel");
     expect(menu).toContain("Duels come later");
+    const objectMenu = renderToStaticMarkup(
+      createElement(PresenceMenu, {
+        person: { id: "object-key-board", name: "Key Board", kind: "object" },
+        onSend: () => {},
+        onClose: () => {},
+      }),
+    );
+    expect(objectMenu).toContain("Examine");
+    expect(objectMenu).not.toContain("Talk");
+    expect(objectMenu).not.toContain("Ask to duel");
   });
 });

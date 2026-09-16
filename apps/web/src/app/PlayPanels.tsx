@@ -61,6 +61,25 @@ export function PlayPanels({
                 visual={character?.visual}
                 name={character?.name ?? "Waiting for your Collegian"}
               />
+              {character ? (
+                <div className="portrait-vitals" aria-label="Character status">
+                  <Vital
+                    label="Health"
+                    value={character.health}
+                    max={character.maxHealth}
+                    tone="health"
+                  />
+                  <Vital
+                    label="Focus"
+                    value={character.focus}
+                    max={character.maxFocus}
+                    tone="focus"
+                  />
+                  <span className={`combat-state${character.inCombat ? " in-combat" : ""}`}>
+                    {character.inCombat ? "In combat" : "Exploring"}
+                  </span>
+                </div>
+              ) : null}
             </div>
             <h3>{character?.name ?? "Joining the realm…"}</h3>
             <p className="small-copy">
@@ -68,25 +87,6 @@ export function PlayPanels({
                 ? `Level ${character.level} · ${character.experience} XP`
                 : "Your character will appear here."}
             </p>
-            {character ? (
-              <div className="vitals" aria-label="Character status">
-                <Vital
-                  label="Health"
-                  value={character.health}
-                  max={character.maxHealth}
-                  tone="health"
-                />
-                <Vital
-                  label="Focus"
-                  value={character.focus}
-                  max={character.maxFocus}
-                  tone="focus"
-                />
-                <span className={`combat-state${character.inCombat ? " in-combat" : ""}`}>
-                  {character.inCombat ? "In combat" : "Exploring"}
-                </span>
-              </div>
-            ) : null}
             <dl className="equipment-caption">
               <dt>In hand</dt>
               <dd>
@@ -148,14 +148,13 @@ export function PlayPanels({
                 </p>
               </header>
               <PresenceAvatars
-                people={(room?.visible ?? [])
-                  .filter((entity) => entity.kind === "npc" || entity.kind === "player")
-                  .map((entity) => ({
-                    id: entity.id,
-                    name: entity.name,
-                    kind: entity.kind === "npc" ? "npc" : "player",
-                    visual: entity.visual,
-                  }))}
+                people={(room?.visible ?? []).map((entity) => ({
+                  id: entity.id,
+                  name: entity.name,
+                  kind:
+                    entity.kind === "npc" ? "npc" : entity.kind === "player" ? "player" : "object",
+                  visual: entity.visual,
+                }))}
                 onSend={onSend}
               />
             </div>

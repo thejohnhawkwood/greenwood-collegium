@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { NPC_PLATE_FILES } from "./npc-plates.js";
+import { OBJECT_PLATE_FILES } from "./object-plates.js";
 import { COLLEGIUM_ROOM_PLATES } from "./room-plates.js";
 import {
   APPEARANCE_ACCESSORIES,
@@ -73,6 +74,14 @@ describe("painted catalog files", () => {
       const path = join(artRoot, "characters/npcs", `${id}.png`);
       expect(existsSync(path)).toBe(true);
       expect(statSync(path).size).toBeGreaterThan(20_000);
+    }
+  });
+  it("keeps a unique painted plate for every clickable room object and takeable item", () => {
+    expect(OBJECT_PLATE_FILES).toHaveLength(30);
+    for (const id of OBJECT_PLATE_FILES) {
+      const path = join(artRoot, "objects", `${id}.png`);
+      expect(existsSync(path)).toBe(true);
+      expect(statSync(path).size).toBeGreaterThan(15_000);
     }
   });
   it("keeps a painted plate for every Collegium room", () => {

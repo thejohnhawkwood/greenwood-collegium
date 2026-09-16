@@ -2,13 +2,20 @@ import { useEffect, useState } from "react";
 import type { CharacterVisual } from "@greenwood/contracts";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { npcArtSrc } from "./npc-plates.js";
+import { objectArtSrc } from "./object-plates.js";
 
 export type PresencePerson = {
   id: string;
   name: string;
-  kind: "npc" | "player";
+  kind: "npc" | "player" | "object";
   visual?: CharacterVisual;
 };
+
+function kindLabel(kind: PresencePerson["kind"]): string {
+  if (kind === "npc") return "NPC";
+  if (kind === "player") return "Collegian";
+  return "object";
+}
 
 export function PresenceAvatars({
   people,
@@ -28,10 +35,11 @@ export function PresenceAvatars({
   }, [openId]);
   if (!people.length) return null;
   return (
-    <div className="presence-rail" aria-label="People in this room">
+    <div className="presence-rail" aria-label="People and objects in this room">
       {people.map((person) => {
         const open = openId === person.id;
-        const plate = npcArtSrc(person.id);
+        const plate =
+          person.kind === "object" ? objectArtSrc(person.id, person.name) : npcArtSrc(person.id);
         return (
           <div key={person.id} className={`presence-slot${open ? " open" : ""}`}>
             <button
@@ -39,7 +47,7 @@ export function PresenceAvatars({
               className={`presence-avatar ${person.kind}`}
               aria-expanded={open}
               aria-haspopup="menu"
-              aria-label={`${person.name}, ${person.kind === "npc" ? "NPC" : "Collegian"}`}
+              aria-label={`${person.name}, ${kindLabel(person.kind)}`}
               title={person.name}
               onClick={() => setOpenId(open ? null : person.id)}
             >
@@ -89,19 +97,23 @@ export function PresenceMenu({
       >
         Examine
       </button>
-      <button
-        type="button"
-        role="menuitem"
-        onClick={() => {
-          onSend(person.kind === "npc" ? `talk ${person.name}` : `say hello`);
-          onClose();
-        }}
-      >
-        Talk
-      </button>
-      <button type="button" role="menuitem" disabled title="Duels come later">
-        Ask to duel
-      </button>
+      {person.kind === "object" ? null : (
+        <>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              onSend(person.kind === "npc" ? `talk ${person.name}` : `say hello`);
+              onClose();
+            }}
+          >
+            Talk
+          </button>
+          <button type="button" role="menuitem" disabled title="Duels come later">
+            Ask to duel
+          </button>
+        </>
+      )}
     </div>
   );
 }
