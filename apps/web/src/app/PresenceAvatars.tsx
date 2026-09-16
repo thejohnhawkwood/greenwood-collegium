@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { CharacterVisual } from "@greenwood/contracts";
 import { CharacterPortrait } from "./CharacterPortrait.js";
+import { npcArtSrc } from "./npc-plates.js";
 
 export type PresencePerson = {
   id: string;
@@ -30,6 +31,7 @@ export function PresenceAvatars({
     <div className="presence-rail" aria-label="People in this room">
       {people.map((person) => {
         const open = openId === person.id;
+        const plate = npcArtSrc(person.id);
         return (
           <div key={person.id} className={`presence-slot${open ? " open" : ""}`}>
             <button
@@ -41,7 +43,9 @@ export function PresenceAvatars({
               title={person.name}
               onClick={() => setOpenId(open ? null : person.id)}
             >
-              {person.visual ? (
+              {plate ? (
+                <img className="presence-plate" src={plate} alt="" draggable={false} />
+              ) : person.visual ? (
                 <CharacterPortrait
                   visual={person.visual}
                   name={person.name}

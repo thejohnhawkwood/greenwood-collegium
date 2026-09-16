@@ -8,6 +8,7 @@ import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PresenceAvatars, PresenceMenu } from "./PresenceAvatars.js";
+import { npcArtSrc } from "./npc-plates.js";
 import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 
@@ -271,6 +272,10 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain("Porter Bramble, NPC");
+    expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
+    expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
+      "/art/characters/npcs/practice-dummy.png",
+    );
     expect(html).toContain("Moss, Collegian");
     const menu = renderToStaticMarkup(
       createElement(PresenceMenu, {

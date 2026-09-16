@@ -2,6 +2,7 @@ import { existsSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { NPC_PLATE_FILES } from "./npc-plates.js";
 import { COLLEGIUM_ROOM_PLATES } from "./room-plates.js";
 import {
   APPEARANCE_ACCESSORIES,
@@ -64,6 +65,14 @@ describe("painted catalog files", () => {
     }
     for (const accessory of APPEARANCE_ACCESSORIES.filter((value) => value !== "none")) {
       expect(existsSync(join(artRoot, "characters/accessories", `${accessory}.png`))).toBe(true);
+    }
+  });
+  it("keeps a unique painted plate for every speaking NPC and the dummy", () => {
+    expect(NPC_PLATE_FILES).toHaveLength(7);
+    for (const id of NPC_PLATE_FILES) {
+      const path = join(artRoot, "characters/npcs", `${id}.png`);
+      expect(existsSync(path)).toBe(true);
+      expect(statSync(path).size).toBeGreaterThan(20_000);
     }
   });
   it("keeps a painted plate for every Collegium room", () => {

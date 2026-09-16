@@ -583,9 +583,12 @@
 .play-client .presence-avatar.npc {
   border-color: #8eb4d4;
 }
-.presence-avatar .character-portrait {
+.presence-avatar .character-portrait,
+.presence-plate {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  pointer-events: none;
 }
 .presence-initial {
   display: grid;
