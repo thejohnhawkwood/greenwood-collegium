@@ -102,7 +102,45 @@ export function createPlayState(
         character.equippedItemId === item.id || character.equippedItemId === item.templateId,
       ...(item.category && item.category !== "ordinary" ? { category: item.category } : {}),
     })),
+    quests: questJournal(world, character.id),
   });
+}
+
+function questJournal(world: WorldState, characterId: string) {
+  const progressById = world.quests?.[characterId] ?? {};
+  return Object.values(world.questTemplates ?? {})
+    .flatMap((template) => {
+      const progress = progressById[template.id];
+      if (!progress) {
+        return [];
+      }
+      return [
+        {
+          id: template.id,
+          title: template.title,
+          status: progress.status,
+          steps: template.objectives.map((objective) => ({
+            id: objective.id,
+            done: progress.completedObjectiveIds.includes(objective.id),
+            ...splitQuestStep(objective.label),
+          })),
+        },
+      ];
+    })
+    .sort((left, right) => {
+      if (left.status !== right.status) {
+        return left.status === "active" ? -1 : 1;
+      }
+      return left.title.localeCompare(right.title);
+    });
+}
+
+function splitQuestStep(raw: string): { label: string; hint?: string } {
+  const match = raw.match(/^(.*?)\s+(Type\s.+)$/iu);
+  if (!match?.[1] || !match[2]) {
+    return { label: raw };
+  }
+  return { label: match[1].replace(/\.$/u, ""), hint: match[2] };
 }
 
 function conversationSnapshot(world: WorldState, character: Character) {

@@ -9,6 +9,7 @@ import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { BagPanel } from "./BagPanel.js";
 import { PlayPanels } from "./PlayPanels.js";
+import { QuestJournal } from "./QuestJournal.js";
 import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
 import { presenceActions } from "./presence-actions.js";
 import { npcArtSrc } from "./npc-plates.js";
@@ -39,6 +40,22 @@ const state: PlayState = {
   bag: [
     { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
     { id: "item-key", name: "Small Copper Key", equipped: false },
+  ],
+  quests: [
+    {
+      id: "arrival",
+      title: "Arrival at the Collegium",
+      status: "active",
+      steps: [
+        {
+          id: "look",
+          label: "Look around Lantern Court",
+          done: true,
+          hint: "Type look to see Lantern Court.",
+        },
+        { id: "speak", label: "Say hello so Porter knows you arrived.", done: false },
+      ],
+    },
   ],
   peers: [],
   minimap: {
@@ -176,6 +193,9 @@ describe("visual foundation", () => {
         worldMapOpen: false,
         onOpenWorldMap: () => {},
         onCloseWorldMap: () => {},
+        questJournalOpen: false,
+        onOpenQuestJournal: () => {},
+        onCloseQuestJournal: () => {},
         connection: "connected",
         error: "",
       }),
@@ -215,6 +235,17 @@ describe("visual foundation", () => {
       ),
     ).toMatch(/Bag and equipment[\s\S]*Practice Sword[\s\S]*Small Copper Key[\s\S]*Equip/);
     expect(
+      renderToStaticMarkup(
+        createElement(QuestJournal, {
+          open: true,
+          state,
+          onClose: () => {},
+        }),
+      ),
+    ).toMatch(
+      /Current quests[\s\S]*Arrival at the Collegium[\s\S]*Look around Lantern Court[\s\S]*Type look to see Lantern Court[\s\S]*Say hello so Porter knows you arrived/,
+    );
+    expect(
       shouldFocusCommandInput({
         closest: (selectors) => (selectors.includes("[tabindex]") ? {} : null),
       }),
@@ -230,6 +261,9 @@ describe("visual foundation", () => {
         worldMapOpen: false,
         onOpenWorldMap: () => {},
         onCloseWorldMap: () => {},
+        questJournalOpen: false,
+        onOpenQuestJournal: () => {},
+        onCloseQuestJournal: () => {},
         connection: "disconnected",
         error: "Visual view unavailable.",
       }),

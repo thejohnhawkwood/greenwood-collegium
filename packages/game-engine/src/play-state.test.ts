@@ -90,6 +90,33 @@ function fixture(): WorldState {
         discoveredRoomIds: ["hall"],
       },
     },
+    questTemplates: {
+      arrival: {
+        id: "arrival",
+        title: "Arrival at the Collegium",
+        introNarration: "Porter waits.",
+        reminderNarration: "Stay with Porter.",
+        experienceReward: 10,
+        objectives: [
+          {
+            id: "look",
+            kind: "look",
+            label: "Look around Lantern Court. Type look to see Lantern Court.",
+          },
+          { id: "speak", kind: "say", label: "Say hello so Porter knows you arrived." },
+        ],
+      },
+    },
+    quests: {
+      self: {
+        arrival: {
+          questId: "arrival",
+          status: "active",
+          completedObjectiveIds: ["look"],
+          rewardGranted: false,
+        },
+      },
+    },
     items: {
       "item-sword": {
         id: "item-sword",
@@ -163,6 +190,22 @@ describe("visual play projection", () => {
     });
     expect(snapshot?.bag).toEqual([
       { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
+    ]);
+    expect(snapshot?.quests).toEqual([
+      {
+        id: "arrival",
+        title: "Arrival at the Collegium",
+        status: "active",
+        steps: [
+          {
+            id: "look",
+            label: "Look around Lantern Court",
+            done: true,
+            hint: "Type look to see Lantern Court.",
+          },
+          { id: "speak", label: "Say hello so Porter knows you arrived.", done: false },
+        ],
+      },
     ]);
     expect(snapshot?.peers).toEqual([]);
     expect(createPlayState(world, "self", { presentIds: ["peer"] })?.peers).toEqual([

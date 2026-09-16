@@ -7,6 +7,7 @@ import { ConversationStage } from "./ConversationStage.js";
 import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
+import { QuestJournal } from "./QuestJournal.js";
 import { RoomScene } from "./RoomScene.js";
 import type { TranscriptLine } from "./transcript.js";
 
@@ -28,6 +29,9 @@ export function PlayPanels({
   worldMapOpen,
   onOpenWorldMap,
   onCloseWorldMap,
+  questJournalOpen,
+  onOpenQuestJournal,
+  onCloseQuestJournal,
   connection,
   error,
   followToken,
@@ -40,6 +44,9 @@ export function PlayPanels({
   worldMapOpen: boolean;
   onOpenWorldMap: () => void;
   onCloseWorldMap: () => void;
+  questJournalOpen: boolean;
+  onOpenQuestJournal: () => void;
+  onCloseQuestJournal: () => void;
   connection: string;
   error: string;
   followToken?: number;
@@ -133,7 +140,13 @@ export function PlayPanels({
               >
                 Inventory
               </button>
-              <button type="button" onClick={() => onSend("quests")}>
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenQuestJournal();
+                  onSend("quests");
+                }}
+              >
                 Quests
               </button>
             </div>
@@ -247,6 +260,7 @@ export function PlayPanels({
         onTravel={(title) => onSend(`travel ${title}`)}
       />
       <BagPanel open={bagOpen} state={state} onClose={() => setBagOpen(false)} onSend={onSend} />
+      <QuestJournal open={questJournalOpen} state={state} onClose={onCloseQuestJournal} />
     </div>
   );
 }

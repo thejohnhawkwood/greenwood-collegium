@@ -1,11 +1,5 @@
 import type { EventEnvelope } from "@greenwood/contracts";
-import type {
-  EngineRuntime,
-  QuestProgress,
-  QuestsIntent,
-  QuestTemplate,
-  WorldState,
-} from "./state.js";
+import type { EngineRuntime, QuestsIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export type QuestsSuccess = {
@@ -35,34 +29,12 @@ export function handleQuests(
     };
   }
 
-  const lines: string[] = [];
-  for (const template of Object.values(world.questTemplates ?? {})) {
-    const progress = world.quests?.[character.id]?.[template.id];
-    if (!progress) {
-      continue;
-    }
-    lines.push(formatQuestStatus(template, progress));
-  }
-  const narration =
-    lines.length === 0 ? "You have no tasks yet." : ["Your tasks:", ...lines].join("\n");
+  const started = Object.values(world.questTemplates ?? {}).some(
+    (template) => world.quests?.[character.id]?.[template.id],
+  );
+  const narration = started ? "You review your tasks." : "You have no tasks yet.";
   return {
     ok: true,
     event: { ...systemNotice(character.id, narration, runtime), presentationKey: "quest.journal" },
   };
-}
-
-function formatQuestStatus(template: QuestTemplate, progress: QuestProgress): string {
-  const remaining = template.objectives.filter(
-    (objective) => !progress.completedObjectiveIds.includes(objective.id),
-  );
-  const done = template.objectives.filter((objective) =>
-    progress.completedObjectiveIds.includes(objective.id),
-  );
-  if (progress.status === "completed") {
-    return `  ${template.title} (completed)`;
-  }
-  const still = remaining.map((objective) => objective.label).join("; ");
-  const finished =
-    done.length === 0 ? "nothing yet" : done.map((objective) => objective.label).join("; ");
-  return `  ${template.title} (active)\n    Done: ${finished}\n    Still to do: ${still}`;
 }

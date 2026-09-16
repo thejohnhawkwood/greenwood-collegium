@@ -223,6 +223,7 @@ function PlayClient({
     },
   ]);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
+  const [questJournalOpen, setQuestJournalOpen] = useState(false);
   const [lobbyOpen, setLobbyOpen] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [draft, setDraft] = useState("");
@@ -378,6 +379,9 @@ function PlayClient({
     if (/^(?:map|chart)$/iu.test(raw.trim())) {
       setWorldMapOpen(true);
     }
+    if (/^quests?$/iu.test(raw.trim())) {
+      setQuestJournalOpen(true);
+    }
     const commandId = crypto.randomUUID();
     pendingRef.current = { commandId, raw };
     setLines((current) =>
@@ -503,6 +507,9 @@ function PlayClient({
         worldMapOpen={worldMapOpen}
         onOpenWorldMap={() => setWorldMapOpen(true)}
         onCloseWorldMap={() => setWorldMapOpen(false)}
+        questJournalOpen={questJournalOpen}
+        onOpenQuestJournal={() => setQuestJournalOpen(true)}
+        onCloseQuestJournal={() => setQuestJournalOpen(false)}
         onMove={(direction) => sendCommand(direction, true)}
         onSend={(raw) => sendCommand(raw)}
         onCommand={fillCommand}

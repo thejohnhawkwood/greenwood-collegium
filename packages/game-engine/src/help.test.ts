@@ -108,16 +108,12 @@ describe("help and quests", () => {
     expect(talk.ok && talk.event.narration).toContain("talk to Porter Bramble");
   });
 
-  it("lists Arrival progress", () => {
+  it("opens the journal with a short review beat", () => {
     const result = handleQuests(world(), { verb: "quests", characterId: "char-rowan" }, runtime());
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.event.narration).toContain("Arrival at the Collegium (active)");
+      expect(result.event.narration).toBe("You review your tasks.");
       expect(result.event.presentationKey).toBe("quest.journal");
-      expect(result.event.narration).toContain(
-        "Look around Lantern Court. Type look to see Lantern Court.",
-      );
-      expect(result.event.narration).toContain("Say hello so Porter knows you arrived.");
     }
   });
 });

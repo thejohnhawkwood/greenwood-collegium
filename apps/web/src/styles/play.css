@@ -784,6 +784,79 @@
   padding: 0.15rem 0.4rem;
   font-size: 0.65rem;
 }
+.quest-dialog {
+  width: min(32rem, 100%);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 0.8rem 1rem 1rem;
+  border: 1px solid #50634e;
+  border-radius: 10px;
+  background: #14271f;
+}
+.quest-group {
+  margin-top: 0.85rem;
+}
+.quest-group-heading {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c2cbb4;
+}
+.quest-entry {
+  margin: 0 0 1rem;
+  padding: 0 0 0.85rem;
+  border-bottom: 1px solid #3d5140;
+}
+.quest-entry:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.quest-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f3e6c0;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.quest-progress {
+  margin: 0.28rem 0 0.5rem;
+  color: #ead2a0;
+  font-size: 0.72rem;
+}
+.quest-steps {
+  margin: 0;
+  padding: 0 0 0 0.15rem;
+  list-style: none;
+}
+.quest-steps li {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  gap: 0.35rem;
+  align-items: start;
+  margin: 0 0 0.45rem;
+}
+.quest-mark {
+  color: #ead2a0;
+  line-height: 1.35;
+}
+.quest-steps .done .quest-step-label {
+  color: #9eab92;
+}
+.quest-step-label {
+  display: block;
+  color: #eee3c3;
+}
+.quest-hint {
+  display: block;
+  margin-top: 0.15rem;
+  padding-left: 0.85rem;
+  color: #c2cbb4;
+  font-size: 0.68rem;
+}
 .settings-dialog {
   width: min(24rem, 100%);
   padding: 0.8rem 1rem 1rem;
@@ -967,7 +1040,9 @@
 .command-reminders kbd {
   margin-left: 0.35rem;
   padding: 0 0.2rem;
-  font: 0.58rem/1.4 ui-monospace, monospace;
+  font:
+    0.58rem/1.4 ui-monospace,
+    monospace;
   color: #c2cbb4;
   border: 1px solid #50634e;
   border-radius: 3px;

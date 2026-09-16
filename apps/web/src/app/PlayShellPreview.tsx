@@ -32,6 +32,22 @@ const previewState: PlayState = {
     { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
     { id: "item-key", name: "Small Copper Key", equipped: false },
   ],
+  quests: [
+    {
+      id: "arrival",
+      title: "Arrival at the Collegium",
+      status: "active",
+      steps: [
+        {
+          id: "look",
+          label: "Look around Lantern Court",
+          done: true,
+          hint: "Type look to see Lantern Court.",
+        },
+        { id: "speak", label: "Say hello so Porter knows you arrived.", done: false },
+      ],
+    },
+  ],
   peers: [
     {
       id: "peer",
@@ -82,6 +98,7 @@ export function PlayShellPreview() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [lobbyOpen, setLobbyOpen] = useState(true);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
+  const [questJournalOpen, setQuestJournalOpen] = useState(false);
   return (
     <AcademyFrame playing>
       <main className="client play-client">
@@ -113,6 +130,9 @@ export function PlayShellPreview() {
           worldMapOpen={worldMapOpen}
           onOpenWorldMap={() => setWorldMapOpen(true)}
           onCloseWorldMap={() => setWorldMapOpen(false)}
+          questJournalOpen={questJournalOpen}
+          onOpenQuestJournal={() => setQuestJournalOpen(true)}
+          onCloseQuestJournal={() => setQuestJournalOpen(false)}
           connection="connected"
           error=""
         />

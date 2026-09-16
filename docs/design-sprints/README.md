@@ -12,7 +12,7 @@ Each significant interface upgrade starts with a written design sprint. Do not a
 | DS-002 | Persistent player status | Complete |
 | DS-003 | Command assistance and keyboard workflow | Complete |
 | DS-004 | Bag and equipment panel | Complete |
-| DS-005 | Quest tracker and journal | Not started |
+| DS-005 | Quest tracker and journal | Complete (journal popup; no pinned HUD tracker) |
 | DS-006 | Discovered-world minimap | Complete |
 | DS-007 | Combat frame | Not started |
 | DS-008 | Ember text effect | Not started |
