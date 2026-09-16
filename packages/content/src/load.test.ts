@@ -40,12 +40,12 @@ describe("content loader", () => {
 
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(26);
+    expect(Object.keys(world.rooms)).toHaveLength(33);
     expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
     expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
     const charted = Object.values(world.rooms).filter((room) => room.map);
-    expect(charted).toHaveLength(25);
-    expect(new Set(charted.map((room) => `${room.map!.x},${room.map!.y}`)).size).toBe(25);
+    expect(charted).toHaveLength(32);
+    expect(new Set(charted.map((room) => `${room.map!.x},${room.map!.y}`)).size).toBe(32);
     expect(world.rooms["north-quad"]?.map).toEqual({ x: 0, y: 2 });
     expect(world.rooms["observatory"]?.map).toEqual({ x: 0, y: 3 });
     expect(world.rooms["library-stacks"]?.map).toEqual({ x: -2, y: 1 });
@@ -101,7 +101,7 @@ describe("content loader", () => {
       title: "Arrival at the Collegium",
       experienceReward: 10,
     });
-    expect(Object.keys(world.quests)).toHaveLength(4);
+    expect(Object.keys(world.quests)).toHaveLength(10);
   });
 
   it("loads an extra room file without a code change", () => {
@@ -123,7 +123,7 @@ describe("content loader", () => {
     });
 
     const world = loadWorldFromDirectory(directory);
-    expect(Object.keys(world.rooms)).toHaveLength(27);
+    expect(Object.keys(world.rooms)).toHaveLength(34);
     expect(world.rooms["extra-nook"]?.title).toBe("Extra Nook");
   });
 

@@ -1,0 +1,54 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hearth-stars",
+  "title": "Hearth of Stars",
+  "shortDescription": "Night windows keep company with ink-stained charts.",
+  "longDescription": "The Hearth of Stars is a loft that pretends it is only a study. Brass instruments wait beside a star-wheel. Charts are pinned where a draught cannot steal them. The windows hold more night than the hour should allow.\nMentor Lumen has ink on her primaries and no patience for guesswork dressed as wonder.",
+  "zone": "schools",
+  "map": {
+    "x": 5,
+    "y": 2
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "hearth-thorn"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-mentor-lumen",
+      "name": "Mentor Lumen",
+      "kind": "npc",
+      "lookDescription": "A barn owl with ink-stained primaries and a star-chart satchel. Try talk lumen.",
+      "examineDescription": "Lumen's facial disc is pale and severe. The satchel is heavy with charts, not stories. She corrects a wrong azimuth the way other teachers correct a sloppy stance.",
+      "dialogue": "\"Stars are measured, not wished. Look this hearth. Find Flint. Come back.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Lumen. Stars teach you to measure what the night is doing. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "choices": [
+              { "say": "1", "label": "What do Stars measure?", "next": "craft" },
+              { "say": "2", "label": "I will go.", "next": "go" }
+            ]
+          },
+          "craft": {
+            "text": "\"Wonder is allowed. Guessing is not a method. First you look. Then you practice on a thing that will not lie about whether you hit it. Then you come back.\"",
+            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"Look the star-wheel. Then find the orchard. I will be at the charts.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-stars-wheel",
+      "name": "Star Wheel",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The brass ring is nicked from careful hands. Tonight's marks are already set. A slate says: 'Write the hour before you name the star.'"
+    }
+  ]
+}

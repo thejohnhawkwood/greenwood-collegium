@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hall-of-schools",
+  "title": "Hall of Schools",
+  "shortDescription": "Six banners wait above a stone hall that has only just opened east of the meadow.",
+  "longDescription": "The meadow path ends in dressed stone. Six banners hang in a row: copper fire, living thorn, pale silver, night-blue stars, granite, and cold steel. The hall is new enough that the mortar still smells of lime, and old enough that the oaks in the beams remember older names.\nA wayboard of cloth and iron names the hearths. North is Steel. South is Stone. East is Ember, and from Ember the other three open like a fan.",
+  "zone": "schools",
+  "map": {
+    "x": 4,
+    "y": 0
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "east-meadow"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "hearth-steel"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "hearth-stone"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "hearth-ember"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-hall-banners",
+      "name": "School Banners",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "Six cloths, six crafts. Ember for fire. Thorns for living green. The Veil for what is not said. Stars for what is measured. Stone for what holds. Steel for what must be met. Alder chooses no house. He only opens a door."
+    }
+  ]
+}

@@ -220,6 +220,14 @@ export class InMemoryCharacterRepository implements CharacterRepository {
     });
   }
 
+  async updateSchool(id: string, schoolId: string | undefined): Promise<void> {
+    const character = this.byId.get(id);
+    if (!character) {
+      return;
+    }
+    this.byId.set(id, { ...character, schoolId, updatedAt: new Date() });
+  }
+
   async updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void> {
     const character = this.byId.get(id);
     if (!character) {

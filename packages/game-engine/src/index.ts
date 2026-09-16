@@ -130,4 +130,11 @@ export type {
 } from "./state.js";
 export { createPlayState } from "./play-state.js";
 export { HEADMASTER_NPC_ID, HEADMASTER_STUDY_ID, summonToHeadmaster } from "./headmaster.js";
-export { SCHOOL_IDS, isSchoolId } from "./schools.js";
+export {
+  SCHOOL_FIRST_LESSONS_ID,
+  SCHOOL_HEARTH_ID,
+  SCHOOL_IDS,
+  SCHOOL_MENTOR_ID,
+  isSchoolId,
+  sendToSchoolHearth,
+} from "./schools.js";

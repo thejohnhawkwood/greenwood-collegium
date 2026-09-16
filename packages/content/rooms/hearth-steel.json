@@ -1,0 +1,58 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hearth-steel",
+  "title": "Hearth of Steel",
+  "shortDescription": "Anvils and hanging mail keep the room honest.",
+  "longDescription": "The Hearth of Steel is an armory that still remembers it is a classroom. Anvils sit where first-years will learn not to lean. Mail hangs in a neat row. Practice swords wait on a rack that has been oiled more often than it has been praised.\nMentor Edge keeps the floor clear and the excuses shorter than the lesson.",
+  "zone": "schools",
+  "map": {
+    "x": 4,
+    "y": 1
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "hall-of-schools"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "hearth-thorn"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-mentor-edge",
+      "name": "Mentor Edge",
+      "kind": "npc",
+      "lookDescription": "A scarred hare in a mail shirt, one ear notched, a practice sword at the hip. Try talk edge.",
+      "examineDescription": "Edge's notch is newer than Flint's and just as earned. The mail is mended. He treats a sloppy stance as a kindness you have not yet been given.",
+      "dialogue": "\"Steel is a craft of meeting what comes. Look this hearth. Find Flint. Come back.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Edge. Steel teaches you to meet what comes. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "choices": [
+              { "say": "1", "label": "What does Steel meet?", "next": "craft" },
+              { "say": "2", "label": "I will go.", "next": "go" }
+            ]
+          },
+          "craft": {
+            "text": "\"A blade that is only shown is furniture. First you look. Then you practice on Flint's dummy. Then you come back, and we will see if your feet remembered.\"",
+            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"Look the anvil. Then find the orchard. I will be here.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-steel-anvil",
+      "name": "Practice Anvil",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The face of the anvil is bright from use. A rack of practice blades waits, oiled and unromantic. A slate says: 'Name the stance before you swing.'"
+    }
+  ]
+}

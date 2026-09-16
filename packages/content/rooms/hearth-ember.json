@@ -1,0 +1,62 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hearth-ember",
+  "title": "Hearth of Ember",
+  "shortDescription": "Banked coals keep a copper grate honest.",
+  "longDescription": "The Hearth of Ember smells of soot and warm metal. A copper grate holds a low fire that does not waste itself. Tongs hang in a row. Clay pots of sand wait for the lesson that comes after a spark gets ideas.\nMentor Cinder stands where the heat is useful, not where it is pretty.",
+  "zone": "schools",
+  "map": {
+    "x": 5,
+    "y": 0
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "hall-of-schools"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "hearth-thorn"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "hearth-veil"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-mentor-cinder",
+      "name": "Mentor Cinder",
+      "kind": "npc",
+      "lookDescription": "A soot-stained stoat in a leather apron, copper-bright eyes, tongs at the belt. Try talk cinder.",
+      "examineDescription": "Cinder's whiskers are singed at the tips. The apron is older than most first-years. She treats fire as a tool that will bite the careless and feed the careful.",
+      "dialogue": "\"Ember is a craft. Look this hearth. Find Flint in the South Orchard. Come back when you have seen the dummy.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Cinder. Ember teaches heat you can spend and heat you can keep. Look this hearth. Then walk to the South Orchard. Flint still owns the dummy. Attack it once. Come back and talk to me.\"",
+            "choices": [
+              { "say": "1", "label": "What does Ember ask of me?", "next": "craft" },
+              { "say": "2", "label": "I will go.", "next": "go" }
+            ]
+          },
+          "craft": {
+            "text": "\"A spark is not a victory. A spark is a beginning. You will learn to spend fire without wasting the room. First you learn to stand still and look. Then you learn to hit a thing that is meant to be hit.\"",
+            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"Look the grate. Then find the orchard. I will be here when you return.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-ember-grate",
+      "name": "Copper Grate",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The grate is scored from years of honest work. Sand waits beside it. A slate says: 'Name the fire before you feed it.'"
+    }
+  ]
+}

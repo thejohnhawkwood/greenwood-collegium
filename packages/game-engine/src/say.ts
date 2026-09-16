@@ -8,7 +8,7 @@ import {
 } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { conversationChoice, dialogueBeat, treeNode } from "./conversation.js";
-import { isSchoolId } from "./schools.js";
+import { isSchoolId, sendToSchoolHearth } from "./schools.js";
 import { charactersInRoom } from "./occupants.js";
 import { sanitizeSpeech, SAY_MAX_LENGTH } from "./speech.js";
 import type { EngineRuntime, SayIntent, WorldState } from "./state.js";
@@ -54,7 +54,7 @@ export function handleSay(world: WorldState, intent: SayIntent, runtime: EngineR
 
   const reply = replyToOpenConversation(world, character.id, intent.text, runtime);
   if (reply) {
-    return { ok: true, events: [reply], notices: [] };
+    return { ok: true, events: reply, notices: [] };
   }
 
   const text = sanitizeSpeech(intent.text);
@@ -136,7 +136,7 @@ function replyToOpenConversation(
   characterId: string,
   spoken: string,
   runtime: EngineRuntime,
-): EventEnvelope | undefined {
+): EventEnvelope[] | undefined {
   const character = world.characters[characterId];
   const open = character?.openConversation;
   if (!character || !open) {
@@ -156,18 +156,22 @@ function replyToOpenConversation(
   if (!choice) {
     return undefined;
   }
+  const events = [systemNotice(character.id, dialogueBeat(npc.name), runtime)];
   if (choice.school && isSchoolId(choice.school) && !character.schoolId) {
     character.schoolId = choice.school;
+    character.openConversation = undefined;
+    events.push(...sendToSchoolHearth(world, character, runtime));
+    return events;
   }
   if (!choice.next) {
     character.openConversation = undefined;
-    return systemNotice(character.id, dialogueBeat(npc.name), runtime);
+    return events;
   }
   const next = treeNode(tree, choice.next);
   if (!next) {
     character.openConversation = undefined;
-    return systemNotice(character.id, dialogueBeat(npc.name), runtime);
+    return events;
   }
   character.openConversation = { npcId: npc.id, nodeId: choice.next };
-  return systemNotice(character.id, dialogueBeat(npc.name), runtime);
+  return events;
 }

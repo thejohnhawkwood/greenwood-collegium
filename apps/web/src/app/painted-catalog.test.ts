@@ -69,7 +69,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a unique painted plate for every speaking NPC and the dummy", () => {
-    expect(NPC_PLATE_FILES).toHaveLength(7);
+    expect(NPC_PLATE_FILES).toHaveLength(13);
     for (const id of NPC_PLATE_FILES) {
       const path = join(artRoot, "characters/npcs", `${id}.png`);
       expect(existsSync(path)).toBe(true);
@@ -85,7 +85,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a painted plate for every Collegium room", () => {
-    expect(rooms).toHaveLength(25);
+    expect(rooms).toHaveLength(32);
     for (const room of rooms) {
       const path = join(artRoot, "rooms", `${room}.png`);
       expect(existsSync(path)).toBe(true);

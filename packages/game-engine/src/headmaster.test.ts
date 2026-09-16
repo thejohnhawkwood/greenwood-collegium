@@ -77,6 +77,28 @@ function world(): WorldState {
           },
         ],
       },
+      "hearth-steel": {
+        id: "hearth-steel",
+        title: "Hearth of Steel",
+        shortDescription: "Anvils.",
+        longDescription: "Mail and iron.",
+        zone: "schools",
+        exits: [{ direction: "south", toRoomId: "headmaster-study" }],
+        fixtures: [
+          {
+            id: "npc-mentor-edge",
+            name: "Mentor Edge",
+            kind: "npc",
+            dialogue: "Train.",
+            dialogueTree: {
+              start: "welcome",
+              nodes: {
+                welcome: { text: "Look this hearth. Find Flint. Come back." },
+              },
+            },
+          },
+        ],
+      },
     },
     characters: {},
     items: {},
@@ -89,7 +111,34 @@ function world(): WorldState {
         roomId: "lantern-court",
       },
     ],
-    questTemplates: { [ARRIVAL_QUEST_ID]: arrivalTemplate },
+    questTemplates: {
+      [ARRIVAL_QUEST_ID]: arrivalTemplate,
+      "first-lessons-steel": {
+        id: "first-lessons-steel",
+        title: "First Lessons: Steel",
+        introNarration: "Edge sets your first work.",
+        reminderNarration: "Look the hearth. Visit the orchard. Talk Edge.",
+        completionNarration: "Steel has your name.",
+        experienceReward: 10,
+        objectives: [
+          { id: "look-hearth", kind: "look", label: "Look the hearth.", roomId: "hearth-steel" },
+          {
+            id: "visit-orchard",
+            kind: "visit",
+            label: "Visit the orchard.",
+            roomId: "south-orchard",
+            requires: ["look-hearth"],
+          },
+          {
+            id: "report",
+            kind: "talk",
+            label: "Talk Edge.",
+            targetId: "npc-mentor-edge",
+            requires: ["visit-orchard"],
+          },
+        ],
+      },
+    },
   };
 }
 
@@ -137,8 +186,15 @@ describe("headmaster study after Arrival", () => {
     const picked = handleSay(realm, { verb: "say", characterId: "char-rowan", text: "6" }, clock);
     expect(picked.ok).toBe(true);
     expect(realm.characters["char-rowan"]?.schoolId).toBe("steel");
-    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("chosen-steel");
-    expect(createPlayState(realm, "char-rowan")?.conversation?.prompt).toBe("Steel it is.");
+    expect(realm.characters["char-rowan"]?.roomId).toBe("hearth-steel");
+    expect(realm.characters["char-rowan"]?.openConversation).toEqual({
+      npcId: "npc-mentor-edge",
+      nodeId: "welcome",
+    });
+    expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.completedObjectiveIds).toEqual([
+      "look-hearth",
+    ]);
+    realm.characters["char-rowan"]!.roomId = "headmaster-study";
     const again = handleTalk(
       realm,
       { verb: "talk", characterId: "char-rowan", target: "alder" },

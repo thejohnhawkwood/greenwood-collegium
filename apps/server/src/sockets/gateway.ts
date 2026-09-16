@@ -31,6 +31,7 @@ import {
   handleStats,
   handleEquip,
   handleTake,
+  isSchoolId,
   listQuestRecords,
   isStaffCommand,
   parsePlayerCommand,
@@ -130,6 +131,7 @@ export type RealtimeOptions = {
     characterId: string,
     input: { experience: number; level: number },
   ) => Promise<void>;
+  persistSchool?: (characterId: string, schoolId: string | undefined) => Promise<void>;
   auditLog?: AuditLogRepository;
   listClassroom?: (actorAccountId: string) => Promise<ClassroomReadModel | undefined>;
   bindInPlay?: (listInPlay: () => InPlaySeat[]) => void;
@@ -369,6 +371,9 @@ export async function attachRealtime(
       present.discoveredRoomIds = [
         ...new Set([...(identity.discoveredRoomIds ?? present.discoveredRoomIds), present.roomId]),
       ];
+      if (identity.schoolId && isSchoolId(identity.schoolId)) {
+        present.schoolId = identity.schoolId;
+      }
       await persistStarterCopies(characterId, identity);
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
@@ -399,6 +404,8 @@ export async function attachRealtime(
         ),
         appearance: identity?.appearance,
         discoveredRoomIds: identity?.discoveredRoomIds,
+        schoolId:
+          identity?.schoolId && isSchoolId(identity.schoolId) ? identity.schoolId : undefined,
       },
       runtime,
     );
@@ -492,6 +499,9 @@ export async function attachRealtime(
         experience: character.experience ?? 0,
         level: character.level ?? 1,
       });
+    }
+    if (options.persistSchool) {
+      await options.persistSchool(characterId, character.schoolId);
     }
     if (options.persistQuest) {
       for (const record of listQuestRecords(world, characterId)) {

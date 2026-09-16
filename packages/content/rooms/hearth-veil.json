@@ -1,0 +1,58 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hearth-veil",
+  "title": "Hearth of the Veil",
+  "shortDescription": "Silver curtains keep half the room in honest shadow.",
+  "longDescription": "The Hearth of the Veil is quieter than its neighbours. Pale curtains take the light and give it back in pieces. A tall dark mirror stands where a first-year will want to look too long. The floor is worn in a path that does not go straight.\nMentor Mist does not fill the silence. She uses it.",
+  "zone": "schools",
+  "map": {
+    "x": 5,
+    "y": -1
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "hearth-ember"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "hearth-stone"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-mentor-mist",
+      "name": "Mentor Mist",
+      "kind": "npc",
+      "lookDescription": "A pale ermine in a silver-grey cloak, one eye kept in shadow. Try talk mist.",
+      "examineDescription": "Mist's fur is almost white. The cloak drinks sound. She watches the end of a sentence, not the start of it.",
+      "dialogue": "\"The Veil is a craft of what is not said. Look this hearth. Find Flint. Come back.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Mist. The Veil teaches you to notice what a room is hiding. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "choices": [
+              { "say": "1", "label": "What does the Veil hide?", "next": "craft" },
+              { "say": "2", "label": "I will go.", "next": "go" }
+            ]
+          },
+          "craft": {
+            "text": "\"Not every true thing should be spoken in the open. First you learn to see. Then you learn to strike a thing that is meant to be struck. Then you come back, and we will see what you noticed.\"",
+            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"Look the mirror. Then find the orchard. I will still be here.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-veil-mirror",
+      "name": "Dark Mirror",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The glass does not flatter. It shows the room behind you more clearly than the face in front. A slate says: 'Name what moved.'"
+    }
+  ]
+}

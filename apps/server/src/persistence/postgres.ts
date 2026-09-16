@@ -230,6 +230,13 @@ export class PostgresCharacterRepository implements CharacterRepository {
       .where(eq(characters.id, id));
   }
 
+  async updateSchool(id: string, schoolId: string | undefined): Promise<void> {
+    await this.db
+      .update(characters)
+      .set({ schoolId, updatedAt: new Date() })
+      .where(eq(characters.id, id));
+  }
+
   async updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void> {
     const current = await this.getById(id);
     if (!current) {
@@ -460,6 +467,7 @@ function toCharacter(row: typeof characters.$inferSelect): CharacterRecord {
     level: row.level,
     experience: row.experience,
     roomId: row.roomId,
+    schoolId: row.schoolId ?? undefined,
     discoveredRoomIds: resolveDiscoveredRoomIds(row.discoveredRoomIds, row.roomId),
     status: row.status as CharacterRecord["status"],
     creationCompletedAt: row.creationCompletedAt ? asDate(row.creationCompletedAt) : undefined,

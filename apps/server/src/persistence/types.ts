@@ -27,6 +27,7 @@ export type CharacterRecord = {
   level: number;
   experience: number;
   roomId: string;
+  schoolId?: string;
   status: CharacterStatus;
   creationCompletedAt?: Date;
   createdAt: Date;
@@ -128,6 +129,7 @@ export interface CharacterRepository {
   updateRoom(id: string, roomId: string): Promise<void>;
   updateProgress(id: string, input: { experience: number; level: number }): Promise<void>;
   updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void>;
+  updateSchool(id: string, schoolId: string | undefined): Promise<void>;
 }
 
 export interface SessionRepository {

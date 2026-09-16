@@ -63,6 +63,7 @@ export function handleJoin(
     speciesId: intent.speciesId,
     gender: intent.gender,
     appearance: intent.appearance,
+    schoolId: intent.schoolId,
   };
   const character = world.characters[intent.characterId];
   if (!character) {

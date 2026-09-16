@@ -101,6 +101,41 @@ export const COLLEGIUM_ROOM_PLATES = [
     blurb: "Bees stitch the clover beneath a wide, unhurried sky.",
   },
   {
+    id: "hall-of-schools",
+    title: "Hall of Schools",
+    blurb: "Six banners wait above a stone hall east of the meadow.",
+  },
+  {
+    id: "hearth-steel",
+    title: "Hearth of Steel",
+    blurb: "Anvils and hanging mail keep the room honest.",
+  },
+  {
+    id: "hearth-stone",
+    title: "Hearth of Stone",
+    blurb: "Granite takes the weight and does not complain.",
+  },
+  {
+    id: "hearth-ember",
+    title: "Hearth of Ember",
+    blurb: "Banked coals keep a copper grate honest.",
+  },
+  {
+    id: "hearth-thorn",
+    title: "Hearth of Thorns",
+    blurb: "Living briar holds the glass and the light.",
+  },
+  {
+    id: "hearth-veil",
+    title: "Hearth of the Veil",
+    blurb: "Silver curtains keep half the room in honest shadow.",
+  },
+  {
+    id: "hearth-stars",
+    title: "Hearth of Stars",
+    blurb: "Night windows keep company with ink-stained charts.",
+  },
+  {
     id: "herb-garden",
     title: "Herb Garden",
     blurb: "Fragrant paths wind between neatly labelled beds.",

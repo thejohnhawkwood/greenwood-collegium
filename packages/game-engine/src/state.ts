@@ -237,6 +237,7 @@ export type JoinIntent = {
   speciesId?: string;
   gender?: "female" | "male";
   discoveredRoomIds?: string[];
+  schoolId?: SchoolId;
 };
 
 export type LeaveIntent = {

@@ -71,6 +71,7 @@ export const characters = pgTable(
     level: integer("level").notNull(),
     experience: integer("experience").notNull(),
     roomId: text("room_id").notNull(),
+    schoolId: text("school_id"),
     discoveredRoomIds: jsonb("discovered_room_ids")
       .$type<string[]>()
       .notNull()

@@ -1,0 +1,31 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "first-lessons-ember",
+  "title": "First Lessons: Ember",
+  "introNarration": "Mentor Cinder sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
+  "reminderNarration": "Look the Hearth of Ember. Visit the South Orchard. Attack the dummy. Then talk Cinder.",
+  "completionNarration": "Cinder nods once. Ember has your name, if not yet your fire.",
+  "experienceReward": 10,
+  "objectives": [
+    {
+      "id": "look-hearth",
+      "kind": "look",
+      "label": "Look around the Hearth of Ember.",
+      "roomId": "hearth-ember"
+    },
+    {
+      "id": "visit-orchard",
+      "kind": "visit",
+      "label": "Visit the South Orchard.",
+      "roomId": "south-orchard",
+      "requires": ["look-hearth"]
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Return and talk Mentor Cinder.",
+      "targetId": "npc-mentor-cinder",
+      "requires": ["visit-orchard"]
+    }
+  ]
+}

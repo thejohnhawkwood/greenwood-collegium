@@ -20,14 +20,14 @@ const baseQuest = {
 };
 
 describe("adventure content", () => {
-  it("offers six speaking staff and discoveries in every existing room", () => {
+  it("offers twelve speaking staff and discoveries in every existing room", () => {
     const world = loadBundledWorld();
     const rooms = Object.values(world.rooms);
-    expect(rooms).toHaveLength(26);
+    expect(rooms).toHaveLength(33);
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );
-    expect(staff).toHaveLength(6);
+    expect(staff).toHaveLength(12);
     for (const npc of staff) {
       expect(npc.dialogue).toBeTruthy();
       expect(reservedCharacterNames()).toContain(npc.name.toLowerCase());

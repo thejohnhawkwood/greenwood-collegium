@@ -1,0 +1,31 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "first-lessons-steel",
+  "title": "First Lessons: Steel",
+  "introNarration": "Mentor Edge sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
+  "reminderNarration": "Look the Hearth of Steel. Visit the South Orchard. Attack the dummy. Then talk Edge.",
+  "completionNarration": "Edge nods at your feet, not your sword. Steel has your name, if not yet your stance.",
+  "experienceReward": 10,
+  "objectives": [
+    {
+      "id": "look-hearth",
+      "kind": "look",
+      "label": "Look around the Hearth of Steel.",
+      "roomId": "hearth-steel"
+    },
+    {
+      "id": "visit-orchard",
+      "kind": "visit",
+      "label": "Visit the South Orchard.",
+      "roomId": "south-orchard",
+      "requires": ["look-hearth"]
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Return and talk Mentor Edge.",
+      "targetId": "npc-mentor-edge",
+      "requires": ["visit-orchard"]
+    }
+  ]
+}

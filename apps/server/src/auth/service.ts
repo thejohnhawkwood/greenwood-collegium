@@ -113,6 +113,7 @@ export type PlayIdentity = {
   discoveredRoomIds?: string[];
   experience: number;
   level: number;
+  schoolId?: string;
 };
 
 export type AuthService = {
@@ -768,6 +769,7 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
     experience: character.experience,
     level: character.level,
+    schoolId: character.schoolId,
   };
 }
 

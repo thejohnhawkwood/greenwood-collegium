@@ -84,6 +84,22 @@ export function persistAccountAndCharacter(
       "great-hall",
     ]);
   });
+  it("saves a chosen school through repository reloads", async () => {
+    const account = await accounts.create({
+      username: "hearth-fixture",
+      passwordHash: "pending",
+      role: "student",
+    });
+    const character = await characters.create({
+      accountId: account.id,
+      name: "Hearth",
+      speciesId: "hare",
+      roomId: "lantern-court",
+    });
+    expect((await characters.getById(character.id))?.schoolId).toBeUndefined();
+    await characters.updateSchool(character.id, "steel");
+    expect((await characters.getById(character.id))?.schoolId).toBe("steel");
+  });
   it("persists an account and a character that can be read back", async () => {
     const account = await accounts.create({
       username: "Rowan",

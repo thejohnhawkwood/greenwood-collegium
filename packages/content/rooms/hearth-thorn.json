@@ -1,0 +1,62 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hearth-thorn",
+  "title": "Hearth of Thorns",
+  "shortDescription": "Living briar holds the glass and the light.",
+  "longDescription": "The Hearth of Thorns is half cloister and half greenhouse. Briar has been trained into trellises that remember every cut. Green light pools on the stone. Shears hang where a first-year can reach them and a second-year has learned not to rush.\nMentor Briar waits among the living walls as if the plants had asked her to stay.",
+  "zone": "schools",
+  "map": {
+    "x": 5,
+    "y": 1
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "hearth-ember"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "hearth-steel"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "hearth-stars"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-mentor-briar",
+      "name": "Mentor Briar",
+      "kind": "npc",
+      "lookDescription": "A scarred hedgehog in a green cloak caught with thorns, shears at the belt. Try talk briar.",
+      "examineDescription": "Briar's quills are patched with old scratches. The cloak is mended with vine-thread. She speaks as if the plants were listening, and they usually are.",
+      "dialogue": "\"Thorns teach patience that can still cut. Look this hearth. Find Flint in the South Orchard. Come back.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Briar. Thorns grow where they are trained. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "choices": [
+              { "say": "1", "label": "What do Thorns teach?", "next": "craft" },
+              { "say": "2", "label": "I will go.", "next": "go" }
+            ]
+          },
+          "craft": {
+            "text": "\"A vine that is never cut becomes a snare. A vine that is only cut becomes a stick. You will learn the difference. First you look. Then you practice on Flint's dummy. Then you come back.\"",
+            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"Look the trellis. Then find the orchard. I will be here.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-thorn-trellis",
+      "name": "Briar Trellis",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The living wood has been trained into a door that is also a warning. New growth is tied, not broken. A slate says: 'Ask before you cut.'"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "hearth-stone",
+  "title": "Hearth of Stone",
+  "shortDescription": "Granite takes the weight and does not complain.",
+  "longDescription": "The Hearth of Stone is a vaulted room that feels older than the hall that leads to it. Granite blocks fit as if they had chosen one another. Dust hangs in cool light. A carved keystone watches the door.\nMentor Quern stands like another block that learned to speak.",
+  "zone": "schools",
+  "map": {
+    "x": 4,
+    "y": -1
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "hall-of-schools"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "hearth-veil"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-mentor-quern",
+      "name": "Mentor Quern",
+      "kind": "npc",
+      "lookDescription": "A massive grey badger with granite-dusted paws and a mason's belt. Try talk quern.",
+      "examineDescription": "Quern's stripe is pale with stone-dust. The belt is heavy. He does not hurry a sentence, and he does not drop one.",
+      "dialogue": "\"Stone holds. Look this hearth. Find Flint. Come back.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Quern. Stone teaches you to hold. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "choices": [
+              { "say": "1", "label": "What does Stone hold?", "next": "craft" },
+              { "say": "2", "label": "I will go.", "next": "go" }
+            ]
+          },
+          "craft": {
+            "text": "\"A wall that boasts is already failing. First you look at what is already holding. Then you strike a thing that is meant to be struck. Then you come back.\"",
+            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"Look the keystone. Then find the orchard. I will be here.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-stone-keystone",
+      "name": "Carved Keystone",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The keystone is plain except for a shallow mark like a held breath. The blocks around it have not shifted. A slate says: 'Carry the weight you named.'"
+    }
+  ]
+}

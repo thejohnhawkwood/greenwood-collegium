@@ -1,10 +1,9 @@
 # Room and quest reference
 
 Developer-facing inventory of the September 10, 2026 content release. The JSON files
-linked below remain the source of truth. This pass keeps the existing campus rooms plus the unmapped High Study.
-exits, zones, and map positions, enriches every description, and adds permanent
-examinable discoveries. There are six speaking staff NPCs and four quests including
-the original Arrival tutorial.
+linked below remain the source of truth. This pass keeps the campus rooms, the
+unmapped High Study, the Hall of Schools, and six hearths. There are twelve
+speaking staff NPCs and ten quests including Arrival and the six first-lessons.
 
 Player instructions and content authoring conventions live in the committed
 [play and authoring guide](adventures.md). Design decisions: [ADR-0029](../adr/0029-authored-npc-adventures.md).
@@ -79,7 +78,7 @@ A broad oak gate opens toward a clover-bright meadow.
 Bees stitch the clover beneath a wide, unhurried sky.
 
 - Source: [room JSON](../../packages/content/rooms/east-meadow.json).
-- Exits: west → `east-gate`.
+- Exits: west → `east-gate`; east → `hall-of-schools`.
 - NPCs: none.
 - Discoveries: Bee Skep (`object-bee-skep`).
 
@@ -102,6 +101,75 @@ Moonlight and lamplight share a high oak room that does not hurry its guests.
 - NPCs: Headmaster Alder (`npc-headmaster-alder`), recast as an old fierce snowy owl.
 - Discoveries: School Chart (`object-school-chart`).
 - Quest roles: school selection. [The Bell Below](#the-bell-below) is gated until later.
+
+### Hall of Schools — `hall-of-schools`
+
+Six banners wait above a stone hall that has only just opened east of the meadow.
+
+- Source: [room JSON](../../packages/content/rooms/hall-of-schools.json).
+- Exits: west → `east-meadow`; north → `hearth-steel`; south → `hearth-stone`; east → `hearth-ember`.
+- NPCs: none.
+- Discoveries: School Banners (`object-hall-banners`).
+
+### Hearth of Ember — `hearth-ember`
+
+Banked coals keep a copper grate honest.
+
+- Source: [room JSON](../../packages/content/rooms/hearth-ember.json).
+- Exits: west → `hall-of-schools`; north → `hearth-thorn`; south → `hearth-veil`.
+- NPCs: Mentor Cinder (`npc-mentor-cinder`).
+- Discoveries: Copper Grate (`object-ember-grate`).
+- Quest roles: [First Lessons: Ember](#first-lessons).
+
+### Hearth of Stars — `hearth-stars`
+
+Night windows keep company with ink-stained charts.
+
+- Source: [room JSON](../../packages/content/rooms/hearth-stars.json).
+- Exits: south → `hearth-thorn`.
+- NPCs: Mentor Lumen (`npc-mentor-lumen`).
+- Discoveries: Star Wheel (`object-stars-wheel`).
+- Quest roles: [First Lessons: Stars](#first-lessons).
+
+### Hearth of Steel — `hearth-steel`
+
+Anvils and hanging mail keep the room honest.
+
+- Source: [room JSON](../../packages/content/rooms/hearth-steel.json).
+- Exits: south → `hall-of-schools`; east → `hearth-thorn`.
+- NPCs: Mentor Edge (`npc-mentor-edge`).
+- Discoveries: Practice Anvil (`object-steel-anvil`).
+- Quest roles: [First Lessons: Steel](#first-lessons).
+
+### Hearth of Stone — `hearth-stone`
+
+Granite takes the weight and does not complain.
+
+- Source: [room JSON](../../packages/content/rooms/hearth-stone.json).
+- Exits: north → `hall-of-schools`; east → `hearth-veil`.
+- NPCs: Mentor Quern (`npc-mentor-quern`).
+- Discoveries: Carved Keystone (`object-stone-keystone`).
+- Quest roles: [First Lessons: Stone](#first-lessons).
+
+### Hearth of Thorns — `hearth-thorn`
+
+Living briar holds the glass and the light.
+
+- Source: [room JSON](../../packages/content/rooms/hearth-thorn.json).
+- Exits: south → `hearth-ember`; west → `hearth-steel`; north → `hearth-stars`.
+- NPCs: Mentor Briar (`npc-mentor-briar`).
+- Discoveries: Briar Trellis (`object-thorn-trellis`).
+- Quest roles: [First Lessons: Thorns](#first-lessons).
+
+### Hearth of the Veil — `hearth-veil`
+
+Silver curtains keep half the room in honest shadow.
+
+- Source: [room JSON](../../packages/content/rooms/hearth-veil.json).
+- Exits: north → `hearth-ember`; west → `hearth-stone`.
+- NPCs: Mentor Mist (`npc-mentor-mist`).
+- Discoveries: Dark Mirror (`object-veil-mirror`).
+- Quest roles: [First Lessons: the Veil](#first-lessons).
 
 ### Greenhouse — `greenhouse`
 
@@ -314,7 +382,23 @@ Objectives:
 - `take` — `take`: Take the small copper key. Target: item template `small-copper-key`.
 - `arrive` — `visit`: Walk north to the Great Hall. Target: room `great-hall`.
 
-Resolution: the original tutorial teaches looking, speaking, taking a personal key, and walking north. The first reward advances a new character to level 2.
+Resolution: the original tutorial teaches looking, speaking, taking a personal key, and walking north. The first reward advances a new character to level 2. Completion summons the Collegian to the High Study.
+
+<a id="first-lessons"></a>
+
+### First Lessons
+
+- Stable IDs: `first-lessons-ember`, `first-lessons-thorn`, `first-lessons-veil`, `first-lessons-stars`, `first-lessons-stone`, `first-lessons-steel`.
+- Starts: automatically when Alder’s School choice teleports the Collegian to that hearth.
+- Reward: **10 experience**, once per character.
+
+Objectives:
+
+- `look-hearth` — `look` in the chosen hearth.
+- `visit-orchard` — `visit` `south-orchard`.
+- `report` — `talk` the School mentor.
+
+Resolution: the student sees their hearth, finds Flint’s orchard, and reports back. The second reward advances them to level 3.
 
 <a id="the-bell-below"></a>
 
