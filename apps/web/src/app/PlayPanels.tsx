@@ -3,7 +3,6 @@ import { useState } from "react";
 import { BagPanel } from "./BagPanel.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { isDialogueMenuText } from "./conversation-from-story.js";
-import { ConversationStage } from "./ConversationStage.js";
 import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
@@ -54,10 +53,7 @@ export function PlayPanels({
   const [bagOpen, setBagOpen] = useState(false);
   const room = state?.room;
   const character = state?.character;
-  const speech = lines.filter((line) => line.event?.type === "chat.said");
-  const story = lines.filter(
-    (line) => line.event?.type !== "chat.said" && !isDialogueMenuText(line.text),
-  );
+  const story = lines.filter((line) => !isDialogueMenuText(line.text));
   const conversation = state?.conversation;
   return (
     <div className="play-scroll">
@@ -204,9 +200,10 @@ export function PlayPanels({
                     entity.kind === "npc" ? "npc" : entity.kind === "player" ? "player" : "object",
                   visual: entity.visual,
                 }))}
+                conversation={conversation}
+                inCombat={character?.inCombat}
                 onSend={onSend}
               />
-              <ConversationStage conversation={conversation} onSend={onSend} />
             </div>
           </section>
           <div className="reading-panes">
@@ -219,6 +216,9 @@ export function PlayPanels({
                 <button type="button" onClick={() => onSend("help")}>
                   Help ↗
                 </button>
+                <button type="button" onClick={() => onCommand("say ")}>
+                  Say ↗
+                </button>
               </div>
               <GameTranscript
                 lines={story}
@@ -228,29 +228,6 @@ export function PlayPanels({
             </section>
           </div>
         </div>
-        <section className="play-panel speech-panel" aria-labelledby="speech-heading">
-          <div className="panel-heading">
-            <h2 id="speech-heading">Room speech</h2>
-            <span className="speech-glyph" aria-hidden="true">
-              ❝
-            </span>
-          </div>
-          <p className="speech-caption">Nearby voices · this session</p>
-          {!speech.length ? (
-            <p className="speech-empty">
-              A quiet moment.
-              <br />
-              <span>When someone speaks nearby, their words will appear here.</span>
-            </p>
-          ) : null}
-          <GameTranscript lines={speech} label="Room speech" />
-          <div className="speech-footer">
-            <button type="button" onClick={() => onCommand("say ")}>
-              Say something ↗
-            </button>
-            <span>Everyone in your room can hear you.</span>
-          </div>
-        </section>
       </div>
       <WorldMapDialog
         open={worldMapOpen}

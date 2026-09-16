@@ -4,10 +4,10 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **Release target:** v0.0 foundation (twenty-five rooms, look, movement, travel, presence, say, inventory, combat, Ember, Arrival)
+- **Release target:** v0.0 foundation (twenty-five mapped rooms plus the unmapped High Study, look, movement, travel, presence, say, inventory, combat, Ember, Arrival)
 - **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-005 quest journal popup, DS-006 minimap. Typed commands stay canonical.
-- **Active follow-up:** confirm live Arrival and the quest journal. Quests button and `quest`/`quests` open a nested journal. Story log stays look/move description. Do not start school-selection, grouping, or the spider dungeon until the owner accepts the combat-prep plan.
-- **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header). The preview now shows a conversation stage, bag items, and a quest journal sample.
+- **Active follow-up:** Dialogue and token clicks share one center zoom. Room speech is folded into the story log. Forced encounters (Porter, Alder, combat) auto-open that zoom. Tokens sit along the bottom and overlap like a hand when the room is crowded.
+- **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header).
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
@@ -38,9 +38,3 @@ pnpm lint
 pnpm test
 pnpm build
 ```
-
-## After Ticket 018
-
-Ticket 018 is the 30-client localhost simulation plus crash-safe process logs. The next school period is the live load test. Do not point the simulation at Render. Edit on `class-2026-09-08`. Do not merge to `main` while the class is connected.
-
-Conversation choices sit on the room painting. Inventory opens the bag. Quests opens the journal. Tab and the reminder strip assist typed commands.

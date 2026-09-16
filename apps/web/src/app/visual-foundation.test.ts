@@ -10,7 +10,14 @@ import { PlayChrome } from "./PlayChrome.js";
 import { BagPanel } from "./BagPanel.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { QuestJournal } from "./QuestJournal.js";
-import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
+import {
+  forcedPresenceId,
+  handOverlap,
+  PresenceAvatars,
+  PresenceMenu,
+  PresenceZoom,
+  tokenKind,
+} from "./PresenceAvatars.js";
 import { presenceActions } from "./presence-actions.js";
 import { npcArtSrc } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
@@ -182,7 +189,7 @@ describe("visual foundation", () => {
       ),
     ).toContain("Legacy: missing");
   });
-  it("renders server vitals, one story region, separate speech and immediate movement controls", () => {
+  it("renders server vitals, one story region, and immediate movement controls", () => {
     const html = renderToStaticMarkup(
       createElement(PlayPanels, {
         state,
@@ -206,7 +213,8 @@ describe("visual foundation", () => {
     expect(html).toContain("Level 2 · 125 XP");
     expect(html).toContain("Complete plain text room description.");
     expect(html).toContain('aria-label="Around you and story"');
-    expect(html).toContain('aria-label="Room speech"');
+    expect(html).not.toContain('aria-label="Room speech"');
+    expect(html).toContain("Say ↗");
     expect(html).toContain('aria-label="Move north"');
     expect(html).toContain(">N<");
     expect(html).not.toContain("Room description");
@@ -348,6 +356,8 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain("Porter Bramble, NPC");
+    expect(html).toContain("presence-avatar npc");
+    expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
       "/art/characters/npcs/practice-dummy.png",
@@ -425,6 +435,40 @@ describe("visual foundation", () => {
     );
     expect(zoom).toContain("Full artwork of Headmaster Alder");
     expect(zoom).toContain("/art/characters/npcs/npc-headmaster-alder.png");
+    expect(handOverlap(4)).toBe(0);
+    expect(handOverlap(30)).toBe(-38);
+    expect(tokenKind({ id: "peer", name: "Moss", kind: "player" })).toBe("player");
+    expect(
+      tokenKind({
+        id: "enemy-practice-dummy-south-orchard",
+        name: "Practice Dummy",
+        kind: "npc",
+      }),
+    ).toBe("hostile");
+    expect(
+      forcedPresenceId([{ id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" }], {
+        npcId: "npc-porter-bramble",
+        npcName: "Porter Bramble",
+        prompt: "Why a weapon, I wonder?",
+        choices: [{ say: "1", label: "Why does a weapon fit?" }],
+      }),
+    ).toBe("npc-porter-bramble");
+    const forced = renderToStaticMarkup(
+      createElement(PresenceAvatars, {
+        people: [{ id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" }],
+        conversation: {
+          npcId: "npc-porter-bramble",
+          npcName: "Porter Bramble",
+          prompt: "Why a weapon, I wonder?",
+          choices: [{ say: "1", label: "Why does a weapon fit?" }],
+        },
+        onSend: () => {},
+      }),
+    );
+    expect(forced).toContain("Talking with Porter Bramble");
+    expect(forced).toContain("Why a weapon, I wonder?");
+    expect(forced).toContain("Why does a weapon fit?");
+    expect(forced).toContain('data-forced="true"');
   });
   it("lists known destinations and present Collegians in the lobby", () => {
     const html = renderToStaticMarkup(

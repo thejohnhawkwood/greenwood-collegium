@@ -174,7 +174,7 @@
 }
 .play-grid {
   display: grid;
-  grid-template-columns: 250px minmax(0, 1fr) 240px;
+  grid-template-columns: 250px minmax(0, 1fr);
   gap: 0.7rem;
   height: 100%;
   min-height: 0;
@@ -433,7 +433,7 @@
 }
 .room-column {
   display: grid;
-  grid-template-rows: minmax(380px, 1.45fr) minmax(200px, 1fr);
+  grid-template-rows: minmax(420px, 1.7fr) minmax(180px, 0.85fr);
   gap: 0.8rem;
   min-height: 0;
   min-width: 0;
@@ -588,21 +588,25 @@
   z-index: 2;
   pointer-events: none;
 }
-.conversation-stage {
+.presence-focus {
   position: absolute;
   left: 50%;
-  right: auto;
-  bottom: 5.1rem;
-  z-index: 5;
-  width: min(36rem, calc(100% - 1.4rem));
-  max-height: 58%;
+  top: 44%;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: minmax(150px, 210px) minmax(14rem, 1fr);
+  gap: 0.65rem;
+  align-items: stretch;
+  width: min(40rem, calc(100% - 1.2rem));
+  transform: translate(-50%, -54%);
+  pointer-events: auto;
+}
+.conversation-stage {
   overflow: auto;
   padding: 0.7rem 0.85rem 0.8rem;
-  transform: translateX(-50%);
   border: 1px solid #ead2a0;
   border-radius: 8px;
   background: #10281df7;
-  box-shadow: 0 10px 28px #0008;
 }
 .conversation-speaker {
   margin: 0 0 0.25rem;
@@ -632,16 +636,11 @@
   border: 1px solid #50634e;
 }
 .presence-zoom {
-  position: absolute;
-  top: 0.7rem;
-  left: 0.7rem;
-  width: 226px;
-  height: 236px;
   overflow: hidden;
+  min-height: 220px;
   border-radius: 10px;
   border: 1px solid #536245;
   background: radial-gradient(ellipse at 50% 30%, #4e6150, #203c2d 60%, #192d22);
-  box-shadow: 0 10px 28px #0008;
 }
 .presence-zoom img,
 .presence-zoom .character-portrait {
@@ -653,34 +652,54 @@
 .presence-rail {
   position: absolute;
   left: 50%;
-  bottom: 0.55rem;
+  bottom: 0.35rem;
   z-index: 2;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 0.45rem;
+  align-items: flex-end;
+  gap: 0;
   transform: translateX(-50%);
-  max-width: calc(100% - 1.2rem);
+  width: calc(100% - 0.8rem);
+  max-width: calc(100% - 0.8rem);
   pointer-events: auto;
 }
 .presence-slot {
   position: relative;
+  flex: 0 0 auto;
+  margin-left: var(--hand-overlap, 0px);
+}
+.presence-slot:first-child {
+  margin-left: 0;
+}
+.presence-slot.open,
+.presence-slot:hover {
+  z-index: 20;
 }
 .play-client .presence-avatar {
-  width: 72px;
-  height: 86px;
+  width: 68px;
+  height: 82px;
   padding: 0;
   overflow: hidden;
-  border-radius: 50% 50% 10px 10px;
-  border: 1px solid #d4b77c;
+  border-radius: 10px;
+  border: 3px solid #c6a45a;
   background: radial-gradient(ellipse at 50% 30%, #3a4f3d, #122018 70%);
   box-shadow: 0 6px 16px #0007;
 }
 .play-client .presence-avatar.npc {
-  border-color: #8eb4d4;
+  border-color: #5ea0d6;
+}
+.play-client .presence-avatar.player {
+  border-color: #d4b056;
 }
 .play-client .presence-avatar.object {
-  border-color: #d4b77c;
+  border-color: #7eaf6a;
+}
+.play-client .presence-avatar.hostile {
+  border-color: #c45a4a;
+}
+.presence-slot.open .presence-avatar {
+  transform: translateY(-10px);
 }
 .presence-avatar .character-portrait,
 .presence-plate {
@@ -699,19 +718,14 @@
   color: #eee3c3;
 }
 .presence-menu {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 0.35rem);
-  z-index: 3;
   display: grid;
-  gap: 0.2rem;
-  min-width: 8.4rem;
-  padding: 0.35rem;
+  align-content: start;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.55rem;
   border: 1px solid #8a7855;
-  border-radius: 7px;
-  background: #14271f;
-  transform: translateX(-50%);
-  box-shadow: 0 10px 24px #0008;
+  border-radius: 8px;
+  background: #14271ff7;
 }
 .play-client .presence-menu button {
   min-height: 26px;
@@ -1331,8 +1345,10 @@
     height: 188px;
   }
   .presence-zoom {
-    width: 180px;
-    height: 188px;
+    min-height: 180px;
+  }
+  .presence-focus {
+    top: 42%;
   }
   .paper-doll {
     padding-bottom: 0.35rem;
@@ -1351,31 +1367,15 @@
 @container play (max-width: 960px) {
   .play-grid {
     grid-template-columns: 220px minmax(0, 1fr);
-    grid-template-rows: 540px 250px;
     height: auto;
   }
   .portrait-mat .character-portrait {
     height: 200px;
   }
-  .character-aside {
-    grid-row: 1 / 3;
-  }
-  .speech-panel {
-    grid-column: 2;
-  }
-  .speech-empty {
-    padding: 0.4rem 0.8rem;
-    margin: 0.3rem 0;
-    font-size: 0.9rem;
-  }
-  .speech-empty span {
-    display: inline;
-    margin-left: 0.4rem;
-  }
-  .speech-footer {
-    flex-direction: row;
-    align-items: center;
-    padding: 0.4rem 0.75rem;
+  .presence-focus {
+    grid-template-columns: 1fr;
+    top: 48%;
+    width: min(22rem, calc(100% - 1rem));
   }
   .play-header .meta {
     max-width: 180px;
@@ -1452,9 +1452,6 @@
   }
   .story-panel {
     height: 260px;
-  }
-  .speech-panel {
-    height: 280px;
   }
   .play-header {
     padding: 0.6rem;
