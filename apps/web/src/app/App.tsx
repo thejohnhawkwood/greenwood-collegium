@@ -1,5 +1,8 @@
 import {
   moderationNoticeSchema,
+  PLAY_STATE_EVENT,
+  playStateSchema,
+  type PlayState,
   commandAckSchema,
   eventEnvelopeSchema,
   renderClassicNarration,
@@ -47,7 +50,7 @@ import {
 import { pendingAfterAck, type PendingCommand } from "./pending-command.js";
 import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
-import { GameTranscript } from "./GameTranscript.js";
+import { PlayPanels } from "./PlayPanels.js";
 import { AdminPane } from "./AdminPane.js";
 import { ApprovalGate } from "./ApprovalGate.js";
 
@@ -124,6 +127,7 @@ export function App() {
             {authNotice}
           </header>
           <CharacterGate
+            initialVisual={me.characterVisual}
             needsApproval={me.role === "student"}
             reviewReason={me.nameReview?.reason}
             username={me.username}
@@ -162,7 +166,7 @@ export function App() {
   }
 
   return (
-    <AcademyFrame sidebar={sidebar}>
+    <AcademyFrame sidebar={sidebar} playing>
       <PlayClient
         key={me?.accountId ?? "guest"}
         status={status}
@@ -201,6 +205,8 @@ function PlayClient({
     sessionChanged.current = onSignedOut;
   }, [onSignedOut]);
   const [connection, setConnection] = useState("disconnected");
+  const [playState, setPlayState] = useState<PlayState>();
+  const [viewError, setViewError] = useState("");
   const [lines, setLines] = useState<TranscriptLine[]>([
     {
       id: "notice-start",
@@ -208,6 +214,7 @@ function PlayClient({
       text: "Porter Bramble will greet you in Lantern Court. Type help for the list of words. Up and down recall earlier commands.",
     },
   ]);
+  const [worldMapOpen, setWorldMapOpen] = useState(false);
   const [draft, setDraft] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
@@ -227,6 +234,18 @@ function PlayClient({
       },
     });
     socketRef.current = socket;
+    socket.on(PLAY_STATE_EVENT, (payload: unknown) => {
+      const parsed = playStateSchema.safeParse(payload);
+      if (parsed.success) {
+        setPlayState(parsed.data);
+        setViewError("");
+      } else {
+        setPlayState(undefined);
+        setViewError(
+          "The visual view could not be read. Your transcript is available; type look to retry.",
+        );
+      }
+    });
     socket.on("moderation-changed", (payload: unknown) => {
       const parsed = moderationNoticeSchema.safeParse(payload);
       if (!parsed.success) return;
@@ -254,6 +273,7 @@ function PlayClient({
         return;
       }
       lastSequenceRef.current = next.lastSequence;
+      setPlayState(undefined);
       if (me?.characterId) {
         writeStoredSequence(sessionStorage, me.characterId, next.lastSequence);
       }
@@ -271,6 +291,7 @@ function PlayClient({
     });
     socket.on("disconnect", () => {
       setConnection("disconnected");
+      setPlayState(undefined);
     });
     let connectErrorShown = false;
     socket.on("connect_error", (error) => {
@@ -330,8 +351,11 @@ function PlayClient({
 
   function submitCommand(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    sendCommand(inputValue);
+  }
+
+  function sendCommand(raw: string, preserveDraft = false) {
     const socket = socketRef.current;
-    const raw = inputValue;
     if (raw.trim().length === 0) {
       return;
     }
@@ -340,6 +364,9 @@ function PlayClient({
       return;
     }
 
+    if (/^(?:map|chart)$/iu.test(raw.trim())) {
+      setWorldMapOpen(true);
+    }
     const commandId = crypto.randomUUID();
     pendingRef.current = { commandId, raw };
     setLines((current) =>
@@ -350,9 +377,11 @@ function PlayClient({
       }),
     );
     setHistory((current) => pushCommandHistory(current, raw));
-    setHistoryCursor(null);
-    setDraft("");
-    setInputValue("");
+    if (!preserveDraft) {
+      setHistoryCursor(null);
+      setDraft("");
+      setInputValue("");
+    }
 
     socket.emit(
       "command",
@@ -400,18 +429,30 @@ function PlayClient({
 
   return (
     <main
-      className="client"
+      className="client play-client"
       onClick={(event) => {
         if (shouldFocusCommandInput(event.target)) {
           inputRef.current?.focus();
         }
       }}
     >
-      <header className="chrome">
-        <h1>{APP_TITLE}</h1>
+      <header className="chrome play-header">
+        <a className="skip-command" href="#play-command">
+          Skip to command
+        </a>
+        <div className="play-brand">
+          <span className="collegium-seal" aria-hidden="true">
+            ✦
+          </span>
+          <div>
+            <span className="eyebrow">An academy among the trees</span>
+            <h1>{APP_TITLE}</h1>
+          </div>
+        </div>
         {authNotice}
         <p className="meta">
-          Connection: {connection}. Living transcript.{" "}
+          <span className={`connection-dot ${connection}`} aria-hidden="true" />
+          {connection === "connected" ? "Connected" : "Reconnecting"}.{" "}
           {me
             ? `Signed in as ${me.username}.`
             : status.allowGuestPlay
@@ -437,14 +478,31 @@ function PlayClient({
           )}
         </p>
       </header>
-      <GameTranscript lines={lines} />
+      <PlayPanels
+        state={playState}
+        lines={lines}
+        connection={connection}
+        error={viewError}
+        worldMapOpen={worldMapOpen}
+        onOpenWorldMap={() => setWorldMapOpen(true)}
+        onCloseWorldMap={() => setWorldMapOpen(false)}
+        onMove={(direction) => sendCommand(direction, true)}
+        onCommand={(raw) => {
+          setInputValue(raw);
+          setDraft(raw);
+          setHistoryCursor(null);
+          inputRef.current?.focus();
+        }}
+      />
       <form className="command-form" onSubmit={submitCommand}>
         <label className="command-label">
           <span className="prompt" aria-hidden="true">
-            &gt;
+            ❯
           </span>
           <input
             ref={inputRef}
+            id="play-command"
+            placeholder="Type a command… look, say hello, help"
             value={inputValue}
             onChange={(event) => {
               setHistoryCursor(null);
@@ -459,6 +517,9 @@ function PlayClient({
             aria-label="Command"
           />
         </label>
+        <button type="submit" disabled={connection !== "connected" || !inputValue.trim()}>
+          Send <span aria-hidden="true">↵</span>
+        </button>
       </form>
     </main>
   );

@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { EnemyPlacement, EnemyTemplate } from "./enemy-schema.js";
 import type { ItemPlacement, ItemTemplate } from "./item-schema.js";
 import { START_ROOM_ID, type RoomFile } from "./schema.js";
@@ -68,13 +70,36 @@ export function validateWorld(namedRooms: NamedRoom[]): ContentIssue[] {
 
   const fixtureIds = new Map<string, string>();
   const mapped = new Map<string, string>();
+  const compass = {
+    north: { axis: "y", sign: 1 },
+    south: { axis: "y", sign: -1 },
+    east: { axis: "x", sign: 1 },
+    west: { axis: "x", sign: -1 },
+  } as const;
 
   for (const named of namedRooms) {
     for (const exit of named.room.exits) {
-      if (!roomsById.has(exit.toRoomId)) {
+      const destination = roomsById.get(exit.toRoomId);
+      if (!destination) {
         issues.push({
           code: "missing_exit_target",
           message: `${named.room.id} exit ${exit.direction} points at unknown room ${exit.toRoomId}`,
+          roomId: named.room.id,
+          fileName: named.fileName,
+        });
+        continue;
+      }
+      const heading = compass[exit.direction as keyof typeof compass];
+      const from = named.room.map;
+      const to = destination.room.map;
+      if (!heading || !from || !to) {
+        continue;
+      }
+      const delta = heading.axis === "x" ? to.x - from.x : to.y - from.y;
+      if (heading.sign > 0 ? delta <= 0 : delta >= 0) {
+        issues.push({
+          code: "compass_inconsistent",
+          message: `${named.room.id} exit ${exit.direction} does not move ${heading.axis} toward ${exit.toRoomId}`,
           roomId: named.room.id,
           fileName: named.fileName,
         });
@@ -144,6 +169,27 @@ export function validateWorld(namedRooms: NamedRoom[]): ContentIssue[] {
     }
   }
 
+  return issues;
+}
+
+export function roomVisualState(room: RoomFile): string {
+  return room.visualState ?? room.id;
+}
+
+export function validateRoomArt(namedRooms: NamedRoom[], artDirectory: string): ContentIssue[] {
+  const issues: ContentIssue[] = [];
+  for (const named of namedRooms) {
+    if (!named.room.map) continue;
+    const visualState = roomVisualState(named.room);
+    if (!existsSync(join(artDirectory, `${visualState}.png`))) {
+      issues.push({
+        code: "missing_room_art",
+        message: `${named.room.id} needs painted room art ${visualState}.png`,
+        roomId: named.room.id,
+        fileName: named.fileName,
+      });
+    }
+  }
   return issues;
 }
 

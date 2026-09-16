@@ -1,0 +1,1 @@
+ALTER TABLE "characters" ADD COLUMN "appearance" jsonb NOT NULL DEFAULT '{"version":1,"build":"rounded","palette":"chestnut","marking":"plain","face":"bright","clothing":"fern","accessory":"none"}'::jsonb;

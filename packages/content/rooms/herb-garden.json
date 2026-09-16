@@ -5,7 +5,10 @@
   "shortDescription": "Fragrant paths wind between neatly labelled beds.",
   "longDescription": "Mint, thyme, and sage crowd raised beds edged with old roof tiles. A bumblebee bumps into a lavender head, considers the matter, and tries again with more dignity.\nGroundskeeper Tansy kneels beside a row of slate labels, her apron full of twine. The greenhouse glints to the north, while rosemary leads the path west toward the Quiet Chapel.",
   "zone": "grounds",
-  "unmapped": true,
+  "map": {
+    "x": -2,
+    "y": -1
+  },
   "exits": [
     {
       "direction": "east",

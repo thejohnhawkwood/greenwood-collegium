@@ -8,9 +8,11 @@ import type { SpellTemplate } from "./spell-schema.js";
 export type LoadedRoom = {
   id: string;
   title: string;
+  map?: { x: number; y: number };
   shortDescription: string;
   longDescription: string;
   zone: string;
+  visualState: string;
   exits: Array<{
     direction: string;
     toRoomId: string;
@@ -139,9 +141,11 @@ export function toWorldState(
     loaded[room.id] = {
       id: room.id,
       title: room.title,
+      map: room.map ? { ...room.map } : undefined,
       shortDescription: room.shortDescription,
       longDescription: room.longDescription,
       zone: room.zone,
+      visualState: room.visualState ?? room.id,
       exits: room.exits.map((exit) => ({
         direction: exit.direction,
         toRoomId: exit.toRoomId,

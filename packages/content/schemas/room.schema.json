@@ -54,6 +54,10 @@
         }
       }
     },
+    "visualState": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
     "unmapped": {
       "const": true
     },

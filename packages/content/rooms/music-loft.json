@@ -5,7 +5,10 @@
   "shortDescription": "Strings and sunbeams share a little room above the quad.",
   "longDescription": "Music stands gather in a loose circle beneath the sloping roof. A covered harp makes a tent of blue velvet, while a kettle-shaped drum waits with the patient air of someone used to being misunderstood.\nA folded page props up the foot of one wobbly stand. On its exposed corner, a tiny painted bird seems to be singing directly at the floor.",
   "zone": "studies",
-  "unmapped": true,
+  "map": {
+    "x": -1,
+    "y": 2
+  },
   "exits": [
     {
       "direction": "east",

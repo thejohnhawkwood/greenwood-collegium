@@ -5,7 +5,10 @@
   "shortDescription": "Four paths meet around a sundial that refuses to hurry.",
   "longDescription": "Clipped grass makes a green square between the school's taller buildings. Four gravel paths meet at a sundial whose carved snail looks rather pleased with the speed of things.\nClockwork ticks from the east. A stray musical phrase drifts from the west, and the observatory's copper roof shines to the north like a leaf after rain.",
   "zone": "academy-core",
-  "unmapped": true,
+  "map": {
+    "x": 0,
+    "y": 2
+  },
   "exits": [
     {
       "direction": "south",

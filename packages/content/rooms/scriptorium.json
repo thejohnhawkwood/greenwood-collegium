@@ -5,7 +5,10 @@
   "shortDescription": "Ink, lamplight, and careful mistakes inhabit the copying desks.",
   "longDescription": "Slanted desks stand in a row beneath broad windows, each with a sand shaker and a capped ink pot. The air smells of paper, lamp oil, and the patient work of putting one good word after another.\nAn ink blotter on the nearest desk carries a reversed impression of a bird's wing. A trail of blue music notes wanders off the edge of the practice sheet.",
   "zone": "studies",
-  "unmapped": true,
+  "map": {
+    "x": -3,
+    "y": 1
+  },
   "exits": [
     {
       "direction": "east",

@@ -5,7 +5,10 @@
   "shortDescription": "Warm glass shelters bright seedlings and one unhappy bed.",
   "longDescription": "Condensation beads on panes patched in amber and green. Vines climb strings toward the rafters, and something among the tomatoes smells faintly of toasted bread.\nMost seedlings stand straight, but one seedling tray droops in a puddle. A small wooden frog beside it bears the hopeful instruction: 'Please investigate before adding more water.'",
   "zone": "grounds",
-  "unmapped": true,
+  "map": {
+    "x": -2,
+    "y": 0
+  },
   "exits": [
     {
       "direction": "south",

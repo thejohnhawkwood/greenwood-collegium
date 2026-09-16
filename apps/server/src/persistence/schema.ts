@@ -1,4 +1,5 @@
 import { sql } from "drizzle-orm";
+import { DEFAULT_APPEARANCE, type Appearance } from "@greenwood/contracts";
 import {
   index,
   pgTable,
@@ -65,10 +66,15 @@ export const characters = pgTable(
       .references(() => accounts.id),
     name: text("name").notNull(),
     speciesId: text("species_id").notNull(),
+    appearance: jsonb("appearance").$type<Appearance>().notNull().default(DEFAULT_APPEARANCE),
     gender: text("gender"),
     level: integer("level").notNull(),
     experience: integer("experience").notNull(),
     roomId: text("room_id").notNull(),
+    discoveredRoomIds: jsonb("discovered_room_ids")
+      .$type<string[]>()
+      .notNull()
+      .default(["lantern-court"]),
     status: text("status").notNull(),
     creationCompletedAt: timestamp("creation_completed_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),

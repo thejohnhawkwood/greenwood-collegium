@@ -5,7 +5,10 @@
   "shortDescription": "Fresh bread perfumes a bright room built for making room.",
   "longDescription": "Long tables shine with beeswax under strings of paper leaves. Plates are stacked at one end, and the smell of fresh bread keeps drawing everyone's attention toward the kitchen door.\nAt the nearest table, a place card marks an empty seat. The bench has been repaired with a plank of lighter wood, proof that being worn out is not always the end of usefulness.",
   "zone": "lodgings",
-  "unmapped": true,
+  "map": {
+    "x": 2,
+    "y": 2
+  },
   "exits": [
     {
       "direction": "south",

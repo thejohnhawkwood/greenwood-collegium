@@ -13,6 +13,7 @@ import { parseTakeCommand } from "./parse-take.js";
 import { parseTalkCommand } from "./parse-talk.js";
 import { parseStatsCommand } from "./parse-stats.js";
 import { parseEquipCommand } from "./parse-equip.js";
+import { parseMapCommand } from "./parse-map.js";
 import type { PlayerCommand } from "./state.js";
 
 export function parsePlayerCommand(raw: string, characterId: string): PlayerCommand | null {
@@ -20,6 +21,7 @@ export function parsePlayerCommand(raw: string, characterId: string): PlayerComm
     parseHelpCommand(raw, characterId) ??
     parseQuestsCommand(raw, characterId) ??
     parseStatsCommand(raw, characterId) ??
+    parseMapCommand(raw, characterId) ??
     parseEquipCommand(raw, characterId) ??
     parseLookCommand(raw, characterId) ??
     parseSayCommand(raw, characterId) ??

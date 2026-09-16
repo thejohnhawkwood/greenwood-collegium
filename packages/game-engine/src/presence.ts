@@ -57,10 +57,12 @@ export function handleJoin(
     lookDescription: intent.lookDescription,
     examineDescription: intent.examineDescription,
     roomId: room.id,
-    discoveredRoomIds: [room.id],
+    discoveredRoomIds: [...new Set([...(intent.discoveredRoomIds ?? []), room.id])],
     experience: intent.experience ?? 0,
     level: intent.level ?? 1,
     speciesId: intent.speciesId,
+    gender: intent.gender,
+    appearance: intent.appearance,
   };
   const character = world.characters[intent.characterId];
   if (!character) {

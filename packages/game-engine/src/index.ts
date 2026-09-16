@@ -17,6 +17,8 @@ export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
 export { handleStats } from "./stats.js";
 export { parseStatsCommand } from "./parse-stats.js";
+export { handleMap } from "./map.js";
+export { parseMapCommand } from "./parse-map.js";
 export { handleEquip } from "./equip.js";
 export { parseEquipCommand } from "./parse-equip.js";
 export {
@@ -76,6 +78,7 @@ export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
 export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
 export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
 export type { StatsFailure, StatsResult, StatsSuccess } from "./stats.js";
+export type { MapFailure, MapResult, MapSuccess } from "./map.js";
 export type { EquipFailure, EquipResult, EquipSuccess } from "./equip.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
@@ -110,6 +113,7 @@ export type {
   QuestTemplate,
   QuestsIntent,
   EquipIntent,
+  MapIntent,
   StatsIntent,
   Room,
   RoomExit,
@@ -120,3 +124,4 @@ export type {
   TakeIntent,
   WorldState,
 } from "./state.js";
+export { createPlayState } from "./play-state.js";

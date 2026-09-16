@@ -5,7 +5,10 @@
   "shortDescription": "Clay freckles the wheels, the benches, and almost everything else.",
   "longDescription": "Pottery wheels face the orchard light, surrounded by clay footprints and ambitious unfinished bowls. Cups dry on a rack above the sink, each one a slightly different answer to the question of what a cup should be.\nA watering jug rests beside a lump of grey clay. The jug wears a painted rain cloud; its spout wears something much less useful.",
   "zone": "grounds",
-  "unmapped": true,
+  "map": {
+    "x": 2,
+    "y": -1
+  },
   "exits": [
     {
       "direction": "west",

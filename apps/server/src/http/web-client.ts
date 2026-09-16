@@ -28,6 +28,7 @@ export async function registerWebClient(
   for (const [folder, prefix] of [
     ["assets", "/assets/"],
     ["frame", "/frame/"],
+    ["art", "/art/"],
   ] as const) {
     const root = join(webDist, folder);
     if (!existsSync(root)) {

@@ -5,7 +5,10 @@
   "shortDescription": "Bees stitch the clover beneath a wide, unhurried sky.",
   "longDescription": "Grass bends in silver-green waves around islands of clover. Beyond a low hedge, the sky seems large enough to hold every question the school has ever asked.\nA bee skep sits in a patch of sunlight, busy with small purposeful journeys. The gate remains plainly visible to the west; even an excellent daydream need not lose its way home.",
   "zone": "grounds",
-  "unmapped": true,
+  "map": {
+    "x": 3,
+    "y": 0
+  },
   "exits": [
     {
       "direction": "west",

@@ -1,3 +1,4 @@
+import type { Appearance } from "@greenwood/contracts";
 export type RoomExit = {
   direction: string;
   toRoomId: string;
@@ -32,9 +33,11 @@ export type RoomFixture = {
 export type Room = {
   id: string;
   title: string;
+  map?: { x: number; y: number };
   shortDescription: string;
   longDescription: string;
   zone: string;
+  visualState?: string;
   exits: RoomExit[];
   fixtures: RoomFixture[];
 };
@@ -45,6 +48,7 @@ export type OpenConversation = {
 };
 
 export type Character = {
+  appearance?: Appearance;
   id: string;
   name: string;
   accountUsername?: string;
@@ -60,6 +64,7 @@ export type Character = {
   level?: number;
   encounterId?: string;
   speciesId?: string;
+  gender?: "female" | "male";
   equippedItemId?: string;
   openConversation?: OpenConversation;
 };
@@ -215,6 +220,7 @@ export type SayIntent = {
 };
 
 export type JoinIntent = {
+  appearance?: Appearance;
   verb: "join";
   characterId: string;
   name: string;
@@ -225,6 +231,8 @@ export type JoinIntent = {
   experience?: number;
   level?: number;
   speciesId?: string;
+  gender?: "female" | "male";
+  discoveredRoomIds?: string[];
 };
 
 export type LeaveIntent = {
@@ -294,6 +302,11 @@ export type EquipIntent = {
   verb: "equip";
   characterId: string;
   target: string;
+};
+
+export type MapIntent = {
+  verb: "map";
+  characterId: string;
 };
 
 export type StaffHelpIntent = {
@@ -367,6 +380,7 @@ export type PlayerCommand =
   | QuestsIntent
   | StatsIntent
   | EquipIntent
+  | MapIntent
   | StaffCommand;
 
 export type EngineRuntime = {

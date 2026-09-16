@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it } from "vitest";
+import { DEFAULT_APPEARANCE } from "@greenwood/contracts";
 import { buildApp } from "../app.js";
 import { SESSION_COOKIE } from "../auth/cookies.js";
 import {
@@ -9,6 +10,62 @@ import {
 import { applyInPlay, registerAuthRoutes } from "./auth.js";
 
 describe("auth HTTP", () => {
+  it("validates appearance and restores it in a new login and after staff rename", async () => {
+    const { auth } = createTestAuth();
+    app = await buildApp();
+    await registerAuthRoutes(app, { auth, allowGuestPlay: false, secureCookies: false });
+    const boot = await app.inject({
+      method: "POST",
+      url: "/auth/bootstrap",
+      payload: {
+        token: TEST_BOOTSTRAP_TOKEN,
+        username: "visual-fixture",
+        password: "lantern-path",
+      },
+    });
+    const cookie = cookieValue(boot, SESSION_COOKIE);
+    const appearance = {
+      ...DEFAULT_APPEARANCE,
+      palette: "ash",
+      clothing: "indigo",
+      accessory: "satchel",
+    };
+    const payload = { name: "Silverbough", speciesId: "owl", gender: "female", appearance };
+    const invalid = await app.inject({
+      method: "POST",
+      url: "/auth/character",
+      cookies: { [SESSION_COOKIE]: cookie },
+      payload: { ...payload, appearance: { ...appearance, accessory: "external-image" } },
+    });
+    expect(invalid.statusCode).toBe(400);
+    const created = await app.inject({
+      method: "POST",
+      url: "/auth/character",
+      cookies: { [SESSION_COOKIE]: cookie },
+      payload,
+    });
+    expect(created.statusCode).toBe(200);
+    expect(created.json().characterVisual).toEqual({
+      speciesId: "owl",
+      gender: "female",
+      appearance,
+    });
+    await auth.renameCharacter(String(boot.json().accountId), "Silverbark");
+    await auth.signOut(cookie);
+    const signedIn = await app.inject({
+      method: "POST",
+      url: "/auth/sign-in",
+      payload: { username: "visual-fixture", password: "lantern-path" },
+    });
+    expect(signedIn.json().characterVisual).toEqual({
+      speciesId: "owl",
+      gender: "female",
+      appearance,
+    });
+    expect(
+      (await auth.resolvePlayIdentity(cookieValue(signedIn, SESSION_COOKIE)))?.appearance,
+    ).toEqual(appearance);
+  });
   let app: Awaited<ReturnType<typeof buildApp>> | undefined;
 
   afterEach(async () => {

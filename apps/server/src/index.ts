@@ -169,6 +169,8 @@ await attachRealtime(app, world, {
   resolveSession: (token) => auth.resolvePlayIdentity(token),
   resolveSocketTicket: (ticket) => auth.resolveSocketTicket(ticket),
   persistRoom: (characterId, roomId) => stores.characters.updateRoom(characterId, roomId),
+  persistDiscovery: (characterId, roomIds) =>
+    stores.characters.updateDiscovery(characterId, roomIds),
   persistProgress: (characterId, input) => stores.characters.updateProgress(characterId, input),
   persistItem,
   persistQuest: stores.quests,

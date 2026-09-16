@@ -5,7 +5,10 @@
   "shortDescription": "Honey-coloured light warms clean beds and folded blankets.",
   "longDescription": "Sunlight falls through linen curtains onto two neatly made beds. The room smells of soap, rosemary, and warm beeswax; even the cabinet doors seem to close softly.\nHealer Fen folds a bandage with the care another person might give a map. A painted breathing wheel hangs where anyone resting can see it.",
   "zone": "lodgings",
-  "unmapped": true,
+  "map": {
+    "x": 3,
+    "y": 1
+  },
   "exits": [
     {
       "direction": "west",

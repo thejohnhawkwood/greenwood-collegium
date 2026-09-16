@@ -6,13 +6,16 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 - **Release target:** v0.0 foundation (classic UI 0, twenty-five rooms, look, movement, presence, say, inventory, combat, Ember, Arrival)
 - **Active ticket:** [#19 — Begin Design Sprint DS-001](https://github.com/thejohnhawkwood/greenwood-collegium/issues/19)
+- **Local art pass:** painted catalog (ADR-0032) uses complete female/male
+  looks plus twenty-five finished room plates. Open `/?builder=1` and
+  `/?rooms=1`. Live workshop is body type, look, size, and colouring.
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. Class tomorrow: [`../classroom/class-day.md`](../classroom/class-day.md) and [`playthrough.md`](../../playthrough.md)
+2. Class: [`../classroom/class-day.md`](../classroom/class-day.md), [`playthrough.md`](../../playthrough.md). Design-sprint period: [`../classroom/design-sprint-lesson.md`](../classroom/design-sprint-lesson.md)
 3. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
 4. ADR-0013 and ADR-0019
 5. PRD Appendix E Ticket 019 (DS-001). Ticket 018 notes: [`docs/ops/load-test.md`](../ops/load-test.md), ADR-0025. Do not start 019 unless the owner says next.
