@@ -36,6 +36,28 @@ and three additional investigation quests. The map and exits remain unchanged.
 See [the adventure guide](content/adventures.md) and
 [ADR-0029](adr/0029-authored-npc-adventures.md).
 
+On September 15, the owner selected Cycle A (S0–S2) of the Coding 9 visual-first
+handoff: a responsive visual play shell and persisted appearance shared across
+creation, paper doll and avatars. Preserve commands, complete narration and
+classroom moderation. Persistent exploration maps, lobby/travel and later game
+systems remain subsequent slices. See [ADR-0030](adr/0030-visual-foundation.md) and
+[the Cycle A guide](design-sprints/ds-002-visual-foundation.md).
+
+The same day, Cycle B (S4) added a canonical 25-room world map with fog of war,
+persisted discovery, a student World map panel and a `map` command. Unvisited
+room titles stay off the client. Lobby travel (S5) remains later. See
+[ADR-0031](adr/0031-world-map-fog.md) and
+[the Cycle B map notes](design-sprints/ds-003-world-map.md).
+
+A following art pass replaced SVG placeholders with an original painted catalog
+for all eleven species and painted plates for the twenty-five rooms. Each species
+has a female and a male body, and three complete looks: Courtyard, Scriptorium,
+and Road. Live workshop controls are body type, look, size, and colouring.
+Overlay stamps are not switched on top. Room plates are finished places, not
+empty halls. Open `/?builder=1` and `/?rooms=1` to compare the catalogs.
+See [ADR-0032](adr/0032-painted-catalog.md) and
+[the painted catalog bible](design-sprints/ds-004-painted-catalog.md).
+
 ---
 
 ## Table of Contents

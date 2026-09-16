@@ -193,3 +193,5 @@ export {
   type AuthSuggestedName,
   type AuthSuggestedNameRequest,
 } from "./auth/schemas.js";
+export * from "./appearance.js";
+export * from "./play-state.js";

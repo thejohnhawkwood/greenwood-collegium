@@ -5,7 +5,10 @@
   "shortDescription": "Willow shadows lace a quiet room of green quilts.",
   "longDescription": "Willow branches comb the window glass, drawing moving lines across neatly folded green quilts. A low table holds a repaired lantern, a bowl of smooth river stones, and a stack of letters waiting for imaginary adventures.\nBeside the window, a dream mobile turns in the draught. Its paper stars make almost no sound.",
   "zone": "lodgings",
-  "unmapped": true,
+  "map": {
+    "x": 3,
+    "y": -1
+  },
   "exits": [
     {
       "direction": "west",

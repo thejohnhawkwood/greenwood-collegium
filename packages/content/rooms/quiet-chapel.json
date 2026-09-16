@@ -5,7 +5,10 @@
   "shortDescription": "Rosemary and coloured light fill a small place for stillness.",
   "longDescription": "Plain benches face a narrow window of green and honey-coloured glass. A sprig of rosemary rests on the sill, and the hush feels offered rather than demanded.\nNear the floor, a smooth listening stone touches an exposed oak root. Three worn circles mark its surface. Here the low note beneath the school is almost clear enough to hum.",
   "zone": "grounds",
-  "unmapped": true,
+  "map": {
+    "x": -3,
+    "y": -1
+  },
   "exits": [
     {
       "direction": "east",

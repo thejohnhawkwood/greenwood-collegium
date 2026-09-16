@@ -21,9 +21,11 @@ export { spellTemplateSchema } from "./spell-schema.js";
 export { questTemplateSchema } from "./quest-schema.js";
 export {
   ContentValidationError,
+  roomVisualState,
   validateBestiary,
   validateCatalog,
   validateQuests,
+  validateRoomArt,
   validateSpells,
   validateWorld,
   type ContentIssue,

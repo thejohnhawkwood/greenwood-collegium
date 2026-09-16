@@ -115,6 +115,7 @@ export const roomFileSchema = z
     exits: z.array(roomExitSchema),
     fixtures: z.array(roomFixtureSchema).default([]),
     map: roomMapSchema.optional(),
+    visualState: stableIdSchema.optional(),
     unmapped: z.literal(true).optional(),
     terminal: z.boolean().optional(),
   })

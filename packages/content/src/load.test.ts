@@ -41,7 +41,18 @@ describe("content loader", () => {
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
     expect(Object.keys(world.rooms)).toHaveLength(25);
+    expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
+    expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
+    const charted = Object.values(world.rooms).filter((room) => room.map);
+    expect(charted).toHaveLength(25);
+    expect(new Set(charted.map((room) => `${room.map!.x},${room.map!.y}`)).size).toBe(25);
+    expect(world.rooms["north-quad"]?.map).toEqual({ x: 0, y: 2 });
+    expect(world.rooms["observatory"]?.map).toEqual({ x: 0, y: 3 });
+    expect(world.rooms["library-stacks"]?.map).toEqual({ x: -2, y: 1 });
+    expect(world.rooms["porter-lodge"]?.map).toEqual({ x: 1, y: 1 });
+    expect(world.rooms["river-landing"]?.map).toEqual({ x: 0, y: -2 });
     expect(world.rooms[START_ROOM_ID]?.title).toBe("Lantern Court");
+    expect(world.rooms[START_ROOM_ID]?.visualState).toBe(START_ROOM_ID);
     expect(world.rooms[START_ROOM_ID]?.fixtures).toEqual([
       expect.objectContaining({
         id: "npc-porter-bramble",
@@ -184,5 +195,24 @@ describe("content loader", () => {
     });
 
     expect(() => loadWorldFromDirectory(directory)).toThrow(/shares map coordinates/);
+  });
+
+  it("rejects a cardinal exit that faces the wrong way on the map", () => {
+    const directory = mkdtempSync(join(tmpdir(), "greenwood-content-"));
+    tempDirs.push(directory);
+    writeRoom(directory, START_ROOM_ID, {
+      title: "Lantern Court",
+      map: { x: 0, y: 0 },
+      unmapped: undefined,
+      exits: [{ direction: "north", toRoomId: "south-nook" }],
+    });
+    writeRoom(directory, "south-nook", {
+      title: "South Nook",
+      map: { x: 0, y: -1 },
+      unmapped: undefined,
+      exits: [{ direction: "south", toRoomId: START_ROOM_ID }],
+    });
+
+    expect(() => loadWorldFromDirectory(directory)).toThrow(/does not move y toward/);
   });
 });

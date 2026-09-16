@@ -1,3 +1,4 @@
+import { appearanceSchema, resolveAppearance, type Appearance } from "@greenwood/contracts";
 import {
   formatCharacterName,
   isKnownGender,
@@ -20,6 +21,7 @@ import {
   type CharacterRepository,
   type InviteRepository,
   type InviteRole,
+  resolveDiscoveredRoomIds,
   type SessionRepository,
 } from "../persistence/types.js";
 import type { PasswordHasher } from "./hasher.js";
@@ -51,6 +53,7 @@ export type AuthFailureCode =
   | "duplicate_character_name"
   | "invalid_species"
   | "invalid_gender"
+  | "invalid_appearance"
   | "character_exists"
   | "character_incomplete";
 
@@ -98,6 +101,7 @@ export type ClassroomAccount = {
 };
 
 export type PlayIdentity = {
+  appearance?: Appearance;
   accountId: string;
   characterId: string;
   characterName: string;
@@ -106,6 +110,7 @@ export type PlayIdentity = {
   speciesId: string;
   gender?: CharacterRecord["gender"];
   roomId: string;
+  discoveredRoomIds?: string[];
   experience: number;
   level: number;
 };
@@ -164,6 +169,7 @@ export type AuthService = {
     accountId: string,
     input: {
       username?: string;
+      appearance?: Appearance;
       name: string;
       speciesId: string;
       gender: NonNullable<CharacterRecord["gender"]>;
@@ -526,6 +532,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     accountId: string,
     input: {
       username?: string;
+      appearance?: Appearance;
       name: string;
       speciesId: string;
       gender: NonNullable<CharacterRecord["gender"]>;
@@ -542,6 +549,9 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       return fail("invalid_gender", "Choose a gender from the list.");
     }
     const givenName = titleCharacterName(input.name);
+    if (input.appearance !== undefined && !appearanceSchema.safeParse(input.appearance).success) {
+      return fail("invalid_appearance", "Choose an appearance from the available layers.");
+    }
     const nameCheck = validateGivenName(givenName);
     if (nameCheck) {
       return nameCheck;
@@ -575,6 +585,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         const character = await deps.characters.updateCreation(existing.id, {
           name: givenName,
           speciesId: input.speciesId,
+          appearance: input.appearance ?? existing.appearance,
           gender: input.gender,
           creationCompletedAt: submittedAt,
         });
@@ -584,6 +595,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
         accountId: account.id,
         name: givenName,
         speciesId: input.speciesId,
+        appearance: resolveAppearance(input.appearance),
         gender: input.gender,
         roomId: startRoomId,
         creationCompletedAt: submittedAt,
@@ -750,8 +762,10 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     username: account.username,
     role: account.role,
     speciesId: character.speciesId,
+    appearance: resolveAppearance(character.appearance),
     gender: character.gender,
     roomId: character.roomId,
+    discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
     experience: character.experience,
     level: character.level,
   };

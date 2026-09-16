@@ -1,3 +1,4 @@
+import { resolveAppearance, resolveVisualGender } from "@greenwood/contracts";
 import {
   authAcceptInviteRequestSchema,
   authBootstrapRequestSchema,
@@ -84,6 +85,7 @@ const failureStatus: Record<AuthFailure["code"], number> = {
   duplicate_character_name: 409,
   invalid_species: 400,
   invalid_gender: 400,
+  invalid_appearance: 400,
   character_exists: 409,
   character_incomplete: 409,
 };
@@ -397,6 +399,13 @@ async function publicSession(
     role: session.account.role,
     characterComplete: complete,
     characterId: complete ? session.character?.id : undefined,
+    characterVisual: session.character
+      ? {
+          speciesId: session.character.speciesId,
+          gender: resolveVisualGender(session.character.gender),
+          appearance: resolveAppearance(session.character.appearance),
+        }
+      : undefined,
     characterName:
       complete && session.character
         ? formatCharacterName(session.character.name, session.character.speciesId)

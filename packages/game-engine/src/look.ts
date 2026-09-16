@@ -1,3 +1,4 @@
+import { resolveAppearance, resolveVisualGender } from "@greenwood/contracts";
 import {
   formatRoomSnapshotText,
   renderClassicSegments,
@@ -75,13 +76,24 @@ export function handleLook(
   return { ok: true, event };
 }
 
-function snapshotPayload(room: Room, world: WorldState, looker: Character): RoomSnapshotPayload {
+export function snapshotPayload(
+  room: Room,
+  world: WorldState,
+  looker: Character,
+): RoomSnapshotPayload {
   const otherPlayers = Object.values(world.characters)
     .filter((character) => character.roomId === room.id && character.id !== looker.id)
     .map((character) => ({
       id: character.id,
       name: character.name,
       kind: "player" as const,
+      visual: character.speciesId
+        ? {
+            speciesId: character.speciesId,
+            gender: resolveVisualGender(character.gender),
+            appearance: resolveAppearance(character.appearance),
+          }
+        : undefined,
       description: character.lookDescription,
     }));
 
@@ -91,6 +103,7 @@ function snapshotPayload(room: Room, world: WorldState, looker: Character): Room
     shortDescription: room.shortDescription,
     longDescription: room.longDescription,
     zone: room.zone,
+    visualState: room.visualState ?? room.id,
     exits: room.exits.map((exit) => ({ direction: exit.direction, toRoomId: exit.toRoomId })),
     visible: [
       ...fixturesVisibleTo(world, looker).map((fixture) => ({

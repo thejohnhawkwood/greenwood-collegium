@@ -5,7 +5,10 @@
   "shortDescription": "Tall shelves shelter the papery hush of a thousand journeys.",
   "longDescription": "Oak shelves lean around the room's living branches, their ladders sliding on brass rails. Cloth bookmarks hang from open volumes like bright tongues, and a little clock ticks much more quietly than seems mechanically reasonable.\nLibrarian Quill sorts a stack of field guides beneath a green-shaded lamp. One book lies open beside the borrowing register, with an awkward gap between its pages.",
   "zone": "studies",
-  "unmapped": true,
+  "map": {
+    "x": -2,
+    "y": 1
+  },
   "exits": [
     {
       "direction": "east",

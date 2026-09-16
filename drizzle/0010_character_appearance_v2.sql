@@ -1,0 +1,1 @@
+ALTER TABLE "characters" ALTER COLUMN "appearance" SET DEFAULT '{"version":2,"build":"rounded","palette":"chestnut","marking":"plain","muzzle":"tapered","ears":"neat","face":"bright","clothing":"fern","accessory":"none"}'::jsonb;

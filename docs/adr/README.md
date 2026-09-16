@@ -35,6 +35,9 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0027](0027-classroom-moderation.md) | Classroom approval, moderation and semester speech |
 | [0028](0028-semantic-transcript.md) | One evolving semantic transcript; supersedes classic UI retention |
 | [0029](0029-authored-npc-adventures.md) | Authored NPC conversations and personal investigation quests |
+| [0030](0030-visual-foundation.md) | Visual play shell, saved appearance and authoritative visual snapshots |
+| [0031](0031-world-map-fog.md) | Canonical Collegium map with persisted fog of war |
+| [0032](0032-painted-catalog.md) | Painted species layers, discrete sliders and room scenes |
 
 ## Template
 

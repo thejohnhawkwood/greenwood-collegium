@@ -5,7 +5,10 @@
   "shortDescription": "Copper pans catch the glow of an industrious oven.",
   "longDescription": "The oven gives a steady, companionable roar. Copper pans hang in shining ranks above a flour-dusted table, and a row of bread tins cools beneath a cloth patched with embroidered turnips.\nA recipe slate leans against a bowl big enough to bathe a very small dragon. Somewhere behind the pantry door, a spoon falls with tremendous importance.",
   "zone": "lodgings",
-  "unmapped": true,
+  "map": {
+    "x": 2,
+    "y": 3
+  },
   "exits": [
     {
       "direction": "south",

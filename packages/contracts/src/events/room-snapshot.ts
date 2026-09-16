@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { characterVisualSchema } from "../appearance.js";
 import { eventEnvelopeSchema } from "./envelope.js";
 
 export const roomExitSchema = z.object({
@@ -11,6 +12,7 @@ export const roomVisibleEntitySchema = z.object({
   name: z.string().min(1),
   kind: z.enum(["player", "npc", "object"]),
   description: z.string().min(1).optional(),
+  visual: characterVisualSchema.optional(),
 });
 
 export const roomSnapshotPayloadSchema = z.object({
@@ -19,6 +21,7 @@ export const roomSnapshotPayloadSchema = z.object({
   shortDescription: z.string().min(1),
   longDescription: z.string().min(1),
   zone: z.string().min(1),
+  visualState: z.string().min(1).optional(),
   exits: z.array(roomExitSchema),
   visible: z.array(roomVisibleEntitySchema),
 });

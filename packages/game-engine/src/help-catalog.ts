@@ -100,6 +100,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       "equip sword (or wield Practice Sword) sets what you hold. take on a practice weapon also equips it. stats shows the equipped item.",
   },
   {
+    topic: "map",
+    aliases: ["map", "chart"],
+    summary: "Read your explored rooms and how much of the Collegium remains in fog.",
+    detail:
+      "map (or chart) names the rooms you have already visited, marks where you stand, and says how many charted rooms remain in fog. It does not name unvisited rooms.",
+  },
+  {
     topic: "quests",
     aliases: ["quest", "quests"],
     summary: "Show your current tasks.",

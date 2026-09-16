@@ -12,6 +12,7 @@ import {
   validateBestiary,
   validateCatalog,
   validateQuests,
+  validateRoomArt,
   validateSpells,
   validateWorld,
   type NamedEnemyPlacement,
@@ -33,6 +34,9 @@ export const bundledEnemyPlacementsDirectory = fileURLToPath(
 );
 export const bundledSpellsDirectory = fileURLToPath(new URL("../spells", import.meta.url));
 export const bundledQuestsDirectory = fileURLToPath(new URL("../quests", import.meta.url));
+export const bundledRoomArtDirectory = fileURLToPath(
+  new URL("../../../apps/web/public/art/rooms", import.meta.url),
+);
 
 function parseJsonFile<T>(fileName: string, raw: string, schema: z.ZodType<T>): T {
   let parsed: unknown;
@@ -172,6 +176,7 @@ export function loadBundledWorld(): LoadedWorld {
     ...validateBestiary(namedRooms, namedEnemies, namedEnemyPlacements),
     ...validateSpells(namedSpells),
     ...validateQuests(namedRooms, namedTemplates, namedQuests),
+    ...validateRoomArt(namedRooms, bundledRoomArtDirectory),
   ];
   if (issues.length > 0) {
     throw new ContentValidationError(issues);

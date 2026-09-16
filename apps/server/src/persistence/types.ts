@@ -1,3 +1,4 @@
+import type { Appearance } from "@greenwood/contracts";
 export type AccountStatus = "active" | "disabled";
 export type AccountRole = "owner" | "teacher" | "student";
 export type CharacterStatus = "active" | "disabled";
@@ -16,6 +17,8 @@ export type AccountRecord = {
 };
 
 export type CharacterRecord = {
+  appearance?: Appearance;
+  discoveredRoomIds?: string[];
   id: string;
   accountId: string;
   name: string;
@@ -29,6 +32,20 @@ export type CharacterRecord = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export function resolveDiscoveredRoomIds(
+  value: unknown,
+  fallbackRoomId = "lantern-court",
+): string[] {
+  const ids = Array.isArray(value)
+    ? value.filter((id): id is string => typeof id === "string" && /^[a-z][a-z0-9-]*$/u.test(id))
+    : [];
+  const unique = [...new Set(ids.length > 0 ? ids : [fallbackRoomId])];
+  if (!unique.includes(fallbackRoomId) && ids.length === 0) {
+    return [fallbackRoomId];
+  }
+  return unique;
+}
 
 export type SessionRecord = {
   id: string;
@@ -60,6 +77,7 @@ export type CreateAccountInput = {
 };
 
 export type CreateCharacterInput = {
+  appearance?: Appearance;
   accountId: string;
   name: string;
   speciesId: string;
@@ -70,6 +88,7 @@ export type CreateCharacterInput = {
 };
 
 export type UpdateCharacterCreationInput = {
+  appearance?: Appearance;
   name: string;
   speciesId: string;
   gender: CharacterGender;
@@ -108,6 +127,7 @@ export interface CharacterRepository {
   updateCreation(id: string, input: UpdateCharacterCreationInput): Promise<CharacterRecord>;
   updateRoom(id: string, roomId: string): Promise<void>;
   updateProgress(id: string, input: { experience: number; level: number }): Promise<void>;
+  updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void>;
 }
 
 export interface SessionRepository {

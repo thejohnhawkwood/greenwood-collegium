@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { appearanceSchema, characterVisualSchema } from "../appearance.js";
 import { nameReviewSchema } from "./moderation.js";
 
 export const usernameSchema = z
@@ -72,6 +73,7 @@ export const authCharacterCreateRequestSchema = z.object({
   name: authCharacterNameSchema,
   speciesId: z.string().min(1).max(32),
   gender: authCharacterGenderSchema,
+  appearance: appearanceSchema.optional(),
 });
 
 export const authSuggestedNameRequestSchema = z.object({
@@ -98,6 +100,7 @@ export const authSessionPublicSchema = z.object({
   characterComplete: z.boolean(),
   characterId: z.string().optional(),
   characterName: z.string().optional(),
+  characterVisual: characterVisualSchema.optional(),
 });
 
 export const authInviteCreatedSchema = z.object({

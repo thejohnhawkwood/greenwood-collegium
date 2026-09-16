@@ -5,7 +5,10 @@
   "shortDescription": "Chalk constellations climb above tiers of polished benches.",
   "longDescription": "Curved benches rise around a lectern worn smooth at the corners. High windows lay bars of light across drifting chalk dust, giving the impression that somebody has diagrammed the sunshine.\nOn the blackboard, six different explanations of the same falling apple compete for space. One small sentence has been circled twice.",
   "zone": "studies",
-  "unmapped": true,
+  "map": {
+    "x": 2,
+    "y": 1
+  },
   "exits": [
     {
       "direction": "west",

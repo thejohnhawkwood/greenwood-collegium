@@ -3,7 +3,13 @@ import type { TranscriptLine } from "./transcript.js";
 import { TranscriptScroll } from "./transcript-scroll.js";
 import { SemanticNarration } from "./SemanticNarration.js";
 
-export function GameTranscript({ lines }: { lines: readonly TranscriptLine[] }) {
+export function GameTranscript({
+  lines,
+  label = "Game transcript",
+}: {
+  lines: readonly TranscriptLine[];
+  label?: string;
+}) {
   const logRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef(new TranscriptScroll());
   const [unread, setUnread] = useState(false);
@@ -33,7 +39,7 @@ export function GameTranscript({ lines }: { lines: readonly TranscriptLine[] }) 
         ref={logRef}
         className="transcript"
         role="log"
-        aria-label="Game transcript"
+        aria-label={label}
         aria-live="polite"
         aria-relevant="additions"
         tabIndex={0}

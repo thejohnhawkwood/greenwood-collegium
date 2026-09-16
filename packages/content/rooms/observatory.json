@@ -5,7 +5,10 @@
   "shortDescription": "Brass instruments wait beneath a roof the colour of old pennies.",
   "longDescription": "The observatory smells of cold metal and cedar shavings. A brass telescope points toward the roof slit, while star charts hang from pegs weighted with tiny polished stones.\nEven in daylight, pinholes in the closed shutters sketch a constellation across the floor. A star wheel rests on the desk, set to a figure called the Lantern Bearer.",
   "zone": "studies",
-  "unmapped": true,
+  "map": {
+    "x": 0,
+    "y": 3
+  },
   "exits": [
     {
       "direction": "south",

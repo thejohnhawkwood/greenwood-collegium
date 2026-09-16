@@ -19,6 +19,13 @@ Each significant interface upgrade starts with a written design sprint. Do not a
 | DS-009 | Magic-school visual grammars | Not started |
 | DS-010 | Glyph room renderer | Not started |
 
+Visual-first cycles (Coding 9 Define handoff) are recorded separately:
+
+| Guide | Scope |
+|---|---|
+| [ds-002-visual-foundation.md](ds-002-visual-foundation.md) | Cycle A play shell and saved appearance |
+| [ds-003-world-map.md](ds-003-world-map.md) | Cycle B canonical map and fog of war |
+
 ## Template
 
 ```markdown

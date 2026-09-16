@@ -1,3 +1,4 @@
+import { resolveAppearance } from "@greenwood/contracts";
 import {
   AccountNotFoundError,
   CharacterNotFoundError,
@@ -26,6 +27,7 @@ import {
   type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
+  resolveDiscoveredRoomIds,
   type UpdateCharacterCreationInput,
 } from "./types.js";
 import {
@@ -131,10 +133,12 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       accountId: input.accountId,
       name,
       speciesId: input.speciesId,
+      appearance: resolveAppearance(input.appearance),
       gender: input.gender,
       level: 1,
       experience: 0,
       roomId: input.roomId,
+      discoveredRoomIds: resolveDiscoveredRoomIds([input.roomId], input.roomId),
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -145,7 +149,16 @@ export class InMemoryCharacterRepository implements CharacterRepository {
   }
 
   async getById(id: string): Promise<CharacterRecord | undefined> {
-    return this.byId.get(id);
+    const character = this.byId.get(id);
+    return character
+      ? {
+          ...character,
+          discoveredRoomIds: resolveDiscoveredRoomIds(
+            character.discoveredRoomIds,
+            character.roomId,
+          ),
+        }
+      : undefined;
   }
 
   async getByNormalizedName(name: string): Promise<CharacterRecord | undefined> {
@@ -156,7 +169,12 @@ export class InMemoryCharacterRepository implements CharacterRepository {
   }
 
   async listByAccountId(accountId: string): Promise<CharacterRecord[]> {
-    return [...this.byId.values()].filter((character) => character.accountId === accountId);
+    return [...this.byId.values()]
+      .filter((character) => character.accountId === accountId)
+      .map((character) => ({
+        ...character,
+        discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
+      }));
   }
 
   async updateCreation(id: string, input: UpdateCharacterCreationInput): Promise<CharacterRecord> {
@@ -172,6 +190,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       ...character,
       name: input.name.trim(),
       speciesId: input.speciesId,
+      appearance: resolveAppearance(input.appearance ?? character.appearance),
       gender: input.gender,
       creationCompletedAt: input.creationCompletedAt,
       updatedAt: new Date(),
@@ -197,6 +216,18 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       ...character,
       experience: input.experience,
       level: input.level,
+      updatedAt: new Date(),
+    });
+  }
+
+  async updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void> {
+    const character = this.byId.get(id);
+    if (!character) {
+      return;
+    }
+    this.byId.set(id, {
+      ...character,
+      discoveredRoomIds: resolveDiscoveredRoomIds(discoveredRoomIds, character.roomId),
       updatedAt: new Date(),
     });
   }

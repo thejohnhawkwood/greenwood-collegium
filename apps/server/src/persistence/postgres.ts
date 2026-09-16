@@ -1,3 +1,4 @@
+import { resolveAppearance } from "@greenwood/contracts";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import {
@@ -37,6 +38,7 @@ import {
   type QuestProgressRecord,
   type QuestProgressRepository,
   type SessionRecord,
+  resolveDiscoveredRoomIds,
   type SessionRepository,
   type UpdateCharacterCreationInput,
 } from "./types.js";
@@ -147,10 +149,12 @@ export class PostgresCharacterRepository implements CharacterRepository {
       accountId: input.accountId,
       name: input.name.trim(),
       speciesId: input.speciesId,
+      appearance: resolveAppearance(input.appearance),
       gender: input.gender,
       level: 1,
       experience: 0,
       roomId: input.roomId,
+      discoveredRoomIds: resolveDiscoveredRoomIds([input.roomId], input.roomId),
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -193,6 +197,7 @@ export class PostgresCharacterRepository implements CharacterRepository {
         .set({
           name: input.name.trim(),
           speciesId: input.speciesId,
+          appearance: input.appearance,
           gender: input.gender,
           creationCompletedAt: input.creationCompletedAt,
           updatedAt: new Date(),
@@ -222,6 +227,20 @@ export class PostgresCharacterRepository implements CharacterRepository {
     await this.db
       .update(characters)
       .set({ experience: input.experience, level: input.level, updatedAt: new Date() })
+      .where(eq(characters.id, id));
+  }
+
+  async updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void> {
+    const current = await this.getById(id);
+    if (!current) {
+      return;
+    }
+    await this.db
+      .update(characters)
+      .set({
+        discoveredRoomIds: resolveDiscoveredRoomIds(discoveredRoomIds, current.roomId),
+        updatedAt: new Date(),
+      })
       .where(eq(characters.id, id));
   }
 }
@@ -436,10 +455,12 @@ function toCharacter(row: typeof characters.$inferSelect): CharacterRecord {
     accountId: row.accountId,
     name: row.name,
     speciesId: row.speciesId,
+    appearance: resolveAppearance(row.appearance),
     gender: row.gender ? (row.gender as CharacterRecord["gender"]) : undefined,
     level: row.level,
     experience: row.experience,
     roomId: row.roomId,
+    discoveredRoomIds: resolveDiscoveredRoomIds(row.discoveredRoomIds, row.roomId),
     status: row.status as CharacterRecord["status"],
     creationCompletedAt: row.creationCompletedAt ? asDate(row.creationCompletedAt) : undefined,
     createdAt: asDate(row.createdAt),

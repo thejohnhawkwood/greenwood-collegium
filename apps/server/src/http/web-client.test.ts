@@ -19,12 +19,14 @@ describe("web client static files", () => {
     dirs.push(webDist);
     await mkdir(join(webDist, "assets"));
     await mkdir(join(webDist, "frame"));
+    await mkdir(join(webDist, "art", "rooms"), { recursive: true });
     await writeFile(
       join(webDist, "index.html"),
       `<!doctype html><title>The Greenwood Collegium</title><script src="/assets/index-old.js"></script>`,
     );
     await writeFile(join(webDist, "assets", "index-old.js"), "old");
     await writeFile(join(webDist, "frame", "bough-left.jpg"), "left");
+    await writeFile(join(webDist, "art", "rooms", "lantern-court.png"), "court");
 
     const app = Fastify();
     apps.push(app);
@@ -48,6 +50,9 @@ describe("web client static files", () => {
     const frame = await app.inject({ method: "GET", url: "/frame/bough-left.jpg" });
     expect(frame.statusCode).toBe(200);
     expect(frame.body).toBe("left");
+    const roomArt = await app.inject({ method: "GET", url: "/art/rooms/lantern-court.png" });
+    expect(roomArt.statusCode).toBe(200);
+    expect(roomArt.body).toBe("court");
   });
 
   it("keeps the foundation page when the web build is absent", async () => {

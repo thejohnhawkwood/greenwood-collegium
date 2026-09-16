@@ -1,7 +1,9 @@
 import {
   commandAckSchema,
+  PLAY_STATE_EVENT,
   commandRequestSchema,
   eventEnvelopeSchema,
+  resolveVisualGender,
   schemaVersion,
   SESSION_HELLO_EVENT,
   sessionHelloSchema,
@@ -10,6 +12,7 @@ import {
 } from "@greenwood/contracts";
 import {
   applyQuestProgress,
+  createPlayState,
   handleAttack,
   handleCast,
   handleDrop,
@@ -20,6 +23,7 @@ import {
   handleJoin,
   handleLeave,
   handleLook,
+  handleMap,
   handleMove,
   handleQuests,
   handleSay,
@@ -113,6 +117,7 @@ export type RealtimeOptions = {
   resolveSession?: (token: string) => Promise<PlayIdentity | undefined>;
   resolveSocketTicket?: (ticket: string) => Promise<PlayIdentity | undefined>;
   persistRoom?: (characterId: string, roomId: string) => Promise<void>;
+  persistDiscovery?: (characterId: string, roomIds: readonly string[]) => Promise<void>;
   persistItem?: {
     ensurePlacements?(
       seeds: ReadonlyArray<{ id: string; templateId: string; roomId: string }>,
@@ -358,6 +363,11 @@ export async function attachRealtime(
       present.lookDescription = appearance.look;
       present.examineDescription = appearance.examine;
       present.speciesId = identity.speciesId;
+      present.gender = resolveVisualGender(identity.gender);
+      present.appearance = identity.appearance;
+      present.discoveredRoomIds = [
+        ...new Set([...(identity.discoveredRoomIds ?? present.discoveredRoomIds), present.roomId]),
+      ];
       await persistStarterCopies(characterId, identity);
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
@@ -383,6 +393,11 @@ export async function attachRealtime(
         experience: identity?.experience,
         level: identity?.level,
         speciesId: identity?.speciesId ?? ("speciesId" in claimed ? claimed.speciesId : undefined),
+        gender: resolveVisualGender(
+          identity?.gender ?? ("gender" in claimed ? claimed.gender : undefined),
+        ),
+        appearance: identity?.appearance,
+        discoveredRoomIds: identity?.discoveredRoomIds,
       },
       runtime,
     );
@@ -413,7 +428,7 @@ export async function attachRealtime(
       },
       "courtyard seat",
     );
-    deliver(sockets, characterId, joined.events, joined.notices);
+    deliverPlay(characterId, joined.events, joined.notices);
     bindCommandHandlers(socket, characterId, identity);
   }
 
@@ -444,7 +459,7 @@ export async function attachRealtime(
     const snapshot = sessionSnapshotEvent(world, characterId, runtime);
     const look = handleLook(world, { verb: "look", characterId }, runtime);
     const events = look.ok ? [snapshot, look.event] : [snapshot];
-    deliver(sockets, characterId, events, []);
+    deliverPlay(characterId, events, []);
   }
 
   async function persistStarterCopies(
@@ -467,6 +482,9 @@ export async function attachRealtime(
     }
     if (options.persistRoom) {
       await options.persistRoom(characterId, character.roomId);
+    }
+    if (options.persistDiscovery) {
+      await options.persistDiscovery(characterId, character.discoveredRoomIds);
     }
     if (options.persistProgress) {
       await options.persistProgress(characterId, {
@@ -522,6 +540,9 @@ export async function attachRealtime(
       if (identity && options.persistRoom && roomId) {
         void options.persistRoom(characterId, roomId);
       }
+      if (identity && options.persistDiscovery && occupant) {
+        void options.persistDiscovery(characterId, occupant.discoveredRoomIds);
+      }
       if (identity && reconnectGraceMs > 0) {
         const timer = setTimeout(() => {
           leaveTimers.delete(characterId);
@@ -536,7 +557,7 @@ export async function attachRealtime(
             commandRuntime(sequences),
           );
           if (left.ok) {
-            deliver(sockets, characterId, left.events, left.notices);
+            deliverPlay(characterId, left.events, left.notices);
           }
         }, reconnectGraceMs);
         leaveTimers.set(characterId, timer);
@@ -546,7 +567,7 @@ export async function attachRealtime(
       identities.delete(characterId);
       const left = handleLeave(world, { verb: "leave", characterId }, commandRuntime(sequences));
       if (left.ok) {
-        deliver(sockets, characterId, left.events, left.notices);
+        deliverPlay(characterId, left.events, left.notices);
       }
     });
   }
@@ -608,7 +629,7 @@ export async function attachRealtime(
     const recorded = commandLog.get(characterId, parsed.data.commandId);
     if (recorded) {
       verb = "replay";
-      deliver(sockets, characterId, recorded.events, []);
+      deliverPlay(characterId, recorded.events, []);
       reply(ack, recorded.ack);
       return;
     }
@@ -764,7 +785,7 @@ export async function attachRealtime(
         reply(ack, rejection);
         return;
       }
-      const delivered = deliver(sockets, characterId, staff.events, staff.notices);
+      const delivered = deliverPlay(characterId, staff.events, staff.notices);
       if (staff.kickCharacterId) {
         kickCharacter(staff.kickCharacterId);
       }
@@ -819,17 +840,19 @@ export async function attachRealtime(
                     ? handleTalk(world, intent, runtime)
                     : intent.verb === "inventory"
                       ? handleInventory(world, intent, runtime)
-                      : intent.verb === "help"
-                        ? handleHelp(world, intent, runtime)
-                        : intent.verb === "quests"
-                          ? handleQuests(world, intent, runtime)
-                          : intent.verb === "stats"
-                            ? handleStats(world, intent, runtime)
-                            : intent.verb === "equip"
-                              ? handleEquip(world, intent, runtime)
-                              : intent.verb === "attack"
-                                ? handleAttack(world, intent, runtime)
-                                : handleCast(world, intent, runtime);
+                      : intent.verb === "map"
+                        ? handleMap(world, intent, runtime)
+                        : intent.verb === "help"
+                          ? handleHelp(world, intent, runtime)
+                          : intent.verb === "quests"
+                            ? handleQuests(world, intent, runtime)
+                            : intent.verb === "stats"
+                              ? handleStats(world, intent, runtime)
+                              : intent.verb === "equip"
+                                ? handleEquip(world, intent, runtime)
+                                : intent.verb === "attack"
+                                  ? handleAttack(world, intent, runtime)
+                                  : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -961,7 +984,7 @@ export async function attachRealtime(
 
     const events = [...resultEvents, ...extra];
     const notices = "notices" in result ? result.notices : [];
-    const delivered = deliver(sockets, characterId, events, notices);
+    const delivered = deliverPlay(characterId, events, notices);
     const first = delivered[0];
     const last = delivered[delivered.length - 1];
     if (!first || !last) {
@@ -1009,13 +1032,29 @@ export async function attachRealtime(
       commandRuntime(sequences),
     );
     if (left.ok) {
-      deliver(sockets, targetId, left.events, left.notices);
+      deliverPlay(targetId, left.events, left.notices);
     }
     targetSocket?.disconnect(true);
   }
 
   options.bindInPlay?.(() => echoInPlay(sockets, identities, world));
   return io;
+
+  function deliverPlay(
+    actorId: string,
+    events: readonly EventEnvelope[],
+    notices: readonly { characterId: string; event: EventEnvelope }[],
+  ): EventEnvelope[] {
+    const delivered = deliver(sockets, actorId, events, notices);
+    // Socket.IO preserves order. Replace the entire view after the durable mutation;
+    // this read model neither consumes a game sequence nor repeats narration.
+    const recipients = new Set([actorId, ...notices.map((notice) => notice.characterId)]);
+    for (const id of recipients) {
+      const snapshot = createPlayState(world, id);
+      if (snapshot) sockets.get(id)?.emit(PLAY_STATE_EVENT, snapshot);
+    }
+    return delivered;
+  }
 }
 
 function noticeAndDisconnect(socket: Socket, narration: string): void {
