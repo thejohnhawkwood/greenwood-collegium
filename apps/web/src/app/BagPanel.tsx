@@ -1,4 +1,5 @@
 import type { PlayState } from "@greenwood/contracts";
+import { useState } from "react";
 
 export function BagPanel({
   open,
@@ -11,10 +12,12 @@ export function BagPanel({
   onClose: () => void;
   onSend: (command: string) => void;
 }) {
+  const items = state?.bag ?? [];
+  const [selectedId, setSelectedId] = useState(items[0]?.id);
   if (!open) {
     return null;
   }
-  const items = state?.bag ?? [];
+  const selected = items.find((item) => item.id === selectedId) ?? items[0];
   const equipped = items.filter((item) => item.equipped);
   const carried = items.filter((item) => !item.equipped);
   return (
@@ -38,8 +41,44 @@ export function BagPanel({
             : "Your bag is empty."}{" "}
           Type examine, equip, or drop.
         </p>
-        <BagGroup title="In hand" items={equipped} empty="Nothing equipped" onSend={onSend} />
-        <BagGroup title="Carried" items={carried} empty="Nothing else in the bag" onSend={onSend} />
+        <BagGroup
+          title="In hand"
+          items={equipped}
+          selectedId={selected?.id}
+          empty="Nothing equipped"
+          onSelect={setSelectedId}
+          onSend={onSend}
+        />
+        <BagGroup
+          title="Carried"
+          items={carried}
+          selectedId={selected?.id}
+          empty="Nothing else in the bag"
+          onSelect={setSelectedId}
+          onSend={onSend}
+        />
+        {selected ? (
+          <section className="bag-detail" aria-label="Selected item">
+            <h3>{selected.name}</h3>
+            <p className="small-copy">
+              {selected.equipped ? "In hand." : "In the bag."}
+              {selected.category ? ` ${selected.category}.` : ""} One of this item.
+            </p>
+            <div className="bag-actions">
+              <button type="button" onClick={() => onSend(`examine ${selected.name}`)}>
+                Examine
+              </button>
+              {selected.equipped ? null : (
+                <button type="button" onClick={() => onSend(`equip ${selected.name}`)}>
+                  Equip
+                </button>
+              )}
+              <button type="button" onClick={() => onSend(`drop ${selected.name}`)}>
+                Drop
+              </button>
+            </div>
+          </section>
+        ) : null}
       </div>
     </div>
   );
@@ -48,12 +87,16 @@ export function BagPanel({
 function BagGroup({
   title,
   items,
+  selectedId,
   empty,
+  onSelect,
   onSend,
 }: {
   title: string;
   items: NonNullable<PlayState["bag"]>;
+  selectedId?: string;
   empty: string;
+  onSelect: (id: string) => void;
   onSend: (command: string) => void;
 }) {
   return (
@@ -63,10 +106,15 @@ function BagGroup({
       <ul>
         {items.map((item) => (
           <li key={item.id}>
-            <div>
+            <button
+              type="button"
+              className={item.id === selectedId ? "bag-item-current" : undefined}
+              aria-pressed={item.id === selectedId}
+              onClick={() => onSelect(item.id)}
+            >
               <strong>{item.name}</strong>
               {item.category ? <small>{item.category}</small> : null}
-            </div>
+            </button>
             <div className="bag-actions">
               <button type="button" onClick={() => onSend(`examine ${item.name}`)}>
                 Examine

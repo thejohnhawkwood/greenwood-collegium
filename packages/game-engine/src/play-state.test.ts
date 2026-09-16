@@ -193,6 +193,9 @@ describe("visual play projection", () => {
       appearance: DEFAULT_APPEARANCE,
     });
     expect(createPlayState(world, "missing")).toBeUndefined();
+    const moved = fixture();
+    moved.characters.self!.roomId = "hall";
+    expect(createPlayState(moved, "self")?.conversation?.npcName).toBe("Porter Bramble");
   });
   it("restores saved discovery on join and writes a map that never names fogged rooms", () => {
     const world = fixture();

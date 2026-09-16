@@ -9,7 +9,7 @@ import {
   DEFAULT_PLAYER_MAX_HEALTH,
   DEFAULT_PLAYER_MAX_FOCUS,
 } from "./combat-state.js";
-import { fixturesVisibleTo } from "./arrival-guide.js";
+import { fixturesVisibleTo, porterCompanionFixture, PORTER_NPC_ID } from "./arrival-guide.js";
 import { treeNode } from "./conversation.js";
 import { itemsHeldBy } from "./items.js";
 import { snapshotPayload } from "./look.js";
@@ -110,7 +110,7 @@ function conversationSnapshot(world: WorldState, character: Character) {
   if (!open) {
     return undefined;
   }
-  const npc = fixturesVisibleTo(world, character).find((fixture) => fixture.id === open.npcId);
+  const npc = fixtureForTalk(world, character, open.npcId);
   const node = npc?.dialogueTree ? treeNode(npc.dialogueTree, open.nodeId) : undefined;
   if (!npc || !node) {
     return undefined;
@@ -121,4 +121,18 @@ function conversationSnapshot(world: WorldState, character: Character) {
     prompt: node.text,
     choices: (node.choices ?? []).map((choice) => ({ say: choice.say, label: choice.label })),
   };
+}
+
+function fixtureForTalk(world: WorldState, character: Character, npcId: string) {
+  const nearby = fixturesVisibleTo(world, character).find((fixture) => fixture.id === npcId);
+  if (nearby) {
+    return nearby;
+  }
+  for (const room of Object.values(world.rooms)) {
+    const authored = room.fixtures.find((fixture) => fixture.id === npcId);
+    if (authored) {
+      return authored;
+    }
+  }
+  return npcId === PORTER_NPC_ID ? porterCompanionFixture(world) : undefined;
 }

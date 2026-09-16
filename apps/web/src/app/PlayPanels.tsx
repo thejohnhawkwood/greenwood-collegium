@@ -2,6 +2,7 @@ import type { PlayState } from "@greenwood/contracts";
 import { useState } from "react";
 import { BagPanel } from "./BagPanel.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
+import { conversationFromStory } from "./conversation-from-story.js";
 import { ConversationStage } from "./ConversationStage.js";
 import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
@@ -48,6 +49,7 @@ export function PlayPanels({
   const character = state?.character;
   const speech = lines.filter((line) => line.event?.type === "chat.said");
   const story = lines.filter((line) => line.event?.type !== "chat.said");
+  const conversation = state?.conversation ?? conversationFromStory(story);
   return (
     <div className="play-scroll">
       {error ? (
@@ -99,6 +101,26 @@ export function PlayPanels({
                 {character ? (character.equipped ?? "Nothing equipped") : "Waiting for the realm"}
               </dd>
             </dl>
+            {state?.bag.length ? (
+              <ul className="bag-strip" aria-label="Bag">
+                {state.bag.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBagOpen(true);
+                        onSend(`examine ${item.name}`);
+                      }}
+                    >
+                      {item.name}
+                      {item.equipped ? " · in hand" : ""}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="small-copy">Bag empty. Inventory opens the full list.</p>
+            )}
             <div className="character-actions">
               <button
                 type="button"
@@ -169,7 +191,7 @@ export function PlayPanels({
                 }))}
                 onSend={onSend}
               />
-              <ConversationStage conversation={state?.conversation} onSend={onSend} />
+              <ConversationStage conversation={conversation} onSend={onSend} />
             </div>
           </section>
           <div className="reading-panes">

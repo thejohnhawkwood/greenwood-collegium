@@ -202,6 +202,8 @@ describe("visual foundation", () => {
     expect(html).toContain("Talking with Porter Bramble");
     expect(html).toContain("Why does a weapon fit?");
     expect(html).toContain("Why a weapon, I wonder?");
+    expect(html).toContain('aria-label="Bag"');
+    expect(html).toContain("Small Copper Key");
     expect(
       renderToStaticMarkup(
         createElement(BagPanel, {
@@ -272,6 +274,7 @@ describe("visual foundation", () => {
     expect(editor).toContain('type="range"');
     expect(editor).toContain("Silhouette");
     expect(editor).toContain("Colouring");
+    expect(editor).toContain("look-catalog");
     expect(editor).toContain("Courtyard");
     expect(editor).not.toContain("Muzzle");
     expect(editor).toContain('aria-valuetext="chestnut"');

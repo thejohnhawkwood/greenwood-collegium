@@ -301,7 +301,7 @@
     serif;
 }
 .character-portrait.portrait-avatar .portrait-stack {
-  inset: -18% -22% 28% -22%;
+  inset: 8% -36% -38% -36%;
 }
 .room-illustration img {
   width: 100%;
@@ -593,13 +593,13 @@
   left: 0.7rem;
   right: 0.7rem;
   bottom: 5.1rem;
-  z-index: 3;
-  max-height: 46%;
+  z-index: 4;
+  max-height: 52%;
   overflow: auto;
-  padding: 0.55rem 0.7rem 0.65rem;
-  border: 1px solid #7c7950;
+  padding: 0.65rem 0.8rem 0.75rem;
+  border: 1px solid #ead2a0;
   border-radius: 8px;
-  background: #10281df2;
+  background: #10281df5;
   box-shadow: 0 8px 20px #0007;
 }
 .conversation-speaker {
@@ -962,6 +962,42 @@
   background: #20352b;
   border: 1px solid #50634e;
 }
+.command-reminders kbd {
+  margin-left: 0.35rem;
+  padding: 0 0.2rem;
+  font: 0.58rem/1.4 ui-monospace, monospace;
+  color: #c2cbb4;
+  border: 1px solid #50634e;
+  border-radius: 3px;
+}
+.bag-strip {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.35rem 0.7rem 0;
+  padding: 0;
+  list-style: none;
+}
+.bag-strip button {
+  width: 100%;
+  min-height: 26px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.68rem;
+  text-align: left;
+  color: #eee3c3;
+  background: #20352b;
+  border: 1px solid #50634e;
+}
+.bag-item-current,
+.bag-detail {
+  border-color: #d4b56a;
+}
+.bag-detail {
+  margin-top: 0.8rem;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid #7c7950;
+  border-radius: 8px;
+  background: #10281d;
+}
 .play-client .command-form {
   display: flex;
   flex-shrink: 0;
@@ -1154,6 +1190,7 @@
   outline: 2px solid #d4b56a;
 }
 .look-catalog {
+  grid-column: 1 / -1;
   border: 1px solid #647354;
   padding: 0.7rem;
   min-width: 0;
@@ -1165,7 +1202,7 @@
 .look-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.6rem;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1174,14 +1211,18 @@
   display: grid;
   gap: 0.35rem;
   width: 100%;
+  min-width: 0;
   padding: 0.45rem;
+  overflow: hidden;
+  isolation: isolate;
   background: #17271f;
   border: 1px solid #536245;
   color: #d7d3b8;
   text-align: left;
 }
 .look-card .character-portrait {
-  height: 180px;
+  height: 150px;
+  overflow: hidden;
 }
 .look-card strong {
   font:
@@ -1195,8 +1236,10 @@
   color: #c9d2b8;
 }
 .look-card-current {
+  z-index: 1;
   border-color: #d4b56a;
   outline: 2px solid #d4b56a;
+  outline-offset: 2px;
 }
 @media (max-width: 720px) {
   .look-grid {

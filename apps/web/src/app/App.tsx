@@ -34,7 +34,13 @@ import {
 import { loadSocketTicket } from "./socket-ticket.js";
 import { shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { loadAuthSession } from "./auth-session.js";
-import { completeCommand, completionCandidates, reminderWords } from "./command-assist.js";
+import {
+  completeCommand,
+  completionCandidates,
+  reminderWords,
+  shortcutForKey,
+} from "./command-assist.js";
+import { conversationFromStory } from "./conversation-from-story.js";
 import { recallCommandHistory, pushCommandHistory } from "./command-history.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 import { createCommandRequest } from "./command-request.js";
@@ -425,6 +431,18 @@ function PlayClient({
   }
 
   function onCommandKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.altKey && !event.ctrlKey && !event.metaKey) {
+      const shortcut = shortcutForKey(event.key);
+      if (shortcut) {
+        event.preventDefault();
+        if (shortcut.send) {
+          sendCommand(shortcut.word);
+          return;
+        }
+        fillCommand(`${shortcut.word} `);
+        return;
+      }
+    }
     if (event.key === "Tab") {
       event.preventDefault();
       const completed = completeCommand(inputValue, completionCandidates(playState));
@@ -502,21 +520,26 @@ function PlayClient({
       />
       <div className="command-dock">
         <nav className="command-reminders" aria-label="Command words">
-          {reminderWords(playState).map((entry) => (
-            <button
-              key={entry.word}
-              type="button"
-              onClick={() => {
-                if (entry.send) {
-                  sendCommand(entry.word);
-                  return;
-                }
-                fillCommand(`${entry.word} `);
-              }}
-            >
-              {entry.word}
-            </button>
-          ))}
+          {reminderWords(playState, playState?.conversation ?? conversationFromStory(lines)).map(
+            (entry) => (
+              <button
+                key={entry.word}
+                type="button"
+                accessKey={entry.shortcut}
+                title={entry.shortcut ? `Alt+${entry.shortcut.toUpperCase()}` : undefined}
+                onClick={() => {
+                  if (entry.send) {
+                    sendCommand(entry.word);
+                    return;
+                  }
+                  fillCommand(`${entry.word} `);
+                }}
+              >
+                {entry.word}
+                {entry.shortcut ? <kbd>{entry.shortcut}</kbd> : null}
+              </button>
+            ),
+          )}
         </nav>
         <form className="command-form" onSubmit={submitCommand}>
           <label className="command-label">

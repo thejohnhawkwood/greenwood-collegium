@@ -5,6 +5,8 @@ from __future__ import annotations
 import time
 from pathlib import Path
 
+import colorsys
+
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +23,9 @@ def is_key(red: int, green: int, blue: int, alpha: int) -> bool:
         return False
     # Generated plates use several magentas: #EE3173, #DB0068, and pink-purple leftovers.
     if red >= 140 and green <= 100 and blue >= 55 and red - green >= 55 and blue + 20 >= green:
+        return True
+    hue, sat, val = colorsys.rgb_to_hsv(red / 255, green / 255, blue / 255)
+    if sat >= 0.45 and val >= 0.35 and 0.83 <= hue <= 0.95:
         return True
     return red >= 130 and green <= 40 and blue >= 50 and red - green >= 80
 

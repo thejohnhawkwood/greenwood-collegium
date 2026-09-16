@@ -42,6 +42,23 @@ export const COMMAND_WORDS = [
 
 const SEND_REMINDERS = new Set(["look", "help", "inventory", "quests", "map", "stats"]);
 
+export const COMMAND_SHORTCUTS = [
+  { key: "l", word: "look", send: true },
+  { key: "s", word: "say", send: false },
+  { key: "t", word: "talk", send: false },
+  { key: "k", word: "take", send: false },
+  { key: "i", word: "inventory", send: true },
+  { key: "h", word: "help", send: true },
+  { key: "q", word: "quests", send: true },
+  { key: "m", word: "map", send: true },
+  { key: "x", word: "examine", send: false },
+] as const;
+
+export function shortcutForKey(key: string) {
+  const needle = key.length === 1 ? key.toLowerCase() : "";
+  return COMMAND_SHORTCUTS.find((entry) => entry.key === needle);
+}
+
 export type CommandCompletion = {
   value: string;
   matches: string[];
@@ -67,12 +84,19 @@ export function completeCommand(
   return { value: prefix + sharedPrefix(matches), matches };
 }
 
-export function reminderWords(state?: PlayState): { word: string; send: boolean }[] {
-  const base = ["look", "say", "talk", "take", "travel", "help"].map((word) => ({
-    word,
-    send: SEND_REMINDERS.has(word),
-  }));
-  const spoken = (state?.conversation?.choices ?? []).map((choice) => ({
+export function reminderWords(
+  state?: PlayState,
+  conversation = state?.conversation,
+): { word: string; send: boolean; shortcut?: string }[] {
+  const base = ["look", "say", "talk", "take", "travel", "help"].map((word) => {
+    const shortcut = COMMAND_SHORTCUTS.find((entry) => entry.word === word);
+    return {
+      word,
+      send: SEND_REMINDERS.has(word),
+      ...(shortcut ? { shortcut: shortcut.key } : {}),
+    };
+  });
+  const spoken = (conversation?.choices ?? []).map((choice) => ({
     word: `say ${choice.say}`,
     send: true,
   }));

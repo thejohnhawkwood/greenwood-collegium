@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_APPEARANCE, type PlayState } from "@greenwood/contracts";
-import { completeCommand, completionCandidates, reminderWords } from "./command-assist.js";
+import {
+  completeCommand,
+  completionCandidates,
+  reminderWords,
+  shortcutForKey,
+} from "./command-assist.js";
 
 const state: PlayState = {
   character: {
@@ -65,8 +70,16 @@ describe("command assistance", () => {
       "help",
       "say 1",
     ]);
-    expect(reminderWords(state).find((entry) => entry.word === "look")?.send).toBe(true);
-    expect(reminderWords(state).find((entry) => entry.word === "say")?.send).toBe(false);
+    expect(reminderWords(state).find((entry) => entry.word === "look")).toMatchObject({
+      send: true,
+      shortcut: "l",
+    });
+    expect(reminderWords(state).find((entry) => entry.word === "say")).toMatchObject({
+      send: false,
+      shortcut: "s",
+    });
+    expect(shortcutForKey("L")?.word).toBe("look");
+    expect(shortcutForKey("s")?.word).toBe("say");
     expect(completionCandidates(state)).toEqual(
       expect.arrayContaining(["1", "Why does a weapon fit?", "Small Copper Key", "Porter Bramble"]),
     );
