@@ -51,6 +51,7 @@ import { pendingAfterAck, type PendingCommand } from "./pending-command.js";
 import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
 import { PlayPanels } from "./PlayPanels.js";
+import { PlayChrome } from "./PlayChrome.js";
 import { AdminPane } from "./AdminPane.js";
 import { ApprovalGate } from "./ApprovalGate.js";
 
@@ -215,6 +216,7 @@ function PlayClient({
     },
   ]);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [draft, setDraft] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyCursor, setHistoryCursor] = useState<number | null>(null);
@@ -436,48 +438,25 @@ function PlayClient({
         }
       }}
     >
-      <header className="chrome play-header">
-        <a className="skip-command" href="#play-command">
-          Skip to command
-        </a>
-        <div className="play-brand">
-          <span className="collegium-seal" aria-hidden="true">
-            ✦
-          </span>
-          <div>
-            <span className="eyebrow">An academy among the trees</span>
-            <h1>{APP_TITLE}</h1>
-          </div>
-        </div>
-        {authNotice}
-        <p className="meta">
-          <span className={`connection-dot ${connection}`} aria-hidden="true" />
-          {connection === "connected" ? "Connected" : "Reconnecting"}.{" "}
-          {me
+      <PlayChrome
+        connection={connection}
+        accountLabel={
+          me
             ? `Signed in as ${me.username}.`
             : status.allowGuestPlay
               ? "Guest play."
-              : "Not signed in."}
-        </p>
-        <p className="auth-actions">
-          {me ? (
-            <>
-              <button
-                type="button"
-                onClick={() => {
-                  void signOut(onSignedOut);
-                }}
-              >
-                Sign out
-              </button>
-            </>
-          ) : (
-            <button type="button" onClick={onShowGate}>
-              Sign in
-            </button>
-          )}
-        </p>
-      </header>
+              : "Not signed in."
+        }
+        signedIn={Boolean(me)}
+        settingsOpen={settingsOpen}
+        onOpenSettings={() => setSettingsOpen(true)}
+        onCloseSettings={() => setSettingsOpen(false)}
+        onShowGate={onShowGate}
+        onSignOut={() => {
+          void signOut(onSignedOut);
+        }}
+        authNotice={authNotice}
+      />
       <PlayPanels
         state={playState}
         lines={lines}
@@ -487,6 +466,7 @@ function PlayClient({
         onOpenWorldMap={() => setWorldMapOpen(true)}
         onCloseWorldMap={() => setWorldMapOpen(false)}
         onMove={(direction) => sendCommand(direction, true)}
+        onSend={(raw) => sendCommand(raw)}
         onCommand={(raw) => {
           setInputValue(raw);
           setDraft(raw);

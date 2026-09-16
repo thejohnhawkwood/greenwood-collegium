@@ -138,23 +138,29 @@ export function Minimap({
           );
         })}
       </svg>
-      <figcaption>North ↑ · Ring marks you · Hatch is fog · {String(fog)} still hidden</figcaption>
-      <details open={size === "world"}>
-        <summary>
-          Explored rooms ({explored.length}) · {fog} in fog
-        </summary>
-        <ul>
-          {explored.map((room) => (
-            <li key={room.id}>
-              {room.title}
-              {room.state === "current" ? " (you)" : ""}
-            </li>
-          ))}
-        </ul>
-        {fog > 0 ? (
-          <p className="small-copy">{String(fog)} charted rooms remain unnamed in fog.</p>
-        ) : null}
-      </details>
+      {size === "world" ? (
+        <>
+          <figcaption>
+            North ↑ · Ring marks you · Hatch is fog · {String(fog)} still hidden
+          </figcaption>
+          <details open>
+            <summary>
+              Explored rooms ({explored.length}) · {fog} in fog
+            </summary>
+            <ul>
+              {explored.map((room) => (
+                <li key={room.id}>
+                  {room.title}
+                  {room.state === "current" ? " (you)" : ""}
+                </li>
+              ))}
+            </ul>
+            {fog > 0 ? (
+              <p className="small-copy">{String(fog)} charted rooms remain unnamed in fog.</p>
+            ) : null}
+          </details>
+        </>
+      ) : null}
     </figure>
   );
 }

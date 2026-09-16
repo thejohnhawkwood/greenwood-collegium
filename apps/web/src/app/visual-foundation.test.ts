@@ -5,7 +5,9 @@ import { DEFAULT_APPEARANCE, snapAppearanceValue, type PlayState } from "@greenw
 import { AppearanceEditor } from "./AppearanceEditor.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
+import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
+import { PresenceAvatars, PresenceMenu } from "./PresenceAvatars.js";
 import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 
@@ -43,6 +45,11 @@ const state: PlayState = {
         kind: "player",
         visual: { speciesId: "mole", appearance: DEFAULT_APPEARANCE },
       },
+      {
+        id: "npc-porter-bramble",
+        name: "Porter Bramble",
+        kind: "npc",
+      },
     ],
   },
 };
@@ -66,10 +73,31 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain('y2="-1"');
-    expect(html).toContain("Court (you)");
-    expect(html).toContain("Hall");
     expect(html).toContain("Unexplored");
+    expect(html).not.toContain("North ↑");
+    expect(html).not.toContain("Court (you)");
     expect(html).not.toContain(">Fog Room<");
+    const world = renderToStaticMarkup(
+      createElement(Minimap, {
+        size: "world",
+        state: {
+          ...state,
+          minimap: {
+            rooms: [
+              ...state.minimap.rooms,
+              { id: "hall", title: "Hall", x: 0, y: 1, state: "explored" },
+            ],
+            paths: [
+              { from: "court", to: "hall" },
+              { from: "court", to: "fog" },
+            ],
+          },
+        },
+      }),
+    );
+    expect(world).toContain("Court (you)");
+    expect(world).toContain("Hall");
+    expect(world).toContain("North ↑");
     expect(renderToStaticMarkup(createElement(Minimap, {}))).toContain("No charted rooms here yet");
   });
   it("renders every supported species with the same deterministic layers at every size", () => {
@@ -120,6 +148,7 @@ describe("visual foundation", () => {
         state,
         lines: [{ id: "room", kind: "narration", text: "Complete plain text room description." }],
         onCommand: () => {},
+        onSend: () => {},
         onMove: () => {},
         worldMapOpen: false,
         onOpenWorldMap: () => {},
@@ -133,12 +162,16 @@ describe("visual foundation", () => {
     expect(html).toContain("Complete plain text room description.");
     expect(html).toContain('aria-label="Around you and story"');
     expect(html).toContain('aria-label="Room speech"');
-    expect(html).toContain("Move north");
+    expect(html).toContain('aria-label="Move north"');
+    expect(html).toContain(">N<");
     expect(html).not.toContain("Room description");
+    expect(html).not.toContain("In this room");
     expect(html).toContain("Compass movement");
     expect(html).toContain("World map");
     expect(html).toContain("/art/rooms/court.png");
     expect(html).toContain("Moss");
+    expect(html).toContain("Porter Bramble");
+    expect(html).toContain("People in this room");
     expect(
       shouldFocusCommandInput({
         closest: (selectors) => (selectors.includes("[tabindex]") ? {} : null),
@@ -150,6 +183,7 @@ describe("visual foundation", () => {
       createElement(PlayPanels, {
         lines: [{ id: "prior", kind: "narration", text: "A saved line." }],
         onCommand: () => {},
+        onSend: () => {},
         onMove: () => {},
         worldMapOpen: false,
         onOpenWorldMap: () => {},
@@ -201,5 +235,53 @@ describe("visual foundation", () => {
     expect(editor).toContain("Courtyard");
     expect(editor).not.toContain("Muzzle");
     expect(editor).toContain('aria-valuetext="chestnut"');
+  });
+  it("keeps academy chrome on the right and opens settings", () => {
+    const html = renderToStaticMarkup(
+      createElement(PlayChrome, {
+        connection: "connected",
+        accountLabel: "Signed in as fern.",
+        signedIn: true,
+        settingsOpen: true,
+        onOpenSettings: () => {},
+        onCloseSettings: () => {},
+        onShowGate: () => {},
+        onSignOut: () => {},
+        authNotice: null,
+      }),
+    );
+    expect(html).toContain("Settings");
+    expect(html).toContain("Signed in as fern.");
+    expect(html).toContain('aria-label="Settings"');
+    expect(html).toContain("Sign out");
+  });
+  it("offers examine, talk, and a later duel on room avatars", () => {
+    const html = renderToStaticMarkup(
+      createElement(PresenceAvatars, {
+        people: [
+          { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
+          {
+            id: "peer",
+            name: "Moss",
+            kind: "player",
+            visual: { speciesId: "mole", appearance: DEFAULT_APPEARANCE },
+          },
+        ],
+        onSend: () => {},
+      }),
+    );
+    expect(html).toContain("Porter Bramble, NPC");
+    expect(html).toContain("Moss, Collegian");
+    const menu = renderToStaticMarkup(
+      createElement(PresenceMenu, {
+        person: { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
+        onSend: () => {},
+        onClose: () => {},
+      }),
+    );
+    expect(menu).toContain("Examine");
+    expect(menu).toContain("Talk");
+    expect(menu).toContain("Ask to duel");
+    expect(menu).toContain("Duels come later");
   });
 });
