@@ -100,7 +100,24 @@
             "text": "\"Down returns you to the Great Hall. Examine the Empty Bell Frame, the Bell Ledger, and the Listening Stone. Then talk alder here.\""
           },
           "bell-done": {
-            "text": "\"The wood remembers. That is enough for today. Go to class.\""
+            "text": "\"The wood remembers. That is enough for the first question.\""
+          },
+          "offer-wakes": {
+            "text": "\"The wood remembers a welcome. Something below the Clock Tower has begun to answer. Descend the stair. Talk Piper Mole. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. Do not invent a queen from one hatchling.\"",
+            "choices": [
+              { "say": "1", "label": "I will descend.", "next": "wakes-active" },
+              { "say": "2", "label": "What am I listening for now?", "next": "wakes-why" }
+            ]
+          },
+          "wakes-why": {
+            "text": "\"Whether the note has a mouth yet, and whether that mouth is still a child. Type east from the North Quad, then down. Piper keeps the gallery. The nave is east and south of him.\"",
+            "choices": [{ "say": "1", "label": "I will go.", "next": "wakes-active" }]
+          },
+          "wakes-active": {
+            "text": "\"Down the Clock Tower. Talk piper. Examine the Stair Rope, Silk Thread, and Waking Husk. Then talk alder here.\""
+          },
+          "wakes-done": {
+            "text": "\"A hatchling is not a queen. When three can stand together, we will ask what still sleeps. Go to class.\""
           }
         }
       }

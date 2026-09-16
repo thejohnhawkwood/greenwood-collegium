@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "cinder-snap",
+  "name": "Cinder Snap",
+  "school": "ember",
+  "description": "A sharp spark that stings a foe and steals their answer.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 3,
+  "effect": "skip-counter",
+  "minLevel": 3,
+  "presentationKey": "cinder-snap",
+  "helpText": "cast cinder-snap"
+}

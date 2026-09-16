@@ -2,8 +2,9 @@
 
 Developer-facing inventory of the September 10, 2026 content release. The JSON files
 linked below remain the source of truth. This pass keeps the campus rooms, the
-unmapped High Study, the Hall of Schools, and six hearths. There are twelve
-speaking staff NPCs and ten quests including Arrival and the six first-lessons.
+unmapped High Study, the Hall of Schools, six hearths, and the Bell Stair below
+the Clock Tower. There are thirteen speaking staff NPCs and eleven quests
+including Arrival and the six first-lessons.
 
 Player instructions and content authoring conventions live in the committed
 [play and authoring guide](adventures.md). Design decisions: [ADR-0029](../adr/0029-authored-npc-adventures.md).
@@ -41,10 +42,50 @@ Cool roots cradle the school's paper memory.
 Patient gears count the hours beneath an empty bell frame.
 
 - Source: [room JSON](../../packages/content/rooms/clock-tower.json).
-- Exits: west → `north-quad`.
+- Exits: west → `north-quad`; down → `bell-stair`.
 - NPCs: none.
 - Discoveries: Empty Bell Frame (`object-empty-bell-frame`).
-- Quest roles: [The Bell Below](#the-bell-below).
+- Quest roles: [The Bell Below](#the-bell-below). [The Bell Wakes](#the-bell-wakes).
+
+### Bell Stair — `bell-stair`
+
+A tight oak stair turns below the empty frame.
+
+- Source: [room JSON](../../packages/content/rooms/bell-stair.json).
+- Unmapped. `visualState`: `clock-tower`. Exits: up → `clock-tower`; down → `silk-gallery`.
+- NPCs: none.
+- Discoveries: Stair Rope (`object-stair-rope`).
+- Quest roles: [The Bell Wakes](#the-bell-wakes).
+
+### Silk Gallery — `silk-gallery`
+
+Pale galleries of silk keep the old stone polite.
+
+- Source: [room JSON](../../packages/content/rooms/silk-gallery.json).
+- Unmapped. `visualState`: `clock-tower`. Exits: up → `bell-stair`; east → `webbed-cloister`.
+- NPCs: Piper Mole (`npc-piper-mole`).
+- Discoveries: Silk Thread (`object-silk-thread`).
+- Quest roles: [The Bell Wakes](#the-bell-wakes).
+
+### Webbed Cloister — `webbed-cloister`
+
+An old walk has been lent to silk and patience.
+
+- Source: [room JSON](../../packages/content/rooms/webbed-cloister.json).
+- Unmapped. `visualState`: `clock-tower`. Exits: west → `silk-gallery`; south → `cocoon-nave`.
+- NPCs: none.
+- Discoveries: Caught Lantern (`object-caught-lantern`).
+- Quest roles: path to the nave.
+
+### Cocoon Nave — `cocoon-nave`
+
+A nave of husks keeps one early waking.
+
+- Source: [room JSON](../../packages/content/rooms/cocoon-nave.json).
+- Unmapped. `visualState`: `clock-tower`. Exit: north → `webbed-cloister`.
+- NPCs: none. Enemy: Silk Hatchling (`enemy-silk-hatchling-cocoon-nave`).
+- Discoveries: Waking Husk (`object-waking-husk`).
+- Quest roles: [The Bell Wakes](#the-bell-wakes).
 
 ### Oak Dormitory — `dormitory-oak`
 
@@ -100,7 +141,7 @@ Moonlight and lamplight share a high oak room that does not hurry its guests.
 - Unmapped. Forced landing after Arrival. Exit: down → `great-hall`.
 - NPCs: Headmaster Alder (`npc-headmaster-alder`), recast as an old fierce snowy owl.
 - Discoveries: School Chart (`object-school-chart`).
-- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons.
+- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons. [The Bell Wakes](#the-bell-wakes) starts here after that report.
 
 ### Hall of Schools — `hall-of-schools`
 
@@ -417,6 +458,24 @@ Objectives:
 
 Resolution: the old bell is absent, but a connected living oak carries its remembered note. The evidence explains the sound's path while leaving the cause of its awakening for later content.
 
+<a id="the-bell-wakes"></a>
+
+### The Bell Wakes
+
+- Stable ID: `the-bell-wakes`; source: [quest JSON](../../packages/content/quests/the-bell-wakes.json).
+- Starts: talk Alder in the High Study after The Bell Below is complete.
+- Reward: **15 experience**, once per character.
+
+Objectives:
+
+- `check-rope` — `examine`: Examine the Stair Rope on the Bell Stair. Target: fixture `object-stair-rope` in `bell-stair`.
+- `hear-piper` — `talk`: Talk piper in the Silk Gallery. Target: fixture `npc-piper-mole` in `silk-gallery`.
+- `check-thread` — `examine`: Examine the Silk Thread in the Silk Gallery. Target: fixture `object-silk-thread` in `silk-gallery`.
+- `check-husk` — `examine`: Examine the Waking Husk in the Cocoon Nave. Target: fixture `object-waking-husk` in `cocoon-nave`.
+- `report` — `talk`: After the stair, Piper, thread, and husk, talk alder in the High Study. Target: fixture `npc-headmaster-alder` in `headmaster-study`. Requires: `check-rope`, `hear-piper`, `check-thread`, `check-husk`.
+
+Resolution: a hatchling woke before the score allows. The silk is a cradle, not a throne. Party work for the queen waits.
+
 <a id="the-missing-pages"></a>
 
 ### The Missing Pages
@@ -440,5 +499,5 @@ Resolution: a page borrowed to study a bird's song ended up steadying a music st
 - `apps/server/src/application/world-adventures.test.ts` walks all three new quests with 30 interleaved fictional characters.
 - `apps/server/src/sockets/adventures.roundtrip.test.ts` checks failed clue requests, private delivery, persistence, reconnect/restart, and replay.
 
-This release does not add rooms, branching dialogue, NPC movement, quest item handover,
-healing effects from conversation, or changes to shared fixtures on completion.
+The Bell Stair rooms are unmapped and reuse Clock Tower art. This pass does not add
+party combat, a queen fight, or relic loot.

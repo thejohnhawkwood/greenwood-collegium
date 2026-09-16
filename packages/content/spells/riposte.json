@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "riposte",
+  "name": "Riposte",
+  "school": "steel",
+  "description": "The answer after a hit. It waits until you have been struck.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 7,
+  "effect": "riposte",
+  "minLevel": 3,
+  "presentationKey": "steel-riposte",
+  "helpText": "cast riposte"
+}

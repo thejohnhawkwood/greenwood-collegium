@@ -3,7 +3,7 @@
   "id": "clock-tower",
   "title": "Clock Tower",
   "shortDescription": "Patient gears count the hours beneath an empty bell frame.",
-  "longDescription": "The stair coils around a timber spine polished by generations of paws and hands. Brass gears turn with the solemn concentration of beetles; every seventh tooth has been painted blue by someone who clearly lost count.\nAbove the clock face hangs an empty bell frame. Wind moves through its ropes, but the deep humming comes from the timber beneath your feet.",
+  "longDescription": "The stair coils around a timber spine polished by generations of paws and hands. Brass gears turn with the solemn concentration of beetles; every seventh tooth has been painted blue by someone who clearly lost count.\nAbove the clock face hangs an empty bell frame. Wind moves through its ropes, but the deep humming comes from the timber beneath your feet. A tighter stair continues down.",
   "zone": "academy-core",
   "map": {
     "x": 1,
@@ -13,6 +13,10 @@
     {
       "direction": "west",
       "toRoomId": "north-quad"
+    },
+    {
+      "direction": "down",
+      "toRoomId": "bell-stair"
     }
   ],
   "fixtures": [

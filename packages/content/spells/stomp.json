@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "stomp",
+  "name": "Stomp",
+  "school": "stone",
+  "description": "A short stamp that treats the floor as an ally and steals a foe's footing.",
+  "focusCost": 4,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "effect": "skip-counter",
+  "minLevel": 3,
+  "presentationKey": "stone-stomp",
+  "helpText": "cast stomp"
+}

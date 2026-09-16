@@ -19,6 +19,7 @@ const state: PlayState = {
     level: 1,
     experience: 0,
     inCombat: false,
+    gifts: [],
   },
   peers: [],
   bag: [{ id: "item-key", name: "Small Copper Key", equipped: false }],

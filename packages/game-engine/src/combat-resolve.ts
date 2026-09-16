@@ -21,6 +21,7 @@ import {
   type CombatStatusAppliedPayload,
   type CombatTurnStartedEvent,
   type ExperienceGainedEvent,
+  type EventEnvelope,
   type RoomSnapshotEvent,
   type SemanticSegment,
 } from "@greenwood/contracts";
@@ -41,6 +42,7 @@ import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
 import type { Character, Encounter, EnemySpawn, EngineRuntime, WorldState } from "./state.js";
+import { systemNotice } from "./system-notice.js";
 
 export type CombatEvent =
   | CombatStartedEvent
@@ -53,7 +55,7 @@ export type CombatEvent =
 
 export type CombatSuccess = {
   ok: true;
-  events: CombatEvent[];
+  events: EventEnvelope[];
   notices: OccupantNotice[];
   outcome: "victory" | "defeat" | "ongoing";
   roomId: string;
@@ -220,37 +222,51 @@ export function concludeRound(
   world: WorldState,
   character: Character,
   encounter: Encounter,
-  events: CombatEvent[],
+  events: EventEnvelope[],
   runtime: EngineRuntime,
 ): CombatSuccess {
   if (encounter.enemy.health <= 0) {
     return finishVictory(world, character, encounter, events, runtime);
   }
 
-  const enemyDamage = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
-  character.health = Math.max(0, (character.health ?? DEFAULT_PLAYER_MAX_HEALTH) - enemyDamage);
-  events.push(
-    actionEvent(
-      encounter,
-      {
-        encounterId: encounter.id,
-        actorId: encounter.enemy.id,
-        actorName: encounter.enemy.name,
-        actorKind: "enemy",
-        verb: "attack",
-        targetId: character.id,
-        targetName: character.name,
-        damage: enemyDamage,
-        targetHealth: character.health,
-        targetMaxHealth: character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH,
-      },
-      runtime,
-      character.id,
-    ),
-  );
+  const skipCounter = encounter.effects.some((effect) => effect.id === "skip-counter");
+  encounter.effects = encounter.effects.filter((effect) => effect.id !== "skip-counter");
+  if (character.ignoreNextHit) {
+    character.ignoreNextHit = false;
+    events.push(systemNotice(character.id, "The next blow misses.", runtime));
+  } else if (skipCounter) {
+    events.push(
+      systemNotice(character.id, `The ${encounter.enemy.name} cannot answer this round.`, runtime),
+    );
+  } else {
+    const enemyDamage = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
+    character.health = Math.max(0, (character.health ?? DEFAULT_PLAYER_MAX_HEALTH) - enemyDamage);
+    if (enemyDamage > 0) {
+      character.hitThisEncounter = true;
+    }
+    events.push(
+      actionEvent(
+        encounter,
+        {
+          encounterId: encounter.id,
+          actorId: encounter.enemy.id,
+          actorName: encounter.enemy.name,
+          actorKind: "enemy",
+          verb: "attack",
+          targetId: character.id,
+          targetName: character.name,
+          damage: enemyDamage,
+          targetHealth: character.health,
+          targetMaxHealth: character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH,
+        },
+        runtime,
+        character.id,
+      ),
+    );
 
-  if (character.health <= 0) {
-    return finishDefeat(world, character, encounter, events, runtime);
+    if (character.health <= 0) {
+      return finishDefeat(world, character, encounter, events, runtime);
+    }
   }
 
   tickBurning(encounter, events, runtime, character.id);
@@ -307,7 +323,7 @@ export function applyBurning(
 
 function tickBurning(
   encounter: Encounter,
-  events: CombatEvent[],
+  events: EventEnvelope[],
   runtime: EngineRuntime,
   listenerId: string,
 ): void {
@@ -317,7 +333,7 @@ function tickBurning(
       remaining.push(effect);
       continue;
     }
-    encounter.enemy.health = Math.max(0, encounter.enemy.health - effect.tickDamage);
+    encounter.enemy.health = Math.max(0, encounter.enemy.health - (effect.tickDamage ?? 0));
     effect.remainingRounds -= 1;
     events.push(
       statusEvent(
@@ -381,7 +397,7 @@ function finishVictory(
   world: WorldState,
   character: Character,
   encounter: Encounter,
-  events: CombatEvent[],
+  events: EventEnvelope[],
   runtime: EngineRuntime,
 ): CombatSuccess {
   const amount = encounter.enemy.experience;
@@ -405,7 +421,7 @@ function finishDefeat(
   world: WorldState,
   character: Character,
   encounter: Encounter,
-  events: CombatEvent[],
+  events: EventEnvelope[],
   runtime: EngineRuntime,
 ): CombatSuccess {
   const originId = character.roomId;

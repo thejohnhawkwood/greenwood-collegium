@@ -131,6 +131,7 @@ export type {
 export { createPlayState } from "./play-state.js";
 export {
   BELL_BELOW_QUEST_ID,
+  BELL_WAKES_QUEST_ID,
   HEADMASTER_NPC_ID,
   HEADMASTER_STUDY_ID,
   summonToHeadmaster,
@@ -143,5 +144,6 @@ export {
   SCHOOL_MENTOR_ID,
   isSchoolId,
   schoolGift,
+  schoolKit,
   sendToSchoolHearth,
 } from "./schools.js";

@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "slip",
+  "name": "Slip",
+  "school": "veil",
+  "description": "A half-step into shadow. The next blow finds empty air.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "avoid-hit",
+  "minLevel": 3,
+  "presentationKey": "veil-slip",
+  "helpText": "cast slip"
+}

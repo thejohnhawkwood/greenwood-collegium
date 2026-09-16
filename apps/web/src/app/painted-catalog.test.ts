@@ -69,7 +69,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a unique painted plate for every speaking NPC and the dummy", () => {
-    expect(NPC_PLATE_FILES).toHaveLength(13);
+    expect(NPC_PLATE_FILES).toHaveLength(14);
     for (const id of NPC_PLATE_FILES) {
       const path = join(artRoot, "characters/npcs", `${id}.png`);
       expect(existsSync(path)).toBe(true);

@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "night-eye",
+  "name": "Night-Eye",
+  "school": "stars",
+  "description": "A cool point of light that teaches the eye to keep a path.",
+  "focusCost": 2,
+  "targetType": "self",
+  "context": "any",
+  "effect": "insight",
+  "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named.",
+  "minLevel": 3,
+  "presentationKey": "night-eye",
+  "helpText": "cast night-eye"
+}

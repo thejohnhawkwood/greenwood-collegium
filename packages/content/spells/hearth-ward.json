@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "hearth-ward",
+  "name": "Hearth Ward",
+  "school": "ember",
+  "description": "A held flame that turns the next blow aside.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "avoid-hit",
+  "minLevel": 3,
+  "presentationKey": "hearth-ward",
+  "helpText": "cast hearth-ward"
+}

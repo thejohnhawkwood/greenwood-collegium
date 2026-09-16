@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-silk-hatchling-cocoon-nave",
+  "templateId": "silk-hatchling",
+  "roomId": "cocoon-nave"
+}

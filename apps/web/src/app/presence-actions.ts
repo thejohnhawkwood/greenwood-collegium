@@ -26,13 +26,19 @@ export function isTakeable(person: PresencePerson): boolean {
 export function presenceActions(
   person: PresencePerson,
   gift?: { id: string; name: string },
+  gifts?: readonly { id: string; name: string }[],
 ): PresenceAction[] {
   const examine = { label: "Examine", command: `examine ${person.name}` };
   if (isHostile(person)) {
-    const cast = gift
-      ? { label: `Cast ${gift.name}`, command: `cast ${gift.id} ${person.name}` }
-      : { label: "Cast Ember", command: `cast ember ${person.name}` };
-    return [examine, { label: "Attack", command: `attack ${person.name}` }, cast];
+    const kit = gifts?.length ? gifts : gift ? [gift] : [{ id: "ember", name: "Ember" }];
+    return [
+      examine,
+      { label: "Attack", command: `attack ${person.name}` },
+      ...kit.map((spell) => ({
+        label: `Cast ${spell.name}`,
+        command: `cast ${spell.id} ${person.name}`,
+      })),
+    ];
   }
   if (isTakeable(person)) {
     return [examine, { label: "Take", command: `take ${person.name}` }];

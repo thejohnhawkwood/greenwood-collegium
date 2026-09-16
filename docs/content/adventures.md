@@ -28,6 +28,9 @@ Three new quests are available alongside Arrival at the Collegium:
   `talk alder`. Investigate the Empty Bell Frame in the Clock Tower, the Bell
   Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel.
   Return to Alder in the High Study. Reward: 15 experience.
+- **The Bell Wakes:** After the Bell Below report, talk Alder again. Type `down`
+  from the Clock Tower. Talk Piper Mole. Examine the Stair Rope, Silk Thread, and
+  Waking Husk. Return to Alder. Reward: 15 experience.
 
 Accept a quest before investigating its clues. Clues can be investigated in any
 order, but the final conversation counts only after all the required discoveries.

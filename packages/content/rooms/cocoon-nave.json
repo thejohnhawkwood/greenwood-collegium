@@ -1,0 +1,25 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "cocoon-nave",
+  "title": "Cocoon Nave",
+  "shortDescription": "A nave of husks keeps one early waking.",
+  "longDescription": "The nave is a quiet oval of silk and old stone. Larger cocoons hang like bells that have not yet learned their note. One husk has already opened. The air tastes of dust and sweet glue.\nA silk-hatchling practices being fierce. It is not the queen. It is the question that comes first.",
+  "zone": "bell-below",
+  "visualState": "clock-tower",
+  "unmapped": true,
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "webbed-cloister"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-waking-husk",
+      "name": "Waking Husk",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The opened husk is lined with the same warm thread. It is a cradle left too soon. Larger closed bells hang beyond it, unmoving. Whatever first woke the wood, it has begun to answer from here, and it is still only a hatchling."
+    }
+  ]
+}

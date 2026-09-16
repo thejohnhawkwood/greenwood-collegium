@@ -203,6 +203,7 @@ export function PlayPanels({
                 conversation={conversation}
                 inCombat={character?.inCombat}
                 gift={character?.gift}
+                gifts={character?.gifts}
                 onSend={onSend}
               />
             </div>

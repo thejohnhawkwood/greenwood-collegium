@@ -47,6 +47,15 @@ export const playStateSchema = z.object({
         helpText: z.string().min(1),
       })
       .optional(),
+    gifts: z
+      .array(
+        z.object({
+          id: z.string().min(1),
+          name: z.string().min(1),
+          helpText: z.string().min(1),
+        }),
+      )
+      .default([]),
   }),
   room: roomSnapshotPayloadSchema,
   minimap: z.object({

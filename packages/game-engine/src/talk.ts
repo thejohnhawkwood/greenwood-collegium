@@ -4,6 +4,7 @@ import { progressQuests, startQuest } from "./arrival.js";
 import { dialogueBeat, startNode } from "./conversation.js";
 import {
   BELL_BELOW_QUEST_ID,
+  BELL_WAKES_QUEST_ID,
   firstLessonsComplete,
   HEADMASTER_NPC_ID,
   resolveAlderSpeechNode,
@@ -76,6 +77,14 @@ export function handleTalk(
     events.push(...startQuest(world, character.id, BELL_BELOW_QUEST_ID, runtime));
     started.add(BELL_BELOW_QUEST_ID);
   }
+  const offerWakes =
+    npc.id === HEADMASTER_NPC_ID &&
+    world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID]?.status === "completed" &&
+    !world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
+  if (offerWakes) {
+    events.push(...startQuest(world, character.id, BELL_WAKES_QUEST_ID, runtime));
+    started.add(BELL_WAKES_QUEST_ID);
+  }
   events.push(
     ...progressQuests(
       world,
@@ -83,10 +92,9 @@ export function handleTalk(
       runtime,
     ),
   );
-  if (
-    npc.id === HEADMASTER_NPC_ID &&
-    world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID]?.status === "completed"
-  ) {
+  const wakes = world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
+  const bellDone = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID]?.status === "completed";
+  if (npc.id === HEADMASTER_NPC_ID && (wakes?.status === "completed" || (bellDone && !wakes))) {
     const nextNode = resolveAlderSpeechNode(npc.dialogueTree, world, character);
     if (nextNode) {
       character.openConversation = { npcId: npc.id, nodeId: nextNode };
@@ -101,6 +109,10 @@ export function handleTalk(
   const bellTemplate = world.questTemplates?.[BELL_BELOW_QUEST_ID];
   if (npc.id === HEADMASTER_NPC_ID && !offerBell && bell?.status === "active" && bellTemplate) {
     events.push(systemNotice(character.id, bellTemplate.reminderNarration, runtime));
+  }
+  const wakesTemplate = world.questTemplates?.[BELL_WAKES_QUEST_ID];
+  if (npc.id === HEADMASTER_NPC_ID && !offerWakes && wakes?.status === "active" && wakesTemplate) {
+    events.push(systemNotice(character.id, wakesTemplate.reminderNarration, runtime));
   }
   return { ok: true, npcId: npc.id, events };
 }

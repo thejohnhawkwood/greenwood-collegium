@@ -6,6 +6,7 @@ import { systemNotice } from "./system-notice.js";
 export const HEADMASTER_NPC_ID = "npc-headmaster-alder";
 export const HEADMASTER_STUDY_ID = "headmaster-study";
 export const BELL_BELOW_QUEST_ID = "the-bell-below";
+export const BELL_WAKES_QUEST_ID = "the-bell-wakes";
 
 export function firstLessonsComplete(world: WorldState, character: Character): boolean {
   if (!character.schoolId) {
@@ -21,8 +22,15 @@ export function alderSpeechNode(world: WorldState, character: Character): string
     return "welcome";
   }
   const bell = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID];
+  const wakes = world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
   if (bell?.status === "completed") {
-    return "bell-done";
+    if (wakes?.status === "completed") {
+      return "wakes-done";
+    }
+    if (wakes?.status === "active") {
+      return "wakes-active";
+    }
+    return "offer-wakes";
   }
   if (bell?.status === "active") {
     return "bell-active";

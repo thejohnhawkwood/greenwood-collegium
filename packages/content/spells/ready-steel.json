@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "ready-steel",
+  "name": "Ready Steel",
+  "school": "steel",
+  "description": "A held edge. The next swing lands heavier.",
+  "focusCost": 2,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "ready-strike",
+  "minLevel": 3,
+  "presentationKey": "ready-steel",
+  "helpText": "cast ready-steel"
+}

@@ -40,7 +40,7 @@ describe("content loader", () => {
 
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(33);
+    expect(Object.keys(world.rooms)).toHaveLength(37);
     expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
     expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
     const charted = Object.values(world.rooms).filter((room) => room.map);
@@ -88,7 +88,7 @@ describe("content loader", () => {
       attack: 2,
       experience: 5,
     });
-    expect(Object.keys(world.enemies)).toHaveLength(1);
+    expect(Object.keys(world.enemies)).toHaveLength(2);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,
@@ -96,13 +96,13 @@ describe("content loader", () => {
       burningRounds: 2,
       presentationKey: "ember-burst",
     });
-    expect(Object.keys(world.spells)).toHaveLength(6);
+    expect(Object.keys(world.spells)).toHaveLength(18);
     expect(world.spells.strike).toMatchObject({ name: "Strike", school: "steel", minLevel: 3 });
     expect(world.quests["arrival-at-the-collegium"]).toMatchObject({
       title: "Arrival at the Collegium",
       experienceReward: 10,
     });
-    expect(Object.keys(world.quests)).toHaveLength(10);
+    expect(Object.keys(world.quests)).toHaveLength(11);
   });
 
   it("loads an extra room file without a code change", () => {
@@ -124,7 +124,7 @@ describe("content loader", () => {
     });
 
     const world = loadWorldFromDirectory(directory);
-    expect(Object.keys(world.rooms)).toHaveLength(34);
+    expect(Object.keys(world.rooms)).toHaveLength(38);
     expect(world.rooms["extra-nook"]?.title).toBe("Extra Nook");
   });
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ARRIVAL_QUEST_ID, progressQuests, startArrivalQuest } from "./arrival.js";
 import { handleExamine } from "./examine.js";
-import { BELL_BELOW_QUEST_ID } from "./headmaster.js";
+import { BELL_BELOW_QUEST_ID, BELL_WAKES_QUEST_ID } from "./headmaster.js";
 import { createPlayState } from "./play-state.js";
 import { handleJoin } from "./presence.js";
 import { handleLook } from "./look.js";
@@ -80,6 +80,12 @@ function world(): WorldState {
                 },
                 "bell-active": { text: "Examine the three places." },
                 "bell-done": { text: "The wood remembers." },
+                "offer-wakes": {
+                  text: "Descend the stair.",
+                  choices: [{ say: "1", label: "I will descend.", next: "wakes-active" }],
+                },
+                "wakes-active": { text: "Talk piper. Examine the husk." },
+                "wakes-done": { text: "A hatchling is not a queen." },
               },
             },
           },
@@ -91,13 +97,80 @@ function world(): WorldState {
         shortDescription: "Gears.",
         longDescription: "An empty frame.",
         zone: "academy-core",
-        exits: [{ direction: "west", toRoomId: "headmaster-study" }],
+        exits: [
+          { direction: "west", toRoomId: "headmaster-study" },
+          { direction: "down", toRoomId: "bell-stair" },
+        ],
         fixtures: [
           {
             id: "object-empty-bell-frame",
             name: "Empty Bell Frame",
             kind: "object",
             examineDescription: "The frame is empty.",
+          },
+        ],
+      },
+      "bell-stair": {
+        id: "bell-stair",
+        title: "Bell Stair",
+        shortDescription: "Steps.",
+        longDescription: "A tight stair.",
+        zone: "bell-below",
+        exits: [
+          { direction: "up", toRoomId: "clock-tower" },
+          { direction: "down", toRoomId: "silk-gallery" },
+        ],
+        fixtures: [
+          {
+            id: "object-stair-rope",
+            name: "Stair Rope",
+            kind: "object",
+            examineDescription: "Three pulses in the grain.",
+          },
+        ],
+      },
+      "silk-gallery": {
+        id: "silk-gallery",
+        title: "Silk Gallery",
+        shortDescription: "Silk.",
+        longDescription: "Piper waits.",
+        zone: "bell-below",
+        exits: [
+          { direction: "up", toRoomId: "bell-stair" },
+          { direction: "east", toRoomId: "cocoon-nave" },
+        ],
+        fixtures: [
+          {
+            id: "npc-piper-mole",
+            name: "Piper Mole",
+            kind: "npc",
+            dialogue: "The silk has begun to sing.",
+            dialogueTree: {
+              start: "welcome",
+              nodes: { welcome: { text: "The silk has begun to sing." } },
+            },
+          },
+          {
+            id: "object-silk-thread",
+            name: "Silk Thread",
+            kind: "object",
+            examineDescription: "A cradle, not a snare.",
+          },
+        ],
+      },
+      "cocoon-nave": {
+        id: "cocoon-nave",
+        title: "Cocoon Nave",
+        shortDescription: "Husks.",
+        longDescription: "One husk is open.",
+        zone: "bell-below",
+        exits: [{ direction: "west", toRoomId: "silk-gallery" }],
+        fixtures: [
+          {
+            id: "object-waking-husk",
+            name: "Waking Husk",
+            kind: "object",
+            examineDescription: "A cradle left too soon.",
           },
         ],
       },
@@ -225,6 +298,47 @@ function world(): WorldState {
             kind: "talk",
             targetId: "npc-headmaster-alder",
             requires: ["check-frame", "read-ledger", "listen"],
+            label: "Talk alder in the High Study.",
+          },
+        ],
+      },
+      [BELL_WAKES_QUEST_ID]: {
+        id: BELL_WAKES_QUEST_ID,
+        title: "The Bell Wakes",
+        introNarration: "Descend the stair.",
+        reminderNarration: "Talk piper. Examine the husk.",
+        completionNarration: "A hatchling is not a queen.",
+        experienceReward: 15,
+        objectives: [
+          {
+            id: "check-rope",
+            kind: "examine",
+            targetId: "object-stair-rope",
+            label: "Examine the Stair Rope.",
+          },
+          {
+            id: "hear-piper",
+            kind: "talk",
+            targetId: "npc-piper-mole",
+            label: "Talk piper.",
+          },
+          {
+            id: "check-thread",
+            kind: "examine",
+            targetId: "object-silk-thread",
+            label: "Examine the Silk Thread.",
+          },
+          {
+            id: "check-husk",
+            kind: "examine",
+            targetId: "object-waking-husk",
+            label: "Examine the Waking Husk.",
+          },
+          {
+            id: "report",
+            kind: "talk",
+            targetId: "npc-headmaster-alder",
+            requires: ["check-rope", "hear-piper", "check-thread", "check-husk"],
             label: "Talk alder in the High Study.",
           },
         ],
@@ -371,9 +485,50 @@ describe("headmaster study after Arrival", () => {
     );
     expect(reported.ok).toBe(true);
     expect(realm.quests?.["char-rowan"]?.[BELL_BELOW_QUEST_ID]?.status).toBe("completed");
-    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("bell-done");
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("offer-wakes");
     expect(
       reported.ok && reported.events.some((event) => event.narration.includes("wood remembers")),
     ).toBe(true);
+    expect(realm.quests?.["char-rowan"]?.[BELL_WAKES_QUEST_ID]).toBeUndefined();
+
+    const offeredWakes = handleTalk(
+      realm,
+      { verb: "talk", characterId: "char-rowan", target: "alder" },
+      clock,
+    );
+    expect(offeredWakes.ok).toBe(true);
+    expect(realm.quests?.["char-rowan"]?.[BELL_WAKES_QUEST_ID]?.status).toBe("active");
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("offer-wakes");
+
+    for (const [roomId, target, targetId] of [
+      ["bell-stair", "rope", "object-stair-rope"],
+      ["silk-gallery", "thread", "object-silk-thread"],
+      ["cocoon-nave", "husk", "object-waking-husk"],
+    ] as const) {
+      realm.characters["char-rowan"]!.roomId = roomId;
+      expect(
+        handleExamine(realm, { verb: "examine", characterId: "char-rowan", target }, clock).ok,
+      ).toBe(true);
+      progressQuests(realm, { characterId: "char-rowan", kind: "examine", targetId }, clock);
+    }
+    realm.characters["char-rowan"]!.roomId = "silk-gallery";
+    expect(
+      handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "piper" }, clock).ok,
+    ).toBe(true);
+    expect(
+      new Set(realm.quests?.["char-rowan"]?.[BELL_WAKES_QUEST_ID]?.completedObjectiveIds),
+    ).toEqual(new Set(["check-rope", "hear-piper", "check-thread", "check-husk"]));
+    realm.characters["char-rowan"]!.roomId = "headmaster-study";
+    const woke = handleTalk(
+      realm,
+      { verb: "talk", characterId: "char-rowan", target: "alder" },
+      clock,
+    );
+    expect(woke.ok).toBe(true);
+    expect(realm.quests?.["char-rowan"]?.[BELL_WAKES_QUEST_ID]?.status).toBe("completed");
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("wakes-done");
+    expect(woke.ok && woke.events.some((event) => event.narration.includes("hatchling"))).toBe(
+      true,
+    );
   });
 });

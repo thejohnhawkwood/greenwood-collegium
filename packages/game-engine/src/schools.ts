@@ -42,6 +42,15 @@ export const SCHOOL_GIFT_ID: Record<SchoolId, string> = {
   steel: "strike",
 };
 
+export const SCHOOL_KIT_IDS: Record<SchoolId, readonly [string, string, string]> = {
+  ember: ["ember", "cinder-snap", "hearth-ward"],
+  thorn: ["briar", "bind", "greenstitch"],
+  veil: ["shade", "slip", "quiet-step"],
+  stars: ["azimuth", "flare", "night-eye"],
+  stone: ["keystone", "stomp", "brace"],
+  steel: ["strike", "riposte", "ready-steel"],
+};
+
 export const SCHOOL_FIRST_LESSONS_ID: Record<SchoolId, string> = {
   ember: "first-lessons-ember",
   thorn: "first-lessons-thorn",
@@ -56,10 +65,17 @@ export function isSchoolId(value: string | undefined): value is SchoolId {
 }
 
 export function schoolGift(world: WorldState, character: Character): SpellTemplate | undefined {
-  if (!character.schoolId) {
-    return undefined;
+  return schoolKit(world, character)[0];
+}
+
+export function schoolKit(world: WorldState, character: Character): SpellTemplate[] {
+  if (!character.schoolId || (character.level ?? 1) < 3) {
+    return [];
   }
-  return world.spells?.[SCHOOL_GIFT_ID[character.schoolId]];
+  return SCHOOL_KIT_IDS[character.schoolId].flatMap((id) => {
+    const spell = world.spells?.[id];
+    return spell ? [spell] : [];
+  });
 }
 
 export function openSchoolGift(
@@ -67,14 +83,12 @@ export function openSchoolGift(
   character: Character,
   runtime: EngineRuntime,
 ): EventEnvelope[] {
-  if ((character.level ?? 1) < 3) {
+  const kit = schoolKit(world, character);
+  if (!kit.length) {
     return [];
   }
-  const gift = schoolGift(world, character);
-  if (!gift) {
-    return [];
-  }
-  return [systemNotice(character.id, `Your School gift opens. Type ${gift.helpText}.`, runtime)];
+  const help = kit.map((spell) => spell.helpText).join(", ");
+  return [systemNotice(character.id, `Your School kit opens. Type ${help}.`, runtime)];
 }
 
 export function openSchoolMentor(world: WorldState, character: Character): void {

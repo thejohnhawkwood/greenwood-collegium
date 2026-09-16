@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "silk-hatchling",
+  "name": "Silk Hatchling",
+  "shortDescription": "An early silk-child practising being fierce.",
+  "lookDescription": "A pale hatchling, no larger than a satchel, testing its legs among the husks.",
+  "examineDescription": "The Silk Hatchling is new and already impatient. Its legs are still soft. The mandibles click like a practice stick against a dummy. It is a lesson, not a queen.",
+  "maxHealth": 10,
+  "attack": 3,
+  "experience": 8
+}

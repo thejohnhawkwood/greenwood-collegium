@@ -11,6 +11,7 @@ export const NPC_PLATE_FILES = [
   "npc-mentor-lumen",
   "npc-mentor-quern",
   "npc-mentor-edge",
+  "npc-piper-mole",
   "practice-dummy",
 ] as const;
 
@@ -27,8 +28,10 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "npc-mentor-lumen": "npc-mentor-lumen",
   "npc-mentor-quern": "npc-mentor-quern",
   "npc-mentor-edge": "npc-mentor-edge",
+  "npc-piper-mole": "npc-piper-mole",
   "practice-dummy": "practice-dummy",
   "enemy-practice-dummy-south-orchard": "practice-dummy",
+  "enemy-silk-hatchling-cocoon-nave": "practice-dummy",
 };
 
 const NPC_ART_REV = "owl-1";

@@ -36,10 +36,13 @@ export function handleAttack(
   const events: CombatEvent[] = prepared.started
     ? openingEvents(character, encounter, runtime)
     : [];
+  const bonus = character.nextAttackBonus ?? 0;
+  character.nextAttackBonus = undefined;
   const playerDamage = Math.max(
     1,
     rollAttackDamage(DEFAULT_PLAYER_ATTACK, nextRoll(runtime)) +
-      attackFitModifier(world, character),
+      attackFitModifier(world, character) +
+      bonus,
   );
   encounter.enemy.health = Math.max(0, encounter.enemy.health - playerDamage);
   events.push(

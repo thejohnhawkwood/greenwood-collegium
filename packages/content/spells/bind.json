@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "bind",
+  "name": "Bind",
+  "school": "thorn",
+  "description": "Living vines catch a foe and hold the next swing.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 3,
+  "effect": "skip-counter",
+  "minLevel": 3,
+  "presentationKey": "thorn-bind",
+  "helpText": "cast bind"
+}

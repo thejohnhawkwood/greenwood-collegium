@@ -162,13 +162,18 @@ export function progressQuests(
       }
       if (template.id.startsWith("first-lessons-")) {
         if ((character.level ?? 1) >= 3) {
-          const gifts = Object.values(world.spells ?? {}).filter(
-            (spell) => spell.school === character.schoolId,
+          const kit = Object.values(world.spells ?? {}).filter(
+            (spell) =>
+              spell.school === character.schoolId &&
+              ((spell.minLevel ?? 1) >= 3 || spell.id === "ember"),
           );
-          const gift = gifts.find((spell) => (spell.minLevel ?? 1) >= 3) ?? gifts[0];
-          if (gift) {
+          if (kit.length) {
             events.push(
-              systemNotice(character.id, `Your School gift opens. Type ${gift.helpText}.`, runtime),
+              systemNotice(
+                character.id,
+                `Your School kit opens. Type ${kit.map((spell) => spell.helpText).join(", ")}.`,
+                runtime,
+              ),
             );
           }
         }

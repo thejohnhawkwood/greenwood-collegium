@@ -1,0 +1,29 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "bell-stair",
+  "title": "Bell Stair",
+  "shortDescription": "A tight oak stair turns below the empty frame.",
+  "longDescription": "The stair leaves the Clock Tower without ceremony. Oak steps are polished by older feet than yours. Silk threads, fine as breath, catch on the newel and tremble when the gears above turn.\nThe humming is louder here. It is not a swing. It is a held note, waiting for a mouth.",
+  "zone": "bell-below",
+  "visualState": "clock-tower",
+  "unmapped": true,
+  "exits": [
+    {
+      "direction": "up",
+      "toRoomId": "clock-tower"
+    },
+    {
+      "direction": "down",
+      "toRoomId": "silk-gallery"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-stair-rope",
+      "name": "Stair Rope",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "The hand-rope is hemp over living oak. Three slow pulses travel up the grain, the same count you felt in the empty frame. The silk on the newel is new. It was not here when the bell still hung."
+    }
+  ]
+}

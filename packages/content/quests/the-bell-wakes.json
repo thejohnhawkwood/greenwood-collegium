@@ -1,0 +1,42 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-bell-wakes",
+  "title": "The Bell Wakes",
+  "experienceReward": 15,
+  "introNarration": "Alder sets the tuning fork down a second time. \"The wood remembers a welcome. Something below the Clock Tower has begun to answer. Descend the stair. Talk Piper Mole in the Silk Gallery. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. Do not invent a queen from one hatchling.\"",
+  "reminderNarration": "Alder counts a new stair. \"Type east from the North Quad to the Clock Tower, then down. Talk piper in the Silk Gallery. Examine the Stair Rope, Silk Thread, and Waking Husk. Then talk alder here in the High Study. Type quests for your checklist.\"",
+  "completionNarration": "You name the stair, the singing thread, Piper's watch, and the opened husk. Alder listens to the end. \"A hatchling woke before the score allows. The silk is a cradle, not a throne. That is enough for one Collegian. When three can stand together, we will ask what still sleeps.\"",
+  "objectives": [
+    {
+      "id": "check-rope",
+      "kind": "examine",
+      "targetId": "object-stair-rope",
+      "label": "Examine the Stair Rope on the Bell Stair. Type down from the Clock Tower."
+    },
+    {
+      "id": "hear-piper",
+      "kind": "talk",
+      "targetId": "npc-piper-mole",
+      "label": "Talk piper in the Silk Gallery, down again from the Bell Stair."
+    },
+    {
+      "id": "check-thread",
+      "kind": "examine",
+      "targetId": "object-silk-thread",
+      "label": "Examine the Silk Thread in the Silk Gallery."
+    },
+    {
+      "id": "check-husk",
+      "kind": "examine",
+      "targetId": "object-waking-husk",
+      "label": "Examine the Waking Husk in the Cocoon Nave, east then south from the gallery."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-headmaster-alder",
+      "requires": ["check-rope", "hear-piper", "check-thread", "check-husk"],
+      "label": "After the stair, Piper, thread, and husk, talk alder in the High Study. Type up from the Great Hall."
+    }
+  ]
+}

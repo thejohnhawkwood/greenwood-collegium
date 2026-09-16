@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "greenstitch",
+  "name": "Greenstitch",
+  "school": "thorn",
+  "description": "A quiet leaf-work that mends what a lesson tore.",
+  "focusCost": 4,
+  "targetType": "self",
+  "context": "any",
+  "effect": "heal",
+  "heal": 6,
+  "minLevel": 3,
+  "presentationKey": "greenstitch",
+  "helpText": "cast greenstitch"
+}

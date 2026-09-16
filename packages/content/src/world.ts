@@ -71,9 +71,12 @@ export type LoadedSpell = {
   school: string;
   description: string;
   focusCost: number;
-  targetType: "enemy";
-  context: "encounter";
-  damage: number;
+  targetType: "enemy" | "self";
+  context: "encounter" | "any";
+  damage?: number;
+  effect?: "skip-counter" | "avoid-hit" | "heal" | "brace" | "ready-strike" | "riposte" | "insight";
+  heal?: number;
+  insight?: string;
   burningRounds?: number;
   burningDamage?: number;
   minLevel?: number;
@@ -244,6 +247,9 @@ export function toWorldState(
       targetType: spell.targetType,
       context: spell.context,
       damage: spell.damage,
+      effect: spell.effect,
+      heal: spell.heal,
+      insight: spell.insight,
       burningRounds: spell.burningRounds,
       burningDamage: spell.burningDamage,
       minLevel: spell.minLevel,

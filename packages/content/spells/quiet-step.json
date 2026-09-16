@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "quiet-step",
+  "name": "Quiet Step",
+  "school": "veil",
+  "description": "A taught stillness that names what the dark is keeping.",
+  "focusCost": 2,
+  "targetType": "self",
+  "context": "any",
+  "effect": "insight",
+  "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it.",
+  "minLevel": 3,
+  "presentationKey": "quiet-step",
+  "helpText": "cast quiet-step"
+}

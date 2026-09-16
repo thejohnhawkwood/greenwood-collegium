@@ -71,6 +71,10 @@ export type Character = {
   equippedItemId?: string;
   openConversation?: OpenConversation;
   schoolId?: SchoolId;
+  nextAttackBonus?: number;
+  ignoreNextHit?: boolean;
+  braceBonus?: number;
+  hitThisEncounter?: boolean;
 };
 
 export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";
@@ -104,10 +108,10 @@ export type QuestProgress = {
 };
 
 export type StatusEffect = {
-  id: "burning";
+  id: "burning" | "skip-counter";
   targetId: string;
   remainingRounds: number;
-  tickDamage: number;
+  tickDamage?: number;
   appliedRound: number;
 };
 
@@ -117,9 +121,12 @@ export type SpellTemplate = {
   school: string;
   description: string;
   focusCost: number;
-  targetType: "enemy";
-  context: "encounter";
-  damage: number;
+  targetType: "enemy" | "self";
+  context: "encounter" | "any";
+  damage?: number;
+  effect?: "skip-counter" | "avoid-hit" | "heal" | "brace" | "ready-strike" | "riposte" | "insight";
+  heal?: number;
+  insight?: string;
   burningRounds?: number;
   burningDamage?: number;
   minLevel?: number;

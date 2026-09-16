@@ -35,6 +35,20 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
   if (character?.encounterId === encounter.id) {
     character.encounterId = undefined;
   }
+  if (character) {
+    if (character.braceBonus) {
+      const max = Math.max(
+        DEFAULT_PLAYER_MAX_HEALTH,
+        (character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH) - character.braceBonus,
+      );
+      character.maxHealth = max;
+      character.health = Math.min(character.health ?? max, max);
+      character.braceBonus = undefined;
+    }
+    character.nextAttackBonus = undefined;
+    character.ignoreNextHit = undefined;
+    character.hitThisEncounter = undefined;
+  }
   delete worldEncounters(world)[encounter.id];
 }
 
@@ -63,7 +77,7 @@ export function rejectIfInCombat(
   return {
     ok: false,
     code: "in_combat",
-    message: "You are in the middle of a lesson. Type attack or cast ember to continue.",
+    message: "You are in the middle of a lesson. Type attack or cast to continue.",
   };
 }
 

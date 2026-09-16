@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "brace",
+  "name": "Brace",
+  "school": "stone",
+  "description": "Patience set in the shoulders. You hold a little more of the lesson.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "brace",
+  "minLevel": 3,
+  "presentationKey": "stone-brace",
+  "helpText": "cast brace"
+}

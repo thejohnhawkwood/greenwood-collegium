@@ -18,6 +18,7 @@ const previewState: PlayState = {
     experience: 20,
     inCombat: false,
     equipped: "Practice Sword",
+    gifts: [],
   },
   conversation: {
     npcId: "npc-porter-bramble",

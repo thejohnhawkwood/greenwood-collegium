@@ -24,9 +24,14 @@ export const spellTemplateSchema = z
     school: z.string().min(1),
     description: z.string().min(1),
     focusCost: z.number().int().nonnegative(),
-    targetType: z.literal("enemy"),
-    context: z.literal("encounter"),
-    damage: z.number().int().positive(),
+    targetType: z.enum(["enemy", "self"]),
+    context: z.enum(["encounter", "any"]),
+    damage: z.number().int().nonnegative().optional(),
+    effect: z
+      .enum(["skip-counter", "avoid-hit", "heal", "brace", "ready-strike", "riposte", "insight"])
+      .optional(),
+    heal: z.number().int().positive().optional(),
+    insight: z.string().min(1).optional(),
     burningRounds: z.number().int().positive().optional(),
     burningDamage: z.number().int().positive().optional(),
     minLevel: z.number().int().positive().optional(),
@@ -40,6 +45,9 @@ export const spellTemplateSchema = z
     rejectMarkup(spell.description, "description", ctx);
     rejectMarkup(spell.helpText, "helpText", ctx);
     rejectMarkup(spell.presentationKey, "presentationKey", ctx);
+    if (spell.insight) {
+      rejectMarkup(spell.insight, "insight", ctx);
+    }
   });
 
 export type SpellTemplate = z.infer<typeof spellTemplateSchema>;
