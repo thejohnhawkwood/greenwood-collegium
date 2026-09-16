@@ -70,6 +70,7 @@ describe("command assistance", () => {
       "travel",
       "help",
       "say 1",
+      "bye",
     ]);
     expect(reminderWords(state).find((entry) => entry.word === "look")).toMatchObject({
       send: true,

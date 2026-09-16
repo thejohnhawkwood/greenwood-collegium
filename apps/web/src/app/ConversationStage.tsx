@@ -14,17 +14,15 @@ export function ConversationStage({
   }
   return (
     <aside className="conversation-stage" aria-label={`Talking with ${conversation.npcName}`}>
-      <div className="conversation-heading">
-        <p className="conversation-speaker">{conversation.npcName}</p>
-        <button
-          type="button"
-          className="conversation-close"
-          onClick={onClose}
-          aria-label="Close conversation"
-        >
-          Close
-        </button>
-      </div>
+      <button
+        type="button"
+        className="conversation-close"
+        onClick={onClose}
+        aria-label="Close conversation"
+      >
+        ×
+      </button>
+      <p className="conversation-speaker">{conversation.npcName}</p>
       <p className="conversation-prompt">{conversation.prompt}</p>
       {conversation.choices.length ? (
         <div className="conversation-choices">

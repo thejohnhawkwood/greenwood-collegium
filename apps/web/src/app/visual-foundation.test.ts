@@ -13,6 +13,7 @@ import { QuestJournal } from "./QuestJournal.js";
 import {
   forcedPresenceId,
   handOverlap,
+  isConversationVisible,
   PresenceAvatars,
   PresenceMenu,
   PresenceZoom,
@@ -495,8 +496,24 @@ describe("visual foundation", () => {
     expect(talking).toContain("Why a weapon, I wonder?");
     expect(talking).toContain("Why does a weapon fit?");
     expect(talking).toContain("Close conversation");
+    expect(talking).toContain("×");
     expect(talking).toContain("Small Copper Key, object");
     expect(talking).not.toContain('data-forced="true"');
+    const edge = {
+      npcId: "npc-mentor-edge",
+      npcName: "Mentor Edge",
+      prompt: "Look the anvil. Then find the orchard.",
+      choices: [] as { say: string; label: string }[],
+    };
+    expect(isConversationVisible(edge, null)).toBe(true);
+    expect(isConversationVisible(edge, "npc-mentor-edge")).toBe(false);
+    expect(
+      isConversationVisible(
+        { ...edge, prompt: "Steel teaches you to meet what comes." },
+        "npc-mentor-edge",
+      ),
+    ).toBe(false);
+    expect(isConversationVisible(edge, "npc-porter-bramble")).toBe(true);
   });
   it("lists known destinations and present Collegians in the lobby", () => {
     const html = renderToStaticMarkup(

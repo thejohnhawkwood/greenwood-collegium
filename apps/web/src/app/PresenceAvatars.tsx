@@ -1,5 +1,5 @@
 import type { PlayState } from "@greenwood/contracts";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { ConversationStage } from "./ConversationStage.js";
 import { npcArtSrc } from "./npc-plates.js";
@@ -21,10 +21,14 @@ export function handOverlap(count: number): number {
 }
 
 export function conversationKey(conversation?: PlayState["conversation"]): string | undefined {
-  if (!conversation) {
-    return undefined;
-  }
-  return `${conversation.npcId}:${conversation.prompt}`;
+  return conversation?.npcId;
+}
+
+export function isConversationVisible(
+  conversation: PlayState["conversation"] | undefined,
+  dismissedNpcId: string | null,
+): conversation is NonNullable<PlayState["conversation"]> {
+  return Boolean(conversation && conversation.npcId !== dismissedNpcId);
 }
 
 export function forcedPresenceId(
@@ -66,18 +70,25 @@ export function PresenceAvatars({
 }) {
   const forcedId = forcedPresenceId(people, conversation, inCombat);
   const [pickedId, setPickedId] = useState<string | null>(null);
-  const [closedKey, setClosedKey] = useState<string | null>(null);
-  const openConversationKey = conversationKey(conversation);
-  const visibleConversation =
-    conversation && closedKey !== openConversationKey ? conversation : undefined;
+  const [dismissedNpcId, setDismissedNpcId] = useState<string | null>(null);
+  const visibleConversation = isConversationVisible(conversation, dismissedNpcId)
+    ? conversation
+    : undefined;
   const openId = forcedId ?? pickedId ?? (visibleConversation ? visibleConversation.npcId : null);
+  const dismissConversation = useCallback(() => {
+    if (!visibleConversation) {
+      return;
+    }
+    setDismissedNpcId(visibleConversation.npcId);
+    setPickedId(null);
+    onSend("bye");
+  }, [visibleConversation, onSend]);
   useEffect(() => {
     if (!openId || forcedId) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         if (visibleConversation) {
-          setClosedKey(openConversationKey ?? null);
-          onSend("bye");
+          dismissConversation();
           return;
         }
         setPickedId(null);
@@ -85,7 +96,7 @@ export function PresenceAvatars({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [openId, forcedId, visibleConversation, openConversationKey, onSend]);
+  }, [openId, forcedId, visibleConversation, dismissConversation]);
   const openPerson =
     people.find((person) => person.id === openId) ??
     (visibleConversation && visibleConversation.npcId === openId
@@ -101,6 +112,22 @@ export function PresenceAvatars({
           data-forced={forcedId ? "true" : undefined}
           aria-live="polite"
         >
+          {!forcedId ? (
+            <button
+              type="button"
+              className="presence-close"
+              aria-label={visibleConversation ? "Close conversation" : "Close portrait"}
+              onClick={() => {
+                if (visibleConversation) {
+                  dismissConversation();
+                  return;
+                }
+                setPickedId(null);
+              }}
+            >
+              ×
+            </button>
+          ) : null}
           <PresenceZoom person={openPerson} />
           <PresenceMenu
             person={openPerson}
@@ -108,7 +135,7 @@ export function PresenceAvatars({
             gifts={gifts}
             onSend={(command) => {
               if (command.startsWith("talk ")) {
-                setClosedKey(null);
+                setDismissedNpcId(null);
               }
               onSend(command);
             }}
@@ -122,10 +149,7 @@ export function PresenceAvatars({
         <ConversationStage
           conversation={visibleConversation}
           onSend={onSend}
-          onClose={() => {
-            setClosedKey(openConversationKey ?? null);
-            onSend("bye");
-          }}
+          onClose={dismissConversation}
         />
       ) : null}
       {people.length ? (

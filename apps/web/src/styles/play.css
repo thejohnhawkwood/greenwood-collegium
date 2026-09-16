@@ -618,33 +618,34 @@
   overflow: auto;
   width: min(22rem, calc(50% - 0.5rem));
   max-height: calc(100% - 6.4rem);
-  padding: 0.55rem 0.7rem 0.7rem;
+  padding: 0.55rem 2.4rem 0.7rem 0.7rem;
   border: 1px solid #ead2a0;
   border-radius: 8px;
   background: #10281df7;
   pointer-events: auto;
 }
-.conversation-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem;
-  margin-bottom: 0.25rem;
-}
 .conversation-speaker {
-  margin: 0;
+  margin: 0 2rem 0.25rem 0;
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #ead2a0;
 }
-.play-client .conversation-close {
-  min-height: 22px;
-  padding: 0.05rem 0.4rem;
-  font-size: 0.62rem;
-  color: #eee3c3;
+.play-client .conversation-close,
+.play-client .presence-close {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  z-index: 5;
+  width: 2rem;
+  height: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: #f3ebd4;
   background: #20352b;
-  border: 1px solid #50634e;
+  border: 1px solid #d4b77c;
 }
 .conversation-prompt {
   margin: 0 0 0.5rem;

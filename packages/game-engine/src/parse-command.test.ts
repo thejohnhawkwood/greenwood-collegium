@@ -74,6 +74,10 @@ describe("parsePlayerCommand", () => {
       verb: "bye",
       characterId: "char-rowan",
     });
+    expect(parsePlayerCommand("close", "char-rowan")).toEqual({
+      verb: "bye",
+      characterId: "char-rowan",
+    });
     expect(parsePlayerCommand("drink well", "char-rowan")).toEqual({
       verb: "drink",
       characterId: "char-rowan",

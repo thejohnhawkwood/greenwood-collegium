@@ -25,6 +25,7 @@ export const COMMAND_WORDS = [
   "talk",
   "bye",
   "goodbye",
+  "close",
   "inventory",
   "i",
   "attack",
@@ -104,7 +105,8 @@ export function reminderWords(
     word: `say ${choice.say}`,
     send: true,
   }));
-  return [...base, ...spoken];
+  const dismiss = conversation ? [{ word: "bye", send: true }] : [];
+  return [...base, ...spoken, ...dismiss];
 }
 
 export function completionCandidates(state?: PlayState): string[] {
