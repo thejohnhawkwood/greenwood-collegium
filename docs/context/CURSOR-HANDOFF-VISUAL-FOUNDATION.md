@@ -1,24 +1,23 @@
 # Cursor handoff: visual foundation and navigation
 
-Prepared September 15, 2026. This is a continuation brief, not authorization to
-implement the entire roadmap or deploy production.
+Updated September 16, 2026. Cycles A–B and the painted catalog are on `main`.
+This is a continuation brief, not authorization to start DS-001 colour or lobby
+travel.
 
 ## Start here
 
-The owner approved the look of Cycle A and requested three refinements, now built:
-a minimap above a working compass, one combined room/story/actions pane, and a
-documented future painted woodland art direction. Preserve these decisions.
+The play shell now uses painted rooms, Collegian looks, unique NPC plates, and
+unique object plates. Clicking an NPC or object zooms the full punched artwork
+to Collegian-portrait size in the top-left of the room painting. Health and
+Focus overlay the Collegian frame. Minimap and NESW stay visible on desktop.
 
-**All Cycle A work and the refinements are local, uncommitted and unpushed. No
-production deployment has occurred for this batch.** “Current push” means the
-pending batch of changes, not a completed Git push.
+**Shipped on `main` through `6619f08` plus the current plate-zoom pass.** Render
+deploys `main` to https://greenwood-collegium.onrender.com.
 
-- Repository: `C:\Users\Papa\Desktop\greenwood`
+- Repository: the `greenwood-collegium` folder in this workspace
 - Remote: `https://github.com/thejohnhawkwood/greenwood-collegium.git`
-- Branch: `codex/visual-foundation`
-- HEAD at handoff: `18d8950` — Drop invite and account tokens from the teacher speech log.
-- Local preview: `http://127.0.0.1:3105/`
-- Runtime: Node 24, pnpm 11.25.0, TypeScript strict, React/Vite, Fastify/Socket.IO,
+- Local preview: `http://127.0.0.1:5173/?shell=1`
+- Runtime: Node (Cursor helper), TypeScript strict, React/Vite, Fastify/Socket.IO,
   pure game engine, Zod contracts, PostgreSQL/Drizzle, Render hosting.
 
 Read root and relevant package `AGENTS.md`, `docs/PRD.md`,
@@ -48,10 +47,12 @@ own PR. Include AI disclosure in a PR description.
 
 ### Play screen
 
-- Left: saved Collegian portrait, level/XP, equipment caption, inventory/quest
-  shortcuts, explored-room minimap, compass buttons below it.
-- Centre: decorative academy scene, server room title/summary and health/focus,
-  visible NPC/object buttons, player avatar shelf, one **Around you & story** log.
+- Left: saved Collegian portrait with Health/Focus overlaid at the bottom of
+  the frame; name, level/XP under the frame; equipment caption; inventory/quest
+  shortcuts; explored-room minimap; NESW compass. Fog legend lives on World map.
+- Centre: painted room plate, server room title/summary, clickable NPC/object/
+  Collegian tokens on the painting (click zooms the full plate), one
+  **Around you & story** log.
 - Right: independent nearby speech log; existing teacher controls remain on the
   right at wide sizes and below the play area at narrow sizes.
 - Command input stays outside the scrolling panel region. Both logs preserve a
@@ -101,17 +102,16 @@ own PR. Include AI disclosure in a PR description.
 
 ### Art direction
 
-Current Collegian SVGs and shared room scene remain placeholders. Future original
-assets should match existing academy art: painted woodland storybook imagery,
-digital watercolor/gouache texture, soft natural light and expressive animal
-characters, with Gwelf and Beatrix Potter as atmosphere references. Preserve saved
-appearance consistency and readable semantic UI text. No new raster assets were
-generated, and no new rooms, mobs, quests or combat systems were added in Cycle A.
+Painted Collegian looks, twenty-five room plates, NPC plates, and object plates
+are checked in. Punch magenta from new plates with `tools/punch-plate-magenta.py`.
+Preserve saved appearance consistency and readable semantic UI text. Gwelf and
+Beatrix Potter are atmosphere only.
 
 ## Focused file map
 
 - UI composition, command submission: `apps/web/src/app/App.tsx`, `PlayPanels.tsx`.
 - Map/scene/portraits: `Minimap.tsx`, `RoomScene.tsx`, `CharacterPortrait.tsx`,
+  `PresenceAvatars.tsx`, `npc-plates.ts`, `object-plates.ts`,
   `appearance-description.ts` in the same directory.
 - Creation: `CharacterGate.tsx`, `AppearanceEditor.tsx`.
 - Layout/scroll integration: `apps/web/src/styles/play.css`,

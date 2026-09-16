@@ -23,13 +23,15 @@ asset service is required. Room plates and Collegian layers are defined in
 1. Create a Collegian using the existing classroom invite/sign-in flow. Choose a
    species, name and appearance. The live preview uses the same rendering as play.
    Students still wait for teacher name approval before entering.
-2. Your left panel shows your saved appearance and actual level/XP. Health and
-   focus appear above the room. Equipped item text comes from the server.
+2. Your left panel shows your saved appearance. Health and focus overlay the
+   bottom of the Collegian frame. Name, level and XP sit under the frame.
+   Equipped item text comes from the server.
 3. The minimap shows explored rooms in the current zone with a ring marking you.
    The compass below it moves immediately when clicked, preserving your input draft.
-   Discovery lasts for the active realm session; it is not yet saved across sessions.
-4. Click a room entity or player to prepare `examine <name>`. Inventory, Quests,
-   Help and Look work the same way. Typed commands remain available throughout.
+   Discovery is saved with your Collegian after Cycle B.
+4. Click a person or object on the room painting to zoom its full plate to
+   Collegian-portrait size and open Examine / Talk. Inventory, Quests, Help and
+   Look still prepare typed commands. Typed commands remain available throughout.
 5. Around you & story combines full room descriptions and action narration in one log.
    Room speech keeps nearby `say` messages from this session, including previous
    rooms. Scrolling up in either log preserves your position as new lines arrive;

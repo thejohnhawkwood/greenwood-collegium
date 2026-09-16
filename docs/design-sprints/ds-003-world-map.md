@@ -1,7 +1,7 @@
 # Cycle B: world map and fog of war (S4)
 
-This slice follows Cycle A. It does not implement lobby travel (S5) or painted
-room art (S3 remains the shared academy placeholder).
+This slice follows Cycle A. It does not implement lobby travel (S5). Painted
+room, NPC, and object plates now live in [DS-004](ds-004-painted-catalog.md).
 
 ## Player guide
 
@@ -25,5 +25,5 @@ Discovery is saved with your Collegian. It returns after sign-in and reconnect.
 
 ## Deferred
 
-Lobby character selection and travel, per-room painted art, class/equipment
-layers, and classroom playtest percentages.
+Lobby character selection and travel, class/equipment layers, and classroom
+playtest percentages.

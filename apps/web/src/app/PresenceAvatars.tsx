@@ -17,6 +17,10 @@ function kindLabel(kind: PresencePerson["kind"]): string {
   return "object";
 }
 
+export function plateSrc(person: PresencePerson): string | undefined {
+  return person.kind === "object" ? objectArtSrc(person.id, person.name) : npcArtSrc(person.id);
+}
+
 export function PresenceAvatars({
   people,
   onSend,
@@ -34,45 +38,65 @@ export function PresenceAvatars({
     return () => window.removeEventListener("keydown", onKey);
   }, [openId]);
   if (!people.length) return null;
+  const openPerson = people.find((person) => person.id === openId);
   return (
-    <div className="presence-rail" aria-label="People and objects in this room">
-      {people.map((person) => {
-        const open = openId === person.id;
-        const plate =
-          person.kind === "object" ? objectArtSrc(person.id, person.name) : npcArtSrc(person.id);
-        return (
-          <div key={person.id} className={`presence-slot${open ? " open" : ""}`}>
-            <button
-              type="button"
-              className={`presence-avatar ${person.kind}`}
-              aria-expanded={open}
-              aria-haspopup="menu"
-              aria-label={`${person.name}, ${kindLabel(person.kind)}`}
-              title={person.name}
-              onClick={() => setOpenId(open ? null : person.id)}
-            >
-              {plate ? (
-                <img className="presence-plate" src={plate} alt="" draggable={false} />
-              ) : person.visual ? (
-                <CharacterPortrait
-                  visual={person.visual}
-                  name={person.name}
-                  decorative
-                  crop="avatar"
-                />
-              ) : (
-                <span className="presence-initial" aria-hidden="true">
-                  {person.name.slice(0, 1)}
-                </span>
-              )}
-            </button>
-            {open ? (
-              <PresenceMenu person={person} onSend={onSend} onClose={() => setOpenId(null)} />
-            ) : null}
-          </div>
-        );
-      })}
+    <div className="presence-layer">
+      {openPerson ? <PresenceZoom person={openPerson} /> : null}
+      <div className="presence-rail" aria-label="People and objects in this room">
+        {people.map((person) => {
+          const open = openId === person.id;
+          const plate = plateSrc(person);
+          return (
+            <div key={person.id} className={`presence-slot${open ? " open" : ""}`}>
+              <button
+                type="button"
+                className={`presence-avatar ${person.kind}`}
+                aria-expanded={open}
+                aria-haspopup="menu"
+                aria-label={`${person.name}, ${kindLabel(person.kind)}`}
+                title={person.name}
+                onClick={() => setOpenId(open ? null : person.id)}
+              >
+                {plate ? (
+                  <img className="presence-plate" src={plate} alt="" draggable={false} />
+                ) : person.visual ? (
+                  <CharacterPortrait
+                    visual={person.visual}
+                    name={person.name}
+                    decorative
+                    crop="avatar"
+                  />
+                ) : (
+                  <span className="presence-initial" aria-hidden="true">
+                    {person.name.slice(0, 1)}
+                  </span>
+                )}
+              </button>
+              {open ? (
+                <PresenceMenu person={person} onSend={onSend} onClose={() => setOpenId(null)} />
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
     </div>
+  );
+}
+
+export function PresenceZoom({ person }: { person: PresencePerson }) {
+  const plate = plateSrc(person);
+  return (
+    <aside className="presence-zoom" aria-label={`Full artwork of ${person.name}`}>
+      {plate ? (
+        <img src={plate} alt="" draggable={false} />
+      ) : person.visual ? (
+        <CharacterPortrait visual={person.visual} name={person.name} decorative />
+      ) : (
+        <span className="presence-initial" aria-hidden="true">
+          {person.name.slice(0, 1)}
+        </span>
+      )}
+    </aside>
   );
 }
 

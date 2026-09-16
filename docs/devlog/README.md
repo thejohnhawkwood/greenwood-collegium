@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-16 — Play-shell tokens and Collegian chrome](2026-09-16-play-shell-tokens.md)
 - [2026-09-16 — Finished Collegium room plates](2026-09-16-room-plates.md)
 - [2026-09-07 — Per-Collegian Arrival key](2026-09-07-per-collegian-key.md)
 - [2026-09-07 — Ticket 014 spell and Ember event](2026-09-07-ticket-014-ember.md)

@@ -19,6 +19,14 @@ characters, costumes, or compositions. No baked UI text.
 - Builds are authored body files; the compositor also slightly scales slender
   and sturdy so the silhouette stays readable if a build file matches rounded.
 
+## NPC and object tokens
+
+- NPC plates live at `characters/npcs/{id}.png`, 512×768, chroma-keyed then
+  punched to transparency. Clicking a token zooms the full figure to Collegian
+  portrait size on the room painting.
+- Object plates live at `objects/{id}.png`, 512×640, same punch. Every current
+  room fixture and the five takeable items have a unique still-life.
+
 ## Rooms
 
 - 1600×900 painted plates, one per current Collegium room.

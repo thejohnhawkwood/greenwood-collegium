@@ -20,7 +20,8 @@ and exits remain server HTML.
 Open `/?rooms=1`. Then walk from Lantern Court and compare the plate to `look`.
 
 ## Next
-Human confirm the live deploy after merge. Lobby travel (S5) remains later.
+See [play-shell tokens](2026-09-16-play-shell-tokens.md). Lobby travel (S5)
+remains later.
 
 ## Open questions
 A few plates still lean tidy. Retake any room that feels generic in class.

@@ -26,6 +26,8 @@ PLATES = [
 def is_key(red: int, green: int, blue: int, alpha: int) -> bool:
     if alpha < 8:
         return False
+    if red >= 150 and green <= 72 and blue >= 70 and red - green >= 90 and blue > green + 10:
+        return True
     return red >= 130 and green <= 40 and blue >= 50 and red - green >= 80
 
 

@@ -41,6 +41,7 @@ const previewState: PlayState = {
     ],
     visible: [
       { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
+      { id: "npc-headmaster-alder", name: "Headmaster Alder", kind: "npc" },
       { id: "object-key-board", name: "Key Board", kind: "object" },
       {
         id: "peer",

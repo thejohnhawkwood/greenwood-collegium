@@ -7,7 +7,7 @@ import { CharacterPortrait } from "./CharacterPortrait.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
-import { PresenceAvatars, PresenceMenu } from "./PresenceAvatars.js";
+import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
 import { npcArtSrc } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
 import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
@@ -311,5 +311,12 @@ describe("visual foundation", () => {
     expect(objectMenu).toContain("Examine");
     expect(objectMenu).not.toContain("Talk");
     expect(objectMenu).not.toContain("Ask to duel");
+    const zoom = renderToStaticMarkup(
+      createElement(PresenceZoom, {
+        person: { id: "npc-headmaster-alder", name: "Headmaster Alder", kind: "npc" },
+      }),
+    );
+    expect(zoom).toContain("Full artwork of Headmaster Alder");
+    expect(zoom).toContain("/art/characters/npcs/npc-headmaster-alder.png");
   });
 });
