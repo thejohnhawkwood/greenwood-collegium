@@ -9,6 +9,7 @@ import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
+import { presenceActions } from "./presence-actions.js";
 import { npcArtSrc } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
 import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
@@ -269,7 +270,7 @@ describe("visual foundation", () => {
     expect(html).toContain('aria-label="Settings"');
     expect(html).toContain("Sign out");
   });
-  it("offers examine, talk, and a later duel on room avatars", () => {
+  it("offers the commands that work on each room token", () => {
     const html = renderToStaticMarkup(
       createElement(PresenceAvatars, {
         people: [
@@ -302,8 +303,9 @@ describe("visual foundation", () => {
     );
     expect(menu).toContain("Examine");
     expect(menu).toContain("Talk");
-    expect(menu).toContain("Ask to duel");
-    expect(menu).toContain("Duels come later");
+    expect(menu).not.toContain("Take");
+    expect(menu).not.toContain("Attack");
+    expect(menu).not.toContain("Ask to duel");
     const objectMenu = renderToStaticMarkup(
       createElement(PresenceMenu, {
         person: { id: "object-key-board", name: "Key Board", kind: "object" },
@@ -313,7 +315,47 @@ describe("visual foundation", () => {
     );
     expect(objectMenu).toContain("Examine");
     expect(objectMenu).not.toContain("Talk");
-    expect(objectMenu).not.toContain("Ask to duel");
+    expect(objectMenu).not.toContain("Take");
+    expect(objectMenu).not.toContain("Attack");
+    const itemMenu = renderToStaticMarkup(
+      createElement(PresenceMenu, {
+        person: { id: "item-practice-sword-south-orchard", name: "Practice Sword", kind: "object" },
+        onSend: () => {},
+        onClose: () => {},
+      }),
+    );
+    expect(itemMenu).toContain("Examine");
+    expect(itemMenu).toContain("Take");
+    expect(itemMenu).not.toContain("Attack");
+    const dummyMenu = renderToStaticMarkup(
+      createElement(PresenceMenu, {
+        person: {
+          id: "enemy-practice-dummy-south-orchard",
+          name: "Practice Dummy",
+          kind: "npc",
+        },
+        onSend: () => {},
+        onClose: () => {},
+      }),
+    );
+    expect(dummyMenu).toContain("Examine");
+    expect(dummyMenu).toContain("Attack");
+    expect(dummyMenu).toContain("Cast Ember");
+    expect(dummyMenu).not.toContain("Talk");
+    expect(
+      presenceActions({
+        id: "item-practice-sword-south-orchard",
+        name: "Practice Sword",
+        kind: "object",
+      }).map((action) => action.command),
+    ).toEqual(["examine Practice Sword", "take Practice Sword"]);
+    expect(
+      presenceActions({
+        id: "enemy-practice-dummy-south-orchard",
+        name: "Practice Dummy",
+        kind: "npc",
+      }).map((action) => action.command),
+    ).toEqual(["examine Practice Dummy", "attack Practice Dummy", "cast ember Practice Dummy"]);
     const zoom = renderToStaticMarkup(
       createElement(PresenceZoom, {
         person: { id: "npc-headmaster-alder", name: "Headmaster Alder", kind: "npc" },

@@ -52,6 +52,8 @@ const previewState: PlayState = {
       { id: "npc-porter-bramble", name: "Porter Bramble", kind: "npc" },
       { id: "npc-headmaster-alder", name: "Headmaster Alder", kind: "npc" },
       { id: "object-key-board", name: "Key Board", kind: "object" },
+      { id: "item-practice-sword-south-orchard", name: "Practice Sword", kind: "object" },
+      { id: "enemy-practice-dummy-south-orchard", name: "Practice Dummy", kind: "npc" },
       {
         id: "peer",
         name: "Moss",

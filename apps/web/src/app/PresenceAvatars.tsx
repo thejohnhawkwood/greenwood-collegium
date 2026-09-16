@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
-import type { CharacterVisual } from "@greenwood/contracts";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { npcArtSrc } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
+import { presenceActions, type PresencePerson } from "./presence-actions.js";
 
-export type PresencePerson = {
-  id: string;
-  name: string;
-  kind: "npc" | "player" | "object";
-  visual?: CharacterVisual;
-};
+export type { PresencePerson };
 
 function kindLabel(kind: PresencePerson["kind"]): string {
   if (kind === "npc") return "NPC";
@@ -111,33 +106,22 @@ export function PresenceMenu({
 }) {
   return (
     <div className="presence-menu" role="menu" aria-label={`${person.name} actions`}>
-      <button
-        type="button"
-        role="menuitem"
-        onClick={() => {
-          onSend(`examine ${person.name}`);
-          onClose();
-        }}
-      >
-        Examine
-      </button>
-      {person.kind === "object" ? null : (
-        <>
-          <button
-            type="button"
-            role="menuitem"
-            onClick={() => {
-              onSend(person.kind === "npc" ? `talk ${person.name}` : `say hello`);
-              onClose();
-            }}
-          >
-            Talk
-          </button>
-          <button type="button" role="menuitem" disabled title="Duels come later">
-            Ask to duel
-          </button>
-        </>
-      )}
+      {presenceActions(person).map((action) => (
+        <button
+          key={action.label}
+          type="button"
+          role="menuitem"
+          disabled={action.disabled}
+          title={action.title}
+          onClick={() => {
+            if (!action.command) return;
+            onSend(action.command);
+            onClose();
+          }}
+        >
+          {action.label}
+        </button>
+      ))}
     </div>
   );
 }
