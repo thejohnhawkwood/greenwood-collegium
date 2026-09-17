@@ -200,11 +200,6 @@ export function WorldMapDialog({
   const currentLevel = mapLevel(
     state?.minimap.rooms.find((room) => room.state === "current") ?? {},
   );
-  const levels = availableMapLevels(state?.minimap.rooms ?? []);
-  const [viewedLevel, setViewedLevel] = useState(currentLevel);
-  useEffect(() => {
-    if (open) setViewedLevel(currentLevel);
-  }, [open, currentLevel]);
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -214,6 +209,33 @@ export function WorldMapDialog({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
   if (!open) return null;
+  return (
+    <WorldMapChart
+      key={currentLevel}
+      currentLevel={currentLevel}
+      state={state}
+      onClose={onClose}
+      onPrepareMove={onPrepareMove}
+      onTravel={onTravel}
+    />
+  );
+}
+
+function WorldMapChart({
+  currentLevel,
+  state,
+  onClose,
+  onPrepareMove,
+  onTravel,
+}: {
+  currentLevel: number;
+  state?: PlayState;
+  onClose: () => void;
+  onPrepareMove?: (direction: string) => void;
+  onTravel?: (title: string) => void;
+}) {
+  const levels = availableMapLevels(state?.minimap.rooms ?? []);
+  const [viewedLevel, setViewedLevel] = useState(currentLevel);
   const upLevel = nextMapLevel(levels, viewedLevel, 1);
   const downLevel = nextMapLevel(levels, viewedLevel, -1);
   const canClimb = state?.room.exits.some((exit) => exit.direction === "up");
