@@ -525,7 +525,11 @@ function tickBurning(
   encounter.effects = remaining;
 }
 
-function settleDefeat(world: WorldState, encounter: Encounter, firstTimers: Character[]): string | undefined {
+function settleDefeat(
+  world: WorldState,
+  encounter: Encounter,
+  firstTimers: Character[],
+): string | undefined {
   const spawn = worldEnemies(world)[encounter.spawnId];
   for (const id of encounterMembers(encounter)) {
     const member = world.characters[id];
@@ -606,7 +610,10 @@ export function finishVictory(
   const notices: CombatSuccess["notices"] = [];
   const firstTimers = encounterMembers(encounter)
     .map((id) => world.characters[id])
-    .filter((member): member is Character => Boolean(member) && !hasDefeatedSpawn(member, encounter.spawnId));
+    .filter(
+      (member): member is Character =>
+        Boolean(member) && !hasDefeatedSpawn(member, encounter.spawnId),
+    );
   const firstTimerIds = new Set(firstTimers.map((member) => member.id));
   for (const id of encounterMembers(encounter)) {
     const member = world.characters[id];

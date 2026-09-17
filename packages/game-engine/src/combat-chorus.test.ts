@@ -227,7 +227,11 @@ describe("party chorus and the Silk Queen", () => {
     world.characters["char-rowan"]!.defeatedSpawnIds = [spawnId];
     world.characters["char-silo"]!.defeatedSpawnIds = [spawnId];
     expect(
-      handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "queen" }, runtime()),
+      handleAttack(
+        world,
+        { verb: "attack", characterId: "char-rowan", target: "queen" },
+        runtime(),
+      ),
     ).toMatchObject({ ok: true });
     expect(world.characters["char-newt"]?.encounterId).toBeDefined();
   });
@@ -239,7 +243,11 @@ describe("party chorus and the Silk Queen", () => {
       world.characters[id]!.defeatedSpawnIds = [spawnId];
     }
     expect(
-      handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "queen" }, runtime()),
+      handleAttack(
+        world,
+        { verb: "attack", characterId: "char-rowan", target: "queen" },
+        runtime(),
+      ),
     ).toMatchObject({ ok: false, code: "foe_already_stood" });
   });
 
