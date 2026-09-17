@@ -2,9 +2,9 @@
 
 Developer-facing inventory of the September 10, 2026 content release. The JSON files
 linked below remain the source of truth. This pass keeps the campus rooms, the
-unmapped High Study, the Hall of Schools, six hearths, and the Bell Stair below
-the Clock Tower. There are thirteen speaking staff NPCs and eleven quests
-including Arrival and the six first-lessons.
+High Study, the Hall of Schools, six hearths, and the Bell Stair below
+the Clock Tower. There are thirteen speaking staff NPCs and twelve quests
+including Arrival and the six first-lessons. Floors use map `z` (ADR-0036).
 
 Player instructions and content authoring conventions live in the committed
 [play and authoring guide](adventures.md). Design decisions: [ADR-0029](../adr/0029-authored-npc-adventures.md).
@@ -52,7 +52,7 @@ Patient gears count the hours beneath an empty bell frame.
 A tight oak stair turns below the empty frame.
 
 - Source: [room JSON](../../packages/content/rooms/bell-stair.json).
-- Unmapped. `visualState`: `clock-tower`. Exits: up → `clock-tower`; down → `silk-gallery`.
+- Map `{x: 1, y: 2, z: -1}`. `visualState`: `clock-tower`. Exits: up → `clock-tower`; down → `silk-gallery`.
 - NPCs: none.
 - Discoveries: Stair Rope (`object-stair-rope`).
 - Quest roles: [The Bell Wakes](#the-bell-wakes).
@@ -62,7 +62,7 @@ A tight oak stair turns below the empty frame.
 Pale galleries of silk keep the old stone polite.
 
 - Source: [room JSON](../../packages/content/rooms/silk-gallery.json).
-- Unmapped. `visualState`: `clock-tower`. Exits: up → `bell-stair`; east → `webbed-cloister`.
+- Map `{x: 1, y: 2, z: -2}`. `visualState`: `clock-tower`. Exits: up → `bell-stair`; east → `webbed-cloister`.
 - NPCs: Piper Mole (`npc-piper-mole`).
 - Discoveries: Silk Thread (`object-silk-thread`).
 - Quest roles: [The Bell Wakes](#the-bell-wakes).
@@ -72,7 +72,7 @@ Pale galleries of silk keep the old stone polite.
 An old walk has been lent to silk and patience.
 
 - Source: [room JSON](../../packages/content/rooms/webbed-cloister.json).
-- Unmapped. `visualState`: `clock-tower`. Exits: west → `silk-gallery`; south → `cocoon-nave`.
+- Map `{x: 2, y: 2, z: -2}`. `visualState`: `clock-tower`. Exits: west → `silk-gallery`; south → `cocoon-nave`.
 - NPCs: none.
 - Discoveries: Caught Lantern (`object-caught-lantern`).
 - Quest roles: path to the nave.
@@ -82,10 +82,20 @@ An old walk has been lent to silk and patience.
 A nave of husks keeps one early waking.
 
 - Source: [room JSON](../../packages/content/rooms/cocoon-nave.json).
-- Unmapped. `visualState`: `clock-tower`. Exit: north → `webbed-cloister`.
+- Map `{x: 2, y: 1, z: -2}`. `visualState`: `clock-tower`. Exits: north → `webbed-cloister`; south → `deep-cradle`.
 - NPCs: none. Enemy: Silk Hatchling (`enemy-silk-hatchling-cocoon-nave`).
 - Discoveries: Waking Husk (`object-waking-husk`).
-- Quest roles: [The Bell Wakes](#the-bell-wakes).
+- Quest roles: [The Bell Wakes](#the-bell-wakes). [What Still Sleeps](#what-still-sleeps).
+
+### Deep Cradle — `deep-cradle`
+
+A still chamber keeps what the nave would not yet name.
+
+- Source: [room JSON](../../packages/content/rooms/deep-cradle.json).
+- Map `{x: 2, y: 0, z: -2}`. `visualState`: `clock-tower`. Exit: north → `cocoon-nave`.
+- NPCs: none. Enemy: Silk Queen (`enemy-silk-queen-deep-cradle`, `minParty`: 3).
+- Discoveries: Still Score (`object-still-score`).
+- Quest roles: [What Still Sleeps](#what-still-sleeps).
 
 ### Oak Dormitory — `dormitory-oak`
 
@@ -135,13 +145,13 @@ Six bright banners hang above tables built around living oaks.
 
 ### The High Study — `headmaster-study`
 
-Moonlight and lamplight share a high oak room that does not hurry its guests.
+A high oak study above the Great Hall, kept for hard questions.
 
 - Source: [room JSON](../../packages/content/rooms/headmaster-study.json).
-- Unmapped. Forced landing after Arrival. Exit: down → `great-hall`.
+- Map `{x: 0, y: 1, z: 1}`. Forced landing after Arrival. Exit: down → `great-hall`.
 - NPCs: Headmaster Alder (`npc-headmaster-alder`), recast as an old fierce snowy owl.
 - Discoveries: School Chart (`object-school-chart`).
-- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons. [The Bell Wakes](#the-bell-wakes) starts here after that report.
+- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons. [The Bell Wakes](#the-bell-wakes) starts here after that report. [What Still Sleeps](#what-still-sleeps) starts here after that report.
 
 ### Hall of Schools — `hall-of-schools`
 
@@ -474,7 +484,23 @@ Objectives:
 - `check-husk` — `examine`: Examine the Waking Husk in the Cocoon Nave. Target: fixture `object-waking-husk` in `cocoon-nave`.
 - `report` — `talk`: After the stair, Piper, thread, and husk, talk alder in the High Study. Target: fixture `npc-headmaster-alder` in `headmaster-study`. Requires: `check-rope`, `hear-piper`, `check-thread`, `check-husk`.
 
-Resolution: a hatchling woke before the score allows. The silk is a cradle, not a throne. Party work for the queen waits.
+Resolution: a hatchling woke before the score allows. The silk is a cradle, not a throne. Alder then offers What Still Sleeps.
+
+<a id="what-still-sleeps"></a>
+
+### What Still Sleeps
+
+- Stable ID: `what-still-sleeps`; source: [quest JSON](../../packages/content/quests/what-still-sleeps.json).
+- Starts: talk Alder in the High Study after The Bell Wakes is complete.
+- Reward: **20 experience**, once per character.
+
+Objectives:
+
+- `stand-together` — `visit`: Go to the Deep Cradle with classmates. South from the Cocoon Nave. Room: `deep-cradle`.
+- `read-score` — `examine`: Examine the Still Score in the Deep Cradle. Target: fixture `object-still-score` in `deep-cradle`.
+- `report` — `talk`: After the cradle, talk alder in the High Study. Target: fixture `npc-headmaster-alder` in `headmaster-study`. Requires: `stand-together`, `read-score`.
+
+Resolution: the silk has a mouth now, and it learned it from a class. The queen will not square up for fewer than three Collegians.
 
 <a id="the-missing-pages"></a>
 
@@ -499,5 +525,6 @@ Resolution: a page borrowed to study a bird's song ended up steadying a music st
 - `apps/server/src/application/world-adventures.test.ts` walks all three new quests with 30 interleaved fictional characters.
 - `apps/server/src/sockets/adventures.roundtrip.test.ts` checks failed clue requests, private delivery, persistence, reconnect/restart, and replay.
 
-The Bell Stair rooms are unmapped and reuse Clock Tower art. This pass does not add
-party combat, a queen fight, or relic loot.
+The Bell Stair rooms and the Deep Cradle are charted on their own floors and reuse Clock Tower art.
+The Silk Queen requires three Collegians (`minParty`: 3). Dummy and hatchling stay solo.
+A spawn stays available for a first-time Collegian. A party boss stands if at least one present Collegian has not fought it. First-timers receive experience and authored loot.

@@ -2,11 +2,15 @@
   "$schema": "../schemas/room.schema.json",
   "id": "silk-gallery",
   "title": "Silk Gallery",
-  "shortDescription": "Pale galleries of silk keep the old stone polite.",
-  "longDescription": "The stair opens into a long gallery that the Collegium maps do not name. Silk is stretched from pillar to pillar like sheets put out to dry. Lantern-light from far above reaches here only as a rumour.\nPiper Mole sits on a crate that has forgotten its cargo, listening with both ears and one paw on the silk.",
+  "shortDescription": "A long stone gallery strung with warm silk, and one frightened keeper.",
+  "longDescription": "The stair opens into a long gallery the Collegium used to leave off the maps. Silk is stretched from pillar to pillar, tight as drying sheets. A little lantern-light leaks down from the Clock Tower.\nPiper Mole sits on a crate with one paw on the silk. He flinches when the threads hum. He has been here too long.",
   "zone": "bell-below",
   "visualState": "clock-tower",
-  "unmapped": true,
+  "map": {
+    "x": 1,
+    "y": 2,
+    "z": -2
+  },
   "exits": [
     {
       "direction": "up",
@@ -22,25 +26,25 @@
       "id": "npc-piper-mole",
       "name": "Piper Mole",
       "kind": "npc",
-      "lookDescription": "A small mole in a patched grey coat, a tin whistle at the belt, silk dust on both paws. Try talk piper.",
-      "examineDescription": "Piper's eyes are used to dark. The whistle is dented. The coat has been mended with the same care as a score. He listens before he speaks, and he does not pretend the silk is decoration.",
-      "dialogue": "\"I keep this stair because the silk has begun to sing. Alder sent you, or the wood did. Examine the threads. The cloister and the nave wait east. Do not wake more than you can name.\"",
+      "lookDescription": "A small mole in a patched grey coat, tin whistle at his belt, silk dust on both paws, eyes too wide. Try talk piper.",
+      "examineDescription": "Piper is smaller than most first-years. The whistle is dented. The coat has been mended twice. His paws shake when the silk hums. He listens before he speaks, and he does not pretend this is a lesson he wanted.",
+      "dialogue": "\"Don't— don't go past the nave alone. I keep this stair because someone has to. The silk has started to sing, and a hatchling already woke. Alder sent you? Good. Examine the threads. East is the cloister. Please come back.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Piper. I keep the stair below the empty frame. The silk has begun to sing, and a hatchling woke before its queen. Talk if you will. Examine the threads. East is the cloister. South of that, the nave.\"",
+            "text": "\"I am Piper. I keep the stair below the empty frame, and I am not brave enough for what woke. The silk is singing. A hatchling came out too early. If Alder sent you, stay and look. Examine the threads. East is the cloister. South of that is the nave. Don't leave me guessing.\"",
             "choices": [
               { "say": "1", "label": "What woke?", "next": "woke" },
               { "say": "2", "label": "Who is the queen?", "next": "queen" }
             ]
           },
           "woke": {
-            "text": "\"A silk-hatchling. Small, hungry, and earlier than the score allows. It is a lesson, not a throne. If it squares up, treat it as Flint treats a dummy: finish the work, then walk away.\"",
+            "text": "\"A silk-hatchling. Satchel-sized. Hungry. It clicked at me like it wanted a name. It should not have woken. If it squares up, finish it the way Flint finishes a dummy — then get out. It will not stay dead if you walk away mid-lesson. I already ran once. I am not proud of that.\"",
             "choices": [{ "say": "1", "label": "Who is the queen?", "next": "queen" }]
           },
           "queen": {
-            "text": "\"Not yet. Alder will not send one Collegian for that. Learn the rooms. Name what you see. Then go back up and talk alder. Three will be needed later.\""
+            "text": "\"South of the nave. The Deep Cradle. Something bigger is still sleeping, and it will not wake for one Collegian. I can't hold this gallery and watch that room. Bring two classmates. Lock your moves on the same clock. Then go back up and talk alder before I lose my nerve again.\""
           }
         }
       }
@@ -49,8 +53,8 @@
       "id": "object-silk-thread",
       "name": "Silk Thread",
       "kind": "object",
-      "lookDescription": "Examine for a closer look.",
-      "examineDescription": "The thread is warm. It holds a note the way a string holds a bow. Pressed lightly, it answers with the same three pulses that rise through the Clock Tower oak. This is a cradle, not a snare."
+      "lookDescription": "A thick pale strand pinned between two pillars. Examine it.",
+      "examineDescription": "The thread is as thick as twine and warm under your paw. Press it and you feel the same three pulses that climb the Clock Tower oak. This is holding something, not decorating the gallery. Piper was right to be afraid of it."
     }
   ]
 }

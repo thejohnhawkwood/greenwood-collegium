@@ -10,6 +10,7 @@ import {
 import {
   arrivalQuestActive,
   arrivalWalkNarration,
+  closeConversationIfNpcGone,
   promptPorterAfterMove,
 } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
@@ -86,6 +87,7 @@ export function handleMove(
 
   const leavers = charactersInRoom(world, room.id, character.id);
   character.roomId = destination.id;
+  closeConversationIfNpcGone(world, character);
   const arrivals = charactersInRoom(world, destination.id, character.id);
 
   const events: Array<MapDiscoveredEvent | RoomSnapshotEvent | EventEnvelope> = [];

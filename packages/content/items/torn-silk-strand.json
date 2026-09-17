@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "torn-silk-strand",
+  "name": "Torn Silk Strand",
+  "shortDescription": "A warm strand pulled from a hatchling.",
+  "examineDescription": "The strand is thicker than sewing thread and still faintly warm. Three slow pulses travel it and fade. Piper would want this upstairs. Alder would want to see it before anyone names it a trophy.",
+  "category": "ordinary",
+  "unique": true
+}

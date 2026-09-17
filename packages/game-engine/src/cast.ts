@@ -1,15 +1,15 @@
+import { applyHostileCast, applySelfCast, applySelfEffect, matchSpell } from "./combat-apply.js";
+import { lockChorusMove } from "./combat-chorus.js";
+import { isChorus } from "./combat-party.js";
 import { activeEncounter, ensurePlayerVitals } from "./combat-state.js";
 import {
-  actionEvent,
-  applyBurning,
   concludeRound,
   openingOnly,
   prepareEncounter,
-  type CombatEvent,
   type CombatFailure,
   type CombatSuccess,
 } from "./combat-resolve.js";
-import type { CastIntent, Character, EngineRuntime, SpellTemplate, WorldState } from "./state.js";
+import type { CastIntent, EngineRuntime, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export type CastSuccess = CombatSuccess;
@@ -95,12 +95,20 @@ export function handleCast(
   }
 
   if (spell.targetType === "self" || ((spell.damage ?? 0) === 0 && spell.effect)) {
-    character.focus = focus - spell.focusCost;
-    const note = applySelfEffect(character, spell);
-    if (fighting) {
-      const events = note ? [systemNotice(character.id, note, runtime)] : [];
-      return concludeRound(world, character, fighting, events, runtime);
+    if (fighting && isChorus(fighting)) {
+      return lockChorusMove(world, character, fighting, { verb: "cast", spell: spell.id }, runtime);
     }
+    if (fighting) {
+      return concludeRound(
+        world,
+        character,
+        fighting,
+        applySelfCast(character, spell, runtime),
+        runtime,
+      );
+    }
+    const note = applySelfEffect(character, spell);
+    character.focus = focus - spell.focusCost;
     return {
       ok: true,
       events: [systemNotice(character.id, note ?? `You cast ${spell.name}.`, runtime)],
@@ -123,96 +131,16 @@ export function handleCast(
 
   const { encounter } = prepared;
   if (prepared.started) {
-    return openingOnly(character, encounter, runtime);
+    return openingOnly(world, character, encounter, runtime);
   }
-  character.focus = focus - spell.focusCost;
-  const events: CombatEvent[] = [];
-  const damage = spell.damage ?? 0;
-  encounter.enemy.health = Math.max(0, encounter.enemy.health - damage);
-  if (spell.effect === "skip-counter") {
-    encounter.effects.push({
-      id: "skip-counter",
-      targetId: encounter.enemy.id,
-      remainingRounds: 1,
-      appliedRound: encounter.round,
-    });
+  if (isChorus(encounter)) {
+    return lockChorusMove(world, character, encounter, { verb: "cast", spell: spell.id }, runtime);
   }
-  const payload = {
-    encounterId: encounter.id,
-    actorId: character.id,
-    actorName: character.name,
-    actorKind: "player" as const,
-    verb: "cast" as const,
-    spellId: spell.id,
-    spellName: spell.name,
-    focusSpent: spell.focusCost,
-    targetId: encounter.enemy.id,
-    targetName: encounter.enemy.name,
-    damage,
-    targetHealth: encounter.enemy.health,
-    targetMaxHealth: encounter.enemy.maxHealth,
-  };
-  events.push(
-    actionEvent(encounter, payload, runtime, character.id, {
-      presentationKey: spell.presentationKey,
-      segments: [
-        { kind: "text" as const, text: "You cast " },
-        { kind: "spell" as const, id: spell.id, text: spell.name },
-        { kind: "text" as const, text: " at the " },
-        { kind: "target" as const, id: encounter.enemy.id, text: encounter.enemy.name },
-        { kind: "text" as const, text: " for " },
-        { kind: "damage" as const, text: String(damage) },
-        {
-          kind: "text" as const,
-          text: `. It has ${String(encounter.enemy.health)} remaining.`,
-        },
-      ],
-    }),
+  return concludeRound(
+    world,
+    character,
+    encounter,
+    applyHostileCast(character, encounter, spell, runtime),
+    runtime,
   );
-  if (encounter.enemy.health > 0 && spell.burningRounds && spell.burningDamage) {
-    events.push(
-      applyBurning(encounter, spell.burningRounds, spell.burningDamage, runtime, character.id),
-    );
-  }
-  return concludeRound(world, character, encounter, events, runtime);
-}
-
-function applySelfEffect(character: Character, spell: SpellTemplate): string | undefined {
-  if (spell.effect === "avoid-hit") {
-    character.ignoreNextHit = true;
-    return `You cast ${spell.name}. The next blow misses.`;
-  }
-  if (spell.effect === "heal") {
-    const heal = spell.heal ?? 4;
-    const max = character.maxHealth ?? 20;
-    character.health = Math.min(max, (character.health ?? max) + heal);
-    return `You cast ${spell.name}. You mend ${String(heal)}.`;
-  }
-  if (spell.effect === "brace") {
-    if (!character.braceBonus) {
-      character.maxHealth = (character.maxHealth ?? 20) + 4;
-      character.health = (character.health ?? 20) + 4;
-      character.braceBonus = 4;
-    }
-    return `You cast ${spell.name}. Stone holds you a little longer.`;
-  }
-  if (spell.effect === "ready-strike") {
-    character.nextAttackBonus = 1;
-    return `You cast ${spell.name}. The next swing lands heavier.`;
-  }
-  if (spell.effect === "insight") {
-    return spell.insight ?? `You cast ${spell.name}.`;
-  }
-  return `You cast ${spell.name}.`;
-}
-
-function matchSpell(world: WorldState, raw: string): SpellTemplate | undefined {
-  const needle = raw.trim().toLowerCase();
-  return Object.values(world.spells ?? {}).find((spell) => {
-    return (
-      spell.id === needle ||
-      spell.name.toLowerCase() === needle ||
-      spell.name.toLowerCase().includes(needle)
-    );
-  });
 }

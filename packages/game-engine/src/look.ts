@@ -112,7 +112,7 @@ export function snapshotPayload(
         kind: fixture.kind,
         description: fixture.lookDescription,
       })),
-      ...enemiesInRoom(world, room.id).map((enemy) => ({
+      ...enemiesInRoom(world, room.id, looker).map((enemy) => ({
         id: enemy.id,
         name: enemy.name,
         kind: "npc" as const,

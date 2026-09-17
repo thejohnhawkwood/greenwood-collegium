@@ -46,8 +46,16 @@ export function handleMap(world: WorldState, intent: MapIntent, runtime: EngineR
       : fog === 1
         ? "1 room remains in fog."
         : `${String(fog)} rooms remain in fog.`;
+  const floor =
+    room.map?.z === 1
+      ? "Upper floor"
+      : room.map?.z === -1
+        ? "Bell Stair"
+        : (room.map?.z ?? 0) < 0
+          ? "Below the Bell"
+          : "Grounds";
   const narration = [
-    `You are in ${room.title}.`,
+    `You are in ${room.title} (${floor}).`,
     `Explored: ${explored.join(", ")}.`,
     fogLine,
     exits.length ? `Exits from here: ${exits.join(", ")}.` : "There are no visible exits.",

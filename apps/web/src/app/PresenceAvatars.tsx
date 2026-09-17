@@ -97,11 +97,7 @@ export function PresenceAvatars({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [openId, forcedId, visibleConversation, dismissConversation]);
-  const openPerson =
-    people.find((person) => person.id === openId) ??
-    (visibleConversation && visibleConversation.npcId === openId
-      ? { id: visibleConversation.npcId, name: visibleConversation.npcName, kind: "npc" as const }
-      : undefined);
+  const openPerson = people.find((person) => person.id === openId);
   if (!people.length && !visibleConversation) return null;
   const overlap = handOverlap(people.length);
   return (

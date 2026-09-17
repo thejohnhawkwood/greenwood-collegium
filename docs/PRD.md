@@ -1324,7 +1324,7 @@ Each sprint must produce:
 
 **Hypothesis:** Separate player and target frames, round markers, legal actions, and paced events will make combat readable and exciting.
 
-**Status:** Lock-in Chorus accepted (16 September 2026). Solo fights use a twelve-second shot clock, real enemy focus, defend, and flee. See [ds-007-combat-frame.md](design-sprints/ds-007-combat-frame.md) and [ADR-0034](adr/0034-lock-in-combat.md). Do not add Strength or start the queen unless asked.
+**Status:** Lock-in Chorus accepted (16 September 2026). Solo fights use a twelve-second shot clock, real enemy focus, defend, and flee. Party of three and the Silk Queen use the same clock ([ADR-0035](adr/0035-party-chorus.md)). See [ds-007-combat-frame.md](design-sprints/ds-007-combat-frame.md) and [ADR-0034](adr/0034-lock-in-combat.md). Do not add Strength unless students ask.
 
 **Deliverables (original list; still the presentation target after a pick):**
 
@@ -3497,7 +3497,7 @@ The MVP is accepted only when all of the following are true.
 - At least three spells work.
 - Damage, healing, focus, and status effects work.
 - Enemy responds.
-- victory awards XP once.
+- victory awards XP once to remaining party members.
 - defeat safely returns the character.
 - reconnect does not duplicate rewards.
 - combat results remain available in plain text.

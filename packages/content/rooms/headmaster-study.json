@@ -2,10 +2,14 @@
   "$schema": "../schemas/room.schema.json",
   "id": "headmaster-study",
   "title": "The High Study",
-  "shortDescription": "Moonlight and lamplight share a high oak room that does not hurry its guests.",
-  "longDescription": "The High Study sits above the Great Hall like a held breath. Oak beams take the moonlight from a round window. A carved owl dais faces six small School banners. Ledgers wait in stacks. A tuning fork lies on the blotter, still as a threat.\nHeadmaster Alder does not smile first. The room smells of ink, dust, and old feathers.",
+  "shortDescription": "A high oak study above the Great Hall, kept for hard questions.",
+  "longDescription": "The High Study sits above the Great Hall. Oak beams take moonlight from a round window. A carved owl dais faces six small School banners. Ledgers wait in stacks. A tuning fork lies on the blotter.\nHeadmaster Alder does not smile first. The room smells of ink, dust, and old feathers. If he sent for you, it matters.",
   "zone": "academy-core",
-  "unmapped": true,
+  "map": {
+    "x": 0,
+    "y": 1,
+    "z": 1
+  },
   "exits": [
     {
       "direction": "down",
@@ -18,7 +22,7 @@
       "name": "Headmaster Alder",
       "kind": "npc",
       "lookDescription": "An ancient snowy owl in a patched green robe, one yellow eye fierce, a scar across the other, a tuning fork at his belt. Try talk alder.",
-      "examineDescription": "Alder's facial disc is white as a judge's ruff. The scar is old. The robe is mended at the elbows. He listens to the end of a sentence, and the questions in his pocket are not all gentle.",
+      "examineDescription": "Alder's facial disc is white. The scar is old. The robe is mended at the elbows. He listens to the end of a sentence. If he is speaking to you, he has already decided you can carry the answer.",
       "dialogue": "\"The Collegium trains woodland students. Choose a School. The bell below can wait until you are ready to stand with others.\"",
       "dialogueTree": {
         "start": "welcome",
@@ -86,38 +90,55 @@
             "text": "\"You have a School. Finish first lessons at your hearth. The bell can wait until you can stand with others. Down, if you must wander.\""
           },
           "offer-bell": {
-            "text": "\"You have a School, and first lessons have your name. A deep bell sounds beneath us, yet the old abbey bell was taken away long ago. Will you help me separate an observation from a rumour? Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder here.\"",
+            "text": "\"You have a School, and first lessons have your name. I am trusting you with the first honest question this school has asked in a long time. A deep bell sounds under our feet. The old abbey bell is gone — we have an empty frame to prove it. I will not invent a cause from a rumour. Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder here.\"",
             "choices": [
               { "say": "1", "label": "I will examine the three places.", "next": "bell-active" },
               { "say": "2", "label": "What am I listening for?", "next": "bell-why" }
             ]
           },
           "bell-why": {
-            "text": "\"The living wood remembers a welcome. I want to know which parts of the sound are true before we invent a cause. Down to the Great Hall. The Clock Tower is east of the North Quad. The ledger is north of Library Stacks. The listening stone is west of the Herb Garden.\"",
+            "text": "\"Which parts of the sound are true. Down to the Great Hall. The Clock Tower is east of the North Quad. The ledger is north of Library Stacks. The listening stone is west of the Herb Garden. Bring me facts, not a story.\"",
             "choices": [{ "say": "1", "label": "I will go.", "next": "bell-active" }]
           },
           "bell-active": {
-            "text": "\"Down returns you to the Great Hall. Examine the Empty Bell Frame, the Bell Ledger, and the Listening Stone. Then talk alder here.\""
+            "text": "\"Down to the Great Hall. Examine the Empty Bell Frame, the Bell Ledger, and the Listening Stone. Then talk alder here. I asked you because I need a Collegian who will look before they guess.\""
           },
           "bell-done": {
-            "text": "\"The wood remembers. That is enough for the first question.\""
+            "text": "\"The wood remembers. That is enough for the first question. You did this school a service.\""
           },
           "offer-wakes": {
-            "text": "\"The wood remembers a welcome. Something below the Clock Tower has begun to answer. Descend the stair. Talk Piper Mole. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. Do not invent a queen from one hatchling.\"",
+            "text": "\"You already proved the wood can carry a welcome. Something below the Clock Tower has begun to answer. I would not send you down that stair if I had another pair of eyes I trusted. Piper Mole has been alone in the Silk Gallery too long, and he is afraid. Talk to him. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. Do not invent a queen from one hatchling.\"",
             "choices": [
               { "say": "1", "label": "I will descend.", "next": "wakes-active" },
-              { "say": "2", "label": "What am I listening for now?", "next": "wakes-why" }
+              { "say": "2", "label": "What am I looking for now?", "next": "wakes-why" }
             ]
           },
           "wakes-why": {
-            "text": "\"Whether the note has a mouth yet, and whether that mouth is still a child. Type east from the North Quad, then down. Piper keeps the gallery. The nave is east and south of him.\"",
+            "text": "\"Whether anything down there has a mouth yet, and whether that mouth is still a child. East from the North Quad, then down. Piper keeps the gallery. The nave is east and south of him. Look. Name what you saw. I am counting on you.\"",
             "choices": [{ "say": "1", "label": "I will go.", "next": "wakes-active" }]
           },
           "wakes-active": {
-            "text": "\"Down the Clock Tower. Talk piper. Examine the Stair Rope, Silk Thread, and Waking Husk. Then talk alder here.\""
+            "text": "\"Down the Clock Tower. Talk piper. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then talk alder here. Finish this before the silk learns another name.\""
           },
           "wakes-done": {
             "text": "\"A hatchling is not a queen. When three can stand together, we will ask what still sleeps. Go to class.\""
+          },
+          "offer-sleeps": {
+            "text": "\"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I will not send one Collegian into that room. Take two classmates. Examine the Still Score. If she squares up, lock your moves on the same clock. Then return and talk alder here. This is the work I saved for students I trust to come home.\"",
+            "choices": [
+              { "say": "1", "label": "We will go together.", "next": "sleeps-active" },
+              { "say": "2", "label": "What are we facing?", "next": "sleeps-why" }
+            ]
+          },
+          "sleeps-why": {
+            "text": "\"The next mouth after the hatchling. Not a throne. East from the North Quad, then down, east, south, and south again. Take two classmates. If she stands, lock together.\"",
+            "choices": [{ "say": "1", "label": "We will go.", "next": "sleeps-active" }]
+          },
+          "sleeps-active": {
+            "text": "\"Together. South of the nave. Examine the Still Score. Lock your moves on one clock. Then talk alder here. The school is watching this one.\""
+          },
+          "sleeps-done": {
+            "text": "\"The silk has a mouth now, and it learned it from a class. That is enough. Go to class.\""
           }
         }
       }

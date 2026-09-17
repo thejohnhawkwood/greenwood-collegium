@@ -13,6 +13,8 @@ export const NPC_PLATE_FILES = [
   "npc-mentor-edge",
   "npc-piper-mole",
   "practice-dummy",
+  "silk-hatchling",
+  "silk-queen",
 ] as const;
 
 const NPC_PLATE_ALIASES: Record<string, string> = {
@@ -31,10 +33,13 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "npc-piper-mole": "npc-piper-mole",
   "practice-dummy": "practice-dummy",
   "enemy-practice-dummy-south-orchard": "practice-dummy",
-  "enemy-silk-hatchling-cocoon-nave": "practice-dummy",
+  "silk-hatchling": "silk-hatchling",
+  "enemy-silk-hatchling-cocoon-nave": "silk-hatchling",
+  "silk-queen": "silk-queen",
+  "enemy-silk-queen-deep-cradle": "silk-queen",
 };
 
-const NPC_ART_REV = "owl-1";
+const NPC_ART_REV = "piper-mole-2";
 
 export function npcArtSrc(id: string): string | undefined {
   const plate = NPC_PLATE_ALIASES[id];

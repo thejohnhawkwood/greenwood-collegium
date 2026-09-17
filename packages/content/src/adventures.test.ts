@@ -23,7 +23,7 @@ describe("adventure content", () => {
   it("offers thirteen speaking staff and discoveries in every existing room", () => {
     const world = loadBundledWorld();
     const rooms = Object.values(world.rooms);
-    expect(rooms).toHaveLength(37);
+    expect(rooms).toHaveLength(38);
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );

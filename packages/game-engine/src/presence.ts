@@ -1,5 +1,6 @@
 import type { EventEnvelope } from "@greenwood/contracts";
 import { startArrivalQuest } from "./arrival.js";
+import { dropEncounterMember, encounterMembers } from "./combat-party.js";
 import { activeEncounter, closeEncounter } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
@@ -106,7 +107,10 @@ export function handleLeave(
   const notices = leftNotices(watchers, character, roomId, runtime);
   const encounter = activeEncounter(world, character.id);
   if (encounter) {
-    closeEncounter(world, encounter);
+    dropEncounterMember(world, encounter, character.id);
+    if (encounterMembers(encounter).length === 0) {
+      closeEncounter(world, encounter);
+    }
   }
   delete world.characters[character.id];
   return { ok: true, events: [], notices };

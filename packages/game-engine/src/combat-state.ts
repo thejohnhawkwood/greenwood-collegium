@@ -31,11 +31,15 @@ export function encounterUsingSpawn(world: WorldState, spawnId: string): Encount
 }
 
 export function closeEncounter(world: WorldState, encounter: Encounter): void {
-  const character = world.characters[encounter.playerId];
-  if (character?.encounterId === encounter.id) {
-    character.encounterId = undefined;
-  }
-  if (character) {
+  const memberIds = encounter.playerIds ?? [encounter.playerId];
+  for (const id of memberIds) {
+    const character = world.characters[id];
+    if (character?.encounterId === encounter.id) {
+      character.encounterId = undefined;
+    }
+    if (!character) {
+      continue;
+    }
     if (character.braceBonus) {
       const max = Math.max(
         DEFAULT_PLAYER_MAX_HEALTH,

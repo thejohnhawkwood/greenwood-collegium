@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-silk-queen-deep-cradle",
+  "templateId": "silk-queen",
+  "roomId": "deep-cradle"
+}

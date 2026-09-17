@@ -33,7 +33,9 @@ export const itemTemplateSchema = z
     rejectMarkup(item.name, "name", ctx);
     rejectMarkup(item.shortDescription, "shortDescription", ctx);
     rejectMarkup(item.examineDescription, "examineDescription", ctx);
-    const primitive = item.itemType ?? (item.category === "weapon" ? undefined : item.category);
+    const primitive =
+      item.itemType ??
+      (item.category === "weapon" || item.category === "ordinary" ? undefined : item.category);
     if (item.category === "weapon" && !item.itemType) {
       ctx.addIssue({ code: "custom", message: "weapon items must declare itemType" });
     }

@@ -12,6 +12,7 @@ export const mapRoomSchema = z
     id: z.string().min(1),
     x: z.number().int(),
     y: z.number().int(),
+    z: z.number().int().optional(),
     state: mapRoomVisibilitySchema,
     title: z.string().min(1).optional(),
   })

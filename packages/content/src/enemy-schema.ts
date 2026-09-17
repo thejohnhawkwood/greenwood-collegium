@@ -28,6 +28,8 @@ export const enemyTemplateSchema = z
     maxFocus: z.number().int().nonnegative().optional(),
     attack: z.number().int().positive(),
     experience: z.number().int().nonnegative(),
+    minParty: z.number().int().positive().optional(),
+    loot: z.array(stableIdSchema).optional(),
   })
   .strict()
   .superRefine((enemy, ctx) => {

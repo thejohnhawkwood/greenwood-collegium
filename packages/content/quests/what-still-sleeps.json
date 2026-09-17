@@ -1,0 +1,30 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "what-still-sleeps",
+  "title": "What Still Sleeps",
+  "experienceReward": 20,
+  "introNarration": "Alder does not lift the fork. He looks at you the way he looks at a load-bearing beam. \"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I will not send one Collegian into that room. Take two classmates. Examine the Still Score. If she squares up, lock your moves on the same clock. Then come back and talk alder here. This is the work I saved for students I trust to come home.\"",
+  "reminderNarration": "Alder counts three. \"East from the North Quad, then down, east, south, and south again. Do not go alone. Examine the Still Score in the Deep Cradle. If the Silk Queen stands, lock together. Then talk alder here. Type quests for the list. The school is watching this one.\"",
+  "completionNarration": "You name the still score and the three who stood. Alder listens to the end. \"The silk has a mouth now, and it learned it from a class, not a rumour. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Go to class.\"",
+  "objectives": [
+    {
+      "id": "stand-together",
+      "kind": "visit",
+      "roomId": "deep-cradle",
+      "label": "Reach the Deep Cradle with classmates. Alder will not accept a solo report from that room. Type south from the Cocoon Nave."
+    },
+    {
+      "id": "read-score",
+      "kind": "examine",
+      "targetId": "object-still-score",
+      "label": "Examine the Still Score in the Deep Cradle. The blank note is the part Alder cannot see from the High Study."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-headmaster-alder",
+      "requires": ["stand-together", "read-score"],
+      "label": "Bring the cradle back to Alder in the High Study. Type up from the Great Hall."
+    }
+  ]
+}

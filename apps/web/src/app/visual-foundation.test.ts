@@ -147,7 +147,59 @@ describe("visual foundation", () => {
     expect(world).toContain("Hall");
     expect(world).toContain("Travel to Hall");
     expect(world).toContain("North ↑");
-    expect(renderToStaticMarkup(createElement(Minimap, {}))).toContain("No charted rooms here yet");
+    expect(world).toContain("Grounds");
+    expect(renderToStaticMarkup(createElement(Minimap, {}))).toContain(
+      "No charted rooms on this level yet",
+    );
+    const stacked = renderToStaticMarkup(
+      createElement(Minimap, {
+        state: {
+          ...state,
+          minimap: {
+            rooms: [
+              { id: "court", title: "Court", x: 0, y: 0, z: 0, state: "current" },
+              { id: "study", title: "The High Study", x: 0, y: 1, z: 1, state: "explored" },
+              { id: "cradle", title: "Deep Cradle", x: 2, y: 0, z: -2, state: "explored" },
+            ],
+            paths: [],
+          },
+        },
+      }),
+    );
+    expect(stacked).toContain("Grounds");
+    expect(stacked).not.toContain("The High Study");
+    expect(stacked).not.toContain("Deep Cradle");
+    const worldDialog = renderToStaticMarkup(
+      createElement(WorldMapDialog, {
+        open: true,
+        state: {
+          ...state,
+          room: {
+            ...state.room,
+            exits: [
+              { direction: "up", toRoomId: "study" },
+              { direction: "down", toRoomId: "stair" },
+            ],
+          },
+          minimap: {
+            rooms: [
+              { id: "court", title: "Court", x: 0, y: 0, z: 0, state: "current" },
+              { id: "study", title: "The High Study", x: 0, y: 1, z: 1, state: "explored" },
+              { id: "cradle", title: "Deep Cradle", x: 2, y: 0, z: -2, state: "explored" },
+            ],
+            paths: [],
+          },
+        },
+        onClose: () => {},
+        onPrepareMove: () => {},
+        onTravel: () => {},
+      }),
+    );
+    expect(worldDialog).toContain("Up");
+    expect(worldDialog).toContain("Down");
+    expect(worldDialog).toContain("Climb up");
+    expect(worldDialog).toContain("Go down");
+    expect(worldDialog).toContain("Grounds");
   });
   it("renders every supported species with the same deterministic layers at every size", () => {
     const portraits = new Set<string>();
@@ -362,7 +414,16 @@ describe("visual foundation", () => {
     expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
-      "/art/characters/npcs/practice-dummy.png?v=owl-1",
+      "/art/characters/npcs/practice-dummy.png?v=piper-mole-2",
+    );
+    expect(npcArtSrc("npc-piper-mole")).toBe(
+      "/art/characters/npcs/npc-piper-mole.png?v=piper-mole-2",
+    );
+    expect(npcArtSrc("enemy-silk-hatchling-cocoon-nave")).toBe(
+      "/art/characters/npcs/silk-hatchling.png?v=piper-mole-2",
+    );
+    expect(objectArtSrc("object-silk-thread", "Silk Thread")).toBe(
+      "/art/objects/object-silk-thread.png",
     );
     expect(objectArtSrc("item-copper-key-lantern-court", "Small Copper Key")).toBe(
       "/art/objects/small-copper-key.png",
@@ -422,6 +483,24 @@ describe("visual foundation", () => {
     expect(itemMenu).toContain("Examine");
     expect(itemMenu).toContain("Take");
     expect(itemMenu).not.toContain("Attack");
+    const lootId = "item-enemy-practice-dummy-south-orchard-loot-straw-practice-scrap";
+    expect(objectArtSrc(lootId, "Straw Practice Scrap")).toBe(
+      "/art/objects/straw-practice-scrap.png",
+    );
+    expect(
+      presenceActions({
+        id: lootId,
+        name: "Straw Practice Scrap",
+        kind: "object",
+      }).map((action) => action.label),
+    ).toEqual(["Examine", "Take"]);
+    expect(
+      tokenKind({
+        id: lootId,
+        name: "Straw Practice Scrap",
+        kind: "object",
+      }),
+    ).toBe("object");
     const dummyMenu = renderToStaticMarkup(
       createElement(PresenceMenu, {
         person: {

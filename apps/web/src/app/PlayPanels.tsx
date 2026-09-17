@@ -203,7 +203,13 @@ export function PlayPanels({
                     entity.kind === "npc" ? "npc" : entity.kind === "player" ? "player" : "object",
                   visual: entity.visual,
                 }))}
-                conversation={state?.encounter ? undefined : conversation}
+                conversation={
+                  state?.encounter ||
+                  !conversation ||
+                  !(room?.visible ?? []).some((entity) => entity.id === conversation.npcId)
+                    ? undefined
+                    : conversation
+                }
                 inCombat={state?.encounter ? false : character?.inCombat}
                 gift={character?.gift}
                 gifts={character?.gifts}

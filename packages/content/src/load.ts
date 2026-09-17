@@ -173,7 +173,12 @@ export function loadBundledWorld(): LoadedWorld {
   const issues = [
     ...validateWorld(namedRooms),
     ...validateCatalog(namedRooms, namedTemplates, namedPlacements),
-    ...validateBestiary(namedRooms, namedEnemies, namedEnemyPlacements),
+    ...validateBestiary(
+      namedRooms,
+      namedEnemies,
+      namedEnemyPlacements,
+      new Set(namedTemplates.map((named) => named.template.id)),
+    ),
     ...validateSpells(namedSpells),
     ...validateQuests(namedRooms, namedTemplates, namedQuests),
     ...validateRoomArt(namedRooms, bundledRoomArtDirectory),

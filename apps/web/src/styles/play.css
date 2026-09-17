@@ -1641,6 +1641,21 @@
 .world-map-dialog .panel-heading {
   margin: 0 0 0.4rem;
 }
+.map-level-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.6rem;
+}
+.map-level-nav p {
+  margin: 0;
+  min-width: 8rem;
+}
+.minimap-compact .minimap-level {
+  margin: 0.25rem 0 0;
+  text-align: center;
+}
 .lobby-overlay {
   position: fixed;
   inset: 0;

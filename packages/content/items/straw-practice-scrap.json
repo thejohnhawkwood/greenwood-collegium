@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "straw-practice-scrap",
+  "name": "Straw Practice Scrap",
+  "shortDescription": "A torn scrap of lesson straw.",
+  "examineDescription": "A wad of straw and patched canvas, still warm from the last hit. Flint would call it proof you finished the lesson. It smells of dust and orchard apples.",
+  "category": "ordinary",
+  "unique": true
+}

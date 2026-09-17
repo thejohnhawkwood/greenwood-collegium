@@ -228,6 +228,7 @@ Students can always type `help`. Today the game explains:
 | `cast ember dummy` | Square up, then spend Ember |
 | `defend` / `guard` | Lock a guard; the reply is halved |
 | `flee` / `run` | Leave the lesson; stay in the room |
+| `attack queen` | After The Bell Wakes, three classmates in the Deep Cradle |
 | `help` / `help look` | This list, or one word |
 | `quests` | Current tasks |
 

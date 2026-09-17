@@ -14,6 +14,7 @@ import {
   applyQuestProgress,
   createPlayState,
   activeEncounter,
+  encounterMembers,
   handleAttack,
   handleCombatExpire,
   handleDefend,
@@ -858,6 +859,7 @@ export async function attachRealtime(
 
     await persistStarterCopies(characterId, identity);
 
+    const previousEncounterId = activeEncounter(world, characterId)?.id;
     const result =
       intent.verb === "look"
         ? handleLook(world, intent, runtime)
@@ -1076,7 +1078,7 @@ export async function attachRealtime(
       intent.verb === "defend" ||
       intent.verb === "flee"
     ) {
-      armCombatLock(characterId, identity);
+      rearmPartyLocks(characterId, previousEncounterId);
     }
   }
 
@@ -1112,6 +1114,24 @@ export async function attachRealtime(
     }
   }
 
+  function rearmPartyLocks(actorId: string, previousEncounterId?: string): void {
+    const current = activeEncounter(world, actorId);
+    if (current) {
+      for (const id of encounterMembers(current)) {
+        armCombatLock(id, identities.get(id));
+      }
+      return;
+    }
+    clearCombatLock(actorId);
+    const leftover = previousEncounterId ? world.encounters?.[previousEncounterId] : undefined;
+    if (!leftover || leftover.status === "closed") {
+      return;
+    }
+    for (const id of encounterMembers(leftover)) {
+      armCombatLock(id, identities.get(id));
+    }
+  }
+
   function armCombatLock(characterId: string, identity: PlayIdentity | undefined): void {
     clearCombatLock(characterId);
     const encounter = activeEncounter(world, characterId);
@@ -1124,6 +1144,7 @@ export async function attachRealtime(
       setTimeout(() => {
         void runExclusive(async () => {
           combatLockTimers.delete(characterId);
+          const previousEncounterId = activeEncounter(world, characterId)?.id;
           const result = handleCombatExpire(
             world,
             { verb: "combat-expire", characterId },
@@ -1139,7 +1160,7 @@ export async function attachRealtime(
             await persistAuthenticatedProgress(characterId);
           }
           deliverPlay(characterId, result.events, result.notices);
-          armCombatLock(characterId, identity);
+          rearmPartyLocks(characterId, previousEncounterId);
         }).catch(() => {
           app.log.error({ event: "combat_lock_failed" }, "combat lock could not complete");
         });

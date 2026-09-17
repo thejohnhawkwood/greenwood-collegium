@@ -8,6 +8,7 @@ import {
   firstLessonsComplete,
   HEADMASTER_NPC_ID,
   resolveAlderSpeechNode,
+  STILL_SLEEPS_QUEST_ID,
 } from "./headmaster.js";
 import { resolveMentorSpeechNode } from "./schools.js";
 import { namesMatch } from "./names.js";
@@ -88,6 +89,14 @@ export function handleTalk(
     events.push(...startQuest(world, character.id, BELL_WAKES_QUEST_ID, runtime));
     started.add(BELL_WAKES_QUEST_ID);
   }
+  const offerSleeps =
+    npc.id === HEADMASTER_NPC_ID &&
+    world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID]?.status === "completed" &&
+    !world.quests?.[character.id]?.[STILL_SLEEPS_QUEST_ID];
+  if (offerSleeps) {
+    events.push(...startQuest(world, character.id, STILL_SLEEPS_QUEST_ID, runtime));
+    started.add(STILL_SLEEPS_QUEST_ID);
+  }
   events.push(
     ...progressQuests(
       world,
@@ -95,9 +104,15 @@ export function handleTalk(
       runtime,
     ),
   );
-  const wakes = world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
+  const wakesNow = world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
+  const sleepsNow = world.quests?.[character.id]?.[STILL_SLEEPS_QUEST_ID];
   const bellDone = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID]?.status === "completed";
-  if (npc.id === HEADMASTER_NPC_ID && (wakes?.status === "completed" || (bellDone && !wakes))) {
+  if (
+    npc.id === HEADMASTER_NPC_ID &&
+    (sleepsNow?.status === "completed" ||
+      (wakesNow?.status === "completed" && !sleepsNow) ||
+      (bellDone && !wakesNow))
+  ) {
     const nextNode = resolveAlderSpeechNode(npc.dialogueTree, world, character);
     if (nextNode) {
       character.openConversation = { npcId: npc.id, nodeId: nextNode };
@@ -118,9 +133,20 @@ export function handleTalk(
   if (npc.id === HEADMASTER_NPC_ID && !offerBell && bell?.status === "active" && bellTemplate) {
     events.push(systemNotice(character.id, bellTemplate.reminderNarration, runtime));
   }
+  const wakes = world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
   const wakesTemplate = world.questTemplates?.[BELL_WAKES_QUEST_ID];
   if (npc.id === HEADMASTER_NPC_ID && !offerWakes && wakes?.status === "active" && wakesTemplate) {
     events.push(systemNotice(character.id, wakesTemplate.reminderNarration, runtime));
+  }
+  const sleeps = world.quests?.[character.id]?.[STILL_SLEEPS_QUEST_ID];
+  const sleepsTemplate = world.questTemplates?.[STILL_SLEEPS_QUEST_ID];
+  if (
+    npc.id === HEADMASTER_NPC_ID &&
+    !offerSleeps &&
+    sleeps?.status === "active" &&
+    sleepsTemplate
+  ) {
+    events.push(systemNotice(character.id, sleepsTemplate.reminderNarration, runtime));
   }
   return { ok: true, npcId: npc.id, events };
 }

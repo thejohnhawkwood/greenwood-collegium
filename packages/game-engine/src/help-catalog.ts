@@ -139,7 +139,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["map", "chart"],
     summary: "Read your explored rooms and how much of the Collegium remains in fog.",
     detail:
-      "map (or chart) names the rooms you have already visited, marks where you stand, and says how many charted rooms remain in fog. It does not name unvisited rooms.",
+      "map (or chart) names the rooms you have already visited, marks where you stand, names the floor, and says how many charted rooms remain in fog. It does not name unvisited rooms.",
   },
   {
     topic: "quests",

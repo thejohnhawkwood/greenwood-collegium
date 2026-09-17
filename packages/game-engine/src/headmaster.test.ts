@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ARRIVAL_QUEST_ID, progressQuests, startArrivalQuest } from "./arrival.js";
 import { handleExamine } from "./examine.js";
-import { BELL_BELOW_QUEST_ID, BELL_WAKES_QUEST_ID } from "./headmaster.js";
+import { BELL_BELOW_QUEST_ID, BELL_WAKES_QUEST_ID, STILL_SLEEPS_QUEST_ID } from "./headmaster.js";
 import { createPlayState } from "./play-state.js";
 import { handleJoin } from "./presence.js";
 import { handleLook } from "./look.js";
@@ -86,6 +86,9 @@ function world(): WorldState {
                 },
                 "wakes-active": { text: "Talk piper. Examine the husk." },
                 "wakes-done": { text: "A hatchling is not a queen." },
+                "offer-sleeps": { text: "Three can stand." },
+                "sleeps-active": { text: "Together. South of the nave." },
+                "sleeps-done": { text: "The silk has a mouth now." },
               },
             },
           },
@@ -164,13 +167,32 @@ function world(): WorldState {
         shortDescription: "Husks.",
         longDescription: "One husk is open.",
         zone: "bell-below",
-        exits: [{ direction: "west", toRoomId: "silk-gallery" }],
+        exits: [
+          { direction: "west", toRoomId: "silk-gallery" },
+          { direction: "south", toRoomId: "deep-cradle" },
+        ],
         fixtures: [
           {
             id: "object-waking-husk",
             name: "Waking Husk",
             kind: "object",
             examineDescription: "A cradle left too soon.",
+          },
+        ],
+      },
+      "deep-cradle": {
+        id: "deep-cradle",
+        title: "Deep Cradle",
+        shortDescription: "A still chamber.",
+        longDescription: "What still sleeps.",
+        zone: "bell-below",
+        exits: [{ direction: "north", toRoomId: "cocoon-nave" }],
+        fixtures: [
+          {
+            id: "object-still-score",
+            name: "Still Score",
+            kind: "object",
+            examineDescription: "Three notes and a blank.",
           },
         ],
       },
@@ -339,6 +361,35 @@ function world(): WorldState {
             kind: "talk",
             targetId: "npc-headmaster-alder",
             requires: ["check-rope", "hear-piper", "check-thread", "check-husk"],
+            label: "Talk alder in the High Study.",
+          },
+        ],
+      },
+      [STILL_SLEEPS_QUEST_ID]: {
+        id: STILL_SLEEPS_QUEST_ID,
+        title: "What Still Sleeps",
+        introNarration: "Three can stand.",
+        reminderNarration: "Go together. Examine the Still Score.",
+        completionNarration: "The silk has a mouth now.",
+        experienceReward: 20,
+        objectives: [
+          {
+            id: "stand-together",
+            kind: "visit",
+            roomId: "deep-cradle",
+            label: "Go to the Deep Cradle.",
+          },
+          {
+            id: "read-score",
+            kind: "examine",
+            targetId: "object-still-score",
+            label: "Examine the Still Score.",
+          },
+          {
+            id: "report",
+            kind: "talk",
+            targetId: "npc-headmaster-alder",
+            requires: ["stand-together", "read-score"],
             label: "Talk alder in the High Study.",
           },
         ],
@@ -526,9 +577,44 @@ describe("headmaster study after Arrival", () => {
     );
     expect(woke.ok).toBe(true);
     expect(realm.quests?.["char-rowan"]?.[BELL_WAKES_QUEST_ID]?.status).toBe("completed");
-    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("wakes-done");
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("offer-sleeps");
     expect(woke.ok && woke.events.some((event) => event.narration.includes("hatchling"))).toBe(
       true,
     );
+    expect(realm.quests?.["char-rowan"]?.[STILL_SLEEPS_QUEST_ID]).toBeUndefined();
+
+    const offeredSleeps = handleTalk(
+      realm,
+      { verb: "talk", characterId: "char-rowan", target: "alder" },
+      clock,
+    );
+    expect(offeredSleeps.ok).toBe(true);
+    expect(realm.quests?.["char-rowan"]?.[STILL_SLEEPS_QUEST_ID]?.status).toBe("active");
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("offer-sleeps");
+
+    realm.characters["char-rowan"]!.roomId = "deep-cradle";
+    progressQuests(
+      realm,
+      { characterId: "char-rowan", kind: "move", roomId: "deep-cradle" },
+      clock,
+    );
+    expect(
+      handleExamine(realm, { verb: "examine", characterId: "char-rowan", target: "score" }, clock)
+        .ok,
+    ).toBe(true);
+    progressQuests(
+      realm,
+      { characterId: "char-rowan", kind: "examine", targetId: "object-still-score" },
+      clock,
+    );
+    realm.characters["char-rowan"]!.roomId = "headmaster-study";
+    const slept = handleTalk(
+      realm,
+      { verb: "talk", characterId: "char-rowan", target: "alder" },
+      clock,
+    );
+    expect(slept.ok).toBe(true);
+    expect(realm.quests?.["char-rowan"]?.[STILL_SLEEPS_QUEST_ID]?.status).toBe("completed");
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("sleeps-done");
   });
 });

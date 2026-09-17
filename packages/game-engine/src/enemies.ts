@@ -1,4 +1,4 @@
-import type { EnemySpawn, WorldState } from "./state.js";
+import type { Character, EnemySpawn, WorldState } from "./state.js";
 
 export function worldEnemies(world: WorldState): Record<string, EnemySpawn> {
   if (!world.enemies) {
@@ -7,8 +7,30 @@ export function worldEnemies(world: WorldState): Record<string, EnemySpawn> {
   return world.enemies;
 }
 
-export function enemiesInRoom(world: WorldState, roomId: string): EnemySpawn[] {
-  return Object.values(worldEnemies(world)).filter((enemy) => enemy.roomId === roomId);
+export function hasDefeatedSpawn(character: Character | undefined, spawnId: string): boolean {
+  return Boolean(character?.defeatedSpawnIds?.includes(spawnId));
+}
+
+export function recordSpawnDefeat(character: Character, spawnId: string): void {
+  if (hasDefeatedSpawn(character, spawnId)) {
+    return;
+  }
+  character.defeatedSpawnIds = [...(character.defeatedSpawnIds ?? []), spawnId];
+}
+
+export function spawnVisibleTo(world: WorldState, spawn: EnemySpawn, looker: Character): boolean {
+  if ((spawn.minParty ?? 1) > 1) {
+    return Object.values(world.characters).some(
+      (member) => member.roomId === spawn.roomId && !hasDefeatedSpawn(member, spawn.id),
+    );
+  }
+  return !hasDefeatedSpawn(looker, spawn.id);
+}
+
+export function enemiesInRoom(world: WorldState, roomId: string, looker: Character): EnemySpawn[] {
+  return Object.values(worldEnemies(world)).filter(
+    (enemy) => enemy.roomId === roomId && spawnVisibleTo(world, enemy, looker),
+  );
 }
 
 export function matchEnemies(candidates: readonly EnemySpawn[], target: string): EnemySpawn[] {

@@ -32,6 +32,7 @@ export { handleDefend } from "./defend.js";
 export { handleFlee } from "./flee.js";
 export { handleCombatExpire } from "./combat-expire.js";
 export { COMBAT_LOCK_MS } from "./combat-lock.js";
+export { encounterMembers } from "./combat-party.js";
 export { handleCast } from "./cast.js";
 export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
@@ -81,7 +82,14 @@ export {
   ensureCharacterStarterItems,
   starterInstanceId,
 } from "./starter-items.js";
-export { enemiesInRoom, matchEnemies, worldEnemies } from "./enemies.js";
+export {
+  enemiesInRoom,
+  hasDefeatedSpawn,
+  matchEnemies,
+  recordSpawnDefeat,
+  spawnVisibleTo,
+  worldEnemies,
+} from "./enemies.js";
 export {
   DEFAULT_PLAYER_ATTACK,
   DEFAULT_PLAYER_MAX_FOCUS,
@@ -161,6 +169,7 @@ export { createPlayState } from "./play-state.js";
 export {
   BELL_BELOW_QUEST_ID,
   BELL_WAKES_QUEST_ID,
+  STILL_SLEEPS_QUEST_ID,
   HEADMASTER_NPC_ID,
   HEADMASTER_STUDY_ID,
   summonToHeadmaster,

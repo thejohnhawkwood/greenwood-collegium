@@ -1,12 +1,8 @@
+import { applyAttackHit } from "./combat-apply.js";
+import { lockChorusMove } from "./combat-chorus.js";
+import { isChorus } from "./combat-party.js";
+import { ensurePlayerVitals } from "./combat-state.js";
 import {
-  DEFAULT_PLAYER_ATTACK,
-  ensurePlayerVitals,
-  nextRoll,
-  rollAttackDamage,
-} from "./combat-state.js";
-import { attackFitModifier } from "./equipment.js";
-import {
-  actionEvent,
   concludeRound,
   openingOnly,
   prepareEncounter,
@@ -34,36 +30,16 @@ export function handleAttack(
   const { character, encounter } = prepared;
   ensurePlayerVitals(character);
   if (prepared.started) {
-    return openingOnly(character, encounter, runtime);
+    return openingOnly(world, character, encounter, runtime);
   }
-  const events: CombatEvent[] = [];
-  const bonus = character.nextAttackBonus ?? 0;
-  character.nextAttackBonus = undefined;
-  const playerDamage = Math.max(
-    1,
-    rollAttackDamage(DEFAULT_PLAYER_ATTACK, nextRoll(runtime)) +
-      attackFitModifier(world, character) +
-      bonus,
+  if (isChorus(encounter)) {
+    return lockChorusMove(world, character, encounter, { verb: "attack" }, runtime);
+  }
+  return concludeRound(
+    world,
+    character,
+    encounter,
+    applyAttackHit(world, character, encounter, runtime),
+    runtime,
   );
-  encounter.enemy.health = Math.max(0, encounter.enemy.health - playerDamage);
-  events.push(
-    actionEvent(
-      encounter,
-      {
-        encounterId: encounter.id,
-        actorId: character.id,
-        actorName: character.name,
-        actorKind: "player",
-        verb: "attack",
-        targetId: encounter.enemy.id,
-        targetName: encounter.enemy.name,
-        damage: playerDamage,
-        targetHealth: encounter.enemy.health,
-        targetMaxHealth: encounter.enemy.maxHealth,
-      },
-      runtime,
-      character.id,
-    ),
-  );
-  return concludeRound(world, character, encounter, events, runtime);
 }

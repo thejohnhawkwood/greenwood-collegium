@@ -4,9 +4,9 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **Release target:** v0.0 foundation (thirty-two mapped rooms plus unmapped High Study and Bell Stair, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits)
-- **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-005 quest journal popup, DS-006 minimap, DS-007 Lock-in Chorus combat. Typed commands stay canonical.
-- **Active follow-up:** Party of three and the queen. Do not start unless asked. Level-3 kits and The Bell Wakes are in. Combat frame is [DS-007](../design-sprints/ds-007-combat-frame.md) Lock-in Chorus with a 12s clock ([ADR-0034](../adr/0034-lock-in-combat.md)).
+- **Release target:** v0.0 foundation (thirty-eight mapped rooms on four floors, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits)
+- **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-005 quest journal popup, DS-006 minimap, DS-007 Lock-in Chorus combat, party of three and What Still Sleeps. Typed commands stay canonical.
+- **Active follow-up:** Classroom play of the queen. Do not add Strength. Combat is [DS-007](../design-sprints/ds-007-combat-frame.md) plus [ADR-0035](../adr/0035-party-chorus.md) and [ADR-0037](../adr/0037-first-time-spawns.md).
 - **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header).
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)

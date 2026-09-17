@@ -17,8 +17,9 @@ map. That requires a canonical graph and a different visibility rule.
 
 - Every current Collegium room receives unique `map: {x,y}` coordinates. Authored
   `+y` is north. Cardinal exits must move on the matching axis; distance may be
-  greater than one so branches do not collide. `unmapped` remains for later
-  secret rooms, which stay absent until discovered.
+  greater than one so branches do not collide. [ADR-0036](0036-map-floors.md)
+  adds optional `z` so upper and lower floors do not collide with the grounds.
+  `unmapped` remains for later secret rooms, which stay absent until discovered.
 - `play-state` includes every charted room and path. Fogged rooms have `id`,
   coordinates and `state: "unknown"`. They never include a title or contents.
 - Discovery is persisted on the character (`discovered_room_ids`, migration 0009)

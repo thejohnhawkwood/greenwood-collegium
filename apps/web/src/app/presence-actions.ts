@@ -15,11 +15,14 @@ export type PresenceAction = {
 };
 
 export function isHostile(person: PresencePerson): boolean {
+  if (person.id.includes("-loot-") || person.id.startsWith("item-")) {
+    return false;
+  }
   return person.id.startsWith("enemy-") || person.id === "practice-dummy";
 }
 
 export function isTakeable(person: PresencePerson): boolean {
-  return person.id.startsWith("item-");
+  return person.id.startsWith("item-") || person.id.includes("-loot-");
 }
 
 /** Commands the engine will accept for this token. Typed words stay canonical. */

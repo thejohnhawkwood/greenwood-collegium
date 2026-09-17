@@ -178,8 +178,8 @@ describe("visual play projection", () => {
     ])
       expect(JSON.stringify(snapshot)).not.toContain(privateText);
     expect(snapshot?.minimap.rooms).toEqual([
-      { id: "court", x: 0, y: 0, state: "current", title: "Court" },
-      { id: "hall", x: 0, y: 1, state: "unknown" },
+      { id: "court", x: 0, y: 0, z: 0, state: "current", title: "Court" },
+      { id: "hall", x: 0, y: 1, z: 0, state: "unknown" },
     ]);
     expect(snapshot?.minimap.paths).toEqual([{ from: "court", to: "hall" }]);
     expect(snapshot?.conversation).toEqual({
@@ -225,8 +225,8 @@ describe("visual play projection", () => {
     const snapshot = createPlayState(world, "self");
     expect(snapshot?.room.title).toBe("Unseen hall");
     expect(snapshot?.minimap.rooms).toEqual([
-      { id: "court", x: 0, y: 0, state: "explored", title: "Court" },
-      { id: "hall", x: 0, y: 1, state: "current", title: "Unseen hall" },
+      { id: "court", x: 0, y: 0, z: 0, state: "explored", title: "Court" },
+      { id: "hall", x: 0, y: 1, z: 0, state: "current", title: "Unseen hall" },
     ]);
     expect(snapshot?.minimap.paths).toEqual([{ from: "court", to: "hall" }]);
     expect(snapshot?.room.visible.map((entity) => entity.id)).toEqual(["distant"]);
@@ -238,7 +238,7 @@ describe("visual play projection", () => {
     expect(createPlayState(world, "missing")).toBeUndefined();
     const moved = fixture();
     moved.characters.self!.roomId = "hall";
-    expect(createPlayState(moved, "self")?.conversation?.npcName).toBe("Porter Bramble");
+    expect(createPlayState(moved, "self")?.conversation).toBeUndefined();
     const linear = fixture();
     linear.rooms.court!.fixtures[0] = {
       id: "npc-wren",
@@ -273,7 +273,7 @@ describe("visual play projection", () => {
     const chart = handleMap(world, { verb: "map", characterId: "self" }, runtime());
     expect(chart.ok).toBe(true);
     if (chart.ok) {
-      expect(chart.event.narration).toContain("You are in Court.");
+      expect(chart.event.narration).toContain("You are in Court (Grounds).");
       expect(chart.event.narration).toContain("Explored: Court, Unseen hall.");
       expect(chart.event.narration).toContain("The charted Collegium is known to you.");
       expect(chart.event.narration).not.toContain("Hidden vault");

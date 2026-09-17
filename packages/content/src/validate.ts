@@ -76,6 +76,10 @@ export function validateWorld(namedRooms: NamedRoom[]): ContentIssue[] {
     east: { axis: "x", sign: 1 },
     west: { axis: "x", sign: -1 },
   } as const;
+  const vertical = {
+    up: 1,
+    down: -1,
+  } as const;
 
   for (const named of namedRooms) {
     for (const exit of named.room.exits) {
@@ -89,9 +93,22 @@ export function validateWorld(namedRooms: NamedRoom[]): ContentIssue[] {
         });
         continue;
       }
-      const heading = compass[exit.direction as keyof typeof compass];
       const from = named.room.map;
       const to = destination.room.map;
+      const climb = vertical[exit.direction as keyof typeof vertical];
+      if (climb && from && to) {
+        const delta = (to.z ?? 0) - (from.z ?? 0);
+        if (climb > 0 ? delta <= 0 : delta >= 0) {
+          issues.push({
+            code: "compass_inconsistent",
+            message: `${named.room.id} exit ${exit.direction} does not move z toward ${exit.toRoomId}`,
+            roomId: named.room.id,
+            fileName: named.fileName,
+          });
+        }
+        continue;
+      }
+      const heading = compass[exit.direction as keyof typeof compass];
       if (!heading || !from || !to) {
         continue;
       }
@@ -121,7 +138,7 @@ export function validateWorld(namedRooms: NamedRoom[]): ContentIssue[] {
     }
 
     if (named.room.map) {
-      const key = `${String(named.room.map.x)},${String(named.room.map.y)}`;
+      const key = `${String(named.room.map.x)},${String(named.room.map.y)},${String(named.room.map.z ?? 0)}`;
       const owner = mapped.get(key);
       if (owner) {
         issues.push({
@@ -291,6 +308,7 @@ export function validateBestiary(
   namedRooms: NamedRoom[],
   namedTemplates: NamedEnemyTemplate[],
   namedPlacements: NamedEnemyPlacement[],
+  itemTemplateIds: ReadonlySet<string> = new Set(),
 ): ContentIssue[] {
   const issues: ContentIssue[] = [];
   const roomIds = new Set(namedRooms.map((named) => named.room.id));
@@ -355,6 +373,20 @@ export function validateBestiary(
         roomId: named.placement.roomId,
         fileName: named.fileName,
       });
+    }
+  }
+
+  for (const named of namedTemplates) {
+    for (const lootId of named.template.loot ?? []) {
+      if (!itemTemplateIds.has(lootId)) {
+        issues.push({
+          code: "unknown_item_template",
+          message: `${named.template.id} drops unknown loot ${lootId}`,
+          enemyId: named.template.id,
+          itemId: lootId,
+          fileName: named.fileName,
+        });
+      }
     }
   }
 

@@ -60,7 +60,7 @@ export function handleExamine(
         fixture.lookDescription ??
         `${fixture.name} is here. You notice nothing more from this distance.`,
     })),
-    ...enemiesInRoom(world, character.roomId).map((enemy) => ({
+    ...enemiesInRoom(world, character.roomId, character).map((enemy) => ({
       id: enemy.id,
       entityKind: "npc" as const,
       name: enemy.name,

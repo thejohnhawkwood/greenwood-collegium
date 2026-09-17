@@ -40,6 +40,9 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0032](0032-painted-catalog.md) | Painted species layers, discrete sliders and room scenes |
 | [0033](0033-lobby-travel.md) | Lobby travel follows discovered paths only |
 | [0034](0034-lock-in-combat.md) | Lock-in Chorus combat with a twelve-second clock |
+| [0035](0035-party-chorus.md) | Party lock-in and the Silk Queen |
+| [0036](0036-map-floors.md) | Map floors and vertical travel |
+| [0037](0037-first-time-spawns.md) | First-time spawn memory, shared bosses |
 
 ## Template
 

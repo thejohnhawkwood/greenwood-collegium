@@ -1,4 +1,6 @@
+import { resolveChorus } from "./combat-chorus.js";
 import { lockStillOpen } from "./combat-lock.js";
+import { encounterMembers, isChorus } from "./combat-party.js";
 import { handleDefend, type DefendResult } from "./defend.js";
 import { systemNotice } from "./system-notice.js";
 import { activeEncounter } from "./combat-state.js";
@@ -25,6 +27,30 @@ export function handleCombatExpire(
       ok: false,
       code: "lock_open",
       message: "The lock window is still open.",
+    };
+  }
+  if (isChorus(encounter)) {
+    encounter.locked ??= {};
+    for (const id of encounterMembers(encounter)) {
+      if (!encounter.locked[id]) {
+        encounter.locked[id] = { verb: "defend" };
+      }
+    }
+    const character = world.characters[intent.characterId];
+    if (!character) {
+      return {
+        ok: false,
+        code: "character_not_found",
+        message: `I do not recognize character "${intent.characterId}".`,
+      };
+    }
+    const resolved = resolveChorus(world, character, encounter, runtime);
+    return {
+      ...resolved,
+      events: [
+        systemNotice(intent.characterId, "The clock runs out. You raise a guard.", runtime),
+        ...resolved.events,
+      ],
     };
   }
   const defended = handleDefend(

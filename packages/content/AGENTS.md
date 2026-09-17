@@ -10,7 +10,8 @@ Declarative world data. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or ga
 - Add a room by adding `rooms/<id>.json`. The file name must match the stable id.
 - Add an item by adding `items/<id>.json` and a placement in `placements/`.
 - `starterPerCharacter: true` on a placement is a per-Collegian recipe, not one shared instance. The Arrival copper key uses this. The moss-bound primer does not.
-- Add an enemy by adding `enemies/<id>.json` and a placement in `enemy-placements/`. Optional `maxFocus` is a real resource (default 6). Enemies do not spend it yet.
+- Add an enemy by adding `enemies/<id>.json` and a placement in `enemy-placements/`. Optional `maxFocus` is a real resource (default 6). Optional `minParty` is how many Collegians must stand before the foe squares up. The Silk Queen uses 3. Optional `loot` lists item template ids dropped for first-timers when the spawn dies. Enemies do not spend focus yet. The same spawn can stand again for a Collegian who has not defeated it. A `minParty` boss stands if at least one present Collegian has not.
+- Room `map` may include `z`. Grounds omit it (`0`). Unique coordinates are `{x,y,z}`. `up` increases `z`; `down` decreases `z`.
 - Add a spell by adding `spells/<id>.json`.
 - Add a quest by adding `quests/<id>.json`.
 - Do not edit TypeScript to register a room, item, enemy, spell, or quest.

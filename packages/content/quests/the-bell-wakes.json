@@ -3,40 +3,40 @@
   "id": "the-bell-wakes",
   "title": "The Bell Wakes",
   "experienceReward": 15,
-  "introNarration": "Alder sets the tuning fork down a second time. \"The wood remembers a welcome. Something below the Clock Tower has begun to answer. Descend the stair. Talk Piper Mole in the Silk Gallery. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. Do not invent a queen from one hatchling.\"",
-  "reminderNarration": "Alder counts a new stair. \"Type east from the North Quad to the Clock Tower, then down. Talk piper in the Silk Gallery. Examine the Stair Rope, Silk Thread, and Waking Husk. Then talk alder here in the High Study. Type quests for your checklist.\"",
-  "completionNarration": "You name the stair, the singing thread, Piper's watch, and the opened husk. Alder listens to the end. \"A hatchling woke before the score allows. The silk is a cradle, not a throne. That is enough for one Collegian. When three can stand together, we will ask what still sleeps.\"",
+  "introNarration": "Alder picks the fork up and sets it down again, slower this time. \"You already proved the wood can carry a welcome. Something below the Clock Tower has begun to answer. I would not send a first-year down that stair if I had another pair of eyes I trusted. Piper Mole has been alone in the Silk Gallery too long, and he is afraid. Talk to him. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then come back and talk alder here. Do not invent a queen from one hungry child. Look. Name what you saw. I am counting on you.\"",
+  "reminderNarration": "Alder counts the stair on one talon. \"East from the North Quad. Down from the Clock Tower. Talk piper in the Silk Gallery — he has been holding that dark with a tin whistle. Examine the Stair Rope, the Silk Thread, and the Waking Husk in the Cocoon Nave. Then talk alder here. Type quests for the list. Finish this before the silk learns another name.\"",
+  "completionNarration": "You report the pulsing rope, the warm thread, Piper's watch, and the opened husk. Alder listens to the end. \"A hatchling woke before the score allows. The silk is a cradle, not a throne. That is enough for one Collegian, and you were the Collegian I asked. When three can stand together, we will ask what still sleeps.\"",
   "objectives": [
     {
       "id": "check-rope",
       "kind": "examine",
       "targetId": "object-stair-rope",
-      "label": "Examine the Stair Rope on the Bell Stair. Type down from the Clock Tower."
+      "label": "Examine the Stair Rope on the Bell Stair. Feel whether the pulses still climb the oak. Type down from the Clock Tower."
     },
     {
       "id": "hear-piper",
       "kind": "talk",
       "targetId": "npc-piper-mole",
-      "label": "Talk piper in the Silk Gallery, down again from the Bell Stair."
+      "label": "Talk piper in the Silk Gallery. He has been alone down there, and Alder wants you to hear him. Type down from the Bell Stair."
     },
     {
       "id": "check-thread",
       "kind": "examine",
       "targetId": "object-silk-thread",
-      "label": "Examine the Silk Thread in the Silk Gallery."
+      "label": "Examine the Silk Thread in the Silk Gallery. Piper needs someone else to name what it is doing."
     },
     {
       "id": "check-husk",
       "kind": "examine",
       "targetId": "object-waking-husk",
-      "label": "Examine the Waking Husk in the Cocoon Nave, east then south from the gallery."
+      "label": "Examine the Waking Husk in the Cocoon Nave. Prove whether a child woke too soon. Type east then south from the gallery."
     },
     {
       "id": "report",
       "kind": "talk",
       "targetId": "npc-headmaster-alder",
       "requires": ["check-rope", "hear-piper", "check-thread", "check-husk"],
-      "label": "After the stair, Piper, thread, and husk, talk alder in the High Study. Type up from the Great Hall."
+      "label": "Take the stair, Piper, thread, and husk back to Alder in the High Study. Type up from the Great Hall."
     }
   ]
 }

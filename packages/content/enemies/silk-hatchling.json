@@ -2,11 +2,12 @@
   "$schema": "../schemas/enemy.schema.json",
   "id": "silk-hatchling",
   "name": "Silk Hatchling",
-  "shortDescription": "An early silk-child practising being fierce.",
-  "lookDescription": "A pale hatchling, no larger than a satchel, testing its legs among the husks.",
-  "examineDescription": "The Silk Hatchling is new and already impatient. Its legs are still soft. The mandibles click like a practice stick against a dummy. It is a lesson, not a queen.",
+  "shortDescription": "A silk-child that woke too early and will not wait.",
+  "lookDescription": "A pale hatchling, no larger than a satchel, clicking among the opened husks.",
+  "examineDescription": "The Silk Hatchling is the size of a school satchel. Its legs are still soft, but the mandibles already click like a practice stick. Piper is afraid of it for a reason. Finish it. It is not a queen, and it should not get back up.",
   "maxHealth": 10,
   "maxFocus": 8,
   "attack": 3,
-  "experience": 8
+  "experience": 8,
+  "loot": ["torn-silk-strand"]
 }

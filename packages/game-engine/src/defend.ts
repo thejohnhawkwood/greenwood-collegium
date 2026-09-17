@@ -1,10 +1,8 @@
-import { DEFAULT_PLAYER_MAX_HEALTH, activeEncounter, ensurePlayerVitals } from "./combat-state.js";
-import {
-  actionEvent,
-  concludeRound,
-  type CombatFailure,
-  type CombatSuccess,
-} from "./combat-resolve.js";
+import { applyDefendAction } from "./combat-apply.js";
+import { lockChorusMove } from "./combat-chorus.js";
+import { isChorus } from "./combat-party.js";
+import { activeEncounter, ensurePlayerVitals } from "./combat-state.js";
+import { concludeRound, type CombatFailure, type CombatSuccess } from "./combat-resolve.js";
 import type { DefendIntent, EngineRuntime, WorldState } from "./state.js";
 
 export type DefendResult = CombatSuccess | CombatFailure;
@@ -31,30 +29,14 @@ export function handleDefend(
     };
   }
   ensurePlayerVitals(character);
-  character.defending = true;
+  if (isChorus(encounter)) {
+    return lockChorusMove(world, character, encounter, { verb: "defend" }, runtime);
+  }
   return concludeRound(
     world,
     character,
     encounter,
-    [
-      actionEvent(
-        encounter,
-        {
-          encounterId: encounter.id,
-          actorId: character.id,
-          actorName: character.name,
-          actorKind: "player",
-          verb: "defend",
-          targetId: character.id,
-          targetName: character.name,
-          damage: 0,
-          targetHealth: character.health ?? DEFAULT_PLAYER_MAX_HEALTH,
-          targetMaxHealth: character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH,
-        },
-        runtime,
-        character.id,
-      ),
-    ],
+    applyDefendAction(character, encounter, runtime),
     runtime,
   );
 }

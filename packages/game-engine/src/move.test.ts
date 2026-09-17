@@ -206,6 +206,17 @@ describe("handleMove", () => {
     }
   });
 
+  it("closes a conversation when the NPC is no longer in the room", () => {
+    const world = threeRooms();
+    world.characters["char-rowan"]!.openConversation = { npcId: "npc-porter-bramble" };
+    handleMove(
+      world,
+      { verb: "move", direction: "north", characterId: "char-rowan" },
+      countingRuntime(),
+    );
+    expect(world.characters["char-rowan"]?.openConversation).toBeUndefined();
+  });
+
   it("lets look see the room after movement", () => {
     const world = threeRooms();
     handleMove(

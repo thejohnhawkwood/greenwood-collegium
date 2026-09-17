@@ -8,7 +8,7 @@ import type { SpellTemplate } from "./spell-schema.js";
 export type LoadedRoom = {
   id: string;
   title: string;
-  map?: { x: number; y: number };
+  map?: { x: number; y: number; z?: number };
   shortDescription: string;
   longDescription: string;
   zone: string;
@@ -64,6 +64,8 @@ export type LoadedEnemy = {
   maxFocus: number;
   attack: number;
   experience: number;
+  minParty?: number;
+  loot?: string[];
 };
 
 export type LoadedSpell = {
@@ -236,6 +238,8 @@ export function toWorldState(
       maxFocus: template.maxFocus ?? 6,
       attack: template.attack,
       experience: template.experience,
+      ...(template.minParty ? { minParty: template.minParty } : {}),
+      ...(template.loot?.length ? { loot: [...template.loot] } : {}),
     };
   }
   const spells: Record<string, LoadedSpell> = {};

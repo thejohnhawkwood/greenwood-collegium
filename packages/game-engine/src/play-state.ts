@@ -9,7 +9,7 @@ import {
   DEFAULT_PLAYER_MAX_HEALTH,
   DEFAULT_PLAYER_MAX_FOCUS,
 } from "./combat-state.js";
-import { fixturesVisibleTo, porterCompanionFixture, PORTER_NPC_ID } from "./arrival-guide.js";
+import { fixturesVisibleTo } from "./arrival-guide.js";
 import { treeNode } from "./conversation.js";
 import { itemsHeldBy } from "./items.js";
 import { snapshotPayload } from "./look.js";
@@ -43,7 +43,9 @@ export function createPlayState(
         const known = discovered.has(candidate.id);
         return {
           id: candidate.id,
-          ...candidate.map!,
+          x: candidate.map!.x,
+          y: candidate.map!.y,
+          z: candidate.map!.z ?? 0,
           state: current ? "current" : known ? "explored" : "unknown",
           ...(current || known ? { title: candidate.title } : {}),
         };
@@ -201,15 +203,5 @@ function conversationSnapshot(world: WorldState, character: Character) {
 }
 
 function fixtureForTalk(world: WorldState, character: Character, npcId: string) {
-  const nearby = fixturesVisibleTo(world, character).find((fixture) => fixture.id === npcId);
-  if (nearby) {
-    return nearby;
-  }
-  for (const room of Object.values(world.rooms)) {
-    const authored = room.fixtures.find((fixture) => fixture.id === npcId);
-    if (authored) {
-      return authored;
-    }
-  }
-  return npcId === PORTER_NPC_ID ? porterCompanionFixture(world) : undefined;
+  return fixturesVisibleTo(world, character).find((fixture) => fixture.id === npcId);
 }

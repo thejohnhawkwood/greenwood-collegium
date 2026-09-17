@@ -1,10 +1,8 @@
+import { applyFleeAction } from "./combat-apply.js";
+import { lockChorusMove } from "./combat-chorus.js";
+import { isChorus } from "./combat-party.js";
 import { activeEncounter, ensurePlayerVitals } from "./combat-state.js";
-import {
-  actionEvent,
-  finishFlee,
-  type CombatFailure,
-  type CombatSuccess,
-} from "./combat-resolve.js";
+import { finishFlee, type CombatFailure, type CombatSuccess } from "./combat-resolve.js";
 import type { EngineRuntime, FleeIntent, WorldState } from "./state.js";
 
 export type FleeResult = CombatSuccess | CombatFailure;
@@ -31,29 +29,14 @@ export function handleFlee(
     };
   }
   ensurePlayerVitals(character);
+  if (isChorus(encounter)) {
+    return lockChorusMove(world, character, encounter, { verb: "flee" }, runtime);
+  }
   return finishFlee(
     world,
     character,
     encounter,
-    [
-      actionEvent(
-        encounter,
-        {
-          encounterId: encounter.id,
-          actorId: character.id,
-          actorName: character.name,
-          actorKind: "player",
-          verb: "flee",
-          targetId: encounter.enemy.id,
-          targetName: encounter.enemy.name,
-          damage: 0,
-          targetHealth: encounter.enemy.health,
-          targetMaxHealth: encounter.enemy.maxHealth,
-        },
-        runtime,
-        character.id,
-      ),
-    ],
+    applyFleeAction(character, encounter, runtime),
     runtime,
   );
 }

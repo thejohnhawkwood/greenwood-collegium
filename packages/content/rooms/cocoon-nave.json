@@ -2,15 +2,23 @@
   "$schema": "../schemas/room.schema.json",
   "id": "cocoon-nave",
   "title": "Cocoon Nave",
-  "shortDescription": "A nave of husks keeps one early waking.",
-  "longDescription": "The nave is a quiet oval of silk and old stone. Larger cocoons hang like bells that have not yet learned their note. One husk has already opened. The air tastes of dust and sweet glue.\nA silk-hatchling practices being fierce. It is not the queen. It is the question that comes first.",
+  "shortDescription": "A stone nave hung with cocoons, and one husk already torn open.",
+  "longDescription": "The nave is an oval of old stone and hanging silk. Larger cocoons hang unopened. One husk has already split. The air tastes of dust and sweet glue.\nA silk-hatchling is here if it still lives. It is not the queen. It woke too early, and Piper wants it finished.",
   "zone": "bell-below",
   "visualState": "clock-tower",
-  "unmapped": true,
+  "map": {
+    "x": 2,
+    "y": 1,
+    "z": -2
+  },
   "exits": [
     {
       "direction": "north",
       "toRoomId": "webbed-cloister"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "deep-cradle"
     }
   ],
   "fixtures": [
@@ -19,7 +27,7 @@
       "name": "Waking Husk",
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
-      "examineDescription": "The opened husk is lined with the same warm thread. It is a cradle left too soon. Larger closed bells hang beyond it, unmoving. Whatever first woke the wood, it has begun to answer from here, and it is still only a hatchling."
+      "examineDescription": "The opened husk is lined with warm thread. Something satchel-sized slept here and left too soon. Larger closed cocoons hang beyond it, still shut. This is the first waking, not the last. Alder asked you to name it before anyone calls it a queen."
     }
   ]
 }

@@ -102,6 +102,7 @@ export const roomMapSchema = z
   .object({
     x: z.number().int(),
     y: z.number().int(),
+    z: z.number().int().optional(),
   })
   .strict();
 

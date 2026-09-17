@@ -7,6 +7,7 @@ export const HEADMASTER_NPC_ID = "npc-headmaster-alder";
 export const HEADMASTER_STUDY_ID = "headmaster-study";
 export const BELL_BELOW_QUEST_ID = "the-bell-below";
 export const BELL_WAKES_QUEST_ID = "the-bell-wakes";
+export const STILL_SLEEPS_QUEST_ID = "what-still-sleeps";
 
 export function firstLessonsComplete(world: WorldState, character: Character): boolean {
   if (!character.schoolId) {
@@ -23,9 +24,16 @@ export function alderSpeechNode(world: WorldState, character: Character): string
   }
   const bell = world.quests?.[character.id]?.[BELL_BELOW_QUEST_ID];
   const wakes = world.quests?.[character.id]?.[BELL_WAKES_QUEST_ID];
+  const sleeps = world.quests?.[character.id]?.[STILL_SLEEPS_QUEST_ID];
   if (bell?.status === "completed") {
     if (wakes?.status === "completed") {
-      return "wakes-done";
+      if (sleeps?.status === "completed") {
+        return "sleeps-done";
+      }
+      if (sleeps?.status === "active") {
+        return "sleeps-active";
+      }
+      return "offer-sleeps";
     }
     if (wakes?.status === "active") {
       return "wakes-active";

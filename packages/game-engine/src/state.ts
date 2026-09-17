@@ -36,7 +36,7 @@ export type RoomFixture = {
 export type Room = {
   id: string;
   title: string;
-  map?: { x: number; y: number };
+  map?: { x: number; y: number; z?: number };
   shortDescription: string;
   longDescription: string;
   zone: string;
@@ -76,6 +76,7 @@ export type Character = {
   braceBonus?: number;
   hitThisEncounter?: boolean;
   defending?: boolean;
+  defeatedSpawnIds?: string[];
 };
 
 export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";
@@ -146,6 +147,13 @@ export type EnemySpawn = {
   maxFocus?: number;
   attack: number;
   experience: number;
+  minParty?: number;
+  loot?: string[];
+};
+
+export type LockedCombatMove = {
+  verb: "attack" | "cast" | "defend" | "flee";
+  spell?: string;
 };
 
 export type EncounterCombatant = {
@@ -165,6 +173,8 @@ export type Encounter = {
   status: "awaiting_intents" | "closed";
   round: number;
   playerId: string;
+  playerIds?: string[];
+  locked?: Record<string, LockedCombatMove>;
   spawnId: string;
   lockDeadlineAt: string;
   enemy: EncounterCombatant;

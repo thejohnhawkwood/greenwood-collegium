@@ -5,6 +5,7 @@ import {
   type EventEnvelope,
   type RoomSnapshotEvent,
 } from "@greenwood/contracts";
+import { closeConversationIfNpcGone } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { namesMatch } from "./names.js";
@@ -101,6 +102,7 @@ export function handleTravel(
 
   const leavers = charactersInRoom(world, origin.id, character.id);
   character.roomId = destination.id;
+  closeConversationIfNpcGone(world, character);
   const arrivals = charactersInRoom(world, destination.id, character.id);
   const narration = `You follow the known paths to ${destination.title}.`;
   const segments = [

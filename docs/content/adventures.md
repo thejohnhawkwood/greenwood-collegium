@@ -31,6 +31,10 @@ Three new quests are available alongside Arrival at the Collegium:
 - **The Bell Wakes:** After the Bell Below report, talk Alder again. Type `down`
   from the Clock Tower. Talk Piper Mole. Examine the Stair Rope, Silk Thread, and
   Waking Husk. Return to Alder. Reward: 15 experience.
+- **What Still Sleeps:** After The Bell Wakes, talk Alder again. Take two
+  classmates. South of the Cocoon Nave is the Deep Cradle. Examine the Still
+  Score. If the Silk Queen squares up, lock your moves on the same twelve-second
+  clock. Return to Alder. Reward: 20 experience.
 
 Accept a quest before investigating its clues. Clues can be investigated in any
 order, but the final conversation counts only after all the required discoveries.

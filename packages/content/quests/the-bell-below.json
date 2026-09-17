@@ -3,34 +3,34 @@
   "id": "the-bell-below",
   "title": "The Bell Below",
   "experienceReward": 15,
-  "introNarration": "Alder sets down his tuning fork. \"A deep bell sounds beneath the school, yet the old abbey bell was taken away long ago. Will you help me separate an observation from a rumour? Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder. Stay on our familiar paths; the answers we need are here.\"",
-  "reminderNarration": "Alder counts the leads on three fingers. \"Down returns you to the Great Hall. Type east from the North Quad to reach the Clock Tower. Type north from Library Stacks to reach the Archive Cellar. Type west from the Herb Garden to reach the Quiet Chapel. Examine the Empty Bell Frame, Bell Ledger, and Listening Stone, then talk alder here in the High Study. Type quests for your checklist.\"",
-  "completionNarration": "You describe the empty frame, the keeper's record, and the three pulses in the chapel root. Alder rests the tuning fork against the oak table. For a moment, its thin note gathers a deeper companion. \"The bell is gone, but the living wood remembers its welcome. That explains how a note reaches us. What first wakes it is a question for another day.\" He smiles. \"A mystery becomes kinder when we know which parts are true.\"",
+  "introNarration": "Alder sets the tuning fork on the blotter and waits until you meet his good eye. \"I am trusting you with the first honest question this school has asked in a long time. A deep bell sounds under our feet. The old abbey bell is gone — we have an empty frame in the Clock Tower to prove it. I will not invent a cause from a rumour. I need you to examine three places and come back with facts: the Empty Bell Frame, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then talk alder here. The Collegium is listening through you.\"",
+  "reminderNarration": "Alder does not raise his voice. He does not need to. \"Down to the Great Hall. East from the North Quad for the Clock Tower. North from Library Stacks for the Archive Cellar. West from the Herb Garden for the Quiet Chapel. Examine the Empty Bell Frame, the Bell Ledger, and the Listening Stone. Then return and talk alder. Type quests if you lose the list. I asked you because I need a Collegian who will look before they guess.\"",
+  "completionNarration": "You lay out what you found: an empty frame that still pulses, a keeper's record that the bell was taken, and three slow beats in the chapel root. Alder rests the fork against the oak. For a moment a deeper note answers it. \"The wood remembers that welcome. The bell is gone, and the living timber still carries the sound. That is the true part. What first woke it is a later question. You did this school a service. I will not forget who brought me facts.\"",
   "objectives": [
     {
       "id": "check-frame",
       "kind": "examine",
       "targetId": "object-empty-bell-frame",
-      "label": "Examine the Empty Bell Frame in the Clock Tower (east of North Quad). Type east to reach the Clock Tower."
+      "label": "Examine the Empty Bell Frame in the Clock Tower. Alder sent you to prove the bell is gone. Type east from the North Quad."
     },
     {
       "id": "read-ledger",
       "kind": "examine",
       "targetId": "object-bell-ledger",
-      "label": "Examine the Bell Ledger in the Archive Cellar (north of Library Stacks). Type north to reach the Archive Cellar."
+      "label": "Examine the Bell Ledger in the Archive Cellar. The keepers wrote down what was taken. Type north from Library Stacks."
     },
     {
       "id": "listen",
       "kind": "examine",
       "targetId": "object-listening-stone",
-      "label": "Examine the Listening Stone in the Quiet Chapel (west of Herb Garden). Type west to reach the Quiet Chapel."
+      "label": "Examine the Listening Stone in the Quiet Chapel. Feel whether the pulses match the tower. Type west from the Herb Garden."
     },
     {
       "id": "report",
       "kind": "talk",
       "targetId": "npc-headmaster-alder",
       "requires": ["check-frame", "read-ledger", "listen"],
-      "label": "After all three clues, talk alder in the High Study. Type up from the Great Hall."
+      "label": "Bring Alder the three facts in the High Study. Type up from the Great Hall."
     }
   ]
 }

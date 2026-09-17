@@ -2,11 +2,15 @@
   "$schema": "../schemas/room.schema.json",
   "id": "webbed-cloister",
   "title": "Webbed Cloister",
-  "shortDescription": "An old walk has been lent to silk and patience.",
-  "longDescription": "The cloister once belonged to the abbey that stood before the Collegium. Silk has taken the arches without tearing the stone. A lantern hangs in a web, still lit, as if someone meant to come back for it.\nSouth, the silk thickens. Something small moves there when you stop pretending not to listen.",
+  "shortDescription": "An old abbey walk taken over by silk, with one lantern still burning.",
+  "longDescription": "This cloister belonged to the abbey that stood before the Collegium. Silk has taken the arches without breaking the stone. A lantern hangs in a web, still lit.\nSouth, the silk thickens. Something small moves there when you stop walking.",
   "zone": "bell-below",
   "visualState": "clock-tower",
-  "unmapped": true,
+  "map": {
+    "x": 2,
+    "y": 2,
+    "z": -2
+  },
   "exits": [
     {
       "direction": "west",
@@ -23,7 +27,7 @@
       "name": "Caught Lantern",
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
-      "examineDescription": "The lantern still burns a blue Collegium flame. Silk holds it as a nurse holds a cup. No one has been trapped. The web is a shelf. Whoever hung the light expected a longer night than this."
+      "examineDescription": "The lantern still burns a blue Collegium flame. Silk holds it up, neat as a shelf. Nobody is trapped in the web. Whoever hung this light meant to come back, and they have not."
     }
   ]
 }

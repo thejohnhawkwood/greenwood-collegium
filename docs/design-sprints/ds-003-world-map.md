@@ -16,8 +16,9 @@ Discovery is saved with your Collegian. It returns after sign-in and reconnect.
 
 ## Developer / authoring guide
 
-- Place every ordinary room with unique `map: {x,y}`. Keep `unmapped` for later
-  secrets. Cardinal exits must increase or decrease the matching axis.
+- Place every ordinary room with unique `map: {x,y}` and optional `z` for floors.
+  Keep `unmapped` for later secrets. Cardinal exits must increase or decrease the
+  matching axis. `up` / `down` must change `z`. The world map can change floors.
 - `createPlayState` emits every charted room. Fogged rooms omit `title`.
 - Persist `discovered_room_ids` through migration 0009 and the character
   repositories. Hydrate it on join.

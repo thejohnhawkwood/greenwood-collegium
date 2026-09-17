@@ -1,0 +1,29 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "deep-cradle",
+  "title": "Deep Cradle",
+  "shortDescription": "A round silk chamber under the nave, built for something larger.",
+  "longDescription": "The silk closes into a round room. Larger cocoons hang unopened. One has split along a seam. A dark, patient shape fills the gap.\nThe air is warm. Three pulses travel the floor. This is not a throne. Alder said she will not wake for one Collegian, and the room agrees.",
+  "zone": "bell-below",
+  "visualState": "clock-tower",
+  "map": {
+    "x": 2,
+    "y": 0,
+    "z": -2
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "cocoon-nave"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-still-score",
+      "name": "Still Score",
+      "kind": "object",
+      "lookDescription": "Examine for a closer look.",
+      "examineDescription": "A thread-chart is pinned to the silk. Three notes are marked. A fourth space is blank and warm under your paw. Alder cannot see this from the High Study. This is the part he sent a party to read."
+    }
+  ]
+}

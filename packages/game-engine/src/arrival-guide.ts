@@ -157,6 +157,16 @@ export function characterArrivalKeyIsUntaken(world: WorldState, characterId: str
   );
 }
 
+export function closeConversationIfNpcGone(world: WorldState, character: Character): void {
+  const open = character.openConversation;
+  if (!open) {
+    return;
+  }
+  if (!fixturesVisibleTo(world, character).some((fixture) => fixture.id === open.npcId)) {
+    character.openConversation = undefined;
+  }
+}
+
 export function fixturesVisibleTo(world: WorldState, character: Character): RoomFixture[] {
   const room = world.rooms[character.roomId];
   const fixtures = [...(room?.fixtures ?? [])];

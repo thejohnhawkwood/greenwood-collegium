@@ -1,29 +1,38 @@
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
 import type { PlayState } from "@greenwood/contracts";
+import { availableMapLevels, mapLevel, mapLevelLabel, nextMapLevel } from "./map-levels.js";
 
 type MapSize = "compact" | "world";
 
 export function Minimap({
   state,
   size = "compact",
+  level,
   onPrepareMove,
   onTravel,
 }: {
   state?: PlayState;
   size?: MapSize;
+  level?: number;
   onPrepareMove?: (direction: string) => void;
   onTravel?: (title: string) => void;
 }) {
   const patternId = useId();
-  const rooms = (state?.minimap.rooms ?? []).map((room) => ({ ...room, y: -room.y }));
-  if (!rooms.length) return <p className="small-copy">No charted rooms here yet.</p>;
+  const currentLevel = mapLevel(
+    state?.minimap.rooms.find((room) => room.state === "current") ?? {},
+  );
+  const shownLevel = level ?? currentLevel;
+  const rooms = (state?.minimap.rooms ?? [])
+    .filter((room) => mapLevel(room) === shownLevel)
+    .map((room) => ({ ...room, y: -room.y }));
+  if (!rooms.length) return <p className="small-copy">No charted rooms on this level yet.</p>;
   const left = Math.min(...rooms.map((room) => room.x));
   const top = Math.min(...rooms.map((room) => room.y));
   const width = Math.max(...rooms.map((room) => room.x)) - left + 1;
   const height = Math.max(...rooms.map((room) => room.y)) - top + 1;
   const explored = rooms.filter((room) => room.state !== "unknown");
   const fog = rooms.length - explored.length;
-  const label = `Collegium map. You are in ${state?.room.title}. North is up. Explored rooms are marked; fog hides the rest.`;
+  const label = `${mapLevelLabel(shownLevel)} map. You are in ${state?.room.title}. North is up. Explored rooms are marked; fog hides the rest.`;
   return (
     <figure className={`minimap minimap-${size}`}>
       <svg
@@ -145,10 +154,13 @@ export function Minimap({
           );
         })}
       </svg>
-      {size === "world" ? (
+      {size === "compact" ? (
+        <figcaption className="minimap-level">{mapLevelLabel(shownLevel)}</figcaption>
+      ) : (
         <>
           <figcaption>
-            North ↑ · Ring marks you · Hatch is fog · {String(fog)} still hidden
+            {mapLevelLabel(shownLevel)} · North ↑ · Ring marks you · Hatch is fog · {String(fog)}{" "}
+            still hidden
           </figcaption>
           <details open>
             <summary>
@@ -167,7 +179,7 @@ export function Minimap({
             ) : null}
           </details>
         </>
-      ) : null}
+      )}
     </figure>
   );
 }
@@ -185,6 +197,14 @@ export function WorldMapDialog({
   onPrepareMove?: (direction: string) => void;
   onTravel?: (title: string) => void;
 }) {
+  const currentLevel = mapLevel(
+    state?.minimap.rooms.find((room) => room.state === "current") ?? {},
+  );
+  const levels = availableMapLevels(state?.minimap.rooms ?? []);
+  const [viewedLevel, setViewedLevel] = useState(currentLevel);
+  useEffect(() => {
+    if (open) setViewedLevel(currentLevel);
+  }, [open, currentLevel]);
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -194,6 +214,10 @@ export function WorldMapDialog({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
   if (!open) return null;
+  const upLevel = nextMapLevel(levels, viewedLevel, 1);
+  const downLevel = nextMapLevel(levels, viewedLevel, -1);
+  const canClimb = state?.room.exits.some((exit) => exit.direction === "up");
+  const canDescend = state?.room.exits.some((exit) => exit.direction === "down");
   return (
     <div className="world-map-overlay" onClick={onClose}>
       <div
@@ -210,9 +234,50 @@ export function WorldMapDialog({
           </button>
         </div>
         <p className="small-copy">
-          Fog hides names you have not earned. An explored room sends travel along known paths.
+          Each level has its own chart. Fog hides names you have not earned. An explored room sends
+          travel along known paths.
         </p>
-        <Minimap state={state} size="world" onPrepareMove={onPrepareMove} onTravel={onTravel} />
+        <nav className="map-level-nav" aria-label="Map levels">
+          <button
+            type="button"
+            disabled={upLevel === undefined}
+            onClick={() => {
+              if (upLevel !== undefined) setViewedLevel(upLevel);
+            }}
+          >
+            Up
+          </button>
+          <p>
+            {mapLevelLabel(viewedLevel)}
+            {viewedLevel === currentLevel ? " · you are here" : ""}
+          </p>
+          <button
+            type="button"
+            disabled={downLevel === undefined}
+            onClick={() => {
+              if (downLevel !== undefined) setViewedLevel(downLevel);
+            }}
+          >
+            Down
+          </button>
+          {canClimb ? (
+            <button type="button" onClick={() => onPrepareMove?.("up")}>
+              Climb up
+            </button>
+          ) : null}
+          {canDescend ? (
+            <button type="button" onClick={() => onPrepareMove?.("down")}>
+              Go down
+            </button>
+          ) : null}
+        </nav>
+        <Minimap
+          state={state}
+          size="world"
+          level={viewedLevel}
+          onPrepareMove={onPrepareMove}
+          onTravel={onTravel}
+        />
       </div>
     </div>
   );
