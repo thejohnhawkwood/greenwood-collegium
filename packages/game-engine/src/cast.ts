@@ -3,7 +3,7 @@ import {
   actionEvent,
   applyBurning,
   concludeRound,
-  openingEvents,
+  openingOnly,
   prepareEncounter,
   type CombatEvent,
   type CombatFailure,
@@ -121,11 +121,12 @@ export function handleCast(
     return prepared;
   }
 
-  character.focus = focus - spell.focusCost;
   const { encounter } = prepared;
-  const events: CombatEvent[] = prepared.started
-    ? openingEvents(character, encounter, runtime)
-    : [];
+  if (prepared.started) {
+    return openingOnly(character, encounter, runtime);
+  }
+  character.focus = focus - spell.focusCost;
+  const events: CombatEvent[] = [];
   const damage = spell.damage ?? 0;
   encounter.enemy.health = Math.max(0, encounter.enemy.health - damage);
   if (spell.effect === "skip-counter") {

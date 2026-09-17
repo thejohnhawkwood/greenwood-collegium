@@ -38,6 +38,14 @@ describe("parsePlayerCommand", () => {
       characterId: "char-rowan",
       spell: "ember",
     });
+    expect(parsePlayerCommand("defend", "char-rowan")).toEqual({
+      verb: "defend",
+      characterId: "char-rowan",
+    });
+    expect(parsePlayerCommand("flee", "char-rowan")).toEqual({
+      verb: "flee",
+      characterId: "char-rowan",
+    });
     expect(parsePlayerCommand("help", "char-rowan")?.verb).toBe("help");
     expect(parsePlayerCommand("help look", "char-rowan")).toEqual({
       verb: "help",

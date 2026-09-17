@@ -180,9 +180,14 @@ describe("level-three School kit", () => {
     const clock = runtime();
     world.characters["char-rowan"]!.schoolId = "thorn";
     world.characters["char-rowan"]!.focus = 10;
-    const bound = handleCast(
+    handleCast(
       world,
       { verb: "cast", characterId: "char-rowan", spell: "bind", target: "dummy" },
+      clock,
+    );
+    const bound = handleCast(
+      world,
+      { verb: "cast", characterId: "char-rowan", spell: "bind" },
       clock,
     );
     expect(bound.ok).toBe(true);

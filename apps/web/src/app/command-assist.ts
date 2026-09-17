@@ -32,6 +32,12 @@ export const COMMAND_WORDS = [
   "i",
   "attack",
   "cast",
+  "defend",
+  "guard",
+  "block",
+  "flee",
+  "run",
+  "retreat",
   "ember",
   "help",
   "where",
@@ -108,7 +114,11 @@ export function reminderWords(
     send: true,
   }));
   const dismiss = conversation ? [{ word: "bye", send: true }] : [];
-  return [...base, ...spoken, ...dismiss];
+  const combat = (state?.encounter?.moves ?? []).map((move) => ({
+    word: move.command,
+    send: true,
+  }));
+  return [...combat, ...base, ...spoken, ...dismiss];
 }
 
 export function completionCandidates(state?: PlayState): string[] {

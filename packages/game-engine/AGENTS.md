@@ -7,7 +7,7 @@ Pure game rules. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or browser A
 - Ticket 007 owns `handleSay`, `handleJoin`, and `handleLeave`. Socket handlers still do not invent room or chat text.
 - Ticket 012 owns `handleTake`, `handleDrop`, `handleExamine`, and `handleInventory`. Unique items have one owner. Examine matches fixtures, enemies, nearby Collegians, and login names. `x` is an examine alias. `starterPerCharacter` placements mint one personal copy per Collegian who does not already hold that template. That is not a general regen system.
 - Ticket 016 owns staff command parsing (`admin announce`, inspect, mute, kick, audit). The engine does not enforce role or persist the audit log.
-- Ticket 013 owns `handleAttack`. Combat uses an injectable `random()` so tests stay deterministic.
+- Ticket 013 owns `handleAttack`. Combat uses an injectable `random()` so tests stay deterministic. DS-007 / ADR-0034 owns lock-in turns: the first targeted `attack` or `cast` squares up only; later commands lock. `handleDefend` halves the reply. `handleFlee` ends with `outcome: "fled"` and stays in the room. `handleCombatExpire` auto-defends after `COMBAT_LOCK_MS` (12s). Enemy focus is a real field; enemies do not spend it yet.
 - Ticket 014 owns `handleCast`, focus, Ember, and burning. Presentation keys do not decide damage.
 - Ticket 015 owns Arrival at the Collegium, `help`, `quests`, and one-time quest rewards. Join auto-look does not complete the look objective.
 - Callers supply world state, a look or move intent, and an injectable clock / id source.

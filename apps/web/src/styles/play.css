@@ -610,6 +610,55 @@
   max-height: calc(100% - 6.4rem);
   pointer-events: auto;
 }
+.combat-stage {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 5;
+  transform: translate(-50%, -40%);
+  width: min(24rem, calc(100% - 1.2rem));
+  padding: 0.7rem 0.8rem 0.8rem;
+  border: 1px solid #ead2a0;
+  border-radius: 10px;
+  background: #10281df7;
+  pointer-events: auto;
+  text-align: center;
+}
+.combat-stage-round,
+.combat-stage-clock {
+  margin: 0 0 0.3rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ead2a0;
+}
+.combat-stage-foe {
+  margin: 0 0 0.35rem;
+  font:
+    1.05rem/1.2 Georgia,
+    serif;
+  color: #f3ebd4;
+}
+.combat-stage-vitals {
+  margin: 0 0 0.2rem;
+  font-size: 0.8rem;
+  color: #eee3c3;
+}
+.combat-stage-moves {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+}
+.combat-stage-moves button {
+  min-height: 32px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+  color: #eee3c3;
+  background: #20352b;
+  border: 1px solid #d4b77c;
+}
 .conversation-stage {
   position: absolute;
   right: 0.55rem;

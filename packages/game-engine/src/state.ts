@@ -75,6 +75,7 @@ export type Character = {
   ignoreNextHit?: boolean;
   braceBonus?: number;
   hitThisEncounter?: boolean;
+  defending?: boolean;
 };
 
 export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";
@@ -142,6 +143,7 @@ export type EnemySpawn = {
   lookDescription?: string;
   roomId: string;
   maxHealth: number;
+  maxFocus?: number;
   attack: number;
   experience: number;
 };
@@ -151,6 +153,8 @@ export type EncounterCombatant = {
   name: string;
   health: number;
   maxHealth: number;
+  focus: number;
+  maxFocus: number;
   attack: number;
   experience: number;
 };
@@ -158,10 +162,11 @@ export type EncounterCombatant = {
 export type Encounter = {
   id: string;
   roomId: string;
-  status: "awaiting_player" | "closed";
+  status: "awaiting_intents" | "closed";
   round: number;
   playerId: string;
   spawnId: string;
+  lockDeadlineAt: string;
   enemy: EncounterCombatant;
   effects: StatusEffect[];
 };
@@ -305,6 +310,21 @@ export type AttackIntent = {
   target?: string;
 };
 
+export type DefendIntent = {
+  verb: "defend";
+  characterId: string;
+};
+
+export type FleeIntent = {
+  verb: "flee";
+  characterId: string;
+};
+
+export type CombatExpireIntent = {
+  verb: "combat-expire";
+  characterId: string;
+};
+
 export type CastIntent = {
   verb: "cast";
   characterId: string;
@@ -414,6 +434,8 @@ export type PlayerCommand =
   | EatIntent
   | InventoryIntent
   | AttackIntent
+  | DefendIntent
+  | FleeIntent
   | CastIntent
   | HelpIntent
   | QuestsIntent

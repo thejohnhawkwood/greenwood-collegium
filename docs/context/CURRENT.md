@@ -5,8 +5,8 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Status
 
 - **Release target:** v0.0 foundation (thirty-two mapped rooms plus unmapped High Study and Bell Stair, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits)
-- **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-005 quest journal popup, DS-006 minimap. Typed commands stay canonical.
-- **Active follow-up:** Party of three and the queen. Do not start unless asked. Level-3 kits and The Bell Wakes are in.
+- **Shipped slices:** DS-001 semantic colour (ADR-0028), visual DS-002–005 play shell / map / plates / lobby, classic DS-002 status, DS-003 command assistance, DS-004 bag, DS-005 quest journal popup, DS-006 minimap, DS-007 Lock-in Chorus combat. Typed commands stay canonical.
+- **Active follow-up:** Party of three and the queen. Do not start unless asked. Level-3 kits and The Bell Wakes are in. Combat frame is [DS-007](../design-sprints/ds-007-combat-frame.md) Lock-in Chorus with a 12s clock ([ADR-0034](../adr/0034-lock-in-combat.md)).
 - **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header).
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
@@ -15,7 +15,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
 2. Implementation handoff: [`CURSOR-HANDOFF-VISUAL-FOUNDATION.md`](CURSOR-HANDOFF-VISUAL-FOUNDATION.md)
-3. Slices: DS-001 through DS-005 under [`../design-sprints/`](../design-sprints/)
+3. Slices: DS-001 through DS-007 under [`../design-sprints/`](../design-sprints/). Combat: [`../design-sprints/ds-007-combat-frame.md`](../design-sprints/ds-007-combat-frame.md)
 4. Class: [`../classroom/class-day.md`](../classroom/class-day.md), [`playthrough.md`](../../playthrough.md)
 5. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
 

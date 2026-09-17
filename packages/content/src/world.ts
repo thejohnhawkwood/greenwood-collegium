@@ -61,6 +61,7 @@ export type LoadedEnemy = {
   lookDescription?: string;
   roomId: string;
   maxHealth: number;
+  maxFocus: number;
   attack: number;
   experience: number;
 };
@@ -232,6 +233,7 @@ export function toWorldState(
       lookDescription: template.lookDescription,
       roomId: placement.roomId,
       maxHealth: template.maxHealth,
+      maxFocus: template.maxFocus ?? 6,
       attack: template.attack,
       experience: template.experience,
     };

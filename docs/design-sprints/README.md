@@ -14,7 +14,7 @@ Each significant interface upgrade starts with a written design sprint. Do not a
 | DS-004 | Bag and equipment panel | Complete |
 | DS-005 | Quest tracker and journal | Complete (journal popup; no pinned HUD tracker) |
 | DS-006 | Discovered-world minimap | Complete |
-| DS-007 | Combat frame | Not started |
+| DS-007 | Combat frame | Implemented (Lock-in Chorus; 12s clock) |
 | DS-008 | Ember text effect | Not started |
 | DS-009 | Magic-school visual grammars | Not started |
 | DS-010 | Glyph room renderer | Not started |
@@ -28,6 +28,7 @@ Visual-first cycles (Coding 9 Define handoff) are recorded separately:
 | [ds-003-world-map.md](ds-003-world-map.md) | Cycle B canonical map and fog of war |
 | [ds-004-painted-catalog.md](ds-004-painted-catalog.md) | Painted Collegians, rooms, NPC and object plates |
 | [ds-005-lobby-travel.md](ds-005-lobby-travel.md) | Cycle C lobby desk and discovered-path travel |
+| [ds-007-combat-frame.md](ds-007-combat-frame.md) | Lock-in Chorus combat; 12s shot clock, defend, flee |
 
 ## Template
 

@@ -559,4 +559,54 @@ describe("visual foundation", () => {
     expect(html).toContain("Moss");
     expect(html).toContain("Enter the Collegium");
   });
+  it("renders a lock-in foe card with health, focus, and move buttons", () => {
+    const fighting: PlayState = {
+      ...state,
+      conversation: undefined,
+      encounter: {
+        id: "enc-1",
+        round: 1,
+        status: "awaiting_intents",
+        lockDeadlineAt: "2026-09-16T19:00:12.000Z",
+        enemy: {
+          id: "enemy-practice-dummy-south-orchard",
+          name: "Practice Dummy",
+          health: 8,
+          maxHealth: 8,
+          focus: 6,
+          maxFocus: 6,
+        },
+        moves: [
+          { label: "Attack", command: "attack", kind: "attack" },
+          { label: "Ember", command: "cast ember", kind: "cast" },
+          { label: "Defend", command: "defend", kind: "defend" },
+          { label: "Flee", command: "flee", kind: "flee" },
+        ],
+      },
+    };
+    const html = renderToStaticMarkup(
+      createElement(PlayPanels, {
+        state: fighting,
+        lines: [{ id: "room", kind: "narration", text: "You square up to the Practice Dummy." }],
+        onCommand: () => {},
+        onSend: () => {},
+        onMove: () => {},
+        worldMapOpen: false,
+        onOpenWorldMap: () => {},
+        onCloseWorldMap: () => {},
+        questJournalOpen: false,
+        onOpenQuestJournal: () => {},
+        onCloseQuestJournal: () => {},
+        connection: "connected",
+        error: "",
+      }),
+    );
+    expect(html).toContain("Fighting Practice Dummy");
+    expect(html).toContain("Health 8 / 8");
+    expect(html).toContain("Focus 6 / 6");
+    expect(html).toContain("1. Attack");
+    expect(html).toContain("3. Defend");
+    expect(html).toContain("4. Flee");
+    expect(html).not.toContain("Talking with Porter Bramble");
+  });
 });

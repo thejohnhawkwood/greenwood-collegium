@@ -16,5 +16,6 @@ React client. Typed commands are the canonical player interaction.
 - Students wait outside the realm until both names are approved. Rejected submissions return to character creation with teacher feedback; timeouts show a waiting screen until the server allows entry.
 - New events must not move a transcript reader who has scrolled up. Show an explicit jump-to-latest button and preserve text selection.
 - The living frame is presentation only. It must not hide command input or invent game text.
+- CombatStage renders `play-state.encounter` only: foe name, health, focus, the lock clock, and buttons that send the projected commands. It does not invent damage, focus spend, or legal moves.
 - Open `/?builder=1` to compare Collegian looks, `/?rooms=1` to compare room plates,
   and `/?shell=1` to review the play layout. Those harnesses do not invent game outcomes.

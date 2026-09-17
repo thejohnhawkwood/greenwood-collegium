@@ -126,7 +126,8 @@ describe("combat socket round trip", () => {
     });
 
     expect((await emitCommand(client, "cmd-south-lose", "south")).status).toBe("accepted");
-    expect((await emitCommand(client, "cmd-attack-lose", "attack dummy")).status).toBe("accepted");
+    expect((await emitCommand(client, "cmd-square-lose", "attack dummy")).status).toBe("accepted");
+    expect((await emitCommand(client, "cmd-attack-lose", "attack")).status).toBe("accepted");
 
     const ended = events.find((event) => event.type === "combat.ended");
     expect(ended).toBeDefined();

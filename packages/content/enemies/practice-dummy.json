@@ -6,6 +6,7 @@
   "lookDescription": "A well-worn straw dummy, notched and patched from many lessons.",
   "examineDescription": "The Practice Dummy is well-worn straw and patched canvas, notched along the shoulders where sticks and spells have landed. Chalk circles mark the chest. It is meant to be struck, not feared.",
   "maxHealth": 8,
+  "maxFocus": 6,
   "attack": 2,
   "experience": 5
 }

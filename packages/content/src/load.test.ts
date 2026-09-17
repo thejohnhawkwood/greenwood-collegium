@@ -86,6 +86,7 @@ describe("content loader", () => {
       name: "Practice Dummy",
       roomId: "south-orchard",
       maxHealth: 8,
+      maxFocus: 6,
       attack: 2,
       experience: 5,
     });

@@ -42,6 +42,7 @@ import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
 import type { Character, Encounter, EnemySpawn, EngineRuntime, WorldState } from "./state.js";
+import { beginLockWindow, enemyFocusFromSpawn } from "./combat-lock.js";
 import { systemNotice } from "./system-notice.js";
 
 export type CombatEvent =
@@ -57,7 +58,7 @@ export type CombatSuccess = {
   ok: true;
   events: EventEnvelope[];
   notices: OccupantNotice[];
-  outcome: "victory" | "defeat" | "ongoing";
+  outcome: "victory" | "defeat" | "fled" | "ongoing";
   roomId: string;
 };
 
@@ -71,7 +72,9 @@ export type CombatFailure = {
     | "foe_ambiguous"
     | "foe_busy"
     | "already_fighting"
-    | "no_pvp";
+    | "no_pvp"
+    | "not_in_combat"
+    | "lock_open";
   message: string;
 };
 
@@ -188,23 +191,28 @@ export function prepareEncounter(
   }
 
   ensurePlayerVitals(character);
+  const focus = enemyFocusFromSpawn(spawn);
   const encounter: Encounter = {
     id: runtime.nextEventId(),
     roomId: room.id,
-    status: "awaiting_player",
+    status: "awaiting_intents",
     round: 1,
     playerId: character.id,
     spawnId: spawn.id,
+    lockDeadlineAt: runtime.now().toISOString(),
     enemy: {
       id: spawn.id,
       name: spawn.name,
       health: spawn.maxHealth,
       maxHealth: spawn.maxHealth,
+      focus: focus.focus,
+      maxFocus: focus.maxFocus,
       attack: spawn.attack,
       experience: spawn.experience,
     },
     effects: [],
   };
+  beginLockWindow(encounter, runtime);
   worldEncounters(world)[encounter.id] = encounter;
   character.encounterId = encounter.id;
   return { ok: true, character, encounter, started: true };
@@ -216,6 +224,39 @@ export function openingEvents(
   runtime: EngineRuntime,
 ): CombatEvent[] {
   return [startedEvent(character, encounter, runtime), turnEvent(character, encounter, runtime)];
+}
+
+export function openingOnly(
+  character: Character,
+  encounter: Encounter,
+  runtime: EngineRuntime,
+): CombatSuccess {
+  return {
+    ok: true,
+    events: openingEvents(character, encounter, runtime),
+    notices: [],
+    outcome: "ongoing",
+    roomId: character.roomId,
+  };
+}
+
+export function finishFlee(
+  world: WorldState,
+  character: Character,
+  encounter: Encounter,
+  events: EventEnvelope[],
+  runtime: EngineRuntime,
+): CombatSuccess {
+  const roomId = character.roomId;
+  events.push(endedEvent(character, encounter, "fled", roomId, runtime));
+  closeEncounter(world, encounter);
+  return {
+    ok: true,
+    events,
+    notices: [],
+    outcome: "fled",
+    roomId,
+  };
 }
 
 export function concludeRound(
@@ -233,13 +274,17 @@ export function concludeRound(
   encounter.effects = encounter.effects.filter((effect) => effect.id !== "skip-counter");
   if (character.ignoreNextHit) {
     character.ignoreNextHit = false;
+    character.defending = undefined;
     events.push(systemNotice(character.id, "The next blow misses.", runtime));
   } else if (skipCounter) {
+    character.defending = undefined;
     events.push(
       systemNotice(character.id, `The ${encounter.enemy.name} cannot answer this round.`, runtime),
     );
   } else {
-    const enemyDamage = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
+    const raw = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
+    const enemyDamage = character.defending ? Math.floor(raw / 2) : raw;
+    character.defending = undefined;
     character.health = Math.max(0, (character.health ?? DEFAULT_PLAYER_MAX_HEALTH) - enemyDamage);
     if (enemyDamage > 0) {
       character.hitThisEncounter = true;
@@ -275,6 +320,7 @@ export function concludeRound(
   }
 
   encounter.round += 1;
+  beginLockWindow(encounter, runtime);
   events.push(turnEvent(character, encounter, runtime));
   return {
     ok: true,
@@ -388,6 +434,7 @@ function spawnFromEncounter(world: WorldState, encounter: Encounter): EnemySpawn
     examineDescription: encounter.enemy.name,
     roomId: encounter.roomId,
     maxHealth: encounter.enemy.maxHealth,
+    maxFocus: encounter.enemy.maxFocus,
     attack: encounter.enemy.attack,
     experience: encounter.enemy.experience,
   };
@@ -478,6 +525,8 @@ function startedEvent(
     enemyName: encounter.enemy.name,
     enemyHealth: encounter.enemy.health,
     enemyMaxHealth: encounter.enemy.maxHealth,
+    enemyFocus: encounter.enemy.focus,
+    enemyMaxFocus: encounter.enemy.maxFocus,
   };
   const narration = formatCombatStartedText(payload);
   const segments = [
@@ -577,7 +626,7 @@ function statusEvent(
 function endedEvent(
   character: Character,
   encounter: Encounter,
-  outcome: "victory" | "defeat",
+  outcome: "victory" | "defeat" | "fled",
   roomId: string,
   runtime: EngineRuntime,
 ): CombatEndedEvent {

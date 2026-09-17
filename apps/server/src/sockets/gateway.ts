@@ -13,7 +13,11 @@ import {
 import {
   applyQuestProgress,
   createPlayState,
+  activeEncounter,
   handleAttack,
+  handleCombatExpire,
+  handleDefend,
+  handleFlee,
   handleBye,
   handleDrink,
   handleEat,
@@ -238,6 +242,7 @@ export async function attachRealtime(
   const sequences = new Map<string, number>();
   const sockets = new Map<string, Socket>();
   const leaveTimers = new Map<string, ReturnType<typeof setTimeout>>();
+  const combatLockTimers = new Map<string, ReturnType<typeof setTimeout>>();
   const commandLog = new CommandLog();
   const limiter = new RateLimiter();
   const mutedUntil = new Map<string, number>();
@@ -484,6 +489,7 @@ export async function attachRealtime(
     const look = handleLook(world, { verb: "look", characterId }, runtime);
     const events = look.ok ? [snapshot, look.event] : [snapshot];
     deliverPlay(characterId, events, []);
+    armCombatLock(characterId, identities.get(characterId));
   }
 
   async function persistStarterCopies(
@@ -578,6 +584,7 @@ export async function attachRealtime(
           }
           sockets.delete(characterId);
           identities.delete(characterId);
+          clearCombatLock(characterId);
           const left = handleLeave(
             world,
             { verb: "leave", characterId },
@@ -592,6 +599,7 @@ export async function attachRealtime(
       }
       sockets.delete(characterId);
       identities.delete(characterId);
+      clearCombatLock(characterId);
       const left = handleLeave(world, { verb: "leave", characterId }, commandRuntime(sequences));
       if (left.ok) {
         deliverPlay(characterId, left.events, left.notices);
@@ -879,15 +887,19 @@ export async function attachRealtime(
                                 ? handleEquip(world, intent, runtime)
                                 : intent.verb === "attack"
                                   ? handleAttack(world, intent, runtime)
-                                  : intent.verb === "travel"
-                                    ? handleTravel(world, intent, runtime)
-                                    : intent.verb === "bye"
-                                      ? handleBye(world, intent, runtime)
-                                      : intent.verb === "drink"
-                                        ? handleDrink(world, intent, runtime)
-                                        : intent.verb === "eat"
-                                          ? handleEat(world, intent, runtime)
-                                          : handleCast(world, intent, runtime);
+                                  : intent.verb === "defend"
+                                    ? handleDefend(world, intent, runtime)
+                                    : intent.verb === "flee"
+                                      ? handleFlee(world, intent, runtime)
+                                      : intent.verb === "travel"
+                                        ? handleTravel(world, intent, runtime)
+                                        : intent.verb === "bye"
+                                          ? handleBye(world, intent, runtime)
+                                          : intent.verb === "drink"
+                                            ? handleDrink(world, intent, runtime)
+                                            : intent.verb === "eat"
+                                              ? handleEat(world, intent, runtime)
+                                              : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -1018,6 +1030,8 @@ export async function attachRealtime(
         intent.verb === "equip" ||
         intent.verb === "attack" ||
         intent.verb === "cast" ||
+        intent.verb === "defend" ||
+        intent.verb === "flee" ||
         intent.verb === "travel")
     ) {
       await persistAuthenticatedProgress(characterId);
@@ -1056,9 +1070,18 @@ export async function attachRealtime(
       notices,
     });
     reply(ack, accepted);
+    if (
+      intent.verb === "attack" ||
+      intent.verb === "cast" ||
+      intent.verb === "defend" ||
+      intent.verb === "flee"
+    ) {
+      armCombatLock(characterId, identity);
+    }
   }
 
   function kickCharacter(targetId: string): void {
+    clearCombatLock(targetId);
     const timer = leaveTimers.get(targetId);
     if (timer) {
       clearTimeout(timer);
@@ -1080,6 +1103,49 @@ export async function attachRealtime(
 
   options.bindInPlay?.(() => echoInPlay(sockets, identities, world));
   return io;
+
+  function clearCombatLock(characterId: string): void {
+    const timer = combatLockTimers.get(characterId);
+    if (timer) {
+      clearTimeout(timer);
+      combatLockTimers.delete(characterId);
+    }
+  }
+
+  function armCombatLock(characterId: string, identity: PlayIdentity | undefined): void {
+    clearCombatLock(characterId);
+    const encounter = activeEncounter(world, characterId);
+    if (!encounter) {
+      return;
+    }
+    const wait = Math.max(0, Date.parse(encounter.lockDeadlineAt) - Date.now());
+    combatLockTimers.set(
+      characterId,
+      setTimeout(() => {
+        void runExclusive(async () => {
+          combatLockTimers.delete(characterId);
+          const result = handleCombatExpire(
+            world,
+            { verb: "combat-expire", characterId },
+            commandRuntime(sequences),
+          );
+          if (!result.ok) {
+            return;
+          }
+          if (identity && result.outcome === "defeat" && options.persistRoom) {
+            await options.persistRoom(characterId, result.roomId);
+          }
+          if (identity) {
+            await persistAuthenticatedProgress(characterId);
+          }
+          deliverPlay(characterId, result.events, result.notices);
+          armCombatLock(characterId, identity);
+        }).catch(() => {
+          app.log.error({ event: "combat_lock_failed" }, "combat lock could not complete");
+        });
+      }, wait),
+    );
+  }
 
   function deliverPlay(
     actorId: string,

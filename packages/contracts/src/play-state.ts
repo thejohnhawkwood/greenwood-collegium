@@ -57,6 +57,31 @@ export const playStateSchema = z.object({
       )
       .default([]),
   }),
+  encounter: z
+    .object({
+      id: z.string().min(1),
+      round: z.number().int().positive(),
+      status: z.literal("awaiting_intents"),
+      lockDeadlineAt: z.string().min(1),
+      enemy: z.object({
+        id: z.string().min(1),
+        name: z.string().min(1),
+        health: z.number().nonnegative(),
+        maxHealth: z.number().positive(),
+        focus: z.number().nonnegative(),
+        maxFocus: z.number().nonnegative(),
+      }),
+      moves: z
+        .array(
+          z.object({
+            label: z.string().min(1),
+            command: z.string().min(1),
+            kind: z.enum(["attack", "cast", "defend", "flee"]),
+          }),
+        )
+        .min(1),
+    })
+    .optional(),
   room: roomSnapshotPayloadSchema,
   minimap: z.object({
     rooms: z.array(mapRoomSchema),

@@ -7,7 +7,7 @@ Fastify process for HTTP and Socket.IO.
 - Validate command payloads with Zod before calling engine handlers.
 - Persist critical mutations before acknowledging success (Ticket 008+).
 - Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory. Persist a personal Arrival key with `ensurePlacements` before that take can `claim`.
-- Ticket 013 owns combat command dispatch. Socket handlers do not invent combat text or damage.
+- Ticket 013 owns combat command dispatch. Socket handlers do not invent combat text or damage. The gateway owns the lock-in `setTimeout` and calls `handleCombatExpire`; it does not invent defend or flee text.
 - Ticket 014 owns `cast`. Handlers do not invent Ember damage, burning, or presentation.
 - Ticket 015 owns Arrival, `help`, and `quests`. Handlers do not invent Porter speech or award XP twice.
 - Repeat command IDs must return the first result. Authenticated disconnects get a resume grace and `session.snapshot`.

@@ -1,4 +1,6 @@
 import { parseAttackCommand } from "./parse-attack.js";
+import { parseDefendCommand } from "./parse-defend.js";
+import { parseFleeCommand } from "./parse-flee.js";
 import { parseCastCommand } from "./parse-cast.js";
 import { parseDropCommand } from "./parse-drop.js";
 import { parseExamineCommand } from "./parse-examine.js";
@@ -40,6 +42,8 @@ export function parsePlayerCommand(raw: string, characterId: string): PlayerComm
     parseDrinkCommand(raw, characterId) ??
     parseEatCommand(raw, characterId) ??
     parseCastCommand(raw, characterId) ??
+    parseDefendCommand(raw, characterId) ??
+    parseFleeCommand(raw, characterId) ??
     parseAttackCommand(raw, characterId) ??
     parseMoveCommand(raw, characterId)
   );

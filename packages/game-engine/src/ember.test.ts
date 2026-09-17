@@ -76,9 +76,14 @@ function runtime(): EngineRuntime {
 describe("ember slice", () => {
   it("casts Ember with focus cost, fire damage, burning, and a presentation key", () => {
     const world = orchardWorld();
-    const result = handleCast(
+    handleCast(
       world,
       { verb: "cast", characterId: "char-rowan", spell: "ember", target: "dummy" },
+      runtime(),
+    );
+    const result = handleCast(
+      world,
+      { verb: "cast", characterId: "char-rowan", spell: "ember" },
       runtime(),
     );
     expect(result.ok).toBe(true);
@@ -114,9 +119,14 @@ describe("ember slice", () => {
   it("ticks burning on the next exchange and explains it in plain text", () => {
     const world = orchardWorld(12);
     const clock = runtime();
-    const first = handleCast(
+    handleCast(
       world,
       { verb: "cast", characterId: "char-rowan", spell: "ember", target: "dummy" },
+      clock,
+    );
+    const first = handleCast(
+      world,
+      { verb: "cast", characterId: "char-rowan", spell: "ember" },
       clock,
     );
     expect(first.ok).toBe(true);
@@ -160,6 +170,9 @@ describe("ember slice", () => {
         { verb: "cast", characterId: "char-rowan", spell: "ember", target: "dummy" },
         clock,
       ).ok,
+    ).toBe(true);
+    expect(
+      handleCast(world, { verb: "cast", characterId: "char-rowan", spell: "ember" }, clock).ok,
     ).toBe(true);
     expect(
       handleCast(world, { verb: "cast", characterId: "char-rowan", spell: "ember" }, clock).ok,

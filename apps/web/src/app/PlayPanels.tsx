@@ -7,6 +7,7 @@ import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
 import { QuestJournal } from "./QuestJournal.js";
+import { CombatStage } from "./CombatStage.js";
 import { RoomScene } from "./RoomScene.js";
 import type { TranscriptLine } from "./transcript.js";
 
@@ -202,12 +203,15 @@ export function PlayPanels({
                     entity.kind === "npc" ? "npc" : entity.kind === "player" ? "player" : "object",
                   visual: entity.visual,
                 }))}
-                conversation={conversation}
-                inCombat={character?.inCombat}
+                conversation={state?.encounter ? undefined : conversation}
+                inCombat={state?.encounter ? false : character?.inCombat}
                 gift={character?.gift}
                 gifts={character?.gifts}
                 onSend={onSend}
               />
+              {state?.encounter ? (
+                <CombatStage encounter={state.encounter} onSend={onSend} />
+              ) : null}
             </div>
           </section>
           <div className="reading-panes">

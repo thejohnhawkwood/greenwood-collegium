@@ -204,6 +204,10 @@ cast ember dummy
 ```
 
 That is practice combat in the South Orchard. It is not required for Arrival.
+The first `attack` or `cast` only squares up. A centre card shows the foe,
+health, focus, and a twelve-second clock. Then type `attack`, `cast ember`,
+`defend`, or `flee`, or press the numbered buttons. If the clock runs out,
+the lesson chooses defend. Flee stays in the orchard.
 
 ---
 
@@ -220,8 +224,10 @@ Students can always type `help`. Today the game explains:
 | `drop key` | Put a carried item down |
 | `examine porter` or `x porter` | Look closer at a person or thing. The dummy is south. |
 | `inventory` or `i` | What you are carrying |
-| `attack dummy` | Practice fight (South Orchard) |
-| `cast ember dummy` | First spell, during a fight |
+| `attack dummy` | Square up in the South Orchard, then attack |
+| `cast ember dummy` | Square up, then spend Ember |
+| `defend` / `guard` | Lock a guard; the reply is halved |
+| `flee` / `run` | Leave the lesson; stay in the room |
 | `help` / `help look` | This list, or one word |
 | `quests` | Current tasks |
 

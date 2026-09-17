@@ -48,6 +48,7 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
     character.nextAttackBonus = undefined;
     character.ignoreNextHit = undefined;
     character.hitThisEncounter = undefined;
+    character.defending = undefined;
   }
   delete worldEncounters(world)[encounter.id];
 }
@@ -77,7 +78,7 @@ export function rejectIfInCombat(
   return {
     ok: false,
     code: "in_combat",
-    message: "You are in the middle of a lesson. Type attack or cast to continue.",
+    message: "You are in the middle of a lesson. Type attack, cast, defend, or flee.",
   };
 }
 

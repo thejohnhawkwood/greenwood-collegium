@@ -39,6 +39,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0031](0031-world-map-fog.md) | Canonical Collegium map with persisted fog of war |
 | [0032](0032-painted-catalog.md) | Painted species layers, discrete sliders and room scenes |
 | [0033](0033-lobby-travel.md) | Lobby travel follows discovered paths only |
+| [0034](0034-lock-in-combat.md) | Lock-in Chorus combat with a twelve-second clock |
 
 ## Template
 

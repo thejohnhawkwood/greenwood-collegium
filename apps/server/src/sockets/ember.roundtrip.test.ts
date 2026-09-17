@@ -73,9 +73,10 @@ describe("ember socket round trip", () => {
     });
 
     expect((await emitCommand(client, "cmd-south-ember", "south")).status).toBe("accepted");
-    expect((await emitCommand(client, "cmd-cast-ember", "cast ember dummy")).status).toBe(
+    expect((await emitCommand(client, "cmd-square-ember", "cast ember dummy")).status).toBe(
       "accepted",
     );
+    expect((await emitCommand(client, "cmd-cast-ember", "cast ember")).status).toBe("accepted");
 
     const ember = events.find(
       (event) =>

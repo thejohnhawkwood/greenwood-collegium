@@ -8,7 +8,7 @@ import { attackFitModifier } from "./equipment.js";
 import {
   actionEvent,
   concludeRound,
-  openingEvents,
+  openingOnly,
   prepareEncounter,
   type CombatEvent,
   type CombatFailure,
@@ -33,9 +33,10 @@ export function handleAttack(
 
   const { character, encounter } = prepared;
   ensurePlayerVitals(character);
-  const events: CombatEvent[] = prepared.started
-    ? openingEvents(character, encounter, runtime)
-    : [];
+  if (prepared.started) {
+    return openingOnly(character, encounter, runtime);
+  }
+  const events: CombatEvent[] = [];
   const bonus = character.nextAttackBonus ?? 0;
   character.nextAttackBonus = undefined;
   const playerDamage = Math.max(

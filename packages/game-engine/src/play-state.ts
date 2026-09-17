@@ -13,6 +13,7 @@ import { fixturesVisibleTo, porterCompanionFixture, PORTER_NPC_ID } from "./arri
 import { treeNode } from "./conversation.js";
 import { itemsHeldBy } from "./items.js";
 import { snapshotPayload } from "./look.js";
+import { combatMoves } from "./combat-lock.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
@@ -31,6 +32,7 @@ export function createPlayState(
           item.id === character.equippedItemId || item.templateId === character.equippedItemId,
       )?.name ?? world.itemTemplates?.[character.equippedItemId]?.name)
     : undefined;
+  const encounter = activeEncounter(world, characterId);
   const discovered = new Set([...character.discoveredRoomIds, room.id]);
   const mappedRooms = Object.values(world.rooms).filter((candidate) => candidate.map);
   const mappedIds = new Set(mappedRooms.map((candidate) => candidate.id));
@@ -66,7 +68,7 @@ export function createPlayState(
       maxFocus: character.maxFocus ?? DEFAULT_PLAYER_MAX_FOCUS,
       level: character.level ?? 1,
       experience: character.experience ?? 0,
-      inCombat: Boolean(activeEncounter(world, characterId)),
+      inCombat: Boolean(encounter),
       equipped,
       schoolId: character.schoolId,
       gift:
@@ -109,6 +111,23 @@ export function createPlayState(
           },
         ];
       }),
+    encounter: encounter
+      ? {
+          id: encounter.id,
+          round: encounter.round,
+          status: "awaiting_intents" as const,
+          lockDeadlineAt: encounter.lockDeadlineAt,
+          enemy: {
+            id: encounter.enemy.id,
+            name: encounter.enemy.name,
+            health: encounter.enemy.health,
+            maxHealth: encounter.enemy.maxHealth,
+            focus: encounter.enemy.focus,
+            maxFocus: encounter.enemy.maxFocus,
+          },
+          moves: combatMoves(world, character),
+        }
+      : undefined,
     conversation: conversationSnapshot(world, character),
     bag: itemsHeldBy(world, character.id).map((item) => ({
       id: item.id,

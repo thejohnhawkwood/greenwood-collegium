@@ -25,6 +25,7 @@ export const enemyTemplateSchema = z
     examineDescription: z.string().min(1),
     lookDescription: z.string().min(1).optional(),
     maxHealth: z.number().int().positive(),
+    maxFocus: z.number().int().nonnegative().optional(),
     attack: z.number().int().positive(),
     experience: z.number().int().nonnegative(),
   })

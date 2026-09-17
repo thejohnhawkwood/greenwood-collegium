@@ -10,7 +10,7 @@ Declarative world data. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or ga
 - Add a room by adding `rooms/<id>.json`. The file name must match the stable id.
 - Add an item by adding `items/<id>.json` and a placement in `placements/`.
 - `starterPerCharacter: true` on a placement is a per-Collegian recipe, not one shared instance. The Arrival copper key uses this. The moss-bound primer does not.
-- Add an enemy by adding `enemies/<id>.json` and a placement in `enemy-placements/`.
+- Add an enemy by adding `enemies/<id>.json` and a placement in `enemy-placements/`. Optional `maxFocus` is a real resource (default 6). Enemies do not spend it yet.
 - Add a spell by adding `spells/<id>.json`.
 - Add a quest by adding `quests/<id>.json`.
 - Do not edit TypeScript to register a room, item, enemy, spell, or quest.

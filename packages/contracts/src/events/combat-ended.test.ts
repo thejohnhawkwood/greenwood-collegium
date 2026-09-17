@@ -40,7 +40,27 @@ describe("combat.ended contract", () => {
       },
     });
 
+    const fled = combatEndedEventSchema.parse({
+      eventId: "evt-combat-end-3",
+      sequence: 7,
+      schemaVersion: 0,
+      type: "combat.ended",
+      occurredAt: "2026-09-07T19:00:00.000Z",
+      audience: "character",
+      roomId: "south-orchard",
+      encounterId: "enc-1",
+      narration: "You break from the lesson and step back.",
+      payload: {
+        encounterId: "enc-1",
+        characterId: "char-rowan",
+        roomId: "south-orchard",
+        enemyName: "Practice Dummy",
+        outcome: "fled",
+      },
+    });
+
     expect(formatCombatEndedText(victory.payload)).toBe(victory.narration);
     expect(formatCombatEndedText(defeat.payload)).toBe(defeat.narration);
+    expect(formatCombatEndedText(fled.payload)).toBe(fled.narration);
   });
 });

@@ -28,6 +28,10 @@ export {
 } from "./recover.js";
 export { handleInventory } from "./inventory.js";
 export { handleAttack } from "./attack.js";
+export { handleDefend } from "./defend.js";
+export { handleFlee } from "./flee.js";
+export { handleCombatExpire } from "./combat-expire.js";
+export { COMBAT_LOCK_MS } from "./combat-lock.js";
 export { handleCast } from "./cast.js";
 export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
@@ -55,6 +59,8 @@ export { parseDropCommand } from "./parse-drop.js";
 export { parseExamineCommand } from "./parse-examine.js";
 export { parseInventoryCommand } from "./parse-inventory.js";
 export { parseAttackCommand } from "./parse-attack.js";
+export { parseDefendCommand } from "./parse-defend.js";
+export { parseFleeCommand } from "./parse-flee.js";
 export { parseCastCommand } from "./parse-cast.js";
 export { parseHelpCommand } from "./parse-help.js";
 export { parseQuestsCommand } from "./parse-quests.js";
@@ -92,6 +98,9 @@ export type { DropFailure, DropResult, DropSuccess } from "./drop.js";
 export type { ExamineFailure, ExamineResult, ExamineSuccess } from "./examine.js";
 export type { InventoryFailure, InventoryResult, InventorySuccess } from "./inventory.js";
 export type { AttackFailure, AttackResult, AttackSuccess } from "./attack.js";
+export type { DefendResult } from "./defend.js";
+export type { FleeResult } from "./flee.js";
+export type { CombatExpireResult } from "./combat-expire.js";
 export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
 export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
 export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
@@ -103,6 +112,8 @@ export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
 export type {
   AttackIntent,
+  DefendIntent,
+  FleeIntent,
   ByeIntent,
   DrinkIntent,
   CastIntent,

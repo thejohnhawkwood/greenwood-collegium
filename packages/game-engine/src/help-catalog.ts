@@ -64,14 +64,28 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["attack"],
     summary: "Start a practice fight.",
     detail:
-      "Walk south from Lantern Court, then type attack dummy. Later attacks can omit the name while the fight lasts.",
+      "Walk south from Lantern Court, then type attack dummy to square up. The foe card opens. Type attack, a spell, defend, or flee within twelve seconds. Later attacks can omit the name while the fight lasts.",
+  },
+  {
+    topic: "defend",
+    aliases: ["defend", "guard", "block"],
+    summary: "Raise a guard and take half the next blow.",
+    detail:
+      "defend (or guard, block) locks a guard for this turn. The foe still answers, but the hit is halved. If the twelve-second clock runs out, the lesson chooses defend for you.",
+  },
+  {
+    topic: "flee",
+    aliases: ["flee", "run", "retreat"],
+    summary: "Step out of a fight without a harsh loss.",
+    detail:
+      "flee (or run, retreat) ends the lesson. You stay in the room. Classroom fights do not take your items.",
   },
   {
     topic: "cast",
     aliases: ["cast"],
     summary: "Cast a known spell during a fight.",
     detail:
-      "cast ember dummy still works as orchard practice. At the third year-mark your School kit opens: two combat spells and one gift for Ember, Thorns, the Veil, Stars, Stone, or Steel.",
+      "cast ember dummy squares up if you are not already fighting, then cast ember locks the spell. At the third year-mark your School kit opens: two combat spells and one gift for Ember, Thorns, the Veil, Stars, Stone, or Steel.",
   },
   {
     topic: "help",

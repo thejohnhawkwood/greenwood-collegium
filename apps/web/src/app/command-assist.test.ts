@@ -86,4 +86,37 @@ describe("command assistance", () => {
       expect.arrayContaining(["1", "Why does a weapon fit?", "Small Copper Key", "Porter Bramble"]),
     );
   });
+
+  it("puts legal combat moves first while a fight is open", () => {
+    const fighting: PlayState = {
+      ...state,
+      character: { ...state.character, inCombat: true },
+      encounter: {
+        id: "enc-1",
+        round: 1,
+        status: "awaiting_intents",
+        lockDeadlineAt: "2026-09-16T19:00:12.000Z",
+        enemy: {
+          id: "enemy-practice-dummy-south-orchard",
+          name: "Practice Dummy",
+          health: 8,
+          maxHealth: 8,
+          focus: 6,
+          maxFocus: 6,
+        },
+        moves: [
+          { label: "Attack", command: "attack", kind: "attack" },
+          { label: "Defend", command: "defend", kind: "defend" },
+          { label: "Flee", command: "flee", kind: "flee" },
+        ],
+      },
+    };
+    expect(
+      reminderWords(fighting)
+        .slice(0, 3)
+        .map((entry) => entry.word),
+    ).toEqual(["attack", "defend", "flee"]);
+    expect(completeCommand("def")).toEqual({ value: "defend", matches: ["defend"] });
+    expect(completeCommand("fl")).toEqual({ value: "flee", matches: ["flee"] });
+  });
 });

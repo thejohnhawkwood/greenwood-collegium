@@ -1324,7 +1324,9 @@ Each sprint must produce:
 
 **Hypothesis:** Separate player and target frames, round markers, legal actions, and paced events will make combat readable and exciting.
 
-**Deliverables:**
+**Status:** Lock-in Chorus accepted (16 September 2026). Solo fights use a twelve-second shot clock, real enemy focus, defend, and flee. See [ds-007-combat-frame.md](design-sprints/ds-007-combat-frame.md) and [ADR-0034](adr/0034-lock-in-combat.md). Do not add Strength or start the queen unless asked.
+
+**Deliverables (original list; still the presentation target after a pick):**
 
 - combat state panel;
 - player and target health;
@@ -3489,6 +3491,8 @@ The MVP is accepted only when all of the following are true.
 
 - A player can start a legal encounter.
 - Turn order is enforced.
+- A twelve-second lock clock bounds each student move; expiry defends.
+- Defend and flee work. Flee stays in the room.
 - Basic attack works.
 - At least three spells work.
 - Damage, healing, focus, and status effects work.

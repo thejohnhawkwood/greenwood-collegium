@@ -94,11 +94,19 @@ describe("combat slice", () => {
     expect(first.events.map((event) => event.type)).toEqual([
       "combat.started",
       "combat.turn_started",
+    ]);
+
+    const swing = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    expect(swing.ok).toBe(true);
+    if (!swing.ok) {
+      return;
+    }
+    expect(swing.events.map((event) => event.type)).toEqual([
       "combat.action_resolved",
       "combat.action_resolved",
       "combat.turn_started",
     ]);
-    const playerHit = combatActionResolvedEventSchema.parse(first.events[2]);
+    const playerHit = combatActionResolvedEventSchema.parse(swing.events[0]);
     expect(playerHit.payload.damage).toBe(rollAttackDamage(4, 0.5));
     expect(playerHit.payload.targetHealth).toBe(4);
     expect(playerHit.narration).toBe("You strike the Practice Dummy for 4. It has 4 remaining.");
@@ -136,16 +144,13 @@ describe("combat slice", () => {
 
   it("uses the injected roll so a low roll deals less damage", () => {
     const world = orchardWorld();
-    const first = handleAttack(
-      world,
-      { verb: "attack", characterId: "char-rowan", target: "dummy" },
-      runtime(0),
-    );
+    handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "dummy" }, runtime(0));
+    const first = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, runtime(0));
     expect(first.ok).toBe(true);
     if (!first.ok) {
       return;
     }
-    const playerHit = combatActionResolvedEventSchema.parse(first.events[2]);
+    const playerHit = combatActionResolvedEventSchema.parse(first.events[0]);
     expect(playerHit.payload.damage).toBe(3);
     expect(playerHit.payload.targetHealth).toBe(5);
   });
@@ -168,11 +173,12 @@ describe("combat slice", () => {
       },
     };
 
-    const result = handleAttack(
+    handleAttack(
       world,
       { verb: "attack", characterId: "char-rowan", target: "dummy" },
       runtime(0.5),
     );
+    const result = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, runtime(0.5));
     expect(result.ok).toBe(true);
     if (!result.ok) {
       return;

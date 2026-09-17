@@ -10,6 +10,8 @@ export const combatStartedPayloadSchema = z.object({
   enemyName: z.string().min(1),
   enemyHealth: z.number().int().nonnegative(),
   enemyMaxHealth: z.number().int().positive(),
+  enemyFocus: z.number().int().nonnegative().default(0),
+  enemyMaxFocus: z.number().int().nonnegative().default(0),
 });
 
 export type CombatStartedPayload = z.infer<typeof combatStartedPayloadSchema>;

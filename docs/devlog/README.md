@@ -33,6 +33,8 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-16 — Lock-in Chorus combat](2026-09-16-lock-in-combat.md)
+- [2026-09-16 — Combat frame scenarios (docs only)](2026-09-16-combat-scenarios.md)
 - [2026-09-16 — Redwall-leaning staff and Collegian plates](2026-09-16-redwall-plates.md)
 - [2026-09-16 — Instructor Flint, veteran hare](2026-09-16-flint-redwall.md)
 - [2026-09-16 — Semantic colour close-out and lobby travel](2026-09-16-lobby-and-colour.md)
