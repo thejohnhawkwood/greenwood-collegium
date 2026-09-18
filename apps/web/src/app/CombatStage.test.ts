@@ -1,7 +1,10 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { CombatStage, secondsLeft } from "./CombatStage.js";
+import { DEFAULT_APPEARANCE } from "@greenwood/contracts";
+import { CombatStage } from "./CombatStage.js";
+import { encounterFoeVisual, secondsLeft } from "./combat-stage.js";
+import { npcArtSrc } from "./npc-plates.js";
 
 const encounter = {
   id: "enc-1",
@@ -38,9 +41,29 @@ describe("CombatStage", () => {
     expect(html).toContain("Round 1");
     expect(html).toContain("Health 8 / 8");
     expect(html).toContain("Focus 6 / 6");
+    expect(html).toContain(npcArtSrc("enemy-practice-dummy-south-orchard"));
     expect(html).toContain("1. Attack");
     expect(html).toContain("2. Ember");
     expect(html).toContain("3. Defend");
     expect(html).toContain("4. Flee");
+  });
+
+  it("paints a classmate look on a duel card from play-state peers", () => {
+    const visual = {
+      speciesId: "mole",
+      gender: "male" as const,
+      appearance: { ...DEFAULT_APPEARANCE, clothing: "russet" as const },
+    };
+    const duel = {
+      ...encounter,
+      enemy: { ...encounter.enemy, id: "char-moss", name: "Moss the Mole" },
+    };
+    const html = renderToStaticMarkup(
+      createElement(CombatStage, { encounter: duel, foeVisual: visual, onSend: () => {} }),
+    );
+    expect(html).toContain("Moss the Mole");
+    expect(html).toContain("/art/characters/looks/mole-male-russet.png");
+    expect(html).not.toContain("/art/characters/npcs/practice-dummy.png");
+    expect(encounterFoeVisual(duel, { peers: [{ id: "char-moss", visual }] })).toEqual(visual);
   });
 });

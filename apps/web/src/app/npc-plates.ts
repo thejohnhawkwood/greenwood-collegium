@@ -39,7 +39,7 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-silk-queen-deep-cradle": "silk-queen",
 };
 
-const NPC_ART_REV = "piper-mole-2";
+const NPC_ART_REV = "foe-cards-1";
 
 export function npcArtSrc(id: string): string | undefined {
   const plate = NPC_PLATE_ALIASES[id];

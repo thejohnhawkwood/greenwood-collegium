@@ -624,6 +624,29 @@
   pointer-events: auto;
   text-align: center;
 }
+.combat-stage-art {
+  margin: 0.15rem auto 0.35rem;
+  width: min(11.5rem, 72%);
+  overflow: hidden;
+  background: #0c1a14;
+  border: 1px solid #536245;
+}
+.combat-stage-art img,
+.combat-stage-art .character-portrait {
+  display: block;
+  width: 100%;
+  height: 11rem;
+  object-fit: contain;
+}
+.combat-stage-meters {
+  display: grid;
+  gap: 0.25rem;
+  width: min(14rem, 100%);
+  margin: 0 auto 0.35rem;
+}
+.combat-stage-meters .vital {
+  width: 100%;
+}
 .combat-stage-round,
 .combat-stage-clock {
   margin: 0 0 0.3rem;
@@ -1395,6 +1418,7 @@
 .look-card .character-portrait {
   height: 150px;
   overflow: hidden;
+  background: #0c1a14;
 }
 .look-card strong {
   font:

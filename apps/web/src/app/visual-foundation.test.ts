@@ -417,13 +417,13 @@ describe("visual foundation", () => {
     expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
-      "/art/characters/npcs/practice-dummy.png?v=piper-mole-2",
+      "/art/characters/npcs/practice-dummy.png?v=foe-cards-1",
     );
     expect(npcArtSrc("npc-piper-mole")).toBe(
-      "/art/characters/npcs/npc-piper-mole.png?v=piper-mole-2",
+      "/art/characters/npcs/npc-piper-mole.png?v=foe-cards-1",
     );
     expect(npcArtSrc("enemy-silk-hatchling-cocoon-nave")).toBe(
-      "/art/characters/npcs/silk-hatchling.png?v=piper-mole-2",
+      "/art/characters/npcs/silk-hatchling.png?v=foe-cards-1",
     );
     expect(objectArtSrc("object-silk-thread", "Silk Thread")).toBe(
       "/art/objects/object-silk-thread.png",
@@ -695,6 +695,7 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain("Fighting Practice Dummy");
+    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=foe-cards-1");
     expect(html).toContain("Health 8 / 8");
     expect(html).toContain("Focus 6 / 6");
     expect(html).toContain("1. Attack");

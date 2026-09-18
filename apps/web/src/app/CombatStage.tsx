@@ -1,15 +1,16 @@
-import type { PlayState } from "@greenwood/contracts";
+import type { CharacterVisual, PlayState } from "@greenwood/contracts";
 import { useEffect, useState } from "react";
-
-export function secondsLeft(lockDeadlineAt: string, now = Date.now()): number {
-  return Math.max(0, Math.ceil((Date.parse(lockDeadlineAt) - now) / 1000));
-}
+import { CharacterPortrait } from "./CharacterPortrait.js";
+import { secondsLeft } from "./combat-stage.js";
+import { npcArtSrc } from "./npc-plates.js";
 
 export function CombatStage({
   encounter,
+  foeVisual,
   onSend,
 }: {
   encounter: NonNullable<PlayState["encounter"]>;
+  foeVisual?: CharacterVisual;
   onSend: (command: string) => void;
 }) {
   const [remaining, setRemaining] = useState(() => secondsLeft(encounter.lockDeadlineAt));
@@ -44,16 +45,24 @@ export function CombatStage({
     return () => window.removeEventListener("keydown", onKey);
   }, [encounter.moves, onSend]);
   const foe = encounter.enemy;
+  const plate = npcArtSrc(foe.id);
   return (
     <aside className="combat-stage" aria-label={`Fighting ${foe.name}`}>
       <p className="combat-stage-round">Round {encounter.round}</p>
+      {plate || foeVisual ? (
+        <figure className="combat-stage-art">
+          {plate ? (
+            <img src={plate} alt="" />
+          ) : (
+            <CharacterPortrait visual={foeVisual} name={foe.name} decorative crop="avatar" />
+          )}
+        </figure>
+      ) : null}
       <p className="combat-stage-foe">{foe.name}</p>
-      <p className="combat-stage-vitals">
-        Health {foe.health} / {foe.maxHealth}
-      </p>
-      <p className="combat-stage-vitals">
-        Focus {foe.focus} / {foe.maxFocus}
-      </p>
+      <div className="combat-stage-meters">
+        <CombatVital label="Health" value={foe.health} max={foe.maxHealth} tone="health" />
+        <CombatVital label="Focus" value={foe.focus} max={foe.maxFocus} tone="focus" />
+      </div>
       <p className="combat-stage-clock" aria-live="polite">
         {remaining > 0 ? `${remaining} seconds to lock a move` : "Locking a guard"}
       </p>
@@ -66,5 +75,28 @@ export function CombatStage({
         ))}
       </div>
     </aside>
+  );
+}
+
+function CombatVital({
+  label,
+  value,
+  max,
+  tone,
+}: {
+  label: string;
+  value: number;
+  max: number;
+  tone: "health" | "focus";
+}) {
+  return (
+    <div className={`vital vital-${tone}`}>
+      <span>
+        {label} {value} / {max}
+      </span>
+      <meter min={0} max={max} value={value} aria-label={`${label} ${value} / ${max}`}>
+        {value} / {max}
+      </meter>
+    </div>
   );
 }

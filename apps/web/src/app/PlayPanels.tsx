@@ -8,6 +8,7 @@ import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
 import { QuestJournal } from "./QuestJournal.js";
 import { CombatStage } from "./CombatStage.js";
+import { encounterFoeVisual } from "./combat-stage.js";
 import { RoomScene } from "./RoomScene.js";
 import type { TranscriptLine } from "./transcript.js";
 
@@ -217,7 +218,11 @@ export function PlayPanels({
                 onSend={onSend}
               />
               {state?.encounter ? (
-                <CombatStage encounter={state.encounter} onSend={onSend} />
+                <CombatStage
+                  encounter={state.encounter}
+                  foeVisual={encounterFoeVisual(state.encounter, state)}
+                  onSend={onSend}
+                />
               ) : null}
             </div>
           </section>
