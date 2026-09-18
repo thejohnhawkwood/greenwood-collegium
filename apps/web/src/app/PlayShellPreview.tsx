@@ -16,17 +16,28 @@ const previewState: PlayState = {
     maxFocus: 10,
     level: 2,
     experience: 20,
-    inCombat: false,
+    inCombat: true,
     equipped: "Practice Sword",
     gifts: [],
   },
-  conversation: {
-    npcId: "npc-porter-bramble",
-    npcName: "Porter Bramble",
-    prompt: "Why a weapon, I wonder?",
-    choices: [
-      { say: "1", label: "Why does a weapon fit a first-year?" },
-      { say: "2", label: "I will put it back." },
+  encounter: {
+    id: "enc-preview",
+    round: 1,
+    status: "awaiting_intents",
+    lockDeadlineAt: new Date(Date.now() + 12_000).toISOString(),
+    enemy: {
+      id: "enemy-practice-dummy-south-orchard",
+      name: "Practice Dummy",
+      health: 8,
+      maxHealth: 8,
+      focus: 6,
+      maxFocus: 6,
+    },
+    moves: [
+      { label: "Attack", command: "attack", kind: "attack" },
+      { label: "Ember", command: "cast ember", kind: "cast" },
+      { label: "Defend", command: "defend", kind: "defend" },
+      { label: "Flee", command: "flee", kind: "flee" },
     ],
   },
   bag: [
