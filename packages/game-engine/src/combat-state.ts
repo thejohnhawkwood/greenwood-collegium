@@ -1,3 +1,4 @@
+import { baseMaxFocusForLevel, baseMaxHealthForLevel } from "./progression.js";
 import type { Character, Encounter, EngineRuntime, WorldState } from "./state.js";
 
 export const INFIRMARY_ROOM_ID = "infirmary";
@@ -42,7 +43,7 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
     }
     if (character.braceBonus) {
       const max = Math.max(
-        DEFAULT_PLAYER_MAX_HEALTH,
+        baseMaxHealthForLevel(character.level ?? 1),
         (character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH) - character.braceBonus,
       );
       character.maxHealth = max;
@@ -57,13 +58,42 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
   delete worldEncounters(world)[encounter.id];
 }
 
+export function applyLevelVitals(character: Character, options?: { healGain?: boolean }): void {
+  const level = character.level ?? 1;
+  const expectedHealth = baseMaxHealthForLevel(level) + (character.braceBonus ?? 0);
+  const expectedFocus = baseMaxFocusForLevel(level);
+  const previousMaxHealth = character.maxHealth;
+  const previousMaxFocus = character.maxFocus;
+  if (character.maxHealth === undefined || character.maxHealth < expectedHealth) {
+    character.maxHealth = expectedHealth;
+  }
+  if (character.maxFocus === undefined || character.maxFocus < expectedFocus) {
+    character.maxFocus = expectedFocus;
+  }
+  if (options?.healGain) {
+    if (previousMaxHealth !== undefined && character.maxHealth > previousMaxHealth) {
+      character.health = Math.min(
+        character.maxHealth,
+        (character.health ?? previousMaxHealth) + (character.maxHealth - previousMaxHealth),
+      );
+    }
+    if (previousMaxFocus !== undefined && character.maxFocus > previousMaxFocus) {
+      character.focus = Math.min(
+        character.maxFocus,
+        (character.focus ?? previousMaxFocus) + (character.maxFocus - previousMaxFocus),
+      );
+    }
+  }
+  character.health ??= character.maxHealth;
+  character.focus ??= character.maxFocus;
+  character.health = Math.min(character.health, character.maxHealth);
+  character.focus = Math.min(character.focus, character.maxFocus);
+}
+
 export function ensurePlayerVitals(character: Character): void {
-  character.health ??= DEFAULT_PLAYER_MAX_HEALTH;
-  character.maxHealth ??= DEFAULT_PLAYER_MAX_HEALTH;
-  character.focus ??= DEFAULT_PLAYER_MAX_FOCUS;
-  character.maxFocus ??= DEFAULT_PLAYER_MAX_FOCUS;
   character.experience ??= 0;
   character.level ??= 1;
+  applyLevelVitals(character);
 }
 
 export type InCombatFailure = {

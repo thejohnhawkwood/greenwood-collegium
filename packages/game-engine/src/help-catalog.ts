@@ -122,6 +122,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
       "eat apple (or nibble) at the Fallen Apples in the South Orchard restores health and focus. Drink from the courtyard well if you are in Lantern Court instead.",
   },
   {
+    topic: "spells",
+    aliases: ["spells", "spell", "grimoire", "book"],
+    summary: "List the spells you have been taught.",
+    detail:
+      "spells (or grimoire) lists Ember and, at the third year-mark, your School kit. Type the listed cast words during a fight.",
+  },
+  {
     topic: "stats",
     aliases: ["stats"],
     summary: "Show health, location, and what you have equipped.",

@@ -61,6 +61,8 @@ describe("parsePlayerCommand", () => {
     expect(parsePlayerCommand("where", "char-rowan")?.verb).toBe("look");
     expect(parsePlayerCommand("place", "char-rowan")?.verb).toBe("look");
     expect(parsePlayerCommand("stats", "char-rowan")?.verb).toBe("stats");
+    expect(parsePlayerCommand("spells", "char-rowan")?.verb).toBe("spells");
+    expect(parsePlayerCommand("grimoire", "char-rowan")?.verb).toBe("spells");
     expect(parsePlayerCommand("map", "char-rowan")?.verb).toBe("map");
     expect(parsePlayerCommand("chart", "char-rowan")?.verb).toBe("map");
     expect(parsePlayerCommand("travel Library Stacks", "char-rowan")).toEqual({

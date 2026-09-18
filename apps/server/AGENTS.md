@@ -9,7 +9,7 @@ Fastify process for HTTP and Socket.IO.
 - Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory. Persist a personal Arrival key with `ensurePlacements` before that take can `claim`.
 - Ticket 013 owns combat command dispatch. Socket handlers do not invent combat text or damage. ADR-0038 owns `duel` / `duel accept` / `duel decline`. Handlers do not invent duel outcomes. The gateway owns the lock-in `setTimeout` and calls `handleCombatExpire`; it does not invent defend or flee text. After a party command it rearms every living member.
 - Ticket 014 owns `cast`. Handlers do not invent Ember damage, burning, or presentation.
-- Ticket 015 owns Arrival, `help`, and `quests`. Handlers do not invent Porter speech or award XP twice.
+- Ticket 015 owns Arrival, `help`, `quests`, and `spells`. Handlers do not invent Porter speech or award XP twice. Persist `defeatedSpawnIds` with the Collegian. Persist personal quest-reward loot the same way as combat loot.
 - Repeat command IDs must return the first result. Authenticated disconnects get a resume grace and `session.snapshot`.
 - Each process emits `session-hello` with a boot id on connect. Do not log the boot id as a secret; it is not a session token.
 - Account and character records use repository interfaces. In-memory tests always run. Postgres tests run only with `GREENWOOD_TEST_DATABASE_URL`.

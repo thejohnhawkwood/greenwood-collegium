@@ -99,6 +99,7 @@ export type QuestTemplate = {
   giverNpcId?: string;
   completionNarration?: string;
   experienceReward: number;
+  itemRewardTemplateId?: string;
   objectives: QuestObjective[];
 };
 
@@ -262,6 +263,7 @@ export type JoinIntent = {
   speciesId?: string;
   gender?: "female" | "male";
   discoveredRoomIds?: string[];
+  defeatedSpawnIds?: string[];
   schoolId?: SchoolId;
 };
 
@@ -357,6 +359,11 @@ export type QuestsIntent = {
 
 export type StatsIntent = {
   verb: "stats";
+  characterId: string;
+};
+
+export type SpellsIntent = {
+  verb: "spells";
   characterId: string;
 };
 
@@ -459,6 +466,7 @@ export type PlayerCommand =
   | HelpIntent
   | QuestsIntent
   | StatsIntent
+  | SpellsIntent
   | EquipIntent
   | MapIntent
   | TravelIntent

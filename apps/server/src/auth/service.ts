@@ -21,6 +21,7 @@ import {
   type CharacterRepository,
   type InviteRepository,
   type InviteRole,
+  resolveDefeatedSpawnIds,
   resolveDiscoveredRoomIds,
   type SessionRepository,
 } from "../persistence/types.js";
@@ -111,6 +112,7 @@ export type PlayIdentity = {
   gender?: CharacterRecord["gender"];
   roomId: string;
   discoveredRoomIds?: string[];
+  defeatedSpawnIds?: string[];
   experience: number;
   level: number;
   schoolId?: string;
@@ -779,6 +781,7 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     gender: character.gender,
     roomId: character.roomId,
     discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
+    defeatedSpawnIds: resolveDefeatedSpawnIds(character.defeatedSpawnIds),
     experience: character.experience,
     level: character.level,
     schoolId: character.schoolId,

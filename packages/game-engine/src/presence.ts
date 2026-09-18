@@ -2,6 +2,7 @@ import type { EventEnvelope } from "@greenwood/contracts";
 import { startArrivalQuest } from "./arrival.js";
 import { dropEncounterMember, encounterMembers } from "./combat-party.js";
 import { activeEncounter, closeEncounter } from "./combat-state.js";
+import { ensurePlayerVitals } from "./combat-state.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
@@ -59,6 +60,7 @@ export function handleJoin(
     examineDescription: intent.examineDescription,
     roomId: room.id,
     discoveredRoomIds: [...new Set([...(intent.discoveredRoomIds ?? []), room.id])],
+    defeatedSpawnIds: [...new Set(intent.defeatedSpawnIds ?? [])],
     experience: intent.experience ?? 0,
     level: intent.level ?? 1,
     speciesId: intent.speciesId,
@@ -67,6 +69,9 @@ export function handleJoin(
     schoolId: intent.schoolId,
   };
   const character = world.characters[intent.characterId];
+  if (character) {
+    ensurePlayerVitals(character);
+  }
   if (!character) {
     return {
       ok: false,

@@ -17,5 +17,5 @@ export const levelGainedEventSchema = eventEnvelopeSchema.extend({
 export type LevelGainedEvent = z.infer<typeof levelGainedEventSchema>;
 
 export function formatLevelGainedText(payload: LevelGainedPayload): string {
-  return `You reach Level ${String(payload.level)}.`;
+  return `You reach Level ${String(payload.level)}. Health and focus grow.`;
 }

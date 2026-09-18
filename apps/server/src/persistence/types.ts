@@ -28,6 +28,7 @@ export type CharacterRecord = {
   experience: number;
   roomId: string;
   schoolId?: string;
+  defeatedSpawnIds?: string[];
   status: CharacterStatus;
   creationCompletedAt?: Date;
   createdAt: Date;
@@ -46,6 +47,13 @@ export function resolveDiscoveredRoomIds(
     return [fallbackRoomId];
   }
   return unique;
+}
+
+export function resolveDefeatedSpawnIds(value: unknown): string[] {
+  const ids = Array.isArray(value)
+    ? value.filter((id): id is string => typeof id === "string" && /^[a-z][a-z0-9-]*$/u.test(id))
+    : [];
+  return [...new Set(ids)];
 }
 
 export type SessionRecord = {
@@ -130,6 +138,7 @@ export interface CharacterRepository {
   updateProgress(id: string, input: { experience: number; level: number }): Promise<void>;
   updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void>;
   updateSchool(id: string, schoolId: string | undefined): Promise<void>;
+  updateDefeatedSpawns(id: string, defeatedSpawnIds: readonly string[]): Promise<void>;
 }
 
 export interface SessionRepository {

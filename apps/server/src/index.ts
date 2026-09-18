@@ -173,6 +173,8 @@ await attachRealtime(app, world, {
     stores.characters.updateDiscovery(characterId, roomIds),
   persistProgress: (characterId, input) => stores.characters.updateProgress(characterId, input),
   persistSchool: (characterId, schoolId) => stores.characters.updateSchool(characterId, schoolId),
+  persistDefeatedSpawns: (characterId, spawnIds) =>
+    stores.characters.updateDefeatedSpawns(characterId, spawnIds),
   persistItem,
   persistQuest: stores.quests,
   auditLog: stores.audit,

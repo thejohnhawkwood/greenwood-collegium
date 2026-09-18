@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-17 — Spawn memory, spells, felt levels](2026-09-17-spawn-memory-and-enjoyment.md)
 - [2026-09-16 — Lock-in Chorus combat](2026-09-16-lock-in-combat.md)
 - [2026-09-16 — Combat frame scenarios (docs only)](2026-09-16-combat-scenarios.md)
 - [2026-09-16 — Redwall-leaning staff and Collegian plates](2026-09-16-redwall-plates.md)

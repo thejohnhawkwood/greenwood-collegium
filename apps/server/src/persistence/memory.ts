@@ -27,6 +27,7 @@ import {
   type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
+  resolveDefeatedSpawnIds,
   resolveDiscoveredRoomIds,
   type UpdateCharacterCreationInput,
 } from "./types.js";
@@ -139,6 +140,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       experience: 0,
       roomId: input.roomId,
       discoveredRoomIds: resolveDiscoveredRoomIds([input.roomId], input.roomId),
+      defeatedSpawnIds: [],
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -157,6 +159,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
             character.discoveredRoomIds,
             character.roomId,
           ),
+          defeatedSpawnIds: resolveDefeatedSpawnIds(character.defeatedSpawnIds),
         }
       : undefined;
   }
@@ -174,6 +177,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       .map((character) => ({
         ...character,
         discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
+        defeatedSpawnIds: resolveDefeatedSpawnIds(character.defeatedSpawnIds),
       }));
   }
 
@@ -236,6 +240,18 @@ export class InMemoryCharacterRepository implements CharacterRepository {
     this.byId.set(id, {
       ...character,
       discoveredRoomIds: resolveDiscoveredRoomIds(discoveredRoomIds, character.roomId),
+      updatedAt: new Date(),
+    });
+  }
+
+  async updateDefeatedSpawns(id: string, defeatedSpawnIds: readonly string[]): Promise<void> {
+    const character = this.byId.get(id);
+    if (!character) {
+      return;
+    }
+    this.byId.set(id, {
+      ...character,
+      defeatedSpawnIds: resolveDefeatedSpawnIds(defeatedSpawnIds),
       updatedAt: new Date(),
     });
   }

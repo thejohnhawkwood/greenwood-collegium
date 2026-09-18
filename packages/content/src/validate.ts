@@ -477,6 +477,18 @@ export function validateQuests(
         fileName: named.fileName,
       });
     }
+    if (
+      named.template.itemRewardTemplateId &&
+      !itemTemplateIds.has(named.template.itemRewardTemplateId)
+    ) {
+      issues.push({
+        code: "unknown_item_template",
+        message: `${named.template.id} rewards unknown template ${named.template.itemRewardTemplateId}`,
+        questId: named.template.id,
+        itemId: named.template.itemRewardTemplateId,
+        fileName: named.fileName,
+      });
+    }
     for (const objective of named.template.objectives) {
       if (objective.kind === "examine" || objective.kind === "talk") {
         const target = objective.targetId ? fixtures.get(objective.targetId) : undefined;

@@ -198,6 +198,8 @@ describe("Arrival at the Collegium", () => {
     expect(levelGainedEventSchema.parse(finished[2]).payload.level).toBe(2);
     expect(world.characters["char-rowan"]?.experience).toBe(10);
     expect(world.characters["char-rowan"]?.level).toBe(2);
+    expect(world.characters["char-rowan"]?.maxHealth).toBe(24);
+    expect(world.characters["char-rowan"]?.maxFocus).toBe(12);
 
     expect(progressQuests(world, { characterId: "char-rowan", kind: "look" }, clock)).toEqual([]);
     expect(progressQuests(world, { characterId: "char-rowan", kind: "say" }, clock)).toEqual([]);
@@ -282,5 +284,59 @@ describe("Arrival at the Collegium", () => {
     expect(mossTake.payload.completedObjectives).toContain(
       "Take the Small Copper Key from Porter. Type take key.",
     );
+  });
+
+  it("puts an authored quest item in the pack on completion", () => {
+    const world = courtWorld();
+    world.itemTemplates = {
+      "librarians-ribbon": {
+        id: "librarians-ribbon",
+        name: "Librarian's Ribbon",
+        examineDescription: "Ink and oak.",
+      },
+    };
+    const pages: QuestTemplate = {
+      id: "the-missing-pages",
+      title: "The Missing Pages",
+      introNarration: "Quill needs pages.",
+      reminderNarration: "Still missing.",
+      completionNarration: "The shelf is honest again.",
+      experienceReward: 10,
+      itemRewardTemplateId: "librarians-ribbon",
+      objectives: [
+        { id: "look-stacks", kind: "look", label: "Look the stacks.", roomId: "lantern-court" },
+      ],
+    };
+    world.questTemplates = { "the-missing-pages": pages };
+    const clock = runtime();
+    expect(
+      handleJoin(
+        world,
+        {
+          verb: "join",
+          characterId: "char-rowan",
+          name: "Rowan the Hare",
+          roomId: "lantern-court",
+        },
+        clock,
+      ).ok,
+    ).toBe(true);
+    applyQuestProgress(world, "char-rowan", [
+      {
+        characterId: "char-rowan",
+        questId: "the-missing-pages",
+        status: "active",
+        completedObjectiveIds: [],
+        rewardGranted: false,
+      },
+    ]);
+    const finished = progressQuests(world, { characterId: "char-rowan", kind: "look" }, clock);
+    expect(finished.some((event) => event.narration.includes("Librarian's Ribbon"))).toBe(true);
+    expect(
+      world.items?.["item-quest-the-missing-pages-loot-librarians-ribbon--char-rowan"],
+    ).toMatchObject({
+      holderCharacterId: "char-rowan",
+      templateId: "librarians-ribbon",
+    });
   });
 });

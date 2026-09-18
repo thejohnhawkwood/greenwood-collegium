@@ -50,7 +50,10 @@ Clues remain available to the whole class. No student can take or consume a ques
 fixture. The missing page is reported for collection, and Tansy prepares a repair;
 neither story removes a shared object. Progress and experience belong to each
 character. Authenticated progress survives reconnects and server restarts; guest
-progress remains temporary. Quest completion grants its experience once.
+progress remains temporary. Quest completion grants its experience once. The
+investigation and silk quests also leave one personal item in the pack. Type
+`spells` to read Ember and, later, the School kit. Each year-mark grows health
+and focus. First-time dummy and queen memory is saved with the Collegian.
 
 The bell story answers how the sound travels through the living wood while leaving
 its first cause open for a future adventure. No inaccessible room is required.

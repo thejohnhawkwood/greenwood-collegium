@@ -38,6 +38,7 @@ import {
   type QuestProgressRecord,
   type QuestProgressRepository,
   type SessionRecord,
+  resolveDefeatedSpawnIds,
   resolveDiscoveredRoomIds,
   type SessionRepository,
   type UpdateCharacterCreationInput,
@@ -155,6 +156,7 @@ export class PostgresCharacterRepository implements CharacterRepository {
       experience: 0,
       roomId: input.roomId,
       discoveredRoomIds: resolveDiscoveredRoomIds([input.roomId], input.roomId),
+      defeatedSpawnIds: [],
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -246,6 +248,16 @@ export class PostgresCharacterRepository implements CharacterRepository {
       .update(characters)
       .set({
         discoveredRoomIds: resolveDiscoveredRoomIds(discoveredRoomIds, current.roomId),
+        updatedAt: new Date(),
+      })
+      .where(eq(characters.id, id));
+  }
+
+  async updateDefeatedSpawns(id: string, defeatedSpawnIds: readonly string[]): Promise<void> {
+    await this.db
+      .update(characters)
+      .set({
+        defeatedSpawnIds: resolveDefeatedSpawnIds(defeatedSpawnIds),
         updatedAt: new Date(),
       })
       .where(eq(characters.id, id));
@@ -469,6 +481,7 @@ function toCharacter(row: typeof characters.$inferSelect): CharacterRecord {
     roomId: row.roomId,
     schoolId: row.schoolId ?? undefined,
     discoveredRoomIds: resolveDiscoveredRoomIds(row.discoveredRoomIds, row.roomId),
+    defeatedSpawnIds: resolveDefeatedSpawnIds(row.defeatedSpawnIds),
     status: row.status as CharacterRecord["status"],
     creationCompletedAt: row.creationCompletedAt ? asDate(row.creationCompletedAt) : undefined,
     createdAt: asDate(row.createdAt),

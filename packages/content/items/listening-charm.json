@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "listening-charm",
+  "name": "Listening Charm",
+  "shortDescription": "A small stone that holds a note.",
+  "examineDescription": "Alder gave you this chip of chapel stone after you reported the empty bell. If you hold it still, a low note sits in the grain.",
+  "category": "ordinary",
+  "unique": true
+}

@@ -63,4 +63,26 @@ describe("presence", () => {
     expect(world.characters["char-moss"]).toBeUndefined();
     expect(world.characters["char-rowan"]).toBeDefined();
   });
+
+  it("restores defeated spawn memory when a Collegian joins", () => {
+    const world = emptyCourt();
+    const joined = handleJoin(
+      world,
+      {
+        verb: "join",
+        characterId: "char-rowan",
+        name: "Rowan the Hare",
+        roomId: "lantern-court",
+        defeatedSpawnIds: [
+          "enemy-practice-dummy-south-orchard",
+          "enemy-practice-dummy-south-orchard",
+        ],
+      },
+      runtime(),
+    );
+    expect(joined.ok).toBe(true);
+    expect(world.characters["char-rowan"]?.defeatedSpawnIds).toEqual([
+      "enemy-practice-dummy-south-orchard",
+    ]);
+  });
 });

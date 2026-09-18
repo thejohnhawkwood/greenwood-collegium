@@ -87,6 +87,8 @@ describe("content loader", () => {
       }),
     ]);
     expect(world.itemTemplates["small-copper-key"]?.name).toBe("Small Copper Key");
+    expect(world.itemTemplates["librarians-ribbon"]?.name).toBe("Librarian's Ribbon");
+    expect(world.quests["the-missing-pages"]?.itemRewardTemplateId).toBe("librarians-ribbon");
     expect(Object.keys(world.items)).toHaveLength(4);
     expect(world.enemies["enemy-practice-dummy-south-orchard"]).toMatchObject({
       templateId: "practice-dummy",

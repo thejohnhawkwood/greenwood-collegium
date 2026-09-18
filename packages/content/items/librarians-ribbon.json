@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "librarians-ribbon",
+  "name": "Librarian's Ribbon",
+  "shortDescription": "A narrow ink-stained ribbon.",
+  "examineDescription": "Quill tied this scrap of library ribbon herself. It still smells of oak-gall ink. Proof you brought the missing pages home.",
+  "category": "ordinary",
+  "unique": true
+}

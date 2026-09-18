@@ -17,6 +17,7 @@ import { parseByeCommand } from "./parse-bye.js";
 import { parseDrinkCommand } from "./parse-drink.js";
 import { parseEatCommand } from "./parse-eat.js";
 import { parseStatsCommand } from "./parse-stats.js";
+import { parseSpellsCommand } from "./parse-spells.js";
 import { parseEquipCommand } from "./parse-equip.js";
 import { parseMapCommand } from "./parse-map.js";
 import { parseTravelCommand } from "./parse-travel.js";
@@ -28,6 +29,7 @@ export function parsePlayerCommand(raw: string, characterId: string): PlayerComm
     parseHelpCommand(raw, characterId) ??
     parseQuestsCommand(raw, characterId) ??
     parseStatsCommand(raw, characterId) ??
+    parseSpellsCommand(raw, characterId) ??
     parseMapCommand(raw, characterId) ??
     parseTravelCommand(raw, characterId) ??
     parseDuelCommand(raw, characterId) ??

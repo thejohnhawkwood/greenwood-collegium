@@ -23,7 +23,8 @@ at one foe.
   in the room has not stood. If everyone present has stood, she does not rise.
 - Experience and authored loot go to first-timers on that kill. Veterans who
   help a first-timer do not get the lesson twice.
-- Encounter memory is process-local until a later persistence ticket.
+- Encounter memory is persisted on the Collegian (`defeated_spawn_ids`) so a
+  Render restart does not restage first-timer XP or dummy loot.
 
 ## Consequences
 

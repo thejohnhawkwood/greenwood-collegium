@@ -85,6 +85,7 @@ export function createDevWorld(): WorldState {
           giverNpcId: quest.giverNpcId,
           completionNarration: quest.completionNarration,
           experienceReward: quest.experienceReward,
+          itemRewardTemplateId: quest.itemRewardTemplateId,
           objectives: quest.objectives.map((objective) => ({ ...objective })),
         },
       ]),

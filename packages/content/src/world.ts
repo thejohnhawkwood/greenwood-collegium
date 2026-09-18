@@ -95,6 +95,7 @@ export type LoadedQuest = {
   giverNpcId?: string;
   completionNarration?: string;
   experienceReward: number;
+  itemRewardTemplateId?: string;
   objectives: Array<{
     id: string;
     kind: "look" | "say" | "take" | "visit" | "examine" | "talk";
@@ -273,6 +274,7 @@ export function toWorldState(
       giverNpcId: quest.giverNpcId,
       completionNarration: quest.completionNarration,
       experienceReward: quest.experienceReward,
+      itemRewardTemplateId: quest.itemRewardTemplateId,
       objectives: quest.objectives.map((objective) => ({
         id: objective.id,
         kind: objective.kind,

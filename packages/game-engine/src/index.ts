@@ -38,6 +38,8 @@ export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
 export { handleStats } from "./stats.js";
 export { parseStatsCommand } from "./parse-stats.js";
+export { handleSpells } from "./spells.js";
+export { parseSpellsCommand } from "./parse-spells.js";
 export { handleMap } from "./map.js";
 export { parseMapCommand } from "./parse-map.js";
 export { handleTravel } from "./travel.js";
@@ -115,6 +117,7 @@ export type { CastFailure, CastResult, CastSuccess } from "./cast.js";
 export type { HelpFailure, HelpResult, HelpSuccess } from "./help.js";
 export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
 export type { StatsFailure, StatsResult, StatsSuccess } from "./stats.js";
+export type { SpellsFailure, SpellsResult, SpellsSuccess } from "./spells.js";
 export type { MapFailure, MapResult, MapSuccess } from "./map.js";
 export type { TravelFailure, TravelResult, TravelSuccess } from "./travel.js";
 export type { DuelFailure, DuelResult } from "./duel.js";
@@ -160,6 +163,7 @@ export type {
   TravelIntent,
   DuelIntent,
   StatsIntent,
+  SpellsIntent,
   Room,
   RoomExit,
   RoomFixture,

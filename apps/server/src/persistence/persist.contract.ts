@@ -100,6 +100,27 @@ export function persistAccountAndCharacter(
     await characters.updateSchool(character.id, "steel");
     expect((await characters.getById(character.id))?.schoolId).toBe("steel");
   });
+  it("saves defeated spawn memory through repository reloads", async () => {
+    const account = await accounts.create({
+      username: "orchard-fixture",
+      passwordHash: "pending",
+      role: "student",
+    });
+    const character = await characters.create({
+      accountId: account.id,
+      name: "Orchard",
+      speciesId: "hare",
+      roomId: "lantern-court",
+    });
+    expect((await characters.getById(character.id))?.defeatedSpawnIds).toEqual([]);
+    await characters.updateDefeatedSpawns(character.id, [
+      "enemy-practice-dummy-south-orchard",
+      "enemy-practice-dummy-south-orchard",
+    ]);
+    expect((await characters.getById(character.id))?.defeatedSpawnIds).toEqual([
+      "enemy-practice-dummy-south-orchard",
+    ]);
+  });
   it("persists an account and a character that can be read back", async () => {
     const account = await accounts.create({
       username: "Rowan",

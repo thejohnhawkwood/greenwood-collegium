@@ -10,7 +10,8 @@ import {
 } from "@greenwood/contracts";
 import { ARRIVAL_QUEST_ID, openPorterArrival } from "./arrival-guide.js";
 import { BELL_BELOW_QUEST_ID, summonToHeadmaster } from "./headmaster.js";
-import { itemsHeldBy } from "./items.js";
+import { applyLevelVitals } from "./combat-state.js";
+import { itemsHeldBy, worldItems } from "./items.js";
 import { levelForExperience } from "./progression.js";
 import type {
   Character,
@@ -156,7 +157,7 @@ export function progressQuests(
     if (remaining.length === 0) {
       progress.status = "completed";
       events.push(questUpdatedEvent(character.id, template, progress, runtime));
-      events.push(...awardQuestReward(character, template, progress, runtime));
+      events.push(...awardQuestReward(world, character, template, progress, runtime));
       if (template.id === ARRIVAL_QUEST_ID) {
         events.push(...summonToHeadmaster(world, character, runtime));
       }
@@ -194,6 +195,7 @@ export function progressQuests(
 }
 
 function awardQuestReward(
+  world: WorldState,
   character: Character,
   template: QuestTemplate,
   progress: QuestProgress,
@@ -209,9 +211,43 @@ function awardQuestReward(
   character.level = nextLevel;
   const events: EventEnvelope[] = [experienceEvent(character, template.experienceReward, runtime)];
   if (nextLevel > previousLevel) {
+    applyLevelVitals(character, { healGain: true });
     events.push(levelEvent(character, runtime));
   }
+  events.push(...grantQuestItem(world, character, template, runtime));
   return events;
+}
+
+function grantQuestItem(
+  world: WorldState,
+  character: Character,
+  template: QuestTemplate,
+  runtime: EngineRuntime,
+): EventEnvelope[] {
+  const templateId = template.itemRewardTemplateId;
+  if (!templateId) {
+    return [];
+  }
+  const itemTemplate = world.itemTemplates?.[templateId];
+  if (!itemTemplate) {
+    return [];
+  }
+  const instanceId = `item-quest-${template.id}-loot-${templateId}--${character.id}`;
+  if (worldItems(world)[instanceId]) {
+    return [];
+  }
+  worldItems(world)[instanceId] = {
+    id: instanceId,
+    templateId: itemTemplate.id,
+    name: itemTemplate.name,
+    examineDescription: itemTemplate.examineDescription,
+    roomId: character.roomId,
+    holderCharacterId: character.id,
+    availableToCharacterId: character.id,
+    category: itemTemplate.category,
+    itemType: itemTemplate.itemType,
+  };
+  return [systemNotice(character.id, `You receive ${itemTemplate.name}.`, runtime)];
 }
 
 function objectiveMatches(

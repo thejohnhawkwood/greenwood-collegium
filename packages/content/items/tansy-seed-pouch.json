@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "tansy-seed-pouch",
+  "name": "Tansy's Seed Pouch",
+  "shortDescription": "A worn pouch of garden seed.",
+  "examineDescription": "Tansy pressed this pouch into your paw after the greenhouse walk. The seeds click when you shake it. They are for growing, not for throwing.",
+  "category": "ordinary",
+  "unique": true
+}

@@ -59,6 +59,7 @@ export const questTemplateSchema = z
     giverNpcId: stableIdSchema.optional(),
     completionNarration: z.string().min(1).optional(),
     experienceReward: z.number().int().positive(),
+    itemRewardTemplateId: stableIdSchema.optional(),
     objectives: z.array(questObjectiveSchema).min(1),
   })
   .strict()

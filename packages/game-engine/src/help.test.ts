@@ -76,6 +76,7 @@ describe("help and quests", () => {
       expect(listed.event.narration).toContain("talk —");
       expect(listed.event.narration).toContain("where —");
       expect(listed.event.narration).toContain("stats —");
+      expect(listed.event.narration).toContain("spells —");
       expect(listed.event.narration).toContain("map —");
       expect(listed.event.narration).toContain("travel —");
       expect(listed.event.narration).toContain("equip —");

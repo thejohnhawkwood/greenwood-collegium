@@ -1,5 +1,9 @@
 import type { EventEnvelope } from "@greenwood/contracts";
-import { DEFAULT_PLAYER_MAX_HEALTH, ensurePlayerVitals } from "./combat-state.js";
+import {
+  DEFAULT_PLAYER_MAX_FOCUS,
+  DEFAULT_PLAYER_MAX_HEALTH,
+  ensurePlayerVitals,
+} from "./combat-state.js";
 import { itemsHeldBy, worldItems } from "./items.js";
 import type { EngineRuntime, StatsIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -42,9 +46,13 @@ export function handleStats(
   ensurePlayerVitals(character);
   const health = character.health ?? DEFAULT_PLAYER_MAX_HEALTH;
   const maxHealth = character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH;
+  const focus = character.focus ?? DEFAULT_PLAYER_MAX_FOCUS;
+  const maxFocus = character.maxFocus ?? DEFAULT_PLAYER_MAX_FOCUS;
   const held = heldItemName(world, character.id, character.equippedItemId);
   const narration = [
     `Health: ${String(health)}/${String(maxHealth)}`,
+    `Focus: ${String(focus)}/${String(maxFocus)}`,
+    `Level: ${String(character.level ?? 1)}`,
     `Location: ${room.title}`,
     `Equipped: ${held}`,
   ].join("\n");

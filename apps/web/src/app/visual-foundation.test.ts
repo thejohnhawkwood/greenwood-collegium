@@ -495,6 +495,9 @@ describe("visual foundation", () => {
     expect(itemMenu).toContain("Take");
     expect(itemMenu).not.toContain("Attack");
     const lootId = "item-enemy-practice-dummy-south-orchard-loot-straw-practice-scrap";
+    expect(objectArtSrc("librarians-ribbon", "Librarian's Ribbon")).toBe(
+      "/art/objects/object-folded-page.png",
+    );
     expect(objectArtSrc(lootId, "Straw Practice Scrap")).toBe(
       "/art/objects/straw-practice-scrap.png",
     );

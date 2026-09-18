@@ -56,16 +56,30 @@ export function personalLootSeeds(world: WorldState): ItemPlacementSeed[] {
 
 export async function persistPersonalLoot(
   world: WorldState,
-  items?: { ensurePlacements?(seeds: readonly ItemPlacementSeed[]): Promise<void> },
+  items?: {
+    ensurePlacements?(seeds: readonly ItemPlacementSeed[]): Promise<void>;
+    claim?(itemId: string, characterId: string, roomId: string): Promise<boolean>;
+  },
 ): Promise<void> {
   if (!items?.ensurePlacements) {
     return;
   }
   const seeds = personalLootSeeds(world);
-  if (seeds.length === 0) {
+  if (seeds.length > 0) {
+    await items.ensurePlacements(seeds);
+  }
+  if (!items.claim) {
     return;
   }
-  await items.ensurePlacements(seeds);
+  for (const item of Object.values(world.items ?? {})) {
+    if (!item.holderCharacterId || !item.roomId || !item.id.includes("-loot-")) {
+      continue;
+    }
+    const claimed = await items.claim(item.id, item.holderCharacterId, item.roomId);
+    if (claimed) {
+      item.roomId = undefined;
+    }
+  }
 }
 
 export async function persistCharacterStarterItems(

@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "copied-still-score",
+  "name": "Copied Still Score",
+  "shortDescription": "A careful copy of the still score.",
+  "examineDescription": "Alder let you keep this copy after the Deep Cradle. The notes do not move on the page, but you remember they did on the stone.",
+  "category": "ordinary",
+  "unique": true
+}
