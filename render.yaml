@@ -14,7 +14,7 @@ services:
     autoDeployTrigger: checksPass
     healthCheckPath: /health/ready
     maxShutdownDelaySeconds: 30
-    buildCommand: corepack enable && corepack prepare pnpm@11.25.0 --activate && pnpm install --frozen-lockfile && pnpm build
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
     preDeployCommand: pnpm --filter @greenwood/server db:migrate
     startCommand: pnpm --filter @greenwood/server start
     envVars:

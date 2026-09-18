@@ -52,6 +52,7 @@ If any click fails, stop. Do not create a second database by hand or paste `DATA
 - Read the Render deploy logs (build command and start command).
 - Confirm CI passed on the commit Render deployed (`autoDeployTrigger` is `checksPass`).
 - Confirm Node 24 (`NODE_VERSION` / `.nvmrc`).
+- Do not run `corepack enable` in the Render build command. The Node 24 image already has `pnpm` on PATH, and rewriting `/usr/bin/pnpm` fails with `EROFS`.
 - Do not add packages or a second service to “make it work” in the dashboard. Fix the repo instead.
 
 ## What not to do
