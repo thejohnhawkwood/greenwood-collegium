@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
+import { FX_FILES } from "./combat-fx.js";
 import { NPC_PLATE_FILES } from "./npc-plates.js";
 import { OBJECT_PLATE_FILES } from "./object-plates.js";
 import { COLLEGIUM_ROOM_PLATES } from "./room-plates.js";
@@ -173,6 +174,14 @@ describe("painted catalog files", () => {
       const path = join(artRoot, "objects", `${id}.png`);
       expect(existsSync(path)).toBe(true);
       expect(statSync(path).size).toBeGreaterThan(15_000);
+    }
+  });
+  it("keeps a punched overlay for every combat FX plate", () => {
+    expect(FX_FILES).toHaveLength(27);
+    for (const id of FX_FILES) {
+      const path = join(artRoot, "fx", `${id}.png`);
+      expect(existsSync(path), id).toBe(true);
+      expect(statSync(path).size).toBeGreaterThan(4_000);
     }
   });
   it("keeps a painted plate for every Collegium room", () => {

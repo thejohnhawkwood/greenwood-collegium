@@ -8,6 +8,8 @@ import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
 import { QuestJournal } from "./QuestJournal.js";
 import { CombatStage } from "./CombatStage.js";
+import { latestCombatAction, resolveCombatFx } from "./combat-fx.js";
+import { useCombatFxPulse } from "./combat-fx-pulse.js";
 import { encounterFoeVisual } from "./combat-stage.js";
 import { RoomScene } from "./RoomScene.js";
 import type { TranscriptLine } from "./transcript.js";
@@ -57,6 +59,21 @@ export function PlayPanels({
   const character = state?.character;
   const story = lines.filter((line) => !isDialogueMenuText(line.text));
   const conversation = state?.conversation;
+  const fxEvent = latestCombatAction(lines);
+  const pulse = useCombatFxPulse(fxEvent?.eventId);
+  const foe = state?.encounter?.enemy;
+  const fx = resolveCombatFx({
+    event: fxEvent,
+    equipped: character?.equipped,
+    health: foe?.health ?? 0,
+    maxHealth: foe?.maxHealth ?? 1,
+  });
+  const selfOverlay =
+    pulse && fx.motion === "self"
+      ? fx.spell
+      : pulse && fx.shakeTarget === "self"
+        ? fx.impact
+        : undefined;
   return (
     <div className="play-scroll">
       {error ? (
@@ -75,6 +92,8 @@ export function PlayPanels({
               <CharacterPortrait
                 visual={character?.visual}
                 name={character?.name ?? "Waiting for your Collegian"}
+                overlaySrc={selfOverlay}
+                shake={pulse && fx.shakeTarget === "self"}
               />
               {character ? (
                 <div className="portrait-vitals" aria-label="Character status">
@@ -221,6 +240,9 @@ export function PlayPanels({
                 <CombatStage
                   encounter={state.encounter}
                   foeVisual={encounterFoeVisual(state.encounter, state)}
+                  fxEvent={fxEvent}
+                  equipped={character?.equipped}
+                  pulse={pulse}
                   onSend={onSend}
                 />
               ) : null}

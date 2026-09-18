@@ -625,18 +625,124 @@
   text-align: center;
 }
 .combat-stage-art {
+  position: relative;
   margin: 0.15rem auto 0.35rem;
   width: min(11.5rem, 72%);
   overflow: hidden;
   background: #0c1a14;
   border: 1px solid #536245;
 }
+.combat-stage-plate,
 .combat-stage-art img,
 .combat-stage-art .character-portrait {
   display: block;
   width: 100%;
   height: 11rem;
   object-fit: contain;
+}
+.combat-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  height: 11rem;
+}
+.combat-stage-art.is-defeated .combat-stage-plate {
+  filter: grayscale(0.7) brightness(0.7);
+}
+.combat-stage-art.is-shaking,
+.character-portrait.is-shaking {
+  animation: combat-card-shake 0.38s ease-out;
+}
+.combat-fx-weapon.combat-fx-swing,
+.combat-fx-spell.combat-fx-swing {
+  animation: combat-fx-swing 0.7s ease-out both;
+}
+.combat-fx-spell.combat-fx-grow {
+  animation: combat-fx-grow 0.7s ease-out both;
+}
+.combat-fx-spell.combat-fx-pulse,
+.combat-fx-impact {
+  animation: combat-fx-pulse 0.7s ease-out both;
+}
+.combat-fx-defeat {
+  animation: combat-fx-defeat 0.45s ease-out both;
+}
+.portrait-layer-fx {
+  z-index: 3;
+  animation: combat-fx-pulse 0.7s ease-out both;
+}
+@keyframes combat-card-shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4px, 2px);
+  }
+  40% {
+    transform: translate(4px, -1px);
+  }
+  60% {
+    transform: translate(-3px, 1px);
+  }
+  80% {
+    transform: translate(2px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes combat-fx-swing {
+  0% {
+    opacity: 0;
+    transform: translate(-18%, -12%) rotate(-18deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(6%, 4%) rotate(8deg);
+  }
+}
+@keyframes combat-fx-grow {
+  0% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.92;
+    transform: scale(1.02);
+  }
+}
+@keyframes combat-fx-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+@keyframes combat-fx-defeat {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .combat-stage-meters {
   display: grid;

@@ -17,6 +17,6 @@ React client. Typed commands are the canonical player interaction.
 - New events must not move a transcript reader who has scrolled up. Show an explicit jump-to-latest button and preserve text selection.
 - The living frame is presentation only. It must not hide command input or invent game text. Presence plates come from the current room only. Conversation overlays must not keep an NPC on the painting after that NPC leaves the scene.
 - The compact minimap shows the current floor. The world map can change floors with Up and Down, and can send `up` / `down` when those exits exist.
-- CombatStage renders `play-state.encounter` only: foe plate or classmate look, name, health, focus, the lock clock, and buttons that send the projected commands. It does not invent damage, focus spend, or legal moves. Presence may send `duel <name>`. The world map sends `travel <title>` for explored rooms on the chart and in the explored list.
+- CombatStage renders `play-state.encounter` only: foe plate or classmate look, name, health, focus, the lock clock, and buttons that send the projected commands. Overlay FX decorate the latest `combat.action_resolved` event and current foe vitals. They do not invent damage, focus spend, or legal moves. Presence may send `duel <name>`. The world map sends `travel <title>` for explored rooms on the chart and in the explored list.
 - Open `/?builder=1` to compare Collegian looks, `/?rooms=1` to compare room plates,
   and `/?shell=1` to review the play layout. Those harnesses do not invent game outcomes.

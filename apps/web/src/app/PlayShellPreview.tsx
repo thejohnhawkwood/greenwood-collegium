@@ -1,4 +1,4 @@
-import { DEFAULT_APPEARANCE, type PlayState } from "@greenwood/contracts";
+import { DEFAULT_APPEARANCE, schemaVersion, type PlayState } from "@greenwood/contracts";
 import { useState } from "react";
 import { AcademyFrame } from "./academy-frame.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
@@ -28,7 +28,7 @@ const previewState: PlayState = {
     enemy: {
       id: "enemy-practice-dummy-south-orchard",
       name: "Practice Dummy",
-      health: 8,
+      health: 3,
       maxHealth: 8,
       focus: 6,
       maxFocus: 6,
@@ -131,9 +131,35 @@ export function PlayShellPreview() {
           lines={[
             { id: "look", kind: "narration", text: "Healer Fen waits nearby." },
             {
-              id: "travel",
+              id: "ember",
               kind: "narration",
-              text: "[SYSTEM] You follow the known paths to Lantern Court.",
+              text: "You cast Ember at the Practice Dummy for 5. It has 3 remaining.",
+              event: {
+                eventId: "evt-preview-ember",
+                sequence: 1,
+                schemaVersion,
+                type: "combat.action_resolved",
+                occurredAt: "2026-09-18T16:00:00.000Z",
+                audience: "character",
+                encounterId: "enc-preview",
+                presentationKey: "ember-burst",
+                narration: "You cast Ember at the Practice Dummy for 5. It has 3 remaining.",
+                payload: {
+                  encounterId: "enc-preview",
+                  actorId: "self",
+                  actorName: "Archimedes the Owl",
+                  actorKind: "player",
+                  verb: "cast",
+                  spellId: "ember",
+                  spellName: "Ember",
+                  focusSpent: 4,
+                  targetId: "enemy-practice-dummy-south-orchard",
+                  targetName: "Practice Dummy",
+                  damage: 5,
+                  targetHealth: 3,
+                  targetMaxHealth: 8,
+                },
+              },
             },
           ]}
           onCommand={() => {}}

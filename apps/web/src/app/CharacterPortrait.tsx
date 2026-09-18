@@ -8,11 +8,15 @@ export function CharacterPortrait({
   name,
   decorative = false,
   crop = "full",
+  overlaySrc,
+  shake = false,
 }: {
   visual?: CharacterVisual;
   name: string;
   decorative?: boolean;
   crop?: "full" | "avatar";
+  overlaySrc?: string;
+  shake?: boolean;
 }) {
   const appearance = resolveAppearance(visual?.appearance);
   const gender = resolveVisualGender(visual?.gender);
@@ -22,7 +26,7 @@ export function CharacterPortrait({
   const label = visual ? appearanceDescription(visual) : "portrait unavailable";
   return (
     <div
-      className={`character-portrait portrait-${crop}`}
+      className={`character-portrait portrait-${crop}${shake ? " is-shaking" : ""}`}
       data-species={kind}
       data-gender={gender}
       data-build={appearance.build}
@@ -49,6 +53,15 @@ export function CharacterPortrait({
               <span key={layer.layer} className="portrait-slot" data-layer={layer.layer} />
             ),
           )}
+          {overlaySrc ? (
+            <img
+              className="portrait-layer portrait-layer-fx"
+              data-layer="fx"
+              src={overlaySrc}
+              alt=""
+              draggable={false}
+            />
+          ) : null}
         </div>
       ) : (
         <p className="portrait-fallback">{visual ? `${name}: ${kind}` : "portrait unavailable"}</p>
