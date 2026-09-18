@@ -3,7 +3,7 @@
   "id": "hearth-stars",
   "title": "Hearth of Stars",
   "shortDescription": "Night windows keep company with ink-stained charts.",
-  "longDescription": "The Hearth of Stars is a loft that pretends it is only a study. Brass instruments wait beside a star-wheel. Charts are pinned where a draught cannot steal them. The windows hold more night than the hour should allow.\nMentor Lumen has ink on her primaries and no patience for guesswork dressed as wonder.",
+  "longDescription": "The Hearth of Stars is a loft that pretends it is only a study. Brass instruments wait beside a star-wheel. Charts are pinned where a draught cannot steal them. The windows hold more night than the hour should allow, and the air smells of ink, cold glass, and a little lamp-oil.\nMentor Lumen has ink on her primaries and no patience for guesswork dressed as wonder.",
   "zone": "schools",
   "map": {
     "x": 5,
@@ -22,26 +22,26 @@
       "kind": "npc",
       "lookDescription": "A barn owl with ink-stained primaries and a star-chart satchel. Try talk lumen.",
       "examineDescription": "Lumen's facial disc is pale and severe. The satchel is heavy with charts, not stories. She corrects a wrong azimuth the way other teachers correct a sloppy stance.",
-      "dialogue": "\"Stars are measured, not wished. Look this hearth. Find Flint. Come back.\"",
+      "dialogue": "\"Stars are measured, not wished. Look this hearth — the wheel, the hour already marked. Find Flint in the South Orchard. Come back when you have hit something that will not lie.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Lumen. Stars teach you to measure what the night is doing. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "text": "\"I am Lumen. Wipe your paws before you touch a chart. Stars teach you to measure what the night is doing — the hour before the name, the mark before the wish. Look this hearth. Write the hour in your head if you cannot write it on the slate. Then walk to the South Orchard, where the apple trees lean and Flint's dummy waits under a straw hat that has seen more honest blows than most first-years. Attack it once. Return and talk to me. I will be at the charts.\"",
             "choices": [
               { "say": "1", "label": "What do Stars measure?", "next": "craft" },
               { "say": "2", "label": "I will go.", "next": "go" }
             ]
           },
           "craft": {
-            "text": "\"Wonder is allowed. Guessing is not a method. First you look. Then you practice on a thing that will not lie about whether you hit it. Then you come back.\"",
+            "text": "\"Wonder is allowed. Guessing is not a method. First you look. Then you practice on a thing that will not lie about whether you hit it — Flint's dummy, in the orchard, with the blossom underfoot. Then you come back, and we will see whether you named the hour or only the feeling.\"",
             "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
           },
           "go": {
-            "text": "\"Look the star-wheel. Then find the orchard. I will be at the charts.\""
+            "text": "\"Look the star-wheel. Tonight's marks are already set. Then find the orchard south of Lantern Court. I will be at the charts when you return.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. Stars have your name, and your kit is open. Alder waits in the High Study with a question about the bell below.\""
+            "text": "\"You have looked. You have stood in the orchard. Stars have your name, and your kit is open. Alder waits in the High Study with a question about the bell below — a deep note the living timber still carries, whether the bronze is there or not. Go up when you have the hour straight. Do not guess on his stair.\""
           }
         }
       }

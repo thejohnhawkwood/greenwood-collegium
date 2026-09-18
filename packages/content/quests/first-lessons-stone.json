@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-stone",
   "title": "First Lessons: Stone",
-  "introNarration": "Mentor Quern sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
-  "reminderNarration": "Look the Hearth of Stone. Visit the South Orchard. Attack the dummy. Then talk Quern.",
-  "completionNarration": "Quern sets a paw on the keystone. Stone has your name, if not yet your weight.",
+  "introNarration": "Mentor Quern stands like another block that learned to speak. Granite-dust pales his stripe. The keystone watches the door, and the air smells of wet rock after rain. \"Look this hearth. Carry the weight you named. Then find Flint in the South Orchard. Attack the dummy once. Come back.\"",
+  "reminderNarration": "Stone does not wander. Look the Hearth of Stone — the keystone, the blocks that chose one another. Visit the South Orchard. Attack the dummy. Then talk Quern.",
+  "completionNarration": "Quern sets a paw on the keystone. Stone has your name, if not yet your weight. The kit is open. Alder waits in the High Study with a question about the bell below.",
   "experienceReward": 10,
   "objectives": [
     {

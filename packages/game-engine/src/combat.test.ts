@@ -134,14 +134,14 @@ describe("combat slice", () => {
       "enemy-practice-dummy-south-orchard",
     ]);
     const after = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
-    expect(after.ok && after.event.narration).not.toContain("Practice Dummy");
+    expect(after.ok && after.event.narration).toContain("Practice Dummy");
 
     const third = handleAttack(
       world,
       { verb: "attack", characterId: "char-rowan", target: "dummy" },
       clock,
     );
-    expect(third).toMatchObject({ ok: false, code: "foe_not_found" });
+    expect(third.ok).toBe(true);
     expect(world.characters["char-rowan"]?.experience).toBe(5);
   });
 
@@ -160,7 +160,7 @@ describe("combat slice", () => {
     const mossLook = handleLook(world, { verb: "look", characterId: "char-moss" }, clock);
     expect(mossLook.ok && mossLook.event.narration).toContain("Practice Dummy");
     const rowanLook = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
-    expect(rowanLook.ok && rowanLook.event.narration).not.toContain("Practice Dummy");
+    expect(rowanLook.ok && rowanLook.event.narration).toContain("Practice Dummy");
 
     handleAttack(world, { verb: "attack", characterId: "char-moss", target: "dummy" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
@@ -199,6 +199,7 @@ describe("combat slice", () => {
     expect(scrap).toMatchObject({
       name: "Straw Practice Scrap",
       roomId: "south-orchard",
+      availableToCharacterId: "char-rowan",
     });
     const taken = handleTake(
       world,
@@ -318,6 +319,42 @@ describe("combat slice", () => {
       runtime(),
     );
     expect(moss.ok).toBe(true);
+  });
+
+  it("mints a personal scrap for each first-timer and hides it from classmates", () => {
+    const world = orchardWorld();
+    const dummy = world.enemies?.["enemy-practice-dummy-south-orchard"];
+    if (!dummy) {
+      throw new Error("expected dummy");
+    }
+    dummy.loot = ["straw-practice-scrap"];
+    world.itemTemplates = {
+      "straw-practice-scrap": {
+        id: "straw-practice-scrap",
+        name: "Straw Practice Scrap",
+        examineDescription: "A torn scrap of lesson straw.",
+        category: "ordinary",
+      },
+    };
+    world.characters["char-moss"] = {
+      id: "char-moss",
+      name: "Moss the Mole",
+      roomId: "south-orchard",
+      discoveredRoomIds: ["south-orchard"],
+    };
+    const clock = runtime(0.5);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    const rowanLook = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    const mossLook = handleLook(world, { verb: "look", characterId: "char-moss" }, clock);
+    expect(rowanLook.ok && rowanLook.event.narration).toContain("Straw Practice Scrap");
+    expect(mossLook.ok && mossLook.event.narration).not.toContain("Straw Practice Scrap");
+    expect(
+      handleTake(world, { verb: "take", characterId: "char-rowan", target: "scrap" }, clock).ok,
+    ).toBe(true);
+    const afterTake = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    expect(afterTake.ok && afterTake.event.narration).not.toContain("Straw Practice Scrap");
   });
 
   it("does not allow fighting students or missing foes", () => {

@@ -3,7 +3,7 @@
   "id": "hearth-stone",
   "title": "Hearth of Stone",
   "shortDescription": "Granite takes the weight and does not complain.",
-  "longDescription": "The Hearth of Stone is a vaulted room that feels older than the hall that leads to it. Granite blocks fit as if they had chosen one another. Dust hangs in cool light. A carved keystone watches the door.\nMentor Quern stands like another block that learned to speak.",
+  "longDescription": "The Hearth of Stone is a vaulted room that feels older than the hall that leads to it. Granite blocks fit as if they had chosen one another. Dust hangs in cool light. A carved keystone watches the door. The air smells of wet rock after rain and the faint chalk of a mason's mark.\nMentor Quern stands like another block that learned to speak.",
   "zone": "schools",
   "map": {
     "x": 4,
@@ -26,26 +26,26 @@
       "kind": "npc",
       "lookDescription": "A massive grey badger with granite-dusted paws and a mason's belt. Try talk quern.",
       "examineDescription": "Quern's stripe is pale with stone-dust. The belt is heavy. He does not hurry a sentence, and he does not drop one.",
-      "dialogue": "\"Stone holds. Look this hearth. Find Flint. Come back.\"",
+      "dialogue": "\"Stone holds. Look this hearth — the keystone, the blocks that chose one another. Find Flint in the South Orchard. Come back when you have stood somewhere that did not shift.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Quern. Stone teaches you to hold. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "text": "\"I am Quern. Set your paws. The floor will wait. Stone teaches you to hold — not to boast, not to hurry a wall that is already doing its work. Look this hearth. See how the keystone carries the weight without a speech. Then walk to the South Orchard, where the grass is springy and Flint keeps a dummy that has taken more honest blows than most first-years. Attack it once. Return and talk to me. I will be here. Stone does not wander.\"",
             "choices": [
               { "say": "1", "label": "What does Stone hold?", "next": "craft" },
               { "say": "2", "label": "I will go.", "next": "go" }
             ]
           },
           "craft": {
-            "text": "\"A wall that boasts is already failing. First you look at what is already holding. Then you strike a thing that is meant to be struck. Then you come back.\"",
+            "text": "\"A wall that boasts is already failing. First you look at what is already holding. Then you strike a thing that is meant to be struck — Flint's dummy, under the apple boughs, not a classmate who did not agree. Then you come back, and we will see whether your feet remembered the floor.\"",
             "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
           },
           "go": {
-            "text": "\"Look the keystone. Then find the orchard. I will be here.\""
+            "text": "\"Look the keystone. Carry the weight you named. Then find the orchard south of Lantern Court. I will be here.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. Stone has your name, and your kit is open. Alder waits in the High Study with a question about the bell below.\""
+            "text": "\"You have looked. You have stood in the orchard. Stone has your name, and your kit is open. Alder waits in the High Study with a question about the bell below — an old note the beams still carry, like a cart over wet cobbles. Go up when you are ready. Do not rush his oak. It has held longer than you have.\""
           }
         }
       }

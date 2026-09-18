@@ -15,7 +15,10 @@ at one foe.
 
 - Keep one spawn. Do not mint a personal dummy, hatchling, or queen.
 - Record victory on the Collegian (`defeatedSpawnIds`). Solo foes hide from
-  students who have already stood and stay visible to first-timers.
+  students who have already stood and stay visible to first-timers. The
+  practice dummy is the exception: it stays in the orchard after a win so
+  later lessons can still hit it. Experience and dummy loot still go to
+  first-timers only.
 - A `minParty` boss is visible and will square up when at least one Collegian
   in the room has not stood. If everyone present has stood, she does not rise.
 - Experience and authored loot go to first-timers on that kill. Veterans who
@@ -25,5 +28,5 @@ at one foe.
 ## Consequences
 
 Classroom groups can still open the Deep Cradle when one new student arrives.
-The orchard dummy remains a first lesson, not a farm, for the student who
-finished it.
+The orchard dummy stays up for practice. Experience and scrap still come
+once.

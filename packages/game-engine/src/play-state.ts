@@ -14,6 +14,8 @@ import { treeNode } from "./conversation.js";
 import { itemsHeldBy } from "./items.js";
 import { snapshotPayload } from "./look.js";
 import { combatMoves } from "./combat-lock.js";
+import { encounterForViewer } from "./combat-party.js";
+import { DUEL_CHALLENGE_ID } from "./duel.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
@@ -114,21 +116,24 @@ export function createPlayState(
         ];
       }),
     encounter: encounter
-      ? {
-          id: encounter.id,
-          round: encounter.round,
-          status: "awaiting_intents" as const,
-          lockDeadlineAt: encounter.lockDeadlineAt,
-          enemy: {
-            id: encounter.enemy.id,
-            name: encounter.enemy.name,
-            health: encounter.enemy.health,
-            maxHealth: encounter.enemy.maxHealth,
-            focus: encounter.enemy.focus,
-            maxFocus: encounter.enemy.maxFocus,
-          },
-          moves: combatMoves(world, character),
-        }
+      ? (() => {
+          const viewed = encounterForViewer(world, encounter, characterId);
+          return {
+            id: viewed.id,
+            round: viewed.round,
+            status: "awaiting_intents" as const,
+            lockDeadlineAt: viewed.lockDeadlineAt,
+            enemy: {
+              id: viewed.enemy.id,
+              name: viewed.enemy.name,
+              health: viewed.enemy.health,
+              maxHealth: viewed.enemy.maxHealth,
+              focus: viewed.enemy.focus,
+              maxFocus: viewed.enemy.maxFocus,
+            },
+            moves: combatMoves(world, character),
+          };
+        })()
       : undefined,
     conversation: conversationSnapshot(world, character),
     bag: itemsHeldBy(world, character.id).map((item) => ({
@@ -180,6 +185,19 @@ function splitQuestStep(raw: string): { label: string; hint?: string } {
 }
 
 function conversationSnapshot(world: WorldState, character: Character) {
+  const challenge = world.duelChallenges?.[character.id];
+  if (challenge) {
+    const from = world.characters[challenge.fromId];
+    return {
+      npcId: DUEL_CHALLENGE_ID,
+      npcName: from?.name ?? "Classmate",
+      prompt: `${from?.name ?? "A classmate"} asks for a classroom duel. Both of you must agree.`,
+      choices: [
+        { say: "1", label: "Accept the duel" },
+        { say: "2", label: "Decline" },
+      ],
+    };
+  }
   const open = character.openConversation;
   if (!open) {
     return undefined;

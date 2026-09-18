@@ -206,7 +206,8 @@ export function PlayPanels({
                 conversation={
                   state?.encounter ||
                   !conversation ||
-                  !(room?.visible ?? []).some((entity) => entity.id === conversation.npcId)
+                  (conversation.npcId !== "duel-challenge" &&
+                    !(room?.visible ?? []).some((entity) => entity.id === conversation.npcId))
                     ? undefined
                     : conversation
                 }

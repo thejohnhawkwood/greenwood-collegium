@@ -104,6 +104,12 @@ describe("parsePlayerCommand", () => {
       verb: "eat",
       characterId: "char-rowan",
     });
+    expect(parsePlayerCommand("duel moss", "char-rowan")).toEqual({
+      verb: "duel",
+      characterId: "char-rowan",
+      action: "challenge",
+      target: "moss",
+    });
     expect(parsePlayerCommand("dance", "char-rowan")).toBeNull();
   });
 });

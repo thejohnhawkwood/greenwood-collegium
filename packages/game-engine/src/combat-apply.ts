@@ -5,6 +5,7 @@ import {
   rollAttackDamage,
 } from "./combat-state.js";
 import { applyBurning, actionEvent, type CombatEvent } from "./combat-resolve.js";
+import { duelOpponent, isDuel } from "./combat-party.js";
 import { attackFitModifier } from "./equipment.js";
 import { systemNotice } from "./system-notice.js";
 import type { EventEnvelope } from "@greenwood/contracts";
@@ -18,13 +19,26 @@ export function applyAttackHit(
 ): CombatEvent[] {
   const bonus = character.nextAttackBonus ?? 0;
   character.nextAttackBonus = undefined;
-  const playerDamage = Math.max(
+  const raw = Math.max(
     1,
     rollAttackDamage(DEFAULT_PLAYER_ATTACK, nextRoll(runtime)) +
       attackFitModifier(world, character) +
       bonus,
   );
-  encounter.enemy.health = Math.max(0, encounter.enemy.health - playerDamage);
+  const foe = isDuel(encounter) ? duelOpponent(world, encounter, character.id) : undefined;
+  const playerDamage = foe?.defending ? Math.floor(raw / 2) : raw;
+  if (foe) {
+    foe.health = Math.max(0, (foe.health ?? DEFAULT_PLAYER_MAX_HEALTH) - playerDamage);
+    if (playerDamage > 0) {
+      foe.hitThisEncounter = true;
+    }
+  } else {
+    encounter.enemy.health = Math.max(0, encounter.enemy.health - playerDamage);
+  }
+  const targetId = foe?.id ?? encounter.enemy.id;
+  const targetName = foe?.name ?? encounter.enemy.name;
+  const targetHealth = foe?.health ?? encounter.enemy.health;
+  const targetMaxHealth = foe?.maxHealth ?? encounter.enemy.maxHealth;
   return [
     actionEvent(
       encounter,
@@ -34,11 +48,11 @@ export function applyAttackHit(
         actorName: character.name,
         actorKind: "player",
         verb: "attack",
-        targetId: encounter.enemy.id,
-        targetName: encounter.enemy.name,
+        targetId,
+        targetName,
         damage: playerDamage,
-        targetHealth: encounter.enemy.health,
-        targetMaxHealth: encounter.enemy.maxHealth,
+        targetHealth,
+        targetMaxHealth,
       },
       runtime,
       character.id,
@@ -104,13 +118,26 @@ export function applyHostileCast(
   encounter: Encounter,
   spell: SpellTemplate,
   runtime: EngineRuntime,
+  world?: WorldState,
 ): CombatEvent[] {
   const focus = character.focus ?? 0;
   character.focus = focus - spell.focusCost;
   const events: CombatEvent[] = [];
   const damage = spell.damage ?? 0;
-  encounter.enemy.health = Math.max(0, encounter.enemy.health - damage);
-  if (spell.effect === "skip-counter") {
+  const foe = world && isDuel(encounter) ? duelOpponent(world, encounter, character.id) : undefined;
+  if (foe) {
+    foe.health = Math.max(0, (foe.health ?? DEFAULT_PLAYER_MAX_HEALTH) - damage);
+    if (damage > 0) {
+      foe.hitThisEncounter = true;
+    }
+  } else {
+    encounter.enemy.health = Math.max(0, encounter.enemy.health - damage);
+  }
+  const targetId = foe?.id ?? encounter.enemy.id;
+  const targetName = foe?.name ?? encounter.enemy.name;
+  const targetHealth = foe?.health ?? encounter.enemy.health;
+  const targetMaxHealth = foe?.maxHealth ?? encounter.enemy.maxHealth;
+  if (spell.effect === "skip-counter" && !foe) {
     encounter.effects.push({
       id: "skip-counter",
       targetId: encounter.enemy.id,
@@ -130,11 +157,11 @@ export function applyHostileCast(
         spellId: spell.id,
         spellName: spell.name,
         focusSpent: spell.focusCost,
-        targetId: encounter.enemy.id,
-        targetName: encounter.enemy.name,
+        targetId,
+        targetName,
         damage,
-        targetHealth: encounter.enemy.health,
-        targetMaxHealth: encounter.enemy.maxHealth,
+        targetHealth,
+        targetMaxHealth,
       },
       runtime,
       character.id,
@@ -144,18 +171,18 @@ export function applyHostileCast(
           { kind: "text" as const, text: "You cast " },
           { kind: "spell" as const, id: spell.id, text: spell.name },
           { kind: "text" as const, text: " at the " },
-          { kind: "target" as const, id: encounter.enemy.id, text: encounter.enemy.name },
+          { kind: "target" as const, id: targetId, text: targetName },
           { kind: "text" as const, text: " for " },
           { kind: "damage" as const, text: String(damage) },
           {
             kind: "text" as const,
-            text: `. It has ${String(encounter.enemy.health)} remaining.`,
+            text: `. It has ${String(targetHealth)} remaining.`,
           },
         ],
       },
     ),
   );
-  if (encounter.enemy.health > 0 && spell.burningRounds && spell.burningDamage) {
+  if (!foe && encounter.enemy.health > 0 && spell.burningRounds && spell.burningDamage) {
     events.push(
       applyBurning(encounter, spell.burningRounds, spell.burningDamage, runtime, character.id),
     );

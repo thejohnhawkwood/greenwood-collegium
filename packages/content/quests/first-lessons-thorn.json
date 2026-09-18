@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-thorn",
   "title": "First Lessons: Thorns",
-  "introNarration": "Mentor Briar sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
-  "reminderNarration": "Look the Hearth of Thorns. Visit the South Orchard. Attack the dummy. Then talk Briar.",
-  "completionNarration": "Briar's shears click shut. Thorns have your name, if not yet your patience.",
+  "introNarration": "Mentor Briar waits among the living walls, her green cloak caught with thorns, shears at her belt. Green light pools on the stone like water held in a leaf, and the air smells of crushed sap. \"Look this hearth. See how the wood is tied, not broken. Then find Flint in the South Orchard. Attack the dummy once. Come back.\"",
+  "reminderNarration": "The plants are still listening. Look the Hearth of Thorns — the trellis, the new growth, the slate that says to ask before you cut. Visit the South Orchard. Attack the dummy. Then talk Briar.",
+  "completionNarration": "Briar's shears click shut. Thorns have your name, if not yet your patience. The kit is open. Alder waits in the High Study with a question about the bell below.",
   "experienceReward": 10,
   "objectives": [
     {

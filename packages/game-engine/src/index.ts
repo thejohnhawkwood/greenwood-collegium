@@ -32,7 +32,7 @@ export { handleDefend } from "./defend.js";
 export { handleFlee } from "./flee.js";
 export { handleCombatExpire } from "./combat-expire.js";
 export { COMBAT_LOCK_MS } from "./combat-lock.js";
-export { encounterMembers } from "./combat-party.js";
+export { encounterMembers, isDuel } from "./combat-party.js";
 export { handleCast } from "./cast.js";
 export { handleHelp } from "./help.js";
 export { handleQuests } from "./quests.js";
@@ -42,6 +42,8 @@ export { handleMap } from "./map.js";
 export { parseMapCommand } from "./parse-map.js";
 export { handleTravel } from "./travel.js";
 export { parseTravelCommand } from "./parse-travel.js";
+export { handleDuel, DUEL_CHALLENGE_ID } from "./duel.js";
+export { parseDuelCommand } from "./parse-duel.js";
 export { handleEquip } from "./equip.js";
 export { parseEquipCommand } from "./parse-equip.js";
 export {
@@ -115,6 +117,7 @@ export type { QuestsFailure, QuestsResult, QuestsSuccess } from "./quests.js";
 export type { StatsFailure, StatsResult, StatsSuccess } from "./stats.js";
 export type { MapFailure, MapResult, MapSuccess } from "./map.js";
 export type { TravelFailure, TravelResult, TravelSuccess } from "./travel.js";
+export type { DuelFailure, DuelResult } from "./duel.js";
 export type { EquipFailure, EquipResult, EquipSuccess } from "./equip.js";
 export type { JoinResult, LeaveResult } from "./presence.js";
 export type { OccupantNotice } from "./presence-events.js";
@@ -155,6 +158,7 @@ export type {
   EquipIntent,
   MapIntent,
   TravelIntent,
+  DuelIntent,
   StatsIntent,
   Room,
   RoomExit,

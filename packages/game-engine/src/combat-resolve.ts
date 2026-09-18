@@ -52,8 +52,10 @@ import type { Character, Encounter, EnemySpawn, EngineRuntime, WorldState } from
 import { beginLockWindow, enemyFocusFromSpawn } from "./combat-lock.js";
 import {
   dropEncounterMember,
+  encounterForViewer,
   encounterMembers,
   isChorus,
+  isDuel,
   joinEncounter,
   presentCollegians,
 } from "./combat-party.js";
@@ -173,7 +175,7 @@ export function prepareEncounter(
       return {
         ok: false,
         code: "no_pvp",
-        message: "Classroom lessons do not allow fighting other students.",
+        message: "Ask them to duel first. They must agree. Type duel and their name.",
       };
     }
     const hidden = matchEnemies(
@@ -277,8 +279,10 @@ export function openingEvents(
   character: Character,
   encounter: Encounter,
   runtime: EngineRuntime,
+  world?: WorldState,
 ): CombatEvent[] {
-  return [startedEvent(character, encounter, runtime), turnEvent(character, encounter, runtime)];
+  const viewed = world ? encounterForViewer(world, encounter, character.id) : encounter;
+  return [startedEvent(character, viewed, runtime), turnEvent(character, viewed, runtime)];
 }
 
 export function openingOnly(
@@ -287,7 +291,7 @@ export function openingOnly(
   encounter: Encounter,
   runtime: EngineRuntime,
 ): CombatSuccess {
-  const events = openingEvents(character, encounter, runtime);
+  const events = openingEvents(character, encounter, runtime, world);
   const notices = encounterMembers(encounter).flatMap((id) => {
     if (id === character.id) {
       return [];
@@ -296,7 +300,7 @@ export function openingOnly(
     if (!member) {
       return [];
     }
-    return openingEvents(member, encounter, runtime).map((event) => ({
+    return openingEvents(member, encounter, runtime, world).map((event) => ({
       characterId: id,
       event,
     }));
@@ -540,7 +544,7 @@ function settleDefeat(
   if (firstTimers.length === 0) {
     return undefined;
   }
-  const names = dropCombatLoot(world, spawn, encounter);
+  const names = dropCombatLoot(world, spawn, encounter, firstTimers);
   if (names.length === 0) {
     return undefined;
   }
@@ -555,27 +559,38 @@ function dropCombatLoot(
   world: WorldState,
   spawn: EnemySpawn | undefined,
   encounter: Encounter,
+  firstTimers: Character[],
 ): string[] {
+  if (!spawn) {
+    return [];
+  }
   const names: string[] = [];
-  for (const templateId of spawn?.loot ?? []) {
+  for (const templateId of spawn.loot ?? []) {
     const template = world.itemTemplates?.[templateId];
     if (!template) {
       continue;
     }
-    const instanceId = `item-${spawn!.id}-loot-${templateId}-${encounter.id}`;
-    if (worldItems(world)[instanceId]) {
-      continue;
+    let dropped = false;
+    for (const member of firstTimers) {
+      const instanceId = `item-${spawn.id}-loot-${templateId}--${member.id}`;
+      if (worldItems(world)[instanceId]) {
+        continue;
+      }
+      worldItems(world)[instanceId] = {
+        id: instanceId,
+        templateId: template.id,
+        name: template.name,
+        examineDescription: template.examineDescription,
+        roomId: encounter.roomId,
+        availableToCharacterId: member.id,
+        category: template.category,
+        itemType: template.itemType,
+      };
+      dropped = true;
     }
-    worldItems(world)[instanceId] = {
-      id: instanceId,
-      templateId: template.id,
-      name: template.name,
-      examineDescription: template.examineDescription,
-      roomId: encounter.roomId,
-      category: template.category,
-      itemType: template.itemType,
-    };
-    names.push(template.name);
+    if (dropped) {
+      names.push(template.name);
+    }
   }
   return names;
 }
@@ -605,7 +620,7 @@ export function finishVictory(
   events: EventEnvelope[],
   runtime: EngineRuntime,
 ): CombatSuccess {
-  const amount = encounter.enemy.experience;
+  const amount = isDuel(encounter) ? 0 : encounter.enemy.experience;
   const roomId = character.roomId;
   const notices: CombatSuccess["notices"] = [];
   const firstTimers = encounterMembers(encounter)

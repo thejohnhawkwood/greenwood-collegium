@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-veil",
   "title": "First Lessons: the Veil",
-  "introNarration": "Mentor Mist sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
-  "reminderNarration": "Look the Hearth of the Veil. Visit the South Orchard. Attack the dummy. Then talk Mist.",
-  "completionNarration": "Mist almost smiles. The Veil has your name, if not yet your silence.",
+  "introNarration": "Mentor Mist does not fill the silence. Pale curtains take the light and give it back in pieces. The dark mirror waits where a first-year will want to look too long. \"Look this hearth. Name what moved. Then find Flint in the South Orchard. Attack the dummy once. Come back.\"",
+  "reminderNarration": "Silence keeps well. Look the Hearth of the Veil — the mirror, the path that will not go straight. Visit the South Orchard. Attack the dummy. Then talk Mist.",
+  "completionNarration": "Mist almost smiles. The Veil has your name, if not yet your silence. The kit is open. Alder waits in the High Study with a question about the bell below.",
   "experienceReward": 10,
   "objectives": [
     {

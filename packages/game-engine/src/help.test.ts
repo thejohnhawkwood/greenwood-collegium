@@ -83,6 +83,7 @@ describe("help and quests", () => {
       expect(listed.event.narration).toContain("eat —");
       expect(listed.event.narration).toContain("defend —");
       expect(listed.event.narration).toContain("flee —");
+      expect(listed.event.narration).toContain("duel —");
     }
 
     const topic = handleHelp(
@@ -110,6 +111,15 @@ describe("help and quests", () => {
       runtime(),
     );
     expect(talk.ok && talk.event.narration).toContain("talk to Porter Bramble");
+
+    const duel = handleHelp(
+      world(),
+      { verb: "help", characterId: "char-rowan", topic: "duel" },
+      runtime(),
+    );
+    expect(duel.ok && duel.event.narration).toContain("classmate");
+    expect(duel.ok && duel.event.narration).toContain("given name");
+    expect(duel.ok && duel.event.narration).not.toContain("Moss");
   });
 
   it("opens the journal with a short review beat", () => {

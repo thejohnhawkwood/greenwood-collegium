@@ -408,7 +408,7 @@ Every design sprint should solve a stated problem. Every implementation change s
 
 ## 6.9 Safe by Default
 
-Public registration, private messaging, PvP, user-generated markup, and unmoderated content are disabled unless deliberately designed and approved.
+Public registration, private messaging, surprise PvP, user-generated markup, and unmoderated content are disabled unless deliberately designed and approved. Consented classroom duels are the approved exception.
 
 ## 6.10 Original World
 
@@ -2244,7 +2244,7 @@ Classroom mode must:
 
 - disable public registration;
 - disable private messaging;
-- disable PvP;
+- disable surprise PvP (consented classroom duels are allowed; both parties must agree);
 - enable chat and moderation logging;
 - require approved accounts;
 - expose teacher moderation tools;
@@ -3743,7 +3743,7 @@ The following decisions are fixed unless changed through an ADR:
 16. declarative JSON world content;
 17. no public registration;
 18. no direct messages;
-19. no PvP;
+19. no surprise PvP; consented classroom duels require both parties to agree;
 20. classic interface permanently retained;
 21. structured events plus plain-text fallback;
 22. plain CSS and no large UI framework;

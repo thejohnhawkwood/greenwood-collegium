@@ -39,7 +39,7 @@
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Welcome, new Collegian! I am Porter Bramble. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn. Walk with me through Arrival.\"",
+            "text": "\"Welcome, new Collegian! I am Porter Bramble. Come in under the oak — the blue lanterns drift between the leaves like stars that have come down to listen, and the well at the roots is cold and ready if you have been practicing too hard. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn. Walk with me through Arrival. The coat is worn. The whistle is for calling help. I have waited through worse weather than you.\"",
             "choices": [
               { "say": "1", "label": "What should I type first?", "next": "commands" },
               { "say": "2", "label": "Why does the Greenwood matter?", "next": "greenwood" },
@@ -47,7 +47,7 @@
             ]
           },
           "school": {
-            "text": "\"The Collegium is a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn.\"",
+            "text": "\"The Collegium is a school. Woodland students learn here to face real dangers in the Greenwood — not a storybook wood, but the real one beyond these lanterns, where the paths get wet and the night does not wait for a first-year to finish a sentence. This is where the animals are trained. Typed commands are how you learn. The oak has heard every arrival. It is still listening.\"",
             "choices": [
               { "say": "1", "label": "What should I type first?", "next": "commands" },
               { "say": "2", "label": "Why does the Greenwood matter?", "next": "greenwood" },
@@ -55,7 +55,7 @@
             ]
           },
           "commands": {
-            "text": "\"Type look to see Lantern Court. Type say hello. Type take key. Then type north to reach the Great Hall.\"",
+            "text": "\"Type look to see Lantern Court — the oak, the drifting blue lanterns, the mossy well, the noticeboard with its curling paper. Type say hello so the roll is not empty beside your name. Type take key; it is still in my paw, worn smooth by other first-years who thought they could skip it. Then type north to reach the Great Hall, where the stone still holds the day's warmth.\"",
             "choices": [
               { "say": "1", "label": "Repeat the school’s purpose.", "next": "school" },
               { "say": "yes", "label": "I understand.", "next": "ready" },
@@ -63,14 +63,14 @@
             ]
           },
           "greenwood": {
-            "text": "\"Outside these lanterns the wood is not a storybook. Students train here first, so they are not surprised later.\"",
+            "text": "\"Outside these lanterns the wood is not a storybook. The Greenwood has wet paths, hungry nights, and things that do not wait for a first-year to finish a sentence. Students train here first — look, speak, take, walk north — so they are not surprised later. I have waited through worse weather than you. The whistle is for calling help, not for decoration.\"",
             "choices": [
               { "say": "1", "label": "What should I type first?", "next": "commands" },
               { "say": "2", "label": "I am ready.", "next": "ready" }
             ]
           },
           "ready": {
-            "text": "\"Good. Stay with me through Arrival. Type take key if you have not, then type north to reach the Great Hall. I will mention this again in the next room. I always do.\""
+            "text": "\"Good. Stay with me through Arrival. Type take key if you have not — the metal is warm from my paw — then type north to reach the Great Hall. I will mention this again in the next room. I always do. Nagging is in the coat. The lanterns will still be drifting when you look back.\""
           },
           "nag-look": {
             "text": "\"A new room, and you still have not typed look. I described it. That does not count. Type look. I will walk. I will ask again.\"",

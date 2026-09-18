@@ -3,7 +3,7 @@
   "id": "hearth-steel",
   "title": "Hearth of Steel",
   "shortDescription": "Anvils and hanging mail keep the room honest.",
-  "longDescription": "The Hearth of Steel is an armory that still remembers it is a classroom. Anvils sit where first-years will learn not to lean. Mail hangs in a neat row. Practice swords wait on a rack that has been oiled more often than it has been praised.\nMentor Edge keeps the floor clear and the excuses shorter than the lesson.",
+  "longDescription": "The Hearth of Steel is an armory that still remembers it is a classroom. Anvils sit where first-years will learn not to lean. Mail hangs in a neat row, oiled and unromantic. Practice swords wait on a rack that has been tended more often than it has been praised. The air smells of metal, leather, and a little linseed oil.\nMentor Edge keeps the floor clear and the excuses shorter than the lesson.",
   "zone": "schools",
   "map": {
     "x": 4,
@@ -26,26 +26,26 @@
       "kind": "npc",
       "lookDescription": "A scarred hare in a mail shirt, one ear notched, a practice sword at the hip. Try talk edge.",
       "examineDescription": "Edge's notch is newer than Flint's and just as earned. The mail is mended. He treats a sloppy stance as a kindness you have not yet been given.",
-      "dialogue": "\"Steel is a craft of meeting what comes. Look this hearth. Find Flint. Come back.\"",
+      "dialogue": "\"Steel is a craft of meeting what comes. Look this hearth — the anvil, the oiled rack. Find Flint in the South Orchard. Come back when your feet have remembered something.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Edge. Steel teaches you to meet what comes. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "text": "\"I am Edge. Do not lean on the anvil. Steel teaches you to meet what comes — a blow, a question, a long afternoon in the orchard when your paws are tired and the dummy is not. Look this hearth. Name the stance before you swing. Then walk to the South Orchard, where apple blossom collects along the paths and Flint keeps a dummy in a straw hat that has survived more lessons than anyone can explain. Attack it once. Return and talk to me. I will be here. The floor stays clear.\"",
             "choices": [
               { "say": "1", "label": "What does Steel meet?", "next": "craft" },
               { "say": "2", "label": "I will go.", "next": "go" }
             ]
           },
           "craft": {
-            "text": "\"A blade that is only shown is furniture. First you look. Then you practice on Flint's dummy. Then you come back, and we will see if your feet remembered.\"",
+            "text": "\"A blade that is only shown is furniture. First you look. Then you practice on Flint's dummy, which is meant to be hit and will not hold a grudge. A classmate is a different matter — both of you must agree, and you type duel and their given name, not a story-name. Then you come back, and we will see if your feet remembered.\"",
             "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
           },
           "go": {
-            "text": "\"Look the anvil. Then find the orchard. I will be here.\""
+            "text": "\"Look the anvil. The face is bright from use. Then find the orchard south of Lantern Court. I will be here.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. Steel has your name, and your kit is open. Alder waits in the High Study with a question about the bell below.\""
+            "text": "\"You have looked. You have stood in the orchard. Steel has your name, and your kit is open. Alder waits in the High Study with a question about the bell below — an old abbey note the timber still carries. Go up when your feet are steady. Pride stays in your pocket.\""
           }
         }
       }

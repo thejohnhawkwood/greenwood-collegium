@@ -78,6 +78,58 @@ export function Minimap({
                   ? "Unexplored"
                   : `${room.title ?? "Explored"}${room.state === "current" ? " — You are here" : ""}`}
               </title>
+              <rect
+                x={room.x - 0.13}
+                y={room.y - 0.13}
+                width="0.26"
+                height="0.26"
+                rx="0.04"
+                pointerEvents="none"
+                fill={
+                  room.state === "current"
+                    ? "#f2cf7c"
+                    : room.state === "explored"
+                      ? "#79aaa1"
+                      : `url(#${patternId})`
+                }
+                stroke={room.state === "unknown" ? "#6f7d68" : "none"}
+                strokeWidth="0.02"
+              />
+              {room.state === "unknown" ? (
+                <text
+                  x={room.x}
+                  y={room.y + 0.04}
+                  textAnchor="middle"
+                  fontSize="0.14"
+                  fill="#c5c7b0"
+                  pointerEvents="none"
+                >
+                  ·
+                </text>
+              ) : null}
+              {room.state === "current" ? (
+                <circle
+                  cx={room.x}
+                  cy={room.y}
+                  r="0.21"
+                  fill="none"
+                  stroke="#f2cf7c"
+                  strokeWidth="0.025"
+                  pointerEvents="none"
+                />
+              ) : null}
+              {size === "world" && room.title ? (
+                <text
+                  x={room.x}
+                  y={room.y + 0.28}
+                  textAnchor="middle"
+                  fontSize="0.11"
+                  fill="#e8e4cf"
+                  pointerEvents="none"
+                >
+                  {room.title}
+                </text>
+              ) : null}
               {canTravel || canPrepare ? (
                 <rect
                   className="map-cell-button"
@@ -102,54 +154,6 @@ export function Minimap({
                   }}
                 />
               ) : null}
-              <rect
-                x={room.x - 0.13}
-                y={room.y - 0.13}
-                width="0.26"
-                height="0.26"
-                rx="0.04"
-                fill={
-                  room.state === "current"
-                    ? "#f2cf7c"
-                    : room.state === "explored"
-                      ? "#79aaa1"
-                      : `url(#${patternId})`
-                }
-                stroke={room.state === "unknown" ? "#6f7d68" : "none"}
-                strokeWidth="0.02"
-              />
-              {room.state === "unknown" ? (
-                <text
-                  x={room.x}
-                  y={room.y + 0.04}
-                  textAnchor="middle"
-                  fontSize="0.14"
-                  fill="#c5c7b0"
-                >
-                  ·
-                </text>
-              ) : null}
-              {room.state === "current" ? (
-                <circle
-                  cx={room.x}
-                  cy={room.y}
-                  r="0.21"
-                  fill="none"
-                  stroke="#f2cf7c"
-                  strokeWidth="0.025"
-                />
-              ) : null}
-              {size === "world" && room.title ? (
-                <text
-                  x={room.x}
-                  y={room.y + 0.28}
-                  textAnchor="middle"
-                  fontSize="0.11"
-                  fill="#e8e4cf"
-                >
-                  {room.title}
-                </text>
-              ) : null}
             </g>
           );
         })}
@@ -169,8 +173,16 @@ export function Minimap({
             <ul>
               {explored.map((room) => (
                 <li key={room.id}>
-                  {room.title}
-                  {room.state === "current" ? " (you)" : ""}
+                  {room.state === "explored" && room.title ? (
+                    <button type="button" onClick={() => onTravel?.(room.title!)}>
+                      Travel to {room.title}
+                    </button>
+                  ) : (
+                    <>
+                      {room.title}
+                      {room.state === "current" ? " (you)" : ""}
+                    </>
+                  )}
                 </li>
               ))}
             </ul>

@@ -61,6 +61,6 @@ export function presenceActions(
   return [
     examine,
     { label: "Talk", command: "say hello" },
-    { label: "Ask to duel", disabled: true, title: "Duels come later" },
+    { label: "Ask to duel", command: `duel ${person.name}` },
   ];
 }

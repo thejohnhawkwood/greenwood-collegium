@@ -15,11 +15,11 @@ Default production and environment-example values:
 - `CLASSROOM_MODE=true`
 - `PUBLIC_REGISTRATION=false`
 - no private messages;
-- no player-versus-player combat;
+- no surprise player-versus-player combat (consented duels: [ADR-0038](0038-classroom-duels.md));
 - no student records in the repository.
 
 Secrets live in Render environment variables or a local untracked `.env`. Fixtures and screenshots use fictional names.
 
 ## Consequences
 
-Open registration, DMs, and PvP require a later ADR and an explicit product decision. Contributors who paste production logs or classmate identity into a pull request will be asked to close it and rotate any exposed secret.
+Open registration and DMs still require a later ADR. Consented classroom duels are [ADR-0038](0038-classroom-duels.md). Contributors who paste production logs or classmate identity into a pull request will be asked to close it and rotate any exposed secret.

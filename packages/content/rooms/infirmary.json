@@ -21,7 +21,7 @@
       "name": "Healer Fen",
       "lookDescription": "A river otter in a work-stained apron, sleeves rolled, a kit of clean bandages at his hip. Try talk fen.",
       "examineDescription": "Fen's paws are steady and his apron has been washed more times than it has stayed clean. The honey is for wounds as much as tea. He puts down his work when you speak, and he will tell you if you are being foolish.",
-      "dialogue": "\"Rest and ask for help when you need it. Nobody earns extra courage by pretending not to hurt.\" Fen glances at a pot of moonmint. \"Helping Tansy? Those roots need air as well as water. Clear the drainage and use a clean jug; never add mysterious potions to an unhappy plant.\"",
+      "dialogue": "\"Rest and ask for help when you need it. Nobody earns extra courage by pretending not to hurt. This room smells of soap, rosemary, and warm beeswax for a reason. Helping Tansy? Those roots need air as well as water. Clear the drainage and use a clean jug; never add mysterious potions to an unhappy plant. Sit if you need to. The breathing wheel is there for anyone whose paws are still shaking.\"",
       "kind": "npc"
     },
     {

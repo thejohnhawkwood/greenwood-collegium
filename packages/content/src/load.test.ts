@@ -136,6 +136,16 @@ describe("content loader", () => {
         .find((fixture) => fixture.id === mentorId);
       expect(mentor?.dialogueTree?.nodes["lessons-done"]?.text).toContain("kit is open");
     }
+    const alder = Object.values(world.rooms)
+      .flatMap((room) => room.fixtures)
+      .find((fixture) => fixture.id === "npc-headmaster-alder");
+    expect(alder?.dialogueTree?.nodes.welcome?.text.length).toBeGreaterThan(400);
+    expect(alder?.dialogueTree?.nodes.welcome?.text).toContain("beeswax");
+    const piper = Object.values(world.rooms)
+      .flatMap((room) => room.fixtures)
+      .find((fixture) => fixture.id === "npc-piper-mole");
+    expect(piper?.dialogueTree?.nodes.welcome?.text.length).toBeGreaterThan(400);
+    expect(piper?.dialogueTree?.nodes.welcome?.text).toContain("silk");
   });
 
   it("loads an extra room file without a code change", () => {

@@ -19,6 +19,9 @@ export function recordSpawnDefeat(character: Character, spawnId: string): void {
 }
 
 export function spawnVisibleTo(world: WorldState, spawn: EnemySpawn, looker: Character): boolean {
+  if (spawn.templateId === "practice-dummy") {
+    return true;
+  }
   if ((spawn.minParty ?? 1) > 1) {
     return Object.values(world.characters).some(
       (member) => member.roomId === spawn.roomId && !hasDefeatedSpawn(member, spawn.id),

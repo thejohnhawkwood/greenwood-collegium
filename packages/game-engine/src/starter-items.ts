@@ -7,13 +7,17 @@ export function starterInstanceId(placementId: string, characterId: string): str
 
 export function availableToCharacterId(
   itemId: string,
-  starters: readonly StarterItemPlacement[],
+  starters: readonly StarterItemPlacement[] = [],
 ): string | undefined {
   for (const starter of starters) {
     const prefix = `${starter.id}--`;
     if (itemId.startsWith(prefix) && itemId.length > prefix.length) {
       return itemId.slice(prefix.length);
     }
+  }
+  const sep = itemId.lastIndexOf("--");
+  if (sep > 0 && itemId.length > sep + 2) {
+    return itemId.slice(sep + 2);
   }
   return undefined;
 }

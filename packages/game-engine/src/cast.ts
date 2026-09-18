@@ -140,7 +140,7 @@ export function handleCast(
     world,
     character,
     encounter,
-    applyHostileCast(character, encounter, spell, runtime),
+    applyHostileCast(character, encounter, spell, runtime, world),
     runtime,
   );
 }

@@ -3,7 +3,7 @@
   "id": "hearth-veil",
   "title": "Hearth of the Veil",
   "shortDescription": "Silver curtains keep half the room in honest shadow.",
-  "longDescription": "The Hearth of the Veil is quieter than its neighbours. Pale curtains take the light and give it back in pieces. A tall dark mirror stands where a first-year will want to look too long. The floor is worn in a path that does not go straight.\nMentor Mist does not fill the silence. She uses it.",
+  "longDescription": "The Hearth of the Veil is quieter than its neighbours. Pale curtains take the light and give it back in pieces, like moonlight through thin ice. A tall dark mirror stands where a first-year will want to look too long. The floor is worn in a path that does not go straight. The air smells of cold stone, silver polish, and a little crushed lavender.\nMentor Mist does not fill the silence. She uses it.",
   "zone": "schools",
   "map": {
     "x": 5,
@@ -26,26 +26,26 @@
       "kind": "npc",
       "lookDescription": "A pale ermine in a silver-grey cloak, one eye kept in shadow. Try talk mist.",
       "examineDescription": "Mist's fur is almost white. The cloak drinks sound. She watches the end of a sentence, not the start of it.",
-      "dialogue": "\"The Veil is a craft of what is not said. Look this hearth. Find Flint. Come back.\"",
+      "dialogue": "\"The Veil is a craft of what is not said. Look this hearth — the mirror, the path that will not go straight. Find Flint in the South Orchard. Come back when you have noticed more than the dummy's hat.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Mist. The Veil teaches you to notice what a room is hiding. Look this hearth. Walk to the South Orchard. Attack the dummy once. Return and talk to me.\"",
+            "text": "\"I am Mist. Do not hurry the threshold. The Veil teaches you to notice what a room is hiding — the shadow behind the curtain, the step that is not on the straight path, the face the mirror refuses to flatter. Look this hearth. Then walk to the South Orchard, where apple blossom collects along the grass and Flint keeps a dummy that will tell you, honestly, whether you struck. Attack it once. Return and talk to me. I will still be here. Silence keeps well.\"",
             "choices": [
               { "say": "1", "label": "What does the Veil hide?", "next": "craft" },
               { "say": "2", "label": "I will go.", "next": "go" }
             ]
           },
           "craft": {
-            "text": "\"Not every true thing should be spoken in the open. First you learn to see. Then you learn to strike a thing that is meant to be struck. Then you come back, and we will see what you noticed.\"",
+            "text": "\"Not every true thing should be spoken in the open. First you learn to see. Then you learn to strike a thing that is meant to be struck — Flint's dummy, not a classmate who did not agree. Then you come back, and we will see what you noticed: the room behind you, or only the face you expected.\"",
             "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
           },
           "go": {
-            "text": "\"Look the mirror. Then find the orchard. I will still be here.\""
+            "text": "\"Look the mirror. Name what moved. Then find the orchard south of Lantern Court. I will still be here when the curtains have settled again.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. The Veil has your name, and your kit is open. Alder waits in the High Study with a question about the bell below.\""
+            "text": "\"You have looked. You have stood in the orchard. The Veil has your name, and your kit is open. Alder waits in the High Study with a question about the bell below — an old note the timber still carries, whether anyone wishes to hear it or not. Go up when you are ready. Do not invent a story on the stair.\""
           }
         }
       }

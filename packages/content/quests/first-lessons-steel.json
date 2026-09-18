@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-steel",
   "title": "First Lessons: Steel",
-  "introNarration": "Mentor Edge sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
-  "reminderNarration": "Look the Hearth of Steel. Visit the South Orchard. Attack the dummy. Then talk Edge.",
-  "completionNarration": "Edge nods at your feet, not your sword. Steel has your name, if not yet your stance.",
+  "introNarration": "Mentor Edge keeps the floor clear. Mail hangs in a neat row, oiled and unromantic, and the anvil's face is bright from use. \"Look this hearth. Name the stance before you swing. Then find Flint in the South Orchard. Attack the dummy once. Come back.\"",
+  "reminderNarration": "The rack is still oiled. Look the Hearth of Steel — the anvil, the practice blades, the slate that says to name the stance. Visit the South Orchard. Attack the dummy. Then talk Edge.",
+  "completionNarration": "Edge nods at your feet, not your sword. Steel has your name, if not yet your stance. The kit is open. Alder waits in the High Study with a question about the bell below.",
   "experienceReward": 10,
   "objectives": [
     {

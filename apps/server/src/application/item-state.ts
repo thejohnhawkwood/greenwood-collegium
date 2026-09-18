@@ -39,6 +39,35 @@ export function starterSeedsForCharacter(
     }));
 }
 
+export function personalLootSeeds(world: WorldState): ItemPlacementSeed[] {
+  return Object.values(world.items ?? {})
+    .filter(
+      (item): item is typeof item & { roomId: string } =>
+        Boolean(item.roomId) &&
+        item.availableToCharacterId !== undefined &&
+        item.id.includes("-loot-"),
+    )
+    .map((item) => ({
+      id: item.id,
+      templateId: item.templateId,
+      roomId: item.roomId,
+    }));
+}
+
+export async function persistPersonalLoot(
+  world: WorldState,
+  items?: { ensurePlacements?(seeds: readonly ItemPlacementSeed[]): Promise<void> },
+): Promise<void> {
+  if (!items?.ensurePlacements) {
+    return;
+  }
+  const seeds = personalLootSeeds(world);
+  if (seeds.length === 0) {
+    return;
+  }
+  await items.ensurePlacements(seeds);
+}
+
 export async function persistCharacterStarterItems(
   world: WorldState,
   characterId: string,

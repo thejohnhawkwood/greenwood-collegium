@@ -64,7 +64,14 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["attack"],
     summary: "Start a practice fight.",
     detail:
-      "Walk south from Lantern Court, then type attack dummy to square up. The foe card opens. Type attack, a spell, defend, or flee within twelve seconds. Later attacks can omit the name while the fight lasts.",
+      "Walk south from Lantern Court, then type attack dummy to square up. The foe card opens. Type attack, a spell, defend, or flee within twelve seconds. Later attacks can omit the name while the fight lasts. To fight a classmate, both of you must agree. Type duel and their name.",
+  },
+  {
+    topic: "duel",
+    aliases: ["duel", "accept", "decline"],
+    summary: "Ask a classmate to duel. Both must agree.",
+    detail:
+      "Type duel and the given name of a classmate standing in the same room. They type duel accept or duel decline. Attack on a classmate without an accepted duel is refused. Type 1 or 2 if the challenge prompt is open.",
   },
   {
     topic: "defend",

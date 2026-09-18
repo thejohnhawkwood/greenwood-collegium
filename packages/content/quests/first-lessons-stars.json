@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-stars",
   "title": "First Lessons: Stars",
-  "introNarration": "Mentor Lumen sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
-  "reminderNarration": "Look the Hearth of Stars. Visit the South Orchard. Attack the dummy. Then talk Lumen.",
-  "completionNarration": "Lumen marks a line and stops. Stars have your name, if not yet your measure.",
+  "introNarration": "Mentor Lumen has ink on her primaries. Brass instruments wait beside the star-wheel, and the windows hold more night than the hour should allow. \"Look this hearth. Write the hour before you name the star. Then find Flint in the South Orchard. Attack the dummy once. Come back.\"",
+  "reminderNarration": "The charts have not wandered. Look the Hearth of Stars — the wheel, the hour already marked. Visit the South Orchard. Attack the dummy. Then talk Lumen. She will be at the charts.",
+  "completionNarration": "Lumen marks a line and stops. Stars have your name, if not yet your measure. The kit is open. Alder waits in the High Study with a question about the bell below.",
   "experienceReward": 10,
   "objectives": [
     {

@@ -51,6 +51,9 @@ export const COMMAND_WORDS = [
   "chart",
   "quest",
   "quests",
+  "duel",
+  "accept",
+  "decline",
 ] as const;
 
 const SEND_REMINDERS = new Set(["look", "help", "inventory", "quests", "map", "stats"]);

@@ -14,4 +14,4 @@ Keep private operational material out of Git:
 - chat exports
 - backup files
 
-Classroom mode is the default production configuration: no public registration, no private messages, no PvP, and teacher moderation tools.
+Classroom mode is the default production configuration: no public registration, no private messages, no surprise PvP (consented duels only), and teacher moderation tools.

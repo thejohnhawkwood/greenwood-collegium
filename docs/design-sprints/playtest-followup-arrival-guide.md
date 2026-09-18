@@ -95,7 +95,7 @@ without adding a HUD, minimap, or 3D view.
 ## 5. Constraints
 
 - Typed commands stay canonical. Keyboard-only. Classic mode remains complete.
-- No graphical map, minimap, 3D, or PvP.
+- No graphical map, minimap, 3D, or surprise PvP. Consented duels came later (ADR-0038).
 - Server authority. No game rules in React.
 - No student legal names, logins, or tokens in Git, fixtures, or process logs.
 - Do not log spoken text in process logs (existing classroom chat ADR).
@@ -299,7 +299,7 @@ Four implementation slices, in this order:
 
 - DS-001 semantic colour and message categories.
 - Graphical map, minimap, 3D room renderer, combat frame, bag/equipment panel.
-- PvP. Attacking other Collegians.
+- Surprise PvP. Consented classroom duels are ADR-0038.
 - Porter following later quests. A second tutorial NPC.
 - Talk trees for Quill, Tansy, Alder, Fen, or other staff.
 - Logging speech text in process logs.

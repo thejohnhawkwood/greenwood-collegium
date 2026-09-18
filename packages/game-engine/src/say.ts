@@ -8,8 +8,10 @@ import {
 } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { conversationChoice, dialogueBeat, treeNode } from "./conversation.js";
+import { replyToDuelChallenge } from "./duel.js";
 import { isSchoolId, sendToSchoolHearth } from "./schools.js";
 import { charactersInRoom } from "./occupants.js";
+import type { OccupantNotice } from "./presence-events.js";
 import { sanitizeSpeech, SAY_MAX_LENGTH } from "./speech.js";
 import type { EngineRuntime, SayIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -22,7 +24,7 @@ export type ChatNotice = {
 export type SaySuccess = {
   ok: true;
   events: Array<ChatSaidEvent | EventEnvelope>;
-  notices: ChatNotice[];
+  notices: Array<ChatNotice | OccupantNotice>;
 };
 
 export type SayFailure = {
@@ -52,6 +54,13 @@ export function handleSay(world: WorldState, intent: SayIntent, runtime: EngineR
     };
   }
 
+  const duel = replyToDuelChallenge(world, character.id, intent.text, runtime);
+  if (duel) {
+    if (!duel.ok) {
+      return { ok: false, code: "empty_say", message: duel.message };
+    }
+    return { ok: true, events: duel.events, notices: duel.notices };
+  }
   const reply = replyToOpenConversation(world, character.id, intent.text, runtime);
   if (reply) {
     return { ok: true, events: reply, notices: [] };

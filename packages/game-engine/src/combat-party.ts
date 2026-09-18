@@ -1,4 +1,9 @@
 import type { EventEnvelope } from "@greenwood/contracts";
+import {
+  DEFAULT_PLAYER_ATTACK,
+  DEFAULT_PLAYER_MAX_FOCUS,
+  DEFAULT_PLAYER_MAX_HEALTH,
+} from "./combat-state.js";
 import type { Character, Encounter, EngineRuntime, WorldState } from "./state.js";
 
 export function encounterMembers(encounter: Encounter): string[] {
@@ -10,6 +15,46 @@ export function encounterMembers(encounter: Encounter): string[] {
 
 export function isChorus(encounter: Encounter): boolean {
   return encounterMembers(encounter).length > 1;
+}
+
+export function isDuel(encounter: Encounter): boolean {
+  return encounter.kind === "duel";
+}
+
+export function duelOpponent(
+  world: WorldState,
+  encounter: Encounter,
+  characterId: string,
+): Character | undefined {
+  const otherId = encounterMembers(encounter).find((id) => id !== characterId);
+  return otherId ? world.characters[otherId] : undefined;
+}
+
+export function encounterForViewer(
+  world: WorldState,
+  encounter: Encounter,
+  characterId: string,
+): Encounter {
+  if (!isDuel(encounter)) {
+    return encounter;
+  }
+  const foe = duelOpponent(world, encounter, characterId);
+  if (!foe) {
+    return encounter;
+  }
+  return {
+    ...encounter,
+    enemy: {
+      id: foe.id,
+      name: foe.name,
+      health: foe.health ?? DEFAULT_PLAYER_MAX_HEALTH,
+      maxHealth: foe.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH,
+      focus: foe.focus ?? DEFAULT_PLAYER_MAX_FOCUS,
+      maxFocus: foe.maxFocus ?? DEFAULT_PLAYER_MAX_FOCUS,
+      attack: DEFAULT_PLAYER_ATTACK,
+      experience: 0,
+    },
+  };
 }
 
 export function presentCollegians(world: WorldState, roomId: string): Character[] {

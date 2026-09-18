@@ -33,12 +33,12 @@
       "name": "Instructor Flint",
       "lookDescription": "A scarred, long-eared hare in a worn leather jerkin, one ear notched, a nicked practice blade ready. Try talk flint.",
       "examineDescription": "Flint's muzzle is greyed and one ear is notched from an old lesson gone wrong. The practice sword is nicked from years of demonstrations, not nursery play. She keeps the clearing open and the path to the Infirmary firmly in mind.",
-      "dialogue": "\"Which weapon do you want to try? Type take Practice Sword, take Practice Staff, or take Practice Sling. If more than one weapon is in reach, name it in full. Then type attack dummy. Other Collegians are partners, never targets.\"",
+      "dialogue": "\"Which weapon do you want to try? Type take Practice Sword, take Practice Staff, or take Practice Sling. Name it in full. Then type attack dummy. The dummy comes back after a lesson. If you mean to square up with a classmate standing in this orchard — the hare or mole or fox beside you, not a story-name — type duel and their given name. Both of you must agree.\"",
       "dialogueTree": {
         "start": "ask",
         "nodes": {
           "ask": {
-            "text": "\"Which weapon do you want to try? The sword, the staff, or the sling. Type take Practice Sword, take Practice Staff, or take Practice Sling. A good fit steadies the paw. A poor fit feels unwieldy — we can talk about why.\"",
+            "text": "\"Which weapon do you want to try? The sword, the staff, or the sling — they wait on the rack under the apple boughs, oiled and unromantic, while fallen blossom collects along the path. Type take Practice Sword, take Practice Staff, or take Practice Sling. A good fit steadies the paw. A poor fit feels unwieldy — we can talk about why. The dummy comes back after every lesson. A classmate standing with you is another matter: type duel and their given name, and wait until they agree.\"",
             "choices": [
               { "say": "1", "label": "Why does a weapon fit?", "next": "fit" },
               { "say": "2", "label": "How do I practice?", "next": "practice" },
@@ -54,7 +54,7 @@
             ]
           },
           "practice": {
-            "text": "\"Type attack dummy to begin. During the lesson, attack continues. Ember still works here as practice. When your School kit opens at the third year-mark, cast those taught spells instead. Finish before you walk away. If you fall, you wake in the Infirmary.\"",
+            "text": "\"Type attack dummy to begin. During the lesson, attack continues. Ember still works here as practice. When your School kit opens at the third year-mark, cast those taught spells instead. Finish before you walk away. If you fall, you wake in the Infirmary, where Fen keeps clean linen and a pot of honey. If you mean to practice against a classmate standing with you, type duel and their given name. They must type duel accept. Do not invent a target who is not in the room.\"",
             "choices": [
               { "say": "1", "label": "Why does a weapon fit?", "next": "fit" },
               { "say": "2", "label": "I understand.", "next": "keep" }
@@ -73,7 +73,7 @@
             "text": "\"Good. Type take Practice Sword, take Practice Staff, or take Practice Sling — the full name. If you type take weapon I will make you choose which one.\""
           },
           "keep": {
-            "text": "\"As you wish. Feet steady. Eyes open. Pride in your pocket.\""
+            "text": "\"As you wish. Feet steady. Eyes open. Pride in your pocket. The apple trees will keep their crooked watch, and the dummy will still be here when you are ready to type attack dummy — or duel and a classmate's given name, if they are standing with you and they agree.\""
           }
         }
       },
@@ -84,7 +84,7 @@
       "name": "Practice Rules",
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
-      "examineDescription": "'Ask before borrowing equipment. Aim only at the Practice Dummy. Stop when someone needs help. A practice defeat sends you to the Infirmary.' Flint has added: 'Winning teaches one thing. Paying attention teaches several.' Try talk flint for the practice commands."
+      "examineDescription": "'Ask before borrowing equipment. Aim at the Practice Dummy, or type duel and a classmate's given name if both of you agree. Stop when someone needs help. A practice defeat sends you to the Infirmary.' Flint has added: 'Winning teaches one thing. Paying attention teaches several. You duel the Collegian standing beside you, not a name from a story.' Try talk flint for the practice commands."
     },
     {
       "id": "object-orchard-apples",

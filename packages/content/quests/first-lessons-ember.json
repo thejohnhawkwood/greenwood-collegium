@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-ember",
   "title": "First Lessons: Ember",
-  "introNarration": "Mentor Cinder sets your first work. Look this hearth. Find Flint in the South Orchard. Come back.",
-  "reminderNarration": "Look the Hearth of Ember. Visit the South Orchard. Attack the dummy. Then talk Cinder.",
-  "completionNarration": "Cinder nods once. Ember has your name, if not yet your fire.",
+  "introNarration": "Mentor Cinder stands where the heat is useful, tongs at her belt, whiskers singed at the tips. The copper grate holds a low fire that does not waste itself, and the hearth smells of soot and last night's oatcakes. \"Look this hearth. Name the fire before you feed it. Then find Flint in the South Orchard, under the crooked apple boughs. Attack the dummy once. Come back.\"",
+  "reminderNarration": "The coals are still behaving. Look the Hearth of Ember — the grate, the sand, the slate that says to name the fire. Visit the South Orchard, where fallen blossom collects along the paths. Attack the dummy. Then talk Cinder. She will still be here.",
+  "completionNarration": "Cinder nods once. Ember has your name, if not yet your fire. The kit is open. Somewhere above the Great Hall, Alder waits with a question about an old bell the timber still carries.",
   "experienceReward": 10,
   "objectives": [
     {

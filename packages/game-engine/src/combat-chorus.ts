@@ -18,8 +18,8 @@ import {
   type CombatFailure,
   type CombatSuccess,
 } from "./combat-resolve.js";
-import { activeEncounter } from "./combat-state.js";
-import { dropEncounterMember, encounterMembers, partyNotices } from "./combat-party.js";
+import { activeEncounter, closeEncounter } from "./combat-state.js";
+import { dropEncounterMember, encounterMembers, isDuel, partyNotices } from "./combat-party.js";
 import { systemNotice } from "./system-notice.js";
 import type { Character, Encounter, EngineRuntime, LockedCombatMove, WorldState } from "./state.js";
 
@@ -86,6 +86,9 @@ export function resolveChorus(
     if (applied.outcome === "fled") {
       return fanActor(actor, encounter, { ...applied, events, notices }, runtime);
     }
+    if (isDuel(encounter)) {
+      continue;
+    }
     if (encounter.enemy.health <= 0) {
       return fanActor(
         actor,
@@ -111,8 +114,81 @@ export function resolveChorus(
   }
 
   encounter.locked = {};
+  if (isDuel(encounter)) {
+    return fanActor(
+      actor,
+      encounter,
+      concludeDuelRound(world, actor, remaining, encounter, events, runtime),
+      runtime,
+      notices,
+    );
+  }
   const concluded = concludePartyRound(world, actor, remaining, encounter, events, runtime);
   return fanActor(actor, encounter, concluded, runtime, notices);
+}
+
+function concludeDuelRound(
+  world: WorldState,
+  actor: Character,
+  remaining: Character[],
+  encounter: Encounter,
+  events: EventEnvelope[],
+  runtime: EngineRuntime,
+): CombatSuccess {
+  const notices: CombatSuccess["notices"] = [];
+  const down = remaining.filter((member) => (member.health ?? 0) <= 0);
+  if (down.length > 0) {
+    for (const loser of down) {
+      const defeated = finishDefeat(world, loser, encounter, [], runtime);
+      notices.push(...defeated.notices);
+      if (loser.id === actor.id) {
+        events.push(...defeated.events);
+      } else {
+        notices.push(...defeated.events.map((event) => ({ characterId: loser.id, event })));
+      }
+    }
+    const living = remaining.filter((member) => (member.health ?? 0) > 0);
+    if (living.length === 0) {
+      closeEncounterIfEmpty(world, encounter);
+      return {
+        ok: true,
+        events,
+        notices,
+        outcome: "defeat",
+        roomId: actor.roomId,
+      };
+    }
+    const winner = living[0] ?? actor;
+    const won = finishVictory(
+      world,
+      winner,
+      encounter,
+      winner.id === actor.id ? events : [],
+      runtime,
+    );
+    if (winner.id !== actor.id) {
+      notices.push(...won.events.map((event) => ({ characterId: winner.id, event })));
+      notices.push(...won.notices);
+      return { ok: true, events, notices, outcome: "ongoing", roomId: actor.roomId };
+    }
+    return { ...won, notices: [...notices, ...won.notices] };
+  }
+  const clockEvents: EventEnvelope[] = [];
+  advanceEncounterClock(actor, encounter, clockEvents, runtime);
+  events.push(...clockEvents);
+  return {
+    ok: true,
+    events,
+    notices,
+    outcome: "ongoing",
+    roomId: actor.roomId,
+  };
+}
+
+function closeEncounterIfEmpty(world: WorldState, encounter: Encounter): void {
+  if (encounterMembers(encounter).length === 0) {
+    closeEncounter(world, encounter);
+  }
 }
 
 function concludePartyRound(
@@ -192,7 +268,7 @@ function applyLockedMove(
   if (move.verb === "flee") {
     const fleeEvents = applyFleeAction(character, encounter, runtime);
     dropEncounterMember(world, encounter, character.id);
-    if (encounterMembers(encounter).length === 0) {
+    if (isDuel(encounter) || encounterMembers(encounter).length === 0) {
       return finishFlee(world, character, encounter, fleeEvents, runtime);
     }
     return {
@@ -228,7 +304,7 @@ function applyLockedMove(
     }
     return {
       ok: true,
-      events: applyHostileCast(character, encounter, spell, runtime),
+      events: applyHostileCast(character, encounter, spell, runtime, world),
       notices: [],
       outcome: "ongoing",
       roomId: character.roomId,

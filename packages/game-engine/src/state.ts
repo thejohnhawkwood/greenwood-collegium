@@ -176,6 +176,7 @@ export type Encounter = {
   playerIds?: string[];
   locked?: Record<string, LockedCombatMove>;
   spawnId: string;
+  kind?: "duel";
   lockDeadlineAt: string;
   enemy: EncounterCombatant;
   effects: StatusEffect[];
@@ -227,6 +228,7 @@ export type WorldState = {
   questTemplates?: Record<string, QuestTemplate>;
   quests?: Record<string, Record<string, QuestProgress>>;
   speciesProficiencies?: Record<string, string>;
+  duelChallenges?: Record<string, { fromId: string; createdAt: string }>;
 };
 
 export type LookIntent = {
@@ -375,6 +377,13 @@ export type TravelIntent = {
   target: string;
 };
 
+export type DuelIntent = {
+  verb: "duel";
+  characterId: string;
+  action: "challenge" | "accept" | "decline";
+  target?: string;
+};
+
 export type StaffHelpIntent = {
   verb: "staff-help";
   characterId: string;
@@ -453,6 +462,7 @@ export type PlayerCommand =
   | EquipIntent
   | MapIntent
   | TravelIntent
+  | DuelIntent
   | StaffCommand;
 
 export type EngineRuntime = {

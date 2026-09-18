@@ -1,8 +1,10 @@
 import type { EventEnvelope } from "@greenwood/contracts";
+import { handleDuel } from "./duel.js";
+import type { OccupantNotice } from "./presence-events.js";
 import type { ByeIntent, EngineRuntime, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
-export type ByeSuccess = { ok: true; event: EventEnvelope };
+export type ByeSuccess = { ok: true; event: EventEnvelope; notices?: OccupantNotice[] };
 export type ByeFailure = {
   ok: false;
   code: "character_not_found" | "no_conversation";
@@ -18,6 +20,20 @@ export function handleBye(world: WorldState, intent: ByeIntent, runtime: EngineR
       code: "character_not_found",
       message: "Your character is not in the realm.",
     };
+  }
+  if (world.duelChallenges?.[character.id]) {
+    const declined = handleDuel(
+      world,
+      { verb: "duel", characterId: character.id, action: "decline" },
+      runtime,
+    );
+    if (declined.ok) {
+      return {
+        ok: true,
+        event: declined.events[0] ?? systemNotice(character.id, "You decline the duel.", runtime),
+        notices: declined.notices,
+      };
+    }
   }
   if (!character.openConversation) {
     return {

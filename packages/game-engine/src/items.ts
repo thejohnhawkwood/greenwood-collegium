@@ -91,6 +91,10 @@ export function resolveTypedItems(
     return { status: "one", item: exact[0] };
   }
   if (exact.length > 1) {
+    const collapsed = collapseSameTemplate(exact);
+    if (collapsed) {
+      return { status: "one", item: collapsed };
+    }
     return { status: "many", items: exact, typeWord: itemTypeWord(exact[0] ?? {}) };
   }
 
@@ -111,7 +115,22 @@ export function resolveTypedItems(
     return { status: "one", item: named[0] };
   }
   if (named.length > 1) {
+    const collapsed = collapseSameTemplate(named);
+    if (collapsed) {
+      return { status: "one", item: collapsed };
+    }
     return { status: "many", items: named, typeWord: itemTypeWord(named[0] ?? {}) };
   }
   return { status: "none" };
+}
+
+function collapseSameTemplate(items: readonly ItemInstance[]): ItemInstance | undefined {
+  const first = items[0];
+  if (!first) {
+    return undefined;
+  }
+  if (items.every((item) => item.templateId === first.templateId && item.name === first.name)) {
+    return first;
+  }
+  return undefined;
 }

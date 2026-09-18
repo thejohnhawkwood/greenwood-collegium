@@ -99,21 +99,28 @@ export function handleExamine(
   }
   if (matches.length > 1) {
     const itemMatches = matches.filter((target) => target.item);
-    const typeWord =
-      itemMatches.length === matches.length
-        ? itemTypeWord({
-            itemType: intent.target.trim().toLowerCase(),
-            category: intent.target.trim().toLowerCase(),
-          })
-        : "item";
-    return {
-      ok: false,
-      code: "item_ambiguous",
-      message:
+    const sameName =
+      itemMatches.length === matches.length &&
+      itemMatches.every((target) => target.name === itemMatches[0]?.name);
+    if (sameName && itemMatches[0]) {
+      matches.splice(0, matches.length, itemMatches[0]);
+    } else {
+      const typeWord =
         itemMatches.length === matches.length
-          ? whichItemMessage("examine", typeWord, matches)
-          : `Which did you mean: ${matches.map((target) => target.name).join(", ")}?`,
-    };
+          ? itemTypeWord({
+              itemType: intent.target.trim().toLowerCase(),
+              category: intent.target.trim().toLowerCase(),
+            })
+          : "item";
+      return {
+        ok: false,
+        code: "item_ambiguous",
+        message:
+          itemMatches.length === matches.length
+            ? whichItemMessage("examine", typeWord, matches)
+            : `Which did you mean: ${matches.map((target) => target.name).join(", ")}?`,
+      };
+    }
   }
 
   const target = matches[0];

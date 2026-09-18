@@ -184,6 +184,7 @@ describe("visual foundation", () => {
           minimap: {
             rooms: [
               { id: "court", title: "Court", x: 0, y: 0, z: 0, state: "current" },
+              { id: "hall", title: "Great Hall", x: 0, y: 1, z: 0, state: "explored" },
               { id: "study", title: "The High Study", x: 0, y: 1, z: 1, state: "explored" },
               { id: "cradle", title: "Deep Cradle", x: 2, y: 0, z: -2, state: "explored" },
             ],
@@ -200,6 +201,8 @@ describe("visual foundation", () => {
     expect(worldDialog).toContain("Climb up");
     expect(worldDialog).toContain("Go down");
     expect(worldDialog).toContain("Grounds");
+    expect(worldDialog).toContain("Travel to Great Hall");
+    expect(worldDialog).toContain('aria-label="Travel to Great Hall"');
   });
   it("renders every supported species with the same deterministic layers at every size", () => {
     const portraits = new Set<string>();
@@ -447,6 +450,14 @@ describe("visual foundation", () => {
     expect(menu).not.toContain("Take");
     expect(menu).not.toContain("Attack");
     expect(menu).not.toContain("Ask to duel");
+    const playerMenu = renderToStaticMarkup(
+      createElement(PresenceMenu, {
+        person: { id: "char-moss", name: "Moss the Mole", kind: "player" },
+        onSend: () => {},
+        onClose: () => {},
+      }),
+    );
+    expect(playerMenu).toContain("Ask to duel");
     const objectMenu = renderToStaticMarkup(
       createElement(PresenceMenu, {
         person: { id: "object-key-board", name: "Key Board", kind: "object" },

@@ -94,7 +94,7 @@ notes below are hypotheses until students fight.
 `defend` / `flee` if those verbs exist.
 - Keyboard access, colour never the only cue, reduced motion before DS-008
 effects, skippable presentation.
-- Classroom: no PvP, Infirmary on defeat, inventory kept, no student data in
+- Classroom: no surprise PvP (consented duels only), Infirmary on defeat, inventory kept, no student data in
 the client payload.
 - One process, one game truth. No second combat service.
 - Hold new combat stats until named student evidence. See § Stats and

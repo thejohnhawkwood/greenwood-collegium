@@ -40,6 +40,7 @@ import {
   handleStats,
   handleEquip,
   handleTake,
+  handleDuel,
   isSchoolId,
   listQuestRecords,
   isStaffCommand,
@@ -54,7 +55,7 @@ import { describeCollegian } from "@greenwood/content";
 import type { FastifyInstance } from "fastify";
 import { Server, type Socket } from "socket.io";
 import { CommandLog } from "../application/command-log.js";
-import { persistCharacterStarterItems } from "../application/item-state.js";
+import { persistCharacterStarterItems, persistPersonalLoot } from "../application/item-state.js";
 import { handleStaffCommand, muteRejection } from "../application/moderation.js";
 import {
   COMMAND_RATE_MAX,
@@ -901,7 +902,9 @@ export async function attachRealtime(
                                             ? handleDrink(world, intent, runtime)
                                             : intent.verb === "eat"
                                               ? handleEat(world, intent, runtime)
-                                              : handleCast(world, intent, runtime);
+                                              : intent.verb === "duel"
+                                                ? handleDuel(world, intent, runtime)
+                                                : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -930,6 +933,16 @@ export async function attachRealtime(
       typeof result.roomId === "string"
     ) {
       await options.persistRoom(characterId, result.roomId);
+    }
+
+    if (
+      identity &&
+      options.persistItem &&
+      result.ok &&
+      "outcome" in result &&
+      result.outcome === "victory"
+    ) {
+      await persistPersonalLoot(world, options.persistItem);
     }
 
     if (
@@ -1034,7 +1047,8 @@ export async function attachRealtime(
         intent.verb === "cast" ||
         intent.verb === "defend" ||
         intent.verb === "flee" ||
-        intent.verb === "travel")
+        intent.verb === "travel" ||
+        intent.verb === "duel")
     ) {
       await persistAuthenticatedProgress(characterId);
     }

@@ -3,7 +3,7 @@
   "id": "hearth-ember",
   "title": "Hearth of Ember",
   "shortDescription": "Banked coals keep a copper grate honest.",
-  "longDescription": "The Hearth of Ember smells of soot and warm metal. A copper grate holds a low fire that does not waste itself. Tongs hang in a row. Clay pots of sand wait for the lesson that comes after a spark gets ideas.\nMentor Cinder stands where the heat is useful, not where it is pretty.",
+  "longDescription": "The Hearth of Ember smells of soot, warm metal, and the ghost of last night's oatcakes left too near the coals. A copper grate holds a low fire that does not waste itself. Tongs hang in a row, blackened at the tips. Clay pots of sand wait for the lesson that comes after a spark gets ideas.\nMentor Cinder stands where the heat is useful, not where it is pretty.",
   "zone": "schools",
   "map": {
     "x": 5,
@@ -29,27 +29,27 @@
       "name": "Mentor Cinder",
       "kind": "npc",
       "lookDescription": "A soot-stained stoat in a leather apron, copper-bright eyes, tongs at the belt. Try talk cinder.",
-      "examineDescription": "Cinder's whiskers are singed at the tips. The apron is older than most first-years. She treats fire as a tool that will bite the careless and feed the careful.",
-      "dialogue": "\"Ember is a craft. Look this hearth. Find Flint in the South Orchard. Come back when you have seen the dummy.\"",
+      "examineDescription": "Cinder's whiskers are singed at the tips. The apron is older than most first-years and smells of honest smoke. She treats fire as a tool that will bite the careless and feed the careful.",
+      "dialogue": "\"Ember is a craft, not a bonfire. Look this hearth — the grate, the sand, the way the coals keep their manners. Find Flint in the South Orchard. Come back when you have seen the dummy.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Cinder. Ember teaches heat you can spend and heat you can keep. Look this hearth. Then walk to the South Orchard. Flint still owns the dummy. Attack it once. Come back and talk to me.\"",
+            "text": "\"I am Cinder. Come in from the hall and take the heat properly — not so close you singe your whiskers, not so far you learn nothing. Ember teaches heat you can spend and heat you can keep. Look this hearth. Name the fire before you feed it. Then walk to the South Orchard, where the apple trees lean over Flint's clearing and the dummy waits in a straw hat that has survived more lessons than anyone can explain. Attack it once. Come back and talk to me. I will still be here, and the coals will still be behaving.\"",
             "choices": [
               { "say": "1", "label": "What does Ember ask of me?", "next": "craft" },
               { "say": "2", "label": "I will go.", "next": "go" }
             ]
           },
           "craft": {
-            "text": "\"A spark is not a victory. A spark is a beginning. You will learn to spend fire without wasting the room. First you learn to stand still and look. Then you learn to hit a thing that is meant to be hit.\"",
+            "text": "\"A spark is not a victory. A spark is a beginning — the first bright thought in a dark grate. You will learn to spend fire without wasting the room, without filling the hall with smoke and panic. First you learn to stand still and look. Then you learn to hit a thing that is meant to be hit. Flint's dummy does not lie about whether you connected. That is a kinder teacher than a classmate who did not agree to be struck.\"",
             "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
           },
           "go": {
-            "text": "\"Look the grate. Then find the orchard. I will be here when you return.\""
+            "text": "\"Look the grate. Feel the warmth that stays in the copper. Then find the orchard — south of Lantern Court, under the crooked apple boughs. I will be here when you return, tongs in reach and sand ready if you come back with ideas.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. Ember has your name, and your kit is open. Alder waits in the High Study with a question about the bell below.\""
+            "text": "\"You have looked. You have stood in the orchard, and the dummy has already forgotten the blow, as a good dummy should. Ember has your name, and your kit is open. Alder waits in the High Study with a question about the bell below — the old note that rolls through these stones like a cart over wet cobbles. Go up when you are ready. Eat something first if the smoke has made you light-headed.\""
           }
         }
       }
