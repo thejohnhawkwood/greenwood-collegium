@@ -33,6 +33,7 @@ Unresolved risks. Do not hide confusion.
 
 ## Entries
 
+- [2026-09-20 — Status after sync](2026-09-20-status.md)
 - [2026-09-18 — Foe cards and look frames](2026-09-18-foe-cards.md)
 - [2026-09-17 — Spawn memory, spells, felt levels](2026-09-17-spawn-memory-and-enjoyment.md)
 - [2026-09-16 — Lock-in Chorus combat](2026-09-16-lock-in-combat.md)
