@@ -173,7 +173,7 @@ Seven old stones and one that has not had a year.
 
 - Source: [room JSON](../../packages/content/rooms/standing-stones.json).
 - Map `{x: 8, y: 1}`. Unique plate `standing-stones.png`. Exits: west → `sheepfold`; north → `peat-cut`.
-- Discoveries: Abbey Mark (`object-abbey-mark`); New Stone (`object-new-stone`).
+- Discoveries: Abbey Mark (`object-abbey-mark`); New Stone (`object-new-stone`). Personal takeable: Abbey Mark Rubbing (`abbey-mark-rubbing`, starter per Collegian).
 - Quest roles: [The East Watch](#the-east-watch).
 
 ### Peat Cut — `peat-cut`
@@ -183,6 +183,7 @@ Black water, old tea and iron, fog at knee height.
 - Source: [room JSON](../../packages/content/rooms/peat-cut.json).
 - Map `{x: 8, y: 2}`. Unique plate `peat-cut.png`. Exits: south → `standing-stones`; north → `barrow-mouth`.
 - Discoveries: Peat Water (`object-peat-water`); Shed Skin (`object-shed-skin`).
+- Enemy: Peat Adder (`enemy-peat-adder-peat-cut`). Solo, optional, not a quest objective.
 - Quest roles: path to the barrow.
 
 ### Barrow Mouth — `barrow-mouth`
@@ -340,7 +341,7 @@ Copper pans catch the glow of an industrious oven.
 - Source: [room JSON](../../packages/content/rooms/kitchens.json).
 - Exits: south → `refectory`.
 - NPCs: none.
-- Discoveries: Recipe Slate (`object-recipe-slate`).
+- Discoveries: Recipe Slate (`object-recipe-slate`); Bread Tin (`object-kitchen-initials`, Holm and Colm initials).
 
 ### Lantern Court — `lantern-court`
 

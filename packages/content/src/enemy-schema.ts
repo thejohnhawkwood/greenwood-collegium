@@ -31,6 +31,7 @@ export const enemyTemplateSchema = z
     minParty: z.number().int().positive().optional(),
     loot: z.array(stableIdSchema).optional(),
     victoryNarration: z.string().min(1).optional(),
+    lockNarration: z.string().min(1).optional(),
   })
   .strict()
   .superRefine((enemy, ctx) => {
@@ -42,6 +43,9 @@ export const enemyTemplateSchema = z
     }
     if (enemy.victoryNarration) {
       rejectMarkup(enemy.victoryNarration, "victoryNarration", ctx);
+    }
+    if (enemy.lockNarration) {
+      rejectMarkup(enemy.lockNarration, "lockNarration", ctx);
     }
   });
 

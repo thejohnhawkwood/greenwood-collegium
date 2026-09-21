@@ -8,5 +8,6 @@
   "maxHealth": 12,
   "attack": 3,
   "experience": 10,
+  "lockNarration": "Fog beads on the feathers and does not shake off.",
   "victoryNarration": "The Mist Crow comes apart into wet feathers and thinner fog. The fold rail is only wood again."
 }

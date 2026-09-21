@@ -53,6 +53,8 @@ export const OBJECT_PLATE_FILES = [
   "object-peat-water",
   "wren-wool-charm",
   "wren-hearth-charm",
+  "abbey-mark-rubbing",
+  "object-kitchen-initials",
 ] as const;
 
 const OBJECT_PLATE_ALIASES: Record<string, string> = Object.fromEntries(
@@ -95,6 +97,7 @@ const PLACEMENT_ALIASES: Record<string, string> = {
   "item-primer-library-stacks": "moss-bound-primer",
   "item-field-primer-lantern-court": "moss-bound-primer",
   "field-primer": "moss-bound-primer",
+  "item-abbey-mark-rubbing-standing-stones": "abbey-mark-rubbing",
 };
 
 function slug(value: string): string {

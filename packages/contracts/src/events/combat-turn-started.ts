@@ -6,6 +6,7 @@ export const combatTurnStartedPayloadSchema = z.object({
   round: z.number().int().positive(),
   actorId: z.string().min(1),
   actorName: z.string().min(1),
+  lockNarration: z.string().min(1).optional(),
 });
 
 export type CombatTurnStartedPayload = z.infer<typeof combatTurnStartedPayloadSchema>;
@@ -19,5 +20,6 @@ export const combatTurnStartedEventSchema = eventEnvelopeSchema.extend({
 export type CombatTurnStartedEvent = z.infer<typeof combatTurnStartedEventSchema>;
 
 export function formatCombatTurnStartedText(payload: CombatTurnStartedPayload): string {
-  return `Round ${String(payload.round)}. It is your turn.`;
+  const base = `Round ${String(payload.round)}. It is your turn.`;
+  return payload.lockNarration ? `${base} ${payload.lockNarration}` : base;
 }

@@ -225,6 +225,10 @@ describe("authenticated socket identity", () => {
     expect(seated).toContain("Lantern Court");
     expect(persistItem.seeds).toEqual([
       expect.objectContaining({
+        templateId: "abbey-mark-rubbing",
+        roomId: "standing-stones",
+      }),
+      expect.objectContaining({
         templateId: "small-copper-key",
         roomId: "lantern-court",
       }),

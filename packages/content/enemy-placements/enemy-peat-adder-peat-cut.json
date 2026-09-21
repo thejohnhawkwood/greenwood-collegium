@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-peat-adder-peat-cut",
+  "templateId": "peat-adder",
+  "roomId": "peat-cut"
+}

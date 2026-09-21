@@ -3,7 +3,7 @@
   "id": "peat-cut",
   "title": "Peat Cut",
   "shortDescription": "Black water, old tea and iron, fog at knee height.",
-  "longDescription": "The cut is a dark wound in the moor. Black water stands in the trenches and smells of old tea and iron. Fog sits at the knee and does not lift when you ask it to.\nNorth the barrow mouth shows as a darker hole in the hill. This is not silk. This is weather that learned to keep things.",
+  "longDescription": "The cut is a dark wound in the moor. Black water stands in the trenches and smells of old tea and iron. Fog sits at the knee and does not lift when you ask it to. Something small and living still uses the water.\nNorth the barrow mouth shows as a darker hole in the hill. This is not silk. This is weather that learned to keep things.",
   "zone": "east-moor",
   "map": {
     "x": 8,
@@ -32,7 +32,7 @@
       "name": "Shed Skin",
       "kind": "object",
       "lookDescription": "A dry skin caught on the cut edge. Examine it.",
-      "examineDescription": "A peat-adder left this, dry as old tea, hooked on the cut. Something small came through and went on. It is not a quest. It is not Colm. Leave it. North is the barrow mouth."
+      "examineDescription": "A peat-adder left this, dry as old tea, hooked on the cut. The adder still uses the water. It is not Colm. If it squares up, that is optional. North is the barrow mouth."
     }
   ]
 }

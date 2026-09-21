@@ -11,5 +11,6 @@
   "experience": 20,
   "minParty": 3,
   "loot": ["queen-silk-cord"],
+  "lockNarration": "Threads tighten around the cradle.",
   "victoryNarration": "The Silk Queen folds in on herself. The hum in the floor misses a beat, then goes on without her."
 }

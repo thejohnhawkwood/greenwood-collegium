@@ -32,6 +32,7 @@ NPC_FILES = [
     "mist-crow.png",
     "barrow-guard.png",
     "fog-walker.png",
+    "peat-adder.png",
 ]
 OBJECT_FILES = [
     "object-holm-wrapping.png",
@@ -49,6 +50,8 @@ OBJECT_FILES = [
     "object-peat-water.png",
     "wren-wool-charm.png",
     "wren-hearth-charm.png",
+    "abbey-mark-rubbing.png",
+    "object-kitchen-initials.png",
 ]
 
 

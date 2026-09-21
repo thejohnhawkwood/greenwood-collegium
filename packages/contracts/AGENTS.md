@@ -14,7 +14,7 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Ticket 010 owns `session.snapshot` for authenticated resume.
 - `sessionHelloSchema` is a process boot handshake. It is not account, role, or character authority.
 - Ticket 012 owns `item.taken`, `item.dropped`, and `inventory.updated`.
-- Ticket 013 owns combat start, turn, action, end, and `progress.experience_gained`. DS-007 / ADR-0034 adds `combat.ended` outcome `fled`, action verbs `defend` / `flee`, `combat.started` enemy focus, and optional `play-state.encounter`.
+- Ticket 013 owns combat start, turn, action, end, and `progress.experience_gained`. DS-007 / ADR-0034 adds `combat.ended` outcome `fled`, action verbs `defend` / `flee`, `combat.started` enemy focus, and optional `play-state.encounter`. Optional `combat.turn_started` `lockNarration` is server-authored; the client must not invent it.
 - Ticket 014 owns Ember, burning, `combat.status_applied`, and the Ember event fixture. Presentation keys do not decide damage.
 - Ticket 015 owns `quest.updated` and `progress.level_gained`. The client must not invent quest completion or level.
 - ADR-0039 adds optional `play-state.primer` cards. The client must not invent offered leaves, ranks, or descriptions.

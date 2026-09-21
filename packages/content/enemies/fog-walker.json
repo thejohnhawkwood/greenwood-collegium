@@ -11,5 +11,6 @@
   "experience": 25,
   "minParty": 3,
   "loot": ["wren-hearth-charm"],
+  "lockNarration": "Fog thickens and does not keep footprints.",
   "victoryNarration": "The Fog Walker thins until the hollow smells like rain on a hearth-stone. Not sweetness. The fog is only weather again."
 }

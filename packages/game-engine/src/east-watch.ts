@@ -1,3 +1,4 @@
+import { itemsHeldBy } from "./items.js";
 import type { Character, DialogueTree, RoomFixture, WorldState } from "./state.js";
 
 export const PIPER_NPC_ID = "npc-piper-mole";
@@ -7,6 +8,7 @@ export const FEN_NPC_ID = "npc-healer-fen";
 export const FLINT_NPC_ID = "npc-instructor-flint";
 export const TANSY_NPC_ID = "npc-groundskeeper-tansy";
 export const QUILL_NPC_ID = "npc-librarian-quill";
+export const ABBEY_MARK_RUBBING_TEMPLATE_ID = "abbey-mark-rubbing";
 
 const STILL_SLEEPS_ID = "what-still-sleeps";
 
@@ -183,11 +185,16 @@ export function resolveQuillSpeechNode(
   if (!tree) {
     return undefined;
   }
-  if (
-    questStatus(world, character, STONES_QUEST_ID) === "completed" &&
-    tree.nodes["abbey-rubbing"]
-  ) {
-    return "abbey-rubbing";
+  if (questStatus(world, character, STONES_QUEST_ID) === "completed") {
+    const holdsRubbing = itemsHeldBy(world, character.id).some(
+      (item) => item.templateId === ABBEY_MARK_RUBBING_TEMPLATE_ID,
+    );
+    if (holdsRubbing && tree.nodes["abbey-rubbing-kept"]) {
+      return "abbey-rubbing-kept";
+    }
+    if (tree.nodes["abbey-rubbing"]) {
+      return "abbey-rubbing";
+    }
   }
   return tree.nodes[tree.start] ? tree.start : undefined;
 }
