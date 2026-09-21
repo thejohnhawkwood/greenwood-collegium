@@ -1,6 +1,7 @@
 import {
   combatActionResolvedEventSchema,
   combatEndedEventSchema,
+  combatTurnStartedEventSchema,
   experienceGainedEventSchema,
 } from "@greenwood/contracts";
 import { describe, expect, it } from "vitest";
@@ -110,6 +111,9 @@ describe("combat slice", () => {
     expect(playerHit.payload.damage).toBe(rollAttackDamage(4, 0.5));
     expect(playerHit.payload.targetHealth).toBe(4);
     expect(playerHit.narration).toBe("You strike the Practice Dummy for 4. It has 4 remaining.");
+    expect(combatTurnStartedEventSchema.parse(swing.events[2]).narration).toBe(
+      "Round 2. It is your turn.",
+    );
 
     const second = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     expect(second.ok).toBe(true);
@@ -355,6 +359,24 @@ describe("combat slice", () => {
     ).toBe(true);
     const afterTake = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
     expect(afterTake.ok && afterTake.event.narration).not.toContain("Straw Practice Scrap");
+  });
+
+  it("appends authored lock narration after the first lock", () => {
+    const world = orchardWorld();
+    world.enemies!["enemy-practice-dummy-south-orchard"]!.maxHealth = 20;
+    world.enemies!["enemy-practice-dummy-south-orchard"]!.lockNarration =
+      "Threads tighten around the cradle.";
+    const clock = runtime(0.5);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
+    const swing = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    expect(swing.ok).toBe(true);
+    if (!swing.ok) {
+      return;
+    }
+    const turn = combatTurnStartedEventSchema.parse(swing.events[2]);
+    expect(turn.payload.round).toBe(2);
+    expect(turn.payload.lockNarration).toBe("Threads tighten around the cradle.");
+    expect(turn.narration).toBe("Round 2. It is your turn. Threads tighten around the cradle.");
   });
 
   it("does not allow fighting students or missing foes", () => {

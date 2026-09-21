@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/placement.schema.json",
+  "id": "item-abbey-mark-rubbing-standing-stones",
+  "templateId": "abbey-mark-rubbing",
+  "roomId": "standing-stones",
+  "starterPerCharacter": true
+}

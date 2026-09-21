@@ -3,7 +3,7 @@
   "id": "kitchens",
   "title": "Kitchens",
   "shortDescription": "Copper pans catch the glow of an industrious oven.",
-  "longDescription": "The oven gives a steady, companionable roar. Copper pans hang in shining ranks above a flour-dusted table, and a row of bread tins cools beneath a cloth patched with embroidered turnips.\nA recipe slate leans against a bowl big enough to bathe a very small dragon. Somewhere behind the pantry door, a spoon falls with tremendous importance.",
+  "longDescription": "The oven gives a steady, companionable roar. Copper pans hang in shining ranks above a flour-dusted table, and a row of bread tins cools beneath a cloth patched with embroidered turnips.\nA recipe slate leans against a bowl big enough to bathe a very small dragon. One battered tin waits with initials under the rim. Somewhere behind the pantry door, a spoon falls with tremendous importance.",
   "zone": "lodgings",
   "map": {
     "x": 2,
@@ -22,6 +22,13 @@
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
       "examineDescription": "The slate reads: 'Collegium soup: vegetables, water, herbs, and enough for the unexpected guest.' Underneath: 'Taste before adding salt. Ask before taking ingredients. Compliments to the washing-up crew count as compliments to the cook.'"
+    },
+    {
+      "id": "object-kitchen-initials",
+      "name": "Bread Tin",
+      "kind": "object",
+      "lookDescription": "A battered tin with initials under the rim. Examine it.",
+      "examineDescription": "H. and C. are scratched under the rim, small as a private joke. Holm and Colm used this tin. The kitchens did not make a speech. They kept the tin in the row."
     }
   ]
 }

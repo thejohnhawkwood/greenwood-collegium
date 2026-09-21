@@ -1,0 +1,13 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "peat-adder",
+  "name": "Peat Adder",
+  "shortDescription": "A brown adder coiled on the cut lip, not asleep.",
+  "lookDescription": "A peat-adder coils on the cut lip, brown as the water and not asleep.",
+  "examineDescription": "The peat-adder is small, brown, and honest about its bite. It uses the cut water. It is not Colm. Solo work. If it squares up, finish it. The stones quest does not require the kill.",
+  "maxHealth": 10,
+  "attack": 3,
+  "experience": 8,
+  "lockNarration": "The cut water goes stiller than tea.",
+  "victoryNarration": "The peat-adder goes still. The cut is only water and iron again."
+}

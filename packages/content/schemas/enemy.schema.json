@@ -67,6 +67,11 @@
     "victoryNarration": {
       "type": "string",
       "minLength": 1
+    },
+    "lockNarration": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Spoken on combat.turn_started after the first lock (round > 1). Dummy stays quiet."
     }
   }
 }

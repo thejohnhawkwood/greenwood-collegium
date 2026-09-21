@@ -1,0 +1,8 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "abbey-mark-rubbing",
+  "name": "Abbey Mark Rubbing",
+  "shortDescription": "Cheap paper with three charcoal circles.",
+  "examineDescription": "Charcoal on cheap paper. Three circles, no flourish, lifted from the old mason's sign at the standing stones. Quill will keep it with the lantern-wren gap if you take it to the stacks.",
+  "category": "ordinary"
+}

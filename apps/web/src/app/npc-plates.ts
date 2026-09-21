@@ -19,6 +19,7 @@ export const NPC_PLATE_FILES = [
   "mist-crow",
   "barrow-guard",
   "fog-walker",
+  "peat-adder",
 ] as const;
 
 const NPC_PLATE_ALIASES: Record<string, string> = {
@@ -54,9 +55,11 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-barrow-guard-barrow-mouth": "barrow-guard",
   "fog-walker": "fog-walker",
   "enemy-fog-walker-fog-hollow": "fog-walker",
+  "peat-adder": "peat-adder",
+  "enemy-peat-adder-peat-cut": "peat-adder",
 };
 
-const NPC_ART_REV = "east-watch-1";
+const NPC_ART_REV = "east-watch-2";
 
 export function npcArtSrc(id: string): string | undefined {
   const plate = NPC_PLATE_ALIASES[id];

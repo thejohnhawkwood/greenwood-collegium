@@ -28,6 +28,11 @@ describe("item-state starter copies", () => {
     const personalId = starterInstanceId("item-copper-key-lantern-court", "char-rowan");
     expect(starterSeedsForCharacter(world, "char-rowan")).toEqual([
       {
+        id: starterInstanceId("item-abbey-mark-rubbing-standing-stones", "char-rowan"),
+        templateId: "abbey-mark-rubbing",
+        roomId: "standing-stones",
+      },
+      {
         id: personalId,
         templateId: "small-copper-key",
         roomId: "lantern-court",

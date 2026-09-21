@@ -216,6 +216,7 @@ export type EnemySpawn = {
   minParty?: number;
   loot?: string[];
   victoryNarration?: string;
+  lockNarration?: string;
 };
 
 export type LockedCombatMove = {
@@ -245,6 +246,7 @@ export type Encounter = {
   spawnId: string;
   kind?: "duel";
   lockDeadlineAt: string;
+  lockNarration?: string;
   enemy: EncounterCombatant;
   effects: StatusEffect[];
 };

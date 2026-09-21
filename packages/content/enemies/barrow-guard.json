@@ -8,5 +8,6 @@
   "maxHealth": 18,
   "attack": 4,
   "experience": 15,
+  "lockNarration": "Peat packs tighter over the bone.",
   "victoryNarration": "The Barrow Guard slumps into wet peat. The hill-lip is only a door again."
 }

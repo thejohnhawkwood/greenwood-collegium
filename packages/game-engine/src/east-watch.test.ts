@@ -5,6 +5,8 @@ import {
   FEN_NPC_ID,
   FOG_TOOK_QUEST_ID,
   MEADOW_FORK_QUEST_ID,
+  QUILL_NPC_ID,
+  STONES_QUEST_ID,
   UNCOUNTED_FLOCK_QUEST_ID,
   WREN_NPC_ID,
 } from "./east-watch.js";
@@ -443,5 +445,67 @@ describe("East Watch chain", () => {
       handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "alder" }, clock).ok,
     ).toBe(true);
     expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("watch-active");
+  });
+
+  it("lets Quill keep an abbey-mark rubbing after the stones", () => {
+    const realm = world();
+    const clock = runtime();
+    realm.rooms["library-stacks"] = {
+      id: "library-stacks",
+      title: "Library Stacks",
+      shortDescription: "Shelves.",
+      longDescription: "Paper.",
+      zone: "studies",
+      exits: [],
+      fixtures: [
+        {
+          id: QUILL_NPC_ID,
+          name: "Librarian Quill",
+          kind: "npc",
+          dialogue: "Paper first.",
+          dialogueTree: {
+            start: "welcome",
+            nodes: {
+              welcome: { text: "Blame is a poor bookmark." },
+              "abbey-rubbing": { text: "Bring a rubbing." },
+              "abbey-rubbing-kept": { text: "You brought the rubbing." },
+            },
+          },
+        },
+      ],
+    };
+    realm.characters["char-rowan"] = {
+      id: "char-rowan",
+      name: "Rowan",
+      roomId: "library-stacks",
+      discoveredRoomIds: ["library-stacks"],
+    };
+    realm.quests = {
+      "char-rowan": {
+        [STONES_QUEST_ID]: {
+          questId: STONES_QUEST_ID,
+          status: "completed",
+          completedObjectiveIds: ["reach-stones", "read-mark", "read-new", "report"],
+          rewardGranted: true,
+        },
+      },
+    };
+    expect(
+      handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "quill" }, clock).ok,
+    ).toBe(true);
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("abbey-rubbing");
+    realm.items = {
+      "item-abbey-mark-rubbing-char-rowan": {
+        id: "item-abbey-mark-rubbing-char-rowan",
+        templateId: "abbey-mark-rubbing",
+        name: "Abbey Mark Rubbing",
+        examineDescription: "Three circles.",
+        holderCharacterId: "char-rowan",
+      },
+    };
+    expect(
+      handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "quill" }, clock).ok,
+    ).toBe(true);
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("abbey-rubbing-kept");
   });
 });

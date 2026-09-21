@@ -25,4 +25,17 @@ describe("combat.turn_started contract", () => {
 
     expect(formatCombatTurnStartedText(event.payload)).toBe(event.narration);
   });
+
+  it("appends authored lock narration when the payload carries it", () => {
+    const payload = {
+      encounterId: "enc-queen",
+      round: 2,
+      actorId: "char-rowan",
+      actorName: "Rowan the Hare",
+      lockNarration: "Threads tighten around the cradle.",
+    };
+    expect(formatCombatTurnStartedText(payload)).toBe(
+      "Round 2. It is your turn. Threads tighten around the cradle.",
+    );
+  });
 });

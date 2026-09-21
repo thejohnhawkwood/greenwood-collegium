@@ -217,13 +217,13 @@ That is intended. East Watch then carries them toward 10.
   Sleeps is done. See [college lessons](quests/college-lessons.md).
 - **Queen fight required.** Live Sleeps is wrapping, visit, score, **defeat**, talk.
 - **Piper after Holm.** `holm-named` after the wrapping; `after-queen` after Sleeps.
+- **Kitchens memorial.** Holm and Colm initials on a battered bread tin (`object-kitchen-initials`). Not a sermon.
 
 ---
 
 ## 7. Held ideas (not this campaign)
 
 - River Landing / otter road after 10, or a side that does not steal the bronze.
-- Kitchens memorial that is not a sermon (Holm and Colm initials on a place-card).
 - Dorms stay comfort. Sleepless students go to Fen, not a jump-scare mobile.
 - Lessons 11–20 parish: do not sketch beyond the open mysteries below.
 

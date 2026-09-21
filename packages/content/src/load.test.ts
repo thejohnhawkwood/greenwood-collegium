@@ -83,6 +83,10 @@ describe("content loader", () => {
     expect(world.rooms["moor-track"]?.map).toEqual({ x: 6, y: 1 });
     expect(world.rooms["moor-track"]?.visualState).toBe("moor-track");
     expect(world.rooms["wren-croft"]?.title).toBe("Wren's Croft");
+    expect(world.rooms["kitchens"]?.fixtures.map((fixture) => fixture.id)).toContain(
+      "object-kitchen-initials",
+    );
+    expect(world.itemTemplates["abbey-mark-rubbing"]?.name).toBe("Abbey Mark Rubbing");
     expect(world.rooms["wren-croft"]?.visualState).toBe("wren-croft");
     expect(world.rooms["barrow-nave"]?.visualState).toBe("barrow-nave");
     expect(world.rooms["west-cloister"]?.exits).toEqual([
@@ -90,6 +94,12 @@ describe("content loader", () => {
     ]);
     expect(world.items["item-copper-key-lantern-court"]).toBeUndefined();
     expect(world.starterPlacements).toEqual([
+      expect.objectContaining({
+        id: "item-abbey-mark-rubbing-standing-stones",
+        templateId: "abbey-mark-rubbing",
+        name: "Abbey Mark Rubbing",
+        roomId: "standing-stones",
+      }),
       expect.objectContaining({
         id: "item-copper-key-lantern-court",
         templateId: "small-copper-key",
@@ -123,12 +133,21 @@ describe("content loader", () => {
       maxFocus: 12,
       minParty: 3,
       victoryNarration: expect.stringContaining("folds in on herself"),
+      lockNarration: "Threads tighten around the cradle.",
     });
     expect(world.enemies["enemy-fog-walker-fog-hollow"]).toMatchObject({
       templateId: "fog-walker",
       minParty: 3,
+      lockNarration: "Fog thickens and does not keep footprints.",
     });
-    expect(Object.keys(world.enemies)).toHaveLength(12);
+    expect(world.enemies["enemy-peat-adder-peat-cut"]).toMatchObject({
+      templateId: "peat-adder",
+      roomId: "peat-cut",
+      maxHealth: 10,
+      attack: 3,
+      experience: 8,
+    });
+    expect(Object.keys(world.enemies)).toHaveLength(13);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,

@@ -52,6 +52,7 @@ export function createDevWorld(): WorldState {
           ...(enemy.minParty ? { minParty: enemy.minParty } : {}),
           ...(enemy.loot?.length ? { loot: [...enemy.loot] } : {}),
           ...(enemy.victoryNarration ? { victoryNarration: enemy.victoryNarration } : {}),
+          ...(enemy.lockNarration ? { lockNarration: enemy.lockNarration } : {}),
         },
       ]),
     ),

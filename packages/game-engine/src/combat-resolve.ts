@@ -256,6 +256,7 @@ export function prepareEncounter(
     playerId: character.id,
     spawnId: spawn.id,
     lockDeadlineAt: runtime.now().toISOString(),
+    ...(spawn.lockNarration ? { lockNarration: spawn.lockNarration } : {}),
     enemy: {
       id: spawn.id,
       name: spawn.name,
@@ -826,6 +827,9 @@ function turnEvent(
     round: encounter.round,
     actorId: character.id,
     actorName: character.name,
+    ...(encounter.round > 1 && encounter.lockNarration
+      ? { lockNarration: encounter.lockNarration }
+      : {}),
   };
   const narration = formatCombatTurnStartedText(payload);
   return combatTurnStartedEventSchema.parse({

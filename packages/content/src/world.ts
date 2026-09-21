@@ -67,6 +67,7 @@ export type LoadedEnemy = {
   minParty?: number;
   loot?: string[];
   victoryNarration?: string;
+  lockNarration?: string;
 };
 
 export type LoadedSpellRank = {
@@ -272,6 +273,7 @@ export function toWorldState(
       ...(template.minParty ? { minParty: template.minParty } : {}),
       ...(template.loot?.length ? { loot: [...template.loot] } : {}),
       ...(template.victoryNarration ? { victoryNarration: template.victoryNarration } : {}),
+      ...(template.lockNarration ? { lockNarration: template.lockNarration } : {}),
     };
   }
   const spells: Record<string, LoadedSpell> = {};

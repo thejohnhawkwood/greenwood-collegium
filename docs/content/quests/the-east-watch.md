@@ -59,7 +59,7 @@ Intended entry: lesson 4 or 5 after the queen report. Over-levelled students sti
 - **Giver:** Wren
 - **Rooms:** `standing-stones`
 - **Objectives:** visit; examine `object-abbey-mark`; examine `object-new-stone`; talk Wren
-- **Mobs:** none required. Optional peat-adder on the path; do not make this a kill quest.
+- **Mobs:** none required. Optional peat-adder (`enemy-peat-adder-peat-cut`) on the cut; solo, killable, not a quest objective.
 - **Stars / Stone** feel useful in copy. All schools can finish. No school gate.
 - **Abbey mark:** Collegium mason’s sign, old, three circles.
 - **New stone:** lichen has not had a year. Wet when the others are only damp. Hums the chapel count.
