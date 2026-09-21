@@ -40,15 +40,15 @@ describe("content loader", () => {
 
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(38);
+    expect(Object.keys(world.rooms)).toHaveLength(46);
     expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
     expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
     const charted = Object.values(world.rooms).filter((room) => room.map);
-    expect(charted).toHaveLength(38);
+    expect(charted).toHaveLength(46);
     expect(
       new Set(charted.map((room) => `${room.map!.x},${room.map!.y},${String(room.map!.z ?? 0)}`))
         .size,
-    ).toBe(38);
+    ).toBe(46);
     expect(world.rooms["headmaster-study"]?.map).toEqual({ x: 0, y: 1, z: 1 });
     expect(world.rooms["bell-stair"]?.map).toEqual({ x: 1, y: 2, z: -1 });
     expect(world.rooms["deep-cradle"]?.map).toEqual({ x: 2, y: 0, z: -2 });
@@ -74,6 +74,17 @@ describe("content loader", () => {
     ]);
     expect(world.rooms["east-gate"]).toBeDefined();
     expect(world.rooms["deep-cradle"]?.title).toBe("Deep Cradle");
+    expect(world.rooms["cocoon-nave"]?.fixtures.map((fixture) => fixture.id)).toContain(
+      "object-holm-wrapping",
+    );
+    expect(world.rooms["east-meadow"]?.exits).toEqual(
+      expect.arrayContaining([{ direction: "north", toRoomId: "moor-track" }]),
+    );
+    expect(world.rooms["moor-track"]?.map).toEqual({ x: 6, y: 1 });
+    expect(world.rooms["moor-track"]?.visualState).toBe("moor-track");
+    expect(world.rooms["wren-croft"]?.title).toBe("Wren's Croft");
+    expect(world.rooms["wren-croft"]?.visualState).toBe("wren-croft");
+    expect(world.rooms["barrow-nave"]?.visualState).toBe("barrow-nave");
     expect(world.rooms["west-cloister"]?.exits).toEqual([
       { direction: "east", toRoomId: START_ROOM_ID },
     ]);
@@ -111,8 +122,13 @@ describe("content loader", () => {
       maxHealth: 28,
       maxFocus: 12,
       minParty: 3,
+      victoryNarration: expect.stringContaining("folds in on herself"),
     });
-    expect(Object.keys(world.enemies)).toHaveLength(9);
+    expect(world.enemies["enemy-fog-walker-fog-hollow"]).toMatchObject({
+      templateId: "fog-walker",
+      minParty: 3,
+    });
+    expect(Object.keys(world.enemies)).toHaveLength(12);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,
@@ -165,7 +181,11 @@ describe("content loader", () => {
       experienceReward: 10,
     });
     expect(world.quests["what-still-sleeps"]?.title).toBe("What Still Sleeps");
-    expect(Object.keys(world.quests)).toHaveLength(24);
+    expect(
+      world.quests["what-still-sleeps"]?.objectives.map((objective) => objective.kind),
+    ).toContain("defeat");
+    expect(world.quests["the-meadow-fork"]?.giverNpcId).toBe("npc-shepherd-wren");
+    expect(Object.keys(world.quests)).toHaveLength(31);
     expect(world.rooms["south-orchard"]?.fixtures.map((fixture) => fixture.id)).toContain(
       "object-orchard-apples",
     );
@@ -213,7 +233,7 @@ describe("content loader", () => {
     });
 
     const world = loadWorldFromDirectory(directory);
-    expect(Object.keys(world.rooms)).toHaveLength(39);
+    expect(Object.keys(world.rooms)).toHaveLength(47);
     expect(world.rooms["extra-nook"]?.title).toBe("Extra Nook");
   });
 

@@ -30,6 +30,7 @@ export const enemyTemplateSchema = z
     experience: z.number().int().nonnegative(),
     minParty: z.number().int().positive().optional(),
     loot: z.array(stableIdSchema).optional(),
+    victoryNarration: z.string().min(1).optional(),
   })
   .strict()
   .superRefine((enemy, ctx) => {
@@ -38,6 +39,9 @@ export const enemyTemplateSchema = z
     rejectMarkup(enemy.examineDescription, "examineDescription", ctx);
     if (enemy.lookDescription) {
       rejectMarkup(enemy.lookDescription, "lookDescription", ctx);
+    }
+    if (enemy.victoryNarration) {
+      rejectMarkup(enemy.victoryNarration, "victoryNarration", ctx);
     }
   });
 

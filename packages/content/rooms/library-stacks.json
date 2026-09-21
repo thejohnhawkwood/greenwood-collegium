@@ -30,6 +30,17 @@
       "lookDescription": "A tawny owl in an ink-spattered waistcoat, spectacles on a cord, a quill tucked like a tool. Try talk quill.",
       "examineDescription": "Quill's stare has ended more arguments than her voice. The waistcoat holds cards and a knife for cutting binding thread. She keeps patience for honest mistakes and none for torn pages.",
       "dialogue": "\"Books may travel. Their pages should generally travel together. I have a finger marking a gap in the lantern-wren guide — the bird that carries its own small lantern through dusk — and the green lamp is making a patient circle on an empty place. If something has gone astray, we begin by finding out what happened. Blame is a poor bookmark. Talk quill if you will help.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"Books may travel. Their pages should generally travel together. I have a finger marking a gap in the lantern-wren guide — the bird that carries its own small lantern through dusk — and the green lamp is making a patient circle on an empty place. If something has gone astray, we begin by finding out what happened. Blame is a poor bookmark. Talk quill if you will help.\""
+          },
+          "abbey-rubbing": {
+            "text": "\"If you bring a rubbing of an abbey mark from the moor stones, I will keep it with the lantern-wren gap and not invent a second mystery from the chalk. Paper first. Accusations never. The stacks will wait while you count to eight.\""
+          }
+        }
+      },
       "kind": "npc"
     },
     {

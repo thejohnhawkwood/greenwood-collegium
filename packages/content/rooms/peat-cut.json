@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "peat-cut",
+  "title": "Peat Cut",
+  "shortDescription": "Black water, old tea and iron, fog at knee height.",
+  "longDescription": "The cut is a dark wound in the moor. Black water stands in the trenches and smells of old tea and iron. Fog sits at the knee and does not lift when you ask it to.\nNorth the barrow mouth shows as a darker hole in the hill. This is not silk. This is weather that learned to keep things.",
+  "zone": "east-moor",
+  "map": {
+    "x": 8,
+    "y": 2
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "standing-stones"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "barrow-mouth"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-peat-water",
+      "name": "Peat Water",
+      "kind": "object",
+      "lookDescription": "Black water in the cut. Examine it.",
+      "examineDescription": "The water is still. No sheep drank here today. Iron and old tea. Three slow pulses move under the peat if you wait, the same count as the chapel. Do not drink it."
+    },
+    {
+      "id": "object-shed-skin",
+      "name": "Shed Skin",
+      "kind": "object",
+      "lookDescription": "A dry skin caught on the cut edge. Examine it.",
+      "examineDescription": "A peat-adder left this, dry as old tea, hooked on the cut. Something small came through and went on. It is not a quest. It is not Colm. Leave it. North is the barrow mouth."
+    }
+  ]
+}

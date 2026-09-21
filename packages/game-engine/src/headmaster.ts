@@ -2,6 +2,13 @@ import type { EventEnvelope } from "@greenwood/contracts";
 import { handleLook } from "./look.js";
 import type { Character, DialogueTree, EngineRuntime, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
+import {
+  BRONZE_QUEST_ID,
+  FOG_TOOK_QUEST_ID,
+  MEADOW_FORK_QUEST_ID,
+  WALKER_QUEST_ID,
+  meadowRoadOpen,
+} from "./east-watch.js";
 
 export const HEADMASTER_NPC_ID = "npc-headmaster-alder";
 export const HEADMASTER_STUDY_ID = "headmaster-study";
@@ -28,7 +35,7 @@ export function alderSpeechNode(world: WorldState, character: Character): string
   if (bell?.status === "completed") {
     if (wakes?.status === "completed") {
       if (sleeps?.status === "completed") {
-        return "sleeps-done";
+        return alderAfterSleepsNode(world, character);
       }
       if (sleeps?.status === "active") {
         return "sleeps-active";
@@ -47,6 +54,45 @@ export function alderSpeechNode(world: WorldState, character: Character): string
     return "offer-bell";
   }
   return "already-chosen";
+}
+
+function questStatus(
+  world: WorldState,
+  character: Character,
+  questId: string,
+): "active" | "completed" | undefined {
+  return world.quests?.[character.id]?.[questId]?.status;
+}
+
+function alderAfterSleepsNode(world: WorldState, character: Character): string {
+  const walker = questStatus(world, character, WALKER_QUEST_ID);
+  if (walker === "completed") {
+    return "walker-done";
+  }
+  if (walker === "active") {
+    return "walker-active";
+  }
+  const bronze = questStatus(world, character, BRONZE_QUEST_ID);
+  if (bronze === "completed") {
+    return "offer-walker";
+  }
+  if (bronze === "active") {
+    return "bronze-active";
+  }
+  if (questStatus(world, character, FOG_TOOK_QUEST_ID) === "completed") {
+    return "offer-bronze";
+  }
+  if (!meadowRoadOpen(world, character)) {
+    return "sleeps-done";
+  }
+  const fork = questStatus(world, character, MEADOW_FORK_QUEST_ID);
+  if (!fork) {
+    return "offer-moor";
+  }
+  if (fork === "active") {
+    return "moor-active";
+  }
+  return "watch-active";
 }
 
 export function resolveAlderSpeechNode(

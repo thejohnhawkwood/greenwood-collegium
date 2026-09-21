@@ -1,0 +1,28 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "fog-hollow",
+  "title": "Fog Hollow",
+  "shortDescription": "A bowl of fog that does not keep footprints.",
+  "longDescription": "The hollow is a bowl in the hill where fog stands thicker than weather. Wool and peat. No silk. No sweetness.\nA tall wet shape is here if it still lives. It does not keep footprints. Alder said not to come alone.",
+  "zone": "east-moor",
+  "map": {
+    "x": 8,
+    "y": 4,
+    "z": -1
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "barrow-nave"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-no-footprints",
+      "name": "Unkept Ground",
+      "kind": "object",
+      "lookDescription": "The floor does not keep footprints. Examine it.",
+      "examineDescription": "Your own paw-marks fade while you watch. The fog is doing work. Three pulses still count under the peat. This is a hunger that learned to walk, not a throne."
+    }
+  ]
+}

@@ -12,9 +12,13 @@ export const NPC_PLATE_FILES = [
   "npc-mentor-quern",
   "npc-mentor-edge",
   "npc-piper-mole",
+  "npc-shepherd-wren",
   "practice-dummy",
   "silk-hatchling",
   "silk-queen",
+  "mist-crow",
+  "barrow-guard",
+  "fog-walker",
 ] as const;
 
 const NPC_PLATE_ALIASES: Record<string, string> = {
@@ -31,6 +35,7 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "npc-mentor-quern": "npc-mentor-quern",
   "npc-mentor-edge": "npc-mentor-edge",
   "npc-piper-mole": "npc-piper-mole",
+  "npc-shepherd-wren": "npc-shepherd-wren",
   "practice-dummy": "practice-dummy",
   "enemy-practice-dummy-south-orchard": "practice-dummy",
   "enemy-practice-dummy-hearth-ember": "practice-dummy",
@@ -43,9 +48,15 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-silk-hatchling-cocoon-nave": "silk-hatchling",
   "silk-queen": "silk-queen",
   "enemy-silk-queen-deep-cradle": "silk-queen",
+  "mist-crow": "mist-crow",
+  "enemy-mist-crow-sheepfold": "mist-crow",
+  "barrow-guard": "barrow-guard",
+  "enemy-barrow-guard-barrow-mouth": "barrow-guard",
+  "fog-walker": "fog-walker",
+  "enemy-fog-walker-fog-hollow": "fog-walker",
 };
 
-const NPC_ART_REV = "foe-cards-1";
+const NPC_ART_REV = "east-watch-1";
 
 export function npcArtSrc(id: string): string | undefined {
   const plate = NPC_PLATE_ALIASES[id];

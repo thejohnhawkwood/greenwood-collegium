@@ -87,7 +87,7 @@ A nave of husks keeps one early waking.
 - Source: [room JSON](../../packages/content/rooms/cocoon-nave.json).
 - Map `{x: 2, y: 1, z: -2}`. `visualState`: `clock-tower`. Exits: north → `webbed-cloister`; south → `deep-cradle`.
 - NPCs: none. Enemy: Silk Hatchling (`enemy-silk-hatchling-cocoon-nave`).
-- Discoveries: Waking Husk (`object-waking-husk`).
+- Discoveries: Waking Husk (`object-waking-husk`); Keeper's Wrapping (`object-holm-wrapping`).
 - Quest roles: [The Bell Wakes](#the-bell-wakes). [What Still Sleeps](#what-still-sleeps).
 
 ### Deep Cradle — `deep-cradle`
@@ -132,9 +132,87 @@ A broad oak gate opens toward a clover-bright meadow.
 Bees stitch the clover beneath a wide, unhurried sky.
 
 - Source: [room JSON](../../packages/content/rooms/east-meadow.json).
-- Exits: west → `east-gate`; east → `hall-of-schools`.
+- Exits: west → `east-gate`; east → `hall-of-schools`; north → `moor-track`.
 - NPCs: none.
 - Discoveries: Bee Skep (`object-bee-skep`).
+- Quest roles: [The East Watch](#the-east-watch). The hedge-path north bends east onto the moor. That road is not the Infirmary.
+
+### Moor Track — `moor-track`
+
+A wet track leaves the clover and turns toward peat and wool.
+
+- Source: [room JSON](../../packages/content/rooms/moor-track.json).
+- Map `{x: 6, y: 1}`. Unique plate `moor-track.png`. Exits: south → `east-meadow`; north → `wren-croft`; east → `sheepfold`.
+- NPCs: none.
+- Discoveries: Waystone (`object-waystone`).
+- Quest roles: [The East Watch](#the-east-watch).
+
+### Wren's Croft — `wren-croft`
+
+A peat fire, a kettle, and one empty peg.
+
+- Source: [room JSON](../../packages/content/rooms/wren-croft.json).
+- Map `{x: 6, y: 2}`. Unique plate `wren-croft.png`. Exit: south → `moor-track`.
+- NPCs: Shepherd Wren (`npc-shepherd-wren`).
+- Discoveries: Empty Peg (`object-empty-peg`).
+- Quest roles: [The East Watch](#the-east-watch).
+
+### Sheepfold — `sheepfold`
+
+A wet fold whose latch was lifted, not broken.
+
+- Source: [room JSON](../../packages/content/rooms/sheepfold.json).
+- Map `{x: 7, y: 1}`. Unique plate `sheepfold.png`. Exits: west → `moor-track`; east → `standing-stones`.
+- NPCs: none. Enemy: Mist Crow (`enemy-mist-crow-sheepfold`).
+- Discoveries: Empty Fold (`object-empty-fold`); Colm's Crook (`object-colms-crook`).
+- Quest roles: [The East Watch](#the-east-watch).
+
+### Standing Stones — `standing-stones`
+
+Seven old stones and one that has not had a year.
+
+- Source: [room JSON](../../packages/content/rooms/standing-stones.json).
+- Map `{x: 8, y: 1}`. Unique plate `standing-stones.png`. Exits: west → `sheepfold`; north → `peat-cut`.
+- Discoveries: Abbey Mark (`object-abbey-mark`); New Stone (`object-new-stone`).
+- Quest roles: [The East Watch](#the-east-watch).
+
+### Peat Cut — `peat-cut`
+
+Black water, old tea and iron, fog at knee height.
+
+- Source: [room JSON](../../packages/content/rooms/peat-cut.json).
+- Map `{x: 8, y: 2}`. Unique plate `peat-cut.png`. Exits: south → `standing-stones`; north → `barrow-mouth`.
+- Discoveries: Peat Water (`object-peat-water`); Shed Skin (`object-shed-skin`).
+- Quest roles: path to the barrow.
+
+### Barrow Mouth — `barrow-mouth`
+
+A hill-lip of wet wool, peat, and one folded cloak.
+
+- Source: [room JSON](../../packages/content/rooms/barrow-mouth.json).
+- Map `{x: 8, y: 3}`. Unique plate `barrow-mouth.png`. Exits: south → `peat-cut`; down → `barrow-nave`.
+- NPCs: none. Enemy: Barrow Guard (`enemy-barrow-guard-barrow-mouth`). Colm is a fixture, not a talk target.
+- Discoveries: Spare Cloak (`object-wool-wrap`); Colm (`object-colm-aftermath`).
+- Quest roles: [The East Watch](#the-east-watch).
+
+### Barrow Nave — `barrow-nave`
+
+The hill's inside, peat-stained bronze, three slow pulses.
+
+- Source: [room JSON](../../packages/content/rooms/barrow-nave.json).
+- Map `{x: 8, y: 3, z: -1}`. Unique plate `barrow-nave.png`. Exits: up → `barrow-mouth`; north → `fog-hollow`.
+- Discoveries: Abbey Bronze (`object-abbey-bronze`).
+- Quest roles: [The East Watch](#the-east-watch).
+
+### Fog Hollow — `fog-hollow`
+
+A bowl of fog that does not keep footprints.
+
+- Source: [room JSON](../../packages/content/rooms/fog-hollow.json).
+- Map `{x: 8, y: 4, z: -1}`. Unique plate `fog-hollow.png`. Exit: south → `barrow-nave`.
+- NPCs: none. Enemy: Fog Walker (`enemy-fog-walker-fog-hollow`, `minParty`: 3).
+- Discoveries: No Footprints (`object-no-footprints`).
+- Quest roles: [The East Watch](#the-east-watch).
 
 ### Great Hall — `great-hall`
 
@@ -154,7 +232,7 @@ A high oak study above the Great Hall, kept for hard questions.
 - Map `{x: 0, y: 1, z: 1}`. Forced landing after Arrival. Exit: down → `great-hall`.
 - NPCs: Headmaster Alder (`npc-headmaster-alder`), recast as an old fierce snowy owl.
 - Discoveries: School Chart (`object-school-chart`).
-- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons. [The Bell Wakes](#the-bell-wakes) starts here after that report. [What Still Sleeps](#what-still-sleeps) starts here after that report.
+- Quest roles: school selection. [The Bell Below](#the-bell-below) starts here after first lessons. [The Bell Wakes](#the-bell-wakes) starts here after that report. [What Still Sleeps](#what-still-sleeps) starts here after that report. After the queen and Alder’s Leave, Alder offers the East Watch, then the bronze, then the walker.
 
 ### Hall of Schools — `hall-of-schools`
 
@@ -401,7 +479,7 @@ Rain-dark arches frame a walk of moss and old promises.
 ## Quests
 
 Story spine: [STORY.md](STORY.md). Storylines: [quests/](quests/README.md). This
-section is the live ID inventory and lags canon (queen `defeat`, East Watch).
+section is the live ID inventory.
 
 Only Arrival starts automatically. Each new investigation begins by talking to its
 giver; clues inspected before acceptance must be examined again. Clues may be
@@ -508,11 +586,26 @@ Resolution: a hatchling woke before the score allows. The silk is a cradle, not 
 
 Objectives:
 
+- `read-wrapping` — `examine`: Examine the Keeper's Wrapping in the Cocoon Nave. Target: fixture `object-holm-wrapping`.
 - `stand-together` — `visit`: Go to the Deep Cradle with classmates. South from the Cocoon Nave. Room: `deep-cradle`.
 - `read-score` — `examine`: Examine the Still Score in the Deep Cradle. Target: fixture `object-still-score` in `deep-cradle`.
-- `report` — `talk`: After the cradle, talk alder in the High Study. Target: fixture `npc-headmaster-alder` in `headmaster-study`. Requires: `stand-together`, `read-score`.
+- `defeat-queen` — `defeat`: Defeat the Silk Queen with two classmates. Target: spawn `enemy-silk-queen-deep-cradle`.
+- `report` — `talk`: After wrapping, cradle, score, and queen, talk alder in the High Study. Target: fixture `npc-headmaster-alder`. Requires: `read-wrapping`, `stand-together`, `read-score`, `defeat-queen`.
 
-Resolution: the silk has a mouth now, and it learned it from a class. The queen will not square up for fewer than three Collegians.
+Resolution: Holm is named. The queen folds. Eat something warm. Alder then offers the East Watch after third lessons.
+
+<a id="the-east-watch"></a>
+
+### The East Watch
+
+- Story: [the-east-watch.md](quests/the-east-watch.md).
+- Stable IDs: `the-meadow-fork`, `the-uncounted-flock`, `the-stones-that-were-not-there`, `the-barrow-mouth`, `what-the-fog-took`, `the-bronze-in-the-hill`, `the-thing-that-walks`.
+- Starts: `north` from `east-meadow` after What Still Sleeps and Alder’s Leave. Wren is giver for L4–L7. Alder offers L9–L10.
+- Map column starts at `{x: 6, y: 1}`. `moor-track` south returns to the meadow.
+- Sources: [the-meadow-fork.json](../../packages/content/quests/the-meadow-fork.json) through [the-thing-that-walks.json](../../packages/content/quests/the-thing-that-walks.json).
+- Rewards: 25 / 25 / 30 / 35 / 40 / 50 / 60 experience. Personal wool and hearth charms on flock and walker.
+
+Resolution: Colm is named and left covered. Wren stays at the kettle. The bronze is in the hill. Who carried it remains open.
 
 <a id="the-missing-pages"></a>
 
@@ -531,8 +624,6 @@ Objectives:
 
 Resolution: a page borrowed to study a bird's song ended up steadying a music stand. The student reports where to collect it; Quill prepares a wedge and avoids an unfounded accusation.
 
-Canon not yet in JSON: [The East Watch](quests/the-east-watch.md) (lessons 4–10, north of East Meadow).
-
 ## Verification and boundaries
 
 - `packages/content/src/adventures.test.ts` validates the cast, discoveries, quest references, plain text, and dependency constraints.
@@ -541,5 +632,6 @@ Canon not yet in JSON: [The East Watch](quests/the-east-watch.md) (lessons 4–1
 - `apps/server/src/sockets/adventures.roundtrip.test.ts` checks failed clue requests, private delivery, persistence, reconnect/restart, and replay.
 
 The Bell Stair rooms and the Deep Cradle are charted on their own floors and reuse Clock Tower art.
-The Silk Queen requires three Collegians (`minParty`: 3). Dummy and hatchling stay solo.
+East Watch outdoors reuse East Meadow art; Wren's Croft reuses Porter Lodge; barrow interiors reuse Archive Cellar.
+The Silk Queen and Fog Walker require three Collegians (`minParty`: 3). Dummy, hatchling, mist-crow, and barrow-guard stay solo.
 A spawn stays available for a first-time Collegian. A party boss stands if at least one present Collegian has not fought it. First-timers receive experience and authored loot.

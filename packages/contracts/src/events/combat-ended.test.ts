@@ -63,4 +63,17 @@ describe("combat.ended contract", () => {
     expect(formatCombatEndedText(defeat.payload)).toBe(defeat.narration);
     expect(formatCombatEndedText(fled.payload)).toBe(fled.narration);
   });
+
+  it("uses authored victory narration when the payload carries it", () => {
+    const payload = {
+      encounterId: "enc-queen",
+      characterId: "char-rowan",
+      roomId: "deep-cradle",
+      enemyName: "Silk Queen",
+      outcome: "victory" as const,
+      victoryNarration:
+        "The Silk Queen folds in on herself. The hum in the floor misses a beat, then goes on without her.",
+    };
+    expect(formatCombatEndedText(payload)).toBe(payload.victoryNarration);
+  });
 });

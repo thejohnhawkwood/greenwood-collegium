@@ -1,0 +1,31 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-thing-that-walks",
+  "title": "The Thing That Walks",
+  "experienceReward": 60,
+  "itemRewardTemplateId": "wren-hearth-charm",
+  "introNarration": "Alder counts three on his talons. Wren blesses you and stays at the croft. \"One more. Not alone. Take two classmates who can lock a move on the same clock as you. Visit the Fog Hollow north of the Barrow Nave. Defeat the Fog Walker. Then talk alder here. Fog thickens when you lock. The count is still three. When it falls the hollow should smell like rain on a hearth-stone, not sweetness. Do not invent who carried the bronze in. Eat after. Sleep after.\"",
+  "reminderNarration": "\"Three Collegians. Type north from the Barrow Nave. Defeat the Fog Walker. Then talk alder here. Type up from the Great Hall. Type quests for the list. I would rather watch you walk back to Wren's kettle.\"",
+  "completionNarration": "You name the hollow that smelled like rain on a hearth-stone. Alder listens to the end. The fork stays on the blotter. \"The wood remembers. The moor remembers. That is enough for one year. Eat. Sleep. Who took the bronze into the hill — if the walker only learned to use it — is a later question. Holm's name stays in this study. Colm's stays at Wren's kettle. Go to class.\"",
+  "objectives": [
+    {
+      "id": "reach-hollow",
+      "kind": "visit",
+      "roomId": "fog-hollow",
+      "label": "Reach the Fog Hollow with classmates. Type north from the Barrow Nave."
+    },
+    {
+      "id": "defeat-walker",
+      "kind": "defeat",
+      "targetId": "enemy-fog-walker-fog-hollow",
+      "label": "Defeat the Fog Walker with two classmates. It will not square up for fewer than three."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-headmaster-alder",
+      "requires": ["reach-hollow", "defeat-walker"],
+      "label": "Bring the hollow back to Alder in the High Study. Type up from the Great Hall."
+    }
+  ]
+}

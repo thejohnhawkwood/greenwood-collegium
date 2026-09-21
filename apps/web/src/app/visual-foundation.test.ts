@@ -484,14 +484,27 @@ describe("visual foundation", () => {
     expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
-      "/art/characters/npcs/practice-dummy.png?v=foe-cards-1",
+      "/art/characters/npcs/practice-dummy.png?v=east-watch-1",
     );
     expect(npcArtSrc("npc-piper-mole")).toBe(
-      "/art/characters/npcs/npc-piper-mole.png?v=foe-cards-1",
+      "/art/characters/npcs/npc-piper-mole.png?v=east-watch-1",
     );
     expect(npcArtSrc("enemy-silk-hatchling-cocoon-nave")).toBe(
-      "/art/characters/npcs/silk-hatchling.png?v=foe-cards-1",
+      "/art/characters/npcs/silk-hatchling.png?v=east-watch-1",
     );
+    expect(npcArtSrc("npc-shepherd-wren")).toBe(
+      "/art/characters/npcs/npc-shepherd-wren.png?v=east-watch-1",
+    );
+    expect(npcArtSrc("enemy-mist-crow-sheepfold")).toBe(
+      "/art/characters/npcs/mist-crow.png?v=east-watch-1",
+    );
+    expect(npcArtSrc("enemy-fog-walker-fog-hollow")).toBe(
+      "/art/characters/npcs/fog-walker.png?v=east-watch-1",
+    );
+    expect(objectArtSrc("object-holm-wrapping", "Keeper's Wrapping")).toBe(
+      "/art/objects/object-holm-wrapping.png",
+    );
+    expect(objectArtSrc("object-waystone", "Waystone")).toBe("/art/objects/object-waystone.png");
     expect(objectArtSrc("object-silk-thread", "Silk Thread")).toBe(
       "/art/objects/object-silk-thread.png",
     );
@@ -762,7 +775,7 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain("Fighting Practice Dummy");
-    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=foe-cards-1");
+    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=east-watch-1");
     expect(html).toContain("Health 8 / 8");
     expect(html).toContain("Focus 6 / 6");
     expect(html).toContain("1. Attack");

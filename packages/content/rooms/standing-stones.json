@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "standing-stones",
+  "title": "Standing Stones",
+  "shortDescription": "Seven old stones and one that has not had a year.",
+  "longDescription": "The moor flattens into a ring of wet stone. Seven of the standing stones wear lichen the colour of old tea. An eighth is darker, still wet when the others are only damp.\nWind comes off the peat-cut to the north. Stars would help you count. Stone would help you wait. Either way, last winter there were seven.",
+  "zone": "east-moor",
+  "map": {
+    "x": 8,
+    "y": 1
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "sheepfold"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "peat-cut"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-abbey-mark",
+      "name": "Abbey Mark",
+      "kind": "object",
+      "lookDescription": "A Collegium mason's sign cut into an old stone. Examine it.",
+      "examineDescription": "The mason's sign matches the Quiet Chapel and the waystone: three circles, no flourish. This ring was counted when the abbey still hung bronze. The cut is old. The rain has not been kind, and the mark is still honest."
+    },
+    {
+      "id": "object-new-stone",
+      "name": "New Stone",
+      "kind": "object",
+      "lookDescription": "The eighth stone is wetter than the rest. Examine it.",
+      "examineDescription": "Lichen has not had a year. The stone is wet when the others are only damp. Set your paw on it and you feel the same three slow pulses as the chapel root. It hums like a welcome that learned to stand up."
+    }
+  ]
+}

@@ -9,12 +9,18 @@ import {
   type EventEnvelope,
 } from "@greenwood/contracts";
 import { ARRIVAL_QUEST_ID, openPorterArrival } from "./arrival-guide.js";
-import { BELL_BELOW_QUEST_ID, summonToHeadmaster } from "./headmaster.js";
+import {
+  BELL_BELOW_QUEST_ID,
+  HEADMASTER_NPC_ID,
+  STILL_SLEEPS_QUEST_ID,
+  summonToHeadmaster,
+} from "./headmaster.js";
 import { applyLevelVitals } from "./combat-state.js";
 import { itemsHeldBy, worldItems } from "./items.js";
 import { inkStarterKit, maybeOpenWorldPrimer, openPrimerChoices } from "./primer.js";
 import { levelForExperience } from "./progression.js";
 import { SCHOOL_SECOND_LESSONS_ID, SCHOOL_THIRD_LESSONS_ID, isSchoolId } from "./schools.js";
+import { WREN_CHAIN_NEXT } from "./east-watch.js";
 import type {
   Character,
   EngineRuntime,
@@ -150,7 +156,7 @@ export function progressQuests(
       (objective) =>
         !progress.completedObjectiveIds.includes(objective.id) &&
         (objective.requires ?? []).every((id) => progress.completedObjectiveIds.includes(id)) &&
-        objectiveMatches(world, character, objective, trigger),
+        objectiveMatches(world, character, template, objective, trigger),
     );
     if (newlyCompleted.length === 0) {
       continue;
@@ -204,6 +210,10 @@ export function progressQuests(
       }
       if (template.id.startsWith("third-lessons-")) {
         events.push(...openPrimerChoices(world, character, 5, runtime));
+      }
+      const nextWatch = WREN_CHAIN_NEXT[template.id];
+      if (nextWatch) {
+        events.push(...startQuest(world, character.id, nextWatch, runtime));
       }
     } else {
       events.push(questUpdatedEvent(character.id, template, progress, runtime));
@@ -272,10 +282,19 @@ function grantQuestItem(
 function objectiveMatches(
   world: WorldState,
   character: Character,
+  template: QuestTemplate,
   objective: QuestObjective,
   trigger: QuestTrigger,
 ): boolean {
   const { kind } = trigger;
+  if (
+    template.id.startsWith("third-lessons-") &&
+    objective.kind === "talk" &&
+    objective.targetId === HEADMASTER_NPC_ID &&
+    world.quests?.[character.id]?.[STILL_SLEEPS_QUEST_ID]?.status !== "completed"
+  ) {
+    return false;
+  }
   if (objective.roomId && character.roomId !== objective.roomId) return false;
   if (objective.kind === "examine" || objective.kind === "talk") {
     return (

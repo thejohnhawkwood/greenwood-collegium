@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "fog-walker",
+  "name": "Fog Walker",
+  "shortDescription": "A tall wet shape that does not keep footprints.",
+  "lookDescription": "A tall wet shape of wool and peat stands in the hollow and does not keep footprints.",
+  "examineDescription": "The Fog Walker is wool and peat and weather that learned to walk. Not a deer-god lecture. A hunger that used the Collegium bronze for a mouth. It will not square up for fewer than 3 Collegians. Fog thickens when you lock. The count is still three. When it falls the hollow should smell like rain on a hearth-stone, not sweetness.",
+  "maxHealth": 32,
+  "maxFocus": 12,
+  "attack": 6,
+  "experience": 25,
+  "minParty": 3,
+  "loot": ["wren-hearth-charm"],
+  "victoryNarration": "The Fog Walker thins until the hollow smells like rain on a hearth-stone. Not sweetness. The fog is only weather again."
+}

@@ -124,21 +124,69 @@
             "text": "\"A hatchling is not a queen. You named a child that woke too soon, and that is enough for one Collegian. When three can stand together, we will ask what still sleeps in the cradle south of the nave. Go to class. Eat something warm. The oak will wait.\""
           },
           "offer-sleeps": {
-            "text": "\"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I have felt it through the beams — a heavier note than the hatchling. It does not move when the hatchling moves. It waits. I will not send one Collegian into that room. Take two classmates who can lock a move on the same clock as you. Examine the Still Score. If she squares up, do not invent heroics. Lock together. Then return and talk alder here. This is the work I saved for students I trust to come home.\"",
+            "text": "\"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I have felt it through the beams — a heavier note than the hatchling. It does not move when the hatchling moves. It waits. I will not send one Collegian into that room. Take two classmates who can lock a move on the same clock as you. Examine the wrapping in the nave — leave him covered. Examine the Still Score. If she squares up, do not invent heroics. Lock together. Then return and talk alder here. This is the work I saved for students I trust to come home.\"",
             "choices": [
               { "say": "1", "label": "We will go together.", "next": "sleeps-active" },
               { "say": "2", "label": "What are we facing?", "next": "sleeps-why" }
             ]
           },
           "sleeps-why": {
-            "text": "\"The next mouth after the hatchling. Not a throne. Not a story. East from the North Quad, then down, east, south, and south again, until the air grows warm and the silk hangs thick as winter curtains. Take two classmates. If she stands, lock together. Come home with the score, not a boast.\"",
+            "text": "\"The next mouth after the hatchling. Not a throne. Not a story. East from the North Quad, then down, east, south, and south again, until the air grows warm and the silk hangs thick as winter curtains. Examine the wrapping in the nave first. Take two classmates. If she stands, lock together. Come home with the score, not a boast.\"",
             "choices": [{ "say": "1", "label": "We will go.", "next": "sleeps-active" }]
           },
           "sleeps-active": {
-            "text": "\"Together. South of the nave. Examine the Still Score — the blank note is the part I cannot see from this blotter. Lock your moves on one clock. Then talk alder here. The school is watching this one, and I would rather watch you walk back up that stair.\""
+            "text": "\"Together. South of the nave. Examine the wrapping first — leave him covered. Then the Still Score; the button is the part I cannot see from this blotter. Lock your moves on one clock until she falls. Then talk alder here. The school is watching this one, and I would rather watch you walk back up that stair.\""
           },
           "sleeps-done": {
-            "text": "\"You stood in the cradle. You named what you saw. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Go to class. Eat something warm. The High Study will keep the facts.\""
+            "text": "\"You stood in the cradle. You named the score, the button, the three who stood, and Holm. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Holm kept that stair so first-years would not walk it dark. We will keep his name in the High Study. Go to class. Eat something warm. If your paws are shaking, talk to Fen. Then, when you can stand a cold wind, come back. The grounds east of the meadow have their own hunger, and I will not send you still hungry from this one.\""
+          },
+          "offer-moor": {
+            "text": "\"North from the East Meadow. The Hall stays east for class. The hedge-path bends east onto the moor — do not look for a door on the Infirmary tile. Talk to Shepherd Wren. She has a croft and a missing partner. Do not invent a second queen on the way. Sit. Eat. Then look.\"",
+            "choices": [
+              { "say": "1", "label": "I will go north from the meadow.", "next": "moor-active" },
+              { "say": "2", "label": "What am I walking into?", "next": "moor-why" }
+            ]
+          },
+          "moor-why": {
+            "text": "\"Mist. Wet wool. A flock that did not come in. Wren is afraid, not cute. Colm has not come home. I will not guess a cause from this blotter. Bring her facts. The bronze we proved gone may have a resting place out there. That is a later question. Eat first.\"",
+            "choices": [{ "say": "1", "label": "I will go.", "next": "moor-active" }]
+          },
+          "moor-active": {
+            "text": "\"North from the East Meadow. Talk wren. The Hall of Schools stays east. I asked you because I need a Collegian who will look before they invent a walker in the fog.\""
+          },
+          "watch-active": {
+            "text": "\"Wren has you. I will not steal her kettle. Bring her facts, then come back when she sends you, or when you have named what the fog took. Eat if you have not. Type north from the East Meadow if you lost the hedge.\""
+          },
+          "offer-bronze": {
+            "text": "\"Wren will not go in, and I will not ask her to. The bronze is in the hill. Holm wrote that it was taken on a wet night. This is where it was taken to. Visit the Barrow Nave. Examine the Abbey Bronze. Then talk alder here. One more after that. Not alone. The thing that walks the fog used our welcome for a mouth.\"",
+            "choices": [
+              { "say": "1", "label": "I will go into the hill.", "next": "bronze-active" },
+              { "say": "2", "label": "What am I looking for?", "next": "bronze-why" }
+            ]
+          },
+          "bronze-why": {
+            "text": "\"Collegium bronze, or the yoke and clapper if the hill has grown around the rest. It should not ring. It will sound the three slow pulses. The Quiet Chapel was telling the truth. Down from the Barrow Mouth. Come home with the fact, not a boast.\"",
+            "choices": [{ "say": "1", "label": "I will go.", "next": "bronze-active" }]
+          },
+          "bronze-active": {
+            "text": "\"Into the Barrow Nave. Examine the Abbey Bronze. Then talk alder here. Wren stays at the croft. She is owed that.\""
+          },
+          "offer-walker": {
+            "text": "\"One more. Not alone. The Fog Walker used our welcome for a mouth. Take two classmates who can lock a move on the same clock as you. Visit the Fog Hollow north of the nave. If it squares up, lock together. Then talk alder here. Wren blesses you and stays. Eat after. Sleep after. Do not invent an answer to who carried the bronze in.\"",
+            "choices": [
+              { "say": "1", "label": "We will go together.", "next": "walker-active" },
+              { "say": "2", "label": "What are we facing?", "next": "walker-why" }
+            ]
+          },
+          "walker-why": {
+            "text": "\"A tall wet shape that does not keep footprints. Wool and peat. Not a lecture. A hunger that learned to walk. Fog thickens when you lock. The count is still three. When it falls the hollow should smell like rain on a hearth-stone, not sweetness. Come home.\"",
+            "choices": [{ "say": "1", "label": "We will go.", "next": "walker-active" }]
+          },
+          "walker-active": {
+            "text": "\"Three Collegians. Fog Hollow. Defeat the Fog Walker. Then talk alder here. The wood and the moor both remember. I would rather watch you walk back to the croft.\""
+          },
+          "walker-done": {
+            "text": "\"The wood remembers. The moor remembers. That is enough for one year. Eat. Sleep. Who took the bronze into the hill — if the walker only learned to use it — is a later question. I will not invent a thief from a fog. Holm's name stays in this study. Colm's stays at Wren's kettle. Go to class.\""
           }
         }
       }

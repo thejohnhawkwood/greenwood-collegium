@@ -1,0 +1,45 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-uncounted-flock",
+  "title": "The Uncounted Flock",
+  "giverNpcId": "npc-shepherd-wren",
+  "requiresQuestIds": ["the-meadow-fork"],
+  "experienceReward": 25,
+  "itemRewardTemplateId": "wren-wool-charm",
+  "introNarration": "Wren's tea is already too hot. Peat-smoke hangs in her fur. \"East of the track is the fold. The latch was lifted, not broken. Hoof-marks go out. None come in. Examine the Empty Fold and Colm's Crook — ash wood, his knife-marks, set down carefully. A mist-crow has been sitting the rail. Defeat it if it squares up. Then talk wren. I will not invent blood where there is none.\"",
+  "reminderNarration": "\"Type east from the Moor Track. Examine the Empty Fold and Colm's Crook. Defeat the mist-crow. Then talk wren here. Leave the crook. I still have a peg for it. Type quests for the list.\"",
+  "completionNarration": "You name the lifted latch and the crook that was not dropped. Wren ties a twist of fold-wool for you and looks at the empty peg. \"The stones next. They were not in last winter's count. Colm went to look. I told him not to.\"",
+  "objectives": [
+    {
+      "id": "reach-fold",
+      "kind": "visit",
+      "roomId": "sheepfold",
+      "label": "Reach the Sheepfold. Type east from the Moor Track."
+    },
+    {
+      "id": "read-fold",
+      "kind": "examine",
+      "targetId": "object-empty-fold",
+      "label": "Examine the Empty Fold. Latch lifted, not broken. No blood."
+    },
+    {
+      "id": "read-crook",
+      "kind": "examine",
+      "targetId": "object-colms-crook",
+      "label": "Examine Colm's Crook. Leave it. Wren still has a peg."
+    },
+    {
+      "id": "defeat-crow",
+      "kind": "defeat",
+      "targetId": "enemy-mist-crow-sheepfold",
+      "label": "Defeat the Mist Crow on the fold rail."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-shepherd-wren",
+      "requires": ["reach-fold", "read-fold", "read-crook", "defeat-crow"],
+      "label": "Return and talk wren at the croft. Type talk wren."
+    }
+  ]
+}

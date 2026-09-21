@@ -1,8 +1,8 @@
 # The East Watch
 
 - **Series:** spine (lessons 4–10, outside college)
-- **Status:** **canon, not in JSON yet**
-- **Proposed ids:** `the-meadow-fork`, `the-uncounted-flock`, `the-stones-that-were-not-there`, `the-barrow-mouth`, `what-the-fog-took`, `the-bronze-in-the-hill`, `the-thing-that-walks`
+- **Status:** live
+- **Stable ids:** `the-meadow-fork`, `the-uncounted-flock`, `the-stones-that-were-not-there`, `the-barrow-mouth`, `what-the-fog-took`, `the-bronze-in-the-hill`, `the-thing-that-walks`
 - **Spine:** [STORY.md](../STORY.md)
 - **Starts after:** [What Still Sleeps](what-still-sleeps.md) and Alder’s Leave in [college lessons](college-lessons.md)
 - **Play / author:** [adventures.md](../adventures.md)
@@ -120,21 +120,21 @@ Two hungers. Two keepers. Two witnesses who lived (Piper, Wren).
 
 ## Side colour (never required)
 
-Tansy: peat-mint later. Quill: a rubbing of the abbey mark. Flint: “If the fog squares up, you lock together. Then Fen.”
+Live talk colour, not quests: Tansy peat-mint after the stones; Quill will keep a rubbing; Flint says lock together, then Fen.
 
-## Implementable (after the queen-line ticket)
+## Live map
 
-| id | title | map (z 0) | exits (story) |
+| id | title | map (z 0 unless noted) | exits (story) |
 | --- | --- | --- | --- |
-| `moor-track` | Moor Track | 6,0 | south → east-meadow (player typed north to enter); north → wren-croft; east → sheepfold |
-| `wren-croft` | Wren’s Croft | 6,1 | south → moor-track |
-| `sheepfold` | Sheepfold | 7,0 | west → moor-track; east → standing-stones |
-| `standing-stones` | Standing Stones | 8,0 | west → sheepfold; north → peat-cut |
-| `peat-cut` | Peat Cut | 8,1 | south → standing-stones; north → barrow-mouth |
-| `barrow-mouth` | Barrow Mouth | 8,2 | south → peat-cut; into barrow-nave |
-| `barrow-nave` | Barrow Nave | 8,2 z -1 or 8,3 | back to mouth; to fog-hollow |
-| `fog-hollow` | Fog Hollow | 8,3 or 9,2 | back to nave |
+| `moor-track` | Moor Track | 6,1 | south → east-meadow (player typed north to enter); north → wren-croft; east → sheepfold |
+| `wren-croft` | Wren’s Croft | 6,2 | south → moor-track |
+| `sheepfold` | Sheepfold | 7,1 | west → moor-track; east → standing-stones |
+| `standing-stones` | Standing Stones | 8,1 | west → sheepfold; north → peat-cut |
+| `peat-cut` | Peat Cut | 8,2 | south → standing-stones; north → barrow-mouth |
+| `barrow-mouth` | Barrow Mouth | 8,3 | south → peat-cut; down → barrow-nave |
+| `barrow-nave` | Barrow Nave | 8,3 z -1 | up → mouth; north → fog-hollow |
+| `fog-hollow` | Fog Hollow | 8,4 z -1 | south → nave |
 
-`east-meadow` gains `north` → `moor-track`. NPC `npc-shepherd-wren`. Reserve `shepherd wren`, `colm`, `keeper holm`. Enemies: `mist-crow`, optional `peat-adder`, `barrow-guard`, `fog-walker`. Seven quest JSON files. Shared fixtures; do not consume Colm. Tests: Wren giver starts once; interleaved fictional characters on the chain.
+`east-meadow` gains `north` → `moor-track`. NPC `npc-shepherd-wren`. Reserved `shepherd wren`, `colm`, `keeper holm`. Enemies: `mist-crow`, `barrow-guard`, `fog-walker`. Seven quest JSON files. Shared fixtures; do not consume Colm.
 
-Engine tickets (document only): declarative `requiresQuestIds`; Alder leave gated on Sleeps; per-enemy combat lines.
+Engine: `requiresQuestIds`; Alder leave gated on Sleeps; per-enemy `victoryNarration`.

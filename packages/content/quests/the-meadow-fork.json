@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-meadow-fork",
+  "title": "The Meadow Fork",
+  "giverNpcId": "npc-shepherd-wren",
+  "requiresQuestIds": ["what-still-sleeps"],
+  "experienceReward": 25,
+  "introNarration": "Wren sets a tin plate of oatcakes by the peat fire. The kettle ticks. One peg by the door is empty. \"Sit. Colm has not come in. The flock was due at dusk yesterday. I will not invent a walker from an empty peg. Examine the Waystone on the track south of here — abbey mark south, sheep-scratch north, three chalked circles. Then come back and talk wren. Eat first. The Hall of Schools stays east. You typed north from the meadow. Good.\"",
+  "reminderNarration": "Wren does not raise her voice. The oatcakes are still warm. \"South to the waystone. Examine it. Then talk wren here. Type south from the croft. Type north from the East Meadow if you lost the hedge. Type quests if you lose the list.\"",
+  "completionNarration": "You name the three chalked circles and the empty peg. Wren pours tea too hot and does not apologise. \"The waystone told you the chapel count. East is the fold. Eat again before you go. I told Colm not to.\"",
+  "objectives": [
+    {
+      "id": "walk-track",
+      "kind": "visit",
+      "roomId": "moor-track",
+      "label": "Reach the Moor Track. Type north from the East Meadow. The Hall stays east for class."
+    },
+    {
+      "id": "hear-wren",
+      "kind": "talk",
+      "targetId": "npc-shepherd-wren",
+      "label": "Talk wren in Wren's Croft. Sit. Eat. Type north from the Moor Track."
+    },
+    {
+      "id": "read-waystone",
+      "kind": "examine",
+      "targetId": "object-waystone",
+      "label": "Examine the Waystone on the Moor Track. Three chalked circles. Type south from the croft."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-shepherd-wren",
+      "requires": ["walk-track", "hear-wren", "read-waystone"],
+      "label": "Return and talk wren at the croft. Type talk wren."
+    }
+  ]
+}

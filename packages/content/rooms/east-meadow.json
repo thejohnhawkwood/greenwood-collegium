@@ -3,7 +3,7 @@
   "id": "east-meadow",
   "title": "East Meadow",
   "shortDescription": "Bees stitch the clover beneath a wide, unhurried sky.",
-  "longDescription": "Grass bends in silver-green waves around islands of clover. Beyond a low hedge, the sky seems large enough to hold every question the school has ever asked.\nA bee skep sits in a patch of sunlight, busy with small purposeful journeys. The gate remains plainly visible to the west. East, dressed stone and six banners mark the Hall of Schools.",
+  "longDescription": "Grass bends in silver-green waves around islands of clover. Beyond a low hedge, the sky seems large enough to hold every question the school has ever asked.\nA bee skep sits in a patch of sunlight, busy with small purposeful journeys. The gate remains plainly visible to the west. East, dressed stone and six banners mark the Hall of Schools. North, the hedge-path bends east onto the moor — wet wool, peat, and Wren's croft. That road is not the Infirmary.",
   "zone": "grounds",
   "map": {
     "x": 3,
@@ -17,6 +17,10 @@
     {
       "direction": "east",
       "toRoomId": "hall-of-schools"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "moor-track"
     }
   ],
   "fixtures": [

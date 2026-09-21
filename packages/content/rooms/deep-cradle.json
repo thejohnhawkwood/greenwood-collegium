@@ -3,7 +3,7 @@
   "id": "deep-cradle",
   "title": "Deep Cradle",
   "shortDescription": "A round silk chamber under the nave, built for something larger.",
-  "longDescription": "The silk closes into a round room. Larger cocoons hang unopened. One has split along a seam. A dark, patient shape fills the gap.\nThe air is warm. Three pulses travel the floor. This is not a throne. Alder said she will not wake for one Collegian, and the room agrees.",
+  "longDescription": "The silk closes into a round room. Larger cocoons hang unopened. One has split along a seam. A dark, patient shape fills the gap.\nThe air is warm. Three pulses travel the floor. This is not a throne. Alder said she will not wake for one Collegian.",
   "zone": "bell-below",
   "visualState": "clock-tower",
   "map": {
@@ -22,8 +22,8 @@
       "id": "object-still-score",
       "name": "Still Score",
       "kind": "object",
-      "lookDescription": "Examine for a closer look.",
-      "examineDescription": "A thread-chart is pinned to the silk. Three notes are marked. A fourth space is blank and warm under your paw. Alder cannot see this from the High Study. This is the part he sent a party to read."
+      "lookDescription": "A thread-chart pinned to the silk, with a wooden coat-button in the fourth space. Examine it.",
+      "examineDescription": "A thread-chart is pinned to the silk. Three notes are marked in the same count as the oak. The fourth space is not blank in any way that helps. A wooden coat-button — two holes, grey thread still in one — is pressed into the silk there. It is warm. Alder cannot see this from the High Study. Someone kept time on a living keeper."
     }
   ]
 }

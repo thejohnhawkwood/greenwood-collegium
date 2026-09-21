@@ -328,7 +328,7 @@ export function finishFlee(
   runtime: EngineRuntime,
 ): CombatSuccess {
   const roomId = character.roomId;
-  events.push(endedEvent(character, encounter, "fled", roomId, runtime));
+  events.push(endedEvent(world, character, encounter, "fled", roomId, runtime));
   closeEncounter(world, encounter);
   return {
     ok: true,
@@ -693,11 +693,11 @@ export function finishVictory(
       ),
     );
     if (id === character.id) {
-      events.push(endedEvent(member, encounter, "victory", roomId, runtime), ...gained);
+      events.push(endedEvent(world, member, encounter, "victory", roomId, runtime), ...gained);
       continue;
     }
     const awarded: EventEnvelope[] = [
-      endedEvent(member, encounter, "victory", member.roomId, runtime),
+      endedEvent(world, member, encounter, "victory", member.roomId, runtime),
       ...gained,
     ];
     notices.push(...awarded.map((event) => ({ characterId: id, event })));
@@ -742,7 +742,7 @@ export function finishDefeat(
   }
 
   if (!infirmary) {
-    events.push(endedEvent(character, encounter, "defeat", character.roomId, runtime));
+    events.push(endedEvent(world, character, encounter, "defeat", character.roomId, runtime));
     return {
       ok: true,
       events,
@@ -758,7 +758,7 @@ export function finishDefeat(
     character.discoveredRoomIds.push(infirmary.id);
   }
   const arrivals = charactersInRoom(world, infirmary.id, character.id);
-  events.push(endedEvent(character, encounter, "defeat", infirmary.id, runtime));
+  events.push(endedEvent(world, character, encounter, "defeat", infirmary.id, runtime));
   const look = handleLook(world, { verb: "look", characterId: character.id }, runtime);
   if (look.ok) {
     events.push(look.event);
@@ -888,18 +888,23 @@ function statusEvent(
 }
 
 function endedEvent(
+  world: WorldState,
   character: Character,
   encounter: Encounter,
   outcome: "victory" | "defeat" | "fled",
   roomId: string,
   runtime: EngineRuntime,
 ): CombatEndedEvent {
+  const spawn = worldEnemies(world)[encounter.spawnId];
   const payload = {
     encounterId: encounter.id,
     characterId: character.id,
     roomId,
     enemyName: encounter.enemy.name,
     outcome,
+    ...(outcome === "victory" && spawn?.victoryNarration
+      ? { victoryNarration: spawn.victoryNarration }
+      : {}),
   };
   const narration = formatCombatEndedText(payload);
   return combatEndedEventSchema.parse({

@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "wren-hearth-charm",
+  "name": "Wren's Hearth Charm",
+  "shortDescription": "A scrap of peat-charred tin from Wren's kettle.",
+  "examineDescription": "Alder let you keep this after the Fog Walker. The tin still smells of oatcakes and wet wool. Wren stays at the croft. The kettle is for the living.",
+  "category": "ordinary",
+  "unique": true
+}

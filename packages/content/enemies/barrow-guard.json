@@ -1,0 +1,12 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "barrow-guard",
+  "name": "Barrow Guard",
+  "shortDescription": "Peat-and-bone that is not a dog.",
+  "lookDescription": "A peat-and-bone shape keeps the barrow mouth, not quite a dog and not quite still.",
+  "examineDescription": "The Barrow Guard is packed peat over old bone. It is not a dog. It does not bark. It waits the way a door waits. Solo work. If it squares up, finish it, then talk Wren before Alder.",
+  "maxHealth": 18,
+  "attack": 4,
+  "experience": 15,
+  "victoryNarration": "The Barrow Guard slumps into wet peat. The hill-lip is only a door again."
+}

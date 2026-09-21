@@ -22,6 +22,17 @@
       "lookDescription": "A river otter in a work-stained apron, sleeves rolled, a kit of clean bandages at his hip. Try talk fen.",
       "examineDescription": "Fen's paws are steady and his apron has been washed more times than it has stayed clean. The honey is for wounds as much as tea. He puts down his work when you speak, and he will tell you if you are being foolish.",
       "dialogue": "\"Rest and ask for help when you need it. Nobody earns extra courage by pretending not to hurt. This room smells of soap, rosemary, and warm beeswax for a reason. Helping Tansy? Those roots need air as well as water. Clear the drainage and use a clean jug; never add mysterious potions to an unhappy plant. Sit if you need to. The breathing wheel is there for anyone whose paws are still shaking.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"Sit if you need to. Nobody earns extra courage by pretending not to hurt. This room smells of soap, rosemary, and warm beeswax for a reason. Helping Tansy? Those roots need air as well as water. After a hard stair or a cold road, ask if you can feel your paws. The breathing wheel is there. Honey is there. I will put the work down.\""
+          },
+          "after-colm": {
+            "text": "\"Sit. Honey first. Can you feel your paws? The wheel on the wall is for anyone whose breath is still trying to run. Wren sent you. That is the right order. Two keepers. Two witnesses who lived. You do not have to be brave at me. Breathe. Then eat something warm.\""
+          }
+        }
+      },
       "kind": "npc"
     },
     {

@@ -120,7 +120,7 @@
       "name": "Noticeboard",
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
-      "examineDescription": "NEED A FIRST ADVENTURE? Talk to Porter for directions. Librarian Quill seeks careful readers in the Library Stacks, west of the Great Hall. Groundskeeper Tansy needs observant helpers in the Herb Garden, west of the South Orchard. Headmaster Alder listens for an impossible bell in the High Study after first lessons. Type up from the Great Hall. After that report, the Clock Tower stair opens downward.\nTry talk porter. Examine named objects with examine or x. Type quests for your checklist."
+      "examineDescription": "NEED A FIRST ADVENTURE? Talk to Porter for directions. Librarian Quill seeks careful readers in the Library Stacks, west of the Great Hall. Groundskeeper Tansy needs observant helpers in the Herb Garden, west of the South Orchard. Headmaster Alder listens for an impossible bell in the High Study after first lessons. Type up from the Great Hall. After that report, the Clock Tower stair opens downward. After the queen, north from the East Meadow for Shepherd Wren.\nTry talk porter. Examine named objects with examine or x. Type quests for your checklist."
     },
     {
       "id": "object-courtyard-well",

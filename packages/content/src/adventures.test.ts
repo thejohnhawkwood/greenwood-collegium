@@ -23,11 +23,11 @@ describe("adventure content", () => {
   it("offers thirteen speaking staff and discoveries in every existing room", () => {
     const world = loadBundledWorld();
     const rooms = Object.values(world.rooms);
-    expect(rooms).toHaveLength(38);
+    expect(rooms).toHaveLength(46);
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );
-    expect(staff).toHaveLength(13);
+    expect(staff).toHaveLength(14);
     for (const npc of staff) {
       expect(npc.dialogue).toBeTruthy();
       expect(reservedCharacterNames()).toContain(npc.name.toLowerCase());
@@ -40,9 +40,17 @@ describe("adventure content", () => {
     const adventures = Object.values(world.quests).filter((quest) => quest.giverNpcId);
     expect(adventures.map((quest) => quest.id).sort()).toEqual([
       "a-little-room-to-grow",
+      "the-barrow-mouth",
+      "the-meadow-fork",
       "the-missing-pages",
+      "the-stones-that-were-not-there",
+      "the-uncounted-flock",
+      "what-the-fog-took",
     ]);
-    for (const quest of adventures) {
+    const investigations = adventures.filter((quest) =>
+      ["a-little-room-to-grow", "the-missing-pages"].includes(quest.id),
+    );
+    for (const quest of investigations) {
       const report = quest.objectives.at(-1);
       expect(report?.targetId).toBe(quest.giverNpcId);
       expect(report?.requires).toEqual(

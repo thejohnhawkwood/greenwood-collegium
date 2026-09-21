@@ -554,5 +554,25 @@ export function validateQuests(
     }
   }
 
+  for (const named of namedQuests) {
+    for (const requiredQuestId of named.template.requiresQuestIds ?? []) {
+      if (requiredQuestId === named.template.id) {
+        issues.push({
+          code: "missing_reference",
+          message: `${named.template.id} cannot require itself`,
+          questId: named.template.id,
+          fileName: named.fileName,
+        });
+      } else if (!questsById.has(requiredQuestId)) {
+        issues.push({
+          code: "missing_reference",
+          message: `${named.template.id} requires unknown quest ${requiredQuestId}`,
+          questId: named.template.id,
+          fileName: named.fileName,
+        });
+      }
+    }
+  }
+
   return issues;
 }
