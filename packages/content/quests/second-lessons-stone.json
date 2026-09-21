@@ -1,0 +1,25 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "second-lessons-stone",
+  "title": "Second Lessons: Stone",
+  "introNarration": "Quern taps the Primer. Granite-dust greys both paws. He does not hurry the next sentence. \"Cast keystone at the hearth dummy in this room. Then talk to me. After that, the book will offer three leaves. Type 1, 2, or 3 when it does.\"",
+  "reminderNarration": "Cast keystone at the hearth dummy in this hearth, then talk to Quern. Weight first. Speech second.",
+  "completionNarration": "The second hearth lesson is done. The Primer rests on the keystone shelf as if it had always belonged there. Type 1, 2, or 3 when it offers three leaves.",
+  "experienceReward": 20,
+  "objectives": [
+    {
+      "id": "cast-starter",
+      "kind": "cast",
+      "label": "Cast keystone in the hearth.",
+      "targetId": "keystone",
+      "roomId": "hearth-stone"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Talk to Mentor Quern.",
+      "targetId": "npc-mentor-quern",
+      "requires": ["cast-starter"]
+    }
+  ]
+}

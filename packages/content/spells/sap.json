@@ -1,0 +1,46 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "sap",
+  "name": "Sap",
+  "school": "thorn",
+  "tag": "gift",
+  "description": "A smaller mend and a little focus from the green.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "any",
+  "effect": "heal",
+  "heal": 4,
+  "restoreFocus": 2,
+  "presentationKey": "greenstitch",
+  "pennedBy": "Mentor Briar",
+  "helpText": "cast sap",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "heal": 4,
+      "restoreFocus": 2
+    },
+    {
+      "focusCost": 3,
+      "heal": 5,
+      "restoreFocus": 2
+    },
+    {
+      "focusCost": 2,
+      "heal": 5,
+      "restoreFocus": 2
+    },
+    {
+      "focusCost": 2,
+      "heal": 6,
+      "restoreFocus": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "heal": 7,
+      "restoreFocus": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

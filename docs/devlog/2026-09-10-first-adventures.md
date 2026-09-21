@@ -46,5 +46,6 @@ movement, and global object transformations are outside this slice.
 AI disclosure: Codex authored the implementation, original fictional content,
 tests, and documentation in collaboration with the owner.
 
-See [the play and authoring guide](../content/adventures.md) and
-[ADR-0029](../adr/0029-authored-npc-adventures.md).
+See [the play and authoring guide](../content/adventures.md),
+[the story spine](../content/STORY.md), [storylines](../content/quests/README.md),
+and [ADR-0029](../adr/0029-authored-npc-adventures.md).

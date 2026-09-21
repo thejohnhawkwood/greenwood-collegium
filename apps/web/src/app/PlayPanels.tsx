@@ -8,6 +8,7 @@ import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
 import { QuestJournal } from "./QuestJournal.js";
 import { CombatStage } from "./CombatStage.js";
+import { PrimerStage } from "./PrimerStage.js";
 import { latestCombatAction, resolveCombatFx } from "./combat-fx.js";
 import { useCombatFxPulse } from "./combat-fx-pulse.js";
 import { encounterFoeVisual } from "./combat-stage.js";
@@ -225,6 +226,7 @@ export function PlayPanels({
                 }))}
                 conversation={
                   state?.encounter ||
+                  state?.primer ||
                   !conversation ||
                   (conversation.npcId !== "duel-challenge" &&
                     !(room?.visible ?? []).some((entity) => entity.id === conversation.npcId))
@@ -245,6 +247,8 @@ export function PlayPanels({
                   pulse={pulse}
                   onSend={onSend}
                 />
+              ) : state?.primer ? (
+                <PrimerStage primer={state.primer} onSend={onSend} />
               ) : null}
             </div>
           </section>

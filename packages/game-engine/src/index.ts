@@ -55,7 +55,24 @@ export {
   progressQuests,
   startArrivalQuest,
 } from "./arrival.js";
-export { levelForExperience } from "./progression.js";
+export {
+  EXPERIENCE_TO_REACH,
+  MAX_LEVEL,
+  experienceToNextLesson,
+  experienceToReach,
+  levelForExperience,
+} from "./progression.js";
+export {
+  SCHOOL_LEAVES,
+  SCHOOL_MENTOR_PEN,
+  applyPrimerChoiceIfPending,
+  canCastSpell,
+  describePrimerCard,
+  formatGrimoire,
+  inkStarterKit,
+  openPrimerChoices,
+  primerPlayState,
+} from "./primer.js";
 export { parseLookCommand } from "./parse-look.js";
 export { parseMoveCommand } from "./parse-move.js";
 export { parseSayCommand } from "./parse-say.js";
@@ -169,6 +186,10 @@ export type {
   RoomFixture,
   SayIntent,
   SpellTemplate,
+  KnownSpellLeaf,
+  PendingPrimerChoices,
+  PrimerChoiceCard,
+  SpellTag,
   StarterItemPlacement,
   TakeIntent,
   WorldState,
@@ -185,9 +206,12 @@ export {
 export {
   SCHOOL_FIRST_LESSONS_ID,
   SCHOOL_GIFT_ID,
+  SCHOOL_HEARTH_DUMMY_ID,
   SCHOOL_HEARTH_ID,
   SCHOOL_IDS,
   SCHOOL_MENTOR_ID,
+  SCHOOL_SECOND_LESSONS_ID,
+  SCHOOL_THIRD_LESSONS_ID,
   isSchoolId,
   schoolGift,
   schoolKit,

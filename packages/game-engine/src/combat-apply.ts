@@ -123,7 +123,12 @@ export function applyHostileCast(
   const focus = character.focus ?? 0;
   character.focus = focus - spell.focusCost;
   const events: CombatEvent[] = [];
-  const damage = spell.damage ?? 0;
+  let damage = spell.damage ?? 0;
+  if (character.readySpellIds?.includes(spell.id)) {
+    damage += character.readySpellBonus ?? 2;
+    character.readySpellIds = undefined;
+    character.readySpellBonus = undefined;
+  }
   const foe = world && isDuel(encounter) ? duelOpponent(world, encounter, character.id) : undefined;
   if (foe) {
     foe.health = Math.max(0, (foe.health ?? DEFAULT_PLAYER_MAX_HEALTH) - damage);
@@ -137,9 +142,24 @@ export function applyHostileCast(
   const targetName = foe?.name ?? encounter.enemy.name;
   const targetHealth = foe?.health ?? encounter.enemy.health;
   const targetMaxHealth = foe?.maxHealth ?? encounter.enemy.maxHealth;
+  let healed = 0;
+  if (spell.effect === "leech" && damage > 0 && (spell.heal ?? 0) > 0) {
+    const max = character.maxHealth ?? DEFAULT_PLAYER_MAX_HEALTH;
+    const before = character.health ?? max;
+    character.health = Math.min(max, before + (spell.heal ?? 0));
+    healed = (character.health ?? max) - before;
+  }
   if (spell.effect === "skip-counter" && !foe) {
     encounter.effects.push({
       id: "skip-counter",
+      targetId: encounter.enemy.id,
+      remainingRounds: 1,
+      appliedRound: encounter.round,
+    });
+  }
+  if (spell.effect === "weaken" && !foe) {
+    encounter.effects.push({
+      id: "weaken",
       targetId: encounter.enemy.id,
       remainingRounds: 1,
       appliedRound: encounter.round,
@@ -160,6 +180,7 @@ export function applyHostileCast(
         targetId,
         targetName,
         damage,
+        ...(healed > 0 ? { heal: healed } : {}),
         targetHealth,
         targetMaxHealth,
       },
@@ -176,7 +197,10 @@ export function applyHostileCast(
           { kind: "damage" as const, text: String(damage) },
           {
             kind: "text" as const,
-            text: `. It has ${String(targetHealth)} remaining.`,
+            text:
+              healed > 0
+                ? `. You mend ${String(healed)}. It has ${String(targetHealth)} remaining.`
+                : `. It has ${String(targetHealth)} remaining.`,
           },
         ],
       },
@@ -194,23 +218,46 @@ export function applySelfCast(
   character: Character,
   spell: SpellTemplate,
   runtime: EngineRuntime,
+  world?: WorldState,
 ): EventEnvelope[] {
   const focus = character.focus ?? 0;
   character.focus = focus - spell.focusCost;
-  const note = applySelfEffect(character, spell);
+  const note = applySelfEffect(character, spell, world);
   return [systemNotice(character.id, note ?? `You cast ${spell.name}.`, runtime)];
 }
 
-export function applySelfEffect(character: Character, spell: SpellTemplate): string | undefined {
+export function applySelfEffect(
+  character: Character,
+  spell: SpellTemplate,
+  world?: WorldState,
+): string | undefined {
   if (spell.effect === "avoid-hit") {
     character.ignoreNextHit = true;
+    if (spell.id === "blaze-mantle") {
+      character.ashShroud = true;
+    }
     return `You cast ${spell.name}. The next blow misses.`;
+  }
+  if (spell.effect === "halve-hit") {
+    character.halveNextHit = true;
+    return `You cast ${spell.name}. The next blow is halved.`;
   }
   if (spell.effect === "heal") {
     const heal = spell.heal ?? 4;
     const max = character.maxHealth ?? 20;
     character.health = Math.min(max, (character.health ?? max) + heal);
+    if (spell.restoreFocus) {
+      const maxFocus = character.maxFocus ?? 10;
+      character.focus = Math.min(maxFocus, (character.focus ?? maxFocus) + spell.restoreFocus);
+      return `You cast ${spell.name}. You mend ${String(heal)} and restore ${String(spell.restoreFocus)} focus.`;
+    }
     return `You cast ${spell.name}. You mend ${String(heal)}.`;
+  }
+  if (spell.effect === "restore-focus") {
+    const restore = spell.restoreFocus ?? 4;
+    const max = character.maxFocus ?? 10;
+    character.focus = Math.min(max, (character.focus ?? max) + restore);
+    return `You cast ${spell.name}. You restore ${String(restore)} focus.`;
   }
   if (spell.effect === "brace") {
     if (!character.braceBonus) {
@@ -224,10 +271,31 @@ export function applySelfEffect(character: Character, spell: SpellTemplate): str
     character.nextAttackBonus = 1;
     return `You cast ${spell.name}. The next swing lands heavier.`;
   }
+  if (spell.effect === "ready-spell") {
+    character.readySpellIds = spell.readySpellIds ? [...spell.readySpellIds] : [];
+    character.readySpellBonus = 2;
+    return `You cast ${spell.name}. The next named leaf lands heavier.`;
+  }
   if (spell.effect === "insight") {
-    return spell.insight ?? `You cast ${spell.name}.`;
+    return insightText(character, spell, world);
   }
   return `You cast ${spell.name}.`;
+}
+
+function insightText(
+  character: Character,
+  spell: SpellTemplate,
+  world: WorldState | undefined,
+): string {
+  if (spell.id === "chart" && world) {
+    const titles = character.discoveredRoomIds
+      .map((id) => world.rooms[id]?.title)
+      .filter((title): title is string => Boolean(title));
+    if (titles.length) {
+      return `You cast ${spell.name}. Charted rooms: ${titles.join(", ")}.`;
+    }
+  }
+  return spell.insight ?? `You cast ${spell.name}.`;
 }
 
 export function matchSpell(world: WorldState, raw: string): SpellTemplate | undefined {

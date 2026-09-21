@@ -35,11 +35,16 @@ import {
   type ItemInstanceRecord,
   type ItemInstanceRepository,
   type ItemPlacementSeed,
+  type KnownSpellRecord,
+  type PendingPrimerRecord,
   type QuestProgressRecord,
   type QuestProgressRepository,
   type SessionRecord,
   resolveDefeatedSpawnIds,
   resolveDiscoveredRoomIds,
+  resolveKnownSpells,
+  resolvePendingPrimer,
+  resolvePrimerAwardedLevels,
   type SessionRepository,
   type UpdateCharacterCreationInput,
 } from "./types.js";
@@ -157,6 +162,8 @@ export class PostgresCharacterRepository implements CharacterRepository {
       roomId: input.roomId,
       discoveredRoomIds: resolveDiscoveredRoomIds([input.roomId], input.roomId),
       defeatedSpawnIds: [],
+      knownSpells: [],
+      primerAwardedLevels: [],
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -258,6 +265,25 @@ export class PostgresCharacterRepository implements CharacterRepository {
       .update(characters)
       .set({
         defeatedSpawnIds: resolveDefeatedSpawnIds(defeatedSpawnIds),
+        updatedAt: new Date(),
+      })
+      .where(eq(characters.id, id));
+  }
+
+  async updatePrimer(
+    id: string,
+    input: {
+      knownSpells: readonly KnownSpellRecord[];
+      pendingPrimerChoices?: PendingPrimerRecord;
+      primerAwardedLevels: readonly number[];
+    },
+  ): Promise<void> {
+    await this.db
+      .update(characters)
+      .set({
+        knownSpells: resolveKnownSpells(input.knownSpells),
+        pendingPrimerChoices: resolvePendingPrimer(input.pendingPrimerChoices) ?? null,
+        primerAwardedLevels: resolvePrimerAwardedLevels(input.primerAwardedLevels),
         updatedAt: new Date(),
       })
       .where(eq(characters.id, id));
@@ -482,6 +508,9 @@ function toCharacter(row: typeof characters.$inferSelect): CharacterRecord {
     schoolId: row.schoolId ?? undefined,
     discoveredRoomIds: resolveDiscoveredRoomIds(row.discoveredRoomIds, row.roomId),
     defeatedSpawnIds: resolveDefeatedSpawnIds(row.defeatedSpawnIds),
+    knownSpells: resolveKnownSpells(row.knownSpells),
+    pendingPrimerChoices: resolvePendingPrimer(row.pendingPrimerChoices),
+    primerAwardedLevels: resolvePrimerAwardedLevels(row.primerAwardedLevels),
     status: row.status as CharacterRecord["status"],
     creationCompletedAt: row.creationCompletedAt ? asDate(row.creationCompletedAt) : undefined,
     createdAt: asDate(row.createdAt),

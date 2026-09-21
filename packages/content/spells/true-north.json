@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "true-north",
+  "name": "True North",
+  "school": "stars",
+  "tag": "gift",
+  "description": "The next Azimuth or Flare is ready-strike.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "ready-spell",
+  "readySpellIds": ["azimuth", "flare"],
+  "presentationKey": "flare",
+  "pennedBy": "Mentor Lumen",
+  "helpText": "cast true-north",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

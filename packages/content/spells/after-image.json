@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "after-image",
+  "name": "After-Image",
+  "school": "veil",
+  "tag": "control",
+  "description": "The fold cuts first. They swing at empty air.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "effect": "skip-counter",
+  "presentationKey": "shade-fold",
+  "pennedBy": "Mentor Mist",
+  "helpText": "cast after-image",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 4
+    },
+    {
+      "focusCost": 3,
+      "damage": 5
+    },
+    {
+      "focusCost": 2,
+      "damage": 5
+    },
+    {
+      "focusCost": 2,
+      "damage": 6,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 7,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

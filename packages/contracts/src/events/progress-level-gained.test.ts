@@ -10,7 +10,7 @@ describe("progress.level_gained contract", () => {
       type: "progress.level_gained",
       occurredAt: "2026-09-07T21:00:00.000Z",
       audience: "character",
-      narration: "You reach Level 2. Health and focus grow.",
+      narration: "You reach lesson 2. Health and focus grow.",
       payload: {
         characterId: "char-rowan",
         level: 2,

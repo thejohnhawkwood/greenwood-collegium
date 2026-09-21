@@ -11,5 +11,31 @@
   "effect": "riposte",
   "minLevel": 3,
   "presentationKey": "steel-riposte",
-  "helpText": "cast riposte"
+  "helpText": "cast riposte",
+  "tag": "control",
+  "pennedBy": "Mentor Edge",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 7
+    },
+    {
+      "focusCost": 3,
+      "damage": 8
+    },
+    {
+      "focusCost": 2,
+      "damage": 8
+    },
+    {
+      "focusCost": 2,
+      "damage": 9,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 10,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

@@ -1,0 +1,25 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "second-lessons-stars",
+  "title": "Second Lessons: Stars",
+  "introNarration": "Lumen taps the Primer. Ink has dried on her primaries in a constellation of honest mistakes. \"Cast azimuth at the hearth dummy in this room. Then talk to me. After that, the book will offer three leaves. Type 1, 2, or 3 when it does.\"",
+  "reminderNarration": "Cast azimuth at the hearth dummy in this hearth, then talk to Lumen. Charts before wonder.",
+  "completionNarration": "The second hearth lesson is done. The Primer lies open under the night windows. Type 1, 2, or 3 when it offers three leaves.",
+  "experienceReward": 20,
+  "objectives": [
+    {
+      "id": "cast-starter",
+      "kind": "cast",
+      "label": "Cast azimuth in the hearth.",
+      "targetId": "azimuth",
+      "roomId": "hearth-stars"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Talk to Mentor Lumen.",
+      "targetId": "npc-mentor-lumen",
+      "requires": ["cast-starter"]
+    }
+  ]
+}

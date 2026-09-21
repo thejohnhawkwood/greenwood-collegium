@@ -28,7 +28,7 @@
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Sit, if you will. The High Study smells of beeswax and last winter's ink, and moonlight from that round window lies in a pale coin upon my blotter. I am Alder. You will not find a house here. You will find a School. Ember for fire that is held and not spilled. Thorns for growth that knows how to guard itself. The Veil for what is unseen and still acts. Stars for light that names a path. Stone for patience that does not yield. Steel for a blade kept flat until it is needed. Each is a craft. Pick one now. The hearths do not open until you have chosen. And do not go hunting the thing that tolls beneath our feet until you have a School. The wood can wait. First lessons cannot.\"",
+            "text": "\"Sit, if you will. The High Study smells of beeswax and last winter's ink, and moonlight from that round window lies in a pale coin upon my blotter. I am Alder. You will not find a house here. You will find a School. Ember for fire held in a grate, not spilled on the rafters. Thorns for growth that knows how to guard a path. The Veil for work done in honest shadow. Stars for a bearing written before you walk. Stone for a keystone that carries weight without a speech. Steel for a blade kept flat until it is needed. Each is a craft. Pick one now. The hearths do not open until you have chosen. And do not go hunting the thing that tolls beneath our feet until you have a School. The wood can wait. First lessons cannot.\"",
             "choices": [
               {
                 "say": "1",
@@ -69,25 +69,25 @@
             ]
           },
           "chosen-ember": {
-            "text": "\"Ember. Fire that is held, not spilled — a sheltered coal, not a wild blaze that eats the rafters. Your hearth is not open yet. Down the stair returns you to the Great Hall, where the banners hang and the stone still holds the day's warmth. Do not waste the hours. Look that grate. Then find Flint among the apple trees.\""
+            "text": "\"Ember. Fire that is held, not spilled — a sheltered coal, not a wild blaze that eats the rafters. Your hearth is open. Down the stair to the Great Hall, where the banners hang and the stone still holds the day's warmth. South to Lantern Court, then east through the East Gate and the clover meadow until six banners mark the Hall of Schools. East from there is Ember. Look around that hearth. Defeat the dummy. Talk to Mentor Cinder. Do not waste the hours.\""
           },
           "chosen-thorn": {
-            "text": "\"Thorns. Growth that knows how to guard itself — a vine trained, not a snare left to wander the cloister. Your hearth is not open yet. Down the stair returns you to the Great Hall. Do not waste the hours. Look that living trellis. Then find Flint among the apple trees.\""
+            "text": "\"Thorns. Growth that knows how to guard itself — a vine trained, not a snare left to wander the cloister. Your hearth is open. Down the stair to the Great Hall. South to Lantern Court, then east through the East Gate and the clover meadow until six banners mark the Hall of Schools. East, then north, is Thorns. Look around that hearth. Defeat the dummy. Talk to Mentor Briar. Do not waste the hours.\""
           },
           "chosen-veil": {
-            "text": "\"The Veil. What is unseen still acts — a moth in silver shadow, a truth that does not need to shout. Your hearth is not open yet. Down the stair returns you to the Great Hall. Do not waste the hours. Look that dark mirror. Then find Flint among the apple trees.\""
+            "text": "\"The Veil. What is unseen still acts — a moth in silver shadow, a truth that does not need to shout. Your hearth is open. Down the stair to the Great Hall. South to Lantern Court, then east through the East Gate and the clover meadow until six banners mark the Hall of Schools. East, then south, is the Veil. Look around that hearth. Defeat the dummy. Talk to Mentor Mist. Do not waste the hours.\""
           },
           "chosen-stars": {
-            "text": "\"Stars. Light that names a path — not a wish flung at the night, but a mark written before the hour changes. Your hearth is not open yet. Down the stair returns you to the Great Hall. Do not waste the hours. Look that star-wheel. Then find Flint among the apple trees.\""
+            "text": "\"Stars. Light that names a path — not a wish flung at the night, but a mark written before the hour changes. Your hearth is open. Down the stair to the Great Hall. South to Lantern Court, then east through the East Gate and the clover meadow until six banners mark the Hall of Schools. East, then north, then north again, is Stars. Look around that hearth. Defeat the dummy. Talk to Mentor Lumen. Do not waste the hours.\""
           },
           "chosen-stone": {
-            "text": "\"Stone. Patience that does not yield — a keystone that carries the weight and does not boast. Your hearth is not open yet. Down the stair returns you to the Great Hall. Do not waste the hours. Look that carved stone. Then find Flint among the apple trees.\""
+            "text": "\"Stone. Patience that does not yield — a keystone that carries the weight and does not boast. Your hearth is open. Down the stair to the Great Hall. South to Lantern Court, then east through the East Gate and the clover meadow until six banners mark the Hall of Schools. South from that hall is Stone. Look around that hearth. Defeat the dummy. Talk to Mentor Quern. Do not waste the hours.\""
           },
           "chosen-steel": {
-            "text": "\"Steel. A blade kept flat until it is needed — mail oiled, an anvil bright from honest work, not furniture hung for show. Your hearth is not open yet. Down the stair returns you to the Great Hall. Do not waste the hours. Look that anvil. Then find Flint among the apple trees.\""
+            "text": "\"Steel. A blade kept flat until it is needed — mail oiled, an anvil bright from honest work, not furniture hung for show. Your hearth is open. Down the stair to the Great Hall. South to Lantern Court, then east through the East Gate and the clover meadow until six banners mark the Hall of Schools. North from that hall is Steel. Look around that hearth. Defeat the dummy. Talk to Mentor Edge. Do not waste the hours.\""
           },
           "already-chosen": {
-            "text": "\"You have a School. I can smell the hearth-smoke on you still. Finish first lessons where you chose — look the room, walk south to the orchard, stand before Flint's dummy. The bell beneath us can wait until you can stand with others. Down, if you must wander. The oak will still be here when you return.\""
+            "text": "\"You have a School. I can smell the hearth-smoke on you still. Finish first lessons where you chose — look around the hearth, defeat that dummy, talk to your mentor. Down the stair, south to Lantern Court, then east through the meadow until six banners mark the Hall of Schools. Your hearth is there. The bell beneath us can wait until you can stand with others. The oak will still be here when you return.\""
           },
           "offer-bell": {
             "text": "\"You have a School, and first lessons have your name. Good. Now I am trusting you with the first honest question this school has asked in a long time. Listen. A deep bell sounds under our feet — not the cheerful hour-bell, but an old abbey note that rolls through these beams like a cart over wet cobbles. The old bronze is gone. We have an empty oak frame in the Clock Tower to prove it, and the timber still answers as if the metal had never left. I will not invent a cause from a rumour. Examine the Empty Bell Frame in the Clock Tower, the Bell Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel. Then return and talk alder here. Bring me facts, not a pretty story.\"",
@@ -124,7 +124,7 @@
             "text": "\"A hatchling is not a queen. You named a child that woke too soon, and that is enough for one Collegian. When three can stand together, we will ask what still sleeps in the cradle south of the nave. Go to class. Eat something warm. The oak will wait.\""
           },
           "offer-sleeps": {
-            "text": "\"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I have felt it through the beams — a heavier note than the hatchling, a stillness that is not rest. I will not send one Collegian into that room. Take two classmates who can lock a move on the same clock as you. Examine the Still Score. If she squares up, do not invent heroics. Lock together. Then return and talk alder here. This is the work I saved for students I trust to come home.\"",
+            "text": "\"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I have felt it through the beams — a heavier note than the hatchling. It does not move when the hatchling moves. It waits. I will not send one Collegian into that room. Take two classmates who can lock a move on the same clock as you. Examine the Still Score. If she squares up, do not invent heroics. Lock together. Then return and talk alder here. This is the work I saved for students I trust to come home.\"",
             "choices": [
               { "say": "1", "label": "We will go together.", "next": "sleeps-active" },
               { "say": "2", "label": "What are we facing?", "next": "sleeps-why" }
@@ -138,7 +138,7 @@
             "text": "\"Together. South of the nave. Examine the Still Score — the blank note is the part I cannot see from this blotter. Lock your moves on one clock. Then talk alder here. The school is watching this one, and I would rather watch you walk back up that stair.\""
           },
           "sleeps-done": {
-            "text": "\"The silk has a mouth now, and it learned it from a class, not a rumour. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Go to class. The High Study will keep the facts.\""
+            "text": "\"You stood in the cradle. You named what you saw. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Go to class. Eat something warm. The High Study will keep the facts.\""
           }
         }
       }

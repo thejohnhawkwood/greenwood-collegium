@@ -29,6 +29,9 @@ export type CharacterRecord = {
   roomId: string;
   schoolId?: string;
   defeatedSpawnIds?: string[];
+  knownSpells?: KnownSpellRecord[];
+  pendingPrimerChoices?: PendingPrimerRecord;
+  primerAwardedLevels?: number[];
   status: CharacterStatus;
   creationCompletedAt?: Date;
   createdAt: Date;
@@ -54,6 +57,132 @@ export function resolveDefeatedSpawnIds(value: unknown): string[] {
     ? value.filter((id): id is string => typeof id === "string" && /^[a-z][a-z0-9-]*$/u.test(id))
     : [];
   return [...new Set(ids)];
+}
+
+export type KnownSpellRecord = {
+  spellId: string;
+  rank: number;
+  pennedBy: string;
+};
+
+export type PendingPrimerRecord = {
+  level: number;
+  options: Array<{
+    kind: "upgrade" | "unlock" | "courtesy" | "vital";
+    spellId?: string;
+    rank?: number;
+    schoolId?: string;
+    tag?: string;
+    vitalHealth?: number;
+    vitalFocus?: number;
+  }>;
+  commandId?: string;
+};
+
+const SPELL_ID = /^[a-z][a-z0-9-]*$/u;
+const PRIMER_KINDS = new Set(["upgrade", "unlock", "courtesy", "vital"]);
+const RETIRED_SPELL_IDS: Record<string, string> = {
+  "coal-breath": "flame-breath",
+  "banked-coals": "heart-fire",
+  "ash-shroud": "blaze-mantle",
+  kiln: "stoke",
+  measure: "draw",
+};
+
+function resolveSpellId(spellId: string): string {
+  return RETIRED_SPELL_IDS[spellId] ?? spellId;
+}
+
+export function resolveKnownSpells(value: unknown): KnownSpellRecord[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  const seen = new Set<string>();
+  const leaves: KnownSpellRecord[] = [];
+  for (const row of value) {
+    if (!row || typeof row !== "object") {
+      continue;
+    }
+    const record = row as Record<string, unknown>;
+    const spellId = typeof record.spellId === "string" ? resolveSpellId(record.spellId) : "";
+    const rank = typeof record.rank === "number" ? Math.floor(record.rank) : 0;
+    const pennedBy = typeof record.pennedBy === "string" ? record.pennedBy.slice(0, 80) : "";
+    if (
+      !SPELL_ID.test(spellId) ||
+      rank < 1 ||
+      rank > 5 ||
+      pennedBy.length === 0 ||
+      seen.has(spellId)
+    ) {
+      continue;
+    }
+    seen.add(spellId);
+    leaves.push({ spellId, rank, pennedBy });
+  }
+  return leaves;
+}
+
+export function resolvePendingPrimer(value: unknown): PendingPrimerRecord | undefined {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+  const record = value as Record<string, unknown>;
+  const level = typeof record.level === "number" ? Math.floor(record.level) : 0;
+  if (level < 4 || level > 20 || !Array.isArray(record.options) || record.options.length === 0) {
+    return undefined;
+  }
+  const options = record.options.flatMap((raw) => {
+    if (!raw || typeof raw !== "object") {
+      return [];
+    }
+    const card = raw as Record<string, unknown>;
+    const kind =
+      typeof card.kind === "string" && PRIMER_KINDS.has(card.kind) ? card.kind : undefined;
+    if (!kind) {
+      return [];
+    }
+    return [
+      {
+        kind: kind as PendingPrimerRecord["options"][number]["kind"],
+        ...(typeof card.spellId === "string" && SPELL_ID.test(resolveSpellId(card.spellId))
+          ? { spellId: resolveSpellId(card.spellId) }
+          : {}),
+        ...(typeof card.rank === "number"
+          ? { rank: Math.min(5, Math.max(1, Math.floor(card.rank))) }
+          : {}),
+        ...(typeof card.schoolId === "string" && SPELL_ID.test(card.schoolId)
+          ? { schoolId: card.schoolId }
+          : {}),
+        ...(typeof card.tag === "string" ? { tag: card.tag } : {}),
+        ...(typeof card.vitalHealth === "number"
+          ? { vitalHealth: Math.floor(card.vitalHealth) }
+          : {}),
+        ...(typeof card.vitalFocus === "number" ? { vitalFocus: Math.floor(card.vitalFocus) } : {}),
+      },
+    ];
+  });
+  if (options.length === 0) {
+    return undefined;
+  }
+  return {
+    level,
+    options: options.slice(0, 3),
+    ...(typeof record.commandId === "string" ? { commandId: record.commandId.slice(0, 80) } : {}),
+  };
+}
+
+export function resolvePrimerAwardedLevels(value: unknown): number[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return [
+    ...new Set(
+      value
+        .filter((level): level is number => typeof level === "number")
+        .map((level) => Math.floor(level))
+        .filter((level) => level >= 3 && level <= 20),
+    ),
+  ].sort((left, right) => left - right);
 }
 
 export type SessionRecord = {
@@ -139,6 +268,14 @@ export interface CharacterRepository {
   updateDiscovery(id: string, discoveredRoomIds: readonly string[]): Promise<void>;
   updateSchool(id: string, schoolId: string | undefined): Promise<void>;
   updateDefeatedSpawns(id: string, defeatedSpawnIds: readonly string[]): Promise<void>;
+  updatePrimer(
+    id: string,
+    input: {
+      knownSpells: readonly KnownSpellRecord[];
+      pendingPrimerChoices?: PendingPrimerRecord;
+      primerAwardedLevels: readonly number[];
+    },
+  ): Promise<void>;
 }
 
 export interface SessionRepository {

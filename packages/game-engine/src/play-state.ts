@@ -16,6 +16,7 @@ import { snapshotPayload } from "./look.js";
 import { combatMoves } from "./combat-lock.js";
 import { encounterForViewer } from "./combat-party.js";
 import { DUEL_CHALLENGE_ID } from "./duel.js";
+import { primerPlayState } from "./primer.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
@@ -35,6 +36,7 @@ export function createPlayState(
       )?.name ?? world.itemTemplates?.[character.equippedItemId]?.name)
     : undefined;
   const encounter = activeEncounter(world, characterId);
+  const primer = primerPlayState(world, character);
   const discovered = new Set([...character.discoveredRoomIds, room.id]);
   const mappedRooms = Object.values(world.rooms).filter((candidate) => candidate.map);
   const mappedIds = new Set(mappedRooms.map((candidate) => candidate.id));
@@ -75,14 +77,11 @@ export function createPlayState(
       inCombat: Boolean(encounter),
       equipped,
       schoolId: character.schoolId,
-      gift:
-        (character.level ?? 1) >= 3
-          ? (() => {
-              const kit = schoolKit(world, character);
-              const gift = kit[0];
-              return gift ? { id: gift.id, name: gift.name, helpText: gift.helpText } : undefined;
-            })()
-          : undefined,
+      gift: (() => {
+        const kit = schoolKit(world, character);
+        const gift = kit[0];
+        return gift ? { id: gift.id, name: gift.name, helpText: gift.helpText } : undefined;
+      })(),
       gifts: schoolKit(world, character).map((spell) => ({
         id: spell.id,
         name: spell.name,
@@ -136,6 +135,7 @@ export function createPlayState(
         })()
       : undefined,
     conversation: conversationSnapshot(world, character),
+    ...(primer ? { primer } : {}),
     bag: itemsHeldBy(world, character.id).map((item) => ({
       id: item.id,
       name: item.name,

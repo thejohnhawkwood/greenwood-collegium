@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "unname",
+  "name": "Unname",
+  "school": "veil",
+  "tag": "control",
+  "description": "A named cut, then a weaker answer. The next blow is an authored flat −2, not a type chart.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "effect": "weaken",
+  "presentationKey": "shade-fold",
+  "pennedBy": "Mentor Mist",
+  "helpText": "cast unname",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 4
+    },
+    {
+      "focusCost": 3,
+      "damage": 5
+    },
+    {
+      "focusCost": 2,
+      "damage": 5
+    },
+    {
+      "focusCost": 2,
+      "damage": 6,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 7,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

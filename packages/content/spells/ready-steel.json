@@ -10,5 +10,26 @@
   "effect": "ready-strike",
   "minLevel": 3,
   "presentationKey": "ready-steel",
-  "helpText": "cast ready-steel"
+  "helpText": "cast ready-steel",
+  "tag": "gift",
+  "pennedBy": "Mentor Edge",
+  "ranks": [
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 1
+    },
+    {
+      "focusCost": 1,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 1,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

@@ -228,6 +228,10 @@ describe("authenticated socket identity", () => {
         templateId: "small-copper-key",
         roomId: "lantern-court",
       }),
+      expect.objectContaining({
+        templateId: "field-primer",
+        roomId: "lantern-court",
+      }),
     ]);
   });
 });

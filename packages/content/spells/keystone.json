@@ -10,5 +10,31 @@
   "damage": 6,
   "minLevel": 3,
   "presentationKey": "keystone-blow",
-  "helpText": "cast keystone"
+  "helpText": "cast keystone",
+  "tag": "strike",
+  "pennedBy": "Mentor Quern",
+  "ranks": [
+    {
+      "focusCost": 5,
+      "damage": 6
+    },
+    {
+      "focusCost": 5,
+      "damage": 7
+    },
+    {
+      "focusCost": 4,
+      "damage": 7
+    },
+    {
+      "focusCost": 4,
+      "damage": 8,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 4,
+      "damage": 9,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

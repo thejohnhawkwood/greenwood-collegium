@@ -68,6 +68,17 @@ export type LoadedEnemy = {
   loot?: string[];
 };
 
+export type LoadedSpellRank = {
+  focusCost?: number;
+  damage?: number;
+  heal?: number;
+  burningRounds?: number;
+  burningDamage?: number;
+  restoreFocus?: number;
+  insight?: string;
+  marginNote?: string;
+};
+
 export type LoadedSpell = {
   id: string;
   name: string;
@@ -77,12 +88,29 @@ export type LoadedSpell = {
   targetType: "enemy" | "self";
   context: "encounter" | "any";
   damage?: number;
-  effect?: "skip-counter" | "avoid-hit" | "heal" | "brace" | "ready-strike" | "riposte" | "insight";
+  effect?:
+    | "skip-counter"
+    | "avoid-hit"
+    | "heal"
+    | "brace"
+    | "ready-strike"
+    | "riposte"
+    | "insight"
+    | "restore-focus"
+    | "halve-hit"
+    | "weaken"
+    | "ready-spell"
+    | "leech";
   heal?: number;
   insight?: string;
   burningRounds?: number;
   burningDamage?: number;
+  restoreFocus?: number;
+  readySpellIds?: string[];
   minLevel?: number;
+  tag?: "strike" | "control" | "ward" | "gift";
+  pennedBy?: string;
+  ranks?: LoadedSpellRank[];
   presentationKey: string;
   helpText: string;
 };
@@ -98,7 +126,7 @@ export type LoadedQuest = {
   itemRewardTemplateId?: string;
   objectives: Array<{
     id: string;
-    kind: "look" | "say" | "take" | "visit" | "examine" | "talk";
+    kind: "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast";
     label: string;
     itemTemplateId?: string;
     roomId?: string;
@@ -259,7 +287,12 @@ export function toWorldState(
       insight: spell.insight,
       burningRounds: spell.burningRounds,
       burningDamage: spell.burningDamage,
+      restoreFocus: spell.restoreFocus,
+      readySpellIds: spell.readySpellIds ? [...spell.readySpellIds] : undefined,
       minLevel: spell.minLevel,
+      tag: spell.tag,
+      pennedBy: spell.pennedBy,
+      ranks: spell.ranks ? spell.ranks.map((rank) => ({ ...rank })) : undefined,
       presentationKey: spell.presentationKey,
       helpText: spell.helpText,
     };

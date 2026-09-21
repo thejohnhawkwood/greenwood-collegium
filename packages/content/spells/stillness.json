@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "stillness",
+  "name": "Stillness",
+  "school": "stone",
+  "tag": "gift",
+  "description": "The next locked door says whether it will take a key or a shoulder.",
+  "focusCost": 2,
+  "targetType": "self",
+  "context": "any",
+  "effect": "insight",
+  "insight": "You cast Stillness. The next locked door will say whether it takes a key or a shoulder.",
+  "presentationKey": "brace",
+  "pennedBy": "Mentor Quern",
+  "helpText": "cast stillness",
+  "ranks": [
+    {
+      "focusCost": 2,
+      "insight": "You cast Stillness. The next locked door will say whether it takes a key or a shoulder."
+    },
+    {
+      "focusCost": 2,
+      "insight": "You cast Stillness. The next locked door will say whether it takes a key or a shoulder."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Stillness. The next locked door will say whether it takes a key or a shoulder."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Stillness. The next locked door will say whether it takes a key or a shoulder.",
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Stillness. The next locked door will say whether it takes a key or a shoulder.",
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

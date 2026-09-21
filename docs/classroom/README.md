@@ -1,6 +1,7 @@
 # Classroom operations
 
 Start with the teacher playthrough: [`playthrough.md`](../../playthrough.md).
+Story spine for later sessions: [`../content/STORY.md`](../content/STORY.md). Arrival: [`../content/quests/arrival.md`](../content/quests/arrival.md).
 
 If you are running a class **and** changing the code the same day, read [`class-day.md`](class-day.md) first. Students play on Render. You edit on a dated class branch. Do not merge to `main` while they are connected.
 

@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "wane",
+  "name": "Wane",
+  "school": "stars",
+  "tag": "ward",
+  "description": "A dim that turns the next blow aside.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "avoid-hit",
+  "presentationKey": "night-eye",
+  "pennedBy": "Mentor Lumen",
+  "helpText": "cast wane",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "draw",
+  "name": "Draw",
+  "school": "steel",
+  "tag": "strike",
+  "description": "A cut that takes something back. You mend as it lands.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "heal": 2,
+  "effect": "leech",
+  "presentationKey": "steel-strike",
+  "pennedBy": "Mentor Edge",
+  "helpText": "cast draw",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 4,
+      "heal": 2
+    },
+    {
+      "focusCost": 3,
+      "damage": 5,
+      "heal": 2
+    },
+    {
+      "focusCost": 2,
+      "damage": 5,
+      "heal": 2
+    },
+    {
+      "focusCost": 2,
+      "damage": 6,
+      "heal": 3,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 7,
+      "heal": 3,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

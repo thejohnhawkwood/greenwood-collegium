@@ -436,10 +436,14 @@ export function validateQuests(
   namedRooms: NamedRoom[],
   namedTemplates: NamedTemplate[],
   namedQuests: NamedQuest[],
+  namedSpells: NamedSpell[] = [],
+  namedEnemyPlacements: NamedEnemyPlacement[] = [],
 ): ContentIssue[] {
   const issues: ContentIssue[] = [];
   const roomIds = new Set(namedRooms.map((named) => named.room.id));
   const itemTemplateIds = new Set(namedTemplates.map((named) => named.template.id));
+  const spellIds = new Set(namedSpells.map((named) => named.template.id));
+  const spawnIds = new Set(namedEnemyPlacements.map((named) => named.placement.id));
   const questsById = new Map<string, NamedQuest>();
   const fixtures = new Map(
     namedRooms.flatMap(({ room }) =>
@@ -490,6 +494,25 @@ export function validateQuests(
       });
     }
     for (const objective of named.template.objectives) {
+      if (
+        objective.kind === "defeat" &&
+        (!objective.targetId || !spawnIds.has(objective.targetId))
+      ) {
+        issues.push({
+          code: "missing_reference",
+          message: `${named.template.id} has an unknown defeat target: ${objective.targetId ?? "missing"}`,
+          questId: named.template.id,
+          fileName: named.fileName,
+        });
+      }
+      if (objective.kind === "cast" && (!objective.targetId || !spellIds.has(objective.targetId))) {
+        issues.push({
+          code: "missing_reference",
+          message: `${named.template.id} has an unknown cast target: ${objective.targetId ?? "missing"}`,
+          questId: named.template.id,
+          fileName: named.fileName,
+        });
+      }
       if (objective.kind === "examine" || objective.kind === "talk") {
         const target = objective.targetId ? fixtures.get(objective.targetId) : undefined;
         if (

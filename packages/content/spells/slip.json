@@ -10,5 +10,26 @@
   "effect": "avoid-hit",
   "minLevel": 3,
   "presentationKey": "veil-slip",
-  "helpText": "cast slip"
+  "helpText": "cast slip",
+  "tag": "ward",
+  "pennedBy": "Mentor Mist",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

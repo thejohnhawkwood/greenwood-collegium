@@ -163,7 +163,7 @@ Students keep Arrival progress after refresh because the classroom database stor
 
 ## The first quest
 
-Every new character starts in **Lantern Court**. Porter Bramble explains the words. The quest is **Arrival at the Collegium**.
+Every new character starts in **Lantern Court**. Porter Bramble explains the words. The quest is **Arrival at the Collegium**. Story: [`docs/content/quests/arrival.md`](docs/content/quests/arrival.md). Spine: [`docs/content/STORY.md`](docs/content/STORY.md).
 
 Type each line and press Enter. The `>` is not typed; it is the prompt.
 

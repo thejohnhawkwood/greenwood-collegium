@@ -11,5 +11,41 @@
   "burningRounds": 2,
   "burningDamage": 1,
   "presentationKey": "ember-burst",
-  "helpText": "cast ember"
+  "helpText": "cast ember",
+  "tag": "strike",
+  "pennedBy": "Mentor Cinder",
+  "ranks": [
+    {
+      "focusCost": 4,
+      "damage": 5,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 4,
+      "damage": 6,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 3,
+      "damage": 6,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 3,
+      "damage": 7,
+      "burningRounds": 2,
+      "burningDamage": 1,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "damage": 8,
+      "burningRounds": 2,
+      "burningDamage": 1,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

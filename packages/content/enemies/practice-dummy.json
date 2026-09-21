@@ -4,10 +4,10 @@
   "name": "Practice Dummy",
   "shortDescription": "A well-worn straw dummy for lessons.",
   "lookDescription": "A well-worn straw dummy, notched and patched from many lessons.",
-  "examineDescription": "The Practice Dummy is well-worn straw and patched canvas. Chalk circles mark the chest. Flint set it here so you can finish a fight without guessing. When it falls, it stays down for this lesson.",
+  "examineDescription": "The Practice Dummy is well-worn straw and patched canvas. Chalk circles mark the chest. It stays up after a win so later lessons can still hit it. Dummy work does not grant a lesson.",
   "maxHealth": 8,
   "maxFocus": 6,
   "attack": 2,
-  "experience": 5,
+  "experience": 0,
   "loot": ["straw-practice-scrap"]
 }

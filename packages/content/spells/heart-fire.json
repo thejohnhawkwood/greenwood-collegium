@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "heart-fire",
+  "name": "Heart-Fire",
+  "school": "ember",
+  "tag": "gift",
+  "description": "Keep a live flame. Restore focus from fire you did not spend.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "any",
+  "effect": "restore-focus",
+  "restoreFocus": 4,
+  "presentationKey": "ember-burst",
+  "pennedBy": "Mentor Cinder",
+  "helpText": "cast heart-fire",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "restoreFocus": 4
+    },
+    {
+      "focusCost": 3,
+      "restoreFocus": 5
+    },
+    {
+      "focusCost": 2,
+      "restoreFocus": 5
+    },
+    {
+      "focusCost": 2,
+      "restoreFocus": 6,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "restoreFocus": 6,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

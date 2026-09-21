@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "quarry",
+  "name": "Quarry",
+  "school": "stone",
+  "tag": "strike",
+  "description": "A slower, harder hit. Higher focus. Higher damage.",
+  "focusCost": 5,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 8,
+  "presentationKey": "keystone",
+  "pennedBy": "Mentor Quern",
+  "helpText": "cast quarry",
+  "ranks": [
+    {
+      "focusCost": 5,
+      "damage": 8
+    },
+    {
+      "focusCost": 5,
+      "damage": 9
+    },
+    {
+      "focusCost": 4,
+      "damage": 9
+    },
+    {
+      "focusCost": 4,
+      "damage": 10,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 4,
+      "damage": 11,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

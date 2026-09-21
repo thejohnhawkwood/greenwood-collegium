@@ -9,6 +9,7 @@ import {
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { conversationChoice, dialogueBeat, treeNode } from "./conversation.js";
 import { replyToDuelChallenge } from "./duel.js";
+import { applyPrimerChoiceIfPending } from "./primer.js";
 import { isSchoolId, sendToSchoolHearth } from "./schools.js";
 import { charactersInRoom } from "./occupants.js";
 import type { OccupantNotice } from "./presence-events.js";
@@ -60,6 +61,10 @@ export function handleSay(world: WorldState, intent: SayIntent, runtime: EngineR
       return { ok: false, code: "empty_say", message: duel.message };
     }
     return { ok: true, events: duel.events, notices: duel.notices };
+  }
+  const primer = applyPrimerChoiceIfPending(world, character, intent.text, runtime);
+  if (primer) {
+    return { ok: true, events: primer, notices: [] };
   }
   const reply = replyToOpenConversation(world, character.id, intent.text, runtime);
   if (reply) {

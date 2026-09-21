@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "transit",
+  "name": "Transit",
+  "school": "stars",
+  "tag": "control",
+  "description": "The point lands first. They cannot answer.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 3,
+  "effect": "skip-counter",
+  "presentationKey": "azimuth",
+  "pennedBy": "Mentor Lumen",
+  "helpText": "cast transit",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 3
+    },
+    {
+      "focusCost": 3,
+      "damage": 4
+    },
+    {
+      "focusCost": 2,
+      "damage": 4
+    },
+    {
+      "focusCost": 2,
+      "damage": 5,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 6,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

@@ -2,30 +2,31 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-veil",
   "title": "First Lessons: the Veil",
-  "introNarration": "Mentor Mist does not fill the silence. Pale curtains take the light and give it back in pieces. The dark mirror waits where a first-year will want to look too long. \"Look this hearth. Name what moved. Then find Flint in the South Orchard. Attack the dummy once. Come back.\"",
-  "reminderNarration": "Silence keeps well. Look the Hearth of the Veil — the mirror, the path that will not go straight. Visit the South Orchard. Attack the dummy. Then talk Mist.",
-  "completionNarration": "Mist almost smiles. The Veil has your name, if not yet your silence. The kit is open. Alder waits in the High Study with a question about the bell below.",
-  "experienceReward": 10,
+  "introNarration": "Mentor Mist keeps the hearth dummy in sight. Pale curtains take the light and give it back in pieces. The air smells of cold stone and a little crushed lavender. \"Look around this hearth. The mirror is only a mirror until you waste time in it. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will ink three leaves in your Field Primer.\"",
+  "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Mist. She has not filled the silence for you.",
+  "completionNarration": "Mist inks three starter leaves at rank 1. The Primer's new lines are quiet on the page. The next lesson will ask you to cast.",
+  "experienceReward": 15,
   "objectives": [
     {
       "id": "look-hearth",
       "kind": "look",
-      "label": "Look around the Hearth of the Veil.",
+      "label": "Look around the hearth.",
       "roomId": "hearth-veil"
     },
     {
-      "id": "visit-orchard",
-      "kind": "visit",
-      "label": "Visit the South Orchard.",
-      "roomId": "south-orchard",
+      "id": "defeat-dummy",
+      "kind": "defeat",
+      "label": "Defeat the hearth dummy.",
+      "targetId": "enemy-practice-dummy-hearth-veil",
+      "roomId": "hearth-veil",
       "requires": ["look-hearth"]
     },
     {
       "id": "report",
       "kind": "talk",
-      "label": "Return and talk Mentor Mist.",
+      "label": "Return and talk to Mentor Mist.",
       "targetId": "npc-mentor-mist",
-      "requires": ["visit-orchard"]
+      "requires": ["defeat-dummy"]
     }
   ]
 }

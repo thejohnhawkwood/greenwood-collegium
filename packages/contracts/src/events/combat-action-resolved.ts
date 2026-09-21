@@ -13,6 +13,7 @@ export const combatActionResolvedPayloadSchema = z.object({
   targetId: z.string().min(1),
   targetName: z.string().min(1),
   damage: z.number().int().nonnegative(),
+  heal: z.number().int().positive().optional(),
   targetHealth: z.number().int().nonnegative(),
   targetMaxHealth: z.number().int().positive(),
 });
@@ -35,7 +36,8 @@ export function formatCombatActionResolvedText(payload: CombatActionResolvedPayl
     return "You break from the lesson.";
   }
   if (payload.verb === "cast" && payload.spellName) {
-    return `You cast ${payload.spellName} at the ${payload.targetName} for ${String(payload.damage)}. It has ${String(payload.targetHealth)} remaining.`;
+    const mend = payload.heal ? ` You mend ${String(payload.heal)}.` : "";
+    return `You cast ${payload.spellName} at the ${payload.targetName} for ${String(payload.damage)}.${mend} It has ${String(payload.targetHealth)} remaining.`;
   }
   if (payload.actorKind === "player") {
     return `You strike the ${payload.targetName} for ${String(payload.damage)}. It has ${String(payload.targetHealth)} remaining.`;

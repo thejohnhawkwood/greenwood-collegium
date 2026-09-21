@@ -23,12 +23,17 @@ import {
   type ItemInstanceRecord,
   type ItemInstanceRepository,
   type ItemPlacementSeed,
+  type KnownSpellRecord,
+  type PendingPrimerRecord,
   type QuestProgressRecord,
   type QuestProgressRepository,
   type SessionRecord,
   type SessionRepository,
   resolveDefeatedSpawnIds,
   resolveDiscoveredRoomIds,
+  resolveKnownSpells,
+  resolvePendingPrimer,
+  resolvePrimerAwardedLevels,
   type UpdateCharacterCreationInput,
 } from "./types.js";
 import {
@@ -141,6 +146,8 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       roomId: input.roomId,
       discoveredRoomIds: resolveDiscoveredRoomIds([input.roomId], input.roomId),
       defeatedSpawnIds: [],
+      knownSpells: [],
+      primerAwardedLevels: [],
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -160,6 +167,9 @@ export class InMemoryCharacterRepository implements CharacterRepository {
             character.roomId,
           ),
           defeatedSpawnIds: resolveDefeatedSpawnIds(character.defeatedSpawnIds),
+          knownSpells: resolveKnownSpells(character.knownSpells),
+          pendingPrimerChoices: resolvePendingPrimer(character.pendingPrimerChoices),
+          primerAwardedLevels: resolvePrimerAwardedLevels(character.primerAwardedLevels),
         }
       : undefined;
   }
@@ -178,6 +188,9 @@ export class InMemoryCharacterRepository implements CharacterRepository {
         ...character,
         discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
         defeatedSpawnIds: resolveDefeatedSpawnIds(character.defeatedSpawnIds),
+        knownSpells: resolveKnownSpells(character.knownSpells),
+        pendingPrimerChoices: resolvePendingPrimer(character.pendingPrimerChoices),
+        primerAwardedLevels: resolvePrimerAwardedLevels(character.primerAwardedLevels),
       }));
   }
 
@@ -252,6 +265,27 @@ export class InMemoryCharacterRepository implements CharacterRepository {
     this.byId.set(id, {
       ...character,
       defeatedSpawnIds: resolveDefeatedSpawnIds(defeatedSpawnIds),
+      updatedAt: new Date(),
+    });
+  }
+
+  async updatePrimer(
+    id: string,
+    input: {
+      knownSpells: readonly KnownSpellRecord[];
+      pendingPrimerChoices?: PendingPrimerRecord;
+      primerAwardedLevels: readonly number[];
+    },
+  ): Promise<void> {
+    const character = this.byId.get(id);
+    if (!character) {
+      return;
+    }
+    this.byId.set(id, {
+      ...character,
+      knownSpells: resolveKnownSpells(input.knownSpells),
+      pendingPrimerChoices: resolvePendingPrimer(input.pendingPrimerChoices),
+      primerAwardedLevels: resolvePrimerAwardedLevels(input.primerAwardedLevels),
       updatedAt: new Date(),
     });
   }

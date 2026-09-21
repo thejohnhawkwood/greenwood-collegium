@@ -28,13 +28,48 @@ export const spellTemplateSchema = z
     context: z.enum(["encounter", "any"]),
     damage: z.number().int().nonnegative().optional(),
     effect: z
-      .enum(["skip-counter", "avoid-hit", "heal", "brace", "ready-strike", "riposte", "insight"])
+      .enum([
+        "skip-counter",
+        "avoid-hit",
+        "heal",
+        "brace",
+        "ready-strike",
+        "riposte",
+        "insight",
+        "restore-focus",
+        "halve-hit",
+        "weaken",
+        "ready-spell",
+        "leech",
+      ])
       .optional(),
     heal: z.number().int().positive().optional(),
     insight: z.string().min(1).optional(),
     burningRounds: z.number().int().positive().optional(),
     burningDamage: z.number().int().positive().optional(),
+    restoreFocus: z.number().int().positive().optional(),
+    readySpellIds: z.array(stableIdSchema).min(1).optional(),
     minLevel: z.number().int().positive().optional(),
+    tag: z.enum(["strike", "control", "ward", "gift"]).optional(),
+    pennedBy: z.string().min(1).optional(),
+    ranks: z
+      .array(
+        z
+          .object({
+            focusCost: z.number().int().nonnegative().optional(),
+            damage: z.number().int().nonnegative().optional(),
+            heal: z.number().int().positive().optional(),
+            burningRounds: z.number().int().positive().optional(),
+            burningDamage: z.number().int().positive().optional(),
+            restoreFocus: z.number().int().positive().optional(),
+            insight: z.string().min(1).optional(),
+            marginNote: z.string().min(1).optional(),
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(5)
+      .optional(),
     presentationKey: z.string().min(1),
     helpText: z.string().min(1),
   })
@@ -47,6 +82,17 @@ export const spellTemplateSchema = z
     rejectMarkup(spell.presentationKey, "presentationKey", ctx);
     if (spell.insight) {
       rejectMarkup(spell.insight, "insight", ctx);
+    }
+    if (spell.pennedBy) {
+      rejectMarkup(spell.pennedBy, "pennedBy", ctx);
+    }
+    for (const rank of spell.ranks ?? []) {
+      if (rank.insight) {
+        rejectMarkup(rank.insight, "insight", ctx);
+      }
+      if (rank.marginNote) {
+        rejectMarkup(rank.marginNote, "marginNote", ctx);
+      }
     }
   });
 

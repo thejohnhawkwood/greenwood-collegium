@@ -4,13 +4,14 @@ import { handleCast } from "./cast.js";
 import { createPlayState } from "./play-state.js";
 import type { EngineRuntime, SpellTemplate, WorldState } from "./state.js";
 
-function runtime(): EngineRuntime {
+function runtime(random?: () => number): EngineRuntime {
   let sequence = 0;
   let events = 0;
   return {
     now: () => new Date("2026-09-16T19:00:00.000Z"),
     nextEventId: () => `evt-kit-${String((events += 1))}`,
     nextSequence: () => (sequence += 1),
+    ...(random ? { random } : {}),
   };
 }
 
@@ -39,6 +40,11 @@ function orchardWorld(): WorldState {
         discoveredRoomIds: ["south-orchard"],
         schoolId: "steel",
         level: 3,
+        knownSpells: [
+          { spellId: "strike", rank: 1, pennedBy: "Mentor Edge" },
+          { spellId: "riposte", rank: 1, pennedBy: "Mentor Edge" },
+          { spellId: "ready-steel", rank: 1, pennedBy: "Mentor Edge" },
+        ],
         health: 20,
         maxHealth: 20,
         focus: 10,
@@ -97,6 +103,21 @@ function orchardWorld(): WorldState {
         minLevel: 3,
         presentationKey: "ready-steel",
         helpText: "cast ready-steel",
+      }),
+      draw: spell({
+        id: "draw",
+        name: "Draw",
+        school: "steel",
+        description: "A cut that takes something back.",
+        focusCost: 3,
+        targetType: "enemy",
+        context: "encounter",
+        damage: 4,
+        heal: 2,
+        effect: "leech",
+        minLevel: 3,
+        presentationKey: "steel-strike",
+        helpText: "cast draw",
       }),
       bind: spell({
         id: "bind",
@@ -179,6 +200,9 @@ describe("level-three School kit", () => {
     const world = orchardWorld();
     const clock = runtime();
     world.characters["char-rowan"]!.schoolId = "thorn";
+    world.characters["char-rowan"]!.knownSpells = [
+      { spellId: "bind", rank: 1, pennedBy: "Mentor Briar" },
+    ];
     world.characters["char-rowan"]!.focus = 10;
     handleCast(
       world,
@@ -196,6 +220,9 @@ describe("level-three School kit", () => {
     ).toBe(true);
 
     world.characters["char-rowan"]!.schoolId = "steel";
+    world.characters["char-rowan"]!.knownSpells = [
+      { spellId: "ready-steel", rank: 1, pennedBy: "Mentor Edge" },
+    ];
     world.characters["char-rowan"]!.focus = 10;
     expect(
       handleCast(world, { verb: "cast", characterId: "char-rowan", spell: "ready-steel" }, clock)
@@ -211,6 +238,9 @@ describe("level-three School kit", () => {
     const world = orchardWorld();
     const clock = runtime();
     world.characters["char-rowan"]!.schoolId = "thorn";
+    world.characters["char-rowan"]!.knownSpells = [
+      { spellId: "greenstitch", rank: 1, pennedBy: "Mentor Briar" },
+    ];
     world.characters["char-rowan"]!.health = 8;
     const mend = handleCast(
       world,
@@ -220,6 +250,9 @@ describe("level-three School kit", () => {
     expect(mend.ok).toBe(true);
     expect(world.characters["char-rowan"]?.health).toBe(14);
     world.characters["char-rowan"]!.schoolId = "stars";
+    world.characters["char-rowan"]!.knownSpells = [
+      { spellId: "night-eye", rank: 1, pennedBy: "Mentor Lumen" },
+    ];
     world.characters["char-rowan"]!.focus = 10;
     const insight = handleCast(
       world,
@@ -230,5 +263,42 @@ describe("level-three School kit", () => {
     expect(insight.ok && insight.events.some((event) => event.narration.includes("turning"))).toBe(
       true,
     );
+  });
+
+  it("lets Draw cut and mend on the same hit", () => {
+    const world = orchardWorld();
+    const clock = runtime(() => 0.5);
+    world.characters["char-rowan"]!.knownSpells = [
+      { spellId: "draw", rank: 1, pennedBy: "Mentor Edge" },
+    ];
+    world.characters["char-rowan"]!.health = 11;
+    world.characters["char-rowan"]!.focus = 10;
+    handleCast(
+      world,
+      { verb: "cast", characterId: "char-rowan", spell: "draw", target: "dummy" },
+      clock,
+    );
+    const cut = handleCast(
+      world,
+      { verb: "cast", characterId: "char-rowan", spell: "draw" },
+      clock,
+    );
+    expect(cut.ok).toBe(true);
+    const strike = cut.ok
+      ? cut.events.find(
+          (event) => event.type === "combat.action_resolved" && event.payload.verb === "cast",
+        )
+      : undefined;
+    expect(strike?.payload).toMatchObject({ damage: 4, heal: 2, targetHealth: 16 });
+    expect(world.characters["char-rowan"]?.health).toBe(11);
+    expect(
+      world.encounters?.[world.characters["char-rowan"]?.encounterId ?? ""]?.enemy.health,
+    ).toBe(16);
+    expect(
+      cut.ok &&
+        cut.events.some((event) =>
+          event.narration.includes("You cast Draw at the Practice Dummy for 4. You mend 2."),
+        ),
+    ).toBe(true);
   });
 });

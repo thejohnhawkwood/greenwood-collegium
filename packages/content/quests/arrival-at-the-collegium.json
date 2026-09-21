@@ -2,7 +2,7 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "arrival-at-the-collegium",
   "title": "Arrival at the Collegium",
-  "introNarration": "A sturdy hedgehog in a worn porter's coat steps out from the lanterns, whistle on a leather cord, quills neat as a roll-call. Blue lanterns drift between the oak leaves like stars that have come down to listen, and the mossy well at the roots waits with a bucket for anyone who has been practicing too hard. Porter Bramble names the first words: look, then help.",
+  "introNarration": "A sturdy hedgehog in a worn porter's coat steps out from the lanterns, whistle on a leather cord, quills neat as a roll-call. Blue lanterns hang in the oak like cold glass stars, and the mossy well at the roots waits with a bucket for anyone who has been practicing too hard. Porter Bramble names the first words: look, then help.",
   "reminderNarration": "Porter Bramble stays at your side until Arrival is finished. The lanterns still drift. The well is still cold. Type look, say hello, take key, then north to the Great Hall.",
   "experienceReward": 10,
   "objectives": [

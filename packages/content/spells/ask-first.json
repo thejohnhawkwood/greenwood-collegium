@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "ask-first",
+  "name": "Ask-First",
+  "school": "thorn",
+  "tag": "gift",
+  "description": "The next living fixture names whether it will cut or feed.",
+  "focusCost": 2,
+  "targetType": "self",
+  "context": "any",
+  "effect": "insight",
+  "insight": "You cast Ask-First. The next living fixture will name whether it cuts or feeds.",
+  "presentationKey": "greenstitch",
+  "pennedBy": "Mentor Briar",
+  "helpText": "cast ask-first",
+  "ranks": [
+    {
+      "focusCost": 2,
+      "insight": "You cast Ask-First. The next living fixture will name whether it cuts or feeds."
+    },
+    {
+      "focusCost": 2,
+      "insight": "You cast Ask-First. The next living fixture will name whether it cuts or feeds."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Ask-First. The next living fixture will name whether it cuts or feeds."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Ask-First. The next living fixture will name whether it cuts or feeds.",
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Ask-First. The next living fixture will name whether it cuts or feeds.",
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

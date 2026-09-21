@@ -60,7 +60,7 @@ describe("bundled examine targets", () => {
       code: "item_not_found",
     });
     if (!dummyInCourt.ok) {
-      expect(dummyInCourt.message).toContain("South Orchard");
+      expect(dummyInCourt.message).toMatch(/dummy/i);
     }
 
     expect(

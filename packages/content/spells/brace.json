@@ -10,5 +10,26 @@
   "effect": "brace",
   "minLevel": 3,
   "presentationKey": "stone-brace",
-  "helpText": "cast brace"
+  "helpText": "cast brace",
+  "tag": "ward",
+  "pennedBy": "Mentor Quern",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

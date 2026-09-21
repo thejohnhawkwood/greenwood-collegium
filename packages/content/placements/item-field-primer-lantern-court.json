@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/placement.schema.json",
+  "id": "item-field-primer-lantern-court",
+  "templateId": "field-primer",
+  "roomId": "lantern-court",
+  "starterPerCharacter": true
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "oath-edge",
+  "name": "Oath-Edge",
+  "school": "steel",
+  "tag": "strike",
+  "description": "A held cut that costs more focus and lands more.",
+  "focusCost": 5,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 9,
+  "presentationKey": "steel-strike",
+  "pennedBy": "Mentor Edge",
+  "helpText": "cast oath-edge",
+  "ranks": [
+    {
+      "focusCost": 5,
+      "damage": 9
+    },
+    {
+      "focusCost": 5,
+      "damage": 10
+    },
+    {
+      "focusCost": 4,
+      "damage": 10
+    },
+    {
+      "focusCost": 4,
+      "damage": 11,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 4,
+      "damage": 12,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

@@ -3,12 +3,50 @@
   "id": "flare",
   "name": "Flare",
   "school": "stars",
-  "description": "A brief named light that lands harder than a spark.",
+  "description": "Named light that lands and stays. The afterglow keeps working.",
   "focusCost": 4,
   "targetType": "enemy",
   "context": "encounter",
-  "damage": 6,
+  "damage": 4,
+  "burningRounds": 2,
+  "burningDamage": 1,
   "minLevel": 3,
   "presentationKey": "stars-flare",
-  "helpText": "cast flare"
+  "helpText": "cast flare",
+  "tag": "strike",
+  "pennedBy": "Mentor Lumen",
+  "ranks": [
+    {
+      "focusCost": 4,
+      "damage": 4,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 4,
+      "damage": 5,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 3,
+      "damage": 5,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 3,
+      "damage": 6,
+      "burningRounds": 2,
+      "burningDamage": 1,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "damage": 7,
+      "burningRounds": 2,
+      "burningDamage": 1,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

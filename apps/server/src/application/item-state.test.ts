@@ -32,6 +32,11 @@ describe("item-state starter copies", () => {
         templateId: "small-copper-key",
         roomId: "lantern-court",
       },
+      {
+        id: starterInstanceId("item-field-primer-lantern-court", "char-rowan"),
+        templateId: "field-primer",
+        roomId: "lantern-court",
+      },
     ]);
     expect((await items.list()).some((record) => record.id === personalId)).toBe(true);
 

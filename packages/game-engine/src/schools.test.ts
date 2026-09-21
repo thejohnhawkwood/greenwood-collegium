@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { progressQuests } from "./arrival.js";
+import { handleAttack } from "./attack.js";
 import { handleCast } from "./cast.js";
-import { handleMove } from "./move.js";
 import { handleSay } from "./say.js";
 import { handleTalk } from "./talk.js";
 import { handleJoin } from "./presence.js";
@@ -53,10 +52,7 @@ function world(): WorldState {
         shortDescription: "Anvils.",
         longDescription: "Mail.",
         zone: "schools",
-        exits: [
-          { direction: "up", toRoomId: "headmaster-study" },
-          { direction: "south", toRoomId: "south-orchard" },
-        ],
+        exits: [{ direction: "up", toRoomId: "headmaster-study" }],
         fixtures: [
           {
             id: "npc-mentor-edge",
@@ -79,28 +75,19 @@ function world(): WorldState {
           },
         ],
       },
-      "south-orchard": {
-        id: "south-orchard",
-        title: "South Orchard",
-        shortDescription: "Apples.",
-        longDescription: "A dummy waits.",
-        zone: "grounds",
-        exits: [{ direction: "north", toRoomId: "hearth-steel" }],
-        fixtures: [],
-      },
     },
     characters: {},
     items: {},
     enemies: {
-      "enemy-practice-dummy-south-orchard": {
-        id: "enemy-practice-dummy-south-orchard",
+      "enemy-practice-dummy-hearth-steel": {
+        id: "enemy-practice-dummy-hearth-steel",
         templateId: "practice-dummy",
         name: "Practice Dummy",
         examineDescription: "Straw.",
-        roomId: "south-orchard",
+        roomId: "hearth-steel",
         maxHealth: 8,
         attack: 1,
-        experience: 1,
+        experience: 0,
       },
     },
     spells: {
@@ -123,16 +110,17 @@ function world(): WorldState {
         id: "first-lessons-steel",
         title: "First Lessons: Steel",
         introNarration: "Edge sets your first work.",
-        reminderNarration: "Look, visit the orchard, talk Edge.",
+        reminderNarration: "Look, defeat the dummy, talk Edge.",
         completionNarration: "Steel has your name.",
-        experienceReward: 10,
+        experienceReward: 15,
         objectives: [
           { id: "look-hearth", kind: "look", label: "Look the hearth.", roomId: "hearth-steel" },
           {
-            id: "visit-orchard",
-            kind: "visit",
-            label: "Visit the orchard.",
-            roomId: "south-orchard",
+            id: "defeat-dummy",
+            kind: "defeat",
+            label: "Defeat the hearth dummy.",
+            targetId: "enemy-practice-dummy-hearth-steel",
+            roomId: "hearth-steel",
             requires: ["look-hearth"],
           },
           {
@@ -140,7 +128,23 @@ function world(): WorldState {
             kind: "talk",
             label: "Talk Edge.",
             targetId: "npc-mentor-edge",
-            requires: ["visit-orchard"],
+            requires: ["defeat-dummy"],
+          },
+        ],
+      },
+      "second-lessons-steel": {
+        id: "second-lessons-steel",
+        title: "Second Lessons: Steel",
+        introNarration: "Cast strike.",
+        reminderNarration: "Cast strike, talk Edge.",
+        experienceReward: 20,
+        objectives: [
+          {
+            id: "cast-starter",
+            kind: "cast",
+            label: "Cast strike.",
+            targetId: "strike",
+            roomId: "hearth-steel",
           },
         ],
       },
@@ -164,7 +168,7 @@ function world(): WorldState {
 }
 
 describe("school hearth after a choice", () => {
-  it("lands a Steel pick in the hearth and tracks first lessons to the dummy and back", () => {
+  it("lands a Steel pick in the hearth and inks three leaves after the hearth dummy", () => {
     const realm = world();
     const clock = runtime();
     expect(
@@ -189,14 +193,14 @@ describe("school hearth after a choice", () => {
     expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.completedObjectiveIds).toEqual([
       "look-hearth",
     ]);
-    handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "south" }, clock);
-    progressQuests(realm, { characterId: "char-rowan", kind: "move" }, clock);
-    expect(realm.characters["char-rowan"]?.roomId).toBe("south-orchard");
+    handleAttack(realm, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
+    handleAttack(realm, { verb: "attack", characterId: "char-rowan" }, clock);
+    const win = handleAttack(realm, { verb: "attack", characterId: "char-rowan" }, clock);
+    expect(win.ok && win.outcome).toBe("victory");
     expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.completedObjectiveIds).toEqual([
       "look-hearth",
-      "visit-orchard",
+      "defeat-dummy",
     ]);
-    handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "north" }, clock);
     const reported = handleTalk(
       realm,
       { verb: "talk", characterId: "char-rowan", target: "edge" },
@@ -209,8 +213,14 @@ describe("school hearth after a choice", () => {
       npcId: "npc-mentor-edge",
       nodeId: "lessons-done",
     });
-    expect(realm.characters["char-rowan"]?.experience).toBe(20);
+    expect(realm.characters["char-rowan"]?.experience).toBe(25);
     expect(realm.characters["char-rowan"]?.level).toBe(3);
+    expect(realm.characters["char-rowan"]?.knownSpells).toEqual([
+      { spellId: "strike", rank: 1, pennedBy: "Mentor Edge" },
+      { spellId: "riposte", rank: 1, pennedBy: "Mentor Edge" },
+      { spellId: "ready-steel", rank: 1, pennedBy: "Mentor Edge" },
+    ]);
+    expect(realm.quests?.["char-rowan"]?.["second-lessons-steel"]?.status).toBe("active");
     expect(
       reported.ok && reported.events.some((event) => event.narration.includes("cast strike")),
     ).toBe(true);
@@ -220,7 +230,6 @@ describe("school hearth after a choice", () => {
     expect(
       reported.ok && reported.events.some((event) => event.narration.includes("bell below")),
     ).toBe(true);
-    handleMove(realm, { verb: "move", characterId: "char-rowan", direction: "south" }, clock);
     expect(
       handleCast(
         realm,
@@ -230,7 +239,7 @@ describe("school hearth after a choice", () => {
     ).toBe(true);
   });
 
-  it("keeps a School gift locked until the third year-mark", () => {
+  it("keeps a School gift locked until the Primer inks it", () => {
     const realm = world();
     const clock = runtime();
     expect(
@@ -240,7 +249,7 @@ describe("school hearth after a choice", () => {
           verb: "join",
           characterId: "char-rowan",
           name: "Rowan",
-          roomId: "south-orchard",
+          roomId: "hearth-steel",
           schoolId: "steel",
           level: 2,
         },

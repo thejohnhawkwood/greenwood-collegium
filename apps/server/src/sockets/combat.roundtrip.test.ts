@@ -1,7 +1,6 @@
 import {
   combatEndedEventSchema,
   eventEnvelopeSchema,
-  experienceGainedEventSchema,
   type EventEnvelope,
 } from "@greenwood/contracts";
 import { afterEach, describe, expect, it } from "vitest";
@@ -91,10 +90,7 @@ describe("combat socket round trip", () => {
     }
     expect(combatEndedEventSchema.parse(ended).payload.outcome).toBe("victory");
     const xp = events.find((event) => event.type === "progress.experience_gained");
-    expect(xp).toBeDefined();
-    if (xp) {
-      expect(experienceGainedEventSchema.parse(xp).narration).toBe("You gain 5 experience.");
-    }
+    expect(xp).toBeUndefined();
     expect(events.some((event) => event.type === "combat.started")).toBe(true);
     expect(events.some((event) => event.type === "combat.turn_started")).toBe(true);
     expect(events.some((event) => event.type === "combat.action_resolved")).toBe(true);

@@ -5,6 +5,9 @@ import {
   ensurePlayerVitals,
 } from "./combat-state.js";
 import { itemsHeldBy, worldItems } from "./items.js";
+import { knownLeaves } from "./primer.js";
+import { experienceToNextLesson } from "./progression.js";
+import { SCHOOL_TITLE } from "./schools.js";
 import type { EngineRuntime, StatsIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
@@ -49,10 +52,20 @@ export function handleStats(
   const focus = character.focus ?? DEFAULT_PLAYER_MAX_FOCUS;
   const maxFocus = character.maxFocus ?? DEFAULT_PLAYER_MAX_FOCUS;
   const held = heldItemName(world, character.id, character.equippedItemId);
+  const lesson = character.level ?? 1;
+  const remaining = experienceToNextLesson(lesson, character.experience ?? 0);
+  const school = character.schoolId ? SCHOOL_TITLE[character.schoolId] : "none yet";
+  const leaves = knownLeaves(character).length;
+  const nextLesson =
+    remaining === undefined
+      ? "Next lesson: the Primer is as full as a 1–20 career allows."
+      : `Next lesson: ${String(remaining)} experience to lesson ${String(lesson + 1)}`;
   const narration = [
     `Health: ${String(health)}/${String(maxHealth)}`,
     `Focus: ${String(focus)}/${String(maxFocus)}`,
-    `Level: ${String(character.level ?? 1)}`,
+    `School: ${school}`,
+    `Primer: ${String(leaves)} ${leaves === 1 ? "leaf" : "leaves"}`,
+    nextLesson,
     `Location: ${room.title}`,
     `Equipped: ${held}`,
   ].join("\n");

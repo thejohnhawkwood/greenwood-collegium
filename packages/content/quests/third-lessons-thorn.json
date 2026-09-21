@@ -1,0 +1,24 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "third-lessons-thorn",
+  "title": "Alder's Leave: Thorns",
+  "introNarration": "Briar wipes sap from the shears and sends you to Alder. The trellis ticks as if it were counting. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
+  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Briar. The living walls have not forgotten you.",
+  "completionNarration": "College lessons in this hearth are complete. Briar inks the leave in the Primer. Keep the book. Each new lesson opens three leaves. Eat something warm before you take a cold road.",
+  "experienceReward": 25,
+  "objectives": [
+    {
+      "id": "talk-alder",
+      "kind": "talk",
+      "label": "Talk to Headmaster Alder.",
+      "targetId": "npc-headmaster-alder"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Return and talk to Mentor Briar.",
+      "targetId": "npc-mentor-briar",
+      "requires": ["talk-alder"]
+    }
+  ]
+}

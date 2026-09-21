@@ -3,7 +3,7 @@
   "id": "hearth-ember",
   "title": "Hearth of Ember",
   "shortDescription": "Banked coals keep a copper grate honest.",
-  "longDescription": "The Hearth of Ember smells of soot, warm metal, and the ghost of last night's oatcakes left too near the coals. A copper grate holds a low fire that does not waste itself. Tongs hang in a row, blackened at the tips. Clay pots of sand wait for the lesson that comes after a spark gets ideas.\nMentor Cinder stands where the heat is useful, not where it is pretty.",
+  "longDescription": "The Hearth of Ember smells of soot, warm metal, and the ghost of last night's oatcakes left too near the coals. A copper grate holds a low fire that does not waste itself. Tongs hang in a row, blackened at the tips. Clay pots of sand wait for the lesson that comes after a spark gets ideas.\nMentor Cinder stands where the heat is useful, not where it is pretty.\nA straw hearth dummy stands where a lesson can be finished without guessing.",
   "zone": "schools",
   "map": {
     "x": 5,
@@ -30,26 +30,46 @@
       "kind": "npc",
       "lookDescription": "A soot-stained stoat in a leather apron, copper-bright eyes, tongs at the belt. Try talk cinder.",
       "examineDescription": "Cinder's whiskers are singed at the tips. The apron is older than most first-years and smells of honest smoke. She treats fire as a tool that will bite the careless and feed the careful.",
-      "dialogue": "\"Ember is a craft, not a bonfire. Look this hearth — the grate, the sand, the way the coals keep their manners. Find Flint in the South Orchard. Come back when you have seen the dummy.\"",
+      "dialogue": "\"Look around this hearth. Smell the soot. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Cinder. Come in from the hall and take the heat properly — not so close you singe your whiskers, not so far you learn nothing. Ember teaches heat you can spend and heat you can keep. Look this hearth. Name the fire before you feed it. Then walk to the South Orchard, where the apple trees lean over Flint's clearing and the dummy waits in a straw hat that has survived more lessons than anyone can explain. Attack it once. Come back and talk to me. I will still be here, and the coals will still be behaving.\"",
+            "text": "\"The grate ticks, and last night's oatcakes were left too near the coals again. Look around this hearth. Name the fire before you feed it. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
             "choices": [
-              { "say": "1", "label": "What does Ember ask of me?", "next": "craft" },
-              { "say": "2", "label": "I will go.", "next": "go" }
+              {
+                "say": "1",
+                "label": "What does the Primer ask?",
+                "next": "craft"
+              },
+              {
+                "say": "2",
+                "label": "I will go.",
+                "next": "go"
+              }
             ]
           },
           "craft": {
-            "text": "\"A spark is not a victory. A spark is a beginning — the first bright thought in a dark grate. You will learn to spend fire without wasting the room, without filling the hall with smoke and panic. First you learn to stand still and look. Then you learn to hit a thing that is meant to be hit. Flint's dummy does not lie about whether you connected. That is a kinder teacher than a classmate who did not agree to be struck.\"",
-            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+            "text": "\"The Field Primer is your book, not a decoration. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. Do not skip the dummy. Fire that is not named will bite.\"",
+            "choices": [
+              {
+                "say": "1",
+                "label": "I understand.",
+                "next": "go"
+              }
+            ]
           },
           "go": {
-            "text": "\"Look the grate. Feel the warmth that stays in the copper. Then find the orchard — south of Lantern Court, under the crooked apple boughs. I will be here when you return, tongs in reach and sand ready if you come back with ideas.\""
+            "text": "\"Look around this hearth. Defeat the dummy. I will be here by the grate. The tongs stay hot. So do I.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard, and the dummy has already forgotten the blow, as a good dummy should. Ember has your name, and your kit is open. Alder waits in the High Study with a question about the bell below — the old note that rolls through these stones like a cart over wet cobbles. Go up when you are ready. Eat something first if the smoke has made you light-headed.\""
+            "text": "\"The three starter leaves are inked. Cast ember at the hearth dummy for the second lesson — a sheltered coal, not a show. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+          },
+          "third-lesson": {
+            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+          },
+          "third-done": {
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Eat something warm before you take a cold road.\""
           }
         }
       }
