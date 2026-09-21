@@ -4,14 +4,13 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **HEAD / live:** `67c0fe0` on `main` (21 September 2026 East Watch merge, PR #66). CI green. Render deploy success. `/health/ready` ok. Bundle `index-DQfBwXXC.js`. East Watch rooms return 200 (`/art/rooms/moor-track.png`).
+- **HEAD / live:** `f8632c9` on `main` (21 September 2026 East Watch flavour, PR #67). CI green. Render deploy success. `/health/ready` ok. Bundle `index-B-DE0noB.js`. Peat-adder, rubbing, and kitchens tin plates return 200.
 - **Release target:** v0.0 foundation (forty-six mapped rooms, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits, Field Primer, East Watch)
-- **Shipped on this HEAD:** Field Primer ranks 1–5 (ADR-0039). East Watch after Sleeps (eight moor rooms, Wren chain, Fog Walker as a three-Collegian boss). Unique plates: 40 room paintings, Wren + three moor foes, Holm/moor objects. Chroma key is `#EE3173` only.
-- **This branch (`east-watch-flavour`):** lock narration on story foes; killable peat-adder; takeable abbey-mark rubbing; kitchens bread-tin memorial. Not live until merged.
+- **Shipped on this HEAD:** Field Primer ranks 1–5 (ADR-0039). East Watch after Sleeps. Lock narration on later combat rounds. Killable peat-adder. Personal abbey-mark rubbing. Kitchens bread-tin memorial. Unique plates: 40 room paintings, 21 NPC files, 56 object files. Chroma key is `#EE3173` only.
 - **In the live game, not yet built:** rooms for lessons 11–20. Shop, Strength, type chart, and random wipes stay held.
 - **College loop:** Arrive → Flint spark → hearth dummy + mentor inks three starters → second cast lesson + three picks → Alder’s leave + three picks. Lessons 6+ open the Primer on the level.
 - **Active playtest:** dummy, a consented duel, and the queen on the live host. Combat law: [DS-007](../design-sprints/ds-007-combat-frame.md), [ADR-0035](../adr/0035-party-chorus.md).
-- **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header). This branch: peat-adder, abbey-mark rubbing, kitchens tin plates punched on `#EE3173`.
+- **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header). Live plates include peat-adder, abbey-mark rubbing, and kitchens tin, punched on `#EE3173`.
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
 - **Render public hostname:** https://greenwood-collegium.onrender.com (no connection strings in this file)
 
