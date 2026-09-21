@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-fog-walker-fog-hollow",
+  "templateId": "fog-walker",
+  "roomId": "fog-hollow"
+}

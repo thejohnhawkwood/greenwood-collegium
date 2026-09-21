@@ -12,7 +12,7 @@ and JSON authoring stay in [adventures.md](../adventures.md).
 3. [The Bell Below](the-bell-below.md) — `the-bell-below`
 4. [The Bell Wakes](the-bell-wakes.md) — `the-bell-wakes`
 5. [What Still Sleeps](what-still-sleeps.md) — `what-still-sleeps` (Holm, queen **defeat**)
-6. [The East Watch](the-east-watch.md) — lessons 4–10, not yet in JSON
+6. [The East Watch](the-east-watch.md) — `the-meadow-fork` … `the-thing-that-walks`
 
 ## Side (never required)
 

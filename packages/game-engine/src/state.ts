@@ -142,6 +142,7 @@ export type QuestTemplate = {
   introNarration: string;
   reminderNarration: string;
   giverNpcId?: string;
+  requiresQuestIds?: string[];
   completionNarration?: string;
   experienceReward: number;
   itemRewardTemplateId?: string;
@@ -214,6 +215,7 @@ export type EnemySpawn = {
   experience: number;
   minParty?: number;
   loot?: string[];
+  victoryNarration?: string;
 };
 
 export type LockedCombatMove = {

@@ -33,7 +33,7 @@
       "name": "Wayboard",
       "kind": "object",
       "lookDescription": "Examine for a closer look.",
-      "examineDescription": "The carved arrows are unusually legible. NORTH: Porter Lodge, then east for the Infirmary. SOUTH: Oak and Willow dormitories. WEST: Lantern Court. EAST: East Meadow. Below them, Porter has written: 'Lost is a place everyone visits. Ask for directions.'"
+      "examineDescription": "The carved arrows are unusually legible. NORTH: Porter Lodge, then east for the Infirmary. SOUTH: Oak and Willow dormitories. WEST: Lantern Court. EAST: East Meadow. NORTH-OF-MEADOW: moor road, Wren's croft — type north from the clover, not from this gate. Below them, Porter has written: 'Lost is a place everyone visits. Ask for directions.'"
     }
   ]
 }

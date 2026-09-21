@@ -4,10 +4,16 @@
   "title": "What Still Sleeps",
   "experienceReward": 20,
   "itemRewardTemplateId": "copied-still-score",
-  "introNarration": "Alder does not lift the fork. He looks at you the way he looks at a load-bearing beam — the good yellow eye fierce, the scarred one already decided. The High Study smells of beeswax and old feathers. \"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I have felt it through these beams — a heavier note than the hatchling. It does not move when the hatchling moves. It waits. I will not send one Collegian into that room. Take two classmates who can lock a move on the same clock as you. Examine the Still Score. If she squares up, do not invent heroics. Lock together. Then come back and talk alder here. This is the work I saved for students I trust to come home.\"",
-  "reminderNarration": "Alder counts three on his talons. Moonlight still lies in a pale coin on the blotter. \"East from the North Quad, then down, east, south, and south again, until the air grows warm and the silk hangs thick as winter curtains. Do not go alone. Examine the Still Score in the Deep Cradle — the blank note is the part I cannot see from this oak. If the Silk Queen stands, lock together. Then talk alder here. Type quests for the list. The school is watching this one, and I would rather watch you walk back up that stair.\"",
-  "completionNarration": "You name the still score and the three who stood. Alder listens to the end. For a moment the fork answers a note too deep for the hour-bell, and the banners on the owl dais do not stir. \"You stood in the cradle. You named what you saw. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Go to class. Eat something warm. The High Study will keep the facts.\"",
+  "introNarration": "Alder does not lift the fork. He looks at you the way he looks at a load-bearing beam — the good yellow eye fierce, the scarred one already decided. The High Study smells of beeswax and old feathers. \"Three can stand. South of the Cocoon Nave the cradle is no longer empty. I have felt it through these beams — a heavier note than the hatchling. It does not move when the hatchling moves. It waits. I will not send one Collegian into that room. Take two classmates who can lock a move on the same clock as you. Examine the wrapping in the nave. Examine the Still Score. If she squares up, do not invent heroics. Lock together until she falls. Then come back and talk alder here. This is the work I saved for students I trust to come home.\"",
+  "reminderNarration": "Alder counts three on his talons. Moonlight still lies in a pale coin on the blotter. \"East from the North Quad, then down, east, south. Examine the wrapping in the Cocoon Nave before you take the south door. Do not go into the cradle alone. Examine the Still Score — the button is the part I cannot see from this oak. If the Silk Queen stands, lock together until she falls. Then talk alder here. Type quests for the list. The school is watching this one, and I would rather watch you walk back up that stair.\"",
+  "completionNarration": "You name the score, the button, the three who stood, and Holm. Alder listens to the end. The fork answers once. He does not lift it again. \"You did not invent a monster. You finished a lesson I could not fight for you. Holm kept that stair so first-years would not walk it dark. We will keep his name in the High Study. Go to class. Eat something warm. If your paws are shaking, talk to Fen. Then, when you can stand a cold wind, come back. The grounds east of the meadow have their own hunger, and I will not send you still hungry from this one.\"",
   "objectives": [
+    {
+      "id": "read-wrapping",
+      "kind": "examine",
+      "targetId": "object-holm-wrapping",
+      "label": "Examine the Keeper's Wrapping in the Cocoon Nave. Leave him covered. Type south from the Webbed Cloister."
+    },
     {
       "id": "stand-together",
       "kind": "visit",
@@ -18,14 +24,20 @@
       "id": "read-score",
       "kind": "examine",
       "targetId": "object-still-score",
-      "label": "Examine the Still Score in the Deep Cradle. The blank note is the part Alder cannot see from the High Study."
+      "label": "Examine the Still Score in the Deep Cradle. The button is the part Alder cannot see from the High Study."
+    },
+    {
+      "id": "defeat-queen",
+      "kind": "defeat",
+      "targetId": "enemy-silk-queen-deep-cradle",
+      "label": "Defeat the Silk Queen with two classmates. She will not square up for fewer than three. Lock together until she falls."
     },
     {
       "id": "report",
       "kind": "talk",
       "targetId": "npc-headmaster-alder",
-      "requires": ["stand-together", "read-score"],
-      "label": "Bring the cradle back to Alder in the High Study. Type up from the Great Hall."
+      "requires": ["read-wrapping", "stand-together", "read-score", "defeat-queen"],
+      "label": "Bring the wrapping, the score, and the queen back to Alder in the High Study. Type up from the Great Hall."
     }
   ]
 }

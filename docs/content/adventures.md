@@ -28,7 +28,7 @@ use gold. Plain narration and labels carry all the meaning without colour.
 | The Bell Below | After first lessons, `up` from the Great Hall, `talk alder`. | [the-bell-below.md](quests/the-bell-below.md) |
 | The Bell Wakes | After that report, `talk alder`. `down` from the Clock Tower. Talk Piper. | [the-bell-wakes.md](quests/the-bell-wakes.md) |
 | What Still Sleeps | After Wakes, `talk alder`. Take two classmates. Deep Cradle. | [what-still-sleeps.md](quests/what-still-sleeps.md) |
-| The East Watch | After the queen report. `north` from East Meadow. Not in JSON yet. | [the-east-watch.md](quests/the-east-watch.md) |
+| The East Watch | After the queen report and Alder’s leave. `north` from East Meadow. Talk Wren. | [the-east-watch.md](quests/the-east-watch.md) |
 
 ### Side (never required)
 
@@ -60,11 +60,10 @@ investigation and silk quests also leave one personal item in the pack. Type
 open on the page. Each character lesson grows health
 and focus. First-time dummy and queen memory is saved with the Collegian.
 
-Canon (not all live yet): the queen fight is required to finish What Still Sleeps;
+Canon: the queen fight is required to finish What Still Sleeps;
 Piper lives; Keeper Holm is the named loss under the tower. See
-[what-still-sleeps.md](quests/what-still-sleeps.md). The bell’s first cause and
-the bronze’s resting place continue in [the-east-watch.md](quests/the-east-watch.md).
-No inaccessible room is required for the live slice.
+[what-still-sleeps.md](quests/what-still-sleeps.md). The bronze’s resting place
+continues in [the-east-watch.md](quests/the-east-watch.md).
 
 ---
 

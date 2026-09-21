@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "sheepfold",
+  "title": "Sheepfold",
+  "shortDescription": "A wet fold whose latch was lifted, not broken.",
+  "longDescription": "Wattle and stone hold a fold that should smell of sheep and does not. Hoof-marks go out. None come in. Mist sits on the rail as if it were invited.\nA mist-crow is here if it still lives. Colm's crook leans where a careful person set it down.",
+  "zone": "east-moor",
+  "map": {
+    "x": 7,
+    "y": 1
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "moor-track"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "standing-stones"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-empty-fold",
+      "name": "Empty Fold",
+      "kind": "object",
+      "lookDescription": "Hoof-marks out, none in. Examine the latch.",
+      "examineDescription": "The latch is lifted, not broken. No blood. The straw is dry under the eaves and wet in the yard. The flock left as if someone they knew had opened the way."
+    },
+    {
+      "id": "object-colms-crook",
+      "name": "Colm's Crook",
+      "kind": "object",
+      "lookDescription": "An ash crook set down carefully against the rail. Examine it.",
+      "examineDescription": "Ash wood. Colm's knife-marks in the grip, the sort you make when you have carried a tool for years and want it to know your paw. It was set down, not dropped. Leave it. Wren still has a peg for it."
+    }
+  ]
+}

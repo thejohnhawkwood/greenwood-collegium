@@ -26,8 +26,8 @@
       "id": "object-caught-lantern",
       "name": "Caught Lantern",
       "kind": "object",
-      "lookDescription": "Examine for a closer look.",
-      "examineDescription": "The lantern still burns a blue Collegium flame. Silk holds it up, neat as a shelf. Nobody is trapped in the web. Whoever hung this light meant to come back, and they have not."
+      "lookDescription": "A Collegium lantern still burning in silk. Examine it.",
+      "examineDescription": "The lantern still burns a blue Collegium flame. Silk holds it up as neat as a shelf. The brass is dented where a keeper's hook used to clip. A tiny scratched H is on the base, the sort of mark you make when two moles share a kit. Nobody is trapped in this web. The mole who hung this light meant to come back. He has not."
     }
   ]
 }

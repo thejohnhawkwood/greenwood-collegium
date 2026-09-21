@@ -1,0 +1,30 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-bronze-in-the-hill",
+  "title": "The Bronze in the Hill",
+  "experienceReward": 50,
+  "introNarration": "Alder does not lift the fork. Wren will not go in, and he will not ask her to. \"The bronze is in the hill. Holm wrote that it was taken on a wet night. This is where it was taken to. Visit the Barrow Nave — down from the Barrow Mouth. Examine the Abbey Bronze. Then talk alder here. One more after that. Not alone. The thing that walks the fog used our welcome for a mouth.\"",
+  "reminderNarration": "\"Down from the Barrow Mouth. Examine the Abbey Bronze. Then talk alder in the High Study. Type up from the Great Hall. Wren stays at the croft. She is owed that. Type quests for the list.\"",
+  "completionNarration": "You name peat-stained bronze and three pulses that should not ring. Alder listens to the end. \"The Quiet Chapel was telling the truth. One more. Not alone. The Fog Walker used our welcome for a mouth. Eat something warm before you take two classmates into that hollow.\"",
+  "objectives": [
+    {
+      "id": "reach-nave",
+      "kind": "visit",
+      "roomId": "barrow-nave",
+      "label": "Reach the Barrow Nave. Type down from the Barrow Mouth."
+    },
+    {
+      "id": "read-bronze",
+      "kind": "examine",
+      "targetId": "object-abbey-bronze",
+      "label": "Examine the Abbey Bronze. Peat-stain. Three pulses. Holm's wet night ends here."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-headmaster-alder",
+      "requires": ["reach-nave", "read-bronze"],
+      "label": "Bring the bronze back to Alder in the High Study. Type up from the Great Hall."
+    }
+  ]
+}

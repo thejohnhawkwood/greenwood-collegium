@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "barrow-mouth",
+  "title": "Barrow Mouth",
+  "shortDescription": "A hill-lip of wet wool, peat, and one folded cloak.",
+  "longDescription": "The barrow opens under a lip of turf and stone. Fog leaks out as if the hill were breathing. A spare cloak is folded on a stone like an offering — wet wool, not silk.\nA barrow-guard is here if it still lives. Down, the nave. Under the lip, if you have come this far, someone is sitting as if he sat down out of the wind.",
+  "zone": "east-moor",
+  "map": {
+    "x": 8,
+    "y": 3
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "peat-cut"
+    },
+    {
+      "direction": "down",
+      "toRoomId": "barrow-nave"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-wool-wrap",
+      "name": "Colm's Spare Cloak",
+      "kind": "object",
+      "lookDescription": "A folded cloak on a stone, wet wool, not silk. Examine it.",
+      "examineDescription": "Colm's spare cloak, folded as if someone meant it as an offering. Wet wool. The weave matches Wren's mending. Enough to scare. This is not a body. Leave it until you know whether he still needs covering."
+    },
+    {
+      "id": "object-colm-aftermath",
+      "name": "What the Fog Took",
+      "kind": "object",
+      "lookDescription": "Someone sits under the barrow lip as if out of the wind. Examine him. Do not talk to him.",
+      "examineDescription": "Colm is under the barrow lip, sitting as if he sat down out of the wind. Fog has soaked his wool coat through. His crook-hand is empty — you already found the crook. There is no silk. There is a stillness that shepherds use for sheep that will not rise. His eyes are closed. The fog moves and he does not. Leave him covered with his own cloak if the spare is here. Tell Wren. Do not invent a fight you already missed. There are no wounds. He is past air. The fog-walker kept him the way weather keeps a stone."
+    }
+  ]
+}
