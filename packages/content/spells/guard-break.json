@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "guard-break",
+  "name": "Guard-Break",
+  "school": "steel",
+  "tag": "control",
+  "description": "A beaten guard. They cannot answer.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "effect": "skip-counter",
+  "presentationKey": "steel-strike",
+  "pennedBy": "Mentor Edge",
+  "helpText": "cast guard-break",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 4
+    },
+    {
+      "focusCost": 3,
+      "damage": 5
+    },
+    {
+      "focusCost": 2,
+      "damage": 5
+    },
+    {
+      "focusCost": 2,
+      "damage": 6,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 7,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

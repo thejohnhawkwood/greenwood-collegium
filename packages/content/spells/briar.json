@@ -12,5 +12,41 @@
   "burningDamage": 1,
   "minLevel": 3,
   "presentationKey": "briar-lash",
-  "helpText": "cast briar"
+  "helpText": "cast briar",
+  "tag": "strike",
+  "pennedBy": "Mentor Briar",
+  "ranks": [
+    {
+      "focusCost": 4,
+      "damage": 4,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 4,
+      "damage": 5,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 3,
+      "damage": 5,
+      "burningRounds": 2,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 3,
+      "damage": 6,
+      "burningRounds": 2,
+      "burningDamage": 1,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "damage": 7,
+      "burningRounds": 2,
+      "burningDamage": 1,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

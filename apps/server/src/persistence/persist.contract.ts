@@ -121,6 +121,99 @@ export function persistAccountAndCharacter(
       "enemy-practice-dummy-south-orchard",
     ]);
   });
+  it("saves Primer leaves and a pending offer through repository reloads", async () => {
+    const account = await accounts.create({
+      username: "primer-fixture",
+      passwordHash: "pending",
+      role: "student",
+    });
+    const character = await characters.create({
+      accountId: account.id,
+      name: "Primer",
+      speciesId: "hare",
+      roomId: "lantern-court",
+    });
+    expect((await characters.getById(character.id))?.knownSpells).toEqual([]);
+    await characters.updatePrimer(character.id, {
+      knownSpells: [{ spellId: "ember", rank: 2, pennedBy: "Mentor Cinder" }],
+      pendingPrimerChoices: {
+        level: 4,
+        options: [
+          { kind: "upgrade", spellId: "ember", rank: 3 },
+          { kind: "unlock", spellId: "flame-breath", rank: 1 },
+          { kind: "vital", vitalHealth: 2, vitalFocus: 1 },
+        ],
+      },
+      primerAwardedLevels: [3, 4],
+    });
+    expect((await characters.getById(character.id))?.knownSpells).toEqual([
+      { spellId: "ember", rank: 2, pennedBy: "Mentor Cinder" },
+    ]);
+    expect((await characters.getById(character.id))?.pendingPrimerChoices?.level).toBe(4);
+    expect((await characters.getById(character.id))?.primerAwardedLevels).toEqual([3, 4]);
+  });
+  it("rewrites retired Ember leaf ids on reload", async () => {
+    const account = await accounts.create({
+      username: "ember-rename",
+      passwordHash: "pending",
+      role: "student",
+    });
+    const character = await characters.create({
+      accountId: account.id,
+      name: "Rename",
+      speciesId: "fox",
+      roomId: "lantern-court",
+    });
+    await characters.updatePrimer(character.id, {
+      knownSpells: [{ spellId: "coal-breath", rank: 2, pennedBy: "Mentor Cinder" }],
+      pendingPrimerChoices: {
+        level: 8,
+        options: [
+          { kind: "unlock", spellId: "ash-shroud", rank: 1 },
+          { kind: "unlock", spellId: "banked-coals", rank: 1 },
+          { kind: "unlock", spellId: "kiln", rank: 1 },
+        ],
+      },
+      primerAwardedLevels: [8],
+    });
+    expect((await characters.getById(character.id))?.knownSpells).toEqual([
+      { spellId: "flame-breath", rank: 2, pennedBy: "Mentor Cinder" },
+    ]);
+    expect(
+      (await characters.getById(character.id))?.pendingPrimerChoices?.options.map(
+        (card) => card.spellId,
+      ),
+    ).toEqual(["blaze-mantle", "heart-fire", "stoke"]);
+  });
+  it("rewrites retired Steel Measure ids to Draw on reload", async () => {
+    const account = await accounts.create({
+      username: "steel-rename",
+      passwordHash: "pending",
+      role: "student",
+    });
+    const character = await characters.create({
+      accountId: account.id,
+      name: "Edge",
+      speciesId: "fox",
+      roomId: "lantern-court",
+    });
+    await characters.updatePrimer(character.id, {
+      knownSpells: [{ spellId: "measure", rank: 2, pennedBy: "Mentor Edge" }],
+      pendingPrimerChoices: {
+        level: 8,
+        options: [{ kind: "unlock", spellId: "measure", rank: 1 }],
+      },
+      primerAwardedLevels: [8],
+    });
+    expect((await characters.getById(character.id))?.knownSpells).toEqual([
+      { spellId: "draw", rank: 2, pennedBy: "Mentor Edge" },
+    ]);
+    expect(
+      (await characters.getById(character.id))?.pendingPrimerChoices?.options.map(
+        (card) => card.spellId,
+      ),
+    ).toEqual(["draw"]);
+  });
   it("persists an account and a character that can be read back", async () => {
     const account = await accounts.create({
       username: "Rowan",

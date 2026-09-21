@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "second-wind",
+  "name": "Second Wind",
+  "school": "steel",
+  "tag": "gift",
+  "description": "A small heal in the orchard or hearth.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "any",
+  "effect": "heal",
+  "heal": 5,
+  "presentationKey": "ready-steel",
+  "pennedBy": "Mentor Edge",
+  "helpText": "cast second-wind",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "heal": 5
+    },
+    {
+      "focusCost": 3,
+      "heal": 6
+    },
+    {
+      "focusCost": 2,
+      "heal": 6
+    },
+    {
+      "focusCost": 2,
+      "heal": 7,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "heal": 8,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

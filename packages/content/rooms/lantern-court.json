@@ -3,7 +3,7 @@
   "id": "lantern-court",
   "title": "Lantern Court",
   "shortDescription": "Blue lanterns drift beneath the welcoming arms of an ancient oak.",
-  "longDescription": "Ancient oak branches arch over a circular courtyard paved with warm, uneven stones. Blue lanterns drift between the leaves like stars that have come down to listen.\nA mossy well sits at the oak's roots, bucket ready for anyone who has been practicing too hard. Porter Bramble keeps a cheerful watch beside a noticeboard crowded with curling paper. Footpaths lead toward the hall, the orchard, the cloister, and the gate; somewhere below their roots, a low note seems to answer the wind.",
+  "longDescription": "Ancient oak branches arch over a circular courtyard paved with warm, uneven stones. Blue lanterns hang in the leaves like cold glass, and they drift when the wind finds them.\nA mossy well sits at the oak's roots, bucket ready for anyone who has been practicing too hard. Porter Bramble keeps a cheerful watch beside a noticeboard crowded with curling paper. Footpaths lead toward the hall, the orchard, the cloister, and the gate; somewhere below their roots, a low note seems to answer the wind.",
   "zone": "academy-core",
   "map": {
     "x": 0,
@@ -39,7 +39,7 @@
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Welcome, new Collegian! I am Porter Bramble. Come in under the oak — the blue lanterns drift between the leaves like stars that have come down to listen, and the well at the roots is cold and ready if you have been practicing too hard. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn. Walk with me through Arrival. The coat is worn. The whistle is for calling help. I have waited through worse weather than you.\"",
+            "text": "\"Welcome, new Collegian! I am Porter Bramble. Come in under the oak — the blue lanterns hang in the leaves like cold glass, and the well at the roots is cold and ready if you have been practicing too hard. This is the Collegium — a school. Woodland students learn here to face real dangers in the Greenwood. This is where the animals are trained. Typed commands are how you learn. Walk with me through Arrival. The coat is worn. The whistle is for calling help. I have waited through worse weather than you.\"",
             "choices": [
               { "say": "1", "label": "What should I type first?", "next": "commands" },
               { "say": "2", "label": "Why does the Greenwood matter?", "next": "greenwood" },

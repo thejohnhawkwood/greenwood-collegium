@@ -3,7 +3,7 @@
   "id": "hearth-steel",
   "title": "Hearth of Steel",
   "shortDescription": "Anvils and hanging mail keep the room honest.",
-  "longDescription": "The Hearth of Steel is an armory that still remembers it is a classroom. Anvils sit where first-years will learn not to lean. Mail hangs in a neat row, oiled and unromantic. Practice swords wait on a rack that has been tended more often than it has been praised. The air smells of metal, leather, and a little linseed oil.\nMentor Edge keeps the floor clear and the excuses shorter than the lesson.",
+  "longDescription": "The Hearth of Steel is an armory that still remembers it is a classroom. Anvils sit where first-years will learn not to lean. Mail hangs in a neat row, oiled and unromantic. Practice swords wait on a rack that has been tended more often than it has been praised. The air smells of metal, leather, and a little linseed oil.\nMentor Edge keeps the floor clear and the excuses shorter than the lesson.\nA straw hearth dummy stands where a lesson can be finished without guessing.",
   "zone": "schools",
   "map": {
     "x": 4,
@@ -26,26 +26,46 @@
       "kind": "npc",
       "lookDescription": "A scarred hare in a mail shirt, one ear notched, a practice sword at the hip. Try talk edge.",
       "examineDescription": "Edge's notch is newer than Flint's and just as earned. The mail is mended. He treats a sloppy stance as a kindness you have not yet been given.",
-      "dialogue": "\"Steel is a craft of meeting what comes. Look this hearth — the anvil, the oiled rack. Find Flint in the South Orchard. Come back when your feet have remembered something.\"",
+      "dialogue": "\"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Edge. Do not lean on the anvil. Steel teaches you to meet what comes — a blow, a question, a long afternoon in the orchard when your paws are tired and the dummy is not. Look this hearth. Name the stance before you swing. Then walk to the South Orchard, where apple blossom collects along the paths and Flint keeps a dummy in a straw hat that has survived more lessons than anyone can explain. Attack it once. Return and talk to me. I will be here. The floor stays clear.\"",
+            "text": "\"Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
             "choices": [
-              { "say": "1", "label": "What does Steel meet?", "next": "craft" },
-              { "say": "2", "label": "I will go.", "next": "go" }
+              {
+                "say": "1",
+                "label": "What does the Primer ask?",
+                "next": "craft"
+              },
+              {
+                "say": "2",
+                "label": "I will go.",
+                "next": "go"
+              }
             ]
           },
           "craft": {
-            "text": "\"A blade that is only shown is furniture. First you look. Then you practice on Flint's dummy, which is meant to be hit and will not hold a grudge. A classmate is a different matter — both of you must agree, and you type duel and their given name, not a story-name. Then you come back, and we will see if your feet remembered.\"",
-            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+            "text": "\"The Field Primer is your book. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. A sloppy stance is a kindness you have not yet been given.\"",
+            "choices": [
+              {
+                "say": "1",
+                "label": "I understand.",
+                "next": "go"
+              }
+            ]
           },
           "go": {
-            "text": "\"Look the anvil. The face is bright from use. Then find the orchard south of Lantern Court. I will be here.\""
+            "text": "\"Look around this hearth. Defeat the dummy. I will be here by the anvil. Excuses stay shorter than the lesson.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. Steel has your name, and your kit is open. Alder waits in the High Study with a question about the bell below — an old abbey note the timber still carries. Go up when your feet are steady. Pride stays in your pocket.\""
+            "text": "\"The three starter leaves are inked. Cast strike at the hearth dummy for the second lesson. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+          },
+          "third-lesson": {
+            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+          },
+          "third-done": {
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Eat something warm before you take a cold road.\""
           }
         }
       }

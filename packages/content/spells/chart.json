@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "chart",
+  "name": "Chart",
+  "school": "stars",
+  "tag": "gift",
+  "description": "Reprint explored map titles. It does not name fog.",
+  "focusCost": 2,
+  "targetType": "self",
+  "context": "any",
+  "effect": "insight",
+  "insight": "You cast Chart. The rooms you have already walked are named again.",
+  "presentationKey": "night-eye",
+  "pennedBy": "Mentor Lumen",
+  "helpText": "cast chart",
+  "ranks": [
+    {
+      "focusCost": 2,
+      "insight": "You cast Chart. The rooms you have already walked are named again."
+    },
+    {
+      "focusCost": 2,
+      "insight": "You cast Chart. The rooms you have already walked are named again."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Chart. The rooms you have already walked are named again."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Chart. The rooms you have already walked are named again.",
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Chart. The rooms you have already walked are named again.",
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

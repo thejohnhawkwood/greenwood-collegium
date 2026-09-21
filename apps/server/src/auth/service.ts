@@ -23,6 +23,9 @@ import {
   type InviteRole,
   resolveDefeatedSpawnIds,
   resolveDiscoveredRoomIds,
+  resolveKnownSpells,
+  resolvePendingPrimer,
+  resolvePrimerAwardedLevels,
   type SessionRepository,
 } from "../persistence/types.js";
 import type { PasswordHasher } from "./hasher.js";
@@ -113,6 +116,9 @@ export type PlayIdentity = {
   roomId: string;
   discoveredRoomIds?: string[];
   defeatedSpawnIds?: string[];
+  knownSpells?: CharacterRecord["knownSpells"];
+  pendingPrimerChoices?: CharacterRecord["pendingPrimerChoices"];
+  primerAwardedLevels?: number[];
   experience: number;
   level: number;
   schoolId?: string;
@@ -782,6 +788,9 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     roomId: character.roomId,
     discoveredRoomIds: resolveDiscoveredRoomIds(character.discoveredRoomIds, character.roomId),
     defeatedSpawnIds: resolveDefeatedSpawnIds(character.defeatedSpawnIds),
+    knownSpells: resolveKnownSpells(character.knownSpells),
+    pendingPrimerChoices: resolvePendingPrimer(character.pendingPrimerChoices),
+    primerAwardedLevels: resolvePrimerAwardedLevels(character.primerAwardedLevels),
     experience: character.experience,
     level: character.level,
     schoolId: character.schoolId,

@@ -1,0 +1,25 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "second-lessons-ember",
+  "title": "Second Lessons: Ember",
+  "introNarration": "Cinder taps the Primer. Soot has dried on her whiskers. The grate still holds a low, useful fire. \"Cast ember at the hearth dummy in this room. Then talk to me. After that, the book will offer three leaves. Type 1, 2, or 3 when it does.\"",
+  "reminderNarration": "Cast ember at the hearth dummy in this hearth, then talk to Cinder. Name the fire before you feed it.",
+  "completionNarration": "The second hearth lesson is done. The Primer lies open on the grate-side table, smelling of smoke and ink. Type 1, 2, or 3 when it offers three leaves.",
+  "experienceReward": 20,
+  "objectives": [
+    {
+      "id": "cast-starter",
+      "kind": "cast",
+      "label": "Cast ember in the hearth.",
+      "targetId": "ember",
+      "roomId": "hearth-ember"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Talk to Mentor Cinder.",
+      "targetId": "npc-mentor-cinder",
+      "requires": ["cast-starter"]
+    }
+  ]
+}

@@ -61,6 +61,14 @@ export function handleJoin(
     roomId: room.id,
     discoveredRoomIds: [...new Set([...(intent.discoveredRoomIds ?? []), room.id])],
     defeatedSpawnIds: [...new Set(intent.defeatedSpawnIds ?? [])],
+    knownSpells: intent.knownSpells ? intent.knownSpells.map((leaf) => ({ ...leaf })) : undefined,
+    pendingPrimerChoices: intent.pendingPrimerChoices
+      ? {
+          ...intent.pendingPrimerChoices,
+          options: intent.pendingPrimerChoices.options.map((card) => ({ ...card })),
+        }
+      : undefined,
+    primerAwardedLevels: intent.primerAwardedLevels ? [...intent.primerAwardedLevels] : undefined,
     experience: intent.experience ?? 0,
     level: intent.level ?? 1,
     speciesId: intent.speciesId,

@@ -10,5 +10,26 @@
   "effect": "avoid-hit",
   "minLevel": 3,
   "presentationKey": "hearth-ward",
-  "helpText": "cast hearth-ward"
+  "helpText": "cast hearth-ward",
+  "tag": "ward",
+  "pennedBy": "Mentor Cinder",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

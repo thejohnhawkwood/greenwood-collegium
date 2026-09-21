@@ -1,0 +1,51 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "flame-breath",
+  "name": "Flame-Breath",
+  "school": "ember",
+  "tag": "strike",
+  "description": "A gust of open flame. It scorches and leaves one burn.",
+  "focusCost": 5,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 4,
+  "burningRounds": 1,
+  "burningDamage": 1,
+  "presentationKey": "ember-burst",
+  "pennedBy": "Mentor Cinder",
+  "helpText": "cast flame-breath",
+  "ranks": [
+    {
+      "focusCost": 5,
+      "damage": 4,
+      "burningRounds": 1,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 5,
+      "damage": 5,
+      "burningRounds": 1,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 4,
+      "damage": 5,
+      "burningRounds": 1,
+      "burningDamage": 1
+    },
+    {
+      "focusCost": 4,
+      "damage": 6,
+      "burningRounds": 1,
+      "burningDamage": 1,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 4,
+      "damage": 7,
+      "burningRounds": 1,
+      "burningDamage": 1,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

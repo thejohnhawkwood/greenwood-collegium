@@ -71,4 +71,34 @@ describe("combat.action_resolved contract", () => {
     expect(event.presentationKey).toBe("ember-burst");
     expect(renderClassicSegments(event.segments ?? [])).toBe(event.narration);
   });
+
+  it("names a leech mend on a hostile cast", () => {
+    const event = combatActionResolvedEventSchema.parse({
+      eventId: "evt-draw-1",
+      sequence: 5,
+      schemaVersion: 0,
+      type: "combat.action_resolved",
+      occurredAt: "2026-09-20T22:00:00.000Z",
+      audience: "character",
+      encounterId: "enc-1",
+      narration: "You cast Draw at the Practice Dummy for 4. You mend 2. It has 16 remaining.",
+      payload: {
+        encounterId: "enc-1",
+        actorId: "char-rowan",
+        actorName: "Rowan the Hare",
+        actorKind: "player",
+        verb: "cast",
+        spellId: "draw",
+        spellName: "Draw",
+        focusSpent: 3,
+        targetId: "enemy-practice-dummy-south-orchard",
+        targetName: "Practice Dummy",
+        damage: 4,
+        heal: 2,
+        targetHealth: 16,
+        targetMaxHealth: 20,
+      },
+    });
+    expect(formatCombatActionResolvedText(event.payload)).toBe(event.narration);
+  });
 });

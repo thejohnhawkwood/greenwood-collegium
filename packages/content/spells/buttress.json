@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "buttress",
+  "name": "Buttress",
+  "school": "stone",
+  "tag": "gift",
+  "description": "A small heal after you have already been struck.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "heal",
+  "heal": 5,
+  "presentationKey": "brace",
+  "pennedBy": "Mentor Quern",
+  "helpText": "cast buttress",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "heal": 5
+    },
+    {
+      "focusCost": 3,
+      "heal": 6
+    },
+    {
+      "focusCost": 2,
+      "heal": 6
+    },
+    {
+      "focusCost": 2,
+      "heal": 7,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "heal": 8,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

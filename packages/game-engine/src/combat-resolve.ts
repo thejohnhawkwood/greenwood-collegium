@@ -5,6 +5,8 @@ import {
   combatStatusAppliedEventSchema,
   combatTurnStartedEventSchema,
   experienceGainedEventSchema,
+  formatLevelGainedText,
+  levelGainedEventSchema,
   formatCombatActionResolvedText,
   formatCombatEndedText,
   formatCombatStartedText,
@@ -30,6 +32,7 @@ import {
   DEFAULT_PLAYER_MAX_HEALTH,
   INFIRMARY_ROOM_ID,
   activeEncounter,
+  applyLevelVitals,
   closeEncounter,
   encounterUsingSpawn,
   ensurePlayerVitals,
@@ -37,6 +40,9 @@ import {
   rollAttackDamage,
   worldEncounters,
 } from "./combat-state.js";
+import { progressQuests } from "./arrival.js";
+import { maybeOpenWorldPrimer } from "./primer.js";
+import { levelForExperience } from "./progression.js";
 import {
   enemiesInRoom,
   hasDefeatedSpawn,
@@ -350,6 +356,10 @@ export function deliverEnemyReply(
   if (character.ignoreNextHit) {
     character.ignoreNextHit = false;
     character.defending = undefined;
+    if (character.ashShroud) {
+      character.ashShroud = undefined;
+      events.push(applyBurning(encounter, 1, 1, runtime, character.id));
+    }
     events.push(systemNotice(character.id, "The next blow misses.", runtime));
     return "ongoing";
   }
@@ -360,7 +370,21 @@ export function deliverEnemyReply(
     );
     return "ongoing";
   }
-  const raw = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
+  let raw = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
+  if (character.halveNextHit) {
+    raw = Math.floor(raw / 2);
+    character.halveNextHit = undefined;
+  }
+  if (character.ashShroud) {
+    raw = Math.floor(raw / 2);
+    character.ashShroud = undefined;
+    events.push(applyBurning(encounter, 1, 1, runtime, character.id));
+  }
+  const weaken = encounter.effects.find((effect) => effect.id === "weaken");
+  if (weaken) {
+    raw = Math.max(1, raw - 2);
+    encounter.effects = encounter.effects.filter((effect) => effect.id !== "weaken");
+  }
   const enemyDamage = character.defending ? Math.floor(raw / 2) : raw;
   character.defending = undefined;
   character.health = Math.max(0, (character.health ?? DEFAULT_PLAYER_MAX_HEALTH) - enemyDamage);
@@ -636,22 +660,46 @@ export function finishVictory(
       continue;
     }
     const award = firstTimerIds.has(id) ? amount : 0;
+    const previousLevel = member.level ?? levelForExperience(member.experience ?? 0);
     if (award > 0) {
       member.experience = (member.experience ?? 0) + award;
-    }
-    if (id === character.id) {
-      events.push(endedEvent(member, encounter, "victory", roomId, runtime));
-      if (award > 0) {
-        events.push(experienceEvent(member, award, runtime));
+      const nextLevel = levelForExperience(member.experience);
+      member.level = nextLevel;
+      if (nextLevel > previousLevel) {
+        applyLevelVitals(member, { healGain: true });
       }
+    }
+    const gained: EventEnvelope[] = [];
+    if (award > 0) {
+      gained.push(experienceEvent(member, award, runtime));
+      if ((member.level ?? 1) > previousLevel) {
+        gained.push(levelEvent(member, runtime));
+        gained.push(
+          ...maybeOpenWorldPrimer(
+            world,
+            member,
+            previousLevel,
+            member.level ?? previousLevel,
+            runtime,
+          ),
+        );
+      }
+    }
+    gained.push(
+      ...progressQuests(
+        world,
+        { characterId: id, kind: "defeat", targetId: encounter.spawnId },
+        runtime,
+      ),
+    );
+    if (id === character.id) {
+      events.push(endedEvent(member, encounter, "victory", roomId, runtime), ...gained);
       continue;
     }
     const awarded: EventEnvelope[] = [
       endedEvent(member, encounter, "victory", member.roomId, runtime),
+      ...gained,
     ];
-    if (award > 0) {
-      awarded.push(experienceEvent(member, award, runtime));
-    }
     notices.push(...awarded.map((event) => ({ characterId: id, event })));
   }
   const lootLine = settleDefeat(world, encounter, firstTimers);
@@ -889,4 +937,22 @@ function experienceEvent(
     narration,
     payload,
   } satisfies ExperienceGainedEvent);
+}
+
+function levelEvent(character: Character, runtime: EngineRuntime): EventEnvelope {
+  const payload = {
+    characterId: character.id,
+    level: character.level ?? 1,
+    experience: character.experience ?? 0,
+  };
+  return levelGainedEventSchema.parse({
+    eventId: runtime.nextEventId(),
+    sequence: runtime.nextSequence(character.id),
+    schemaVersion,
+    type: "progress.level_gained",
+    occurredAt: runtime.now().toISOString(),
+    audience: "character",
+    narration: formatLevelGainedText(payload),
+    payload,
+  });
 }

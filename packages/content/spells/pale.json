@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "pale",
+  "name": "Pale",
+  "school": "veil",
+  "tag": "ward",
+  "description": "Half the next hit. No skipped answer.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "halve-hit",
+  "presentationKey": "veil-slip",
+  "pennedBy": "Mentor Mist",
+  "helpText": "cast pale",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

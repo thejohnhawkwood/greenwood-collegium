@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "field-primer",
+  "name": "Field Primer Book",
+  "shortDescription": "A personal book of leaves.",
+  "examineDescription": "A personal Field Primer book. Type grimoire to read the leaves. Type spells ember to open one page. The moss-bound primer in the Stacks stays the school copy.",
+  "category": "book",
+  "itemType": "book",
+  "unique": true
+}

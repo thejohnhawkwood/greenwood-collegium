@@ -10,5 +10,31 @@
   "damage": 6,
   "minLevel": 3,
   "presentationKey": "steel-strike",
-  "helpText": "cast strike"
+  "helpText": "cast strike",
+  "tag": "strike",
+  "pennedBy": "Mentor Edge",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 6
+    },
+    {
+      "focusCost": 3,
+      "damage": 7
+    },
+    {
+      "focusCost": 2,
+      "damage": 7
+    },
+    {
+      "focusCost": 2,
+      "damage": 8,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 9,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

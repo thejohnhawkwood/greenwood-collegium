@@ -3,7 +3,7 @@
   "id": "hearth-thorn",
   "title": "Hearth of Thorns",
   "shortDescription": "Living briar holds the glass and the light.",
-  "longDescription": "The Hearth of Thorns is half cloister and half greenhouse. Briar has been trained into trellises that remember every cut, and green light pools on the stone like water held in a leaf. Shears hang where a first-year can reach them and a second-year has learned not to rush. The air smells of crushed sap, damp earth, and the faint sweetness of something flowering out of season.\nMentor Briar waits among the living walls as if the plants had asked her to stay.",
+  "longDescription": "The Hearth of Thorns is half cloister and half greenhouse. Briar has been trained into trellises that remember every cut, and green light pools on the stone like water held in a leaf. Shears hang where a first-year can reach them and a second-year has learned not to rush. The air smells of crushed sap, damp earth, and the faint sweetness of something flowering out of season.\nMentor Briar waits among the living walls as if the plants had asked her to stay.\nA straw hearth dummy stands where a lesson can be finished without guessing.",
   "zone": "schools",
   "map": {
     "x": 5,
@@ -30,26 +30,46 @@
       "kind": "npc",
       "lookDescription": "A scarred hedgehog in a green cloak caught with thorns, shears at the belt. Try talk briar.",
       "examineDescription": "Briar's quills are patched with old scratches. The cloak is mended with vine-thread. She speaks as if the plants were listening, and they usually are.",
-      "dialogue": "\"Thorns teach patience that can still cut. Look this hearth — the living wood, the tied new growth. Find Flint in the South Orchard. Come back when the dummy has taught you something honest.\"",
+      "dialogue": "\"Look around this hearth. The briar remembers every cut. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Briar. Mind the thorns as you come in — they are trained, not cruel, but they do not make exceptions for hurry. Thorns grow where they are asked to grow. Look this hearth. See how the living wood has been tied, not broken. Then walk to the South Orchard, where fallen blossom collects along the paths and Flint keeps a dummy in a straw hat. Attack it once. Return and talk to me. The plants will still be listening when you get back.\"",
+            "text": "\"Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
             "choices": [
-              { "say": "1", "label": "What do Thorns teach?", "next": "craft" },
-              { "say": "2", "label": "I will go.", "next": "go" }
+              {
+                "say": "1",
+                "label": "What does the Primer ask?",
+                "next": "craft"
+              },
+              {
+                "say": "2",
+                "label": "I will go.",
+                "next": "go"
+              }
             ]
           },
           "craft": {
-            "text": "\"A vine that is never cut becomes a snare. A vine that is only cut becomes a stick. You will learn the difference — when to ask, when to prune, when to let a thing keep its thorns. First you look. Then you practice on Flint's dummy, which is meant to be struck and will not hold a grudge. Then you come back, and we will see whether you noticed the new growth or only the old scars.\"",
-            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+            "text": "\"The Field Primer is your book, not a pressed flower. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. Growth that is not named will snare you.\"",
+            "choices": [
+              {
+                "say": "1",
+                "label": "I understand.",
+                "next": "go"
+              }
+            ]
           },
           "go": {
-            "text": "\"Look the trellis. Ask before you cut, even with your eyes. Then find the orchard south of Lantern Court. I will be here among the living walls.\""
+            "text": "\"Look around this hearth. Defeat the dummy. I will be here among the living walls. The shears stay sharp. So do I.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard, and the dummy has already forgotten you, as good practice should. Thorns have your name, and your kit is open. Alder waits in the High Study with a question about the bell below — an old abbey note that the timber still carries. Go up when you are ready. Do not rush the stair. The plants never do.\""
+            "text": "\"The three starter leaves are inked. Cast briar at the hearth dummy for the second lesson — a vine trained, not a snare left to wander. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+          },
+          "third-lesson": {
+            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+          },
+          "third-done": {
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Eat something warm before you take a cold road.\""
           }
         }
       }

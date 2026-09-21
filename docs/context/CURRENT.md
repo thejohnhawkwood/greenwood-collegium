@@ -6,9 +6,9 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 - **HEAD / live:** `5803eaf` on `main` (20 September 2026 pull). CI green. Render deploy success. `/health/ready` ok.
 - **Release target:** v0.0 foundation (thirty-eight mapped rooms on four floors, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits)
-- **Shipped on this HEAD:** DS-001–007 play shell and Lock-in Chorus; personal loot and map travel; consented duels ([ADR-0038](../adr/0038-classroom-duels.md)); persisted first-time spawn memory ([ADR-0037](../adr/0037-first-time-spawns.md)); `spells` / `grimoire` lists the kit; year-marks still grow health and focus from XP; investigation quests award a pack item; lock-in card shows foe plates plus overlay FX. Typed commands stay canonical.
-- **In the live game, not yet changed:** one orchard dummy; first-lessons still send students to Flint and dump the School kit at year-mark 3; `stats` still shows Level / XP. No Field Primer pages, no hearth dummies, no teacher-lesson rank.
-- **Agreed next build (not started):** teacher lessons and a personal Field Primer. Mentors assign a task, students practice on a **hearth** dummy, they talk again, one leaf inks, max health/focus grow. Drop year-mark / silent XP-bar language. Keep Flint’s orchard dummy for weapons, Ember practice, and duels. No Strength. No seasons.
+- **Shipped on this HEAD:** Field Primer ranks 1–5, college 1–5 teacher-and-dummy, three clickable Primer cards after the first three leaves (typed 1/2/3 stay canonical), seven leaves per School, published XP table to lesson 20 ([ADR-0039](../adr/0039-field-primer.md)). Personal Primer item. Six hearth dummies stay up with the orchard dummy ([ADR-0037](../adr/0037-first-time-spawns.md)). `stats` shows School, leaves, and next lesson. Preview: `/?shell=1&primer=1`.
+- **In the live game, not yet built:** rooms for lessons 11–20. Shop, Strength, type chart, and random wipes stay held.
+- **College loop:** Arrive → Flint spark → hearth dummy + mentor inks three starters → second cast lesson + three picks → Alder’s leave + three picks. Lessons 6+ open the Primer on the level.
 - **Active playtest:** dummy, a consented duel, and the queen on the live host. Combat law: [DS-007](../design-sprints/ds-007-combat-frame.md), [ADR-0035](../adr/0035-party-chorus.md).
 - **Local art pass:** `/?builder=1`, `/?rooms=1`, `/?shell=1` (lobby opens first; Enter play, then Lobby in the header).
 - **Public repo:** https://github.com/thejohnhawkwood/greenwood-collegium
@@ -17,10 +17,13 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. Implementation handoff: [`CURSOR-HANDOFF-VISUAL-FOUNDATION.md`](CURSOR-HANDOFF-VISUAL-FOUNDATION.md)
-3. Slices: DS-001 through DS-007 under [`../design-sprints/`](../design-sprints/). Combat: [`../design-sprints/ds-007-combat-frame.md`](../design-sprints/ds-007-combat-frame.md)
-4. Class: [`../classroom/class-day.md`](../classroom/class-day.md), [`playthrough.md`](../../playthrough.md)
-5. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
+2. Story spine (tone, cast, order): [`../content/STORY.md`](../content/STORY.md). Storylines: [`../content/quests/`](../content/quests/README.md)
+3. Field Primer, ranks, and every leaf: [`../content/PROGRESSION.md`](../content/PROGRESSION.md)
+4. Play and JSON authoring: [`../content/adventures.md`](../content/adventures.md)
+5. Implementation handoff: [`CURSOR-HANDOFF-VISUAL-FOUNDATION.md`](CURSOR-HANDOFF-VISUAL-FOUNDATION.md)
+6. Slices: DS-001 through DS-007 under [`../design-sprints/`](../design-sprints/). Combat: [`../design-sprints/ds-007-combat-frame.md`](../design-sprints/ds-007-combat-frame.md)
+7. Class: [`../classroom/class-day.md`](../classroom/class-day.md), [`playthrough.md`](../../playthrough.md)
+8. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
 
 ## Forbidden this pass
 

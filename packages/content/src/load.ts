@@ -180,7 +180,7 @@ export function loadBundledWorld(): LoadedWorld {
       new Set(namedTemplates.map((named) => named.template.id)),
     ),
     ...validateSpells(namedSpells),
-    ...validateQuests(namedRooms, namedTemplates, namedQuests),
+    ...validateQuests(namedRooms, namedTemplates, namedQuests, namedSpells, namedEnemyPlacements),
     ...validateRoomArt(namedRooms, bundledRoomArtDirectory),
   ];
   if (issues.length > 0) {

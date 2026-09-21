@@ -1,3 +1,4 @@
+import { progressQuests } from "./arrival.js";
 import { applyHostileCast, applySelfCast, applySelfEffect, matchSpell } from "./combat-apply.js";
 import { lockChorusMove } from "./combat-chorus.js";
 import { isChorus } from "./combat-party.js";
@@ -9,7 +10,8 @@ import {
   type CombatFailure,
   type CombatSuccess,
 } from "./combat-resolve.js";
-import type { CastIntent, EngineRuntime, WorldState } from "./state.js";
+import { applyRank, canCastSpell, findKnownSpell } from "./primer.js";
+import type { CastIntent, EngineRuntime, SpellTemplate, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export type CastSuccess = CombatSuccess;
@@ -53,19 +55,11 @@ export function handleCast(
       message: `I do not recognize character "${intent.characterId}".`,
     };
   }
-  const locked = (spell.minLevel ?? 1) >= 3;
-  if (locked && (!character.schoolId || character.schoolId !== spell.school)) {
+  if (!canCastSpell(character, spell)) {
     return {
       ok: false,
       code: "gift_locked",
-      message: "That gift belongs to another School.",
-    };
-  }
-  if (locked && (character.level ?? 1) < (spell.minLevel ?? 3)) {
-    return {
-      ok: false,
-      code: "gift_locked",
-      message: "Your School gift opens at the third year-mark.",
+      message: "That leaf is not in your Primer.",
     };
   }
   if (spell.effect === "riposte" && !character.hitThisEncounter) {
@@ -75,47 +69,73 @@ export function handleCast(
       message: "Riposte waits until you have been hit in this fight.",
     };
   }
+  if (spell.id === "buttress" && !character.hitThisEncounter) {
+    return {
+      ok: false,
+      code: "gift_locked",
+      message: "Buttress waits until you have been struck.",
+    };
+  }
+  const ranked = applyRank(spell, findKnownSpell(character, spell.id)?.rank ?? 1);
   ensurePlayerVitals(character);
   const focus = character.focus ?? 0;
-  if (focus < spell.focusCost) {
+  if (focus < ranked.focusCost) {
     return {
       ok: false,
       code: "not_enough_focus",
-      message: `You need ${String(spell.focusCost)} focus to cast ${spell.name}. You have ${String(focus)}.`,
+      message: `You need ${String(ranked.focusCost)} focus to cast ${ranked.name}. You have ${String(focus)}.`,
     };
   }
 
   const fighting = activeEncounter(world, character.id);
-  if (spell.context === "encounter" && spell.targetType === "self" && !fighting) {
+  if (ranked.context === "encounter" && ranked.targetType === "self" && !fighting) {
     return {
       ok: false,
       code: "missing_target",
-      message: `${spell.name} is for a fight.`,
+      message: `${ranked.name} is for a fight.`,
     };
   }
 
-  if (spell.targetType === "self" || ((spell.damage ?? 0) === 0 && spell.effect)) {
+  if (ranked.targetType === "self" || ((ranked.damage ?? 0) === 0 && ranked.effect)) {
     if (fighting && isChorus(fighting)) {
-      return lockChorusMove(world, character, fighting, { verb: "cast", spell: spell.id }, runtime);
-    }
-    if (fighting) {
-      return concludeRound(
+      return lockChorusMove(
         world,
         character,
         fighting,
-        applySelfCast(character, spell, runtime),
+        { verb: "cast", spell: ranked.id },
         runtime,
       );
     }
-    const note = applySelfEffect(character, spell);
-    character.focus = focus - spell.focusCost;
-    return {
-      ok: true,
-      events: [systemNotice(character.id, note ?? `You cast ${spell.name}.`, runtime)],
-      notices: [],
-      outcome: "ongoing",
-      roomId: character.roomId,
-    };
+    if (fighting) {
+      return withCastProgress(
+        world,
+        character.id,
+        ranked,
+        concludeRound(
+          world,
+          character,
+          fighting,
+          applySelfCast(character, ranked, runtime, world),
+          runtime,
+        ),
+        runtime,
+      );
+    }
+    const note = applySelfEffect(character, ranked, world);
+    character.focus = focus - ranked.focusCost;
+    return withCastProgress(
+      world,
+      character.id,
+      ranked,
+      {
+        ok: true,
+        events: [systemNotice(character.id, note ?? `You cast ${ranked.name}.`, runtime)],
+        notices: [],
+        outcome: "ongoing",
+        roomId: character.roomId,
+      },
+      runtime,
+    );
   }
 
   const prepared = prepareEncounter(
@@ -123,7 +143,7 @@ export function handleCast(
     intent.characterId,
     intent.target,
     runtime,
-    `Cast ${spell.name} at whom?`,
+    `Cast ${ranked.name} at whom?`,
   );
   if (!prepared.ok) {
     return prepared;
@@ -134,13 +154,35 @@ export function handleCast(
     return openingOnly(world, character, encounter, runtime);
   }
   if (isChorus(encounter)) {
-    return lockChorusMove(world, character, encounter, { verb: "cast", spell: spell.id }, runtime);
+    return lockChorusMove(world, character, encounter, { verb: "cast", spell: ranked.id }, runtime);
   }
-  return concludeRound(
+  return withCastProgress(
     world,
-    character,
-    encounter,
-    applyHostileCast(character, encounter, spell, runtime, world),
+    character.id,
+    ranked,
+    concludeRound(
+      world,
+      character,
+      encounter,
+      applyHostileCast(character, encounter, ranked, runtime, world),
+      runtime,
+    ),
     runtime,
   );
+}
+
+function withCastProgress(
+  world: WorldState,
+  characterId: string,
+  spell: SpellTemplate,
+  result: CastResult,
+  runtime: EngineRuntime,
+): CastResult {
+  if (!result.ok) {
+    return result;
+  }
+  result.events.push(
+    ...progressQuests(world, { characterId, kind: "cast", targetId: spell.id }, runtime),
+  );
+  return result;
 }

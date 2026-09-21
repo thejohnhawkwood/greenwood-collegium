@@ -284,4 +284,78 @@ describe("visual play projection", () => {
     expect(parseMapCommand("chart", "self")).toEqual({ verb: "map", characterId: "self" });
     expect(handleMap(world, { verb: "map", characterId: "missing" }, runtime()).ok).toBe(false);
   });
+  it("projects pending Primer leaves as clickable cards with numbers and descriptions", () => {
+    const world = fixture();
+    world.spells = {
+      ember: {
+        id: "ember",
+        name: "Ember",
+        school: "ember",
+        description: "A small coal of will that lands and lingers.",
+        focusCost: 4,
+        targetType: "enemy",
+        context: "encounter",
+        damage: 5,
+        burningRounds: 2,
+        pennedBy: "Cinder Wick",
+        presentationKey: "ember-burst",
+        helpText: "cast ember",
+      },
+      "flame-breath": {
+        id: "flame-breath",
+        name: "Flame-Breath",
+        school: "ember",
+        description: "A gust of open flame. It scorches and leaves one burn.",
+        focusCost: 5,
+        targetType: "enemy",
+        context: "encounter",
+        damage: 4,
+        burningRounds: 1,
+        presentationKey: "ember-burst",
+        helpText: "cast flame-breath",
+      },
+    };
+    const self = world.characters.self!;
+    self.schoolId = "ember";
+    self.pendingPrimerChoices = {
+      level: 4,
+      options: [
+        { kind: "upgrade", spellId: "ember", rank: 2, schoolId: "ember", tag: "strike" },
+        { kind: "unlock", spellId: "flame-breath", rank: 1, schoolId: "ember", tag: "strike" },
+        { kind: "vital", vitalHealth: 2, vitalFocus: 1 },
+      ],
+    };
+    const snapshot = createPlayState(world, "self");
+    expect(snapshot?.primer).toEqual({
+      pennedBy: "Mentor Cinder",
+      prompt: "Mentor Cinder's hand offers three leaves.",
+      cards: [
+        {
+          command: "1",
+          title: "Ember",
+          badge: "Rank II",
+          kind: "upgrade",
+          numbers: "Focus 4. Damage 6. Burns 2.",
+          description: "A small coal of will that lands and lingers.",
+          pennedBy: "Cinder Wick",
+        },
+        {
+          command: "2",
+          title: "Flame-Breath",
+          badge: "New",
+          kind: "unlock",
+          numbers: "Focus 5. Damage 4. Burns 1.",
+          description: "A gust of open flame. It scorches and leaves one burn.",
+        },
+        {
+          command: "3",
+          title: "Vital leaf",
+          badge: "Vital",
+          kind: "vital",
+          numbers: "+2 health. +1 focus.",
+          description: "A thicker page. Your health and focus rise so the next field is kinder.",
+        },
+      ],
+    });
+  });
 });

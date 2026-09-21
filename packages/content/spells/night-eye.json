@@ -11,5 +11,31 @@
   "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named.",
   "minLevel": 3,
   "presentationKey": "night-eye",
-  "helpText": "cast night-eye"
+  "helpText": "cast night-eye",
+  "tag": "gift",
+  "pennedBy": "Mentor Lumen",
+  "ranks": [
+    {
+      "focusCost": 2,
+      "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named."
+    },
+    {
+      "focusCost": 2,
+      "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named.",
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Night-Eye. The dark keeps its shapes, but the next turning is named.",
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

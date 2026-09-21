@@ -1,12 +1,15 @@
 # First adventures at the Collegium
 
-For stable IDs, room exits, fixtures, quest objectives, and implementation entry
-points, see the [developer room and quest summary](room-and-quest-summary.md).
+How to **play** the live quests and how to **author** JSON. Story tone and the
+spine live in the [story bible](STORY.md). Each storyline has its own file under
+[quests/](quests/README.md). Spells and the Field Primer live in
+[PROGRESSION.md](PROGRESSION.md). Live IDs and exits live in
+[room-and-quest-summary.md](room-and-quest-summary.md).
 
-The September 10 content pass enriches all 25 existing rooms without changing room
-IDs, exits, or map placement. Each room has an examinable object. Six members of
-staff have authored conversations: Porter Bramble, Headmaster Alder, Librarian
-Quill, Groundskeeper Tansy, Healer Fen, and Instructor Flint.
+JSON remains runtime truth. The bibles are author truth. Do not invent a second
+plot or a second kit.
+
+---
 
 ## Playing
 
@@ -16,25 +19,26 @@ Bramble` also works. `look` lists nearby people and objects; `x` is shorthand fo
 NPC names use the existing blue treatment, objects use green, and quest updates
 use gold. Plain narration and labels carry all the meaning without colour.
 
-Three new quests are available alongside Arrival at the Collegium:
+### Spine (walk these in order)
 
-- **The Missing Pages:** From Lantern Court, go north, west, then `talk quill`.
-  Investigate the Ink Blotter in the Scriptorium and the Folded Page in the Music
-  Loft. Return to Quill with an explanation. Reward: 10 experience.
-- **A Little Room to Grow:** Go south, west from Lantern Court, then `talk tansy`.
-  Examine the Seedling Tray in the Greenhouse and the Watering Jug in the Pottery
-  Shed; `talk fen` in the Infirmary for advice. Return to Tansy. Reward: 10 experience.
-- **The Bell Below:** After first lessons, type `up` from the Great Hall and
-  `talk alder`. Investigate the Empty Bell Frame in the Clock Tower, the Bell
-  Ledger in the Archive Cellar, and the Listening Stone in the Quiet Chapel.
-  Return to Alder in the High Study. Reward: 15 experience.
-- **The Bell Wakes:** After the Bell Below report, talk Alder again. Type `down`
-  from the Clock Tower. Talk Piper Mole. Examine the Stair Rope, Silk Thread, and
-  Waking Husk. Return to Alder. Reward: 15 experience.
-- **What Still Sleeps:** After The Bell Wakes, talk Alder again. Take two
-  classmates. South of the Cocoon Nave is the Deep Cradle. Examine the Still
-  Score. If the Silk Queen squares up, lock your moves on the same twelve-second
-  clock. Return to Alder. Reward: 20 experience.
+| Storyline | Start | Story |
+| --- | --- | --- |
+| Arrival at the Collegium | Auto in Lantern Court. `look`, `say hello`, `take key`, `north`. | [arrival.md](quests/arrival.md) |
+| College lessons | Alder picks a School. Look around the hearth, defeat the dummy, cast, talk. | [college-lessons.md](quests/college-lessons.md) |
+| The Bell Below | After first lessons, `up` from the Great Hall, `talk alder`. | [the-bell-below.md](quests/the-bell-below.md) |
+| The Bell Wakes | After that report, `talk alder`. `down` from the Clock Tower. Talk Piper. | [the-bell-wakes.md](quests/the-bell-wakes.md) |
+| What Still Sleeps | After Wakes, `talk alder`. Take two classmates. Deep Cradle. | [what-still-sleeps.md](quests/what-still-sleeps.md) |
+| The East Watch | After the queen report. `north` from East Meadow. Not in JSON yet. | [the-east-watch.md](quests/the-east-watch.md) |
+
+### Side (never required)
+
+| Storyline | Start | Story |
+| --- | --- | --- |
+| The Missing Pages | North, west from Lantern Court, `talk quill`. | [the-missing-pages.md](quests/the-missing-pages.md) |
+| A Little Room to Grow | South, west, `talk tansy`. | [a-little-room-to-grow.md](quests/a-little-room-to-grow.md) |
+
+Flint in the South Orchard teaches `attack` / `cast ember` and consented `duel`.
+That is practice, not a quest file.
 
 Accept a quest before investigating its clues. Clues can be investigated in any
 order, but the final conversation counts only after all the required discoveries.
@@ -52,11 +56,17 @@ neither story removes a shared object. Progress and experience belong to each
 character. Authenticated progress survives reconnects and server restarts; guest
 progress remains temporary. Quest completion grants its experience once. The
 investigation and silk quests also leave one personal item in the pack. Type
-`spells` to read Ember and, later, the School kit. Each year-mark grows health
+`spells` to read the Field Primer. After college, three clickable leaves
+open on the page. Each character lesson grows health
 and focus. First-time dummy and queen memory is saved with the Collegian.
 
-The bell story answers how the sound travels through the living wood while leaving
-its first cause open for a future adventure. No inaccessible room is required.
+Canon (not all live yet): the queen fight is required to finish What Still Sleeps;
+Piper lives; Keeper Holm is the named loss under the tower. See
+[what-still-sleeps.md](quests/what-still-sleeps.md). The bell’s first cause and
+the bronze’s resting place continue in [the-east-watch.md](quests/the-east-watch.md).
+No inaccessible room is required for the live slice.
+
+---
 
 ## Authoring
 
@@ -65,14 +75,17 @@ Add an NPC to an existing room's `fixtures` with `kind: "npc"`, a stable `id`,
 Use a recognisable name and mention the `talk` command in its visible description.
 Full staff names belong in `character-creation/names.json`'s reserved list.
 
-Add quests as individual JSON files under `packages/content/quests/`. No TypeScript
-registration is needed. The added fields are:
+Add quests as individual JSON files under `packages/content/quests/`. Add the
+matching storyline markdown under `docs/content/quests/` and a row in
+[quests/README.md](quests/README.md) plus the spine graph in [STORY.md](STORY.md).
+No TypeScript registration is needed. The added JSON fields are:
 
 - `giverNpcId`: a speaking NPC fixture. Talking to that NPC starts this quest once.
 - `completionNarration`: a plain-text conclusion appended to the completion event.
-- Objective kinds `examine` and `talk`: require `targetId`, referencing a fixture;
-  a talk target must be a speaking NPC. Examining loose inventory items is not a
-  supported objective target in this slice.
+- Objective kinds `look`, `say`, `take`, `visit`, `examine`, `talk`, `defeat`, `cast`.
+  `examine`, `talk`, `defeat`, and `cast` require `targetId`. `take` requires
+  `itemTemplateId`. `visit` requires `roomId`. Examining loose inventory items is
+  not a supported objective target in this slice.
 - Objective `requires`: an optional list of earlier objective IDs. Each must already
   be complete before this objective can advance. Dependencies must be unique and
   point backwards in the definition, preventing cycles. The investigation clues
@@ -84,8 +97,11 @@ The existing Arrival format remains valid. Keep published quest and objective ID
 stable because saved progress references them. New fields are optional and reuse
 the existing progress rows; no database migration or new dependency is needed.
 
+Tone, grim ceiling, and Kaplan’s test live in [STORY.md](STORY.md). Do not write
+college-poetry leaps. Side quests must not gate the spine.
+
 Run `corepack pnpm build` and `corepack pnpm --filter @greenwood/content validate`.
 Malformed dialogue, unknown givers or targets, duplicate objective IDs, and invalid
 dependencies fail content validation. Engine tests cover command matching and
-reward guards; server tests cover all three routes with 30 independent characters
-and authenticated progress across server restarts.
+reward guards; server tests cover investigation routes with 30 independent
+characters and authenticated progress across server restarts.

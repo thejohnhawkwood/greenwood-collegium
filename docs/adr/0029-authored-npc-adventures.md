@@ -48,4 +48,5 @@ changes remain future work. Published quest and objective IDs must remain stable
 unless an explicit progress migration is supplied.
 
 See [the adventure guide](../content/adventures.md) for commands, quest routes,
-authoring constraints, and validation.
+authoring constraints, and validation. Story spine: [STORY.md](../content/STORY.md).
+Storylines: [quests/](../content/quests/README.md).

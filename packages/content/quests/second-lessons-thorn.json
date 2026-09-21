@@ -1,0 +1,25 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "second-lessons-thorn",
+  "title": "Second Lessons: Thorns",
+  "introNarration": "Briar taps the Primer. A thorn has caught her cloak again and she does not bother to free it. \"Cast briar at the hearth dummy in this room. Then talk to me. After that, the book will offer three leaves. Type 1, 2, or 3 when it does.\"",
+  "reminderNarration": "Cast briar at the hearth dummy in this hearth, then talk to Briar. The trellis is still listening.",
+  "completionNarration": "The second hearth lesson is done. Green light lies across the open Primer. Type 1, 2, or 3 when it offers three leaves.",
+  "experienceReward": 20,
+  "objectives": [
+    {
+      "id": "cast-starter",
+      "kind": "cast",
+      "label": "Cast briar in the hearth.",
+      "targetId": "briar",
+      "roomId": "hearth-thorn"
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "label": "Talk to Mentor Briar.",
+      "targetId": "npc-mentor-briar",
+      "requires": ["cast-starter"]
+    }
+  ]
+}

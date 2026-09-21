@@ -2,7 +2,7 @@
 
 The Greenwood Collegium is a classroom MUD and a public proof of work. Agents assist with issue-sized work. They are not the product architect of record and must not build the entire game in one pass.
 
-Read `docs/PRD.md` and any relevant ADRs before editing.
+Read `docs/PRD.md` and any relevant ADRs before editing. For player-facing story, read `docs/content/STORY.md` (spine) and `docs/content/quests/` (storylines). For Primer leaves, read `docs/content/PROGRESSION.md`.
 
 ## Required rules
 

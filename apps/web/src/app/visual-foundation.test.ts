@@ -316,6 +316,73 @@ describe("visual foundation", () => {
       }),
     ).toBe(false);
   });
+  it("renders Primer pick buttons from play-state without inventing card text", () => {
+    const html = renderToStaticMarkup(
+      createElement(PlayPanels, {
+        state: {
+          ...state,
+          character: { ...state.character, inCombat: false },
+          conversation: undefined,
+          primer: {
+            pennedBy: "Mentor Cinder",
+            prompt: "Mentor Cinder's hand offers three leaves.",
+            cards: [
+              {
+                command: "1",
+                title: "Ember",
+                badge: "Rank II",
+                kind: "upgrade",
+                numbers: "Focus 4. Damage 6. Burns 2.",
+                description: "A small coal of will that lands and lingers.",
+                pennedBy: "Cinder Wick",
+              },
+              {
+                command: "2",
+                title: "Flame-Breath",
+                badge: "New",
+                kind: "unlock",
+                numbers: "Focus 5. Damage 4. Burns 1.",
+                description: "A gust of open flame. It scorches and leaves one burn.",
+              },
+              {
+                command: "3",
+                title: "Vital leaf",
+                badge: "Vital",
+                kind: "vital",
+                numbers: "+2 health. +1 focus.",
+                description:
+                  "A thicker page. Your health and focus rise so the next field is kinder.",
+              },
+            ],
+          },
+        },
+        lines: [
+          { id: "primer", kind: "narration", text: "Mentor Cinder's hand offers three leaves." },
+        ],
+        onCommand: () => {},
+        onSend: () => {},
+        onMove: () => {},
+        worldMapOpen: false,
+        onOpenWorldMap: () => {},
+        onCloseWorldMap: () => {},
+        questJournalOpen: false,
+        onOpenQuestJournal: () => {},
+        onCloseQuestJournal: () => {},
+        connection: "connected",
+        error: "",
+      }),
+    );
+    expect(html).toContain('aria-label="Field Primer choices"');
+    expect(html).toContain("A small coal of will that lands and lingers.");
+    expect(html).toContain("A gust of open flame. It scorches and leaves one burn.");
+    expect(html).toContain(
+      "A thicker page. Your health and focus rise so the next field is kinder.",
+    );
+    expect(html).toContain(
+      'aria-label="Choose 1: Ember. A small coal of will that lands and lingers."',
+    );
+    expect(html).not.toContain("Talking with Porter Bramble");
+  });
   it("leaves narration available during reconnects and malformed visual responses", () => {
     const html = renderToStaticMarkup(
       createElement(PlayPanels, {

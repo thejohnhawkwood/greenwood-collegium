@@ -106,11 +106,51 @@ const previewState: PlayState = {
   },
 };
 
+const primerPreviewState: PlayState = {
+  ...previewState,
+  character: { ...previewState.character, inCombat: false, level: 4, experience: 45 },
+  encounter: undefined,
+  primer: {
+    pennedBy: "Mentor Cinder",
+    prompt: "Mentor Cinder's hand offers three leaves.",
+    cards: [
+      {
+        command: "1",
+        title: "Ember",
+        badge: "Rank II",
+        kind: "upgrade",
+        numbers: "Focus 4. Damage 6. Burns 2.",
+        description: "A small coal of will that lands and lingers.",
+        pennedBy: "Cinder Wick",
+      },
+      {
+        command: "2",
+        title: "Flame-Breath",
+        badge: "New",
+        kind: "unlock",
+        numbers: "Focus 5. Damage 4. Burns 1.",
+        description: "A gust of open flame. It scorches and leaves one burn.",
+      },
+      {
+        command: "3",
+        title: "Vital leaf",
+        badge: "Vital",
+        kind: "vital",
+        numbers: "+2 health. +1 focus.",
+        description: "A thicker page. Your health and focus rise so the next field is kinder.",
+      },
+    ],
+  },
+};
+
 export function PlayShellPreview() {
+  const wantsPrimer = new URLSearchParams(window.location.search).has("primer");
+  const state = wantsPrimer ? primerPreviewState : previewState;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [lobbyOpen, setLobbyOpen] = useState(true);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
   const [questJournalOpen, setQuestJournalOpen] = useState(false);
+  const [lastSend, setLastSend] = useState("");
   return (
     <AcademyFrame playing>
       <main className="client play-client">
@@ -127,7 +167,7 @@ export function PlayShellPreview() {
           authNotice={null}
         />
         <PlayPanels
-          state={previewState}
+          state={state}
           lines={[
             { id: "look", kind: "narration", text: "Healer Fen waits nearby." },
             {
@@ -163,7 +203,8 @@ export function PlayShellPreview() {
             },
           ]}
           onCommand={() => {}}
-          onSend={() => {}}
+          onSend={(command) => setLastSend(command)}
+          error={lastSend ? `Preview sent: ${lastSend}` : ""}
           onMove={() => {}}
           worldMapOpen={worldMapOpen}
           onOpenWorldMap={() => setWorldMapOpen(true)}
@@ -172,11 +213,10 @@ export function PlayShellPreview() {
           onOpenQuestJournal={() => setQuestJournalOpen(true)}
           onCloseQuestJournal={() => setQuestJournalOpen(false)}
           connection="connected"
-          error=""
         />
         <CollegiumLobby
           open={lobbyOpen}
-          state={previewState}
+          state={state}
           onEnter={() => setLobbyOpen(false)}
           onTravel={() => setLobbyOpen(false)}
         />

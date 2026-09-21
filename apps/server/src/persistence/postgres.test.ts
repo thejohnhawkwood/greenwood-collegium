@@ -79,6 +79,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       updateDiscovery: (id, roomIds) => characters().updateDiscovery(id, roomIds),
       updateSchool: (id, schoolId) => characters().updateSchool(id, schoolId),
       updateDefeatedSpawns: (id, spawnIds) => characters().updateDefeatedSpawns(id, spawnIds),
+      updatePrimer: (id, input) => characters().updatePrimer(id, input),
     },
   );
 
@@ -103,6 +104,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       updateDiscovery: (id, roomIds) => characters().updateDiscovery(id, roomIds),
       updateSchool: (id, schoolId) => characters().updateSchool(id, schoolId),
       updateDefeatedSpawns: (id, spawnIds) => characters().updateDefeatedSpawns(id, spawnIds),
+      updatePrimer: (id, input) => characters().updatePrimer(id, input),
     },
     {
       create: (input) => sessions().create(input),
@@ -139,6 +141,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       updateDiscovery: (id, roomIds) => characters().updateDiscovery(id, roomIds),
       updateSchool: (id, schoolId) => characters().updateSchool(id, schoolId),
       updateDefeatedSpawns: (id, spawnIds) => characters().updateDefeatedSpawns(id, spawnIds),
+      updatePrimer: (id, input) => characters().updatePrimer(id, input),
     },
     {
       ensurePlacements: (seeds) => items().ensurePlacements(seeds),
@@ -169,6 +172,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       updateDiscovery: (id, roomIds) => characters().updateDiscovery(id, roomIds),
       updateSchool: (id, schoolId) => characters().updateSchool(id, schoolId),
       updateDefeatedSpawns: (id, spawnIds) => characters().updateDefeatedSpawns(id, spawnIds),
+      updatePrimer: (id, input) => characters().updatePrimer(id, input),
     },
     {
       listByCharacter: (characterId) => quests().listByCharacter(characterId),

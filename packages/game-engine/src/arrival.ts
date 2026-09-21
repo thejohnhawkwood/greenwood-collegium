@@ -12,7 +12,9 @@ import { ARRIVAL_QUEST_ID, openPorterArrival } from "./arrival-guide.js";
 import { BELL_BELOW_QUEST_ID, summonToHeadmaster } from "./headmaster.js";
 import { applyLevelVitals } from "./combat-state.js";
 import { itemsHeldBy, worldItems } from "./items.js";
+import { inkStarterKit, maybeOpenWorldPrimer, openPrimerChoices } from "./primer.js";
 import { levelForExperience } from "./progression.js";
+import { SCHOOL_SECOND_LESSONS_ID, SCHOOL_THIRD_LESSONS_ID, isSchoolId } from "./schools.js";
 import type {
   Character,
   EngineRuntime,
@@ -25,7 +27,8 @@ import { systemNotice } from "./system-notice.js";
 
 export { ARRIVAL_QUEST_ID } from "./arrival-guide.js";
 
-export type QuestTriggerKind = "look" | "say" | "take" | "move" | "examine" | "talk";
+export type QuestTriggerKind =
+  "look" | "say" | "take" | "move" | "examine" | "talk" | "defeat" | "cast";
 
 export type QuestTrigger = {
   characterId: string;
@@ -162,21 +165,27 @@ export function progressQuests(
         events.push(...summonToHeadmaster(world, character, runtime));
       }
       if (template.id.startsWith("first-lessons-")) {
-        if ((character.level ?? 1) >= 3) {
-          const kit = Object.values(world.spells ?? {}).filter(
-            (spell) =>
-              spell.school === character.schoolId &&
-              ((spell.minLevel ?? 1) >= 3 || spell.id === "ember"),
+        const inked = inkStarterKit(character);
+        if (inked.length) {
+          events.push(
+            systemNotice(
+              character.id,
+              `Your Primer inks three leaves. Type ${inked
+                .map((leaf) => world.spells?.[leaf.spellId]?.helpText ?? `cast ${leaf.spellId}`)
+                .join(", ")}.`,
+              runtime,
+            ),
           );
-          if (kit.length) {
-            events.push(
-              systemNotice(
-                character.id,
-                `Your School kit opens. Type ${kit.map((spell) => spell.helpText).join(", ")}.`,
-                runtime,
-              ),
-            );
-          }
+        }
+        if (character.schoolId && isSchoolId(character.schoolId)) {
+          events.push(
+            ...startQuest(
+              world,
+              character.id,
+              SCHOOL_SECOND_LESSONS_ID[character.schoolId],
+              runtime,
+            ),
+          );
         }
         events.push(...startQuest(world, character.id, BELL_BELOW_QUEST_ID, runtime));
         events.push(
@@ -186,6 +195,15 @@ export function progressQuests(
             runtime,
           ),
         );
+      }
+      if (template.id.startsWith("second-lessons-") && character.schoolId) {
+        events.push(...openPrimerChoices(world, character, 4, runtime));
+        events.push(
+          ...startQuest(world, character.id, SCHOOL_THIRD_LESSONS_ID[character.schoolId], runtime),
+        );
+      }
+      if (template.id.startsWith("third-lessons-")) {
+        events.push(...openPrimerChoices(world, character, 5, runtime));
       }
     } else {
       events.push(questUpdatedEvent(character.id, template, progress, runtime));
@@ -213,6 +231,7 @@ function awardQuestReward(
   if (nextLevel > previousLevel) {
     applyLevelVitals(character, { healGain: true });
     events.push(levelEvent(character, runtime));
+    events.push(...maybeOpenWorldPrimer(world, character, previousLevel, nextLevel, runtime));
   }
   events.push(...grantQuestItem(world, character, template, runtime));
   return events;
@@ -275,6 +294,16 @@ function objectiveMatches(
     return (
       kind === "take" &&
       itemsHeldBy(world, character.id).some((item) => item.templateId === objective.itemTemplateId)
+    );
+  }
+  if (objective.kind === "defeat") {
+    return (
+      kind === "defeat" && Boolean(objective.targetId) && trigger.targetId === objective.targetId
+    );
+  }
+  if (objective.kind === "cast") {
+    return (
+      kind === "cast" && Boolean(objective.targetId) && trigger.targetId === objective.targetId
     );
   }
   return kind === "move" && Boolean(objective.roomId) && character.roomId === objective.roomId;

@@ -11,5 +11,31 @@
   "heal": 6,
   "minLevel": 3,
   "presentationKey": "greenstitch",
-  "helpText": "cast greenstitch"
+  "helpText": "cast greenstitch",
+  "tag": "gift",
+  "pennedBy": "Mentor Briar",
+  "ranks": [
+    {
+      "focusCost": 4,
+      "heal": 6
+    },
+    {
+      "focusCost": 4,
+      "heal": 7
+    },
+    {
+      "focusCost": 3,
+      "heal": 7
+    },
+    {
+      "focusCost": 3,
+      "heal": 8,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "heal": 9,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

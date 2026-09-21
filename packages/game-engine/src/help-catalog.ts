@@ -44,7 +44,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["examine", "ex", "x"],
     summary: "Look more closely at a person, object, or item.",
     detail:
-      "examine porter looks at Porter Bramble. x porter does the same. Look and examine also describe nearby Collegians. The Practice Dummy is a well-worn straw target in the South Orchard.",
+      "examine porter looks at Porter Bramble. x porter does the same. Look and examine also describe nearby Collegians. The Practice Dummy is a well-worn straw target in the South Orchard. Each School hearth keeps one as well.",
   },
   {
     topic: "talk",
@@ -92,7 +92,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["cast"],
     summary: "Cast a known spell during a fight.",
     detail:
-      "cast ember dummy squares up if you are not already fighting, then cast ember locks the spell. At the third year-mark your School kit opens: two combat spells and one gift for Ember, Thorns, the Veil, Stars, Stone, or Steel.",
+      "cast ember dummy squares up if you are not already fighting, then cast ember locks the spell. Ember is Flint's orchard practice spark. School leaves open in your Field Primer after first lessons, then three clickable leaves (or typed 1 / 2 / 3).",
   },
   {
     topic: "help",
@@ -126,13 +126,14 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["spells", "spell", "grimoire", "book"],
     summary: "List the spells you have been taught.",
     detail:
-      "spells (or grimoire) lists Ember and, at the third year-mark, your School kit. Type the listed cast words during a fight.",
+      "spells (or grimoire) reads your Field Primer: ranks, numbers, and the mentor's hand. Type spells ember to open one leaf. When three leaves are offered, click a card or type 1, 2, or 3. Type the listed cast words during a fight.",
   },
   {
     topic: "stats",
     aliases: ["stats"],
-    summary: "Show health, location, and what you have equipped.",
-    detail: "stats prints your health, the room title, and the item you have equipped.",
+    summary: "Show health, School, Primer leaves, and the next lesson.",
+    detail:
+      "stats prints health, focus, School, Primer leaves, the next lesson, the room title, and the item you have equipped.",
   },
   {
     topic: "equip",

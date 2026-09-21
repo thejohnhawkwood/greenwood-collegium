@@ -111,6 +111,26 @@ export const playStateSchema = z.object({
       ),
     })
     .optional(),
+  primer: z
+    .object({
+      pennedBy: z.string().min(1),
+      prompt: z.string().min(1),
+      cards: z
+        .array(
+          z.object({
+            command: z.enum(["1", "2", "3"]),
+            title: z.string().min(1),
+            badge: z.string().min(1),
+            kind: z.enum(["upgrade", "unlock", "courtesy", "vital"]),
+            numbers: z.string().min(1),
+            description: z.string().min(1),
+            pennedBy: z.string().min(1).optional(),
+          }),
+        )
+        .min(1)
+        .max(3),
+    })
+    .optional(),
   bag: z
     .array(
       z.object({

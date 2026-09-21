@@ -50,7 +50,20 @@
       "minimum": 0
     },
     "effect": {
-      "enum": ["skip-counter", "avoid-hit", "heal", "brace", "ready-strike", "riposte", "insight"]
+      "enum": [
+        "skip-counter",
+        "avoid-hit",
+        "heal",
+        "brace",
+        "ready-strike",
+        "riposte",
+        "insight",
+        "restore-focus",
+        "halve-hit",
+        "weaken",
+        "ready-spell",
+        "leech"
+      ]
     },
     "heal": {
       "type": "integer",
@@ -68,9 +81,47 @@
       "type": "integer",
       "minimum": 1
     },
+    "restoreFocus": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "readySpellIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      }
+    },
     "minLevel": {
       "type": "integer",
       "minimum": 1
+    },
+    "tag": {
+      "enum": ["strike", "control", "ward", "gift"]
+    },
+    "pennedBy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ranks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "focusCost": { "type": "integer", "minimum": 0 },
+          "damage": { "type": "integer", "minimum": 0 },
+          "heal": { "type": "integer", "minimum": 1 },
+          "burningRounds": { "type": "integer", "minimum": 1 },
+          "burningDamage": { "type": "integer", "minimum": 1 },
+          "restoreFocus": { "type": "integer", "minimum": 1 },
+          "insight": { "type": "string", "minLength": 1 },
+          "marginNote": { "type": "string", "minLength": 1 }
+        }
+      }
     },
     "presentationKey": {
       "type": "string",

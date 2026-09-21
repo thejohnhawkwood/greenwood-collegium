@@ -3,12 +3,38 @@
   "id": "shade",
   "name": "Shade",
   "school": "veil",
-  "description": "A cold fold of shadow that finds the unguarded side.",
+  "description": "A cold fold of shadow that finds the unguarded side and cuts there.",
   "focusCost": 4,
   "targetType": "enemy",
   "context": "encounter",
-  "damage": 5,
+  "damage": 6,
   "minLevel": 3,
   "presentationKey": "shade-fold",
-  "helpText": "cast shade"
+  "helpText": "cast shade",
+  "tag": "strike",
+  "pennedBy": "Mentor Mist",
+  "ranks": [
+    {
+      "focusCost": 4,
+      "damage": 6
+    },
+    {
+      "focusCost": 4,
+      "damage": 7
+    },
+    {
+      "focusCost": 3,
+      "damage": 7
+    },
+    {
+      "focusCost": 3,
+      "damage": 8,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "damage": 9,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

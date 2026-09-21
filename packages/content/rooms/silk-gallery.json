@@ -44,7 +44,7 @@
             "choices": [{ "say": "1", "label": "Who is the queen?", "next": "queen" }]
           },
           "queen": {
-            "text": "\"South of the nave. The Deep Cradle. Something bigger is still sleeping there — I have felt it through the silk, heavier than the hatchling, a stillness that is not rest. It will not wake for one Collegian. I can't hold this gallery and watch that room. Bring two classmates. Lock your moves on the same clock, the way Flint taught you in the orchard. Then go back up and talk alder before I lose my nerve again. Please. The lantern-light from the tower is getting thinner, and I do not like what the threads do in the dark.\""
+            "text": "\"South of the nave. The Deep Cradle. Something bigger is still sleeping there — I have felt it through the silk, heavier than the hatchling. It does not move when the hatchling moves. It waits. It will not wake for one Collegian. I can't hold this gallery and watch that room. Bring two classmates. Lock your moves on the same clock, the way Flint taught you in the orchard. Then go back up and talk alder before I lose my nerve again. Please. The lantern-light from the tower is getting thinner, and I do not like what the threads do in the dark.\""
           }
         }
       }

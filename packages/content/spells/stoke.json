@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "stoke",
+  "name": "Stoke",
+  "school": "ember",
+  "tag": "gift",
+  "description": "Feed the fire. The next Ember or Cinder Snap lands heavier.",
+  "focusCost": 3,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "ready-spell",
+  "readySpellIds": ["ember", "cinder-snap"],
+  "presentationKey": "ember-burst",
+  "pennedBy": "Mentor Cinder",
+  "helpText": "cast stoke",
+  "ranks": [
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 2
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

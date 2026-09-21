@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "blaze-mantle",
+  "name": "Blaze-Mantle",
+  "school": "ember",
+  "tag": "ward",
+  "description": "A wrap of fire. The next hit is turned, and the attacker burns.",
+  "focusCost": 4,
+  "targetType": "self",
+  "context": "encounter",
+  "effect": "avoid-hit",
+  "presentationKey": "hearth-ward",
+  "pennedBy": "Mentor Cinder",
+  "helpText": "cast blaze-mantle",
+  "ranks": [
+    {
+      "focusCost": 4
+    },
+    {
+      "focusCost": 4
+    },
+    {
+      "focusCost": 3
+    },
+    {
+      "focusCost": 3,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

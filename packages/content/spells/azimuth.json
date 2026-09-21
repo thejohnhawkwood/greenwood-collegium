@@ -10,5 +10,31 @@
   "damage": 5,
   "minLevel": 3,
   "presentationKey": "azimuth-point",
-  "helpText": "cast azimuth"
+  "helpText": "cast azimuth",
+  "tag": "strike",
+  "pennedBy": "Mentor Lumen",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 5
+    },
+    {
+      "focusCost": 3,
+      "damage": 6
+    },
+    {
+      "focusCost": 2,
+      "damage": 6
+    },
+    {
+      "focusCost": 2,
+      "damage": 7,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 8,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

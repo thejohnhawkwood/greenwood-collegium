@@ -788,6 +788,94 @@
   background: #20352b;
   border: 1px solid #d4b77c;
 }
+.primer-stage {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  z-index: 6;
+  transform: translate(-50%, -50%);
+  width: min(46rem, calc(100% - 1rem));
+  max-height: calc(100% - 1.2rem);
+  overflow: auto;
+  padding: 0.7rem 0.75rem 0.8rem;
+  border: 1px solid #ead2a0;
+  border-radius: 10px;
+  background: #10281df7;
+  pointer-events: auto;
+  text-align: center;
+}
+.primer-stage-eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ead2a0;
+}
+.primer-stage-prompt {
+  margin: 0 0 0.55rem;
+  font:
+    0.92rem/1.35 Georgia,
+    serif;
+  color: #f3ebd4;
+}
+.primer-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.primer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.28rem;
+  min-height: 12.5rem;
+  padding: 0.65rem 0.7rem 0.75rem;
+  text-align: left;
+  color: #f3ebd4;
+  background: #1a3228;
+  border: 1px solid #d4b77c;
+  border-radius: 8px;
+}
+.primer-card:hover,
+.primer-card:focus-visible {
+  background: #244233;
+  border-color: #ead2a0;
+}
+.primer-card-index {
+  align-self: flex-end;
+  min-width: 1.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: #ead2a0;
+}
+.primer-card-badge {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ead2a0;
+}
+.primer-card-title {
+  font:
+    1.05rem/1.2 Georgia,
+    serif;
+  color: #fff6de;
+}
+.primer-card-numbers {
+  font-size: 0.74rem;
+  color: #eee3c3;
+}
+.primer-card-description {
+  font:
+    0.78rem/1.4 Georgia,
+    serif;
+  color: #f3ebd4;
+}
+.primer-card-pen {
+  margin-top: auto;
+  font-size: 0.68rem;
+  font-style: italic;
+  color: #d8c89a;
+}
 .conversation-stage {
   position: absolute;
   right: 0.55rem;
@@ -1592,11 +1680,24 @@
   .conversation-stage {
     width: min(18rem, calc(52% - 0.4rem));
   }
+  .primer-stage {
+    width: min(36rem, calc(100% - 0.8rem));
+  }
   .play-header .meta {
     max-width: 180px;
   }
 }
 @container play (max-width: 720px) {
+  .primer-stage {
+    width: calc(100% - 0.8rem);
+    top: 50%;
+  }
+  .primer-cards {
+    grid-template-columns: 1fr;
+  }
+  .primer-card {
+    min-height: 0;
+  }
   .play-grid {
     display: flex;
     flex-direction: column;

@@ -16,9 +16,9 @@ at one foe.
 - Keep one spawn. Do not mint a personal dummy, hatchling, or queen.
 - Record victory on the Collegian (`defeatedSpawnIds`). Solo foes hide from
   students who have already stood and stay visible to first-timers. The
-  practice dummy is the exception: it stays in the orchard after a win so
-  later lessons can still hit it. Experience and dummy loot still go to
-  first-timers only.
+  practice dummy is the exception: orchard and hearth dummies stay up after a
+  win so later lessons can still hit them. Dummy work does not grant a lesson.
+  Experience and dummy loot still go to first-timers only.
 - A `minParty` boss is visible and will square up when at least one Collegian
   in the room has not stood. If everyone present has stood, she does not rise.
 - Experience and authored loot go to first-timers on that kill. Veterans who

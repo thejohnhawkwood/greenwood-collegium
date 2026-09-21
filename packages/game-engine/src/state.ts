@@ -77,9 +77,54 @@ export type Character = {
   hitThisEncounter?: boolean;
   defending?: boolean;
   defeatedSpawnIds?: string[];
+  knownSpells?: KnownSpellLeaf[];
+  pendingPrimerChoices?: PendingPrimerChoices;
+  primerAwardedLevels?: number[];
+  halveNextHit?: boolean;
+  ashShroud?: boolean;
+  readySpellIds?: string[];
+  readySpellBonus?: number;
 };
 
-export type QuestObjectiveKind = "look" | "say" | "take" | "visit" | "examine" | "talk";
+export type SpellTag = "strike" | "control" | "ward" | "gift";
+
+export type KnownSpellLeaf = {
+  spellId: string;
+  rank: number;
+  pennedBy: string;
+};
+
+export type PrimerChoiceKind = "upgrade" | "unlock" | "courtesy" | "vital";
+
+export type PrimerChoiceCard = {
+  kind: PrimerChoiceKind;
+  spellId?: string;
+  rank?: number;
+  schoolId?: SchoolId;
+  tag?: SpellTag;
+  vitalHealth?: number;
+  vitalFocus?: number;
+};
+
+export type PendingPrimerChoices = {
+  level: number;
+  options: PrimerChoiceCard[];
+  commandId?: string;
+};
+
+export type SpellRankNumbers = {
+  focusCost?: number;
+  damage?: number;
+  heal?: number;
+  burningRounds?: number;
+  burningDamage?: number;
+  restoreFocus?: number;
+  insight?: string;
+  marginNote?: string;
+};
+
+export type QuestObjectiveKind =
+  "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast";
 
 export type QuestObjective = {
   id: string;
@@ -111,12 +156,26 @@ export type QuestProgress = {
 };
 
 export type StatusEffect = {
-  id: "burning" | "skip-counter";
+  id: "burning" | "skip-counter" | "weaken";
   targetId: string;
   remainingRounds: number;
   tickDamage?: number;
   appliedRound: number;
 };
+
+export type SpellEffectId =
+  | "skip-counter"
+  | "avoid-hit"
+  | "heal"
+  | "brace"
+  | "ready-strike"
+  | "riposte"
+  | "insight"
+  | "restore-focus"
+  | "halve-hit"
+  | "weaken"
+  | "ready-spell"
+  | "leech";
 
 export type SpellTemplate = {
   id: string;
@@ -127,12 +186,17 @@ export type SpellTemplate = {
   targetType: "enemy" | "self";
   context: "encounter" | "any";
   damage?: number;
-  effect?: "skip-counter" | "avoid-hit" | "heal" | "brace" | "ready-strike" | "riposte" | "insight";
+  effect?: SpellEffectId;
   heal?: number;
   insight?: string;
   burningRounds?: number;
   burningDamage?: number;
+  restoreFocus?: number;
+  readySpellIds?: string[];
   minLevel?: number;
+  tag?: SpellTag;
+  pennedBy?: string;
+  ranks?: SpellRankNumbers[];
   presentationKey: string;
   helpText: string;
 };
@@ -265,6 +329,9 @@ export type JoinIntent = {
   discoveredRoomIds?: string[];
   defeatedSpawnIds?: string[];
   schoolId?: SchoolId;
+  knownSpells?: KnownSpellLeaf[];
+  pendingPrimerChoices?: PendingPrimerChoices;
+  primerAwardedLevels?: number[];
 };
 
 export type LeaveIntent = {
@@ -365,6 +432,7 @@ export type StatsIntent = {
 export type SpellsIntent = {
   verb: "spells";
   characterId: string;
+  target?: string;
 };
 
 export type EquipIntent = {

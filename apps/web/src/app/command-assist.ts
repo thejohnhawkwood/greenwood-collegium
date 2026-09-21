@@ -125,13 +125,19 @@ export function reminderWords(
     word: move.command,
     send: true,
   }));
-  return [...combat, ...base, ...spoken, ...dismiss];
+  const primer = (state?.primer?.cards ?? []).map((card) => ({
+    word: card.command,
+    send: true,
+  }));
+  return [...primer, ...combat, ...base, ...spoken, ...dismiss];
 }
 
 export function completionCandidates(state?: PlayState): string[] {
   return [
     ...(state?.conversation?.choices.map((choice) => choice.say) ?? []),
     ...(state?.conversation?.choices.map((choice) => choice.label) ?? []),
+    ...(state?.primer?.cards.map((card) => card.command) ?? []),
+    ...(state?.primer?.cards.map((card) => card.title) ?? []),
     ...(state?.bag.map((item) => item.name) ?? []),
     ...(state?.room.visible.map((entity) => entity.name) ?? []),
     ...(state?.minimap.rooms.flatMap((room) => (room.title ? [room.title] : [])) ?? []),

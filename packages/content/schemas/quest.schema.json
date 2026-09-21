@@ -53,7 +53,7 @@
             "pattern": "^[a-z][a-z0-9-]*$"
           },
           "kind": {
-            "enum": ["look", "say", "take", "visit", "examine", "talk"]
+            "enum": ["look", "say", "take", "visit", "examine", "talk", "defeat", "cast"]
           },
           "label": {
             "type": "string",
@@ -86,7 +86,7 @@
             "if": {
               "properties": {
                 "kind": {
-                  "enum": ["examine", "talk"]
+                  "enum": ["examine", "talk", "defeat", "cast"]
                 }
               }
             },

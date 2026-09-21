@@ -1,5 +1,9 @@
 import type { Character, EnemySpawn, WorldState } from "./state.js";
 
+export function isPracticeDummy(spawn: { templateId: string }): boolean {
+  return spawn.templateId === "practice-dummy" || spawn.templateId.startsWith("practice-dummy-");
+}
+
 export function worldEnemies(world: WorldState): Record<string, EnemySpawn> {
   if (!world.enemies) {
     world.enemies = {};
@@ -19,7 +23,7 @@ export function recordSpawnDefeat(character: Character, spawnId: string): void {
 }
 
 export function spawnVisibleTo(world: WorldState, spawn: EnemySpawn, looker: Character): boolean {
-  if (spawn.templateId === "practice-dummy") {
+  if (isPracticeDummy(spawn)) {
     return true;
   }
   if ((spawn.minParty ?? 1) > 1) {

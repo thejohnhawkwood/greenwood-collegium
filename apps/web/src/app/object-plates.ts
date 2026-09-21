@@ -75,6 +75,8 @@ const PLACEMENT_ALIASES: Record<string, string> = {
   "item-practice-staff-south-orchard": "practice-staff",
   "item-practice-sling-south-orchard": "practice-sling",
   "item-primer-library-stacks": "moss-bound-primer",
+  "item-field-primer-lantern-court": "moss-bound-primer",
+  "field-primer": "moss-bound-primer",
 };
 
 function slug(value: string): string {

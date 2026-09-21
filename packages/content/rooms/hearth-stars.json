@@ -3,7 +3,7 @@
   "id": "hearth-stars",
   "title": "Hearth of Stars",
   "shortDescription": "Night windows keep company with ink-stained charts.",
-  "longDescription": "The Hearth of Stars is a loft that pretends it is only a study. Brass instruments wait beside a star-wheel. Charts are pinned where a draught cannot steal them. The windows hold more night than the hour should allow, and the air smells of ink, cold glass, and a little lamp-oil.\nMentor Lumen has ink on her primaries and no patience for guesswork dressed as wonder.",
+  "longDescription": "The Hearth of Stars is a loft that pretends it is only a study. Brass instruments wait beside a star-wheel. Charts are pinned where a draught cannot steal them. The windows hold more night than the hour should allow, and the air smells of ink, cold glass, and a little lamp-oil.\nMentor Lumen has ink on her primaries and no patience for guesswork dressed as wonder.\nA straw hearth dummy stands where a lesson can be finished without guessing.",
   "zone": "schools",
   "map": {
     "x": 5,
@@ -22,26 +22,46 @@
       "kind": "npc",
       "lookDescription": "A barn owl with ink-stained primaries and a star-chart satchel. Try talk lumen.",
       "examineDescription": "Lumen's facial disc is pale and severe. The satchel is heavy with charts, not stories. She corrects a wrong azimuth the way other teachers correct a sloppy stance.",
-      "dialogue": "\"Stars are measured, not wished. Look this hearth — the wheel, the hour already marked. Find Flint in the South Orchard. Come back when you have hit something that will not lie.\"",
+      "dialogue": "\"Look around this hearth. Charts before wonder. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Lumen. Wipe your paws before you touch a chart. Stars teach you to measure what the night is doing — the hour before the name, the mark before the wish. Look this hearth. Write the hour in your head if you cannot write it on the slate. Then walk to the South Orchard, where the apple trees lean and Flint's dummy waits under a straw hat that has seen more honest blows than most first-years. Attack it once. Return and talk to me. I will be at the charts.\"",
+            "text": "\"Ink, cold glass, lamp-oil. Look around this hearth. Charts before wonder. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
             "choices": [
-              { "say": "1", "label": "What do Stars measure?", "next": "craft" },
-              { "say": "2", "label": "I will go.", "next": "go" }
+              {
+                "say": "1",
+                "label": "What does the Primer ask?",
+                "next": "craft"
+              },
+              {
+                "say": "2",
+                "label": "I will go.",
+                "next": "go"
+              }
             ]
           },
           "craft": {
-            "text": "\"Wonder is allowed. Guessing is not a method. First you look. Then you practice on a thing that will not lie about whether you hit it — Flint's dummy, in the orchard, with the blossom underfoot. Then you come back, and we will see whether you named the hour or only the feeling.\"",
-            "choices": [{ "say": "1", "label": "I understand.", "next": "go" }]
+            "text": "\"The Field Primer is your book, not a wish flung at the night. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. Write the hour before you name the star.\"",
+            "choices": [
+              {
+                "say": "1",
+                "label": "I understand.",
+                "next": "go"
+              }
+            ]
           },
           "go": {
-            "text": "\"Look the star-wheel. Tonight's marks are already set. Then find the orchard south of Lantern Court. I will be at the charts when you return.\""
+            "text": "\"Look around this hearth. Defeat the dummy. I will be here with the charts. Guesswork dressed as wonder will not pass.\""
           },
           "lessons-done": {
-            "text": "\"You have looked. You have stood in the orchard. Stars have your name, and your kit is open. Alder waits in the High Study with a question about the bell below — a deep note the living timber still carries, whether the bronze is there or not. Go up when you have the hour straight. Do not guess on his stair.\""
+            "text": "\"The three starter leaves are inked. Cast azimuth at the hearth dummy for the second lesson. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+          },
+          "third-lesson": {
+            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+          },
+          "third-done": {
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Eat something warm before you take a cold road.\""
           }
         }
       }

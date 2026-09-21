@@ -11,5 +11,31 @@
   "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it.",
   "minLevel": 3,
   "presentationKey": "quiet-step",
-  "helpText": "cast quiet-step"
+  "helpText": "cast quiet-step",
+  "tag": "gift",
+  "pennedBy": "Mentor Mist",
+  "ranks": [
+    {
+      "focusCost": 2,
+      "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it."
+    },
+    {
+      "focusCost": 2,
+      "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it.",
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 1,
+      "insight": "You cast Quiet Step. The next door you try will tell you if someone waits beyond it.",
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

@@ -82,26 +82,43 @@ describe("spells", () => {
       characterId: "char-rowan",
     });
     expect(parsePlayerCommand("grimoire", "char-rowan")?.verb).toBe("spells");
+    expect(parsePlayerCommand("spells ember", "char-rowan")).toEqual({
+      verb: "spells",
+      characterId: "char-rowan",
+      target: "ember",
+    });
   });
 
-  it("lists Ember before the School kit opens", () => {
+  it("lists foxed Ember pages before any leaf is inked", () => {
     const listed = handleSpells(world(), { verb: "spells", characterId: "char-rowan" }, runtime());
     expect(listed.ok).toBe(true);
     if (listed.ok) {
-      expect(listed.event.narration).toContain("cast ember");
-      expect(listed.event.narration).not.toContain("cinder-snap");
+      expect(listed.event.narration).toContain("Field Primer");
+      expect(listed.event.narration).toContain("foxed blank");
+      expect(listed.event.narration).not.toContain("Ember · I");
     }
   });
 
-  it("lists the School kit at the third year-mark", () => {
+  it("lists inked leaves with ranks after first lessons", () => {
     const state = world();
-    state.characters["char-rowan"]!.level = 3;
+    state.characters["char-rowan"]!.knownSpells = [
+      { spellId: "ember", rank: 1, pennedBy: "Mentor Cinder" },
+      { spellId: "cinder-snap", rank: 1, pennedBy: "Mentor Cinder" },
+      { spellId: "hearth-ward", rank: 1, pennedBy: "Mentor Cinder" },
+    ];
     const listed = handleSpells(state, { verb: "spells", characterId: "char-rowan" }, runtime());
     expect(listed.ok).toBe(true);
     if (listed.ok) {
-      expect(listed.event.narration).toContain("cast ember");
-      expect(listed.event.narration).toContain("cast cinder-snap");
-      expect(listed.event.narration).toContain("cast hearth-ward");
+      expect(listed.event.narration).toContain("Ember · I");
+      expect(listed.event.narration).toContain("Cinder Snap · I");
+      expect(listed.event.narration).toContain("Hearth Ward · I");
+      expect(listed.event.narration).toContain("Penned by Mentor Cinder");
     }
+    const leaf = handleSpells(
+      state,
+      { verb: "spells", characterId: "char-rowan", target: "ember" },
+      runtime(),
+    );
+    expect(leaf.ok && leaf.event.narration).toContain("Rank 1.");
   });
 });

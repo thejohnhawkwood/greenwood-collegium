@@ -50,6 +50,9 @@ import {
   revertDrop,
   revertTake,
   type EngineRuntime,
+  type PendingPrimerChoices,
+  type PrimerChoiceCard,
+  type SpellTag,
   type WorldState,
 } from "@greenwood/game-engine";
 import { describeCollegian } from "@greenwood/content";
@@ -144,6 +147,14 @@ export type RealtimeOptions = {
   ) => Promise<void>;
   persistSchool?: (characterId: string, schoolId: string | undefined) => Promise<void>;
   persistDefeatedSpawns?: (characterId: string, spawnIds: readonly string[]) => Promise<void>;
+  persistPrimer?: (
+    characterId: string,
+    input: {
+      knownSpells: NonNullable<PlayIdentity["knownSpells"]>;
+      pendingPrimerChoices?: PlayIdentity["pendingPrimerChoices"];
+      primerAwardedLevels: number[];
+    },
+  ) => Promise<void>;
   auditLog?: AuditLogRepository;
   listClassroom?: (actorAccountId: string) => Promise<ClassroomReadModel | undefined>;
   bindInPlay?: (listInPlay: () => InPlaySeat[]) => void;
@@ -402,6 +413,15 @@ export async function attachRealtime(
       present.defeatedSpawnIds = [
         ...new Set([...(present.defeatedSpawnIds ?? []), ...(identity.defeatedSpawnIds ?? [])]),
       ];
+      if (identity.knownSpells?.length) {
+        present.knownSpells = identity.knownSpells.map((leaf) => ({ ...leaf }));
+      }
+      if (identity.pendingPrimerChoices) {
+        present.pendingPrimerChoices = toPendingPrimer(identity.pendingPrimerChoices);
+      }
+      if (identity.primerAwardedLevels?.length) {
+        present.primerAwardedLevels = [...identity.primerAwardedLevels];
+      }
       await persistStarterCopies(characterId, identity);
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
@@ -433,6 +453,9 @@ export async function attachRealtime(
         appearance: identity?.appearance,
         discoveredRoomIds: identity?.discoveredRoomIds,
         defeatedSpawnIds: identity?.defeatedSpawnIds,
+        knownSpells: identity?.knownSpells,
+        pendingPrimerChoices: toPendingPrimer(identity?.pendingPrimerChoices),
+        primerAwardedLevels: identity?.primerAwardedLevels,
         schoolId:
           identity?.schoolId && isSchoolId(identity.schoolId) ? identity.schoolId : undefined,
       },
@@ -535,6 +558,18 @@ export async function attachRealtime(
     }
     if (options.persistDefeatedSpawns) {
       await options.persistDefeatedSpawns(characterId, character.defeatedSpawnIds ?? []);
+    }
+    if (options.persistPrimer) {
+      await options.persistPrimer(characterId, {
+        knownSpells: (character.knownSpells ?? []).map((leaf) => ({ ...leaf })),
+        pendingPrimerChoices: character.pendingPrimerChoices
+          ? {
+              ...character.pendingPrimerChoices,
+              options: character.pendingPrimerChoices.options.map((card) => ({ ...card })),
+            }
+          : undefined,
+        primerAwardedLevels: [...(character.primerAwardedLevels ?? [])],
+      });
     }
     if (options.persistQuest) {
       for (const record of listQuestRecords(world, characterId)) {
@@ -1242,6 +1277,29 @@ function deliver(
     sockets.get(notice.characterId)?.emit("event", eventEnvelopeSchema.parse(notice.event));
   }
   return mine;
+}
+
+const SPELL_TAGS = new Set<SpellTag>(["strike", "control", "ward", "gift"]);
+
+function toPendingPrimer(
+  pending: PlayIdentity["pendingPrimerChoices"],
+): PendingPrimerChoices | undefined {
+  if (!pending?.options.length) {
+    return undefined;
+  }
+  return {
+    level: pending.level,
+    commandId: pending.commandId,
+    options: pending.options.map((card): PrimerChoiceCard => ({
+      kind: card.kind,
+      spellId: card.spellId,
+      rank: card.rank,
+      schoolId: card.schoolId && isSchoolId(card.schoolId) ? card.schoolId : undefined,
+      tag: card.tag && SPELL_TAGS.has(card.tag as SpellTag) ? (card.tag as SpellTag) : undefined,
+      vitalHealth: card.vitalHealth,
+      vitalFocus: card.vitalFocus,
+    })),
+  };
 }
 
 function commandRuntime(sequences: Map<string, number>): EngineRuntime {

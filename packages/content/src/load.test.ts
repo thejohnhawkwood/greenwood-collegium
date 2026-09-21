@@ -85,6 +85,12 @@ describe("content loader", () => {
         name: "Small Copper Key",
         roomId: START_ROOM_ID,
       }),
+      expect.objectContaining({
+        id: "item-field-primer-lantern-court",
+        templateId: "field-primer",
+        name: "Field Primer Book",
+        roomId: START_ROOM_ID,
+      }),
     ]);
     expect(world.itemTemplates["small-copper-key"]?.name).toBe("Small Copper Key");
     expect(world.itemTemplates["librarians-ribbon"]?.name).toBe("Librarian's Ribbon");
@@ -97,7 +103,7 @@ describe("content loader", () => {
       maxHealth: 8,
       maxFocus: 6,
       attack: 2,
-      experience: 5,
+      experience: 0,
     });
     expect(world.enemies["enemy-silk-queen-deep-cradle"]).toMatchObject({
       templateId: "silk-queen",
@@ -106,7 +112,7 @@ describe("content loader", () => {
       maxFocus: 12,
       minParty: 3,
     });
-    expect(Object.keys(world.enemies)).toHaveLength(3);
+    expect(Object.keys(world.enemies)).toHaveLength(9);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,
@@ -114,14 +120,52 @@ describe("content loader", () => {
       burningRounds: 2,
       presentationKey: "ember-burst",
     });
-    expect(Object.keys(world.spells)).toHaveLength(18);
+    expect(Object.keys(world.spells)).toHaveLength(42);
     expect(world.spells.strike).toMatchObject({ name: "Strike", school: "steel", minLevel: 3 });
+    expect(world.spells.shade).toMatchObject({
+      name: "Shade",
+      school: "veil",
+      tag: "strike",
+      damage: 6,
+    });
+    expect(world.spells.hush).toMatchObject({
+      name: "Hush",
+      school: "veil",
+      tag: "strike",
+      damage: 8,
+      targetType: "enemy",
+    });
+    expect(world.spells["after-image"]).toMatchObject({ damage: 4, effect: "skip-counter" });
+    expect(world.spells.unname).toMatchObject({ damage: 4, effect: "weaken" });
+    expect(world.spells.azimuth).toMatchObject({
+      name: "Azimuth",
+      school: "stars",
+      tag: "strike",
+      damage: 5,
+    });
+    expect(world.spells.flare).toMatchObject({
+      name: "Flare",
+      school: "stars",
+      tag: "strike",
+      damage: 4,
+      burningRounds: 2,
+      burningDamage: 1,
+    });
+    expect(world.spells.draw).toMatchObject({
+      name: "Draw",
+      school: "steel",
+      tag: "strike",
+      damage: 4,
+      heal: 2,
+      effect: "leech",
+    });
+    expect(world.spells.measure).toBeUndefined();
     expect(world.quests["arrival-at-the-collegium"]).toMatchObject({
       title: "Arrival at the Collegium",
       experienceReward: 10,
     });
     expect(world.quests["what-still-sleeps"]?.title).toBe("What Still Sleeps");
-    expect(Object.keys(world.quests)).toHaveLength(12);
+    expect(Object.keys(world.quests)).toHaveLength(24);
     expect(world.rooms["south-orchard"]?.fixtures.map((fixture) => fixture.id)).toContain(
       "object-orchard-apples",
     );
@@ -136,7 +180,7 @@ describe("content loader", () => {
       const mentor = Object.values(world.rooms)
         .flatMap((room) => room.fixtures)
         .find((fixture) => fixture.id === mentorId);
-      expect(mentor?.dialogueTree?.nodes["lessons-done"]?.text).toContain("kit is open");
+      expect(mentor?.dialogueTree?.nodes["lessons-done"]?.text).toContain("leaves are inked");
     }
     const alder = Object.values(world.rooms)
       .flatMap((room) => room.fixtures)

@@ -11,5 +11,31 @@
   "effect": "skip-counter",
   "minLevel": 3,
   "presentationKey": "thorn-bind",
-  "helpText": "cast bind"
+  "helpText": "cast bind",
+  "tag": "control",
+  "pennedBy": "Mentor Briar",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 3
+    },
+    {
+      "focusCost": 3,
+      "damage": 4
+    },
+    {
+      "focusCost": 2,
+      "damage": 4
+    },
+    {
+      "focusCost": 2,
+      "damage": 5,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 6,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

@@ -6,8 +6,11 @@ High Study, the Hall of Schools, six hearths, and the Bell Stair below
 the Clock Tower. There are thirteen speaking staff NPCs and twelve quests
 including Arrival and the six first-lessons. Floors use map `z` (ADR-0036).
 
-Player instructions and content authoring conventions live in the committed
-[play and authoring guide](adventures.md). Design decisions: [ADR-0029](../adr/0029-authored-npc-adventures.md).
+Index of content bibles: [README.md](README.md).
+Player instructions and JSON authoring: [adventures.md](adventures.md).
+Story spine: [STORY.md](STORY.md). Storylines: [quests/](quests/README.md).
+Field Primer: [PROGRESSION.md](PROGRESSION.md).
+Design decisions: [ADR-0029](../adr/0029-authored-npc-adventures.md).
 
 ## Runtime and persistence
 
@@ -397,6 +400,9 @@ Rain-dark arches frame a walk of moss and old promises.
 
 ## Quests
 
+Story spine: [STORY.md](STORY.md). Storylines: [quests/](quests/README.md). This
+section is the live ID inventory and lags canon (queen `defeat`, East Watch).
+
 Only Arrival starts automatically. Each new investigation begins by talking to its
 giver; clues inspected before acceptance must be examined again. Clues may be
 completed in any order, and the final report requires every listed discovery.
@@ -405,6 +411,7 @@ completed in any order, and the final report requires every listed discovery.
 
 ### A Little Room to Grow
 
+- Story: [a-little-room-to-grow.md](quests/a-little-room-to-grow.md).
 - Stable ID: `a-little-room-to-grow`; source: [quest JSON](../../packages/content/quests/a-little-room-to-grow.json).
 - Starts: talk to `npc-groundskeeper-tansy` in `herb-garden`.
 - Reward: **10 experience**, once per character.
@@ -422,6 +429,7 @@ Resolution: clay from a tool-rinsing jug blocked the seedling tray's drainage. T
 
 ### Arrival at the Collegium
 
+- Story: [arrival.md](quests/arrival.md).
 - Stable ID: `arrival-at-the-collegium`; source: [quest JSON](../../packages/content/quests/arrival-at-the-collegium.json).
 - Starts: automatically on joining Lantern Court; the automatic room snapshot does not count as a player-issued look.
 - Reward: **10 experience**, once per character.
@@ -439,22 +447,24 @@ Resolution: the original tutorial teaches looking, speaking, taking a personal k
 
 ### First Lessons
 
+- Story: [college-lessons.md](quests/college-lessons.md) (first, second, and Alder’s Leave).
 - Stable IDs: `first-lessons-ember`, `first-lessons-thorn`, `first-lessons-veil`, `first-lessons-stars`, `first-lessons-stone`, `first-lessons-steel`.
 - Starts: automatically when Alder’s School choice teleports the Collegian to that hearth.
-- Reward: **10 experience**, once per character.
+- Reward: **15 experience**, once per character. Inks all three starter leaves at rank 1.
 
 Objectives:
 
 - `look-hearth` — `look` in the chosen hearth.
-- `visit-orchard` — `visit` `south-orchard`.
+- `defeat-dummy` — `defeat` the hearth dummy in that hearth.
 - `report` — `talk` the School mentor.
 
-Resolution: the student sees their hearth, finds Flint’s orchard, and reports back. The second reward advances them to level 3.
+Resolution: the student looks the hearth, defeats the hearth dummy, and reports back. The Primer inks three starter leaves. Second and third lessons follow (`second-lessons-*`, `third-lessons-*`).
 
 <a id="the-bell-below"></a>
 
 ### The Bell Below
 
+- Story: [the-bell-below.md](quests/the-bell-below.md).
 - Stable ID: `the-bell-below`; source: [quest JSON](../../packages/content/quests/the-bell-below.json).
 - Starts: talk Alder in the High Study after that School's first-lessons quest is complete.
 - Reward: **15 experience**, once per character.
@@ -472,6 +482,7 @@ Resolution: the old bell is absent, but a connected living oak carries its remem
 
 ### The Bell Wakes
 
+- Story: [the-bell-wakes.md](quests/the-bell-wakes.md).
 - Stable ID: `the-bell-wakes`; source: [quest JSON](../../packages/content/quests/the-bell-wakes.json).
 - Starts: talk Alder in the High Study after The Bell Below is complete.
 - Reward: **15 experience**, once per character.
@@ -490,6 +501,7 @@ Resolution: a hatchling woke before the score allows. The silk is a cradle, not 
 
 ### What Still Sleeps
 
+- Story: [what-still-sleeps.md](quests/what-still-sleeps.md) (canon: Holm, queen defeat).
 - Stable ID: `what-still-sleeps`; source: [quest JSON](../../packages/content/quests/what-still-sleeps.json).
 - Starts: talk Alder in the High Study after The Bell Wakes is complete.
 - Reward: **20 experience**, once per character.
@@ -506,6 +518,7 @@ Resolution: the silk has a mouth now, and it learned it from a class. The queen 
 
 ### The Missing Pages
 
+- Story: [the-missing-pages.md](quests/the-missing-pages.md).
 - Stable ID: `the-missing-pages`; source: [quest JSON](../../packages/content/quests/the-missing-pages.json).
 - Starts: talk to `npc-librarian-quill` in `library-stacks`.
 - Reward: **10 experience**, once per character.
@@ -517,6 +530,8 @@ Objectives:
 - `report` — `talk`: After both discoveries, talk quill in Library Stacks. Target: fixture `npc-librarian-quill` in `library-stacks`. Requires: `read-blotter`, `find-page`.
 
 Resolution: a page borrowed to study a bird's song ended up steadying a music stand. The student reports where to collect it; Quill prepares a wedge and avoids an unfounded accusation.
+
+Canon not yet in JSON: [The East Watch](quests/the-east-watch.md) (lessons 4–10, north of East Meadow).
 
 ## Verification and boundaries
 

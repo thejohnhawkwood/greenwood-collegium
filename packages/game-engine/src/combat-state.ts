@@ -52,6 +52,10 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
     }
     character.nextAttackBonus = undefined;
     character.ignoreNextHit = undefined;
+    character.halveNextHit = undefined;
+    character.ashShroud = undefined;
+    character.readySpellIds = undefined;
+    character.readySpellBonus = undefined;
     character.hitThisEncounter = undefined;
     character.defending = undefined;
   }

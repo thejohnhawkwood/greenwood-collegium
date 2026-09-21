@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/spell.schema.json",
+  "id": "prune",
+  "name": "Prune",
+  "school": "thorn",
+  "tag": "strike",
+  "description": "A clean cut that teaches the vine. It does not cling.",
+  "focusCost": 3,
+  "targetType": "enemy",
+  "context": "encounter",
+  "damage": 6,
+  "presentationKey": "briar-lash",
+  "pennedBy": "Mentor Briar",
+  "helpText": "cast prune",
+  "ranks": [
+    {
+      "focusCost": 3,
+      "damage": 6
+    },
+    {
+      "focusCost": 3,
+      "damage": 7
+    },
+    {
+      "focusCost": 2,
+      "damage": 7
+    },
+    {
+      "focusCost": 2,
+      "damage": 8,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 2,
+      "damage": 9,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
+}

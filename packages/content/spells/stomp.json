@@ -11,5 +11,31 @@
   "effect": "skip-counter",
   "minLevel": 3,
   "presentationKey": "stone-stomp",
-  "helpText": "cast stomp"
+  "helpText": "cast stomp",
+  "tag": "control",
+  "pennedBy": "Mentor Quern",
+  "ranks": [
+    {
+      "focusCost": 4,
+      "damage": 4
+    },
+    {
+      "focusCost": 4,
+      "damage": 5
+    },
+    {
+      "focusCost": 3,
+      "damage": 5
+    },
+    {
+      "focusCost": 3,
+      "damage": 6,
+      "marginNote": "The margin deepens in the same hand."
+    },
+    {
+      "focusCost": 3,
+      "damage": 7,
+      "marginNote": "A last sentence sits in the mentor's hand."
+    }
+  ]
 }

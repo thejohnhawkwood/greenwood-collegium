@@ -1,6 +1,6 @@
 import type { EventEnvelope } from "@greenwood/contracts";
-import type { EngineRuntime, SpellTemplate, SpellsIntent, WorldState } from "./state.js";
-import { schoolKit } from "./schools.js";
+import { formatGrimoire, formatLeaf, matchPrimerLeaf } from "./primer.js";
+import type { EngineRuntime, SpellsIntent, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export type SpellsSuccess = {
@@ -30,36 +30,20 @@ export function handleSpells(
     };
   }
 
-  const known = knownSpells(world, character.id);
-  if (known.length === 0) {
+  const target = intent.target?.trim();
+  if (target) {
+    const leaf = matchPrimerLeaf(world, character, target);
+    if (!leaf) {
+      return {
+        ok: true,
+        event: systemNotice(character.id, `The Primer has no leaf named "${target}."`, runtime),
+      };
+    }
     return {
       ok: true,
-      event: systemNotice(
-        character.id,
-        "You have not been taught a spell yet. Ember waits in the orchard.",
-        runtime,
-      ),
+      event: systemNotice(character.id, formatLeaf(world, character, leaf), runtime),
     };
   }
-  const lines = ["You know these spells:", ...known.map((spell) => `  ${spell.helpText}`)];
-  return { ok: true, event: systemNotice(character.id, lines.join("\n"), runtime) };
-}
 
-function knownSpells(world: WorldState, characterId: string): SpellTemplate[] {
-  const character = world.characters[characterId];
-  if (!character) {
-    return [];
-  }
-  const ember = world.spells?.ember;
-  const kit = schoolKit(world, character);
-  const seen = new Set<string>();
-  const listed: SpellTemplate[] = [];
-  for (const spell of ember ? [ember, ...kit] : kit) {
-    if (seen.has(spell.id)) {
-      continue;
-    }
-    seen.add(spell.id);
-    listed.push(spell);
-  }
-  return listed;
+  return { ok: true, event: systemNotice(character.id, formatGrimoire(world, character), runtime) };
 }

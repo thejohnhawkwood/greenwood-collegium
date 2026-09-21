@@ -119,4 +119,47 @@ describe("command assistance", () => {
     expect(completeCommand("def")).toEqual({ value: "defend", matches: ["defend"] });
     expect(completeCommand("fl")).toEqual({ value: "flee", matches: ["flee"] });
   });
+
+  it("puts Primer leaf commands first while an offer is open", () => {
+    const choosing: PlayState = {
+      ...state,
+      conversation: undefined,
+      primer: {
+        pennedBy: "Mentor Cinder",
+        prompt: "Mentor Cinder's hand offers three leaves.",
+        cards: [
+          {
+            command: "1",
+            title: "Ember",
+            badge: "Rank II",
+            kind: "upgrade",
+            numbers: "Focus 4. Damage 6.",
+            description: "A small coal of will that lands and lingers.",
+          },
+          {
+            command: "2",
+            title: "Flame-Breath",
+            badge: "New",
+            kind: "unlock",
+            numbers: "Focus 5. Damage 4.",
+            description: "A gust of open flame.",
+          },
+          {
+            command: "3",
+            title: "Vital leaf",
+            badge: "Vital",
+            kind: "vital",
+            numbers: "+2 health. +1 focus.",
+            description: "A thicker page.",
+          },
+        ],
+      },
+    };
+    expect(
+      reminderWords(choosing)
+        .slice(0, 3)
+        .map((entry) => entry.word),
+    ).toEqual(["1", "2", "3"]);
+    expect(completionCandidates(choosing)).toEqual(expect.arrayContaining(["1", "Ember"]));
+  });
 });
