@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-stones-that-were-not-there",
+  "title": "The Stones That Were Not There",
+  "giverNpcId": "npc-shepherd-wren",
+  "requiresQuestIds": ["the-uncounted-flock"],
+  "experienceReward": 30,
+  "introNarration": "Wren counts on her fingers and does not like the number. \"East of the fold. Last winter there were seven standing stones. There are eight. Examine the Abbey Mark on the old ring — three circles, Collegium mason. Examine the New Stone. It is wet when the others are only damp. It hums the chapel count. Then talk wren. Stars would help you count. Stone would help you wait. Either way, come home.\"",
+  "reminderNarration": "\"Type east from the Sheepfold. Examine the Abbey Mark and the New Stone. Then talk wren here. Type quests for the list. I told Colm not to go. I am telling you to look and come back.\"",
+  "completionNarration": "You name eight where seven stood. Wren's ears go flat. \"Last winter there were seven. There are eight. North of the stones the peat-cut opens. I hate sending you. If you find him, you come to me before you go to Alder. I am owed that.\"",
+  "objectives": [
+    {
+      "id": "reach-stones",
+      "kind": "visit",
+      "roomId": "standing-stones",
+      "label": "Reach the Standing Stones. Type east from the Sheepfold."
+    },
+    {
+      "id": "read-mark",
+      "kind": "examine",
+      "targetId": "object-abbey-mark",
+      "label": "Examine the Abbey Mark. Three circles. Old mason-work."
+    },
+    {
+      "id": "read-new-stone",
+      "kind": "examine",
+      "targetId": "object-new-stone",
+      "label": "Examine the New Stone. Wet. Humming. Not a year of lichen."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-shepherd-wren",
+      "requires": ["reach-stones", "read-mark", "read-new-stone"],
+      "label": "Return and talk wren at the croft. Type talk wren."
+    }
+  ]
+}

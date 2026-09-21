@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "wren-wool-charm",
+  "name": "Wren's Wool Charm",
+  "shortDescription": "A twist of fold-wool on a string.",
+  "examineDescription": "Wren tied this after the uncounted flock. The wool still smells of wet fold and peat-smoke. She said keep it if the mist starts sitting the rail again.",
+  "category": "ordinary",
+  "unique": true
+}

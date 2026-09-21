@@ -27,7 +27,7 @@ Moor for lessons 4–10; Piper lives; Keeper Holm is the named loss under the Cl
 - **Kaplan’s test.** Every objective must tell a Grade 9 student the next command.
   Mystery lives in what they find, not in guessing `talk` versus `examine`.
 - **Do not implement from flavour alone.** Implementable notes sit at the bottom
-  of each storyline file. This pass is canon, not a content patch.
+  of each storyline file. JSON is runtime truth.
 
 ---
 
@@ -124,12 +124,11 @@ Scene lines live in the storyline files.
 | Librarian Quill | Stacks | yes | [Missing Pages](quests/the-missing-pages.md) only. |
 | Groundskeeper Tansy | Herb Garden | yes | [A Little Room to Grow](quests/a-little-room-to-grow.md). |
 | Healer Fen | Infirmary | yes | Consult, defeat-wake, honey after grim. Not a spine hub. |
-| Shepherd Wren | Wren’s Croft (proposed) | **yes** | East Watch hub. |
-| Colm | fixture (proposed) | **no** | Moor named loss. Students never `talk colm`. |
+| Shepherd Wren | Wren’s Croft | **yes** | East Watch hub. |
+| Colm | fixture under the barrow lip | **no** | Moor named loss. Students never `talk colm`. |
 
-Reserve `keeper holm`, `shepherd wren`, and `colm` in `character-creation/names.json`
-when those tickets land. Do not take names from the suggested student pool (`Sedge`
-is already a surname).
+Reserve `keeper holm`, `shepherd wren`, and `colm` in `character-creation/names.json`.
+Do not take names from the suggested student pool (`Sedge` is already a surname).
 
 ---
 
@@ -155,9 +154,10 @@ Not a second exit table — use [room-and-quest-summary.md](room-and-quest-summa
 
 ## 6. The spine
 
-Live JSON: 24 quests, 38 rooms. Cross-quest prereqs are engine-hardcoded today
-(Arrival auto-start, school pick, lesson chain, Alder bell offers). `giverNpcId`
-is only used by Missing Pages and A Little Room to Grow.
+Live JSON: 31 quests, 46 rooms. Cross-quest prereqs use `requiresQuestIds` plus
+Alder/Wren engine offers (Arrival auto-start, school pick, lesson chain, Alder bell
+and moor offers). `giverNpcId` is used by Missing Pages, A Little Room to Grow, and
+Wren’s L4–L8.
 
 ```text
 JOIN
@@ -210,13 +210,13 @@ That is intended. East Watch then carries them toward 10.
 ### 6.2 Failure modes (every storyline must respect)
 
 - **Solo at the queen.** `visit` does not require three Collegians. `minParty: 3`
-  only blocks square-up. Canon: [What Still Sleeps](quests/what-still-sleeps.md)
-  is not complete without `defeat`.
-- **Alder collision.** He does not discuss the East Moor until Sleeps is complete.
-  Third-lessons talk must not skip the stair. See [college lessons](quests/college-lessons.md).
-- **Queen fight optional today.** Live Sleeps is visit + examine + talk. Canon
-  requires defeat.
-- **Piper underused.** After Wakes he needs post-Holm talk. He lives.
+  only blocks square-up. [What Still Sleeps](quests/what-still-sleeps.md) is not
+  complete without `defeat`.
+- **Alder collision.** He does not discuss the East Moor until Sleeps is complete
+  **and** third lessons are complete. Third-lessons talk does not count until
+  Sleeps is done. See [college lessons](quests/college-lessons.md).
+- **Queen fight required.** Live Sleeps is wrapping, visit, score, **defeat**, talk.
+- **Piper after Holm.** `holm-named` after the wrapping; `after-queen` after Sleeps.
 
 ---
 

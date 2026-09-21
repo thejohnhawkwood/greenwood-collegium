@@ -60,6 +60,7 @@ export const questTemplateSchema = z
     introNarration: z.string().min(1),
     reminderNarration: z.string().min(1),
     giverNpcId: stableIdSchema.optional(),
+    requiresQuestIds: z.array(stableIdSchema).min(1).optional(),
     completionNarration: z.string().min(1).optional(),
     experienceReward: z.number().int().positive(),
     itemRewardTemplateId: stableIdSchema.optional(),
@@ -72,6 +73,12 @@ export const questTemplateSchema = z
     rejectMarkup(quest.reminderNarration, "reminderNarration", ctx);
     if (quest.completionNarration) {
       rejectMarkup(quest.completionNarration, "completionNarration", ctx);
+    }
+    if (
+      quest.requiresQuestIds &&
+      new Set(quest.requiresQuestIds).size !== quest.requiresQuestIds.length
+    ) {
+      ctx.addIssue({ code: "custom", message: "requiresQuestIds must be unique" });
     }
     const earlierIds = new Set<string>();
     for (const objective of quest.objectives) {

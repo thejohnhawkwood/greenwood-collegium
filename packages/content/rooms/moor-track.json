@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "moor-track",
+  "title": "Moor Track",
+  "shortDescription": "A wet track leaves the clover and turns toward peat and wool.",
+  "longDescription": "The hedge-path from the East Meadow bends east here, away from the Infirmary tile and the Hall of Schools. Wet wool and peat hang in the air. Mist sits at knee height and does not hurry.\nA waystone leans in the verge, older than the Collegium's banners. South is clover. North a croft chimney puts a thin thread of peat-smoke against the grey.",
+  "zone": "east-moor",
+  "map": {
+    "x": 6,
+    "y": 1
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "east-meadow"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "wren-croft"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "sheepfold"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-waystone",
+      "name": "Waystone",
+      "kind": "object",
+      "lookDescription": "A leaning stone at the verge, chalked and scratched. Examine it.",
+      "examineDescription": "The south face carries an abbey mason's mark, old and honest. The north face is sheep-scratch, wool still caught in a nick. Three chalked circles sit in the same count as the Quiet Chapel. Someone counted here recently. The chalk is not a year old."
+    }
+  ]
+}

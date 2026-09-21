@@ -7,6 +7,7 @@ export const combatEndedPayloadSchema = z.object({
   roomId: z.string().min(1),
   enemyName: z.string().min(1),
   outcome: z.enum(["victory", "defeat", "fled"]),
+  victoryNarration: z.string().min(1).optional(),
 });
 
 export type CombatEndedPayload = z.infer<typeof combatEndedPayloadSchema>;
@@ -22,7 +23,7 @@ export type CombatEndedEvent = z.infer<typeof combatEndedEventSchema>;
 
 export function formatCombatEndedText(payload: CombatEndedPayload): string {
   if (payload.outcome === "victory") {
-    return `The ${payload.enemyName} topples. The lesson is over.`;
+    return payload.victoryNarration ?? `The ${payload.enemyName} topples. The lesson is over.`;
   }
   if (payload.outcome === "fled") {
     return "You break from the lesson and step back.";

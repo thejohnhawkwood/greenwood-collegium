@@ -3,12 +3,13 @@
   "id": "silk-queen",
   "name": "Silk Queen",
   "shortDescription": "The next mouth after the hatchling. She waits for three.",
-  "lookDescription": "A larger silk-shape fills the split cradle, unfinished and listening for more than one pair of feet.",
-  "examineDescription": "The Silk Queen is bigger than the hatchling and still not finished. Longer legs. Thicker silk. Alder would not send one Collegian for this. If she squares up, lock your moves on the same clock. When she falls, she stays fallen.",
+  "lookDescription": "A larger silk-shape fills the split cradle. She does not roar. She waits for three.",
+  "examineDescription": "The Silk Queen is the next mouth after the hatchling. She is not Holm. Longer legs. Thicker silk. Threads tighten when a Collegian locks a move. The hum counts three. Alder would not send one Collegian for this. If she squares up, lock together. When she falls, she stays fallen.",
   "maxHealth": 28,
   "maxFocus": 12,
   "attack": 5,
   "experience": 20,
   "minParty": 3,
-  "loot": ["queen-silk-cord"]
+  "loot": ["queen-silk-cord"],
+  "victoryNarration": "The Silk Queen folds in on herself. The hum in the floor misses a beat, then goes on without her."
 }

@@ -121,6 +121,16 @@ export function openSchoolGift(
   return [systemNotice(character.id, `Your Primer leaves are inked. Type ${help}.`, runtime)];
 }
 
+export function thirdLessonsComplete(world: WorldState, character: Character): boolean {
+  if (!character.schoolId || !isSchoolId(character.schoolId)) {
+    return false;
+  }
+  return (
+    world.quests?.[character.id]?.[SCHOOL_THIRD_LESSONS_ID[character.schoolId]]?.status ===
+    "completed"
+  );
+}
+
 export const MENTOR_DONE_NODE = "lessons-done";
 
 function questStatus(
@@ -151,8 +161,9 @@ export function resolveMentorSpeechNode(
     if (firstLessonsComplete(world, character) && tree.nodes[MENTOR_DONE_NODE]) {
       return MENTOR_DONE_NODE;
     }
+    return tree.nodes[tree.start] ? tree.start : undefined;
   }
-  return tree.nodes[tree.start] ? tree.start : undefined;
+  return undefined;
 }
 
 export function openSchoolMentor(world: WorldState, character: Character): void {

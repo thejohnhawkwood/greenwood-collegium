@@ -8,17 +8,19 @@ describe("room catalog", () => {
   it("shows every Collegium plate with its painted file", () => {
     const html = renderToStaticMarkup(createElement(RoomCatalog));
     expect(html).toContain("Room catalog");
-    expect(html).toContain("Thirty-two finished paintings");
-    expect(COLLEGIUM_ROOM_PLATES).toHaveLength(32);
+    expect(html).toContain("Forty finished paintings");
+    expect(COLLEGIUM_ROOM_PLATES).toHaveLength(40);
     expect(html).toContain("Lantern Court");
     expect(html).toContain("River Landing");
+    expect(html).toContain("Wren&#x27;s Croft");
+    expect(html).toContain("Fog Hollow");
     expect(html).toContain("/art/rooms/lantern-court.png");
     expect(html).toContain("/art/rooms/clock-tower.png");
     expect(html).toContain("/art/rooms/quiet-chapel.png");
     expect(html).toContain('alt="Lantern Court"');
     for (const room of COLLEGIUM_ROOM_PLATES) {
       expect(html).toContain(`/art/rooms/${room.id}.png`);
-      expect(html).toContain(room.title);
+      expect(html).toContain(room.title.replaceAll("'", "&#x27;"));
     }
   });
 });

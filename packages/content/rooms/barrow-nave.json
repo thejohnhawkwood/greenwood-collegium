@@ -1,0 +1,32 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "barrow-nave",
+  "title": "Barrow Nave",
+  "shortDescription": "The hill's inside, peat-stained bronze, three slow pulses.",
+  "longDescription": "The nave is packed earth and old timber. Peat-stain climbs the walls. The air is cold and wet, not sweet.\nHalf-sunk in the floor is Collegium bronze — or the yoke and clapper if the hill grew around the rest. It should not ring. It sounds the three slow pulses anyway. Holm wrote that the bell was taken on a wet night. This is where it was taken to.",
+  "zone": "east-moor",
+  "map": {
+    "x": 8,
+    "y": 3,
+    "z": -1
+  },
+  "exits": [
+    {
+      "direction": "up",
+      "toRoomId": "barrow-mouth"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "fog-hollow"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-abbey-bronze",
+      "name": "Abbey Bronze",
+      "kind": "object",
+      "lookDescription": "Peat-stained bronze half-sunk in the hill. Examine it.",
+      "examineDescription": "Green with peat-stain. Half-sunk as if the hill grew around it. The Quiet Chapel was telling the truth: three slow pulses live in the metal. It should not ring, and it does not, and you hear it anyway. Holm's ledger said the bronze was taken on a wet night. This is the resting place. Do not try to hang it. Talk alder with the fact."
+    }
+  ]
+}

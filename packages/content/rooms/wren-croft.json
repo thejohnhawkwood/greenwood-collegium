@@ -1,0 +1,72 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "wren-croft",
+  "title": "Wren's Croft",
+  "shortDescription": "A peat fire, a kettle, and one empty peg.",
+  "longDescription": "The croft is low stone and wet thatch. A peat fire keeps the kettle honest. Two cloaks drip by the door; a third peg is empty where a crook should hang.\nOatcakes wait on a tin plate, still warm. Shepherd Wren does not pretend this is a lesson she wanted.",
+  "zone": "east-moor",
+  "map": {
+    "x": 6,
+    "y": 2
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "moor-track"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-shepherd-wren",
+      "name": "Shepherd Wren",
+      "kind": "npc",
+      "lookDescription": "An adult hare in a wet cloak, peat-smoke in her fur, kettle-calluses on both paws. Try talk wren.",
+      "examineDescription": "Wren's ears are notched by weather, not by Flint. The cloak is mended with wool, not silk. She watches the door as if a partner might still fill it. She is afraid. She is not cute.",
+      "dialogue": "\"Sit. The kettle is on. Colm has not come in. Eat something warm before you name the mist. Type north from the East Meadow if you got lost. Talk wren. Examine the waystone on the track.\"",
+      "dialogueTree": {
+        "start": "welcome",
+        "nodes": {
+          "welcome": {
+            "text": "\"I am Wren. Sit. The kettle is on, and the oatcakes are still warm enough to matter. Colm has not come in. The flock was due at dusk yesterday, and the peg where his crook should hang is empty. I will not invent a walker from an empty peg. Eat. Then examine the waystone on the track south of here. Come back and talk wren. Alder sent you? Good. Do not invent a second queen on my moor.\"",
+            "choices": [
+              { "say": "1", "label": "Who is Colm?", "next": "colm" },
+              { "say": "2", "label": "I will look.", "next": "go" }
+            ]
+          },
+          "colm": {
+            "text": "\"My partner. Adult. He counts sheep the way Alder counts facts. He went to look at stones that were not in last winter's count. I told him not to. Eat. Then look. I am owed the truth, not a pretty story.\"",
+            "choices": [{ "say": "1", "label": "I will look.", "next": "go" }]
+          },
+          "go": {
+            "text": "\"South to the waystone. Examine it. Then talk wren here. The oatcakes will keep. I will not.\""
+          },
+          "fork-done": {
+            "text": "\"The waystone told you the same three counts the chapel knows. East is the fold. The latch was lifted, not broken. Examine the empty fold and Colm's crook. A mist-crow has been sitting the rail as if it paid rent. Defeat it if it squares up. Then talk wren. I will have the kettle too hot by then.\""
+          },
+          "flock-done": {
+            "text": "\"The stones next. They were not in last winter's count. Colm went to look. I told him not to. East from the fold. Examine the abbey mark and the new stone. Then talk wren. I will not go with you. Someone has to keep the kettle.\""
+          },
+          "stones-done": {
+            "text": "\"Last winter there were seven. There are eight. North of the stones the peat-cut opens, then the barrow mouth. I hate sending you. If you find him, you come to me before you go to Alder. I am owed that. Examine the wool wrap. The barrow-guard is peat-and-bone that is not a dog. Then talk wren.\""
+          },
+          "barrow-done": {
+            "text": "\"You found the spare cloak. Now the lip of the barrow. Examine what the fog took. Then come to me. Do not go to Alder first. I asked you that already.\""
+          },
+          "after-colm": {
+            "text": "\"Put the kettle down. I put it down too hard. Did you tell him anything? No. Do not answer that. I hate the question. Go to Fen. Sit. Honey. Tell him if you can feel your paws. I will keep this fire. I will not go into the hill.\""
+          },
+          "stay": {
+            "text": "\"Alder can have the bronze. I will not go in. The kettle is for the living. If the fog squares up, you lock together. Then Fen. Then you come back here and eat.\""
+          }
+        }
+      }
+    },
+    {
+      "id": "object-empty-peg",
+      "name": "Empty Peg",
+      "kind": "object",
+      "lookDescription": "A peg by the door with no crook on it. Examine it.",
+      "examineDescription": "Wool fibres still cling to the wood. The peg is not broken. Someone took a crook down carefully and meant to hang it back. They have not."
+    }
+  ]
+}

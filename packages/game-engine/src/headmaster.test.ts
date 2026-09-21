@@ -178,6 +178,12 @@ function world(): WorldState {
             kind: "object",
             examineDescription: "A cradle left too soon.",
           },
+          {
+            id: "object-holm-wrapping",
+            name: "Keeper's Wrapping",
+            kind: "object",
+            examineDescription: "Leave him covered.",
+          },
         ],
       },
       "deep-cradle": {
@@ -374,6 +380,12 @@ function world(): WorldState {
         experienceReward: 20,
         objectives: [
           {
+            id: "read-wrapping",
+            kind: "examine",
+            targetId: "object-holm-wrapping",
+            label: "Examine the wrapping.",
+          },
+          {
             id: "stand-together",
             kind: "visit",
             roomId: "deep-cradle",
@@ -386,10 +398,16 @@ function world(): WorldState {
             label: "Examine the Still Score.",
           },
           {
+            id: "defeat-queen",
+            kind: "defeat",
+            targetId: "enemy-silk-queen-deep-cradle",
+            label: "Defeat the Silk Queen.",
+          },
+          {
             id: "report",
             kind: "talk",
             targetId: "npc-headmaster-alder",
-            requires: ["stand-together", "read-score"],
+            requires: ["read-wrapping", "stand-together", "read-score", "defeat-queen"],
             label: "Talk alder in the High Study.",
           },
         ],
@@ -592,6 +610,19 @@ describe("headmaster study after Arrival", () => {
     expect(realm.quests?.["char-rowan"]?.[STILL_SLEEPS_QUEST_ID]?.status).toBe("active");
     expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("offer-sleeps");
 
+    realm.characters["char-rowan"]!.roomId = "cocoon-nave";
+    expect(
+      handleExamine(
+        realm,
+        { verb: "examine", characterId: "char-rowan", target: "wrapping" },
+        clock,
+      ).ok,
+    ).toBe(true);
+    progressQuests(
+      realm,
+      { characterId: "char-rowan", kind: "examine", targetId: "object-holm-wrapping" },
+      clock,
+    );
     realm.characters["char-rowan"]!.roomId = "deep-cradle";
     progressQuests(
       realm,
@@ -608,6 +639,23 @@ describe("headmaster study after Arrival", () => {
       clock,
     );
     realm.characters["char-rowan"]!.roomId = "headmaster-study";
+    const unread = handleTalk(
+      realm,
+      { verb: "talk", characterId: "char-rowan", target: "alder" },
+      clock,
+    );
+    expect(unread.ok).toBe(true);
+    expect(realm.quests?.["char-rowan"]?.[STILL_SLEEPS_QUEST_ID]?.status).toBe("active");
+
+    progressQuests(
+      realm,
+      {
+        characterId: "char-rowan",
+        kind: "defeat",
+        targetId: "enemy-silk-queen-deep-cradle",
+      },
+      clock,
+    );
     const slept = handleTalk(
       realm,
       { verb: "talk", characterId: "char-rowan", target: "alder" },

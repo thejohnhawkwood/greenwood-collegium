@@ -66,6 +66,7 @@ export type LoadedEnemy = {
   experience: number;
   minParty?: number;
   loot?: string[];
+  victoryNarration?: string;
 };
 
 export type LoadedSpellRank = {
@@ -121,6 +122,7 @@ export type LoadedQuest = {
   introNarration: string;
   reminderNarration: string;
   giverNpcId?: string;
+  requiresQuestIds?: string[];
   completionNarration?: string;
   experienceReward: number;
   itemRewardTemplateId?: string;
@@ -269,6 +271,7 @@ export function toWorldState(
       experience: template.experience,
       ...(template.minParty ? { minParty: template.minParty } : {}),
       ...(template.loot?.length ? { loot: [...template.loot] } : {}),
+      ...(template.victoryNarration ? { victoryNarration: template.victoryNarration } : {}),
     };
   }
   const spells: Record<string, LoadedSpell> = {};
@@ -305,6 +308,7 @@ export function toWorldState(
       introNarration: quest.introNarration,
       reminderNarration: quest.reminderNarration,
       giverNpcId: quest.giverNpcId,
+      requiresQuestIds: quest.requiresQuestIds ? [...quest.requiresQuestIds] : undefined,
       completionNarration: quest.completionNarration,
       experienceReward: quest.experienceReward,
       itemRewardTemplateId: quest.itemRewardTemplateId,

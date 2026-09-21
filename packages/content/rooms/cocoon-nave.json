@@ -3,7 +3,7 @@
   "id": "cocoon-nave",
   "title": "Cocoon Nave",
   "shortDescription": "A stone nave hung with cocoons, and one husk already torn open.",
-  "longDescription": "The nave is an oval of old stone and hanging silk. Larger cocoons hang unopened. One husk has already split. The air tastes of dust and sweet glue.\nA silk-hatchling is here if it still lives. It is not the queen. It woke too early, and Piper wants it finished.",
+  "longDescription": "The nave is an oval of old stone and hanging silk. Larger cocoons hang unopened. One husk has already split. The air tastes of dust and sweet glue.\nAgainst the south wall a wrapping stands too still. A silk-hatchling is here if it still lives. It is not the queen. It woke too early, and Piper wants it finished.",
   "zone": "bell-below",
   "visualState": "clock-tower",
   "map": {
@@ -26,8 +26,15 @@
       "id": "object-waking-husk",
       "name": "Waking Husk",
       "kind": "object",
-      "lookDescription": "Examine for a closer look.",
-      "examineDescription": "The opened husk is lined with warm thread. Something satchel-sized slept here and left too soon. Larger closed cocoons hang beyond it, still shut. This is the first waking, not the last. Alder asked you to name it before anyone calls it a queen."
+      "lookDescription": "An opened husk, satchel-sized, still warm. Examine it.",
+      "examineDescription": "The opened husk is lined with warm thread. Something satchel-sized slept here and left too soon. Larger closed cocoons hang beyond it, still shut. This is the first waking, not the last. It is not Holm. Alder asked you to name it before anyone calls it a queen."
+    },
+    {
+      "id": "object-holm-wrapping",
+      "name": "Keeper's Wrapping",
+      "kind": "object",
+      "lookDescription": "A silk wrapping the size of a grown mole stands against the south wall, too still. Examine it.",
+      "examineDescription": "The wrapping is the size of a grown mole. It is upright, as if someone sat down to rest and was not allowed to get up. A grey coat shows in two places where the silk is thin — the same poor thread Piper uses on his sleeves. The lantern-hook on the belt is empty. The muzzle is covered. The silk there is pressed flat, neat as a bandage that was not meant to come off, so a cry could not climb the stair. The air is sweet, the same sweetness as the opened husk. There is no blood. There is no need to cut the silk to know he is past air. Piper asked, if you got this far, that you leave him covered."
     }
   ]
 }

@@ -160,6 +160,46 @@ export const COLLEGIUM_ROOM_PLATES = [
     title: "River Landing",
     blurb: "Willow roots hold a little landing above the slow brown river.",
   },
+  {
+    id: "moor-track",
+    title: "Moor Track",
+    blurb: "A wet track leaves the clover and turns toward peat and wool.",
+  },
+  {
+    id: "wren-croft",
+    title: "Wren's Croft",
+    blurb: "A peat fire keeps the kettle honest beside one empty peg.",
+  },
+  {
+    id: "sheepfold",
+    title: "Sheepfold",
+    blurb: "Wattle and stone hold a fold whose latch was lifted, not broken.",
+  },
+  {
+    id: "standing-stones",
+    title: "Standing Stones",
+    blurb: "Seven old stones and one that has not had a year.",
+  },
+  {
+    id: "peat-cut",
+    title: "Peat Cut",
+    blurb: "Black water stands in the trenches and smells of old tea and iron.",
+  },
+  {
+    id: "barrow-mouth",
+    title: "Barrow Mouth",
+    blurb: "A hill-lip of wet wool, peat, and one folded cloak.",
+  },
+  {
+    id: "barrow-nave",
+    title: "Barrow Nave",
+    blurb: "Packed earth, peat-stain, and Collegium bronze half-sunk in the floor.",
+  },
+  {
+    id: "fog-hollow",
+    title: "Fog Hollow",
+    blurb: "A bowl of fog that does not keep footprints.",
+  },
 ] as const;
 
 export type CollegiumRoomPlate = (typeof COLLEGIUM_ROOM_PLATES)[number];

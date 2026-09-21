@@ -1,7 +1,7 @@
 # What Still Sleeps
 
 - **Series:** spine (abbey mystery, beat 3 — first true terror)
-- **Status:** live JSON; **canon requires queen defeat** (not yet in objectives)
+- **Status:** live JSON; queen **defeat** required
 - **Stable id:** `what-still-sleeps`
 - **JSON:** [`packages/content/quests/what-still-sleeps.json`](../../../packages/content/quests/what-still-sleeps.json)
 - **IDs / exits:** [room-and-quest-summary.md](../room-and-quest-summary.md#what-still-sleeps)
@@ -15,9 +15,7 @@ Write it so a high schooler can see it, name it, and then go eat something warm.
 
 ## Live vs canon
 
-Live objectives: visit `deep-cradle`, examine `object-still-score`, talk Alder.
-
-**Canon objectives:** keep those; **add** `defeat` target `enemy-silk-queen-deep-cradle`; report requires visit, score, and defeat. Visit still cannot enforce party; `minParty: 3` remains the square-up gate. Not complete if you only read the score.
+Live objectives: examine `object-holm-wrapping`, visit `deep-cradle`, examine `object-still-score`, **defeat** `enemy-silk-queen-deep-cradle`, talk Alder. Visit still cannot enforce party; `minParty: 3` remains the square-up gate. Not complete if you only read the score.
 
 ## Continuity stitch
 
@@ -33,7 +31,7 @@ Students meet him as fixtures. Do not write a talk tree. Do not animate him. Do 
 
 ## The wrapping (true terror)
 
-Proposed fixture `object-holm-wrapping` in `cocoon-nave` (so solo students see it before the party room).
+Live fixture `object-holm-wrapping` in `cocoon-nave` (so solo students see it before the party room).
 
 **Look:** A silk wrapping the size of a grown mole stands against the south wall, too still.
 
@@ -68,7 +66,7 @@ Spawn `enemy-silk-queen-deep-cradle`, `minParty: 3`, first-timer XP 20, loot `qu
 
 ## Piper after (he lives)
 
-Proposed talk nodes: `holm-named`, `after-queen`.
+Live talk nodes: `holm-named`, `after-queen`.
 
 **holm-named** (after wrapping examined, even before the fight): he says the name. Holm put Piper on the crate and went south. Piper ran. Leave the wrapping covered. Come back up even if you are angry. The lantern-light from the tower is getting thinner.
 
@@ -86,7 +84,7 @@ That last sentence is the **only** moor seed here. Full breadcrumb: [college les
 
 **Bramble (optional later node):** the lowest hook on the stair-keepers’ row is empty. No speech.
 
-## What students type (after the content ticket)
+## What students type
 
 1. `talk alder`
 2. Clock Tower `down` `down` `east` `south` — or travel
@@ -97,11 +95,4 @@ That last sentence is the **only** moor seed here. Full breadcrumb: [college les
 7. `talk alder`
 8. Optional: `talk piper` again; `talk fen`
 
-## Implementable (later ticket — smallest complete spine fix)
-
-- Rooms: archive ledger, cloister lantern, nave wrapping, cradle score, Piper tree, Alder sleeps nodes, porter hook, lantern-court copy
-- Quest JSON: add `defeat` / `enemy-silk-queen-deep-cradle`
-- Items: `piper-stair-charm` gender; `copied-still-score` button
-- Enemies: queen/hatchling look/examine; combat lines if the engine supports them
-- Names: reserve `keeper holm`
-- Tests: wrapping examine does not complete Sleeps without defeat; queen `defeat` progresses the quest
+Live JSON: wrapping, queen `defeat`, Piper `holm-named` / `after-queen`, Alder sleeps nodes, porter empty hook, reserved `keeper holm`.
