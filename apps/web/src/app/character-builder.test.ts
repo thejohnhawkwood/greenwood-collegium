@@ -39,7 +39,7 @@ describe("character builder", () => {
     expect(html).toContain("Road");
     expect(html).toContain('type="range"');
     expect(html).not.toContain("Muzzle");
-    expect(html).toContain("fox-female-fern.png");
+    expect(html).toContain("fox-female-fern.png?v=comic-ink-looks-1");
     expect(html).toContain("fox-female-indigo.png");
     expect(html).toContain("fox-female-russet.png");
     expect(html).toContain("toad-male-fern.png");

@@ -56,12 +56,14 @@ export function bodyArtSrc(
   return `${ART}/bodies/${speciesId}-${gender}-${build}.png`;
 }
 
+export const LOOK_ART_REV = "comic-ink-looks-1";
+
 export function lookArtSrc(
   speciesId: KnownSpecies,
   gender: VisualGender,
   look: "fern" | "indigo" | "russet",
 ): string {
-  return `${ART}/looks/${speciesId}-${gender}-${look}.png`;
+  return `${ART}/looks/${speciesId}-${gender}-${look}.png?v=${LOOK_ART_REV}`;
 }
 
 /** One complete painted look. Build and palette stay live; overlays do not stack. */

@@ -105,9 +105,13 @@ describe("painted catalog files", () => {
     for (const species of KNOWN_SPECIES) {
       for (const gender of ["female", "male"] as const) {
         for (const look of APPEARANCE_CLOTHING) {
-          expect(
-            existsSync(join(artRoot, "characters/looks", `${species}-${gender}-${look}.png`)),
-          ).toBe(true);
+          const path = join(artRoot, "characters/looks", `${species}-${gender}-${look}.png`);
+          expect(existsSync(path)).toBe(true);
+          const header = readFileSync(path).subarray(0, 26);
+          expect(header.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+          expect(header.readUInt32BE(16)).toBe(512);
+          expect(header.readUInt32BE(20)).toBe(768);
+          expect(header[25]).toBe(6);
         }
       }
     }

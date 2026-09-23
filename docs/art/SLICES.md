@@ -10,12 +10,11 @@ Heavy black contour, flat local colour behind it. Fur colour stays on fur. Cloth
 
 ## Order
 
-1. **Female Courtyard looks.** Mouse and hare are the masters. First pass, generated 22 September 2026 and waiting on Philip Bird: badger, otter, squirrel, mole, hedgehog, fox, stoat, owl, toad. Files and hashes are in `art/reviews/female-fern-comic-pass-1.md`. They are not the live plates.
-2. **The other looks.** Male Courtyard, both Scriptorium looks, and both Road looks accepted 22 September 2026.
-3. **Named cast.** The 34 files in `NPC_PLATE_FILES` were punched off `#EE3173` and fitted to 512×768. The first 21 landed on 23 September 2026. The east moor and south river added six people and seven foes the same day. The cache key is `comic-ink-1`. Tansy is `v003`, the hatchling is `v002`, the Silk Queen is `v003`, Foldhand Hobb is `v003`, the Fold Hound is `v003`, the Ditch Lurker is `v002`, and the rest are `v001`.
-4. **Rooms.** All 60 room plates were fitted to 1600×900. The first 40 landed on 23 September 2026. Twenty east-moor and south-river rooms followed the same day and no longer borrow another plate. Sources stay in `art/sources/`. Lantern Court is `v003`, East Meadow is `v004`, Hearth of the Veil is `v002`, and the rest are `v001`.
-5. **Objects.** The 109 files in `OBJECT_PLATE_FILES` are in `apps/web/public/art/objects/`. The first 56 were generated 23 September 2026. Thirteen carried pieces were added the same day. The east moor and south river added 40 fixtures and carried items later that day. Foldhand Hobb is `v003`. The Fold Hound is `v003`. The Ditch Lurker is `v002`. The deck token is `v002`. Wooden Guard is `v003`. Thorn Ring is `v002`. The rest of the new set are `v001`.
-6. **Combat FX.** The 27 files in `FX_FILES`, Ember first.
-7. **Arrival procession.** `apps/web/public/frame/arrival-students.png`, after the species plates exist.
+1. **Collegian looks.** All 66 comic-ink looks were punched off `#EE3173`, fitted to 512×768, and copied into `apps/web/public/art/characters/looks/` on 23 September 2026. The cache key is `comic-ink-looks-1`. Mouse fern is `v007`, hare fern is `v005`, and the rest are `v001`. Sources stay in `art/sources/`.
+2. **Named cast.** The 34 files in `NPC_PLATE_FILES` were punched off `#EE3173` and fitted to 512×768. The first 21 landed on 23 September 2026. The east moor and south river added six people and seven foes the same day. The cache key is `comic-ink-1`. Tansy is `v003`, the hatchling is `v002`, the Silk Queen is `v003`, Foldhand Hobb is `v003`, the Fold Hound is `v003`, the Ditch Lurker is `v002`, and the rest are `v001`.
+3. **Rooms.** All 60 room plates were fitted to 1600×900. The first 40 landed on 23 September 2026. Twenty east-moor and south-river rooms followed the same day and no longer borrow another plate. Sources stay in `art/sources/`. Lantern Court is `v003`, East Meadow is `v004`, Hearth of the Veil is `v002`, and the rest are `v001`.
+4. **Objects.** The 109 files in `OBJECT_PLATE_FILES` are in `apps/web/public/art/objects/`. The first 56 were generated 23 September 2026. Thirteen carried pieces were added the same day. The east moor and south river added 40 fixtures and carried items later that day. Foldhand Hobb is `v003`. The Fold Hound is `v003`. The Ditch Lurker is `v002`. The deck token is `v002`. Wooden Guard is `v003`. Thorn Ring is `v002`. The rest of the new set are `v001`.
+5. **Combat FX.** The 27 files in `FX_FILES`, Ember first.
+6. **Arrival procession.** `apps/web/public/frame/arrival-students.png`, after the species plates exist.
 
 Unused body, clothing, ear, muzzle, marking, face, and accessory files stay unused.
