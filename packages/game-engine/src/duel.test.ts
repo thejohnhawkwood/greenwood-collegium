@@ -121,9 +121,10 @@ describe("classroom duels", () => {
     expect(locked.ok).toBe(true);
     expect(world.characters["char-rowan"]?.health).toBe(18);
     expect(world.characters["char-moss"]?.health).toBe(18);
-    expect(locked.ok && locked.events.some((event) => event.narration.includes("You mirror each other."))).toBe(
-      true,
-    );
+    expect(
+      locked.ok &&
+        locked.events.some((event) => event.narration.includes("You mirror each other.")),
+    ).toBe(true);
     expect(createPlayState(world, "char-rowan")?.encounter?.read).toContain("same lesson twice");
   });
 
@@ -144,7 +145,11 @@ describe("classroom duels", () => {
       },
     };
     const clock = runtime();
-    handleDuel(world, { verb: "duel", characterId: "char-rowan", action: "challenge", target: "moss" }, clock);
+    handleDuel(
+      world,
+      { verb: "duel", characterId: "char-rowan", action: "challenge", target: "moss" },
+      clock,
+    );
     handleDuel(world, { verb: "duel", characterId: "char-moss", action: "accept" }, clock);
     handleCast(world, { verb: "cast", characterId: "char-rowan", spell: "ember" }, clock);
     const covered = handleDefend(world, { verb: "defend", characterId: "char-moss" }, clock);
@@ -152,7 +157,8 @@ describe("classroom duels", () => {
     expect(world.characters["char-moss"]?.health).toBe(18);
     expect(world.characters["char-rowan"]?.health).toBe(20);
     expect(
-      covered.ok && covered.events.some((event) => event.narration.includes("Their guard covers the blow.")),
+      covered.ok &&
+        covered.events.some((event) => event.narration.includes("Their guard covers the blow.")),
     ).toBe(true);
 
     handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
@@ -161,7 +167,9 @@ describe("classroom duels", () => {
     if (!answered.ok) {
       return;
     }
-    const loaded = answered.events.find((event) => event.narration.includes("Their guard covers the blow."));
+    const loaded = answered.events.find((event) =>
+      event.narration.includes("Their guard covers the blow."),
+    );
     expect(loaded?.payload).toMatchObject({ damage: 3 });
     expect(world.characters["char-rowan"]?.health).toBe(17);
   });

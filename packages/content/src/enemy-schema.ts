@@ -32,7 +32,11 @@ export const enemyTemplateSchema = z
     loot: z.array(stableIdSchema).optional(),
     victoryNarration: z.string().min(1).optional(),
     lockNarration: z.string().min(1).optional(),
-    reads: z.array(z.enum(["lunge", "brace", "gather"])).min(1).max(6).optional(),
+    reads: z
+      .array(z.enum(["lunge", "brace", "gather"]))
+      .min(1)
+      .max(6)
+      .optional(),
   })
   .strict()
   .superRefine((enemy, ctx) => {

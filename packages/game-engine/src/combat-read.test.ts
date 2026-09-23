@@ -113,9 +113,9 @@ describe("combat reads", () => {
     const clock = runtime();
     handleAttack(state, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
     const waited = handleDefend(state, { verb: "defend", characterId: "char-rowan" }, clock);
-    expect(waited.ok && waited.events.some((event) => event.narration.includes("finishes drawing back"))).toBe(
-      true,
-    );
+    expect(
+      waited.ok && waited.events.some((event) => event.narration.includes("finishes drawing back")),
+    ).toBe(true);
     expect(state.enemies!["enemy-practice-dummy-south-orchard"]).toBeTruthy();
     const encounter = state.encounters?.[state.characters["char-rowan"]?.encounterId ?? ""];
     expect(encounter?.enemy.health).toBe(30);
@@ -138,9 +138,9 @@ describe("combat reads", () => {
     const clock = runtime();
     handleAttack(state, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
     const caught = handleAttack(state, { verb: "attack", characterId: "char-rowan" }, clock);
-    expect(caught.ok && caught.events.some((event) => event.narration.includes("drawing back"))).toBe(
-      true,
-    );
+    expect(
+      caught.ok && caught.events.some((event) => event.narration.includes("drawing back")),
+    ).toBe(true);
     const answer = handleAttack(state, { verb: "attack", characterId: "char-rowan" }, clock);
     expect(answer.ok).toBe(true);
     if (!answer.ok) {

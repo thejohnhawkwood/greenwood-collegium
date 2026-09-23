@@ -104,7 +104,10 @@ export function clearLesson(character: Character): void {
   character.strikeLight = undefined;
 }
 
-export function markDuelStrikeLights(characters: Record<string, Character>, encounter: Encounter): void {
+export function markDuelStrikeLights(
+  characters: Record<string, Character>,
+  encounter: Encounter,
+): void {
   if (encounter.kind !== "duel") {
     return;
   }

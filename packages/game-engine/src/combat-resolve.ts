@@ -858,7 +858,7 @@ function turnEvent(
 ): CombatTurnStartedEvent {
   const read = readPrompt(encounter);
   const authored = encounter.round > 1 ? encounter.lockNarration : undefined;
-  const lockNarration = read && authored ? `${read} ${authored}` : read ?? authored;
+  const lockNarration = read && authored ? `${read} ${authored}` : (read ?? authored);
   const payload = {
     encounterId: encounter.id,
     round: encounter.round,
