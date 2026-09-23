@@ -140,7 +140,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["equip", "wield"],
     summary: "Hold a carried item or a practice weapon.",
     detail:
-      "equip sword (or wield Practice Sword) sets what you hold. take on a practice weapon also equips it. stats shows the equipped item.",
+      "equip sword (or wield Practice Sword) sets what you hold. take on a practice weapon also equips it. unequip sword (or take off Practice Sword) puts it back in the bag. stats shows the equipped item.",
   },
   {
     topic: "travel",

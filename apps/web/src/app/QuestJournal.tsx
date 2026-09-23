@@ -1,4 +1,5 @@
 import type { PlayState } from "@greenwood/contracts";
+import { useEffect } from "react";
 
 export function QuestJournal({
   open,
@@ -9,6 +10,14 @@ export function QuestJournal({
   state?: PlayState;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
   if (!open) {
     return null;
   }
@@ -35,21 +44,23 @@ export function QuestJournal({
             ? `${active.length} active · ${finished.length} finished`
             : "You have no tasks yet."}
         </p>
-        {active.length ? (
-          <section className="quest-group" aria-label="Active quests">
-            {active.map((quest) => (
-              <QuestEntry key={quest.id} quest={quest} />
-            ))}
-          </section>
-        ) : null}
-        {finished.length ? (
-          <section className="quest-group" aria-label="Finished quests">
-            <h3 className="quest-group-heading">Finished</h3>
-            {finished.map((quest) => (
-              <QuestEntry key={quest.id} quest={quest} />
-            ))}
-          </section>
-        ) : null}
+        <div className="quest-scroll">
+          {active.length ? (
+            <section className="quest-group" aria-label="Active quests">
+              {active.map((quest) => (
+                <QuestEntry key={quest.id} quest={quest} />
+              ))}
+            </section>
+          ) : null}
+          {finished.length ? (
+            <section className="quest-group" aria-label="Finished quests">
+              <h3 className="quest-group-heading">Finished</h3>
+              {finished.map((quest) => (
+                <QuestEntry key={quest.id} quest={quest} />
+              ))}
+            </section>
+          ) : null}
+        </div>
       </div>
     </div>
   );
@@ -65,18 +76,27 @@ function QuestEntry({ quest }: { quest: PlayState["quests"][number] }) {
           ? "Completed"
           : `${String(done)} of ${String(quest.steps.length)} steps done`}
       </p>
+      {quest.current ? (
+        <p className="quest-now">
+          <span>Now</span> {quest.current}
+        </p>
+      ) : null}
+      {quest.reward ? <p className="quest-reward">Reward: {quest.reward}</p> : null}
       <ul className="quest-steps">
-        {quest.steps.map((step) => (
-          <li key={step.id} className={step.done ? "done" : "open"}>
-            <span className="quest-mark" aria-hidden="true">
-              {step.done ? "✓" : "•"}
-            </span>
-            <div>
-              <span className="quest-step-label">{step.label}</span>
-              {step.hint ? <small className="quest-hint">{step.hint}</small> : null}
-            </div>
-          </li>
-        ))}
+        {quest.steps.map((step) => {
+          const current = quest.status === "active" && !step.done && step.label === quest.current;
+          return (
+            <li key={step.id} className={step.done ? "done" : current ? "open is-current" : "open"}>
+              <span className="quest-mark" aria-hidden="true">
+                {step.done ? "✓" : "•"}
+              </span>
+              <div>
+                <span className="quest-step-label">{step.label}</span>
+                {step.hint ? <small className="quest-hint">{step.hint}</small> : null}
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </article>
   );

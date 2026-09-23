@@ -25,6 +25,7 @@ import {
   resolveDiscoveredRoomIds,
   resolveKnownSpells,
   resolvePendingPrimer,
+  resolveEquipment,
   resolvePrimerAwardedLevels,
   type SessionRepository,
 } from "../persistence/types.js";
@@ -119,6 +120,7 @@ export type PlayIdentity = {
   knownSpells?: CharacterRecord["knownSpells"];
   pendingPrimerChoices?: CharacterRecord["pendingPrimerChoices"];
   primerAwardedLevels?: number[];
+  equipment?: CharacterRecord["equipment"];
   experience: number;
   level: number;
   schoolId?: string;
@@ -791,6 +793,7 @@ function playIdentity(account: AccountRecord, character: CharacterRecord): PlayI
     knownSpells: resolveKnownSpells(character.knownSpells),
     pendingPrimerChoices: resolvePendingPrimer(character.pendingPrimerChoices),
     primerAwardedLevels: resolvePrimerAwardedLevels(character.primerAwardedLevels),
+    equipment: resolveEquipment(character.equipment),
     experience: character.experience,
     level: character.level,
     schoolId: character.schoolId,

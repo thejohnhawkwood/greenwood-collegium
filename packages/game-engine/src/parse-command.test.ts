@@ -75,6 +75,16 @@ describe("parsePlayerCommand", () => {
       characterId: "char-rowan",
       target: "sword",
     });
+    expect(parsePlayerCommand("unequip sword", "char-rowan")).toEqual({
+      verb: "unequip",
+      characterId: "char-rowan",
+      target: "sword",
+    });
+    expect(parsePlayerCommand("take off Practice Sword", "char-rowan")).toEqual({
+      verb: "unequip",
+      characterId: "char-rowan",
+      target: "Practice Sword",
+    });
     expect(parsePlayerCommand("1", "char-rowan")).toEqual({
       verb: "say",
       characterId: "char-rowan",

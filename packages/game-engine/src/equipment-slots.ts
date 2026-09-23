@@ -153,6 +153,54 @@ export function wearItem(
   return { ok: true, slot, aside, bothHands: false };
 }
 
+export function takeOff(
+  world: WorldState,
+  character: Character,
+  target: string,
+): { ok: true; name: string } | { ok: false; message: string } {
+  const needle = target.trim().toLowerCase();
+  if (!needle) {
+    return { ok: false, message: "Unequip what?" };
+  }
+  const gear = gearOf(character);
+  const labelMatches = (id: EquipmentSlotId) => {
+    const label = SLOT_LABELS[id].toLowerCase();
+    return id === needle || label === needle || label.replace(" ", "") === needle.replace(" ", "");
+  };
+  const slot =
+    EQUIPMENT_SLOT_IDS.find((id) => Boolean(gear[id]) && labelMatches(id)) ??
+    EQUIPMENT_SLOT_IDS.find((id) => {
+      const worn = findWornItem(world, gear[id]);
+      return worn ? worn.name.toLowerCase().includes(needle) || worn.id === needle : false;
+    });
+  const itemId = slot ? gear[slot] : undefined;
+  const item = findWornItem(world, itemId);
+  if (!item || !itemId) {
+    return { ok: false, message: "You are not wearing that." };
+  }
+  clearWornItem(character, item);
+  return { ok: true, name: item.name };
+}
+
+/** Keep only worn items this Collegian still holds. */
+export function restoreEquipment(
+  world: WorldState,
+  character: Character,
+  stored: Partial<Record<EquipmentSlotId, string>>,
+): void {
+  const gear: Partial<Record<EquipmentSlotId, string>> = {};
+  for (const id of EQUIPMENT_SLOT_IDS) {
+    const itemId = stored[id];
+    const item = findWornItem(world, itemId);
+    if (!item || item.holderCharacterId !== character.id) {
+      continue;
+    }
+    gear[id] = item.id;
+  }
+  character.equipment = gear;
+  character.equippedItemId = gear["main-hand"];
+}
+
 export function clearWornItem(character: Character, item: ItemInstance): void {
   const gear = gearOf(character);
   let clearedMain = false;

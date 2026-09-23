@@ -2,8 +2,15 @@ import type { EventEnvelope } from "@greenwood/contracts";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { misfitNodeId, treeNode } from "./conversation.js";
 import { setEquippedItem, speciesWeaponFit, weaponFeelLine } from "./equipment.js";
+import { takeOff } from "./equipment-slots.js";
 import { itemsHeldBy, itemsInRoom, resolveTypedItems, whichItemMessage } from "./items.js";
-import type { EngineRuntime, EquipIntent, ItemInstance, WorldState } from "./state.js";
+import type {
+  EngineRuntime,
+  EquipIntent,
+  ItemInstance,
+  UnequipIntent,
+  WorldState,
+} from "./state.js";
 import { systemNotice } from "./system-notice.js";
 
 export type EquipSuccess = {
@@ -112,4 +119,27 @@ function openFlintMisfit(world: WorldState, characterId: string): boolean {
   }
   character.openConversation = { npcId: "npc-instructor-flint", nodeId };
   return true;
+}
+
+export function handleUnequip(
+  world: WorldState,
+  intent: UnequipIntent,
+  runtime: EngineRuntime,
+): EquipResult {
+  const character = world.characters[intent.characterId];
+  if (!character) {
+    return {
+      ok: false,
+      code: "character_not_found",
+      message: "That Collegian is not here.",
+    };
+  }
+  const removed = takeOff(world, character, intent.target);
+  if (!removed.ok) {
+    return { ok: false, code: "not_wearable", message: removed.message };
+  }
+  return {
+    ok: true,
+    event: systemNotice(character.id, `You take off the ${removed.name}.`, runtime),
+  };
 }

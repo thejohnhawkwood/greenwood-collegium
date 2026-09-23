@@ -1,5 +1,5 @@
 import type { EquipmentSlotId, EquipmentSlotView, PlayState } from "@greenwood/contracts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 
 export function BagPanel({
@@ -15,6 +15,14 @@ export function BagPanel({
 }) {
   const items = state?.bag ?? [];
   const [selectedId, setSelectedId] = useState(items[0]?.id);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
   if (!open) {
     return null;
   }
@@ -42,7 +50,7 @@ export function BagPanel({
           {items.length
             ? `Carrying ${items.length} ${items.length === 1 ? "item" : "items"}.`
             : "Your bag is empty."}{" "}
-          Type examine, equip, or drop.
+          Type examine, equip, unequip, or drop.
         </p>
         <div className="bag-layout">
           <section className="bag-doll" aria-label="Equipment">
@@ -82,7 +90,11 @@ export function BagPanel({
                 <button type="button" onClick={() => onSend(`examine ${selected.name}`)}>
                   Examine
                 </button>
-                {selected.equipped ? null : (
+                {selected.equipped ? (
+                  <button type="button" onClick={() => onSend(`unequip ${selected.name}`)}>
+                    Unequip
+                  </button>
+                ) : (
                   <button type="button" onClick={() => onSend(`equip ${selected.name}`)}>
                     Equip
                   </button>

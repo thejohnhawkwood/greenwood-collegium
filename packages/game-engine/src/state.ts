@@ -471,6 +471,12 @@ export type EquipIntent = {
   target: string;
 };
 
+export type UnequipIntent = {
+  verb: "unequip";
+  characterId: string;
+  target: string;
+};
+
 export type MapIntent = {
   verb: "map";
   characterId: string;
@@ -567,6 +573,7 @@ export type PlayerCommand =
   | SpellsIntent
   | InkIntent
   | EquipIntent
+  | UnequipIntent
   | MapIntent
   | TravelIntent
   | DuelIntent

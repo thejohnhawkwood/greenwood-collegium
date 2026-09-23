@@ -63,6 +63,8 @@ const previewState: PlayState = {
       id: "arrival",
       title: "Arrival at the Collegium",
       status: "active",
+      reward: "10 experience",
+      current: "Say hello so Porter knows you arrived.",
       steps: [
         {
           id: "look",

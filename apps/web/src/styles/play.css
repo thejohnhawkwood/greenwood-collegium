@@ -1360,13 +1360,38 @@
   font-size: 0.65rem;
 }
 .quest-dialog {
-  width: min(32rem, 100%);
-  max-height: calc(100dvh - 2rem);
-  overflow: auto;
+  width: min(100%, calc(100vw - 0.8rem));
+  height: min(100%, calc(100dvh - 0.8rem));
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   padding: 0.8rem 1rem 1rem;
   border: 1px solid #50634e;
   border-radius: 10px;
   background: #14271f;
+}
+.quest-scroll {
+  flex: 1;
+  overflow: auto;
+}
+.quest-now,
+.quest-reward {
+  margin: 0.35rem 0 0;
+}
+.quest-now span,
+.quest-step.open.is-current .quest-step-label {
+  color: #fff;
+  font-weight: 650;
+}
+.quest-now span {
+  margin-right: 0.4rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+.quest-reward {
+  color: #c5d0bc;
 }
 .quest-group {
   margin-top: 0.85rem;

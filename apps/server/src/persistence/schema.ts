@@ -13,7 +13,7 @@ import {
   serial,
 } from "drizzle-orm/pg-core";
 import type { ModerationState } from "./moderation-types.js";
-import type { KnownSpellRecord, PendingPrimerRecord } from "./types.js";
+import type { KnownSpellRecord, PendingPrimerRecord, WornGearRecord } from "./types.js";
 
 export const moderationState = pgTable("moderation_state", {
   accountId: text("account_id")
@@ -77,6 +77,7 @@ export const characters = pgTable(
     knownSpells: jsonb("known_spells").$type<KnownSpellRecord[]>().notNull().default([]),
     pendingPrimerChoices: jsonb("pending_primer_choices").$type<PendingPrimerRecord | null>(),
     primerAwardedLevels: jsonb("primer_awarded_levels").$type<number[]>().notNull().default([]),
+    equipment: jsonb("equipment").$type<WornGearRecord>().notNull().default({}),
     discoveredRoomIds: jsonb("discovered_room_ids")
       .$type<string[]>()
       .notNull()

@@ -46,8 +46,10 @@ export { handleTravel } from "./travel.js";
 export { parseTravelCommand } from "./parse-travel.js";
 export { handleDuel, DUEL_CHALLENGE_ID } from "./duel.js";
 export { parseDuelCommand } from "./parse-duel.js";
-export { handleEquip } from "./equip.js";
+export { handleEquip, handleUnequip } from "./equip.js";
 export { parseEquipCommand } from "./parse-equip.js";
+export { parseUnequipCommand } from "./parse-unequip.js";
+export { restoreEquipment } from "./equipment-slots.js";
 export {
   ARRIVAL_QUEST_ID,
   applyQuestProgress,

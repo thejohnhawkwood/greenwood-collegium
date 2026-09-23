@@ -1,4 +1,4 @@
-import type { Appearance } from "@greenwood/contracts";
+import { equipmentSlotIdSchema, type Appearance, type EquipmentSlotId } from "@greenwood/contracts";
 export type AccountStatus = "active" | "disabled";
 export type AccountRole = "owner" | "teacher" | "student";
 export type CharacterStatus = "active" | "disabled";
@@ -32,6 +32,7 @@ export type CharacterRecord = {
   knownSpells?: KnownSpellRecord[];
   pendingPrimerChoices?: PendingPrimerRecord;
   primerAwardedLevels?: number[];
+  equipment?: WornGearRecord;
   status: CharacterStatus;
   creationCompletedAt?: Date;
   createdAt: Date;
@@ -171,6 +172,25 @@ export function resolvePendingPrimer(value: unknown): PendingPrimerRecord | unde
   };
 }
 
+export type WornGearRecord = Partial<Record<EquipmentSlotId, string>>;
+
+const WORN_ITEM_ID = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,180}$/u;
+
+export function resolveEquipment(value: unknown): WornGearRecord {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return {};
+  }
+  const gear: WornGearRecord = {};
+  for (const [key, itemId] of Object.entries(value)) {
+    const slot = equipmentSlotIdSchema.safeParse(key);
+    if (!slot.success || typeof itemId !== "string" || !WORN_ITEM_ID.test(itemId)) {
+      continue;
+    }
+    gear[slot.data] = itemId;
+  }
+  return gear;
+}
+
 export function resolvePrimerAwardedLevels(value: unknown): number[] {
   if (!Array.isArray(value)) {
     return [];
@@ -276,6 +296,7 @@ export interface CharacterRepository {
       primerAwardedLevels: readonly number[];
     },
   ): Promise<void>;
+  updateEquipment(id: string, equipment: WornGearRecord): Promise<void>;
 }
 
 export interface SessionRepository {

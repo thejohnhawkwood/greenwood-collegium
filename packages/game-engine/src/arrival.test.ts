@@ -339,4 +339,79 @@ describe("Arrival at the Collegium", () => {
       templateId: "librarians-ribbon",
     });
   });
+
+  it("counts a hearth dummy already beaten once the hearth has been looked at", () => {
+    const dummy = "enemy-practice-dummy-hearth-ember";
+    const template: QuestTemplate = {
+      id: "first-lessons-ember",
+      title: "First lessons, Ember",
+      introNarration: "Cinder waits.",
+      reminderNarration: "Cinder waits.",
+      experienceReward: 15,
+      objectives: [
+        {
+          id: "look-hearth",
+          kind: "look",
+          label: "Look around the hearth.",
+          roomId: "hearth-ember",
+        },
+        {
+          id: "defeat-dummy",
+          kind: "defeat",
+          label: "Defeat the practice dummy.",
+          targetId: dummy,
+          roomId: "hearth-ember",
+          requires: ["look-hearth"],
+        },
+        {
+          id: "talk",
+          kind: "talk",
+          label: "Talk to Mentor Cinder.",
+          targetId: "npc-mentor-cinder",
+          requires: ["defeat-dummy"],
+        },
+      ],
+    };
+    const hearth = {
+      id: "hearth-ember",
+      title: "Ember hearth",
+      shortDescription: "A hearth.",
+      longDescription: "Coals.",
+      zone: "academy",
+      exits: [],
+      fixtures: [],
+    };
+    const rowan = {
+      id: "rowan",
+      name: "Rowan",
+      roomId: "hearth-ember",
+      discoveredRoomIds: ["hearth-ember"],
+      defeatedSpawnIds: ["enemy-practice-dummy-south-orchard"],
+    };
+    const world: WorldState = {
+      rooms: { "hearth-ember": hearth },
+      characters: { rowan },
+      questTemplates: { [template.id]: template },
+      quests: {
+        rowan: {
+          [template.id]: {
+            questId: template.id,
+            status: "active",
+            completedObjectiveIds: [],
+            rewardGranted: false,
+          },
+        },
+      },
+    };
+    progressQuests(world, { characterId: "rowan", kind: "look" }, runtime());
+    expect(world.quests?.rowan?.[template.id]?.completedObjectiveIds).toEqual(["look-hearth"]);
+
+    rowan.defeatedSpawnIds = [dummy];
+    progressQuests(world, { characterId: "rowan", kind: "say" }, runtime());
+    expect(world.quests?.rowan?.[template.id]?.completedObjectiveIds).toEqual([
+      "look-hearth",
+      "defeat-dummy",
+    ]);
+    expect(world.quests?.rowan?.[template.id]?.status).toBe("active");
+  });
 });

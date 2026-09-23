@@ -33,8 +33,10 @@ import {
   resolveDiscoveredRoomIds,
   resolveKnownSpells,
   resolvePendingPrimer,
+  resolveEquipment,
   resolvePrimerAwardedLevels,
   type UpdateCharacterCreationInput,
+  type WornGearRecord,
 } from "./types.js";
 import {
   InMemoryClassroomResetRepository,
@@ -148,6 +150,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       defeatedSpawnIds: [],
       knownSpells: [],
       primerAwardedLevels: [],
+      equipment: {},
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -170,6 +173,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
           knownSpells: resolveKnownSpells(character.knownSpells),
           pendingPrimerChoices: resolvePendingPrimer(character.pendingPrimerChoices),
           primerAwardedLevels: resolvePrimerAwardedLevels(character.primerAwardedLevels),
+          equipment: resolveEquipment(character.equipment),
         }
       : undefined;
   }
@@ -191,6 +195,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
         knownSpells: resolveKnownSpells(character.knownSpells),
         pendingPrimerChoices: resolvePendingPrimer(character.pendingPrimerChoices),
         primerAwardedLevels: resolvePrimerAwardedLevels(character.primerAwardedLevels),
+        equipment: resolveEquipment(character.equipment),
       }));
   }
 
@@ -286,6 +291,18 @@ export class InMemoryCharacterRepository implements CharacterRepository {
       knownSpells: resolveKnownSpells(input.knownSpells),
       pendingPrimerChoices: resolvePendingPrimer(input.pendingPrimerChoices),
       primerAwardedLevels: resolvePrimerAwardedLevels(input.primerAwardedLevels),
+      updatedAt: new Date(),
+    });
+  }
+
+  async updateEquipment(id: string, equipment: WornGearRecord): Promise<void> {
+    const character = this.byId.get(id);
+    if (!character) {
+      return;
+    }
+    this.byId.set(id, {
+      ...character,
+      equipment: resolveEquipment(equipment),
       updatedAt: new Date(),
     });
   }

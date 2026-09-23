@@ -44,8 +44,10 @@ import {
   resolveDiscoveredRoomIds,
   resolveKnownSpells,
   resolvePendingPrimer,
+  resolveEquipment,
   resolvePrimerAwardedLevels,
   type SessionRepository,
+  type WornGearRecord,
   type UpdateCharacterCreationInput,
 } from "./types.js";
 
@@ -164,6 +166,7 @@ export class PostgresCharacterRepository implements CharacterRepository {
       defeatedSpawnIds: [],
       knownSpells: [],
       primerAwardedLevels: [],
+      equipment: {},
       status: input.status ?? "active",
       creationCompletedAt: input.creationCompletedAt,
       createdAt: now,
@@ -284,6 +287,16 @@ export class PostgresCharacterRepository implements CharacterRepository {
         knownSpells: resolveKnownSpells(input.knownSpells),
         pendingPrimerChoices: resolvePendingPrimer(input.pendingPrimerChoices) ?? null,
         primerAwardedLevels: resolvePrimerAwardedLevels(input.primerAwardedLevels),
+        updatedAt: new Date(),
+      })
+      .where(eq(characters.id, id));
+  }
+
+  async updateEquipment(id: string, equipment: WornGearRecord): Promise<void> {
+    await this.db
+      .update(characters)
+      .set({
+        equipment: resolveEquipment(equipment),
         updatedAt: new Date(),
       })
       .where(eq(characters.id, id));
@@ -511,6 +524,7 @@ function toCharacter(row: typeof characters.$inferSelect): CharacterRecord {
     knownSpells: resolveKnownSpells(row.knownSpells),
     pendingPrimerChoices: resolvePendingPrimer(row.pendingPrimerChoices),
     primerAwardedLevels: resolvePrimerAwardedLevels(row.primerAwardedLevels),
+    equipment: resolveEquipment(row.equipment),
     status: row.status as CharacterRecord["status"],
     creationCompletedAt: row.creationCompletedAt ? asDate(row.creationCompletedAt) : undefined,
     createdAt: asDate(row.createdAt),

@@ -99,6 +99,13 @@
       "when": 1789862400000,
       "tag": "0013_character_primer",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1789948800000,
+      "tag": "0014_character_equipment",
+      "breakpoints": true
     }
   ]
 }

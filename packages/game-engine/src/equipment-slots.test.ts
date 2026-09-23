@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { handleEquip } from "./equip.js";
-import { equipmentSheet } from "./equipment-slots.js";
+import { equipmentSheet, restoreEquipment } from "./equipment-slots.js";
+import { handleEquip, handleUnequip } from "./equip.js";
 import { handleDrop } from "./drop.js";
 import type { EngineRuntime, ItemInstance, WorldState } from "./state.js";
 
@@ -213,5 +213,37 @@ describe("paper-doll wear slots", () => {
       expect(replaced.event.narration).toContain("You set the Copper Ring aside.");
     }
     expect(state.characters.fern?.equipment?.["ring-1"]).toBe("ring-c");
+  });
+
+  it("takes off a worn sword and a two-handed staff", () => {
+    const state = world();
+    handleEquip(state, { verb: "equip", characterId: "fern", target: "sword" }, runtime());
+    const removed = handleUnequip(
+      state,
+      { verb: "unequip", characterId: "fern", target: "sword" },
+      runtime(),
+    );
+    expect(removed.ok).toBe(true);
+    if (removed.ok) {
+      expect(removed.event.narration).toBe("You take off the Practice Sword.");
+    }
+    expect(state.characters.fern?.equippedItemId).toBeUndefined();
+    expect(state.characters.fern?.equipment?.["main-hand"]).toBeUndefined();
+
+    handleEquip(state, { verb: "equip", characterId: "fern", target: "staff" }, runtime());
+    handleUnequip(state, { verb: "unequip", characterId: "fern", target: "main hand" }, runtime());
+    expect(state.characters.fern?.equipment?.["main-hand"]).toBeUndefined();
+    expect(state.characters.fern?.equippedItemId).toBeUndefined();
+    expect(
+      equipmentSheet(state, state.characters.fern!).find((slot) => slot.id === "off-hand")?.blocked,
+    ).toBeUndefined();
+  });
+
+  it("restores only gear the Collegian still holds", () => {
+    const state = world();
+    const fern = state.characters.fern!;
+    restoreEquipment(state, fern, { "main-hand": "sword", cloak: "missing-cloak" });
+    expect(fern.equipment).toEqual({ "main-hand": "sword" });
+    expect(fern.equippedItemId).toBe("sword");
   });
 });

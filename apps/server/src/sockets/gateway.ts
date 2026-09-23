@@ -40,6 +40,8 @@ import {
   handleStats,
   handleSpells,
   handleEquip,
+  handleUnequip,
+  restoreEquipment,
   handleInk,
   handleTake,
   handleDuel,
@@ -148,6 +150,10 @@ export type RealtimeOptions = {
   ) => Promise<void>;
   persistSchool?: (characterId: string, schoolId: string | undefined) => Promise<void>;
   persistDefeatedSpawns?: (characterId: string, spawnIds: readonly string[]) => Promise<void>;
+  persistEquipment?: (
+    characterId: string,
+    equipment: NonNullable<PlayIdentity["equipment"]>,
+  ) => Promise<void>;
   persistPrimer?: (
     characterId: string,
     input: {
@@ -424,6 +430,7 @@ export async function attachRealtime(
         present.primerAwardedLevels = [...identity.primerAwardedLevels];
       }
       await persistStarterCopies(characterId, identity);
+      restoreEquipment(world, present, identity.equipment ?? {});
       resumeAuthenticated(socket, characterId);
       bindCommandHandlers(socket, characterId, identity);
       return;
@@ -473,6 +480,10 @@ export async function attachRealtime(
     }
 
     await persistStarterCopies(characterId, identity);
+    const arrived = world.characters[characterId];
+    if (identity && arrived) {
+      restoreEquipment(world, arrived, identity.equipment ?? {});
+    }
     if (identity && (options.persistRoom || options.persistProgress || options.persistQuest)) {
       await persistAuthenticatedProgress(characterId);
     }
@@ -559,6 +570,9 @@ export async function attachRealtime(
     }
     if (options.persistDefeatedSpawns) {
       await options.persistDefeatedSpawns(characterId, character.defeatedSpawnIds ?? []);
+    }
+    if (options.persistEquipment) {
+      await options.persistEquipment(characterId, { ...(character.equipment ?? {}) });
     }
     if (options.persistPrimer) {
       await options.persistPrimer(characterId, {
@@ -933,27 +947,29 @@ export async function attachRealtime(
                               ? handleStats(world, intent, runtime)
                               : intent.verb === "spells"
                                 ? handleSpells(world, intent, runtime)
-                                : intent.verb === "equip"
-                                  ? handleEquip(world, intent, runtime)
-                                  : intent.verb === "ink"
-                                    ? handleInk(world, intent, runtime)
-                                    : intent.verb === "attack"
-                                      ? handleAttack(world, intent, runtime)
-                                      : intent.verb === "defend"
-                                        ? handleDefend(world, intent, runtime)
-                                        : intent.verb === "flee"
-                                          ? handleFlee(world, intent, runtime)
-                                          : intent.verb === "travel"
-                                            ? handleTravel(world, intent, runtime)
-                                            : intent.verb === "bye"
-                                              ? handleBye(world, intent, runtime)
-                                              : intent.verb === "drink"
-                                                ? handleDrink(world, intent, runtime)
-                                                : intent.verb === "eat"
-                                                  ? handleEat(world, intent, runtime)
-                                                  : intent.verb === "duel"
-                                                    ? handleDuel(world, intent, runtime)
-                                                    : handleCast(world, intent, runtime);
+                                : intent.verb === "unequip"
+                                  ? handleUnequip(world, intent, runtime)
+                                  : intent.verb === "equip"
+                                    ? handleEquip(world, intent, runtime)
+                                    : intent.verb === "ink"
+                                      ? handleInk(world, intent, runtime)
+                                      : intent.verb === "attack"
+                                        ? handleAttack(world, intent, runtime)
+                                        : intent.verb === "defend"
+                                          ? handleDefend(world, intent, runtime)
+                                          : intent.verb === "flee"
+                                            ? handleFlee(world, intent, runtime)
+                                            : intent.verb === "travel"
+                                              ? handleTravel(world, intent, runtime)
+                                              : intent.verb === "bye"
+                                                ? handleBye(world, intent, runtime)
+                                                : intent.verb === "drink"
+                                                  ? handleDrink(world, intent, runtime)
+                                                  : intent.verb === "eat"
+                                                    ? handleEat(world, intent, runtime)
+                                                    : intent.verb === "duel"
+                                                      ? handleDuel(world, intent, runtime)
+                                                      : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -1088,10 +1104,12 @@ export async function attachRealtime(
       (intent.verb === "look" ||
         intent.verb === "say" ||
         intent.verb === "take" ||
+        intent.verb === "drop" ||
         intent.verb === "move" ||
         intent.verb === "examine" ||
         intent.verb === "talk" ||
         intent.verb === "equip" ||
+        intent.verb === "unequip" ||
         intent.verb === "ink" ||
         intent.verb === "attack" ||
         intent.verb === "cast" ||

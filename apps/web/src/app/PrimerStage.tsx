@@ -1,5 +1,5 @@
 import type { PlayState } from "@greenwood/contracts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PrimerBook = NonNullable<PlayState["primer"]>;
 type PrimerLeaf = PrimerBook["leaves"][number];
@@ -20,6 +20,14 @@ export function PrimerStage({
   const firstOpen = leaves.find((leaf) => leaf.open)?.schoolId ?? leaves[0]?.schoolId;
   const [schoolId, setSchoolId] = useState(firstOpen);
   const [selectedId, setSelectedId] = useState<string>();
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
   if (!open || !primer) {
     return null;
   }

@@ -176,6 +176,8 @@ await attachRealtime(app, world, {
   persistDefeatedSpawns: (characterId, spawnIds) =>
     stores.characters.updateDefeatedSpawns(characterId, spawnIds),
   persistPrimer: (characterId, input) => stores.characters.updatePrimer(characterId, input),
+  persistEquipment: (characterId, equipment) =>
+    stores.characters.updateEquipment(characterId, equipment),
   persistItem,
   persistQuest: stores.quests,
   auditLog: stores.audit,

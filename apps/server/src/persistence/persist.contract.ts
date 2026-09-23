@@ -151,6 +151,16 @@ export function persistAccountAndCharacter(
     ]);
     expect((await characters.getById(character.id))?.pendingPrimerChoices?.level).toBe(4);
     expect((await characters.getById(character.id))?.primerAwardedLevels).toEqual([3, 4]);
+    expect((await characters.getById(character.id))?.equipment).toEqual({});
+    await characters.updateEquipment(character.id, {
+      "main-hand": "item-sword",
+      cloak: "not a slot item",
+      helmet: "helm-1",
+    });
+    expect((await characters.getById(character.id))?.equipment).toEqual({
+      "main-hand": "item-sword",
+      helmet: "helm-1",
+    });
   });
   it("rewrites retired Ember leaf ids on reload", async () => {
     const account = await accounts.create({

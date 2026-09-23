@@ -19,7 +19,7 @@ in Postgres.
   Sword, staff, and sling infer main hand, two-hand, and ranged when the
   field is omitted. Keys, books, and ordinary items without a slot cannot
   be worn.
-- The Collegian keeps `equipment` in memory. `equippedItemId` stays the
+- The Collegian keeps `equipment` on the character. `equippedItemId` stays the
   main-hand weapon, including a two-handed one. A ranged weapon does not
   replace it. Dropping an item clears every slot that held it.
 - `play-state.slots` always lists the eleven positions. A blocked off hand
@@ -29,6 +29,9 @@ in Postgres.
 
 ## Consequences
 
-Worn gear is lost on restart, the same as today’s in-hand weapon. Persisting
-the sheet is a later migration. No new item category is required for
-two-handed weapons.
+Worn gear is stored in `characters.equipment` (`drizzle/0014_character_equipment.sql`)
+and restored when the Collegian joins. `unequip` (and `take off`) clears a
+named slot or a worn item and puts it back in the bag. Dropping a worn item
+still clears the slot, and that change is saved with the drop. A slot whose
+item is no longer held is dropped on restore. No new item category is required
+for two-handed weapons.

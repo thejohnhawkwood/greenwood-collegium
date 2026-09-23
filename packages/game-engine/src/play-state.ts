@@ -153,6 +153,17 @@ export function createPlayState(
   });
 }
 
+function questRewardLine(
+  world: WorldState,
+  template: NonNullable<WorldState["questTemplates"]>[string],
+): string {
+  const experience = `${String(template.experienceReward)} experience`;
+  const itemName = template.itemRewardTemplateId
+    ? world.itemTemplates?.[template.itemRewardTemplateId]?.name
+    : undefined;
+  return itemName ? `${experience}. ${itemName}.` : experience;
+}
+
 function questJournal(world: WorldState, characterId: string) {
   const progressById = world.quests?.[characterId] ?? {};
   return Object.values(world.questTemplates ?? {})
@@ -166,6 +177,17 @@ function questJournal(world: WorldState, characterId: string) {
           id: template.id,
           title: template.title,
           status: progress.status,
+          reward: questRewardLine(world, template),
+          ...(progress.status === "active"
+            ? (() => {
+                const current = splitQuestStep(
+                  template.objectives.find(
+                    (objective) => !progress.completedObjectiveIds.includes(objective.id),
+                  )?.label ?? "",
+                ).label;
+                return current ? { current } : {};
+              })()
+            : {}),
           steps: template.objectives.map((objective) => ({
             id: objective.id,
             done: progress.completedObjectiveIds.includes(objective.id),

@@ -68,6 +68,8 @@ const state: PlayState = {
       id: "arrival",
       title: "Arrival at the Collegium",
       status: "active",
+      reward: "10 experience",
+      current: "Say hello so Porter knows you arrived.",
       steps: [
         {
           id: "look",
@@ -320,7 +322,7 @@ describe("visual foundation", () => {
         }),
       ),
     ).toMatch(
-      /Bag and equipment[\s\S]*Helmet, empty[\s\S]*Main hand, Practice Sword[\s\S]*Small Copper Key[\s\S]*Worn on Main hand[\s\S]*The blade is wood, nicked from many lessons[\s\S]*Examine[\s\S]*Drop/,
+      /Bag and equipment[\s\S]*Helmet, empty[\s\S]*Main hand, Practice Sword[\s\S]*Small Copper Key[\s\S]*Worn on Main hand[\s\S]*The blade is wood, nicked from many lessons[\s\S]*Examine[\s\S]*Unequip[\s\S]*Drop/,
     );
     expect(
       renderToStaticMarkup(
@@ -344,7 +346,7 @@ describe("visual foundation", () => {
         }),
       ),
     ).toMatch(
-      /Current quests[\s\S]*Arrival at the Collegium[\s\S]*Look around Lantern Court[\s\S]*Type look to see Lantern Court[\s\S]*Say hello so Porter knows you arrived/,
+      /Current quests[\s\S]*Arrival at the Collegium[\s\S]*Now[\s\S]*Say hello so Porter knows you arrived[\s\S]*Reward: 10 experience[\s\S]*Look around Lantern Court[\s\S]*Type look to see Lantern Court/,
     );
     expect(
       shouldFocusCommandInput({

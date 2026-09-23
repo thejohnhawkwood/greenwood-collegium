@@ -194,6 +194,8 @@ export const playStateSchema = z.object({
         id: z.string().min(1),
         title: z.string().min(1),
         status: z.enum(["active", "completed"]),
+        reward: z.string().min(1).optional(),
+        current: z.string().min(1).optional(),
         steps: z.array(
           z.object({
             id: z.string().min(1),

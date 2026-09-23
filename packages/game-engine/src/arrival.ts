@@ -16,6 +16,7 @@ import {
   summonToHeadmaster,
 } from "./headmaster.js";
 import { applyLevelVitals } from "./combat-state.js";
+import { hasDefeatedSpawn } from "./enemies.js";
 import { itemsHeldBy, worldItems } from "./items.js";
 import { grantPrimerInk, maybeOpenWorldPrimer } from "./primer-book.js";
 import { openSchoolLeaf } from "./primer.js";
@@ -164,10 +165,21 @@ export function progressQuests(
         (objective.requires ?? []).every((id) => progress.completedObjectiveIds.includes(id)) &&
         objectiveMatches(world, character, template, objective, trigger),
     );
-    if (newlyCompleted.length === 0) {
+    if (newlyCompleted.length > 0) {
+      progress.completedObjectiveIds.push(...newlyCompleted.map((objective) => objective.id));
+    }
+    const alreadyBeaten = template.objectives.filter(
+      (objective) =>
+        objective.kind === "defeat" &&
+        Boolean(objective.targetId) &&
+        hasDefeatedSpawn(character, objective.targetId ?? "") &&
+        !progress.completedObjectiveIds.includes(objective.id) &&
+        (objective.requires ?? []).every((id) => progress.completedObjectiveIds.includes(id)),
+    );
+    if (newlyCompleted.length === 0 && alreadyBeaten.length === 0) {
       continue;
     }
-    progress.completedObjectiveIds.push(...newlyCompleted.map((objective) => objective.id));
+    progress.completedObjectiveIds.push(...alreadyBeaten.map((objective) => objective.id));
     const remaining = remainingObjectives(template, progress);
     if (remaining.length === 0) {
       progress.status = "completed";
