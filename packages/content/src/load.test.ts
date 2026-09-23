@@ -219,7 +219,7 @@ describe("content loader", () => {
       const mentor = Object.values(world.rooms)
         .flatMap((room) => room.fixtures)
         .find((fixture) => fixture.id === mentorId);
-      expect(mentor?.dialogueTree?.nodes["lessons-done"]?.text).toContain("leaves are inked");
+      expect(mentor?.dialogueTree?.nodes["lessons-done"]?.text).toContain("The stem is inked");
     }
     const alder = Object.values(world.rooms)
       .flatMap((room) => room.fixtures)
