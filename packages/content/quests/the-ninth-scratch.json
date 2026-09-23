@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-ninth-scratch",
+  "title": "The Ninth Scratch",
+  "giverNpcId": "npc-stoneward-kern",
+  "requiresQuestIds": ["the-mere-that-keeps"],
+  "experienceReward": 25,
+  "itemRewardTemplateId": "lintel-band",
+  "introNarration": "Kern taps a lintel with chalk, not with a story. \"Examine the scratch stone. North is the black ditch. If the lurker keeps iron there, defeat it. Then talk kern. Eight lintels were enough. The ninth scratch is not mine.\"",
+  "reminderNarration": "\"Examine the scratch stone. Defeat the ditch-lurker in the black ditch. Then talk kern. Type east from the Standing Stones. Type north from the lintel field.\"",
+  "completionNarration": "Kern chalks a dot beside the ninth scratch and gives you a plain band. \"Wear it or pocket it. The barrow west of the stile is Wren's errand if she has sent you. I do not send students under a hill. Eat something warm.\"",
+  "objectives": [
+    {
+      "id": "read-scratch",
+      "kind": "examine",
+      "targetId": "object-scratch-stone",
+      "label": "Examine the Scratch Stone in the Lintel Field. Type east from the Standing Stones."
+    },
+    {
+      "id": "defeat-lurker",
+      "kind": "defeat",
+      "targetId": "enemy-ditch-lurker-black-ditch",
+      "label": "Defeat the Ditch Lurker in the Black Ditch. Type north from the Lintel Field."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-stoneward-kern",
+      "requires": ["read-scratch", "defeat-lurker"],
+      "label": "Talk kern in the Lintel Field."
+    }
+  ]
+}

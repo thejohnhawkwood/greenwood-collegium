@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "willow-bend",
+  "title": "Willow Bend",
+  "shortDescription": "Willows, and a painter cut on purpose.",
+  "longDescription": "The river bends under willows. A flat skiff should be tied here. The painter is cut, not worn through. Deckhand Nett sits on the root with empty paws and a story he is willing to finish.\nWest is the landing. East is the osier holt. South is the skiff-line.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 1,
+    "y": -2
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "river-landing"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "osier-holt"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "skiff-line"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-deckhand-nett",
+      "name": "Deckhand Nett",
+      "kind": "npc",
+      "lookDescription": "A young-adult mouse in a tarred jerkin, no token on the cord. Try talk nett.",
+      "examineDescription": "Nett's jerkin is river-thief cut, and the cord at his neck is empty. He left the camp. He is not a student and not a captain. He smells of biscuits he did not get to eat.",
+      "dialogue": "\"Marram will have sent you if the painter is cut. I cut nothing. I carried tins. The crate is south and east, in the cargo hollow. Examine it. A deck-hand still keeps the skiff-line south of here. Finish that if he squares up. Then talk nett. I am done keeping other people's biscuits.\""
+    },
+    {
+      "id": "object-cut-painter",
+      "name": "Cut Painter",
+      "kind": "object",
+      "lookDescription": "A mooring rope cut clean. Examine it.",
+      "examineDescription": "The painter is cut clean, tar still soft. Weather frays a rope. A knife ends it. The knot on the landing post was not the part that failed."
+    }
+  ]
+}

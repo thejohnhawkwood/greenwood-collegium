@@ -40,15 +40,15 @@ describe("content loader", () => {
 
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(46);
+    expect(Object.keys(world.rooms)).toHaveLength(66);
     expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
     expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
     const charted = Object.values(world.rooms).filter((room) => room.map);
-    expect(charted).toHaveLength(46);
+    expect(charted).toHaveLength(66);
     expect(
       new Set(charted.map((room) => `${room.map!.x},${room.map!.y},${String(room.map!.z ?? 0)}`))
         .size,
-    ).toBe(46);
+    ).toBe(66);
     expect(world.rooms["headmaster-study"]?.map).toEqual({ x: 0, y: 1, z: 1 });
     expect(world.rooms["bell-stair"]?.map).toEqual({ x: 1, y: 2, z: -1 });
     expect(world.rooms["deep-cradle"]?.map).toEqual({ x: 2, y: 0, z: -2 });
@@ -163,7 +163,7 @@ describe("content loader", () => {
       attack: 3,
       experience: 8,
     });
-    expect(Object.keys(world.enemies)).toHaveLength(13);
+    expect(Object.keys(world.enemies)).toHaveLength(20);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,
@@ -220,7 +220,16 @@ describe("content loader", () => {
       world.quests["what-still-sleeps"]?.objectives.map((objective) => objective.kind),
     ).toContain("defeat");
     expect(world.quests["the-meadow-fork"]?.giverNpcId).toBe("npc-shepherd-wren");
-    expect(Object.keys(world.quests)).toHaveLength(33);
+    expect(Object.keys(world.quests)).toHaveLength(40);
+    expect(world.quests["arrival-at-the-collegium"]?.introNarration).toContain(
+      "train as a defender",
+    );
+    for (const quest of Object.values(world.quests)) {
+      expect(quest.itemRewardTemplateId, quest.id).toBeTruthy();
+    }
+    for (const enemy of Object.values(world.enemies)) {
+      expect(enemy.loot?.length, enemy.id).toBeGreaterThan(0);
+    }
     expect(world.rooms["south-orchard"]?.fixtures.map((fixture) => fixture.id)).toContain(
       "object-orchard-apples",
     );
@@ -268,7 +277,7 @@ describe("content loader", () => {
     });
 
     const world = loadWorldFromDirectory(directory);
-    expect(Object.keys(world.rooms)).toHaveLength(47);
+    expect(Object.keys(world.rooms)).toHaveLength(67);
     expect(world.rooms["extra-nook"]?.title).toBe("Extra Nook");
   });
 

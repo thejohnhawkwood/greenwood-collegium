@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "skiff-line",
+  "title": "Skiff Line",
+  "shortDescription": "A line of flat boats, one of them not ours.",
+  "longDescription": "Flat skiffs knock the piling. One has a Collegium knot. One has a thief's knot and a stoat who will not move. North is the willow bend. West is the slip. East is the mill-race. South is the cargo hollow.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 1,
+    "y": -3
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "willow-bend"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "otter-slip"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "mill-race"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "cargo-hollow"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-thief-knot",
+      "name": "Thief Knot",
+      "kind": "object",
+      "lookDescription": "A knot that is not the landing's. Examine it.",
+      "examineDescription": "Marram's knot is elaborate and meant to hold. This one is fast and mean, a knot for people who plan to leave quickly. The skiff under it is ours. The knot is not."
+    }
+  ]
+}

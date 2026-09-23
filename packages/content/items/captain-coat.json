@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "captain-coat",
+  "name": "Captain Coat",
+  "shortDescription": "A river coat with the buttons still on.",
+  "examineDescription": "A short river coat, buttons still on, lining dry. The captain kept other people's cargo and wore this over it. It smells of tar and biscuit crumbs. No blood on it.",
+  "category": "ordinary",
+  "unique": true,
+  "equipSlot": "cloak"
+}

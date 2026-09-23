@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "fold-bell",
+  "name": "Fold Bell",
+  "shortDescription": "A small bell that used to count sheep.",
+  "examineDescription": "A small brass bell, tongue wrapped so it will not ring by accident. The fold-hound had it in the mist. It counts sheep. It does not count the dead.",
+  "category": "ordinary",
+  "unique": true
+}

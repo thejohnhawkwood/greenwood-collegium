@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-empty-byre",
+  "title": "The Empty Byre",
+  "giverNpcId": "npc-foldhand-hobb",
+  "requiresQuestIds": ["the-meadow-fork"],
+  "experienceReward": 20,
+  "itemRewardTemplateId": "fold-mitts",
+  "introNarration": "Hobb trims a lamp and does not sit. \"North of Wren's croft the byre is empty. Examine the empty stall. Then go east into the mist-lane. If a hound-shape keeps it, defeat it. Come back and talk hobb. It is not a sheep. It is not a story you leave in the straw.\"",
+  "reminderNarration": "\"Examine the empty stall north of the croft. Defeat the fold-hound in the mist-lane if it is still there. Then talk hobb. Type north from Wren's Croft. Type east from the byre.\"",
+  "completionNarration": "You name the empty hook and the hound that was not a dog. Hobb puts wool mitts in your paws. \"Wear them if the mist sits on your claws. Sile is at the mere, north of the lane. Talk sile when you want the water's version. Eat at the croft. Wren is still owed the flock.\"",
+  "objectives": [
+    {
+      "id": "read-stall",
+      "kind": "examine",
+      "targetId": "object-empty-stall",
+      "label": "Examine the Empty Stall in the Croft Byre. Type north from Wren's Croft."
+    },
+    {
+      "id": "defeat-hound",
+      "kind": "defeat",
+      "targetId": "enemy-fold-hound-mist-lane",
+      "label": "Defeat the Fold Hound in the Mist Lane. Type east from the Croft Byre."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-foldhand-hobb",
+      "requires": ["read-stall", "defeat-hound"],
+      "label": "Talk hobb in the Wool Shed. Type east from the croft, or south from the lane."
+    }
+  ]
+}

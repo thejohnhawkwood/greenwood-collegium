@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "wool-shed",
+  "title": "Wool Shed",
+  "shortDescription": "A shed of wet wool and one honest lamp.",
+  "longDescription": "The shed smells of lanolin and peat-smoke. Fleeces hang on pegs, most of them still heavy with mist. A lamp burns because Foldhand Hobb does not trust the lane after dusk.\nNorth is the mist-lane. South is the fold. West is Wren's door.",
+  "zone": "east-moor",
+  "visualState": "sheepfold",
+  "map": {
+    "x": 7,
+    "y": 2
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "sheepfold"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "wren-croft"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "mist-lane"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-foldhand-hobb",
+      "name": "Foldhand Hobb",
+      "kind": "npc",
+      "lookDescription": "A mole in a wool vest, lamp-soot on his claws. Try talk hobb.",
+      "examineDescription": "Hobb's vest is mended with the same wool he hangs. He has walked this moor in weather that took sheep and did not give them back. He is adult. He is not cute. He will not name a walker until Wren does.",
+      "dialogue": "\"If Wren has had you read the waystone, I have a byre that should not be empty. North of her croft. Examine the empty stall. Then the mist-lane, if the hound-shape is still keeping it. Come back and talk hobb. Eat at the croft first. I have seen a fold go quiet. I do not invent why.\""
+    },
+    {
+      "id": "object-wool-pegs",
+      "name": "Wool Pegs",
+      "kind": "object",
+      "lookDescription": "Pegs of wet fleece. Examine them.",
+      "examineDescription": "Most pegs are full. One near the door has a bell-loop and no bell. Hobb says the flock went out counted and the bell did not come home with them."
+    }
+  ]
+}

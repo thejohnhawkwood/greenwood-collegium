@@ -17,6 +17,10 @@
     {
       "direction": "north",
       "toRoomId": "barrow-mouth"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "black-ditch"
     }
   ],
   "fixtures": [

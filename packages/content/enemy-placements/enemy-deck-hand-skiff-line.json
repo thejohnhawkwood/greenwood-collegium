@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-deck-hand-skiff-line",
+  "templateId": "deck-hand",
+  "roomId": "skiff-line"
+}

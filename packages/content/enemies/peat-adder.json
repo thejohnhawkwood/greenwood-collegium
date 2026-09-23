@@ -10,5 +10,6 @@
   "experience": 8,
   "reads": ["lunge", "lunge", "gather"],
   "lockNarration": "The cut water goes stiller than tea.",
-  "victoryNarration": "The peat-adder goes still. The cut is only water and iron again."
+  "victoryNarration": "The peat-adder goes still. The cut is only water and iron again.",
+  "loot": ["cut-iron"]
 }

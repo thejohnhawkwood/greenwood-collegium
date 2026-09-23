@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "porters-cord",
+  "name": "Porter's Cord",
+  "shortDescription": "A short leather cord from the court.",
+  "examineDescription": "A short leather cord, the sort Porter Bramble keeps spare whistles on. It is not a weapon. It is proof you came through the gate and were told what the school is for.",
+  "category": "ordinary",
+  "unique": true,
+  "equipSlot": "necklace"
+}

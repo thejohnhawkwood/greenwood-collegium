@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "peat-nail",
+  "name": "Peat Nail",
+  "shortDescription": "An old nail packed in peat.",
+  "examineDescription": "An old nail the barrow-guard had packed into its peat the way a wall keeps a hinge. It is iron, not bone.",
+  "category": "ordinary",
+  "unique": true
+}

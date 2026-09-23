@@ -21,5 +21,6 @@
       "targetId": "npc-mentor-briar",
       "requires": ["cast-starter"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "ink-rag"
 }

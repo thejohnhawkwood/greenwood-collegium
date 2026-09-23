@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "crow-pin",
+  "name": "Crow Pin",
+  "shortDescription": "A bent pin from a mist-crow's feather.",
+  "examineDescription": "A bent pin caught in fog-wet feathers. The mist-crow is gone. The pin is small enough to lose and honest enough to keep.",
+  "category": "ordinary",
+  "unique": true
+}

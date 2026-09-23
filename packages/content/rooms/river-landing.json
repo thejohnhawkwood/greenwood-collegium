@@ -3,7 +3,7 @@
   "id": "river-landing",
   "title": "River Landing",
   "shortDescription": "Willow roots hold a little landing above the slow brown river.",
-  "longDescription": "River water slips around willow roots with a sound like pages being turned. A flat-bottomed boat rests against the landing, its painter tied in an impressively elaborate knot.\nSilver rings spread where insects touch the surface. A flood marker stands beside the post, its bright bands recording days when the river felt much taller.",
+  "longDescription": "River water slips around willow roots with a sound like pages being turned. A flat-bottomed boat should rest against the landing. Skipper Marram keeps the post, tar on his paws, whistle on a cord.\nEast the willows hide a cut painter. South the slip leads toward people who take what the Collegium does not lock. The College is still north, through the orchard, and it is still the bright place.",
   "zone": "grounds",
   "map": {
     "x": 0,
@@ -13,9 +13,29 @@
     {
       "direction": "north",
       "toRoomId": "south-orchard"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "willow-bend"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "reed-bank"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "otter-slip"
     }
   ],
   "fixtures": [
+    {
+      "id": "npc-skipper-marram",
+      "name": "Skipper Marram",
+      "kind": "npc",
+      "lookDescription": "An otter in a tarred coat, whistle on a cord, paws still wet. Try talk marram.",
+      "examineDescription": "Marram's coat has flood marks older than most students. One ear is nicked from a boathook, not from play. He has kept this landing through thieves and high water. He talks like a veteran because he is one.",
+      "dialogue": "\"The College is the bright place. This landing is the wet edge of it. Boats and biscuits go missing south of the orchard, and I have seen enough of that to stop calling it mischief. Talk marram if you will walk the bank. Type east for the willow bend. Do not invent a second queen on my river.\""
+    },
     {
       "id": "object-flood-marker",
       "name": "Flood Marker",

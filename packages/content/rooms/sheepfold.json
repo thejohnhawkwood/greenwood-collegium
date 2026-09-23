@@ -17,6 +17,10 @@
     {
       "direction": "east",
       "toRoomId": "standing-stones"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "wool-shed"
     }
   ],
   "fixtures": [

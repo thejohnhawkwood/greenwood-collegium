@@ -28,5 +28,6 @@
       "targetId": "npc-mentor-edge",
       "requires": ["defeat-dummy"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "hearth-biscuit"
 }

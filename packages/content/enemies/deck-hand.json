@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "deck-hand",
+  "name": "Deck Hand",
+  "shortDescription": "A river-thief with a token instead of a name.",
+  "lookDescription": "A stoat in a tarred jerkin blocks the skiff-line, a wooden token on a cord.",
+  "examineDescription": "The Deck Hand is a stoat who takes boats that are not his. He is an adult. He is not a student. Solo work. He squares up if you mean to have the landing's painter back.",
+  "maxHealth": 26,
+  "attack": 5,
+  "experience": 10,
+  "loot": ["deck-token"],
+  "lockNarration": "He sets his paws on the skiff and does not offer a name.",
+  "victoryNarration": "The Deck Hand drops the token and goes into the willow. The skiff stays."
+}

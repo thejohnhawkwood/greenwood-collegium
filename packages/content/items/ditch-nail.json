@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "ditch-nail",
+  "name": "Ditch Nail",
+  "shortDescription": "A bent iron nail from the black ditch.",
+  "examineDescription": "A bent iron nail, peat in the threads. The ditch-lurker kept it the way a magpie keeps shine. It is not the abbey bronze.",
+  "category": "ordinary",
+  "unique": true
+}

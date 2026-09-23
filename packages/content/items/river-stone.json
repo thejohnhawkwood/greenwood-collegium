@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "river-stone",
+  "name": "River Stone",
+  "shortDescription": "A smooth stone from the mill-race.",
+  "examineDescription": "A smooth stone the race-pike had worried into a pocket of current. It is cold and ordinary. That is the point.",
+  "category": "ordinary",
+  "unique": true
+}

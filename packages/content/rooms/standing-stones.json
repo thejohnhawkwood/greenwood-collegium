@@ -17,6 +17,10 @@
     {
       "direction": "north",
       "toRoomId": "peat-cut"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "lintel-field"
     }
   ],
   "fixtures": [

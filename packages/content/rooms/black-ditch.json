@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "black-ditch",
+  "title": "Black Ditch",
+  "shortDescription": "A ditch of black water east of the peat-cut.",
+  "longDescription": "The ditch is narrower than the peat-cut and just as unwilling. Iron smell. No tea. If the lurker is still here, it is keeping shine, not a person.\nSouth is the lintel field. West is the peat-cut. North is the stile toward the barrow.",
+  "zone": "east-moor",
+  "visualState": "peat-cut",
+  "map": {
+    "x": 9,
+    "y": 2
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "lintel-field"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "peat-cut"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "crow-stile"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-black-water",
+      "name": "Black Water",
+      "kind": "object",
+      "lookDescription": "Black water with iron in it. Examine it.",
+      "examineDescription": "The water holds a bent shine and does not hold your face. Do not drink it. The peat-cut is west if you still owe Wren that path. This ditch is Kern's errand, not a second queen."
+    }
+  ]
+}

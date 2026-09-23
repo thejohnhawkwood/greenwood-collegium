@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "lintel-band",
+  "name": "Lintel Band",
+  "shortDescription": "A plain band from the ninth scratch.",
+  "examineDescription": "A plain metal band, no jewel, no prayer. Stoneward Kern said the ninth scratch did not need a sermon. The band is cold and honest.",
+  "category": "ordinary",
+  "unique": true,
+  "equipSlot": "ring"
+}

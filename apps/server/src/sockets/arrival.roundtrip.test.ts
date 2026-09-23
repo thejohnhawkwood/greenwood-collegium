@@ -91,6 +91,9 @@ describe("arrival socket round trip", () => {
     const { events } = connected;
 
     const intro = await waitFor(events, "system.notice");
+    expect(intro.narration).toContain("train as a defender");
+    expect(intro.narration).toContain("Ember, Thorns, Veil, Stars, Stone, and Steel");
+    expect(intro.narration).toContain("Clock Tower");
     expect(intro.narration).toContain("Porter Bramble");
     expect(intro.narration).toContain("help");
     expect(intro.narration).toContain("look");

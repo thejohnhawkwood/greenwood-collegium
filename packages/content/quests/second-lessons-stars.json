@@ -21,5 +21,6 @@
       "targetId": "npc-mentor-lumen",
       "requires": ["cast-starter"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "ink-rag"
 }

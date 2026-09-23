@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "lintel-field",
+  "title": "Lintel Field",
+  "shortDescription": "Fallen gate-stones and one scratch that is newer than lichen.",
+  "longDescription": "A field of fallen lintels, none of them standing like the ring to the west. Stoneward Kern sits on the driest one with a chalk stub and a veteran’s patience.\nWest is the standing stones. North is the black ditch. South is salt-grass.",
+  "zone": "east-moor",
+  "visualState": "standing-stones",
+  "map": {
+    "x": 9,
+    "y": 1
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "standing-stones"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "black-ditch"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "salt-grass"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-stoneward-kern",
+      "name": "Stoneward Kern",
+      "kind": "npc",
+      "lookDescription": "A badger in a stone-dust coat, chalk on one claw. Try talk kern.",
+      "examineDescription": "Kern counts stones the way Alder counts facts. The coat has old tears mended with wire, not silk. He has stood a gate against weather that walked. He does not discuss the barrow unless you have already told Wren.",
+      "dialogue": "\"If Sile has sent you on from the mere, examine the scratch stone. Then the ditch north of here, if the lurker is still keeping iron. Come back and talk kern. Last winter this field had eight fallen lintels. I chalked them. There is a ninth scratch. I did not put it there.\""
+    },
+    {
+      "id": "object-scratch-stone",
+      "name": "Scratch Stone",
+      "kind": "object",
+      "lookDescription": "A lintel with a fresh scratch. Examine it.",
+      "examineDescription": "Eight lintels wear old lichen. The ninth scratch is pale, a mason's three circles and then a line through them, as if someone started the abbey mark and refused to finish. Kern's chalk is a dot beside it, not the scratch itself."
+    }
+  ]
+}

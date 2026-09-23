@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "mill-race",
+  "title": "Mill Race",
+  "shortDescription": "Fast water beside a wheel that no longer turns.",
+  "longDescription": "The race runs fast and brown beside a mill wheel furred with moss. The wheel does not turn. Something long holds the current if it has not been sent on.\nNorth is the osier holt. West is the skiff-line. South is the black mooring.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 2,
+    "y": -3
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "osier-holt"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "skiff-line"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "black-mooring"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-still-wheel",
+      "name": "Still Wheel",
+      "kind": "object",
+      "lookDescription": "A mill wheel that does not turn. Examine it.",
+      "examineDescription": "The wheel is sound. The axle is packed with reed on purpose, so the race stays a hiding place. Pulling the reed out is a job for a dry day and a grown otter with a wrench. Today, look, and leave the axle."
+    }
+  ]
+}

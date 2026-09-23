@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "river-captain",
+  "name": "River Captain",
+  "shortDescription": "The adult who keeps other people's cargo at the black mooring.",
+  "lookDescription": "An otter in a buttoned river coat waits at the black mooring as if the camp were a school.",
+  "examineDescription": "The River Captain keeps boats, biscuits, and a coat with the buttons still on. Adult. Not gore, and not a lecture. Solo work. Skipper Marram says one trained Collegian may square up, and a classmate is still wiser.",
+  "maxHealth": 48,
+  "attack": 8,
+  "experience": 18,
+  "loot": ["captain-coat"],
+  "lockNarration": "The camp goes quiet the way a held boat goes quiet.",
+  "victoryNarration": "The River Captain's coat comes off the rail. The mooring is only tar and willow again. The cargo can go home."
+}

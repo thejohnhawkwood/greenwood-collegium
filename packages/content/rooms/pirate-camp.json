@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "pirate-camp",
+  "title": "Pirate Camp",
+  "shortDescription": "A camp of tarps, tins, and one captain who will not give the boats back.",
+  "longDescription": "Tarps over willow poles. Tins with the kitchens' turnip still on them. No blood, no trophies, just other people's work kept in a pile. If the river captain is here, the coat is buttoned and the mooring is treated like a school he did not earn.\nNorth is the slip. East is the cargo hollow. West is the heron post.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 0,
+    "y": -4
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "otter-slip"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "cargo-hollow"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "heron-post"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-turnip-tins",
+      "name": "Turnip Tins",
+      "kind": "object",
+      "lookDescription": "Tins stamped with a turnip. Examine them.",
+      "examineDescription": "The stamp is the kitchens' mark. These tins were for the refectory. The camp kept them because a locked store was harder than a night boat. Bring them home after the captain is done, or tell Marram and let the landing do the carrying."
+    }
+  ]
+}

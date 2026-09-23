@@ -1,0 +1,28 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "salt-grass",
+  "title": "Salt Grass",
+  "shortDescription": "Wind and pale grass, and no sheep.",
+  "longDescription": "The grass here is pale and sharp. Wind comes off the ditch and tastes faintly of iron. No sheep. No footprints worth a story.\nNorth is the lintel field.",
+  "zone": "east-moor",
+  "visualState": "sheepfold",
+  "map": {
+    "x": 9,
+    "y": 0
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "lintel-field"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-pale-grass",
+      "name": "Pale Grass",
+      "kind": "object",
+      "lookDescription": "Pale grass bent one way. Examine it.",
+      "examineDescription": "The grass is bent east, toward open moor, and it stays bent. Kern says salt gets into this pasture after a wet year. He also says not to follow bent grass into weather you have not been sent into."
+    }
+  ]
+}

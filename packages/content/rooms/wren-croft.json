@@ -13,6 +13,14 @@
     {
       "direction": "south",
       "toRoomId": "moor-track"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "croft-byre"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "wool-shed"
     }
   ],
   "fixtures": [
@@ -29,13 +37,27 @@
           "welcome": {
             "text": "\"I am Wren. Sit. The kettle is on, and the oatcakes are still warm enough to matter. Colm has not come in. The flock was due at dusk yesterday, and the peg where his crook should hang is empty. I will not invent a walker from an empty peg. Eat. Then examine the waystone on the track south of here. Come back and talk wren. Alder sent you? Good. Do not invent a second queen on my moor.\"",
             "choices": [
-              { "say": "1", "label": "Who is Colm?", "next": "colm" },
-              { "say": "2", "label": "I will look.", "next": "go" }
+              {
+                "say": "1",
+                "label": "Who is Colm?",
+                "next": "colm"
+              },
+              {
+                "say": "2",
+                "label": "I will look.",
+                "next": "go"
+              }
             ]
           },
           "colm": {
             "text": "\"My partner. Adult. He counts sheep the way Alder counts facts. He went to look at stones that were not in last winter's count. I told him not to. Eat. Then look. I am owed the truth, not a pretty story.\"",
-            "choices": [{ "say": "1", "label": "I will look.", "next": "go" }]
+            "choices": [
+              {
+                "say": "1",
+                "label": "I will look.",
+                "next": "go"
+              }
+            ]
           },
           "go": {
             "text": "\"South to the waystone. Examine it. Then talk wren here. The oatcakes will keep. I will not.\""

@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "mist-lane",
+  "title": "Mist Lane",
+  "shortDescription": "A lane where mist sits at knee height and does not lift.",
+  "longDescription": "The lane runs between byre and mere. Mist sits at the knee and does not lift when you ask it to. If the fold-hound still keeps this path, it will look like a dog until it does not.\nSouth is the wool shed. West is the byre. North is the mere.",
+  "zone": "east-moor",
+  "visualState": "fog-hollow",
+  "map": {
+    "x": 7,
+    "y": 3
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "wool-shed"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "croft-byre"
+    },
+    {
+      "direction": "north",
+      "toRoomId": "reed-mere"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-lane-mist",
+      "name": "Lane Mist",
+      "kind": "object",
+      "lookDescription": "Mist at knee height. Examine it.",
+      "examineDescription": "The mist is cold and wool-smelling. It does not keep footprints. Hobb told you not to invent a walker from it. If a hound-shape is here, that is a fight, not a story you have to guess."
+    }
+  ]
+}

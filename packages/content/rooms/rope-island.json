@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "rope-island",
+  "title": "Rope Island",
+  "shortDescription": "A willow island posted like a gate.",
+  "longDescription": "A small island of willow roots holds a coil of rope and, if the sentry is still posted, a badger who means the painter to stay cut. North is the reed bank. East is the slip. South is the heron post.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": -1,
+    "y": -3
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "reed-bank"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "otter-slip"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "heron-post"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-rope-coil",
+      "name": "Rope Coil",
+      "kind": "object",
+      "lookDescription": "A coil of tarred rope. Examine it.",
+      "examineDescription": "The coil is Collegium rope, stolen neatly. One end is cut. The sentry, if present, is an adult keeping a gate. Not a classmate."
+    }
+  ]
+}

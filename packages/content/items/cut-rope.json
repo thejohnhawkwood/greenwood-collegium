@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "cut-rope",
+  "name": "Cut Rope",
+  "shortDescription": "A tarred rope-end from the island.",
+  "examineDescription": "A tarred rope-end, cut clean, not frayed by weather. Someone meant the painter to fail. The landing knot was not an accident.",
+  "category": "ordinary",
+  "unique": true
+}

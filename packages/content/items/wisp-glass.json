@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "wisp-glass",
+  "name": "Wisp Glass",
+  "shortDescription": "A bead of river-green glass.",
+  "examineDescription": "A bead of river-green glass, cold even in a paw. The reed-wisp left it when the mere went back to being water. Do not look for a face in it.",
+  "category": "ordinary",
+  "unique": true
+}

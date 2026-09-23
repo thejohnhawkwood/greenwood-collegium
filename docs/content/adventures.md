@@ -36,6 +36,10 @@ use gold. Plain narration and labels carry all the meaning without colour.
 | --- | --- | --- |
 | The Missing Pages | North, west from Lantern Court, `talk quill`. | [the-missing-pages.md](quests/the-missing-pages.md) |
 | A Little Room to Grow | South, west, `talk tansy`. | [a-little-room-to-grow.md](quests/a-little-room-to-grow.md) |
+| Porter's Night Round | `talk porter`. | [porters-night-round.md](quests/porters-night-round.md) |
+| Fen's Linen | `talk fen`. | [fens-linen.md](quests/fens-linen.md) |
+| East Watch sides | After the waystone, `talk hobb` in the wool shed. | [the-east-watch.md](quests/the-east-watch.md) |
+| The River Watch | South from the orchard, `talk marram`. | [the-river-watch.md](quests/the-river-watch.md) |
 
 Flint in the South Orchard teaches `attack` / `cast ember` and consented `duel`.
 That is practice, not a quest file.

@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "biscuit-tin",
+  "name": "Biscuit Tin",
+  "shortDescription": "A dented tin the landing was owed.",
+  "examineDescription": "A dented tin that used to hold Collegium biscuits. Deckhand Nett said the thieves ate the biscuits and kept the tin because a tin can be sold. It is empty. It is still yours.",
+  "category": "ordinary",
+  "unique": true
+}

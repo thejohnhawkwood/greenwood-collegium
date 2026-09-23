@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-fold-hound-mist-lane",
+  "templateId": "fold-hound",
+  "roomId": "mist-lane"
+}
