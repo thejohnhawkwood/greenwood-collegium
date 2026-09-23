@@ -76,6 +76,8 @@ export function CombatStage({
   });
   const showPulse = pulse && fx.motion !== "self";
   const shaking = showPulse && fx.shakeTarget === "foe";
+  const selfPose = pulse ? fx.poses.self : undefined;
+  const foePose = pulse ? fx.poses.foe : undefined;
   return (
     <aside
       className="combat-stage"
@@ -86,7 +88,10 @@ export function CombatStage({
       <p className="combat-stage-round">Round {encounter.round}</p>
       <div className="combat-pair">
         {player ? (
-          <section className="combat-self" aria-label={player.name}>
+          <section
+            className={`combat-self${selfPose ? ` is-${selfPose}` : ""}`}
+            aria-label={player.name}
+          >
             <CharacterPortrait
               visual={player.visual}
               name={player.name}
@@ -105,7 +110,7 @@ export function CombatStage({
             </div>
           </section>
         ) : null}
-        <section className="combat-foe" aria-label={foe.name}>
+        <section className={`combat-foe${foePose ? ` is-${foePose}` : ""}`} aria-label={foe.name}>
           {plate || foeVisual ? (
             <figure
               className={`combat-stage-art${shaking ? " is-shaking" : ""}${fx.defeat ? " is-defeated" : ""}`}

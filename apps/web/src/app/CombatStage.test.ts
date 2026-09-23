@@ -106,6 +106,7 @@ describe("CombatStage", () => {
     expect(html).toContain(fxArtSrc("impact-burst"));
     expect(html).toContain(fxArtSrc("wound-shred"));
     expect(html).toContain("is-shaking");
+    expect(html).toContain("is-flinch");
     expect(html).toContain(npcArtSrc("enemy-practice-dummy-south-orchard"));
   });
 
@@ -147,11 +148,19 @@ describe("CombatStage", () => {
         encounter,
         fxEvent: combatAction({ verb: "defend", damage: 0 }),
         equipped: "Practice Sword",
+        player: {
+          name: "Fern",
+          health: 8,
+          maxHealth: 20,
+          focus: 4,
+          maxFocus: 10,
+        },
         onSend: () => {},
       }),
     );
     expect(defend).not.toContain("is-shaking");
     expect(defend).not.toContain("weapon-sword");
+    expect(defend).toContain("is-guard");
     const dead = renderToStaticMarkup(
       createElement(CombatStage, {
         encounter: { ...encounter, enemy: { ...encounter.enemy, health: 0 } },

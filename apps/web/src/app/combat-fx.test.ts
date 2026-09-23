@@ -66,6 +66,7 @@ describe("combat FX catalog", () => {
     expect(fx.impact).toBe(fxArtSrc("impact-burst"));
     expect(fx.shakeTarget).toBe("foe");
     expect(fx.motion).toBe("swing");
+    expect(fx.poses).toEqual({ self: "lunge", foe: "flinch" });
     expect(fx.wound).toBe(fxArtSrc("wound-shred"));
   });
 
@@ -80,6 +81,26 @@ describe("combat FX catalog", () => {
     expect(fx.impact).toBeUndefined();
     expect(fx.shakeTarget).toBeNull();
     expect(fx.wound).toBeUndefined();
+    expect(fx.poses).toEqual({ self: "guard" });
+  });
+
+  it("steps the Collegian back on flee and wards a self cast", () => {
+    const flee = resolveCombatFx({
+      event: action({ payload: { verb: "flee", damage: 0 } }),
+      health: 8,
+      maxHealth: 8,
+    });
+    expect(flee.poses).toEqual({ self: "retreat" });
+    expect(flee.motion).toBeNull();
+    const ward = resolveCombatFx({
+      event: action({
+        presentationKey: "hearth-ward",
+        payload: { verb: "cast", spellId: "hearth-ward", spellName: "Hearth Ward", damage: 0 },
+      }),
+      health: 8,
+      maxHealth: 8,
+    });
+    expect(ward.poses).toEqual({ self: "ward" });
   });
 
   it("maps unique enemy spells and self spells", () => {
@@ -132,6 +153,7 @@ describe("combat FX catalog", () => {
       maxHealth: 8,
     });
     expect(fx.shakeTarget).toBe("self");
+    expect(fx.poses).toEqual({ foe: "lunge", self: "flinch" });
     expect(fx.impact).toBe(fxArtSrc("impact-burst"));
     expect(fx.weapon).toBeUndefined();
   });

@@ -774,6 +774,110 @@
     transform: scale(1.12);
   }
 }
+.combat-self.is-lunge {
+  animation: combat-lunge-self 0.55s ease-out;
+}
+.combat-foe.is-lunge {
+  animation: combat-lunge-foe 0.55s ease-out;
+}
+.combat-self.is-flinch,
+.combat-foe.is-flinch {
+  animation: combat-flinch 0.45s ease-out;
+}
+.combat-self.is-cast,
+.combat-foe.is-cast {
+  animation: combat-cast 0.55s ease-out;
+}
+.combat-self.is-guard {
+  animation: combat-guard 0.5s ease-out;
+}
+.combat-self.is-retreat {
+  animation: combat-retreat 0.6s ease-out;
+}
+.combat-self.is-ward,
+.combat-foe.is-ward {
+  animation: combat-ward 0.6s ease-out;
+}
+@keyframes combat-lunge-self {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(1.35rem);
+  }
+}
+@keyframes combat-lunge-foe {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-1.35rem);
+  }
+}
+@keyframes combat-flinch {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(0.55rem);
+  }
+  60% {
+    transform: translateX(-0.35rem);
+  }
+}
+@keyframes combat-cast {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-0.55rem);
+  }
+}
+@keyframes combat-guard {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(0.92);
+  }
+}
+@keyframes combat-retreat {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(-1.5rem);
+  }
+}
+@keyframes combat-ward {
+  0%,
+  100% {
+    filter: none;
+  }
+  40% {
+    filter: brightness(1.35);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .combat-self.is-lunge,
+  .combat-foe.is-lunge,
+  .combat-self.is-flinch,
+  .combat-foe.is-flinch,
+  .combat-self.is-cast,
+  .combat-foe.is-cast,
+  .combat-self.is-guard,
+  .combat-self.is-retreat,
+  .combat-self.is-ward,
+  .combat-foe.is-ward {
+    animation: none;
+  }
+}
 @keyframes combat-fx-defeat {
   from {
     opacity: 0;

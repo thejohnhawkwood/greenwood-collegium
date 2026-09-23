@@ -38,6 +38,7 @@ export type WeaponKind = "sword" | "staff" | "sling" | "fist";
 export type WoundTier = "shred" | "seep" | "blacken";
 export type ShakeTarget = "foe" | "self" | null;
 export type FxMotion = "swing" | "grow" | "pulse" | "self" | null;
+export type CombatPose = "lunge" | "flinch" | "cast" | "guard" | "retreat" | "ward";
 
 export type CombatFxLayers = {
   weapon?: string;
@@ -47,6 +48,7 @@ export type CombatFxLayers = {
   defeat?: string;
   shakeTarget: ShakeTarget;
   motion: FxMotion;
+  poses: Partial<Record<"self" | "foe", CombatPose>>;
 };
 
 const SELF_KEYS = new Set([
@@ -103,6 +105,23 @@ export function latestCombatAction(lines: readonly TranscriptLine[]): EventEnvel
   return undefined;
 }
 
+function actionPoses(
+  payload: CombatActionResolvedPayload,
+  presentationKey?: string,
+): Partial<Record<"self" | "foe", CombatPose>> {
+  const enemy = payload.actorKind === "enemy";
+  const actor = enemy ? "foe" : "self";
+  const reactor = enemy ? "self" : "foe";
+  if (payload.verb === "defend") return { self: "guard" };
+  if (payload.verb === "flee") return { self: "retreat" };
+  if (payload.verb === "cast" && presentationKey && SELF_KEYS.has(presentationKey)) {
+    return { self: "ward" };
+  }
+  const strike = payload.verb === "attack" ? "lunge" : "cast";
+  if (payload.damage > 0) return { [actor]: strike, [reactor]: "flinch" };
+  return { [actor]: strike };
+}
+
 function actionPayload(event?: EventEnvelope): CombatActionResolvedPayload | undefined {
   if (!event || event.type !== "combat.action_resolved") return undefined;
   const payload = event.payload;
@@ -126,9 +145,12 @@ export function resolveCombatFx(input: {
     defeat: input.health <= 0 ? fxArtSrc("defeat-skull") : undefined,
     shakeTarget: null,
     motion: null,
+    poses: {},
   };
   const payload = actionPayload(input.event);
-  if (!payload || payload.verb === "defend" || payload.verb === "flee") {
+  if (!payload) return layers;
+  layers.poses = actionPoses(payload, input.event?.presentationKey);
+  if (payload.verb === "defend" || payload.verb === "flee") {
     return layers;
   }
   const damaging = payload.damage > 0;
