@@ -1,4 +1,5 @@
 import type { Character, ItemInstance, WorldState } from "./state.js";
+import { clearWornItem, wearItem, type WearFailure, type WearSuccess } from "./equipment-slots.js";
 import { itemTypeWord } from "./items.js";
 
 export function equippedWeaponType(world: WorldState, character: Character): string | undefined {
@@ -45,14 +46,16 @@ export function weaponFeelLine(item: ItemInstance, fit: "fit" | "misfit" | "none
   return `You try the ${item.name}.`;
 }
 
-export function setEquippedItem(character: Character, item: ItemInstance): void {
-  character.equippedItemId = item.id;
+export function setEquippedItem(
+  world: WorldState,
+  character: Character,
+  item: ItemInstance,
+): WearSuccess | WearFailure {
+  return wearItem(world, character, item);
 }
 
 export function clearEquippedIfMatching(character: Character, item: ItemInstance): void {
-  if (character.equippedItemId === item.id || character.equippedItemId === item.templateId) {
-    character.equippedItemId = undefined;
-  }
+  clearWornItem(character, item);
 }
 
 export function attackFitModifier(world: WorldState, character: Character): number {

@@ -36,6 +36,31 @@ describe("CombatStage", () => {
     expect(secondsLeft("2026-09-16T19:00:12.000Z", Date.parse("2026-09-16T19:00:20.000Z"))).toBe(0);
   });
 
+  it("shows both combatants, the latest narration, and a modal move menu", () => {
+    const html = renderToStaticMarkup(
+      createElement(CombatStage, {
+        encounter,
+        history: "You strike the Practice Dummy for 3.",
+        player: {
+          name: "Fern",
+          visual: { speciesId: "fox", appearance: DEFAULT_APPEARANCE },
+          health: 8,
+          maxHealth: 20,
+          focus: 4,
+          maxFocus: 10,
+        },
+        onSend: () => {},
+      }),
+    );
+    expect(html).toContain('role="dialog"');
+    expect(html).toContain('aria-modal="true"');
+    expect(html).toContain("Fern");
+    expect(html).toContain("Practice Dummy");
+    expect(html).toContain("You strike the Practice Dummy for 3.");
+    expect(html).toContain("1. Attack");
+    expect(html).toContain("4. Flee");
+  });
+
   it("shows foe vitals and numbered lock-in moves", () => {
     const html = renderToStaticMarkup(createElement(CombatStage, { encounter, onSend: () => {} }));
     expect(html).toContain('aria-label="Fighting Practice Dummy"');

@@ -4,6 +4,7 @@ import { AcademyFrame } from "./academy-frame.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { PlayPanels } from "./PlayPanels.js";
+import { previewEquipmentSlots } from "./preview-equipment.js";
 
 const previewState: PlayState = {
   character: {
@@ -41,9 +42,22 @@ const previewState: PlayState = {
     ],
   },
   bag: [
-    { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
-    { id: "item-key", name: "Small Copper Key", equipped: false },
+    {
+      id: "item-sword",
+      name: "Practice Sword",
+      equipped: true,
+      category: "weapon",
+      description: "The blade is wood, nicked from many lessons.",
+      slot: "main-hand",
+    },
+    {
+      id: "item-key",
+      name: "Small Copper Key",
+      equipped: false,
+      description: "A small copper key.",
+    },
   ],
+  slots: previewEquipmentSlots,
   quests: [
     {
       id: "arrival",

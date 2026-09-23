@@ -1,10 +1,10 @@
 import type { PlayState } from "@greenwood/contracts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BagPanel } from "./BagPanel.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { isDialogueMenuText } from "./conversation-from-story.js";
 import { GameTranscript } from "./GameTranscript.js";
-import { Minimap, WorldMapDialog } from "./Minimap.js";
+import { Minimap, WorldMapDialog, type MapTravelResult } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
 import { QuestJournal } from "./QuestJournal.js";
 import { CombatStage } from "./CombatStage.js";
@@ -30,6 +30,7 @@ export function PlayPanels({
   onCommand,
   onSend,
   onMove,
+  onMapTravel,
   worldMapOpen,
   onOpenWorldMap,
   onCloseWorldMap,
@@ -45,6 +46,7 @@ export function PlayPanels({
   onCommand: (command: string) => void;
   onSend: (command: string) => void;
   onMove: (direction: string) => void;
+  onMapTravel?: (title: string, report: (result: MapTravelResult) => void) => void;
   worldMapOpen: boolean;
   onOpenWorldMap: () => void;
   onCloseWorldMap: () => void;
@@ -56,6 +58,10 @@ export function PlayPanels({
   followToken?: number;
 }) {
   const [bagOpen, setBagOpen] = useState(false);
+  const fighting = Boolean(state?.encounter);
+  useEffect(() => {
+    if (worldMapOpen) setBagOpen(false);
+  }, [worldMapOpen]);
   const room = state?.room;
   const character = state?.character;
   const story = lines.filter((line) => !isDialogueMenuText(line.text));
@@ -82,7 +88,7 @@ export function PlayPanels({
           {error}
         </p>
       ) : null}
-      <div className="play-grid">
+      <div className="play-grid" inert={fighting ? true : undefined}>
         <aside className="character-aside" aria-label="Your character and local map">
           <section className="play-panel paper-doll" aria-labelledby="collegian-heading">
             <div className="panel-heading">
@@ -128,30 +134,15 @@ export function PlayPanels({
                 {character ? (character.equipped ?? "Nothing equipped") : "Waiting for the realm"}
               </dd>
             </dl>
-            {state?.bag.length ? (
-              <ul className="bag-strip" aria-label="Bag">
-                {state.bag.map((item) => (
-                  <li key={item.id}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setBagOpen(true);
-                        onSend(`examine ${item.name}`);
-                      }}
-                    >
-                      {item.name}
-                      {item.equipped ? " · in hand" : ""}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : (
+            {state && state.bag.length === 0 ? (
               <p className="small-copy">Bag empty. Inventory opens the full list.</p>
-            )}
+            ) : null}
             <div className="character-actions">
               <button
                 type="button"
+                disabled={fighting}
                 onClick={() => {
+                  onCloseWorldMap();
                   setBagOpen(true);
                   onSend("inventory");
                 }}
@@ -160,6 +151,7 @@ export function PlayPanels({
               </button>
               <button
                 type="button"
+                disabled={fighting}
                 onClick={() => {
                   onOpenQuestJournal();
                   onSend("quests");
@@ -172,7 +164,7 @@ export function PlayPanels({
           <section className="play-panel local-map" aria-labelledby="local-map-heading">
             <div className="panel-heading">
               <h2 id="local-map-heading">Minimap</h2>
-              <button type="button" onClick={onOpenWorldMap}>
+              <button type="button" disabled={fighting} onClick={onOpenWorldMap}>
                 World map
               </button>
             </div>
@@ -185,7 +177,7 @@ export function PlayPanels({
                     type="button"
                     title={`Move ${exit.direction}`}
                     aria-label={`Move ${exit.direction}`}
-                    disabled={connection !== "connected"}
+                    disabled={connection !== "connected" || fighting}
                     data-direction={exit.direction}
                     onClick={() => onMove(exit.direction)}
                   >
@@ -238,16 +230,7 @@ export function PlayPanels({
                 gifts={character?.gifts}
                 onSend={onSend}
               />
-              {state?.encounter ? (
-                <CombatStage
-                  encounter={state.encounter}
-                  foeVisual={encounterFoeVisual(state.encounter, state)}
-                  fxEvent={fxEvent}
-                  equipped={character?.equipped}
-                  pulse={pulse}
-                  onSend={onSend}
-                />
-              ) : state?.primer ? (
+              {state?.encounter ? null : state?.primer ? (
                 <PrimerStage primer={state.primer} onSend={onSend} />
               ) : null}
             </div>
@@ -275,15 +258,57 @@ export function PlayPanels({
           </div>
         </div>
       </div>
+      {state?.encounter ? (
+        <div className="combat-overlay">
+          <CombatStage
+            encounter={state.encounter}
+            foeVisual={encounterFoeVisual(state.encounter, state)}
+            fxEvent={fxEvent}
+            equipped={character?.equipped}
+            pulse={pulse}
+            history={fxEvent?.narration}
+            selfOverlay={selfOverlay}
+            selfShake={Boolean(pulse && fx.shakeTarget === "self")}
+            player={
+              character
+                ? {
+                    name: character.name,
+                    visual: character.visual,
+                    health: character.health,
+                    maxHealth: character.maxHealth,
+                    focus: character.focus,
+                    maxFocus: character.maxFocus,
+                  }
+                : undefined
+            }
+            onSend={onSend}
+          />
+        </div>
+      ) : null}
       <WorldMapDialog
-        open={worldMapOpen}
+        open={worldMapOpen && !fighting}
         state={state}
         onClose={onCloseWorldMap}
         onPrepareMove={(direction) => onMove(direction)}
-        onTravel={(title) => onSend(`travel ${title}`)}
+        onTravel={(title, report) => {
+          if (onMapTravel) {
+            onMapTravel(title, report);
+            return;
+          }
+          onSend(`travel ${title}`);
+        }}
       />
-      <BagPanel open={bagOpen} state={state} onClose={() => setBagOpen(false)} onSend={onSend} />
-      <QuestJournal open={questJournalOpen} state={state} onClose={onCloseQuestJournal} />
+      <BagPanel
+        open={bagOpen && !fighting}
+        state={state}
+        onClose={() => setBagOpen(false)}
+        onSend={onSend}
+      />
+      <QuestJournal
+        open={questJournalOpen && !fighting}
+        state={state}
+        onClose={onCloseQuestJournal}
+      />
     </div>
   );
 }

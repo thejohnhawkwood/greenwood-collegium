@@ -229,7 +229,7 @@ function equipTrainingWeapon(
       message: `I do not recognize character "${characterId}".`,
     };
   }
-  setEquippedItem(character, item);
+  setEquippedItem(world, character, item);
   const fit = speciesWeaponFit(world, character, item);
   const lines = [`You take the ${item.name}.`, "", weaponFeelLine(item, fit)];
   if (fit === "misfit") {

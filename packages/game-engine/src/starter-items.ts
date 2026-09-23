@@ -60,6 +60,7 @@ export function ensureCharacterStarterItems(
       availableToCharacterId: characterId,
       category: placement.category,
       itemType: placement.itemType,
+      equipSlot: placement.equipSlot,
     };
     items[id] = instance;
     created.push(instance);

@@ -366,13 +366,18 @@ function PlayClient({
     sendCommand(inputValue);
   }
 
-  function sendCommand(raw: string, preserveDraft = false) {
+  function sendCommand(
+    raw: string,
+    preserveDraft = false,
+    onSettled?: (result: { ok: boolean; message: string }) => void,
+  ) {
     const socket = socketRef.current;
     if (raw.trim().length === 0) {
       return;
     }
     if (!socket || !canSendCommand(connection, raw)) {
       addNotice(DISCONNECTED_COMMAND_NOTICE);
+      onSettled?.({ ok: false, message: DISCONNECTED_COMMAND_NOTICE });
       return;
     }
 
@@ -405,14 +410,18 @@ function PlayClient({
       (payload: unknown) => {
         const ack = commandAckSchema.safeParse(payload);
         if (!ack.success) {
-          addNotice("The server acknowledgement was not valid.");
+          const message = "The server acknowledgement was not valid.";
+          addNotice(message);
+          onSettled?.({ ok: false, message });
           return;
         }
         pendingRef.current = pendingAfterAck(pendingRef.current, ack.data.commandId);
         if (ack.data.status === "rejected") {
           addNotice(ack.data.message);
+          onSettled?.({ ok: false, message: ack.data.message });
           return;
         }
+        onSettled?.({ ok: true, message: ack.data.message });
         if (shouldResyncAfterAck(lastSequenceRef.current, ack.data.eventSequenceEnd)) {
           lastSequenceRef.current = ack.data.eventSequenceEnd ?? 0;
           if (me?.characterId) {
@@ -511,6 +520,9 @@ function PlayClient({
         onOpenQuestJournal={() => setQuestJournalOpen(true)}
         onCloseQuestJournal={() => setQuestJournalOpen(false)}
         onMove={(direction) => sendCommand(direction, true)}
+        onMapTravel={(title, report) => {
+          sendCommand(`travel ${title}`, false, report);
+        }}
         onSend={(raw) => sendCommand(raw)}
         onCommand={fillCommand}
         followToken={followToken}

@@ -18,3 +18,4 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Ticket 014 owns Ember, burning, `combat.status_applied`, and the Ember event fixture. Presentation keys do not decide damage.
 - Ticket 015 owns `quest.updated` and `progress.level_gained`. The client must not invent quest completion or level.
 - ADR-0039 adds optional `play-state.primer` cards. The client must not invent offered leaves, ranks, or descriptions.
+- ADR-0040 adds `play-state.slots`. The client must not invent wear positions.

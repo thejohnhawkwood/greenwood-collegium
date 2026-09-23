@@ -17,6 +17,7 @@ import { combatMoves } from "./combat-lock.js";
 import { encounterForViewer } from "./combat-party.js";
 import { DUEL_CHALLENGE_ID } from "./duel.js";
 import { primerPlayState } from "./primer.js";
+import { equipmentSheet, wornSlotId } from "./equipment-slots.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
@@ -136,13 +137,18 @@ export function createPlayState(
       : undefined,
     conversation: conversationSnapshot(world, character),
     ...(primer ? { primer } : {}),
-    bag: itemsHeldBy(world, character.id).map((item) => ({
-      id: item.id,
-      name: item.name,
-      equipped:
-        character.equippedItemId === item.id || character.equippedItemId === item.templateId,
-      ...(item.category && item.category !== "ordinary" ? { category: item.category } : {}),
-    })),
+    slots: equipmentSheet(world, character),
+    bag: itemsHeldBy(world, character.id).map((item) => {
+      const slot = wornSlotId(world, character, item.id);
+      return {
+        id: item.id,
+        name: item.name,
+        equipped: slot !== undefined,
+        ...(item.category && item.category !== "ordinary" ? { category: item.category } : {}),
+        ...(item.examineDescription ? { description: item.examineDescription } : {}),
+        ...(slot ? { slot } : {}),
+      };
+    }),
     quests: questJournal(world, character.id),
   });
 }

@@ -6,6 +6,7 @@
   "examineDescription": "The blade is wood, nicked from many lessons. Flint keeps it for students who want a light edge.",
   "category": "weapon",
   "itemType": "sword",
+  "equipSlot": "main-hand",
   "training": true,
   "unique": true
 }

@@ -6,6 +6,7 @@
   "examineDescription": "Ash wood, worn smooth at the grip. Heavier than it looks until it sits right in the paws.",
   "category": "weapon",
   "itemType": "staff",
+  "equipSlot": "two-hand",
   "training": true,
   "unique": true
 }

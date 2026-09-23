@@ -44,6 +44,8 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0036](0036-map-floors.md) | Map floors and vertical travel |
 | [0037](0037-first-time-spawns.md) | First-time spawn memory, shared bosses |
 | [0038](0038-classroom-duels.md) | Consented classroom duels |
+| [0039](0039-field-primer.md) | Field Primer ranks and three choices |
+| [0040](0040-paper-doll-slots.md) | Paper-doll wear slots |
 
 ## Template
 

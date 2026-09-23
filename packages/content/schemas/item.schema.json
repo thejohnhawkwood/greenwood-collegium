@@ -31,6 +31,21 @@
     "itemType": {
       "enum": ["key", "book", "weapon", "sword", "staff", "sling", "ordinary"]
     },
+    "equipSlot": {
+      "enum": [
+        "helmet",
+        "necklace",
+        "cloak",
+        "armor",
+        "gloves",
+        "boots",
+        "ring",
+        "main-hand",
+        "off-hand",
+        "ranged",
+        "two-hand"
+      ]
+    },
     "training": {
       "type": "boolean"
     },

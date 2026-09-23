@@ -69,6 +69,23 @@ export type Character = {
   speciesId?: string;
   gender?: "female" | "male";
   equippedItemId?: string;
+  /** Worn item ids by paper-doll slot. Two-handed weapons occupy main-hand only. */
+  equipment?: Partial<
+    Record<
+      | "helmet"
+      | "necklace"
+      | "cloak"
+      | "armor"
+      | "gloves"
+      | "boots"
+      | "ring-1"
+      | "ring-2"
+      | "main-hand"
+      | "off-hand"
+      | "ranged",
+      string
+    >
+  >;
   openConversation?: OpenConversation;
   schoolId?: SchoolId;
   nextAttackBonus?: number;
@@ -259,6 +276,7 @@ export type ItemTemplateRecord = {
   examineDescription: string;
   category?: ItemCategory;
   itemType?: string;
+  equipSlot?: string;
   training?: boolean;
 };
 
@@ -270,6 +288,7 @@ export type StarterItemPlacement = {
   roomId: string;
   category?: ItemCategory;
   itemType?: string;
+  equipSlot?: string;
 };
 
 export type ItemInstance = {
@@ -282,6 +301,7 @@ export type ItemInstance = {
   availableToCharacterId?: string;
   category?: ItemCategory;
   itemType?: string;
+  equipSlot?: string;
   training?: boolean;
 };
 

@@ -13,7 +13,7 @@ export type EquipSuccess = {
 
 export type EquipFailure = {
   ok: false;
-  code: "character_not_found" | "item_not_found" | "item_ambiguous";
+  code: "character_not_found" | "item_not_found" | "item_ambiguous" | "not_wearable";
   message: string;
 };
 
@@ -56,9 +56,17 @@ export function handleEquip(
   }
 
   const item = resolved.item;
-  setEquippedItem(character, item);
+  const worn = setEquippedItem(world, character, item);
+  if (!worn.ok) {
+    return { ok: false, code: "not_wearable", message: worn.message };
+  }
   const fit = speciesWeaponFit(world, character, item);
-  const lines = [`You equip the ${item.name}.`, "", weaponFeelLine(item, fit)];
+  const lines = [`You equip the ${item.name}.`];
+  if (worn.bothHands) lines.push("It needs both hands.");
+  for (const name of worn.aside) lines.push(`You set the ${name} aside.`);
+  if (item.category === "weapon") {
+    lines.push("", weaponFeelLine(item, fit));
+  }
   if (fit === "misfit") {
     if (openFlintMisfit(world, character.id)) {
       lines.push("");

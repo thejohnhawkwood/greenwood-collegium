@@ -50,6 +50,7 @@ export type LoadedItem = {
   roomId: string;
   category?: "key" | "book" | "weapon" | "ordinary";
   itemType?: string;
+  equipSlot?: string;
   training?: boolean;
 };
 
@@ -144,6 +145,7 @@ export type LoadedItemTemplate = {
   examineDescription: string;
   category?: "key" | "book" | "weapon" | "ordinary";
   itemType?: string;
+  equipSlot?: string;
   training?: boolean;
 };
 
@@ -155,6 +157,7 @@ export type LoadedStarterPlacement = {
   roomId: string;
   category?: "key" | "book" | "weapon" | "ordinary";
   itemType?: string;
+  equipSlot?: string;
 };
 
 export type LoadedWorld = {
@@ -217,6 +220,7 @@ export function toWorldState(
       examineDescription: template.examineDescription,
       category: template.category,
       itemType: template.itemType,
+      equipSlot: template.equipSlot,
       training: template.training,
     };
   }
@@ -236,6 +240,7 @@ export function toWorldState(
         roomId: placement.roomId,
         category: template.category,
         itemType: template.itemType,
+        equipSlot: template.equipSlot,
       });
       continue;
     }
@@ -247,6 +252,7 @@ export function toWorldState(
       roomId: placement.roomId,
       category: template.category,
       itemType: template.itemType,
+      equipSlot: template.equipSlot,
       training: template.training,
     };
   }

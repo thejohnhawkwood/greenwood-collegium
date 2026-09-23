@@ -4,6 +4,30 @@ import { roomSnapshotPayloadSchema } from "./events/room-snapshot.js";
 
 export const PLAY_STATE_EVENT = "play-state";
 
+export const equipmentSlotIdSchema = z.enum([
+  "helmet",
+  "necklace",
+  "cloak",
+  "armor",
+  "gloves",
+  "boots",
+  "ring-1",
+  "ring-2",
+  "main-hand",
+  "off-hand",
+  "ranged",
+]);
+export type EquipmentSlotId = z.infer<typeof equipmentSlotIdSchema>;
+
+export const equipmentSlotSchema = z.object({
+  id: equipmentSlotIdSchema,
+  label: z.string().min(1),
+  itemId: z.string().min(1).optional(),
+  itemName: z.string().min(1).optional(),
+  blocked: z.boolean().optional(),
+});
+export type EquipmentSlotView = z.infer<typeof equipmentSlotSchema>;
+
 export const mapRoomVisibilitySchema = z.enum(["current", "explored", "unknown"]);
 export type MapRoomVisibility = z.infer<typeof mapRoomVisibilitySchema>;
 
@@ -138,9 +162,12 @@ export const playStateSchema = z.object({
         name: z.string().min(1),
         equipped: z.boolean(),
         category: z.string().min(1).optional(),
+        description: z.string().min(1).optional(),
+        slot: equipmentSlotIdSchema.optional(),
       }),
     )
     .default([]),
+  slots: z.array(equipmentSlotSchema).default([]),
   quests: z
     .array(
       z.object({

@@ -11,6 +11,10 @@ export function CombatStage({
   fxEvent,
   equipped,
   pulse = true,
+  history,
+  player,
+  selfOverlay,
+  selfShake = false,
   onSend,
 }: {
   encounter: NonNullable<PlayState["encounter"]>;
@@ -18,6 +22,17 @@ export function CombatStage({
   fxEvent?: EventEnvelope;
   equipped?: string;
   pulse?: boolean;
+  history?: string;
+  player?: {
+    name: string;
+    visual?: CharacterVisual;
+    health: number;
+    maxHealth: number;
+    focus: number;
+    maxFocus: number;
+  };
+  selfOverlay?: string;
+  selfShake?: boolean;
   onSend: (command: string) => void;
 }) {
   const [remaining, setRemaining] = useState(() => secondsLeft(encounter.lockDeadlineAt));
@@ -62,51 +77,96 @@ export function CombatStage({
   const showPulse = pulse && fx.motion !== "self";
   const shaking = showPulse && fx.shakeTarget === "foe";
   return (
-    <aside className="combat-stage" aria-label={`Fighting ${foe.name}`}>
+    <aside
+      className="combat-stage"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Fighting ${foe.name}`}
+    >
       <p className="combat-stage-round">Round {encounter.round}</p>
-      {plate || foeVisual ? (
-        <figure
-          className={`combat-stage-art${shaking ? " is-shaking" : ""}${fx.defeat ? " is-defeated" : ""}`}
-        >
-          <div className="combat-stage-plate">
-            {plate ? (
-              <img src={plate} alt="" />
-            ) : (
-              <CharacterPortrait visual={foeVisual} name={foe.name} decorative crop="avatar" />
-            )}
+      <div className="combat-pair">
+        {player ? (
+          <section className="combat-self" aria-label={player.name}>
+            <CharacterPortrait
+              visual={player.visual}
+              name={player.name}
+              overlaySrc={selfOverlay}
+              shake={selfShake}
+            />
+            <p className="combat-stage-foe">{player.name}</p>
+            <div className="combat-stage-meters">
+              <CombatVital
+                label="Health"
+                value={player.health}
+                max={player.maxHealth}
+                tone="health"
+              />
+              <CombatVital label="Focus" value={player.focus} max={player.maxFocus} tone="focus" />
+            </div>
+          </section>
+        ) : null}
+        <section className="combat-foe" aria-label={foe.name}>
+          {plate || foeVisual ? (
+            <figure
+              className={`combat-stage-art${shaking ? " is-shaking" : ""}${fx.defeat ? " is-defeated" : ""}`}
+            >
+              <div className="combat-stage-plate">
+                {plate ? (
+                  <img src={plate} alt="" />
+                ) : (
+                  <CharacterPortrait visual={foeVisual} name={foe.name} decorative crop="avatar" />
+                )}
+              </div>
+              {fx.wound ? (
+                <img
+                  className="combat-fx combat-fx-wound"
+                  src={fx.wound}
+                  alt=""
+                  draggable={false}
+                />
+              ) : null}
+              {showPulse && fx.weapon ? (
+                <img
+                  className={`combat-fx combat-fx-weapon combat-fx-${fx.motion ?? "swing"}`}
+                  src={fx.weapon}
+                  alt=""
+                  draggable={false}
+                />
+              ) : null}
+              {showPulse && fx.spell ? (
+                <img
+                  className={`combat-fx combat-fx-spell combat-fx-${fx.motion ?? "pulse"}`}
+                  src={fx.spell}
+                  alt=""
+                  draggable={false}
+                />
+              ) : null}
+              {showPulse && fx.impact && fx.shakeTarget === "foe" ? (
+                <img
+                  className="combat-fx combat-fx-impact"
+                  src={fx.impact}
+                  alt=""
+                  draggable={false}
+                />
+              ) : null}
+              {fx.defeat ? (
+                <img
+                  className="combat-fx combat-fx-defeat"
+                  src={fx.defeat}
+                  alt=""
+                  draggable={false}
+                />
+              ) : null}
+            </figure>
+          ) : null}
+          <p className="combat-stage-foe">{foe.name}</p>
+          <div className="combat-stage-meters">
+            <CombatVital label="Health" value={foe.health} max={foe.maxHealth} tone="health" />
+            <CombatVital label="Focus" value={foe.focus} max={foe.maxFocus} tone="focus" />
           </div>
-          {fx.wound ? (
-            <img className="combat-fx combat-fx-wound" src={fx.wound} alt="" draggable={false} />
-          ) : null}
-          {showPulse && fx.weapon ? (
-            <img
-              className={`combat-fx combat-fx-weapon combat-fx-${fx.motion ?? "swing"}`}
-              src={fx.weapon}
-              alt=""
-              draggable={false}
-            />
-          ) : null}
-          {showPulse && fx.spell ? (
-            <img
-              className={`combat-fx combat-fx-spell combat-fx-${fx.motion ?? "pulse"}`}
-              src={fx.spell}
-              alt=""
-              draggable={false}
-            />
-          ) : null}
-          {showPulse && fx.impact && fx.shakeTarget === "foe" ? (
-            <img className="combat-fx combat-fx-impact" src={fx.impact} alt="" draggable={false} />
-          ) : null}
-          {fx.defeat ? (
-            <img className="combat-fx combat-fx-defeat" src={fx.defeat} alt="" draggable={false} />
-          ) : null}
-        </figure>
-      ) : null}
-      <p className="combat-stage-foe">{foe.name}</p>
-      <div className="combat-stage-meters">
-        <CombatVital label="Health" value={foe.health} max={foe.maxHealth} tone="health" />
-        <CombatVital label="Focus" value={foe.focus} max={foe.maxFocus} tone="focus" />
+        </section>
       </div>
+      {history ? <p className="combat-history">{history}</p> : null}
       <p className="combat-stage-clock" aria-live="polite">
         {remaining > 0 ? `${remaining} seconds to lock a move` : "Locking a guard"}
       </p>

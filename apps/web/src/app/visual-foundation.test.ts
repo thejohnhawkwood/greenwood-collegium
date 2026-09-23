@@ -4,10 +4,11 @@ import { describe, expect, it } from "vitest";
 import { DEFAULT_APPEARANCE, snapAppearanceValue, type PlayState } from "@greenwood/contracts";
 import { AppearanceEditor } from "./AppearanceEditor.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
-import { Minimap, WorldMapDialog } from "./Minimap.js";
+import { mapPlaceMessage, Minimap, WorldMapDialog } from "./Minimap.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { BagPanel } from "./BagPanel.js";
+import { previewEquipmentSlots } from "./preview-equipment.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { QuestJournal } from "./QuestJournal.js";
 import {
@@ -47,9 +48,21 @@ const state: PlayState = {
     choices: [{ say: "1", label: "Why does a weapon fit?" }],
   },
   bag: [
-    { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
-    { id: "item-key", name: "Small Copper Key", equipped: false },
+    {
+      id: "item-sword",
+      name: "Practice Sword",
+      equipped: true,
+      category: "weapon",
+      description: "The blade is wood, nicked from many lessons.",
+    },
+    {
+      id: "item-key",
+      name: "Small Copper Key",
+      equipped: false,
+      description: "A small copper key.",
+    },
   ],
+  slots: previewEquipmentSlots,
   quests: [
     {
       id: "arrival",
@@ -143,9 +156,15 @@ describe("visual foundation", () => {
         },
       }),
     );
+    expect(world).toContain("You are here");
     expect(world).toContain("Court (you)");
     expect(world).toContain("Hall");
     expect(world).toContain("Travel to Hall");
+    expect(world).toContain('aria-label="Fog still hides that place."');
+    expect(world).not.toContain("Fogged");
+    expect(mapPlaceMessage({ state: "unknown" })).toBe("Fog still hides that place.");
+    expect(mapPlaceMessage({ state: "current", title: "Court" })).toBe("You are already in Court.");
+    expect(mapPlaceMessage({ state: "explored", title: "Hall" })).toBeUndefined();
     expect(world).toContain("North ↑");
     expect(world).toContain("Grounds");
     expect(renderToStaticMarkup(createElement(Minimap, {}))).toContain(
@@ -203,6 +222,7 @@ describe("visual foundation", () => {
     expect(worldDialog).toContain("Grounds");
     expect(worldDialog).toContain("Travel to Great Hall");
     expect(worldDialog).toContain('aria-label="Travel to Great Hall"');
+    expect(worldDialog).toContain("You are here");
   });
   it("renders every supported species with the same deterministic layers at every size", () => {
     const portraits = new Set<string>();
@@ -287,8 +307,9 @@ describe("visual foundation", () => {
     expect(html).toContain("Talking with Porter Bramble");
     expect(html).toContain("Why does a weapon fit?");
     expect(html).toContain("Why a weapon, I wonder?");
-    expect(html).toContain('aria-label="Bag"');
-    expect(html).toContain("Small Copper Key");
+    expect(html).not.toContain('aria-label="Bag"');
+    expect(html).not.toContain("Small Copper Key");
+    expect(html).toContain("Practice Sword");
     expect(
       renderToStaticMarkup(
         createElement(BagPanel, {
@@ -298,7 +319,22 @@ describe("visual foundation", () => {
           onSend: () => {},
         }),
       ),
-    ).toMatch(/Bag and equipment[\s\S]*Practice Sword[\s\S]*Small Copper Key[\s\S]*Equip/);
+    ).toMatch(
+      /Bag and equipment[\s\S]*Helmet, empty[\s\S]*Main hand, Practice Sword[\s\S]*Small Copper Key[\s\S]*Worn on Main hand[\s\S]*The blade is wood, nicked from many lessons[\s\S]*Examine[\s\S]*Drop/,
+    );
+    expect(
+      renderToStaticMarkup(
+        createElement(BagPanel, {
+          open: true,
+          state: {
+            ...state,
+            bag: [state.bag[1]!, state.bag[0]!],
+          },
+          onClose: () => {},
+          onSend: () => {},
+        }),
+      ),
+    ).toMatch(/A small copper key[\s\S]*Equip/);
     expect(
       renderToStaticMarkup(
         createElement(QuestJournal, {
@@ -790,6 +826,10 @@ describe("visual foundation", () => {
     expect(html).toContain("1. Attack");
     expect(html).toContain("3. Defend");
     expect(html).toContain("4. Flee");
+    expect(html).toContain('role="dialog"');
+    expect(html).toContain('aria-modal="true"');
+    expect(html).toContain("combat-overlay");
+    expect(html).toContain("Fern");
     expect(html).not.toContain("Talking with Porter Bramble");
   });
 });

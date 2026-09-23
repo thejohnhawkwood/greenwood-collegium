@@ -610,6 +610,7 @@ function dropCombatLoot(
         availableToCharacterId: member.id,
         category: template.category,
         itemType: template.itemType,
+        equipSlot: template.equipSlot,
       };
       dropped = true;
     }

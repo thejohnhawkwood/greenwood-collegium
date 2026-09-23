@@ -23,6 +23,7 @@ const state: PlayState = {
   },
   peers: [],
   bag: [{ id: "item-key", name: "Small Copper Key", equipped: false }],
+  slots: [],
   conversation: {
     npcId: "npc-porter-bramble",
     npcName: "Porter Bramble",

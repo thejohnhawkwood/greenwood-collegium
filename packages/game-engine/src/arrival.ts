@@ -275,6 +275,7 @@ function grantQuestItem(
     availableToCharacterId: character.id,
     category: itemTemplate.category,
     itemType: itemTemplate.itemType,
+    equipSlot: itemTemplate.equipSlot,
   };
   return [systemNotice(character.id, `You receive ${itemTemplate.name}.`, runtime)];
 }

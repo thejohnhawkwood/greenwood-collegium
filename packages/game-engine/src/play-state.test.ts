@@ -188,8 +188,24 @@ describe("visual play projection", () => {
       prompt: "Why a weapon, I wonder?",
       choices: [{ say: "1", label: "Why does a weapon fit?" }],
     });
+    expect(snapshot?.slots).toHaveLength(11);
+    expect(snapshot?.slots.find((slot) => slot.id === "helmet")).toEqual({
+      id: "helmet",
+      label: "Helmet",
+    });
+    expect(snapshot?.slots.find((slot) => slot.id === "main-hand")).toMatchObject({
+      itemId: "item-sword",
+      itemName: "Practice Sword",
+    });
     expect(snapshot?.bag).toEqual([
-      { id: "item-sword", name: "Practice Sword", equipped: true, category: "weapon" },
+      {
+        id: "item-sword",
+        name: "Practice Sword",
+        equipped: true,
+        category: "weapon",
+        description: "A wooden blade.",
+        slot: "main-hand",
+      },
     ]);
     expect(snapshot?.quests).toEqual([
       {

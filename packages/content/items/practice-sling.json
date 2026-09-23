@@ -6,6 +6,7 @@
   "examineDescription": "A short leather sling with a soft practice stone. Meant for aim, not for the orchard walls.",
   "category": "weapon",
   "itemType": "sling",
+  "equipSlot": "ranged",
   "training": true,
   "unique": true
 }

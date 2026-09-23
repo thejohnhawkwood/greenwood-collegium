@@ -25,6 +25,21 @@ export const itemTemplateSchema = z
     examineDescription: z.string().min(1),
     category: z.enum(["key", "book", "weapon", "ordinary"]),
     itemType: z.enum(["key", "book", "weapon", "sword", "staff", "sling", "ordinary"]).optional(),
+    equipSlot: z
+      .enum([
+        "helmet",
+        "necklace",
+        "cloak",
+        "armor",
+        "gloves",
+        "boots",
+        "ring",
+        "main-hand",
+        "off-hand",
+        "ranged",
+        "two-hand",
+      ])
+      .optional(),
     training: z.boolean().optional(),
     unique: z.literal(true).default(true),
   })
