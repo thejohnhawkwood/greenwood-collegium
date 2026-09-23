@@ -46,7 +46,7 @@ export function BagPanel({
         </p>
         <div className="bag-layout">
           <section className="bag-doll" aria-label="Equipment">
-            <div className="paper-doll">
+            <div className="gear-sheet">
               <div className="portrait-mat">
                 <CharacterPortrait
                   visual={character?.visual}

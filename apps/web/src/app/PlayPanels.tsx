@@ -1,5 +1,5 @@
 import type { PlayState } from "@greenwood/contracts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BagPanel } from "./BagPanel.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
 import { isDialogueMenuText } from "./conversation-from-story.js";
@@ -58,10 +58,12 @@ export function PlayPanels({
   followToken?: number;
 }) {
   const [bagOpen, setBagOpen] = useState(false);
-  const fighting = Boolean(state?.encounter);
-  useEffect(() => {
+  const [mapOpenSeen, setMapOpenSeen] = useState(worldMapOpen);
+  if (worldMapOpen !== mapOpenSeen) {
+    setMapOpenSeen(worldMapOpen);
     if (worldMapOpen) setBagOpen(false);
-  }, [worldMapOpen]);
+  }
+  const fighting = Boolean(state?.encounter);
   const room = state?.room;
   const character = state?.character;
   const story = lines.filter((line) => !isDialogueMenuText(line.text));

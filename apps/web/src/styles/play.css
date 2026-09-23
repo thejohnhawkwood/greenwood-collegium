@@ -1111,7 +1111,7 @@
   min-height: 0;
   overflow: auto;
 }
-.paper-doll {
+.gear-sheet {
   display: grid;
   grid-template-columns: 4.4rem minmax(0, 1fr) 4.4rem;
   grid-template-areas:
@@ -1124,12 +1124,12 @@
   align-items: center;
   justify-items: center;
 }
-.paper-doll .portrait-mat {
+.gear-sheet .portrait-mat {
   grid-area: portrait;
   margin: 0;
   max-width: none;
 }
-.paper-doll .character-portrait {
+.gear-sheet .character-portrait {
   height: 11rem;
 }
 .gear-slot {
