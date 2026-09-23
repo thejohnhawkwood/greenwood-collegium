@@ -8,6 +8,9 @@ Painted room, NPC, and object plates live in [DS-004](ds-004-painted-catalog.md)
 The left minimap now shows the whole charted Collegium. A ring marks you.
 Explored rooms are solid cells. Fogged rooms are hatched and unnamed. Open
 **World map** or type `map` (or `chart`) for the larger chart and a text list.
+Drag the chart to move it. Zoom in to read a cluster. **Whole floor** shows the
+level; a name stays off the chart when it would cover another. **Read names**
+centers the chart close enough to read the rooms around you.
 The command names only rooms you have already visited and how many remain in
 fog. Compass clicks still move immediately. A neighbouring explored room on the
 world map prepares `go <direction>`.

@@ -231,6 +231,9 @@ describe("visual foundation", () => {
     expect(worldDialog).toContain("Travel to Great Hall");
     expect(worldDialog).toContain('aria-label="Travel to Great Hall"');
     expect(worldDialog).toContain("You are here");
+    expect(worldDialog).toContain("Zoom in");
+    expect(worldDialog).toContain("Whole floor");
+    expect(worldDialog).toContain("Read names");
   });
   it("renders every supported species with the same deterministic layers at every size", () => {
     const portraits = new Set<string>();
@@ -486,7 +489,7 @@ describe("visual foundation", () => {
     };
     const layers = portraitLayers(fox);
     expect(layers.find((layer) => layer.layer === "body")?.src).toBe(
-      "/art/characters/looks/fox-female-fern.png",
+      "/art/characters/looks/fox-female-fern.png?v=comic-ink-looks-1",
     );
     expect(layers.find((layer) => layer.layer === "clothing")).toBeUndefined();
     expect(layers.find((layer) => layer.layer === "marking")).toBeUndefined();
