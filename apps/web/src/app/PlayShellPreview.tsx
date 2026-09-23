@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AcademyFrame } from "./academy-frame.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
+import { CommandStatus } from "./CommandStatus.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { previewEquipmentSlots } from "./preview-equipment.js";
 
@@ -233,11 +234,35 @@ const primerPreviewState: PlayState = {
   },
 };
 
+const duelChallenge = {
+  npcId: "duel-challenge",
+  npcName: "Moss",
+  prompt: "Moss asks for a classroom duel. Both of you must agree.",
+  choices: [
+    { say: "1", label: "Accept the duel" },
+    { say: "2", label: "Decline" },
+  ],
+};
+
 export function PlayShellPreview() {
-  const wantsPrimer = new URLSearchParams(window.location.search).has("primer");
-  const state = wantsPrimer ? primerPreviewState : previewState;
+  const params = new URLSearchParams(window.location.search);
+  const wantsPrimer = params.has("primer");
+  const duel = params.get("duel");
+  const peaceful = {
+    ...primerPreviewState,
+    primer: undefined,
+    character: { ...primerPreviewState.character, inCombat: false },
+  };
+  const state =
+    duel === "1"
+      ? { ...peaceful, conversation: duelChallenge }
+      : duel === "wait"
+        ? { ...peaceful, conversation: undefined, duelAsk: { name: "Moss" } }
+        : wantsPrimer
+          ? primerPreviewState
+          : previewState;
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [lobbyOpen, setLobbyOpen] = useState(true);
+  const [lobbyOpen, setLobbyOpen] = useState(!duel);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
   const [questJournalOpen, setQuestJournalOpen] = useState(false);
   const [lastSend, setLastSend] = useState("");
@@ -305,6 +330,26 @@ export function PlayShellPreview() {
           onCloseQuestJournal={() => setQuestJournalOpen(false)}
           connection="connected"
         />
+        <div className="command-dock">
+          <CommandStatus state={state} />
+          <form
+            className="command-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const field = event.currentTarget.elements.namedItem("command");
+              const command = field instanceof HTMLInputElement ? field.value.trim() : "";
+              if (command) setLastSend(command);
+            }}
+          >
+            <label className="command-label">
+              <span className="prompt" aria-hidden="true">
+                ❯
+              </span>
+              <input name="command" placeholder="Type a command… Tab completes a word" />
+            </label>
+            <button type="submit">Send</button>
+          </form>
+        </div>
         <CollegiumLobby
           open={lobbyOpen}
           state={state}

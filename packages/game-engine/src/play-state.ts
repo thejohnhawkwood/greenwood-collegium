@@ -136,6 +136,7 @@ export function createPlayState(
         })()
       : undefined,
     conversation: conversationSnapshot(world, character),
+    ...(outgoingDuelAsk(world, character) ?? {}),
     ...(primer ? { primer } : {}),
     slots: equipmentSheet(world, character),
     bag: itemsHeldBy(world, character.id).map((item) => {
@@ -210,6 +211,17 @@ function splitQuestStep(raw: string): { label: string; hint?: string } {
     return { label: raw };
   }
   return { label: match[1].replace(/\.$/u, ""), hint: match[2] };
+}
+
+function outgoingDuelAsk(
+  world: WorldState,
+  character: Character,
+): { duelAsk: { name: string } } | undefined {
+  const askedId = Object.entries(world.duelChallenges ?? {}).find(
+    ([, challenge]) => challenge.fromId === character.id,
+  )?.[0];
+  const asked = askedId ? world.characters[askedId] : undefined;
+  return asked ? { duelAsk: { name: asked.name } } : undefined;
 }
 
 function conversationSnapshot(world: WorldState, character: Character) {

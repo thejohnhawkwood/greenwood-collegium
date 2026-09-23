@@ -8,6 +8,7 @@ import { Minimap, WorldMapDialog, type MapTravelResult } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
 import { QuestJournal } from "./QuestJournal.js";
 import { CombatStage } from "./CombatStage.js";
+import { DuelPrompt } from "./DuelPrompt.js";
 import { PrimerStage } from "./PrimerStage.js";
 import { latestCombatAction, resolveCombatFx } from "./combat-fx.js";
 import { useCombatFxPulse } from "./combat-fx-pulse.js";
@@ -249,8 +250,8 @@ export function PlayPanels({
                 conversation={
                   state?.encounter ||
                   !conversation ||
-                  (conversation.npcId !== "duel-challenge" &&
-                    !(room?.visible ?? []).some((entity) => entity.id === conversation.npcId))
+                  conversation.npcId === "duel-challenge" ||
+                  !(room?.visible ?? []).some((entity) => entity.id === conversation.npcId)
                     ? undefined
                     : conversation
                 }
@@ -341,6 +342,9 @@ export function PlayPanels({
         state={state}
         onClose={onCloseQuestJournal}
       />
+      {conversation?.npcId === "duel-challenge" && !fighting ? (
+        <DuelPrompt conversation={conversation} onSend={onSend} />
+      ) : null}
     </div>
   );
 }

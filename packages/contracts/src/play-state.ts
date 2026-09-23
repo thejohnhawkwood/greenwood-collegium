@@ -135,6 +135,11 @@ export const playStateSchema = z.object({
       ),
     })
     .optional(),
+  duelAsk: z
+    .object({
+      name: z.string().min(1),
+    })
+    .optional(),
   primer: z
     .object({
       ink: z.number().int().nonnegative(),

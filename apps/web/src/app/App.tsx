@@ -56,6 +56,7 @@ import {
 import { pendingAfterAck, type PendingCommand } from "./pending-command.js";
 import { APP_TITLE } from "./title.js";
 import { appendTranscript, type TranscriptLine } from "./transcript.js";
+import { CommandStatus } from "./CommandStatus.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
@@ -542,6 +543,7 @@ function PlayClient({
         }}
       />
       <div className="command-dock">
+        <CommandStatus state={playState} />
         <nav className="command-reminders" aria-label="Command words">
           {reminderWords(playState).map((entry) => (
             <button

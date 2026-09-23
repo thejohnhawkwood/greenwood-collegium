@@ -1619,9 +1619,57 @@
   color: #bac8b6;
 }
 .command-dock {
+  position: relative;
+  z-index: 40;
   flex-shrink: 0;
   border-top: 1px solid #485a3f;
   background: #192d22;
+}
+.command-status {
+  padding: 0.35rem 1rem 0;
+}
+.duel-wait,
+.quest-dock {
+  margin: 0 0 0.2rem;
+}
+.quest-dock span {
+  margin-right: 0.4rem;
+  color: #fff;
+  font-weight: 650;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.duel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #0c1612cc;
+}
+.duel-dialog {
+  width: min(32rem, 100%);
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid #ead2a0;
+  border-radius: 10px;
+  background: #14271f;
+}
+.duel-dialog h2,
+.duel-speaker {
+  margin: 0 0 0.4rem;
+}
+.duel-speaker {
+  color: #ead2a0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.duel-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
 }
 .command-reminders {
   display: flex;

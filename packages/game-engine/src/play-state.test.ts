@@ -361,4 +361,21 @@ describe("visual play projection", () => {
     expect(mantle?.ranks?.every((step) => step.spend === false)).toBe(true);
     expect(snapshot?.primer?.leaves.find((leaf) => leaf.schoolId === "thorn")?.nodes).toEqual([]);
   });
+
+  it("shows an outgoing duel ask to the challenger and a challenge to the classmate", () => {
+    const world = fixture();
+    const fern = world.characters.self;
+    if (!fern) throw new Error("missing fern");
+    fern.openConversation = undefined;
+    world.duelChallenges = {
+      peer: { fromId: "self", createdAt: "2026-09-22T12:00:00.000Z" },
+    };
+    expect(createPlayState(world, "self")?.duelAsk).toEqual({ name: "Moss" });
+    expect(createPlayState(world, "self")?.conversation).toBeUndefined();
+    expect(createPlayState(world, "peer")?.conversation).toMatchObject({
+      npcId: "duel-challenge",
+      npcName: "Fern",
+    });
+    expect(createPlayState(world, "peer")?.duelAsk).toBeUndefined();
+  });
 });
