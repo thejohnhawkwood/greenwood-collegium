@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-veil",
   "title": "First Lessons: the Veil",
-  "introNarration": "Mentor Mist keeps the hearth dummy in sight. Pale curtains take the light and give it back in pieces. The air smells of cold stone and a little crushed lavender. \"Look around this hearth. The mirror is only a mirror until you waste time in it. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will ink three leaves in your Field Primer.\"",
+  "introNarration": "Mentor Mist keeps the hearth dummy in sight. Pale curtains take the light and give it back in pieces. The air smells of cold stone and a little crushed lavender. \"Look around this hearth. The mirror is only a mirror until you waste time in it. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
   "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Mist. She has not filled the silence for you.",
-  "completionNarration": "Mist inks three starter leaves at rank 1. The Primer's new lines are quiet on the page. The next lesson will ask you to cast.",
+  "completionNarration": "Mist inks the stem at rank I. The Primer's new lines are quiet on the page. The next lesson will ask you to cast.",
   "experienceReward": 15,
   "objectives": [
     {

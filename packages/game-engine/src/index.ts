@@ -65,14 +65,14 @@ export {
 export {
   SCHOOL_LEAVES,
   SCHOOL_MENTOR_PEN,
-  applyPrimerChoiceIfPending,
   canCastSpell,
-  describePrimerCard,
   formatGrimoire,
   inkStarterKit,
-  openPrimerChoices,
-  primerPlayState,
+  openSchoolLeaf,
 } from "./primer.js";
+export { LEAF_GRAPHS } from "./leaf-graphs.js";
+export { handleInk, primerPlayState, unspentInk } from "./primer-book.js";
+export { parseInkCommand } from "./parse-ink.js";
 export { parseLookCommand } from "./parse-look.js";
 export { parseMoveCommand } from "./parse-move.js";
 export { parseSayCommand } from "./parse-say.js";

@@ -5,55 +5,97 @@ import type { PlayState } from "@greenwood/contracts";
 import { PrimerStage } from "./PrimerStage.js";
 
 const primer: NonNullable<PlayState["primer"]> = {
-  pennedBy: "Mentor Cinder",
-  prompt: "Mentor Cinder's hand offers three leaves.",
-  cards: [
+  ink: 1,
+  prompt: "The Primer holds 1 ink. Choose a vein.",
+  leaves: [
     {
-      command: "1",
+      schoolId: "ember",
       title: "Ember",
-      badge: "Rank II",
-      kind: "upgrade",
-      numbers: "Focus 4. Damage 6. Burns 2.",
-      description: "A small coal of will that lands and lingers.",
-      pennedBy: "Cinder Wick",
-    },
-    {
-      command: "2",
-      title: "Flame-Breath",
-      badge: "New",
-      kind: "unlock",
-      numbers: "Focus 5. Damage 4. Burns 1.",
-      description: "A gust of open flame. It scorches and leaves one burn.",
-    },
-    {
-      command: "3",
-      title: "Vital leaf",
-      badge: "Vital",
-      kind: "vital",
-      numbers: "+2 health. +1 focus.",
-      description: "A thicker page. Your health and focus rise so the next field is kinder.",
+      mentor: "Mentor Cinder",
+      outline: "lanceolate",
+      open: true,
+      nodes: [
+        {
+          id: "ember",
+          name: "Ember",
+          distance: 0,
+          parents: [],
+          status: "inked",
+          legal: true,
+          rank: 1,
+          numbers: "Focus 4. Damage 5. Burns 2.",
+          description: "A small coal of will that lands and lingers.",
+          ranks: [
+            {
+              rank: 1,
+              mark: "I",
+              numbers: "Focus 4. Damage 5. Burns 2.",
+              held: true,
+              spend: false,
+            },
+            {
+              rank: 2,
+              mark: "II",
+              numbers: "Focus 4. Damage 6. Burns 2.",
+              held: false,
+              spend: true,
+            },
+            {
+              rank: 3,
+              mark: "III",
+              numbers: "Focus 3. Damage 6. Burns 2.",
+              held: false,
+              spend: false,
+            },
+            {
+              rank: 4,
+              mark: "IV",
+              numbers: "Focus 3. Damage 7. Burns 2.",
+              held: false,
+              spend: false,
+            },
+            {
+              rank: 5,
+              mark: "V",
+              numbers: "Focus 3. Damage 8. Burns 2.",
+              held: false,
+              spend: false,
+            },
+          ],
+        },
+        {
+          id: "blaze-mantle",
+          name: "Blaze-Mantle",
+          distance: 3,
+          parents: ["hearth-ward", "flame-breath"],
+          join: "and",
+          status: "locked",
+          legal: false,
+          description: "The next blow misses, and the attacker takes the burn.",
+        },
+      ],
     },
   ],
 };
 
 describe("PrimerStage", () => {
-  it("paints three clickable leaves with the offered numbers and descriptions", () => {
-    const html = renderToStaticMarkup(createElement(PrimerStage, { primer, onSend: () => {} }));
-    expect(html).toContain('aria-label="Field Primer choices"');
-    expect(html).toContain("Mentor Cinder&#x27;s hand offers three leaves.");
-    expect(html).toContain("Ember");
-    expect(html).toContain("Rank II");
+  it("draws the open leaf and only inks a node the server marked legal", () => {
+    const html = renderToStaticMarkup(
+      createElement(PrimerStage, {
+        open: true,
+        primer,
+        onClose: () => {},
+        onSend: () => {},
+      }),
+    );
+    expect(html).toContain("Field Primer");
+    expect(html).toContain("Ember, inked I, spend 1 ink for II");
+    expect(html).toContain("Blaze-Mantle, locked");
+    expect(html).toContain("Spend 1 ink for rank II.");
+    expect(html).toContain('class="is-held"');
+    expect(html).toContain("Preview");
     expect(html).toContain("Focus 4. Damage 6. Burns 2.");
     expect(html).toContain("A small coal of will that lands and lingers.");
-    expect(html).toContain("Cinder Wick");
-    expect(html).toContain("Flame-Breath");
-    expect(html).toContain("A gust of open flame. It scorches and leaves one burn.");
-    expect(html).toContain("Vital leaf");
-    expect(html).toContain("+2 health. +1 focus.");
-    expect(html).toContain(
-      'aria-label="Choose 1: Ember. A small coal of will that lands and lingers."',
-    );
-    expect(html).toContain('class="primer-card primer-card-upgrade"');
-    expect(html).toContain("<button");
+    expect(html).not.toContain("Vital leaf");
   });
 });

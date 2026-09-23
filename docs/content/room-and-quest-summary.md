@@ -529,7 +529,7 @@ Resolution: the original tutorial teaches looking, speaking, taking a personal k
 - Story: [college-lessons.md](quests/college-lessons.md) (first, second, and Alder’s Leave).
 - Stable IDs: `first-lessons-ember`, `first-lessons-thorn`, `first-lessons-veil`, `first-lessons-stars`, `first-lessons-stone`, `first-lessons-steel`.
 - Starts: automatically when Alder’s School choice teleports the Collegian to that hearth.
-- Reward: **15 experience**, once per character. Inks all three starter leaves at rank 1.
+- Reward: **15 experience**, once per character. Opens that School's leaf and inks the signature stem at rank I.
 
 Objectives:
 
@@ -537,7 +537,7 @@ Objectives:
 - `defeat-dummy` — `defeat` the hearth dummy in that hearth.
 - `report` — `talk` the School mentor.
 
-Resolution: the student looks the hearth, defeats the hearth dummy, and reports back. The Primer inks three starter leaves. Second and third lessons follow (`second-lessons-*`, `third-lessons-*`).
+Resolution: the student looks the hearth, defeats the hearth dummy, and reports back. The Primer opens that School's leaf and inks the signature stem. Second and third lessons follow (`second-lessons-*`, `third-lessons-*`).
 
 <a id="the-bell-below"></a>
 

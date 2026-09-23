@@ -137,22 +137,42 @@ export const playStateSchema = z.object({
     .optional(),
   primer: z
     .object({
-      pennedBy: z.string().min(1),
+      ink: z.number().int().nonnegative(),
       prompt: z.string().min(1),
-      cards: z
-        .array(
-          z.object({
-            command: z.enum(["1", "2", "3"]),
-            title: z.string().min(1),
-            badge: z.string().min(1),
-            kind: z.enum(["upgrade", "unlock", "courtesy", "vital"]),
-            numbers: z.string().min(1),
-            description: z.string().min(1),
-            pennedBy: z.string().min(1).optional(),
-          }),
-        )
-        .min(1)
-        .max(3),
+      leaves: z.array(
+        z.object({
+          schoolId: z.enum(["ember", "thorn", "veil", "stars", "stone", "steel"]),
+          title: z.string().min(1),
+          mentor: z.string().min(1),
+          outline: z.enum(["lanceolate", "compound", "ovate", "palmate", "obovate", "linear"]),
+          open: z.boolean(),
+          nodes: z.array(
+            z.object({
+              id: z.string().min(1),
+              name: z.string().min(1),
+              distance: z.number().int().nonnegative(),
+              parents: z.array(z.string().min(1)),
+              join: z.enum(["or", "and"]).optional(),
+              status: z.enum(["locked", "ready", "inked", "maxed"]),
+              legal: z.boolean(),
+              rank: z.number().int().min(1).max(5).optional(),
+              numbers: z.string().min(1).optional(),
+              description: z.string().min(1).optional(),
+              ranks: z
+                .array(
+                  z.object({
+                    rank: z.number().int().min(1).max(5),
+                    mark: z.string().min(1),
+                    numbers: z.string().min(1).optional(),
+                    held: z.boolean(),
+                    spend: z.boolean(),
+                  }),
+                )
+                .optional(),
+            }),
+          ),
+        }),
+      ),
     })
     .optional(),
   bag: z

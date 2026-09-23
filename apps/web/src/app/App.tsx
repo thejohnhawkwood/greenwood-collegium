@@ -223,6 +223,7 @@ function PlayClient({
     },
   ]);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
+  const [primerRequest, setPrimerRequest] = useState(0);
   const [questJournalOpen, setQuestJournalOpen] = useState(false);
   const [lobbyOpen, setLobbyOpen] = useState(true);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -384,6 +385,9 @@ function PlayClient({
     if (/^(?:map|chart)$/iu.test(raw.trim())) {
       setWorldMapOpen(true);
     }
+    if (/^(?:spells|spell|grimoire|book)$/iu.test(raw.trim())) {
+      setPrimerRequest((current) => current + 1);
+    }
     if (/^quests?$/iu.test(raw.trim())) {
       setQuestJournalOpen(true);
     }
@@ -515,6 +519,7 @@ function PlayClient({
         error={viewError}
         worldMapOpen={worldMapOpen}
         onOpenWorldMap={() => setWorldMapOpen(true)}
+        primerRequest={primerRequest}
         onCloseWorldMap={() => setWorldMapOpen(false)}
         questJournalOpen={questJournalOpen}
         onOpenQuestJournal={() => setQuestJournalOpen(true)}

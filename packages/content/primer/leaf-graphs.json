@@ -1,0 +1,270 @@
+{
+  "ember": {
+    "schoolId": "ember",
+    "title": "Ember",
+    "mentor": "Mentor Cinder",
+    "outline": "lanceolate",
+    "nodes": [
+      {
+        "id": "ember",
+        "distance": 0,
+        "parents": []
+      },
+      {
+        "id": "cinder-snap",
+        "distance": 1,
+        "parents": ["ember"]
+      },
+      {
+        "id": "hearth-ward",
+        "distance": 1,
+        "parents": ["ember"]
+      },
+      {
+        "id": "heart-fire",
+        "distance": 1,
+        "parents": ["ember"]
+      },
+      {
+        "id": "flame-breath",
+        "distance": 2,
+        "parents": ["cinder-snap"]
+      },
+      {
+        "id": "stoke",
+        "distance": 2,
+        "parents": ["cinder-snap", "heart-fire"],
+        "join": "or"
+      },
+      {
+        "id": "blaze-mantle",
+        "distance": 3,
+        "parents": ["hearth-ward", "flame-breath"],
+        "join": "and"
+      }
+    ]
+  },
+  "thorn": {
+    "schoolId": "thorn",
+    "title": "Thorns",
+    "mentor": "Mentor Briar",
+    "outline": "compound",
+    "nodes": [
+      {
+        "id": "briar",
+        "distance": 0,
+        "parents": []
+      },
+      {
+        "id": "bind",
+        "distance": 1,
+        "parents": ["briar"]
+      },
+      {
+        "id": "prune",
+        "distance": 1,
+        "parents": ["briar"]
+      },
+      {
+        "id": "greenstitch",
+        "distance": 1,
+        "parents": ["briar"]
+      },
+      {
+        "id": "thornwall",
+        "distance": 2,
+        "parents": ["bind", "prune"],
+        "join": "or"
+      },
+      {
+        "id": "sap",
+        "distance": 2,
+        "parents": ["greenstitch"]
+      },
+      {
+        "id": "ask-first",
+        "distance": 3,
+        "parents": ["bind", "greenstitch"],
+        "join": "and"
+      }
+    ]
+  },
+  "veil": {
+    "schoolId": "veil",
+    "title": "the Veil",
+    "mentor": "Mentor Mist",
+    "outline": "ovate",
+    "nodes": [
+      {
+        "id": "shade",
+        "distance": 0,
+        "parents": []
+      },
+      {
+        "id": "slip",
+        "distance": 1,
+        "parents": ["shade"]
+      },
+      {
+        "id": "after-image",
+        "distance": 1,
+        "parents": ["shade"]
+      },
+      {
+        "id": "quiet-step",
+        "distance": 1,
+        "parents": ["shade"]
+      },
+      {
+        "id": "pale",
+        "distance": 2,
+        "parents": ["slip"]
+      },
+      {
+        "id": "hush",
+        "distance": 3,
+        "parents": ["after-image", "pale"],
+        "join": "or"
+      },
+      {
+        "id": "unname",
+        "distance": 4,
+        "parents": ["quiet-step", "hush"],
+        "join": "and"
+      }
+    ]
+  },
+  "stars": {
+    "schoolId": "stars",
+    "title": "Stars",
+    "mentor": "Mentor Lumen",
+    "outline": "palmate",
+    "nodes": [
+      {
+        "id": "azimuth",
+        "distance": 0,
+        "parents": []
+      },
+      {
+        "id": "flare",
+        "distance": 1,
+        "parents": ["azimuth"]
+      },
+      {
+        "id": "transit",
+        "distance": 1,
+        "parents": ["azimuth"]
+      },
+      {
+        "id": "night-eye",
+        "distance": 1,
+        "parents": ["azimuth"]
+      },
+      {
+        "id": "wane",
+        "distance": 2,
+        "parents": ["flare"]
+      },
+      {
+        "id": "chart",
+        "distance": 2,
+        "parents": ["night-eye"]
+      },
+      {
+        "id": "true-north",
+        "distance": 3,
+        "parents": ["flare", "transit", "chart"],
+        "join": "or"
+      }
+    ]
+  },
+  "stone": {
+    "schoolId": "stone",
+    "title": "Stone",
+    "mentor": "Mentor Quern",
+    "outline": "obovate",
+    "nodes": [
+      {
+        "id": "keystone",
+        "distance": 0,
+        "parents": []
+      },
+      {
+        "id": "stomp",
+        "distance": 1,
+        "parents": ["keystone"]
+      },
+      {
+        "id": "brace",
+        "distance": 1,
+        "parents": ["keystone"]
+      },
+      {
+        "id": "stillness",
+        "distance": 1,
+        "parents": ["keystone"]
+      },
+      {
+        "id": "quarry",
+        "distance": 2,
+        "parents": ["stomp"]
+      },
+      {
+        "id": "lintel",
+        "distance": 2,
+        "parents": ["stomp", "brace"],
+        "join": "or"
+      },
+      {
+        "id": "buttress",
+        "distance": 3,
+        "parents": ["lintel", "stillness"],
+        "join": "or"
+      }
+    ]
+  },
+  "steel": {
+    "schoolId": "steel",
+    "title": "Steel",
+    "mentor": "Mentor Edge",
+    "outline": "linear",
+    "nodes": [
+      {
+        "id": "strike",
+        "distance": 0,
+        "parents": []
+      },
+      {
+        "id": "riposte",
+        "distance": 1,
+        "parents": ["strike"]
+      },
+      {
+        "id": "guard-break",
+        "distance": 1,
+        "parents": ["strike"]
+      },
+      {
+        "id": "ready-steel",
+        "distance": 1,
+        "parents": ["strike"]
+      },
+      {
+        "id": "draw",
+        "distance": 2,
+        "parents": ["riposte"]
+      },
+      {
+        "id": "second-wind",
+        "distance": 2,
+        "parents": ["ready-steel"]
+      },
+      {
+        "id": "oath-edge",
+        "distance": 3,
+        "parents": ["draw", "guard-break"],
+        "join": "or"
+      }
+    ]
+  }
+}

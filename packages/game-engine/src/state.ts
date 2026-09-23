@@ -453,6 +453,12 @@ export type StatsIntent = {
   characterId: string;
 };
 
+export type InkIntent = {
+  verb: "ink";
+  characterId: string;
+  target: string;
+};
+
 export type SpellsIntent = {
   verb: "spells";
   characterId: string;
@@ -559,6 +565,7 @@ export type PlayerCommand =
   | QuestsIntent
   | StatsIntent
   | SpellsIntent
+  | InkIntent
   | EquipIntent
   | MapIntent
   | TravelIntent

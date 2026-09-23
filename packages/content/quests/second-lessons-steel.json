@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "second-lessons-steel",
   "title": "Second Lessons: Steel",
-  "introNarration": "Edge taps the Primer. His mail shirt clicks once, oiled and unromantic. \"Cast strike at the hearth dummy in this room. Then talk to me. After that, the book will offer three leaves. Type 1, 2, or 3 when it does.\"",
+  "introNarration": "Edge taps the Primer. His mail shirt clicks once, oiled and unromantic. \"Cast strike at the hearth dummy in this room. Then talk to me. After that, the Primer will hold one ink. Open the book and type ink and the vein's name.\"",
   "reminderNarration": "Cast strike at the hearth dummy in this hearth, then talk to Edge. Name the stance before you swing.",
-  "completionNarration": "The second hearth lesson is done. The Primer lies beside the anvil, a little linseed on the cover. Type 1, 2, or 3 when it offers three leaves.",
+  "completionNarration": "The second hearth lesson is done. The Primer lies beside the anvil, a little linseed on the cover. Open the Primer and type ink and the vein's name.",
   "experienceReward": 20,
   "objectives": [
     {

@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-thorn",
   "title": "First Lessons: Thorns",
-  "introNarration": "Mentor Briar keeps the hearth dummy in sight. Green light pools on the stone. The air smells of crushed sap and damp earth. \"Look around this hearth. The briar remembers every cut, and so will you. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will ink three leaves in your Field Primer.\"",
+  "introNarration": "Mentor Briar keeps the hearth dummy in sight. Green light pools on the stone. The air smells of crushed sap and damp earth. \"Look around this hearth. The briar remembers every cut, and so will you. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
   "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Briar. The shears are still on her belt.",
-  "completionNarration": "Briar inks three starter leaves at rank 1. A drop of sap darkens the page-edge and dries. The next lesson will ask you to cast.",
+  "completionNarration": "Briar inks the stem at rank I. A drop of sap darkens the page-edge and dries. The next lesson will ask you to cast.",
   "experienceReward": 15,
   "objectives": [
     {

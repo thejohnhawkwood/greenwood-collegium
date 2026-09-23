@@ -16,9 +16,9 @@ School pick is Alder’s High Study tree. He sends the Collegian to the Hall of 
 
 | Tier | XP | What they type | Engine side-effect |
 | --- | --- | --- | --- |
-| First | 15 | `look` hearth → `defeat` dummy → `talk` mentor | Ink three starters; start second + Bell Below |
-| Second | 20 | `cast` starter in hearth → `talk` mentor | Primer offers three leaves; start third |
-| Third (“Alder’s Leave”) | 25 | `talk` Alder → `talk` mentor | Primer offers again |
+| First | 15 | `look` hearth → `defeat` dummy → `talk` mentor | Ink the signature stem; start second + Bell Below |
+| Second | 20 | `cast` the signature in the hearth → `talk` mentor | Grant lesson-4 ink; start third |
+| Third (“Alder’s Leave”) | 25 | `talk` Alder → `talk` mentor | Grant lesson-5 ink |
 
 ## School table (IDs to keep)
 

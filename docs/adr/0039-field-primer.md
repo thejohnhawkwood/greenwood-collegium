@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted, 20 September 2026.
+Accepted, 20 September 2026. The three-card offer is superseded by
+[ADR-0042](0042-primer-leaf-graphs.md). Ranks, the ink cap, and one Primer
+remain.
 
 ## Context
 

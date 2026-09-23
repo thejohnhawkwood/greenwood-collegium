@@ -5,7 +5,7 @@ Declarative world data. No React, Fastify, Socket.IO, PostgreSQL, Drizzle, or ga
 - Ticket 011 owns room JSON, JSON Schema, and validation.
 - Ticket 012 owns item templates and placements.
 - Ticket 013 owns enemy templates and placements.
-- Ticket 014 owns spell templates. Ember is the first spell. Each School has seven leaves. Optional `tag`, `pennedBy`, and `ranks` describe Primer pages. Presentation keys stay cosmetic. The developer catalog is `docs/content/PROGRESSION.md`.
+- Ticket 014 owns spell templates. Ember is the first spell. Each School has seven leaves. Optional `tag`, `pennedBy`, and `ranks` describe Primer pages. Presentation keys stay cosmetic. The developer catalog is `docs/content/PROGRESSION.md`. The six leaf graphs are copied in `primer/leaf-graphs.json` and must match the engine constant.
 - Ticket 015 owns quest templates. Arrival at the Collegium is the first quest. First/second/third-lessons are the college loop. `defeat` and `cast` objectives are legal. Optional `requiresQuestIds` must already be complete before a giver can start the quest. Story spine: `docs/content/STORY.md`. Storylines: `docs/content/quests/`. Play/author: `docs/content/adventures.md`.
 - Add a room by adding `rooms/<id>.json`. The file name must match the stable id.
 - Add an item by adding `items/<id>.json` and a placement in `placements/`. Optional `equipSlot` is the paper-doll wear class (`two-hand` uses both hands; `ring` fills an open ring). Sword, staff, and sling infer a slot when it is omitted.

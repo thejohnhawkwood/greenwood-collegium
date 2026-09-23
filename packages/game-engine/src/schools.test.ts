@@ -168,7 +168,7 @@ function world(): WorldState {
 }
 
 describe("school hearth after a choice", () => {
-  it("lands a Steel pick in the hearth and inks three leaves after the hearth dummy", () => {
+  it("lands a Steel pick in the hearth and inks the stem after the hearth dummy", () => {
     const realm = world();
     const clock = runtime();
     expect(
@@ -217,8 +217,6 @@ describe("school hearth after a choice", () => {
     expect(realm.characters["char-rowan"]?.level).toBe(3);
     expect(realm.characters["char-rowan"]?.knownSpells).toEqual([
       { spellId: "strike", rank: 1, pennedBy: "Mentor Edge" },
-      { spellId: "riposte", rank: 1, pennedBy: "Mentor Edge" },
-      { spellId: "ready-steel", rank: 1, pennedBy: "Mentor Edge" },
     ]);
     expect(realm.quests?.["char-rowan"]?.["second-lessons-steel"]?.status).toBe("active");
     expect(

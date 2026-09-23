@@ -30,12 +30,12 @@
       "kind": "npc",
       "lookDescription": "A scarred hedgehog in a green cloak caught with thorns, shears at the belt. Try talk briar.",
       "examineDescription": "Briar's quills are patched with old scratches. The cloak is mended with vine-thread. She speaks as if the plants were listening, and they usually are.",
-      "dialogue": "\"Look around this hearth. The briar remembers every cut. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
+      "dialogue": "\"Look around this hearth. The briar remembers every cut. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
+            "text": "\"Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -50,7 +50,7 @@
             ]
           },
           "craft": {
-            "text": "\"The Field Primer is your book, not a pressed flower. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. Growth that is not named will snare you.\"",
+            "text": "\"The Field Primer is your book, not a pressed flower. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Growth that is not named will snare you.\"",
             "choices": [
               {
                 "say": "1",
@@ -63,13 +63,13 @@
             "text": "\"Look around this hearth. Defeat the dummy. I will be here among the living walls. The shears stay sharp. So do I.\""
           },
           "lessons-done": {
-            "text": "\"The three starter leaves are inked. Cast briar at the hearth dummy for the second lesson — a vine trained, not a snare left to wander. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+            "text": "\"The stem is inked. Cast briar at the hearth dummy for the second lesson — a vine trained, not a snare left to wander. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
             "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
           }
         }
       }

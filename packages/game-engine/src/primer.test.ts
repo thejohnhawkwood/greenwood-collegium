@@ -1,20 +1,8 @@
 import { describe, expect, it } from "vitest";
-import {
-  applyPrimerChoice,
-  applyRank,
-  buildPrimerOffer,
-  canCastSpell,
-  describePrimerCard,
-  formatGrimoire,
-  formatLeaf,
-  inkStarterKit,
-  legalPrimerCards,
-  openPrimerChoices,
-  primerPlayState,
-  weightForCard,
-} from "./primer.js";
+import { handleInk, primerPlayState, unspentInk } from "./primer-book.js";
+import { openSchoolLeaf } from "./primer.js";
+import { applyRank, canCastSpell, formatGrimoire, formatLeaf, inkStarterKit } from "./primer.js";
 import { EXPERIENCE_TO_REACH, MAX_LEVEL, levelForExperience } from "./progression.js";
-import { handleSay } from "./say.js";
 import type { Character, EngineRuntime, SpellTemplate, WorldState } from "./state.js";
 
 function runtime(random: () => number = () => 0.5): EngineRuntime {
@@ -158,14 +146,12 @@ describe("Field Primer", () => {
     expect(levelForExperience(70)).toBe(5);
   });
 
-  it("inks three starter leaves at rank 1 and shows numbers plus the mentor hand", () => {
+  it("inks the signature stem at rank 1 and shows numbers plus the mentor hand", () => {
     const world = primerWorld();
     const character = world.characters["char-rowan"] as Character;
     inkStarterKit(character);
     expect(character.knownSpells).toEqual([
       { spellId: "ember", rank: 1, pennedBy: "Mentor Cinder" },
-      { spellId: "cinder-snap", rank: 1, pennedBy: "Mentor Cinder" },
-      { spellId: "hearth-ward", rank: 1, pennedBy: "Mentor Cinder" },
     ]);
     const book = formatGrimoire(world, character);
     expect(book).toContain("Ember · I");
@@ -175,7 +161,7 @@ describe("Field Primer", () => {
     const leaf = formatLeaf(world, character, world.spells!.ember);
     expect(leaf).toContain("Ember · I");
     expect(leaf).toContain("cast ember");
-    expect(canCastSpell(character, world.spells!["cinder-snap"]!)).toBe(true);
+    expect(canCastSpell(character, world.spells!["cinder-snap"]!)).toBe(false);
     expect(canCastSpell({ ...character, knownSpells: [] }, world.spells!["cinder-snap"]!)).toBe(
       false,
     );
@@ -199,94 +185,65 @@ describe("Field Primer", () => {
       5,
     );
     expect(ranked).toMatchObject({ focusCost: 3, damage: 8, burningRounds: 3 });
-    const careerInk = 3 + 17;
-    expect(careerInk).toBe(20);
-    expect(7 * 5).toBe(35);
-    expect(careerInk).toBeLessThan(35);
+    expect(17).toBeLessThan(7 * 5);
   });
 
-  it("opens three typed choices and applies 1 without rerolling a stored offer", () => {
+  it("refuses a locked tip, opens an OR rejoin from either parent, and requires both parents for an AND tip", () => {
     const world = primerWorld();
     const character = world.characters["char-rowan"] as Character;
     inkStarterKit(character);
-    character.level = 4;
-    const clock = runtime(() => 0.1);
-    const first = openPrimerChoices(world, character, 4, clock);
-    expect(first[0]?.narration).toContain("Mentor Cinder's hand offers three leaves");
-    expect(first[0]?.narration).toContain("Choose a leaf, or type 1, 2, or 3.");
-    const stored = character.pendingPrimerChoices;
-    const painted = primerPlayState(world, character);
-    expect(painted?.cards).toHaveLength(3);
-    expect(painted?.cards.every((card) => card.description.length > 0)).toBe(true);
-    expect(describePrimerCard(world, stored!.options[0]!, 0).command).toBe("1");
-    expect(stored?.options).toHaveLength(3);
-    const again = openPrimerChoices(
+    character.primerAwardedLevels = [4, 5, 6, 7];
+    const clock = runtime();
+    const locked = handleInk(
       world,
-      character,
-      4,
-      runtime(() => 0.9),
+      { verb: "ink", characterId: "char-rowan", target: "blaze-mantle" },
+      clock,
     );
-    expect(again[0]?.narration).toBe(first[0]?.narration);
-    expect(character.pendingPrimerChoices).toEqual(stored);
-    const picked = handleSay(world, { verb: "say", characterId: "char-rowan", text: "1" }, clock);
-    expect(picked.ok).toBe(true);
-    expect(character.pendingPrimerChoices).toBeUndefined();
-    expect(
-      character.knownSpells?.some((leaf) => leaf.rank > 1) || character.knownSpells!.length > 3,
-    ).toBe(true);
+    expect(locked).toMatchObject({ ok: false, message: "That node is still shut." });
+    const snap = handleInk(
+      world,
+      { verb: "ink", characterId: "char-rowan", target: "cinder snap" },
+      clock,
+    );
+    expect(snap.ok).toBe(true);
+    const stoke = handleInk(
+      world,
+      { verb: "ink", characterId: "char-rowan", target: "stoke" },
+      clock,
+    );
+    expect(stoke.ok).toBe(true);
+    const mantle = handleInk(
+      world,
+      { verb: "ink", characterId: "char-rowan", target: "blaze-mantle" },
+      clock,
+    );
+    expect(mantle).toMatchObject({ ok: false, message: "That node is still shut." });
+    handleInk(world, { verb: "ink", characterId: "char-rowan", target: "hearth ward" }, clock);
+    handleInk(world, { verb: "ink", characterId: "char-rowan", target: "flame-breath" }, clock);
+    expect(unspentInk(character)).toBe(0);
+    character.primerAwardedLevels = [4, 5, 6, 7, 8];
+    const opened = handleInk(
+      world,
+      { verb: "ink", characterId: "char-rowan", target: "blaze-mantle" },
+      clock,
+    );
+    expect(opened.ok).toBe(true);
+    const book = primerPlayState(world, character);
+    const ember = book?.leaves.find((leaf) => leaf.schoolId === "ember");
+    expect(ember?.nodes.find((node) => node.id === "blaze-mantle")?.status).toBe("inked");
+    expect(ember?.nodes.find((node) => node.id === "stoke")?.status).toBe("inked");
   });
 
-  it("weights upgrades toward a strike book and keeps courtesy rare until lesson 8", () => {
+  it("adds a second school leaf without changing the home school", () => {
     const world = primerWorld();
     const character = world.characters["char-rowan"] as Character;
+    character.schoolId = "ember";
     inkStarterKit(character);
-    const upgrade = legalPrimerCards(world, character, 6).find((card) => card.kind === "upgrade")!;
-    const unlock = legalPrimerCards(world, character, 6).find((card) => card.kind === "unlock")!;
-    expect(weightForCard(world, character, upgrade, 6)).toBeGreaterThan(
-      weightForCard(world, character, unlock, 6),
-    );
-    expect(legalPrimerCards(world, character, 6).some((card) => card.kind === "courtesy")).toBe(
-      false,
-    );
-    const courtesy = legalPrimerCards(world, character, 8).filter(
-      (card) => card.kind === "courtesy",
-    );
-    expect(courtesy.length).toBeGreaterThan(0);
-    expect(weightForCard(world, character, courtesy[0]!, 8)).toBe(3);
-    let strikeCards = 0;
-    let courtesyCards = 0;
-    for (let seed = 0; seed < 80; seed += 1) {
-      let cursor = seed / 80;
-      const offer = buildPrimerOffer(
-        world,
-        character,
-        8,
-        runtime(() => (cursor += 0.017) % 1),
-      );
-      strikeCards += offer.filter((card) => card.tag === "strike").length;
-      courtesyCards += offer.filter((card) => card.kind === "courtesy").length;
-    }
-    expect(strikeCards).toBeGreaterThan(courtesyCards);
-  });
-
-  it("pads a stalled book with one vital leaf and applies it", () => {
-    const world = primerWorld();
-    const character = world.characters["char-rowan"] as Character;
-    character.knownSpells = [
-      { spellId: "ember", rank: 5, pennedBy: "Mentor Cinder" },
-      { spellId: "cinder-snap", rank: 5, pennedBy: "Mentor Cinder" },
-      { spellId: "hearth-ward", rank: 5, pennedBy: "Mentor Cinder" },
-      { spellId: "flame-breath", rank: 5, pennedBy: "Mentor Cinder" },
-      { spellId: "heart-fire", rank: 5, pennedBy: "Mentor Cinder" },
-      { spellId: "blaze-mantle", rank: 5, pennedBy: "Mentor Cinder" },
-      { spellId: "stoke", rank: 5, pennedBy: "Mentor Cinder" },
-    ];
-    const offer = buildPrimerOffer(world, character, 16, runtime());
-    expect(offer.some((card) => card.kind === "vital")).toBe(true);
-    character.pendingPrimerChoices = { level: 16, options: offer };
-    const vitalIndex = offer.findIndex((card) => card.kind === "vital");
-    applyPrimerChoice(world, character, vitalIndex, runtime());
-    expect(character.maxHealth).toBe(30);
-    expect(character.maxFocus).toBe(15);
+    openSchoolLeaf(character, "thorn");
+    expect(character.schoolId).toBe("ember");
+    expect(character.knownSpells?.map((leaf) => leaf.spellId)).toEqual(["ember", "briar"]);
+    const book = primerPlayState(world, character);
+    expect(book?.leaves.find((leaf) => leaf.schoolId === "thorn")?.open).toBe(true);
+    expect(book?.leaves.find((leaf) => leaf.schoolId === "veil")?.open).toBe(false);
   });
 });

@@ -39,12 +39,10 @@ lesson.
 
 ### 2.1 Ink budget
 
-- First lessons ink **three starter leaves at rank 1**.
-- Lessons 4–20 each offer **one pick** from three cards.
-- A 1–20 career has **20 ink** (3 + 17). Seven leaves at rank 5 would need **35**.
-  A Collegian cannot max every leaf.
-- A pick either inks a new leaf at rank 1 or raises an owned leaf by 1, cap 5.
-- A **vital leaf** is not a spell. It is +2 health and +1 focus.
+- First lessons open that School's leaf and ink **only the signature stem** at rank I.
+- Lessons 4–20 each grant **1 ink** (17). Lessons 4 and 5 wait on the second and third hearth lessons.
+- Spend 1 ink to open a legal node at rank I, or to raise an owned node by 1, cap V.
+- Seven leaves at rank 5 would need **35** besides the free stem. A Collegian cannot max every node.
 
 ### 2.2 Ranks
 
@@ -111,12 +109,13 @@ win ([ADR-0037](../adr/0037-first-time-spawns.md)).
 2. **Flint spark.** South Orchard. Orchard Ember is Flint's practice spark. It
    stays castable even if the Ember leaf is not yet inked.
 3. **First lessons.** Look around the hearth. Defeat that School's hearth dummy. Talk
-   to the mentor. Inks the three starters at rank 1. Quest id `first-lessons-<school>`.
-4. **Second lessons.** Cast the School's first starter in the hearth. Talk to the
-   mentor. Opens the first three-card offer (lesson 4). Quest id
-   `second-lessons-<school>`.
-5. **Alder's leave.** Talk Alder, then the mentor. Opens the second offer
-   (lesson 5). Quest id `third-lessons-<school>`.
+   to the mentor. Opens that School's leaf and inks the signature stem. Quest id
+   `first-lessons-<school>`. Another School's intro quest adds that leaf and does not
+   change `schoolId`.
+4. **Second lessons.** Cast the signature in the hearth. Talk to the mentor. Grants
+   the lesson-4 ink. Quest id `second-lessons-<school>`.
+5. **Alder's leave.** Talk Alder, then the mentor. Grants the lesson-5 ink. Quest id
+   `third-lessons-<school>`.
 
 Second-lesson cast targets:
 
@@ -129,52 +128,59 @@ Second-lesson cast targets:
 | Stone | `keystone` |
 | Steel | `strike` |
 
-Lessons 6–20 open three cards when the character level rises. Pending offers
-persist. Repeat command ids do not reroll.
+Lessons 6–20 grant one ink when the character level rises. Unspent ink banks.
 
 ---
 
-## 4. How a pick works
+## 4. How a vein works
 
-The server builds three cards. The living frame paints them as clickable buttons
-with title, badge, numbers, and description. Clicking sends `1`, `2`, or `3`.
-Typed `1` / `2` / `3` stay canonical when no conversation is open.
+The Primer is a full-window book. One School fills both pages as a leaf. The
+stem sits at the bottom. Further nodes sit farther toward the tip. The client
+draws `play-state.primer` and does not decide which node is legal. Clicking a
+legal node sends `ink <name>`.
 
-### 4.1 Card kinds
+A node opens when any OR parent is inked, or when every AND parent is inked.
+An OR rejoin is drawn one step past its farther parent. There is no random
+offer, no courtesy neighbor, and no vital-leaf filler.
 
-| Kind | Badge | Meaning |
-| --- | --- | --- |
-| `upgrade` | Rank II–V | Owned leaf +1 |
-| `unlock` | New | Own-school leaf at rank 1 |
-| `courtesy` | Courtesy | Neighbor School *starter* at rank 1, from lesson 8 |
-| `vital` | Vital | +2 health, +1 focus (padding when the pool is thin) |
+Law: [ADR-0042](../adr/0042-primer-leaf-graphs.md). The graphs live in
+`packages/game-engine/src/leaf-graphs.ts`.
 
-### 4.2 Soft weights
+### Ember — lanceolate
 
-Tag overlap and own-school count bias the book toward itself.
+`ember` (0) forks to `cinder-snap`, `hearth-ward`, and `heart-fire` (1).
+`flame-breath` (2) follows the snap. `stoke` (2, OR) rejoins snap and
+`heart-fire`. `blaze-mantle` (3, AND) needs the ward and the breath.
 
-| Kind | Weight |
-| --- | --- |
-| Upgrade | `10 + 4×tagOverlap + 2×ownSchool` (`×1.3` if 5+ own-school leaves) |
-| Unlock | `8 + (4 if ownSchool < 4) + 3×tagOverlap` (`×0.6` if 5+ own-school; `×0.5` at lessons 4–5) |
-| Courtesy | `3` |
-| Vital | `1` |
+### Thorns — compound
 
-If all three starters are already rank 5, the last slot prefers an unlock so the
-book cannot stall on upgrades alone.
+`briar` (0) forks to `bind`, `prune`, and `greenstitch` (1). `thornwall` (2, OR)
+rejoins bind and prune. `sap` (2) follows the mend. `ask-first` (3, AND) needs
+bind and greenstitch.
 
-### 4.3 Neighbor courtesy (lesson 8+)
+### Veil — ovate
 
-Only the neighbor's **first three** leaves can appear.
+`shade` (0) forks to `slip`, `after-image`, and `quiet-step` (1). `pale` (2)
+follows the slip. `hush` (3, OR) rejoins the fold and the pale. `unname` (4, AND)
+needs quiet-step and hush.
 
-| School | Neighbors |
-| --- | --- |
-| Ember | Thorns, Veil, Stone |
-| Thorns | Ember, Veil, Steel, Stars |
-| Veil | Ember, Thorns, Stone |
-| Stars | Thorns, Steel |
-| Stone | Ember, Veil |
-| Steel | Thorns, Stars |
+### Stars — palmate
+
+`azimuth` (0) forks to `flare`, `transit`, and `night-eye` (1). `wane` (2) is a
+spur off flare. `chart` (2) follows night-eye. `true-north` (3, OR) rejoins
+flare, transit, and chart.
+
+### Stone — obovate
+
+`keystone` (0) forks to `stomp`, `brace`, and `stillness` (1). `quarry` (2) is a
+spur off the stomp. `lintel` (2, OR) rejoins stomp and brace. `buttress` (3, OR)
+rejoins lintel and stillness.
+
+### Steel — linear
+
+`strike` (0) forks to `riposte`, `guard-break`, and `ready-steel` (1). `draw` (2)
+follows the riposte. `second-wind` (2) is a spur off ready-steel. `oath-edge`
+(3, OR) rejoins draw and guard-break.
 
 ---
 
@@ -432,7 +438,7 @@ unless the table lists one.
 | `spells <leaf>` | Same | One page: rank, numbers, mentor hand. |
 | `cast <leaf> [target]` | Engine `handleCast` | Checks ink (except Ember), focus, and special locks. |
 | `stats` | Engine `handleStats` | School, leaf count, next lesson. No silent XP bar. |
-| `1` / `2` / `3` | `handleSay` while an offer is pending | Same as clicking a Primer card. |
+| `ink <leaf>` | Engine `handleInk` | Opens a legal node or raises its rank. |
 | `help spells` / `help cast` | Help catalog | Mentions clickable leaves. |
 
 The client must not invent cards, ranks, or damage. `play-state.primer` is the

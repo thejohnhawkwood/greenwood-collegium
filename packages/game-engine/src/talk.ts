@@ -10,7 +10,12 @@ import {
   resolveAlderSpeechNode,
   STILL_SLEEPS_QUEST_ID,
 } from "./headmaster.js";
-import { resolveMentorSpeechNode } from "./schools.js";
+import {
+  SCHOOL_FIRST_LESSONS_ID,
+  SCHOOL_IDS,
+  SCHOOL_MENTOR_ID,
+  resolveMentorSpeechNode,
+} from "./schools.js";
 import {
   BRONZE_QUEST_ID,
   FOG_TOOK_QUEST_ID,
@@ -90,6 +95,15 @@ export function handleTalk(
     }
     events.push(...startQuest(world, character.id, quest.id, runtime));
     started.add(quest.id);
+  }
+  const guestSchool = SCHOOL_IDS.find((id) => SCHOOL_MENTOR_ID[id] === npc.id);
+  if (
+    guestSchool &&
+    guestSchool !== character.schoolId &&
+    firstLessonsComplete(world, character) &&
+    !world.quests?.[character.id]?.[SCHOOL_FIRST_LESSONS_ID[guestSchool]]
+  ) {
+    events.push(...startQuest(world, character.id, SCHOOL_FIRST_LESSONS_ID[guestSchool], runtime));
   }
   const offerBell =
     npc.id === HEADMASTER_NPC_ID &&

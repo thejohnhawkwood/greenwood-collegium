@@ -30,12 +30,12 @@
       "kind": "npc",
       "lookDescription": "A soot-stained stoat in a leather apron, copper-bright eyes, tongs at the belt. Try talk cinder.",
       "examineDescription": "Cinder's whiskers are singed at the tips. The apron is older than most first-years and smells of honest smoke. She treats fire as a tool that will bite the careless and feed the careful.",
-      "dialogue": "\"Look around this hearth. Smell the soot. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
+      "dialogue": "\"Look around this hearth. Smell the soot. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"The grate ticks, and last night's oatcakes were left too near the coals again. Look around this hearth. Name the fire before you feed it. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
+            "text": "\"The grate ticks, and last night's oatcakes were left too near the coals again. Look around this hearth. Name the fire before you feed it. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -50,7 +50,7 @@
             ]
           },
           "craft": {
-            "text": "\"The Field Primer is your book, not a decoration. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. Do not skip the dummy. Fire that is not named will bite.\"",
+            "text": "\"The Field Primer is your book, not a decoration. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Do not skip the dummy. Fire that is not named will bite.\"",
             "choices": [
               {
                 "say": "1",
@@ -63,13 +63,13 @@
             "text": "\"Look around this hearth. Defeat the dummy. I will be here by the grate. The tongs stay hot. So do I.\""
           },
           "lessons-done": {
-            "text": "\"The three starter leaves are inked. Cast ember at the hearth dummy for the second lesson — a sheltered coal, not a show. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+            "text": "\"The stem is inked. Cast ember at the hearth dummy for the second lesson — a sheltered coal, not a show. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
             "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
           }
         }
       }

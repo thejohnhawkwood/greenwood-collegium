@@ -17,9 +17,15 @@ import {
 } from "./headmaster.js";
 import { applyLevelVitals } from "./combat-state.js";
 import { itemsHeldBy, worldItems } from "./items.js";
-import { inkStarterKit, maybeOpenWorldPrimer, openPrimerChoices } from "./primer.js";
+import { grantPrimerInk, maybeOpenWorldPrimer } from "./primer-book.js";
+import { openSchoolLeaf } from "./primer.js";
 import { levelForExperience } from "./progression.js";
-import { SCHOOL_SECOND_LESSONS_ID, SCHOOL_THIRD_LESSONS_ID, isSchoolId } from "./schools.js";
+import {
+  SCHOOL_SECOND_LESSONS_ID,
+  SCHOOL_THIRD_LESSONS_ID,
+  SCHOOL_TITLE,
+  isSchoolId,
+} from "./schools.js";
 import { WREN_CHAIN_NEXT } from "./east-watch.js";
 import type {
   Character,
@@ -171,45 +177,42 @@ export function progressQuests(
         events.push(...summonToHeadmaster(world, character, runtime));
       }
       if (template.id.startsWith("first-lessons-")) {
-        const inked = inkStarterKit(character);
-        if (inked.length) {
+        const school = template.id.slice("first-lessons-".length);
+        if (isSchoolId(school)) {
+          const inked = openSchoolLeaf(character, school);
+          const spell = inked ? world.spells?.[inked.spellId] : undefined;
           events.push(
             systemNotice(
               character.id,
-              `Your Primer inks three leaves. Type ${inked
-                .map((leaf) => world.spells?.[leaf.spellId]?.helpText ?? `cast ${leaf.spellId}`)
-                .join(", ")}.`,
+              spell
+                ? `Your Primer opens the ${SCHOOL_TITLE[school]} leaf and inks ${spell.name}. Type ${spell.helpText}.`
+                : "Your Primer opens a new leaf.",
               runtime,
             ),
           );
+          if (school === character.schoolId) {
+            events.push(
+              ...startQuest(world, character.id, SCHOOL_SECOND_LESSONS_ID[school], runtime),
+            );
+            events.push(...startQuest(world, character.id, BELL_BELOW_QUEST_ID, runtime));
+            events.push(
+              systemNotice(
+                character.id,
+                "Alder will see you in the High Study. Type up from the Great Hall.",
+                runtime,
+              ),
+            );
+          }
         }
-        if (character.schoolId && isSchoolId(character.schoolId)) {
-          events.push(
-            ...startQuest(
-              world,
-              character.id,
-              SCHOOL_SECOND_LESSONS_ID[character.schoolId],
-              runtime,
-            ),
-          );
-        }
-        events.push(...startQuest(world, character.id, BELL_BELOW_QUEST_ID, runtime));
-        events.push(
-          systemNotice(
-            character.id,
-            "Alder will see you in the High Study. Type up from the Great Hall.",
-            runtime,
-          ),
-        );
       }
       if (template.id.startsWith("second-lessons-") && character.schoolId) {
-        events.push(...openPrimerChoices(world, character, 4, runtime));
+        events.push(...grantPrimerInk(character, 4, runtime));
         events.push(
           ...startQuest(world, character.id, SCHOOL_THIRD_LESSONS_ID[character.schoolId], runtime),
         );
       }
       if (template.id.startsWith("third-lessons-")) {
-        events.push(...openPrimerChoices(world, character, 5, runtime));
+        events.push(...grantPrimerInk(character, 5, runtime));
       }
       const nextWatch = WREN_CHAIN_NEXT[template.id];
       if (nextWatch) {

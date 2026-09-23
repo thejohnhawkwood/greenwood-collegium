@@ -126,7 +126,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["spells", "spell", "grimoire", "book"],
     summary: "List the spells you have been taught.",
     detail:
-      "spells (or grimoire) reads your Field Primer: ranks, numbers, and the mentor's hand. Type spells ember to open one leaf. When three leaves are offered, click a card or type 1, 2, or 3. Type the listed cast words during a fight.",
+      "spells (or grimoire) reads your Field Primer: ranks, numbers, and the mentor's hand. Type spells ember to open one leaf. Open the Primer and type ink and a vein's name to spend ink. Type the listed cast words during a fight.",
   },
   {
     topic: "stats",

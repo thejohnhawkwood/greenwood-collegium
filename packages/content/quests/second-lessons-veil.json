@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "second-lessons-veil",
   "title": "Second Lessons: the Veil",
-  "introNarration": "Mist taps the Primer. The curtains move though there is no draught you can name. \"Cast shade at the hearth dummy in this room. Then talk to me. After that, the book will offer three leaves. Type 1, 2, or 3 when it does.\"",
+  "introNarration": "Mist taps the Primer. The curtains move though there is no draught you can name. \"Cast shade at the hearth dummy in this room. Then talk to me. After that, the Primer will hold one ink. Open the book and type ink and the vein's name.\"",
   "reminderNarration": "Cast shade at the hearth dummy in this hearth, then talk to Mist. Do not get lost in the mirror on the way.",
-  "completionNarration": "The second hearth lesson is done. The Primer's new page takes the lamplight and gives it back in pieces. Type 1, 2, or 3 when it offers three leaves.",
+  "completionNarration": "The second hearth lesson is done. The Primer's new page takes the lamplight and gives it back in pieces. Open the Primer and type ink and the vein's name.",
   "experienceReward": 20,
   "objectives": [
     {

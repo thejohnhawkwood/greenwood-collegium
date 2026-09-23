@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-stars",
   "title": "First Lessons: Stars",
-  "introNarration": "Mentor Lumen keeps the hearth dummy in sight. Brass instruments wait beside a star-wheel. The air smells of ink, cold glass, and lamp-oil. \"Look around this hearth. Charts before wonder. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will ink three leaves in your Field Primer.\"",
+  "introNarration": "Mentor Lumen keeps the hearth dummy in sight. Brass instruments wait beside a star-wheel. The air smells of ink, cold glass, and lamp-oil. \"Look around this hearth. Charts before wonder. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
   "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Lumen. The star-wheel has not moved.",
-  "completionNarration": "Lumen inks three starter leaves at rank 1. A little lamp-oil shines on the nib and is gone. The next lesson will ask you to cast.",
+  "completionNarration": "Lumen inks the stem at rank I. A little lamp-oil shines on the nib and is gone. The next lesson will ask you to cast.",
   "experienceReward": 15,
   "objectives": [
     {

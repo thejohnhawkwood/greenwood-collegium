@@ -26,12 +26,12 @@
       "kind": "npc",
       "lookDescription": "A scarred hare in a mail shirt, one ear notched, a practice sword at the hip. Try talk edge.",
       "examineDescription": "Edge's notch is newer than Flint's and just as earned. The mail is mended. He treats a sloppy stance as a kindness you have not yet been given.",
-      "dialogue": "\"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room. Come back and talk to me. I will ink three leaves in your Field Primer.\"",
+      "dialogue": "\"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will ink three leaves.\"",
+            "text": "\"Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -46,7 +46,7 @@
             ]
           },
           "craft": {
-            "text": "\"The Field Primer is your book. I pen the first three leaves after you look around this hearth, defeat the dummy, and talk to me. Later the page offers three choices. Type 1, 2, or 3. A sloppy stance is a kindness you have not yet been given.\"",
+            "text": "\"The Field Primer is your book. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. A sloppy stance is a kindness you have not yet been given.\"",
             "choices": [
               {
                 "say": "1",
@@ -59,13 +59,13 @@
             "text": "\"Look around this hearth. Defeat the dummy. I will be here by the anvil. Excuses stay shorter than the lesson.\""
           },
           "lessons-done": {
-            "text": "\"The three starter leaves are inked. Cast strike at the hearth dummy for the second lesson. After that, the Primer will offer three leaves. Type 1, 2, or 3.\""
+            "text": "\"The stem is inked. Cast strike at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
             "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson opens three leaves. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
           }
         }
       }

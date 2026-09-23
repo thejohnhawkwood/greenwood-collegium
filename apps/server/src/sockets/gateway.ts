@@ -40,6 +40,7 @@ import {
   handleStats,
   handleSpells,
   handleEquip,
+  handleInk,
   handleTake,
   handleDuel,
   isSchoolId,
@@ -934,23 +935,25 @@ export async function attachRealtime(
                                 ? handleSpells(world, intent, runtime)
                                 : intent.verb === "equip"
                                   ? handleEquip(world, intent, runtime)
-                                  : intent.verb === "attack"
-                                    ? handleAttack(world, intent, runtime)
-                                    : intent.verb === "defend"
-                                      ? handleDefend(world, intent, runtime)
-                                      : intent.verb === "flee"
-                                        ? handleFlee(world, intent, runtime)
-                                        : intent.verb === "travel"
-                                          ? handleTravel(world, intent, runtime)
-                                          : intent.verb === "bye"
-                                            ? handleBye(world, intent, runtime)
-                                            : intent.verb === "drink"
-                                              ? handleDrink(world, intent, runtime)
-                                              : intent.verb === "eat"
-                                                ? handleEat(world, intent, runtime)
-                                                : intent.verb === "duel"
-                                                  ? handleDuel(world, intent, runtime)
-                                                  : handleCast(world, intent, runtime);
+                                  : intent.verb === "ink"
+                                    ? handleInk(world, intent, runtime)
+                                    : intent.verb === "attack"
+                                      ? handleAttack(world, intent, runtime)
+                                      : intent.verb === "defend"
+                                        ? handleDefend(world, intent, runtime)
+                                        : intent.verb === "flee"
+                                          ? handleFlee(world, intent, runtime)
+                                          : intent.verb === "travel"
+                                            ? handleTravel(world, intent, runtime)
+                                            : intent.verb === "bye"
+                                              ? handleBye(world, intent, runtime)
+                                              : intent.verb === "drink"
+                                                ? handleDrink(world, intent, runtime)
+                                                : intent.verb === "eat"
+                                                  ? handleEat(world, intent, runtime)
+                                                  : intent.verb === "duel"
+                                                    ? handleDuel(world, intent, runtime)
+                                                    : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -1089,6 +1092,7 @@ export async function attachRealtime(
         intent.verb === "examine" ||
         intent.verb === "talk" ||
         intent.verb === "equip" ||
+        intent.verb === "ink" ||
         intent.verb === "attack" ||
         intent.verb === "cast" ||
         intent.verb === "defend" ||

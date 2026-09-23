@@ -1076,6 +1076,154 @@
 }
 .settings-overlay,
 .world-map-overlay,
+.primer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  padding: 0.4rem;
+  background: #0c161280;
+}
+.primer-book {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.8rem 1rem 1rem;
+  border: 1px solid #50634e;
+  border-radius: 10px;
+  background: #14271f;
+}
+.primer-pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.primer-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(12rem, 18rem);
+  gap: 0.8rem;
+  min-height: 0;
+  flex: 1;
+  margin-top: 0.6rem;
+}
+.primer-leaf {
+  position: relative;
+  min-height: 22rem;
+  border: 1px solid #3d5140;
+  border-radius: 12px;
+  background: #10281d;
+  overflow: hidden;
+}
+.primer-veins {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #8ea58a;
+}
+.primer-veins line {
+  stroke: currentColor;
+  stroke-width: 0.6;
+}
+.play-client .primer-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  max-width: 8rem;
+  padding: 0.28rem 0.4rem;
+  font-size: 0.68rem;
+  line-height: 1.15;
+}
+.primer-node-name {
+  color: #8ea58a;
+}
+.primer-node-name.is-held,
+.primer-detail h3.is-held,
+.primer-ladder .is-held,
+.primer-node-ranks .is-held {
+  color: #fff;
+  font-weight: 650;
+}
+.primer-node-ranks {
+  display: flex;
+  gap: 0.2rem;
+  font-size: 0.62rem;
+}
+.primer-node-ranks .is-spend,
+.primer-ladder .is-spend {
+  color: #c5d0bc;
+}
+.primer-node-ranks .is-later,
+.primer-ladder .is-later,
+.primer-ink .is-later {
+  color: #667568;
+}
+.primer-node-spend {
+  color: #c5d0bc;
+  font-size: 0.62rem;
+}
+.primer-node-inked,
+.primer-node-maxed {
+  border-color: #ead2a0;
+}
+.primer-node-locked {
+  opacity: 0.72;
+}
+.primer-node.is-selected {
+  outline: 2px solid #fff;
+}
+.primer-ink {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.28rem;
+  margin: 0.2rem 0 0;
+}
+.primer-ink-pip {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #fff;
+}
+.primer-spend-line {
+  margin: 0.35rem 0;
+  color: #c5d0bc;
+}
+.play-client .primer-ladder {
+  list-style: none;
+  margin: 0.4rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.play-client .primer-ladder li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.play-client .primer-rank-head {
+  display: flex;
+  gap: 0.45rem;
+  align-items: baseline;
+}
+.play-client .primer-ladder .is-held {
+  color: #fff;
+  font-weight: 650;
+}
+.play-client .primer-ladder .is-spend {
+  color: #c5d0bc;
+}
+.play-client .primer-ladder .is-later {
+  color: #667568;
+}
+.primer-shut,
+.primer-detail {
+  margin: 0.4rem 0;
+}
 .bag-overlay {
   position: fixed;
   inset: 0;

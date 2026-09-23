@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-steel",
   "title": "First Lessons: Steel",
-  "introNarration": "Mentor Edge keeps the hearth dummy in sight. Mail hangs in a neat row, oiled and unromantic. The air smells of metal, leather, and linseed. \"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will ink three leaves in your Field Primer.\"",
+  "introNarration": "Mentor Edge keeps the hearth dummy in sight. Mail hangs in a neat row, oiled and unromantic. The air smells of metal, leather, and linseed. \"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
   "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Edge. The anvil is still bright from honest work.",
-  "completionNarration": "Edge inks three starter leaves at rank 1. A smear of oil darkens one corner of the page. The next lesson will ask you to cast.",
+  "completionNarration": "Edge inks the stem at rank I. A smear of oil darkens one corner of the page. The next lesson will ask you to cast.",
   "experienceReward": 15,
   "objectives": [
     {

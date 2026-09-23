@@ -125,33 +125,107 @@ const primerPreviewState: PlayState = {
   character: { ...previewState.character, inCombat: false, level: 4, experience: 45 },
   encounter: undefined,
   primer: {
-    pennedBy: "Mentor Cinder",
-    prompt: "Mentor Cinder's hand offers three leaves.",
-    cards: [
+    ink: 1,
+    prompt: "The Primer holds 1 ink. Choose a vein.",
+    leaves: [
       {
-        command: "1",
+        schoolId: "ember",
         title: "Ember",
-        badge: "Rank II",
-        kind: "upgrade",
-        numbers: "Focus 4. Damage 6. Burns 2.",
-        description: "A small coal of will that lands and lingers.",
-        pennedBy: "Cinder Wick",
+        mentor: "Mentor Cinder",
+        outline: "lanceolate",
+        open: true,
+        nodes: [
+          {
+            id: "ember",
+            name: "Ember",
+            distance: 0,
+            parents: [],
+            status: "inked",
+            legal: true,
+            rank: 1,
+            numbers: "Focus 4. Damage 5. Burns 2.",
+            description: "A small coal of will that lands and lingers.",
+            ranks: [
+              {
+                rank: 1,
+                mark: "I",
+                numbers: "Focus 4. Damage 5. Burns 2.",
+                held: true,
+                spend: false,
+              },
+              {
+                rank: 2,
+                mark: "II",
+                numbers: "Focus 4. Damage 6. Burns 2.",
+                held: false,
+                spend: true,
+              },
+              {
+                rank: 3,
+                mark: "III",
+                numbers: "Focus 3. Damage 6. Burns 2.",
+                held: false,
+                spend: false,
+              },
+              {
+                rank: 4,
+                mark: "IV",
+                numbers: "Focus 3. Damage 7. Burns 2.",
+                held: false,
+                spend: false,
+              },
+              {
+                rank: 5,
+                mark: "V",
+                numbers: "Focus 3. Damage 8. Burns 2.",
+                held: false,
+                spend: false,
+              },
+            ],
+          },
+          {
+            id: "cinder-snap",
+            name: "Cinder Snap",
+            distance: 1,
+            parents: ["ember"],
+            status: "ready",
+            legal: true,
+            numbers: "Focus 3. Damage 3.",
+            description: "A sharp spark. The foe cannot answer.",
+            ranks: [
+              { rank: 1, mark: "I", numbers: "Focus 3. Damage 3.", held: false, spend: true },
+              { rank: 2, mark: "II", numbers: "Focus 3. Damage 4.", held: false, spend: false },
+              { rank: 3, mark: "III", numbers: "Focus 2. Damage 4.", held: false, spend: false },
+              { rank: 4, mark: "IV", numbers: "Focus 2. Damage 5.", held: false, spend: false },
+              { rank: 5, mark: "V", numbers: "Focus 2. Damage 6.", held: false, spend: false },
+            ],
+          },
+          {
+            id: "blaze-mantle",
+            name: "Blaze-Mantle",
+            distance: 3,
+            parents: ["hearth-ward", "flame-breath"],
+            join: "and",
+            status: "locked",
+            legal: false,
+            description: "The next blow misses, and the attacker takes the burn.",
+            ranks: [
+              { rank: 1, mark: "I", held: false, spend: false },
+              { rank: 2, mark: "II", held: false, spend: false },
+              { rank: 3, mark: "III", held: false, spend: false },
+              { rank: 4, mark: "IV", held: false, spend: false },
+              { rank: 5, mark: "V", held: false, spend: false },
+            ],
+          },
+        ],
       },
       {
-        command: "2",
-        title: "Flame-Breath",
-        badge: "New",
-        kind: "unlock",
-        numbers: "Focus 5. Damage 4. Burns 1.",
-        description: "A gust of open flame. It scorches and leaves one burn.",
-      },
-      {
-        command: "3",
-        title: "Vital leaf",
-        badge: "Vital",
-        kind: "vital",
-        numbers: "+2 health. +1 focus.",
-        description: "A thicker page. Your health and focus rise so the next field is kinder.",
+        schoolId: "thorn",
+        title: "Thorns",
+        mentor: "Mentor Briar",
+        outline: "compound",
+        open: false,
+        nodes: [],
       },
     ],
   },
@@ -222,6 +296,7 @@ export function PlayShellPreview() {
           onMove={() => {}}
           worldMapOpen={worldMapOpen}
           onOpenWorldMap={() => setWorldMapOpen(true)}
+          primerRequest={wantsPrimer ? 1 : 0}
           onCloseWorldMap={() => setWorldMapOpen(false)}
           questJournalOpen={questJournalOpen}
           onOpenQuestJournal={() => setQuestJournalOpen(true)}

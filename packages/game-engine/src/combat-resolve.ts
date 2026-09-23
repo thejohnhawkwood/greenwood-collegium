@@ -41,7 +41,7 @@ import {
   worldEncounters,
 } from "./combat-state.js";
 import { progressQuests } from "./arrival.js";
-import { maybeOpenWorldPrimer } from "./primer.js";
+import { maybeOpenWorldPrimer } from "./primer-book.js";
 import { levelForExperience } from "./progression.js";
 import {
   enemiesInRoom,

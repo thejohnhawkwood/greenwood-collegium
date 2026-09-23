@@ -121,46 +121,36 @@ describe("command assistance", () => {
     expect(completeCommand("fl")).toEqual({ value: "flee", matches: ["flee"] });
   });
 
-  it("puts Primer leaf commands first while an offer is open", () => {
+  it("suggests an open Primer vein by name", () => {
     const choosing: PlayState = {
       ...state,
       conversation: undefined,
       primer: {
-        pennedBy: "Mentor Cinder",
-        prompt: "Mentor Cinder's hand offers three leaves.",
-        cards: [
+        ink: 1,
+        prompt: "The Primer holds 1 ink. Choose a vein.",
+        leaves: [
           {
-            command: "1",
+            schoolId: "ember",
             title: "Ember",
-            badge: "Rank II",
-            kind: "upgrade",
-            numbers: "Focus 4. Damage 6.",
-            description: "A small coal of will that lands and lingers.",
-          },
-          {
-            command: "2",
-            title: "Flame-Breath",
-            badge: "New",
-            kind: "unlock",
-            numbers: "Focus 5. Damage 4.",
-            description: "A gust of open flame.",
-          },
-          {
-            command: "3",
-            title: "Vital leaf",
-            badge: "Vital",
-            kind: "vital",
-            numbers: "+2 health. +1 focus.",
-            description: "A thicker page.",
+            mentor: "Mentor Cinder",
+            outline: "lanceolate",
+            open: true,
+            nodes: [
+              {
+                id: "ember",
+                name: "Ember",
+                distance: 0,
+                parents: [],
+                status: "inked",
+                legal: true,
+                rank: 1,
+              },
+            ],
           },
         ],
       },
     };
-    expect(
-      reminderWords(choosing)
-        .slice(0, 3)
-        .map((entry) => entry.word),
-    ).toEqual(["1", "2", "3"]);
-    expect(completionCandidates(choosing)).toEqual(expect.arrayContaining(["1", "Ember"]));
+    expect(reminderWords(choosing).map((entry) => entry.word)).not.toContain("1");
+    expect(completionCandidates(choosing)).toEqual(expect.arrayContaining(["Ember"]));
   });
 });

@@ -16,7 +16,7 @@ import { snapshotPayload } from "./look.js";
 import { combatMoves } from "./combat-lock.js";
 import { encounterForViewer } from "./combat-party.js";
 import { DUEL_CHALLENGE_ID } from "./duel.js";
-import { primerPlayState } from "./primer.js";
+import { primerPlayState } from "./primer-book.js";
 import { equipmentSheet, wornSlotId } from "./equipment-slots.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
