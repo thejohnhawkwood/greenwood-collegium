@@ -65,28 +65,33 @@ export function PrimerStage({
         {leaf ? (
           <div className={`primer-fit primer-outline-${leaf.outline}`}>
             <div className="primer-page primer-page-left">
-              <img className="primer-page-plate" src={primerPage(leaf.schoolId)} alt="" />
+              <div className="primer-ornament">
+                <img className="primer-page-plate" src={primerPage(leaf.schoolId)} alt="" />
+              </div>
               {leaf.open ? (
                 <LeafPlate leaf={leaf} selectedId={selected?.id} onSelect={setSelectedId} />
               ) : null}
             </div>
             <div className="primer-page primer-page-right">
-              <h2 id="primer-heading">Field Primer</h2>
+              <p className="primer-kicker" id="primer-heading">
+                Field Primer
+              </p>
+              <h2 className="primer-school">{leaf.title}</h2>
+              <p className="primer-mentor">{leaf.mentor}</p>
               <p className="small-copy">{primer.prompt}</p>
               <p className="primer-ink" aria-label={`${String(primer.ink)} ink unspent`}>
-                <span>Unspent</span>
-                {primer.ink > 0 ? (
-                  Array.from({ length: primer.ink }, (_, index) => (
-                    <span key={index} className="primer-ink-pip" aria-hidden="true" />
-                  ))
-                ) : (
-                  <span className="is-later">none</span>
-                )}
+                <span>Unspent {primer.ink}</span>
+                {primer.ink > 0
+                  ? Array.from({ length: primer.ink }, (_, index) => (
+                      <span key={index} className="primer-ink-pip" aria-hidden="true" />
+                    ))
+                  : null}
               </p>
               <div className="primer-pages" role="tablist" aria-label="School leaves">
                 {leaves.map((entry) => (
                   <button
                     key={entry.schoolId}
+                    className="primer-tab"
                     type="button"
                     role="tab"
                     aria-selected={entry.schoolId === leaf.schoolId}
@@ -160,6 +165,7 @@ function LeafPlate({
           aria-label={nodeLabel(node)}
           onClick={() => onSelect(node.id)}
         >
+          <span className="primer-node-disc" aria-hidden="true" />
           <span
             className={
               node.ranks?.some((step) => step.held)
@@ -214,7 +220,7 @@ function VeinSpend({ node, onSpend }: { node?: PrimerNode; onSpend?: () => void 
         <p className="small-copy">{node.numbers}</p>
       ) : null}
       {node.legal && onSpend ? (
-        <button type="button" onClick={onSpend}>
+        <button className="primer-spend" type="button" onClick={onSpend}>
           Spend 1 ink
         </button>
       ) : null}

@@ -91,13 +91,44 @@ describe("PrimerStage", () => {
     expect(html).toContain("Field Primer");
     expect(html).toContain("/art/primer/primer-spread.png");
     expect(html).toContain("/art/primer/primer-page-ember.png");
+    expect(html).toContain("primer-node-disc");
     expect(html).toContain("Ember, inked I, spend 1 ink for II");
     expect(html).toContain("Blaze-Mantle, locked");
     expect(html).toContain("Spend 1 ink for rank II.");
+    expect(html).toContain('class="primer-spend"');
+    expect(html).toContain('aria-selected="true"');
     expect(html).toContain('class="is-held"');
     expect(html).toContain("Preview");
     expect(html).toContain("Focus 4. Damage 6. Burns 2.");
     expect(html).toContain("A small coal of will that lands and lingers.");
     expect(html).not.toContain("Vital leaf");
+  });
+
+  it("keeps a shut leaf as a closed page with no nodes", () => {
+    const html = renderToStaticMarkup(
+      createElement(PrimerStage, {
+        open: true,
+        primer: {
+          ink: 0,
+          prompt: "The Primer holds no ink.",
+          leaves: [
+            {
+              schoolId: "thorn",
+              title: "Thorns",
+              mentor: "Mentor Briar",
+              outline: "compound",
+              open: false,
+              nodes: [],
+            },
+          ],
+        },
+        onClose: () => {},
+        onSend: () => {},
+      }),
+    );
+    expect(html).toContain("/art/primer/primer-page-thorn.png");
+    expect(html).toContain("Thorns shut");
+    expect(html).toContain("Mentor Briar has not given you this leaf.");
+    expect(html).not.toContain("primer-node");
   });
 });
