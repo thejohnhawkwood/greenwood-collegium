@@ -62,7 +62,9 @@
             "job_id": null,
             "requested_parameters": {
               "aspect_ratio": "3:4",
-              "reference_image_paths": ["apps/web/public/art/characters/looks/mouse-female-fern.png"]
+              "reference_image_paths": [
+                "apps/web/public/art/characters/looks/mouse-female-fern.png"
+              ]
             },
             "accepted_or_reported_parameters": {
               "aspect_ratio": "3:4"
@@ -110,7 +112,11 @@
             "reviewed_at": "2026-09-22",
             "visual_inspection_performed": true,
             "technical_checks": ["fail: jpeg 864x1152 rgb, not 512x768 png"],
-            "style_checks": ["fail: thick uniform outline", "fail: smooth colour", "fail: paint covers the drawing"],
+            "style_checks": [
+              "fail: thick uniform outline",
+              "fail: smooth colour",
+              "fail: paint covers the drawing"
+            ],
             "identity_checks": ["pass: mouse, green tunic, rope belt, hands on hips, tail"],
             "observations": [
               "Cartoon contour and smooth fill. Not a pencil-crayon drawing.",
