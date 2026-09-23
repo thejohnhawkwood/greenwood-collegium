@@ -39,6 +39,7 @@ export const mapRoomSchema = z
     z: z.number().int().optional(),
     state: mapRoomVisibilitySchema,
     title: z.string().min(1).optional(),
+    quest: z.boolean().optional(),
   })
   .superRefine((room, ctx) => {
     if (room.state === "unknown" && room.title !== undefined) {

@@ -378,4 +378,52 @@ describe("visual play projection", () => {
     });
     expect(createPlayState(world, "peer")?.duelAsk).toBeUndefined();
   });
+
+  it("marks the current quest room without naming a place still in fog", () => {
+    const world = fixture();
+    world.questTemplates = {
+      ...world.questTemplates,
+      hearth: {
+        id: "hearth",
+        title: "First lessons",
+        introNarration: "Cinder waits.",
+        reminderNarration: "Cinder waits.",
+        experienceReward: 15,
+        objectives: [
+          {
+            id: "look-hearth",
+            kind: "look",
+            label: "Look around the hearth.",
+            roomId: "hall",
+          },
+        ],
+      },
+    };
+    world.quests = {
+      ...world.quests,
+      self: {
+        ...(world.quests?.self ?? {}),
+        hearth: {
+          questId: "hearth",
+          status: "active",
+          completedObjectiveIds: [],
+          rewardGranted: false,
+        },
+      },
+    };
+    const rooms = createPlayState(world, "self")?.minimap.rooms;
+    expect(rooms?.find((room) => room.id === "court")).toMatchObject({
+      title: "Court",
+      state: "current",
+    });
+    expect(rooms?.find((room) => room.id === "court")?.quest).toBeUndefined();
+    expect(rooms?.find((room) => room.id === "hall")).toEqual({
+      id: "hall",
+      x: 0,
+      y: 1,
+      z: 0,
+      state: "unknown",
+      quest: true,
+    });
+  });
 });

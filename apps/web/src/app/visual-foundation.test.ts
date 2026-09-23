@@ -147,8 +147,10 @@ describe("visual foundation", () => {
           ...state,
           minimap: {
             rooms: [
-              ...state.minimap.rooms,
-              { id: "hall", title: "Hall", x: 0, y: 1, state: "explored" },
+              ...state.minimap.rooms.map((room) =>
+                room.id === "fog" ? { ...room, quest: true as const } : room,
+              ),
+              { id: "hall", title: "Hall", x: 0, y: 1, state: "explored", quest: true },
             ],
             paths: [
               { from: "court", to: "hall" },
@@ -161,8 +163,11 @@ describe("visual foundation", () => {
     expect(world).toContain("You are here");
     expect(world).toContain("Court (you)");
     expect(world).toContain("Hall");
+    expect(world).toContain("Quest");
     expect(world).toContain("Travel to Hall");
-    expect(world).toContain('aria-label="Fog still hides that place."');
+    expect(world).toContain('aria-label="Travel to Hall. Quest"');
+    expect(world).toContain('aria-label="Quest. Fog still hides that place."');
+    expect(world).not.toContain(">Fog Room<");
     expect(world).not.toContain("Fogged");
     expect(mapPlaceMessage({ state: "unknown" })).toBe("Fog still hides that place.");
     expect(mapPlaceMessage({ state: "current", title: "Court" })).toBe("You are already in Court.");

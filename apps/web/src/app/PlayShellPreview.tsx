@@ -88,8 +88,8 @@ const previewState: PlayState = {
   minimap: {
     rooms: [
       { id: "porter-lodge", title: "Porter Lodge", x: 0, y: 0, state: "current" },
-      { id: "lantern-court", title: "Lantern Court", x: 0, y: -1, state: "explored" },
-      { id: "fog", x: 1, y: 0, state: "unknown" },
+      { id: "lantern-court", title: "Lantern Court", x: 0, y: -1, state: "explored", quest: true },
+      { id: "fog", x: 1, y: 0, state: "unknown", quest: true },
     ],
     paths: [
       { from: "porter-lodge", to: "lantern-court" },

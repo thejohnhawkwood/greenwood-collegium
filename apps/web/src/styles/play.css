@@ -2239,11 +2239,15 @@
   border-color: #f2cf7c;
   color: #f2cf7c;
 }
-.map-here {
+.map-here,
+.map-quest {
   display: block;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+.map-quest {
+  color: #f2cf7c;
 }
 .map-notice:empty {
   display: none;

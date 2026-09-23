@@ -90,9 +90,11 @@ export function Minimap({
       {rooms.map((room) => (
         <g key={room.id}>
           <title>
-            {room.state === "unknown"
-              ? "Unexplored"
-              : `${room.title ?? "Explored"}${room.state === "current" ? " — You are here" : ""}`}
+            {`${room.quest ? "Quest. " : ""}${
+              room.state === "unknown"
+                ? "Unexplored"
+                : `${room.title ?? "Explored"}${room.state === "current" ? " — You are here" : ""}`
+            }`}
           </title>
           <rect
             x={room.x - 0.13}
@@ -108,7 +110,7 @@ export function Minimap({
                   ? "#79aaa1"
                   : `url(#${patternId})`
             }
-            stroke={room.state === "unknown" ? "#6f7d68" : "none"}
+            stroke={room.quest ? "#f2cf7c" : room.state === "unknown" ? "#6f7d68" : "none"}
             strokeWidth="0.02"
           />
           {room.state === "unknown" ? (
@@ -163,12 +165,14 @@ export function Minimap({
                     className={`map-room-label map-room-${room.state}`}
                     style={style}
                     aria-label={
-                      place ??
-                      (canTravel
-                        ? `Travel to ${room.title}`
-                        : canPrepare
-                          ? `Prepare go ${direction}`
-                          : room.title)
+                      room.quest && room.state === "unknown"
+                        ? "Quest. Fog still hides that place."
+                        : (place ??
+                          (canTravel
+                            ? `Travel to ${room.title}${room.quest ? ". Quest" : ""}`
+                            : canPrepare
+                              ? `Prepare go ${direction}`
+                              : room.title))
                     }
                     onClick={() => {
                       if (place) {
@@ -180,10 +184,15 @@ export function Minimap({
                     }}
                   >
                     {room.state === "unknown" ? (
-                      <span aria-hidden="true">·</span>
+                      room.quest ? (
+                        <span className="map-quest">Quest</span>
+                      ) : (
+                        <span aria-hidden="true">·</span>
+                      )
                     ) : (
                       <>
                         <span className="map-room-name">{room.title}</span>
+                        {room.quest ? <span className="map-quest">Quest</span> : null}
                         {room.state === "current" ? (
                           <span className="map-here">You are here</span>
                         ) : null}

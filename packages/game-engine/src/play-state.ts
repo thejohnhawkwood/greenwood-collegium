@@ -53,6 +53,7 @@ export function createPlayState(
           z: candidate.map!.z ?? 0,
           state: current ? "current" : known ? "explored" : "unknown",
           ...(current || known ? { title: candidate.title } : {}),
+          ...(candidate.id === questDestinationId(world, character.id) ? { quest: true } : {}),
         };
       }),
       paths: mappedRooms.flatMap((candidate) =>
@@ -211,6 +212,18 @@ function splitQuestStep(raw: string): { label: string; hint?: string } {
     return { label: raw };
   }
   return { label: match[1].replace(/\.$/u, ""), hint: match[2] };
+}
+
+function questDestinationId(world: WorldState, characterId: string): string | undefined {
+  for (const template of Object.values(world.questTemplates ?? {})) {
+    const progress = world.quests?.[characterId]?.[template.id];
+    if (!progress || progress.status !== "active") continue;
+    const open = template.objectives.find(
+      (objective) => !progress.completedObjectiveIds.includes(objective.id),
+    );
+    if (open?.roomId) return open.roomId;
+  }
+  return undefined;
 }
 
 function outgoingDuelAsk(
