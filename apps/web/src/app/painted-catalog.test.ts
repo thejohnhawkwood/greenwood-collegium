@@ -5,7 +5,7 @@ import { inflateSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
 import { FX_FILES } from "./combat-fx.js";
 import { NPC_PLATE_FILES } from "./npc-plates.js";
-import { OBJECT_PLATE_FILES } from "./object-plates.js";
+import { OBJECT_PLATE_FILES, objectArtSrc } from "./object-plates.js";
 import { COLLEGIUM_ROOM_PLATES } from "./room-plates.js";
 import {
   APPEARANCE_ACCESSORIES,
@@ -169,12 +169,17 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a unique painted plate for every clickable room object and takeable item", () => {
-    expect(OBJECT_PLATE_FILES).toHaveLength(56);
+    expect(OBJECT_PLATE_FILES).toHaveLength(69);
     for (const id of OBJECT_PLATE_FILES) {
       const path = join(artRoot, "objects", `${id}.png`);
       expect(existsSync(path)).toBe(true);
       expect(statSync(path).size).toBeGreaterThan(15_000);
     }
+    expect(objectArtSrc("peat-lantern", "Peat Lantern")).toBe("/art/objects/peat-lantern.png");
+    expect(objectArtSrc("item-quest-the-east-watch-loot-patched-hood--moss", "Patched Hood")).toBe(
+      "/art/objects/patched-hood.png",
+    );
+    expect(objectArtSrc("wooden-guard", "Wooden Guard")).toBe("/art/objects/wooden-guard.png");
   });
   it("keeps a punched overlay for every combat FX plate", () => {
     expect(FX_FILES).toHaveLength(27);

@@ -55,6 +55,19 @@ export const OBJECT_PLATE_FILES = [
   "wren-hearth-charm",
   "abbey-mark-rubbing",
   "object-kitchen-initials",
+  "patched-hood",
+  "fog-glass-bead",
+  "peat-lantern",
+  "abbey-mark-ring",
+  "moor-boots",
+  "linen-wrap",
+  "path-boots",
+  "wooden-guard",
+  "slate-cap",
+  "glass-ring",
+  "quiet-cloak",
+  "thorn-ring",
+  "hearth-mitts",
 ] as const;
 
 const OBJECT_PLATE_ALIASES: Record<string, string> = Object.fromEntries(

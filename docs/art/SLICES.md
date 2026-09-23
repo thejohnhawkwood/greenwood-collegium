@@ -14,7 +14,7 @@ Heavy black contour, flat local colour behind it. Fur colour stays on fur. Cloth
 2. **The other looks.** Male Courtyard, both Scriptorium looks, and both Road looks accepted 22 September 2026.
 3. **Named cast.** The 21 files in `NPC_PLATE_FILES` were punched off `#EE3173`, fitted to 512×768, and copied into `apps/web/public/art/characters/npcs/` on 23 September 2026. The cache key is `comic-ink-1`. Tansy is `v003`, the hatchling is `v002`, the Silk Queen is `v003`, and the rest are `v001`.
 4. **Rooms.** All 40 room plates, including Lantern Court, were fitted to 1600×900 and copied into `apps/web/public/art/rooms/` on 23 September 2026. Sources stay in `art/sources/`. Lantern Court is `v003`, East Meadow is `v004`, Hearth of the Veil is `v002`, and the rest are `v001`.
-5. **Objects.** The 56 files in `OBJECT_PLATE_FILES` were generated 23 September 2026, punched off `#EE3173`, fitted to 512×640, and copied into `apps/web/public/art/objects/`. Sources are `art/sources/object_<id>__v001__comic-ink.png`.
+5. **Objects.** The 69 files in `OBJECT_PLATE_FILES` are in `apps/web/public/art/objects/`. The first 56 were generated 23 September 2026. The 13 carried pieces that had no plate — Patched Hood, Fog-Glass Bead, Peat Lantern, Abbey-Mark Ring, Moor Boots, Linen Wrap, Path Boots, Wooden Guard, Slate Cap, Glass Ring, Quiet Cloak, Thorn Ring, and Hearth Mitts — were added the same day. Wooden Guard is `v003`. Thorn Ring is `v002`. The rest of that set are `v001`.
 6. **Combat FX.** The 27 files in `FX_FILES`, Ember first.
 7. **Arrival procession.** `apps/web/public/frame/arrival-students.png`, after the species plates exist.
 
