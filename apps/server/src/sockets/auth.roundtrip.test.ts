@@ -236,6 +236,18 @@ describe("authenticated socket identity", () => {
         templateId: "field-primer",
         roomId: "lantern-court",
       }),
+      expect.objectContaining({
+        templateId: "practice-sling",
+        roomId: "south-orchard",
+      }),
+      expect.objectContaining({
+        templateId: "practice-staff",
+        roomId: "south-orchard",
+      }),
+      expect.objectContaining({
+        templateId: "practice-sword",
+        roomId: "south-orchard",
+      }),
     ]);
   });
 });
