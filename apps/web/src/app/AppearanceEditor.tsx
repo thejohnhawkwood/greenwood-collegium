@@ -8,7 +8,6 @@ import {
   appearanceSchema,
   snapAppearanceValue,
   type Appearance,
-  type AppearanceEditorField,
   type VisualGender,
 } from "@greenwood/contracts";
 import { CharacterPortrait } from "./CharacterPortrait.js";
@@ -91,14 +90,6 @@ export function AppearanceEditor({
       })}
     </fieldset>
   );
-}
-
-export function workshopSnap(
-  current: Appearance,
-  key: AppearanceEditorField,
-  index: number,
-): Appearance {
-  return { ...current, [key]: snapAppearanceValue(key, index), version: 2 };
 }
 
 function titleCase(value: string): string {

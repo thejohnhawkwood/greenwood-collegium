@@ -1,6 +1,7 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { PlayState } from "@greenwood/contracts";
 import { availableMapLevels, mapLevel, mapLevelLabel, nextMapLevel } from "./map-levels.js";
+import { mapPlaceMessage } from "./map-place.js";
 import {
   MAP_READABLE_SCALE,
   clampMapPan,
@@ -14,21 +15,8 @@ import {
 } from "./map-zoom.js";
 
 type MapSize = "compact" | "world";
-type MapRoom = PlayState["minimap"]["rooms"][number];
 
 export type MapTravelResult = { ok: boolean; message: string };
-
-/** Copy for a chart click that must not send travel. Explored rooms travel instead. */
-export function mapPlaceMessage(room: {
-  state: MapRoom["state"];
-  title?: string;
-}): string | undefined {
-  if (room.state === "unknown") return "Fog still hides that place.";
-  if (room.state === "current") {
-    return room.title ? `You are already in ${room.title}.` : "You are already here.";
-  }
-  return undefined;
-}
 
 export function Minimap({
   state,

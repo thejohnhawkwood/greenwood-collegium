@@ -4,7 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DEFAULT_APPEARANCE, snapAppearanceValue, type PlayState } from "@greenwood/contracts";
 import { AppearanceEditor } from "./AppearanceEditor.js";
 import { CharacterPortrait } from "./CharacterPortrait.js";
-import { mapPlaceMessage, Minimap, WorldMapDialog } from "./Minimap.js";
+import { mapPlaceMessage } from "./map-place.js";
+import { Minimap, WorldMapDialog } from "./Minimap.js";
 import { CollegiumLobby } from "./CollegiumLobby.js";
 import { PlayChrome } from "./PlayChrome.js";
 import { BagPanel } from "./BagPanel.js";
@@ -12,15 +13,13 @@ import { previewEquipmentSlots } from "./preview-equipment.js";
 import { PlayPanels } from "./PlayPanels.js";
 import { Noticeboard } from "./Noticeboard.js";
 import { QuestJournal } from "./QuestJournal.js";
+import { PresenceAvatars, PresenceMenu, PresenceZoom } from "./PresenceAvatars.js";
 import {
   forcedPresenceId,
   handOverlap,
   isConversationVisible,
-  PresenceAvatars,
-  PresenceMenu,
-  PresenceZoom,
   tokenKind,
-} from "./PresenceAvatars.js";
+} from "./presence-layout.js";
 import { presenceActions } from "./presence-actions.js";
 import { npcArtSrc } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
