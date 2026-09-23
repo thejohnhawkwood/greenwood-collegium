@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "hearth-mitts",
+  "name": "Hearth Mitts",
+  "shortDescription": "Wool mitts smoked at the cuff.",
+  "examineDescription": "Wool mitts smoked at the cuff. Cinder pressed them into your paws when the hearth lessons were done. They will sit on your paws if you wear them.",
+  "category": "ordinary",
+  "equipSlot": "gloves",
+  "unique": true
+}

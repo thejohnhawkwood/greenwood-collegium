@@ -72,6 +72,16 @@
       "type": "string",
       "minLength": 1,
       "description": "Spoken on combat.turn_started after the first lock (round > 1). Dummy stays quiet."
+    },
+    "reads": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": ["lunge", "brace", "gather"]
+      },
+      "description": "Cycle of foe beats. The card states the current read before the lock."
     }
   }
 }

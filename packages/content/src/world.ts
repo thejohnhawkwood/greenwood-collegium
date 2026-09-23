@@ -69,6 +69,7 @@ export type LoadedEnemy = {
   loot?: string[];
   victoryNarration?: string;
   lockNarration?: string;
+  reads?: Array<"lunge" | "brace" | "gather">;
 };
 
 export type LoadedSpellRank = {
@@ -280,6 +281,7 @@ export function toWorldState(
       ...(template.loot?.length ? { loot: [...template.loot] } : {}),
       ...(template.victoryNarration ? { victoryNarration: template.victoryNarration } : {}),
       ...(template.lockNarration ? { lockNarration: template.lockNarration } : {}),
+      ...(template.reads?.length ? { reads: [...template.reads] } : {}),
     };
   }
   const spells: Record<string, LoadedSpell> = {};

@@ -106,6 +106,7 @@ export const playStateSchema = z.object({
           }),
         )
         .min(1),
+      read: z.string().min(1).optional(),
     })
     .optional(),
   room: roomSnapshotPayloadSchema,

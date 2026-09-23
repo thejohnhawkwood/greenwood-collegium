@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "fog-glass-bead",
+  "name": "Fog-Glass Bead",
+  "shortDescription": "A bead of fogged glass on a cord.",
+  "examineDescription": "A bead of fogged glass on a cord. Wren closed your paw around it after you sat with Fen. It will sit at your throat if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "necklace",
+  "unique": true
+}

@@ -64,21 +64,21 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["attack"],
     summary: "Start a practice fight.",
     detail:
-      "Walk south from Lantern Court, then type attack dummy to square up. The foe card opens. Type attack, a spell, defend, or flee within twelve seconds. Later attacks can omit the name while the fight lasts. To fight a classmate, both of you must agree. Type duel and their name.",
+      "Walk south from Lantern Court, then type attack dummy to square up. The foe card names the read. Type attack, a spell, defend, or flee within twelve seconds. The same swing or the same leaf, twice in a row, lands lighter. A guard meets a lean-in and loads your next blow. A stick glances off set feet. A spark does not. Strike when they draw back, or the next swing is heavier. To fight a classmate, both of you must agree. Type duel and their name.",
   },
   {
     topic: "duel",
     aliases: ["duel", "accept", "decline"],
     summary: "Ask a classmate to duel. Both must agree.",
     detail:
-      "Type duel and the given name of a classmate standing in the same room. They type duel accept or duel decline. Attack on a classmate without an accepted duel is refused. Type 1 or 2 if the challenge prompt is open.",
+      "Type duel and the given name of a classmate standing in the same room. They type duel accept or duel decline. Attack on a classmate without an accepted duel is refused. Type 1 or 2 if the challenge prompt is open. The same lesson from both of you lands light. A guard covers their swing or spark and loads your next blow.",
   },
   {
     topic: "defend",
     aliases: ["defend", "guard", "block"],
     summary: "Raise a guard and take half the next blow.",
     detail:
-      "defend (or guard, block) locks a guard for this turn. The foe still answers, but the hit is halved. If the twelve-second clock runs out, the lesson chooses defend for you.",
+      "defend (or guard, block) locks a guard for this turn. A lean-in is halved, and your next blow lands heavier. A classmate's swing or spark is covered the same way. If the twelve-second clock runs out, the lesson chooses defend for you.",
   },
   {
     topic: "flee",

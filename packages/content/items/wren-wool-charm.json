@@ -3,7 +3,8 @@
   "id": "wren-wool-charm",
   "name": "Wren's Wool Charm",
   "shortDescription": "A twist of fold-wool on a string.",
-  "examineDescription": "Wren tied this after the uncounted flock. The wool still smells of wet fold and peat-smoke. She said keep it if the mist starts sitting the rail again.",
+  "examineDescription": "Wren tied this after the uncounted flock. The wool still smells of wet fold and peat-smoke. She said keep it if the mist starts sitting the rail again. It will sit as a cloak if you wear it.",
   "category": "ordinary",
+  "equipSlot": "cloak",
   "unique": true
 }

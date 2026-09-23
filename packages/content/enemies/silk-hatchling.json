@@ -9,6 +9,7 @@
   "maxFocus": 8,
   "attack": 3,
   "experience": 8,
+  "reads": ["lunge", "gather", "lunge"],
   "loot": ["torn-silk-strand"],
   "lockNarration": "Silk pulls tighter around the husk.",
   "victoryNarration": "The Silk Hatchling goes still. The opened husk stays sweet. It is not a queen, and it is not Holm."

@@ -112,11 +112,26 @@ describe("content loader", () => {
         name: "Field Primer Book",
         roomId: START_ROOM_ID,
       }),
+      expect.objectContaining({
+        id: "item-practice-sling-south-orchard",
+        templateId: "practice-sling",
+        roomId: "south-orchard",
+      }),
+      expect.objectContaining({
+        id: "item-practice-staff-south-orchard",
+        templateId: "practice-staff",
+        roomId: "south-orchard",
+      }),
+      expect.objectContaining({
+        id: "item-practice-sword-south-orchard",
+        templateId: "practice-sword",
+        roomId: "south-orchard",
+      }),
     ]);
     expect(world.itemTemplates["small-copper-key"]?.name).toBe("Small Copper Key");
     expect(world.itemTemplates["librarians-ribbon"]?.name).toBe("Librarian's Ribbon");
     expect(world.quests["the-missing-pages"]?.itemRewardTemplateId).toBe("librarians-ribbon");
-    expect(Object.keys(world.items)).toHaveLength(4);
+    expect(Object.keys(world.items)).toHaveLength(1);
     expect(world.enemies["enemy-practice-dummy-south-orchard"]).toMatchObject({
       templateId: "practice-dummy",
       name: "Practice Dummy",
@@ -125,6 +140,7 @@ describe("content loader", () => {
       maxFocus: 6,
       attack: 2,
       experience: 0,
+      reads: ["lunge", "brace", "gather"],
     });
     expect(world.enemies["enemy-silk-queen-deep-cradle"]).toMatchObject({
       templateId: "silk-queen",
@@ -204,7 +220,7 @@ describe("content loader", () => {
       world.quests["what-still-sleeps"]?.objectives.map((objective) => objective.kind),
     ).toContain("defeat");
     expect(world.quests["the-meadow-fork"]?.giverNpcId).toBe("npc-shepherd-wren");
-    expect(Object.keys(world.quests)).toHaveLength(31);
+    expect(Object.keys(world.quests)).toHaveLength(33);
     expect(world.rooms["south-orchard"]?.fixtures.map((fixture) => fixture.id)).toContain(
       "object-orchard-apples",
     );

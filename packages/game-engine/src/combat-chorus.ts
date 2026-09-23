@@ -20,6 +20,7 @@ import {
 } from "./combat-resolve.js";
 import { activeEncounter, closeEncounter } from "./combat-state.js";
 import { dropEncounterMember, encounterMembers, isDuel, partyNotices } from "./combat-party.js";
+import { awardDuelGuards, markDuelStrikeLights } from "./combat-read.js";
 import { systemNotice } from "./system-notice.js";
 import type { Character, Encounter, EngineRuntime, LockedCombatMove, WorldState } from "./state.js";
 
@@ -73,6 +74,7 @@ export function resolveChorus(
 ): CombatSuccess {
   const events: EventEnvelope[] = [];
   const notices: CombatSuccess["notices"] = [];
+  markDuelStrikeLights(world.characters, encounter);
   const order = encounterMembers(encounter);
   for (const id of order) {
     const member = world.characters[id];
@@ -113,6 +115,7 @@ export function resolveChorus(
     };
   }
 
+  awardDuelGuards(world.characters, encounter);
   encounter.locked = {};
   if (isDuel(encounter)) {
     return fanActor(

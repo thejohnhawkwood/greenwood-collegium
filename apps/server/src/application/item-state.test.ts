@@ -13,9 +13,6 @@ describe("item-state starter copies", () => {
   it("seeds only shared room items from a fresh world", () => {
     const world = createDevWorld();
     expect(itemSeedsFromWorld(world).map((seed) => seed.id)).toEqual([
-      "item-practice-sling-south-orchard",
-      "item-practice-staff-south-orchard",
-      "item-practice-sword-south-orchard",
       "item-primer-library-stacks",
     ]);
   });
@@ -41,6 +38,21 @@ describe("item-state starter copies", () => {
         id: starterInstanceId("item-field-primer-lantern-court", "char-rowan"),
         templateId: "field-primer",
         roomId: "lantern-court",
+      },
+      {
+        id: starterInstanceId("item-practice-sling-south-orchard", "char-rowan"),
+        templateId: "practice-sling",
+        roomId: "south-orchard",
+      },
+      {
+        id: starterInstanceId("item-practice-staff-south-orchard", "char-rowan"),
+        templateId: "practice-staff",
+        roomId: "south-orchard",
+      },
+      {
+        id: starterInstanceId("item-practice-sword-south-orchard", "char-rowan"),
+        templateId: "practice-sword",
+        roomId: "south-orchard",
       },
     ]);
     expect((await items.list()).some((record) => record.id === personalId)).toBe(true);

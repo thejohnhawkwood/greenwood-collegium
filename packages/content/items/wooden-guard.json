@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "wooden-guard",
+  "name": "Wooden Guard",
+  "shortDescription": "A light wooden guard for the off paw.",
+  "examineDescription": "A light wooden guard for the off paw. Edge oiled it and did not call it a shield. It will sit in your off hand if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "off-hand",
+  "unique": true
+}

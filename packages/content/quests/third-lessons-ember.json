@@ -4,8 +4,9 @@
   "title": "Alder's Leave: Ember",
   "introNarration": "Cinder hangs the tongs and sends you to Alder. The grate ticks behind her. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
   "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Cinder. The oatcakes are still a little too near the coals.",
-  "completionNarration": "College lessons in this hearth are complete. Cinder inks the leave in the Primer. Keep the book. Each new lesson grants one ink. Eat something warm before you take a cold road.",
+  "completionNarration": "College lessons in this hearth are complete. Cinder inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She sets a pair of hearth mitts on the grate rail. Wear them if you want the soot on your paws. Eat something warm before you take a cold road.",
   "experienceReward": 25,
+  "itemRewardTemplateId": "hearth-mitts",
   "objectives": [
     {
       "id": "talk-alder",

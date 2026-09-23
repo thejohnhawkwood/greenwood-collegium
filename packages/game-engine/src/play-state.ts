@@ -18,6 +18,8 @@ import { encounterForViewer } from "./combat-party.js";
 import { DUEL_CHALLENGE_ID } from "./duel.js";
 import { primerPlayState } from "./primer-book.js";
 import { equipmentSheet, wornSlotId } from "./equipment-slots.js";
+import { readPrompt } from "./combat-read.js";
+import { wearRewardPhrase } from "./gear-help.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
@@ -119,6 +121,7 @@ export function createPlayState(
     encounter: encounter
       ? (() => {
           const viewed = encounterForViewer(world, encounter, characterId);
+          const read = readPrompt(viewed);
           return {
             id: viewed.id,
             round: viewed.round,
@@ -133,6 +136,7 @@ export function createPlayState(
               maxFocus: viewed.enemy.maxFocus,
             },
             moves: combatMoves(world, character),
+            ...(read ? { read } : {}),
           };
         })()
       : undefined,
@@ -160,10 +164,12 @@ function questRewardLine(
   template: NonNullable<WorldState["questTemplates"]>[string],
 ): string {
   const experience = `${String(template.experienceReward)} experience`;
-  const itemName = template.itemRewardTemplateId
-    ? world.itemTemplates?.[template.itemRewardTemplateId]?.name
+  const item = template.itemRewardTemplateId
+    ? world.itemTemplates?.[template.itemRewardTemplateId]
     : undefined;
-  return itemName ? `${experience}. ${itemName}.` : experience;
+  if (!item) return experience;
+  const worn = wearRewardPhrase(item.equipSlot);
+  return worn ? `${experience}. ${item.name}. ${worn}.` : `${experience}. ${item.name}.`;
 }
 
 function questJournal(world: WorldState, characterId: string) {

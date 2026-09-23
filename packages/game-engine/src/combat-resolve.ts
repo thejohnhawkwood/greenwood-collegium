@@ -40,6 +40,7 @@ import {
   rollAttackDamage,
   worldEncounters,
 } from "./combat-state.js";
+import { applyIncomingGuard } from "./gear-help.js";
 import { progressQuests } from "./arrival.js";
 import { maybeOpenWorldPrimer } from "./primer-book.js";
 import { levelForExperience } from "./progression.js";
@@ -56,6 +57,7 @@ import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
 import type { Character, Encounter, EnemySpawn, EngineRuntime, WorldState } from "./state.js";
 import { beginLockWindow, enemyFocusFromSpawn } from "./combat-lock.js";
+import { foeRead, readPrompt } from "./combat-read.js";
 import {
   dropEncounterMember,
   encounterForViewer,
@@ -257,6 +259,7 @@ export function prepareEncounter(
     spawnId: spawn.id,
     lockDeadlineAt: runtime.now().toISOString(),
     ...(spawn.lockNarration ? { lockNarration: spawn.lockNarration } : {}),
+    ...(spawn.reads?.length ? { reads: [...spawn.reads] } : {}),
     enemy: {
       id: spawn.id,
       name: spawn.name,
@@ -354,6 +357,24 @@ export function deliverEnemyReply(
   runtime: EngineRuntime,
   skipCounter: boolean,
 ): "ongoing" | "defeat" {
+  const read = foeRead(encounter);
+  if (read !== "lunge") {
+    character.defending = undefined;
+    if (!encounter.readSettled) {
+      encounter.readSettled = true;
+      if (read === "gather" && !encounter.woundedThisRound) {
+        encounter.gatherPending = true;
+      }
+      const line =
+        read === "brace"
+          ? `The ${encounter.enemy.name} holds still.`
+          : encounter.woundedThisRound
+            ? `You catch the ${encounter.enemy.name} drawing back.`
+            : `The ${encounter.enemy.name} finishes drawing back.`;
+      events.push(systemNotice(character.id, line, runtime));
+    }
+    return "ongoing";
+  }
   if (character.ignoreNextHit) {
     character.ignoreNextHit = false;
     character.defending = undefined;
@@ -372,6 +393,9 @@ export function deliverEnemyReply(
     return "ongoing";
   }
   let raw = rollAttackDamage(encounter.enemy.attack, nextRoll(runtime));
+  if (encounter.gatherPending) {
+    raw += 2;
+  }
   if (character.halveNextHit) {
     raw = Math.floor(raw / 2);
     character.halveNextHit = undefined;
@@ -386,8 +410,12 @@ export function deliverEnemyReply(
     raw = Math.max(1, raw - 2);
     encounter.effects = encounter.effects.filter((effect) => effect.id !== "weaken");
   }
-  const enemyDamage = character.defending ? Math.floor(raw / 2) : raw;
+  const replied = character.defending ? Math.floor(raw / 2) : raw;
+  if (character.defending) {
+    character.nextStrikeBonus = (character.nextStrikeBonus ?? 0) + 2;
+  }
   character.defending = undefined;
+  const enemyDamage = applyIncomingGuard(character, replied);
   character.health = Math.max(0, (character.health ?? DEFAULT_PLAYER_MAX_HEALTH) - enemyDamage);
   if (enemyDamage > 0) {
     character.hitThisEncounter = true;
@@ -423,6 +451,11 @@ export function advanceEncounterClock(
   events: EventEnvelope[],
   runtime: EngineRuntime,
 ): void {
+  if (foeRead(encounter) === "lunge") {
+    encounter.gatherPending = undefined;
+  }
+  encounter.woundedThisRound = undefined;
+  encounter.readSettled = undefined;
   tickBurning(encounter, events, runtime, character.id);
   if (encounter.enemy.health <= 0) {
     return;
@@ -823,14 +856,15 @@ function turnEvent(
   encounter: Encounter,
   runtime: EngineRuntime,
 ): CombatTurnStartedEvent {
+  const read = readPrompt(encounter);
+  const authored = encounter.round > 1 ? encounter.lockNarration : undefined;
+  const lockNarration = read && authored ? `${read} ${authored}` : read ?? authored;
   const payload = {
     encounterId: encounter.id,
     round: encounter.round,
     actorId: character.id,
     actorName: character.name,
-    ...(encounter.round > 1 && encounter.lockNarration
-      ? { lockNarration: encounter.lockNarration }
-      : {}),
+    ...(lockNarration ? { lockNarration } : {}),
   };
   const narration = formatCombatTurnStartedText(payload);
   return combatTurnStartedEventSchema.parse({

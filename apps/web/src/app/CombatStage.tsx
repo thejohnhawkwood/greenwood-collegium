@@ -86,6 +86,7 @@ export function CombatStage({
       aria-label={`Fighting ${foe.name}`}
     >
       <p className="combat-stage-round">Round {encounter.round}</p>
+      {encounter.read ? <p className="combat-stage-read">{encounter.read}</p> : null}
       <div className="combat-pair">
         {player ? (
           <section

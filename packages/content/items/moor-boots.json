@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "moor-boots",
+  "name": "Moor Boots",
+  "shortDescription": "Boots lined with fold-wool.",
+  "examineDescription": "Boots lined with fold-wool. Wren set them by the door after the waystone. They smell of peat-smoke and oatcakes. They will sit on your feet if you wear them.",
+  "category": "ordinary",
+  "equipSlot": "boots",
+  "unique": true
+}

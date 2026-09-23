@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "slate-cap",
+  "name": "Slate Cap",
+  "shortDescription": "A felt cap with a slate-grey band.",
+  "examineDescription": "A felt cap with a slate-grey band. Quern dusted it and said the hill can wait. It will sit on your head if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "helmet",
+  "unique": true
+}

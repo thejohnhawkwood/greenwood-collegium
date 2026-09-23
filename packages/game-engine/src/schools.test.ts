@@ -195,6 +195,7 @@ describe("school hearth after a choice", () => {
     ]);
     handleAttack(realm, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
     handleAttack(realm, { verb: "attack", characterId: "char-rowan" }, clock);
+    handleAttack(realm, { verb: "attack", characterId: "char-rowan" }, clock);
     const win = handleAttack(realm, { verb: "attack", characterId: "char-rowan" }, clock);
     expect(win.ok && win.outcome).toBe("victory");
     expect(realm.quests?.["char-rowan"]?.["first-lessons-steel"]?.completedObjectiveIds).toEqual([

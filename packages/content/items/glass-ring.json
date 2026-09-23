@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "glass-ring",
+  "name": "Glass Ring",
+  "shortDescription": "A small glass ring with a brass fleck.",
+  "examineDescription": "A small glass ring with a brass fleck caught in it. Lumen said it was for counting, not for light. It will sit on a finger if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "ring",
+  "unique": true
+}

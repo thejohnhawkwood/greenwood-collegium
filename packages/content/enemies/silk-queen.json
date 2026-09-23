@@ -9,6 +9,7 @@
   "maxFocus": 12,
   "attack": 5,
   "experience": 20,
+  "reads": ["gather", "lunge", "brace"],
   "minParty": 3,
   "loot": ["queen-silk-cord"],
   "lockNarration": "Threads tighten around the cradle.",

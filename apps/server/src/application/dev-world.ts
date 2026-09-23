@@ -55,6 +55,7 @@ export function createDevWorld(): WorldState {
           ...(enemy.loot?.length ? { loot: [...enemy.loot] } : {}),
           ...(enemy.victoryNarration ? { victoryNarration: enemy.victoryNarration } : {}),
           ...(enemy.lockNarration ? { lockNarration: enemy.lockNarration } : {}),
+          ...(enemy.reads?.length ? { reads: [...enemy.reads] } : {}),
         },
       ]),
     ),

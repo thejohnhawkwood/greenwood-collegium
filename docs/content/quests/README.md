@@ -18,6 +18,8 @@ and JSON authoring stay in [adventures.md](../adventures.md).
 
 - [The Missing Pages](the-missing-pages.md) — `the-missing-pages`
 - [A Little Room to Grow](a-little-room-to-grow.md) — `a-little-room-to-grow`
+- [Porter's Night Round](porters-night-round.md) — `porters-night-round`
+- [Fen's Linen](fens-linen.md) — `fens-linen`
 
 Flint’s orchard is practice and consented duels, not a quest file.
 

@@ -2,5 +2,6 @@
   "$schema": "../schemas/placement.schema.json",
   "id": "item-practice-staff-south-orchard",
   "templateId": "practice-staff",
-  "roomId": "south-orchard"
+  "roomId": "south-orchard",
+  "starterPerCharacter": true
 }

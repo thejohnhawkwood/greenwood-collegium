@@ -5,9 +5,10 @@
   "giverNpcId": "npc-shepherd-wren",
   "requiresQuestIds": ["the-barrow-mouth"],
   "experienceReward": 40,
+  "itemRewardTemplateId": "fog-glass-bead",
   "introNarration": "Wren does not sit. The peat fire pops. \"The lip of the barrow. Examine what the fog took. Then talk wren here. Then talk fen in the Infirmary — soap, rosemary, honey, the breathing wheel. I am owed the name before Alder is. Sit with Fen after. Nobody earns extra courage by pretending not to hurt.\"",
   "reminderNarration": "\"Examine what the fog took under the barrow lip. Talk wren. Then talk fen. Type east from the Porter Lodge for the Infirmary. Type quests for the list. Do not invent a fight you already missed.\"",
-  "completionNarration": "You told Wren, then sat with Fen until your paws felt like paws again. Two keepers. Two witnesses who lived. Piper under the tower. Wren at the kettle. Eat. The bronze in the hill is Alder's question now.",
+  "completionNarration": "You told Wren, then sat with Fen until your paws felt like paws again. Wren closes your paw around a fog-glass bead. Two keepers. Two witnesses who lived. Piper under the tower. Wren at the kettle. Eat. The bronze in the hill is Alder's question now.",
   "objectives": [
     {
       "id": "read-colm",

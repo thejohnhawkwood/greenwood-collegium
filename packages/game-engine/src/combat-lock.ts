@@ -1,3 +1,4 @@
+import { castFocusCost } from "./gear-help.js";
 import { schoolKit } from "./schools.js";
 import type { Character, Encounter, EnemySpawn, EngineRuntime, WorldState } from "./state.js";
 
@@ -32,7 +33,7 @@ export function combatMoves(world: WorldState, character: Character): CombatMove
   const spells = kit.length > 0 ? kit : ember ? [ember] : [];
   const focus = character.focus ?? 0;
   const casts = spells.flatMap((spell) => {
-    if (spell.focusCost > focus) {
+    if (castFocusCost(character, spell.focusCost, true) > focus) {
       return [];
     }
     if (spell.effect === "riposte" && !character.hitThisEncounter) {

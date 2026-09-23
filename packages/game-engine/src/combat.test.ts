@@ -120,14 +120,24 @@ describe("combat slice", () => {
     if (!second.ok) {
       return;
     }
-    expect(second.outcome).toBe("victory");
-    expect(second.events.map((event) => event.type)).toEqual([
+    expect(second.outcome).toBe("ongoing");
+    const light = combatActionResolvedEventSchema.parse(second.events[0]);
+    expect(light.payload.damage).toBe(2);
+    expect(light.narration).toContain("The same motion is easy to read.");
+
+    const finishing = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    expect(finishing.ok).toBe(true);
+    if (!finishing.ok) {
+      return;
+    }
+    expect(finishing.outcome).toBe("victory");
+    expect(finishing.events.map((event) => event.type)).toEqual([
       "combat.action_resolved",
       "combat.ended",
       "progress.experience_gained",
     ]);
-    expect(combatEndedEventSchema.parse(second.events[1]).payload.outcome).toBe("victory");
-    expect(experienceGainedEventSchema.parse(second.events[2]).payload).toMatchObject({
+    expect(combatEndedEventSchema.parse(finishing.events[1]).payload.outcome).toBe("victory");
+    expect(experienceGainedEventSchema.parse(finishing.events[2]).payload).toMatchObject({
       amount: 5,
       total: 5,
     });
@@ -155,6 +165,7 @@ describe("combat slice", () => {
     handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     world.characters["char-moss"] = {
       id: "char-moss",
       name: "Moss the Mole",
@@ -167,6 +178,7 @@ describe("combat slice", () => {
     expect(rowanLook.ok && rowanLook.event.narration).toContain("Practice Dummy");
 
     handleAttack(world, { verb: "attack", characterId: "char-moss", target: "dummy" }, clock);
+    handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
     const mossWin = handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
     expect(mossWin.ok && mossWin.outcome).toBe("victory");
@@ -192,6 +204,7 @@ describe("combat slice", () => {
     const clock = runtime(0.5);
     handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     const last = handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     expect(last.ok && last.outcome).toBe("victory");
     expect(
@@ -205,12 +218,24 @@ describe("combat slice", () => {
       roomId: "south-orchard",
       availableToCharacterId: "char-rowan",
     });
+    world.characters["char-moss"] = {
+      id: "char-moss",
+      name: "Moss the Mole",
+      roomId: "south-orchard",
+      discoveredRoomIds: ["south-orchard"],
+    };
+    const rowanLook = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    const mossLook = handleLook(world, { verb: "look", characterId: "char-moss" }, clock);
+    expect(rowanLook.ok && rowanLook.event.narration).toContain("Straw Practice Scrap");
+    expect(mossLook.ok && mossLook.event.narration).not.toContain("Straw Practice Scrap");
     const taken = handleTake(
       world,
       { verb: "take", characterId: "char-rowan", target: "scrap" },
       clock,
     );
     expect(taken.ok).toBe(true);
+    const afterTake = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    expect(afterTake.ok && afterTake.event.narration).not.toContain("Straw Practice Scrap");
   });
 
   it("uses the injected roll so a low roll deals less damage", () => {
@@ -348,6 +373,7 @@ describe("combat slice", () => {
     };
     const clock = runtime(0.5);
     handleAttack(world, { verb: "attack", characterId: "char-rowan", target: "dummy" }, clock);
+    handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     handleAttack(world, { verb: "attack", characterId: "char-rowan" }, clock);
     const rowanLook = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);

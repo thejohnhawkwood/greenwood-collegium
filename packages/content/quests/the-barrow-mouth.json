@@ -5,9 +5,10 @@
   "giverNpcId": "npc-shepherd-wren",
   "requiresQuestIds": ["the-stones-that-were-not-there"],
   "experienceReward": 35,
+  "itemRewardTemplateId": "peat-lantern",
   "introNarration": "Wren's kettle ticks too fast. She hates this sentence and says it anyway. \"North of the stones, through the peat-cut — black water, old tea and iron, fog at the knee. The barrow mouth opens under a lip of turf. Examine Colm's Spare Cloak on the stone. Wet wool, not silk. Enough to scare. Not a body. The Barrow Guard is peat-and-bone that is not a dog. Defeat it if it squares up. Then talk wren. If you find him, you come to me before you go to Alder. I am owed that.\"",
   "reminderNarration": "\"Type north from the Standing Stones, then north again. Examine the spare cloak. Defeat the barrow-guard. Then talk wren here. Do not skip me for the High Study. Type quests for the list.\"",
-  "completionNarration": "You name the folded cloak and the guard that was not a dog. Wren's paws shake once on the kettle. \"You found the spare. Now the lip of the barrow. Examine what the fog took. Then come to me. Do not go to Alder first.\"",
+  "completionNarration": "You name the folded cloak and the guard that was not a dog. Wren's paws shake once on the kettle. She puts a small peat lantern in your off paw. It is not the crook. \"You found the spare. Now the lip of the barrow. Examine what the fog took. Then come to me. Do not go to Alder first.\"",
   "objectives": [
     {
       "id": "reach-mouth",

@@ -147,6 +147,7 @@ Not a second exit table — use [room-and-quest-summary.md](room-and-quest-summa
 - **South Orchard** is Flint. Practice is honest. It is not the queen.
 - **Herb Garden parish** is Tansy and Fen.
 - **River Landing** is held for a later otter series. Do not steal it for 4–10.
+- Worn quest clothes are a record of the walk ([ADR-0043](../adr/0043-paper-doll-helps.md)). They are not a second plot and they do not raise the Primer's health or focus.
 - **West Cloister / Porter Lodge / dorms / kitchens** may nod at the spine. They
   are not fetch hubs.
 
@@ -154,7 +155,7 @@ Not a second exit table — use [room-and-quest-summary.md](room-and-quest-summa
 
 ## 6. The spine
 
-Live JSON: 31 quests, 46 rooms. Cross-quest prereqs use `requiresQuestIds` plus
+Live JSON: 33 quests, 46 rooms. Cross-quest prereqs use `requiresQuestIds` plus
 Alder/Wren engine offers (Arrival auto-start, school pick, lesson chain, Alder bell
 and moor offers). `giverNpcId` is used by Missing Pages, A Little Room to Grow, and
 Wren’s L4–L8.
@@ -177,6 +178,8 @@ Side, any time, never required:
 ```text
 talk Quill  → The Missing Pages          docs/content/quests/the-missing-pages.md
 talk Tansy  → A Little Room to Grow      docs/content/quests/a-little-room-to-grow.md
+talk Porter → Porter's Night Round       docs/content/quests/porters-night-round.md
+talk Fen    → Fen's Linen                 docs/content/quests/fens-linen.md
 Flint       → practice / duel only
 ```
 

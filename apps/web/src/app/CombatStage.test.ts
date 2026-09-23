@@ -20,6 +20,7 @@ const encounter = {
     focus: 6,
     maxFocus: 6,
   },
+  read: "Practice Dummy leans in. A guard meets the swing and loads your next blow.",
   moves: [
     { label: "Attack", command: "attack", kind: "attack" as const },
     { label: "Ember", command: "cast ember", kind: "cast" as const },
@@ -65,6 +66,7 @@ describe("CombatStage", () => {
     const html = renderToStaticMarkup(createElement(CombatStage, { encounter, onSend: () => {} }));
     expect(html).toContain('aria-label="Fighting Practice Dummy"');
     expect(html).toContain("Round 1");
+    expect(html).toContain("Practice Dummy leans in.");
     expect(html).toContain("Health 8 / 8");
     expect(html).toContain("Focus 6 / 6");
     expect(html).toContain(npcArtSrc("enemy-practice-dummy-south-orchard"));

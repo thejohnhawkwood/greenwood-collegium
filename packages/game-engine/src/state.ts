@@ -101,6 +101,16 @@ export type Character = {
   ashShroud?: boolean;
   readySpellIds?: string[];
   readySpellBonus?: number;
+  /** First incoming hit of this fight already took the paper-doll guard. */
+  gearGuardUsed?: boolean;
+  /** First cast of this fight already took the paper-doll focus help. */
+  gearFocusUsed?: boolean;
+  /** Last committed swing or leaf. The same one, next lock, lands lighter. */
+  lastStrike?: string;
+  /** Extra damage on the next swing or spark after a guard that met a blow. */
+  nextStrikeBonus?: number;
+  /** Set for this lock when a classmate mirrors the lesson or covers it. */
+  strikeLight?: "mirror" | "guard";
 };
 
 export type SpellTag = "strike" | "control" | "ward" | "gift";
@@ -234,6 +244,7 @@ export type EnemySpawn = {
   loot?: string[];
   victoryNarration?: string;
   lockNarration?: string;
+  reads?: Array<"lunge" | "brace" | "gather">;
 };
 
 export type LockedCombatMove = {
@@ -264,6 +275,11 @@ export type Encounter = {
   kind?: "duel";
   lockDeadlineAt: string;
   lockNarration?: string;
+  reads?: Array<"lunge" | "brace" | "gather">;
+  /** The foe drew back and was not struck, so the next lean-in hits harder. */
+  gatherPending?: boolean;
+  woundedThisRound?: boolean;
+  readSettled?: boolean;
   enemy: EncounterCombatant;
   effects: StatusEffect[];
 };

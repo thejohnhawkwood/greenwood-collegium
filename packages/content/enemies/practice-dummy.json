@@ -9,5 +9,6 @@
   "maxFocus": 6,
   "attack": 2,
   "experience": 0,
+  "reads": ["lunge", "brace", "gather"],
   "loot": ["straw-practice-scrap"]
 }

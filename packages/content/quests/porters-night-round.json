@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "porters-night-round",
+  "title": "Porter's Night Round",
+  "giverNpcId": "npc-porter-bramble",
+  "requiresQuestIds": ["arrival-at-the-collegium"],
+  "experienceReward": 10,
+  "itemRewardTemplateId": "path-boots",
+  "introNarration": "Porter taps the whistle against his coat and does not blow it. \"Arrival is done. The night round is a walk, not a race. Type west to the West Cloister and look at the arches. Then the lodge: east back to this court, east to the East Gate, north to the Porter Lodge. Come back and talk porter. I will be here. The kettle in the lodge can mind itself.\"",
+  "reminderNarration": "\"West to the West Cloister. Then east, east, and north to the Porter Lodge. Come back and talk porter in Lantern Court. Type quests if you lose the list. It is a walk.\"",
+  "completionNarration": "You name the moss in the cloister and the kettle in the lodge. Porter sets a pair of soft boots on the noticeboard ledge. Court-dust already sits in the seams. \"Wear them if you like. They will not make you faster, and they will not turn a blow. The round is the point.\"",
+  "objectives": [
+    {
+      "id": "walk-cloister",
+      "kind": "visit",
+      "roomId": "west-cloister",
+      "label": "Walk the West Cloister. Type west from Lantern Court."
+    },
+    {
+      "id": "walk-lodge",
+      "kind": "visit",
+      "roomId": "porter-lodge",
+      "label": "Reach the Porter Lodge. Type east to Lantern Court, east to the East Gate, then north."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-porter-bramble",
+      "requires": ["walk-cloister", "walk-lodge"],
+      "label": "Return and talk porter in Lantern Court. Type south from the lodge, then west."
+    }
+  ]
+}

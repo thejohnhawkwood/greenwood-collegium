@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "abbey-mark-ring",
+  "name": "Abbey-Mark Ring",
+  "shortDescription": "A clay ring stamped with three circles.",
+  "examineDescription": "A clay ring stamped with three circles. It is not the rubbing. Wren said the mark can sit on a paw. The rubbing stays in the bag.",
+  "category": "ordinary",
+  "equipSlot": "ring",
+  "unique": true
+}

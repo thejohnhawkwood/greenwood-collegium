@@ -82,6 +82,11 @@ export function dropEncounterMember(
     character.nextAttackBonus = undefined;
     character.ignoreNextHit = undefined;
     character.hitThisEncounter = undefined;
+    character.gearGuardUsed = undefined;
+    character.gearFocusUsed = undefined;
+    character.lastStrike = undefined;
+    character.nextStrikeBonus = undefined;
+    character.strikeLight = undefined;
   }
   encounter.playerIds = encounterMembers(encounter).filter((id) => id !== characterId);
   if (encounter.playerId === characterId) {

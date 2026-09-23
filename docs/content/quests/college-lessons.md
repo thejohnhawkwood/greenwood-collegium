@@ -18,7 +18,7 @@ School pick is Alder’s High Study tree. He sends the Collegian to the Hall of 
 | --- | --- | --- | --- |
 | First | 15 | `look` hearth → `defeat` dummy → `talk` mentor | Ink the signature stem; start second + Bell Below |
 | Second | 20 | `cast` the signature in the hearth → `talk` mentor | Grant lesson-4 ink; start third |
-| Third (“Alder’s Leave”) | 25 | `talk` Alder → `talk` mentor | Grant lesson-5 ink |
+| Third (“Alder’s Leave”) | 25 | `talk` Alder → `talk` mentor | Grant lesson-5 ink and one wearable |
 
 ## School table (IDs to keep)
 
@@ -36,5 +36,16 @@ School pick is Alder’s High Study tree. He sends the Collegian to the Hall of 
 Expanded 20 September 2026. Mentors speak in complete sentences with a hearth smell. They say “Look around this hearth” and “Talk to Headmaster Alder.” Third lessons warn that the Clock Tower stair comes first if Alder is still sending you down.
 
 Mentors may mention Holm in **one** sentence after the spine beat. They do not run the mystery.
+
+Alder’s Leave also hands one piece for the paper doll. Home school does not lock the other hearths.
+
+| School | Mentor | Piece | Slot |
+| --- | --- | --- | --- |
+| Ember | Cinder | Hearth Mitts | gloves |
+| Thorns | Briar | Thorn Ring | ring |
+| Veil | Mist | Quiet Cloak | cloak |
+| Stars | Lumen | Glass Ring | ring |
+| Stone | Quern | Slate Cap | helmet |
+| Steel | Edge | Wooden Guard | off hand |
 
 Hearth smells: Cinder soot and oatcakes; Briar sap and shears; Mist lavender and curtains; Lumen ink and brass; Quern granite dust; Edge oil and mail.

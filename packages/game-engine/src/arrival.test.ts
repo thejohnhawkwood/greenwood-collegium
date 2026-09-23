@@ -336,8 +336,20 @@ describe("Arrival at the Collegium", () => {
       world.items?.["item-quest-the-missing-pages-loot-librarians-ribbon--char-rowan"],
     ).toMatchObject({
       holderCharacterId: "char-rowan",
+      availableToCharacterId: "char-rowan",
       templateId: "librarians-ribbon",
     });
+    expect(
+      handleJoin(
+        world,
+        { verb: "join", characterId: "char-moss", name: "Moss the Mole", roomId: "lantern-court" },
+        clock,
+      ).ok,
+    ).toBe(true);
+    const rowanLook = handleLook(world, { verb: "look", characterId: "char-rowan" }, clock);
+    const mossLook = handleLook(world, { verb: "look", characterId: "char-moss" }, clock);
+    expect(rowanLook.ok && rowanLook.event.narration).not.toContain("Librarian's Ribbon");
+    expect(mossLook.ok && mossLook.event.narration).not.toContain("Librarian's Ribbon");
   });
 
   it("counts a hearth dummy already beaten once the hearth has been looked at", () => {

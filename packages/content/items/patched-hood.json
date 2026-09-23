@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "patched-hood",
+  "name": "Patched Hood",
+  "shortDescription": "A wool hood with a neat stitch along the brim.",
+  "examineDescription": "A wool hood with a neat stitch along the brim. Wren spared it. It is wool and stitch. It is not the bronze in the hill. It will sit on your head if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "helmet",
+  "unique": true
+}

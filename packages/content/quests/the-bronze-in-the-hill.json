@@ -3,9 +3,10 @@
   "id": "the-bronze-in-the-hill",
   "title": "The Bronze in the Hill",
   "experienceReward": 50,
+  "itemRewardTemplateId": "patched-hood",
   "introNarration": "Alder does not lift the fork. Wren will not go in, and he will not ask her to. \"The bronze is in the hill. Holm wrote that it was taken on a wet night. This is where it was taken to. Visit the Barrow Nave — down from the Barrow Mouth. Examine the Abbey Bronze. Then talk alder here. One more after that. Not alone. The thing that walks the fog used our welcome for a mouth.\"",
   "reminderNarration": "\"Down from the Barrow Mouth. Examine the Abbey Bronze. Then talk alder in the High Study. Type up from the Great Hall. Wren stays at the croft. She is owed that. Type quests for the list.\"",
-  "completionNarration": "You name peat-stained bronze and three pulses that should not ring. Alder listens to the end. \"The Quiet Chapel was telling the truth. One more. Not alone. The Fog Walker used our welcome for a mouth. Eat something warm before you take two classmates into that hollow.\"",
+  "completionNarration": "You name peat-stained bronze and three pulses that should not ring. Alder listens to the end. He sets a patched hood on the desk. Wool and stitch. Wren spared it. It is not the bronze. \"The Quiet Chapel was telling the truth. One more. Not alone. The Fog Walker used our welcome for a mouth. Eat something warm before you take two classmates into that hollow.\"",
   "objectives": [
     {
       "id": "reach-nave",

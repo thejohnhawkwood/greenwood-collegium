@@ -3,7 +3,8 @@
   "id": "librarians-ribbon",
   "name": "Librarian's Ribbon",
   "shortDescription": "A narrow ink-stained ribbon.",
-  "examineDescription": "Quill tied this scrap of library ribbon herself. It still smells of oak-gall ink. Proof you brought the missing pages home.",
+  "examineDescription": "Quill tied this scrap of library ribbon herself. It still smells of oak-gall ink. Proof you brought the missing pages home. It will sit across your paws if you wear it.",
   "category": "ordinary",
+  "equipSlot": "gloves",
   "unique": true
 }

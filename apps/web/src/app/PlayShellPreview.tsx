@@ -27,6 +27,7 @@ const previewState: PlayState = {
     round: 1,
     status: "awaiting_intents",
     lockDeadlineAt: new Date(Date.now() + 12_000).toISOString(),
+    read: "Practice Dummy leans in. A guard meets the swing and loads your next blow.",
     enemy: {
       id: "enemy-practice-dummy-south-orchard",
       name: "Practice Dummy",

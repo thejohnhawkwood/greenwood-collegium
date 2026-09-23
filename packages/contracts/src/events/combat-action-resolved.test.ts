@@ -55,6 +55,15 @@ describe("combat.action_resolved contract", () => {
     });
 
     expect(formatCombatActionResolvedText(player.payload)).toBe(player.narration);
+    expect(
+      formatCombatActionResolvedText({
+        ...player.payload,
+        damage: 2,
+        readNote: "The same motion is easy to read.",
+      }),
+    ).toBe(
+      "You strike the Practice Dummy for 2. It has 4 remaining. The same motion is easy to read.",
+    );
     expect(formatCombatActionResolvedText(enemy.payload)).toBe(enemy.narration);
   });
 

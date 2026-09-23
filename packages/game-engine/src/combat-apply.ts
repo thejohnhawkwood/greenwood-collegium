@@ -7,6 +7,8 @@ import {
 import { applyBurning, actionEvent, type CombatEvent } from "./combat-resolve.js";
 import { duelOpponent, isDuel } from "./combat-party.js";
 import { attackFitModifier } from "./equipment.js";
+import { adjustOutgoing, clearLesson } from "./combat-read.js";
+import { applyIncomingGuard, chargeCastFocus } from "./gear-help.js";
 import { systemNotice } from "./system-notice.js";
 import type { EventEnvelope } from "@greenwood/contracts";
 import type { Character, Encounter, EngineRuntime, SpellTemplate, WorldState } from "./state.js";
@@ -26,7 +28,8 @@ export function applyAttackHit(
       bonus,
   );
   const foe = isDuel(encounter) ? duelOpponent(world, encounter, character.id) : undefined;
-  const playerDamage = foe?.defending ? Math.floor(raw / 2) : raw;
+  const adjusted = adjustOutgoing(character, encounter, "attack", undefined, raw, !foe);
+  const playerDamage = foe ? applyIncomingGuard(foe, adjusted.damage) : adjusted.damage;
   if (foe) {
     foe.health = Math.max(0, (foe.health ?? DEFAULT_PLAYER_MAX_HEALTH) - playerDamage);
     if (playerDamage > 0) {
@@ -53,6 +56,7 @@ export function applyAttackHit(
         damage: playerDamage,
         targetHealth,
         targetMaxHealth,
+        ...(adjusted.readNote ? { readNote: adjusted.readNote } : {}),
       },
       runtime,
       character.id,
@@ -65,6 +69,7 @@ export function applyDefendAction(
   encounter: Encounter,
   runtime: EngineRuntime,
 ): CombatEvent[] {
+  clearLesson(character);
   character.defending = true;
   return [
     actionEvent(
@@ -92,6 +97,7 @@ export function applyFleeAction(
   encounter: Encounter,
   runtime: EngineRuntime,
 ): CombatEvent[] {
+  clearLesson(character);
   return [
     actionEvent(
       encounter,
@@ -120,8 +126,7 @@ export function applyHostileCast(
   runtime: EngineRuntime,
   world?: WorldState,
 ): CombatEvent[] {
-  const focus = character.focus ?? 0;
-  character.focus = focus - spell.focusCost;
+  const focusSpent = chargeCastFocus(character, spell.focusCost, true);
   const events: CombatEvent[] = [];
   let damage = spell.damage ?? 0;
   if (character.readySpellIds?.includes(spell.id)) {
@@ -130,6 +135,8 @@ export function applyHostileCast(
     character.readySpellBonus = undefined;
   }
   const foe = world && isDuel(encounter) ? duelOpponent(world, encounter, character.id) : undefined;
+  const adjusted = adjustOutgoing(character, encounter, "cast", spell.id, damage, !foe);
+  damage = foe ? applyIncomingGuard(foe, adjusted.damage) : adjusted.damage;
   if (foe) {
     foe.health = Math.max(0, (foe.health ?? DEFAULT_PLAYER_MAX_HEALTH) - damage);
     if (damage > 0) {
@@ -176,33 +183,38 @@ export function applyHostileCast(
         verb: "cast",
         spellId: spell.id,
         spellName: spell.name,
-        focusSpent: spell.focusCost,
+        focusSpent,
         targetId,
         targetName,
         damage,
         ...(healed > 0 ? { heal: healed } : {}),
         targetHealth,
         targetMaxHealth,
+        ...(adjusted.readNote ? { readNote: adjusted.readNote } : {}),
       },
       runtime,
       character.id,
       {
         presentationKey: spell.presentationKey,
-        segments: [
-          { kind: "text" as const, text: "You cast " },
-          { kind: "spell" as const, id: spell.id, text: spell.name },
-          { kind: "text" as const, text: " at the " },
-          { kind: "target" as const, id: targetId, text: targetName },
-          { kind: "text" as const, text: " for " },
-          { kind: "damage" as const, text: String(damage) },
-          {
-            kind: "text" as const,
-            text:
-              healed > 0
-                ? `. You mend ${String(healed)}. It has ${String(targetHealth)} remaining.`
-                : `. It has ${String(targetHealth)} remaining.`,
-          },
-        ],
+        ...(adjusted.readNote
+          ? {}
+          : {
+              segments: [
+                { kind: "text" as const, text: "You cast " },
+                { kind: "spell" as const, id: spell.id, text: spell.name },
+                { kind: "text" as const, text: " at the " },
+                { kind: "target" as const, id: targetId, text: targetName },
+                { kind: "text" as const, text: " for " },
+                { kind: "damage" as const, text: String(damage) },
+                {
+                  kind: "text" as const,
+                  text:
+                    healed > 0
+                      ? `. You mend ${String(healed)}. It has ${String(targetHealth)} remaining.`
+                      : `. It has ${String(targetHealth)} remaining.`,
+                },
+              ],
+            }),
       },
     ),
   );
@@ -220,8 +232,8 @@ export function applySelfCast(
   runtime: EngineRuntime,
   world?: WorldState,
 ): EventEnvelope[] {
-  const focus = character.focus ?? 0;
-  character.focus = focus - spell.focusCost;
+  clearLesson(character);
+  chargeCastFocus(character, spell.focusCost, true);
   const note = applySelfEffect(character, spell, world);
   return [systemNotice(character.id, note ?? `You cast ${spell.name}.`, runtime)];
 }

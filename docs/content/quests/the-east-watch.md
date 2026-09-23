@@ -31,7 +31,7 @@ Intended entry: lesson 4 or 5 after the queen report. Over-levelled students sti
 
 ### L4 — The Meadow Fork (`the-meadow-fork`)
 
-- **XP:** 25
+- **XP:** 25 plus `moor-boots`
 - **Giver:** Alder breadcrumb after Sleeps, then Wren
 - **Rooms:** `east-meadow`, `moor-track`, `wren-croft`
 - **Objectives:** visit `moor-track`; talk Wren; examine `object-waystone`; talk Wren
@@ -55,7 +55,7 @@ Intended entry: lesson 4 or 5 after the queen report. Over-levelled students sti
 
 ### L6 — The Stones That Were Not There (`the-stones-that-were-not-there`)
 
-- **XP:** 30
+- **XP:** 30 plus `abbey-mark-ring` (the rubbing stays a bag proof)
 - **Giver:** Wren
 - **Rooms:** `standing-stones`
 - **Objectives:** visit; examine `object-abbey-mark`; examine `object-new-stone`; talk Wren
@@ -67,7 +67,7 @@ Intended entry: lesson 4 or 5 after the queen report. Over-levelled students sti
 
 ### L7 — The Barrow Mouth (`the-barrow-mouth`)
 
-- **XP:** 35 plus guard
+- **XP:** 35 plus guard, plus `peat-lantern` (off hand; not Colm’s crook)
 - **Giver:** Wren, who hates sending you
 - **Rooms:** `peat-cut`, `barrow-mouth`
 - **Objectives:** visit `barrow-mouth`; examine `object-wool-wrap`; defeat `enemy-barrow-guard-barrow-mouth`; talk Wren
@@ -78,7 +78,7 @@ Intended entry: lesson 4 or 5 after the queen report. Over-levelled students sti
 
 ### L8 — What the Fog Took (`what-the-fog-took`)
 
-- **XP:** 40
+- **XP:** 40 plus `fog-glass-bead`
 - **Giver:** Wren; then talk **Fen** (warm food, do not skip Wren’s grief)
 - **Rooms:** barrow-mouth or barrow-nave threshold
 - **Objectives:** examine `object-colm-aftermath`; talk Wren; talk Fen
@@ -97,7 +97,7 @@ Two hungers. Two keepers. Two witnesses who lived (Piper, Wren).
 
 ### L9 — The Bronze in the Hill (`the-bronze-in-the-hill`)
 
-- **XP:** 50
+- **XP:** 50 plus `patched-hood` (wool and stitch, not the bronze)
 - **Giver:** Alder (Wren will not go in)
 - **Rooms:** `barrow-nave`
 - **Objectives:** visit; examine `object-abbey-bronze`; talk Alder

@@ -4,8 +4,9 @@
   "title": "Alder's Leave: the Veil",
   "introNarration": "Mist lets the curtain fall and sends you to Alder. Lavender hangs in the quiet. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
   "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Mist. The mirror will wait. It always does.",
-  "completionNarration": "College lessons in this hearth are complete. Mist inks the leave in the Primer. Keep the book. Each new lesson grants one ink. Eat something warm before you take a cold road.",
+  "completionNarration": "College lessons in this hearth are complete. Mist inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She folds a short quiet cloak once and gives it over. Eat something warm before you take a cold road.",
   "experienceReward": 25,
+  "itemRewardTemplateId": "quiet-cloak",
   "objectives": [
     {
       "id": "talk-alder",

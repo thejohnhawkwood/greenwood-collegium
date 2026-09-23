@@ -48,6 +48,8 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0042](0042-primer-leaf-graphs.md) | Primer leaf graphs |
 | [0040](0040-paper-doll-slots.md) | Paper-doll wear slots |
 | [0041](0041-drawing-led-art.md) | Drawing-led pencil, ink, and pencil-crayon art |
+| [0043](0043-paper-doll-helps.md) | Paper-doll guard and focus helps |
+| [0044](0044-combat-reads.md) | Combat reads: a repeated lesson lands lighter |
 
 ## Template
 

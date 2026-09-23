@@ -9,6 +9,7 @@
   "maxFocus": 12,
   "attack": 6,
   "experience": 25,
+  "reads": ["gather", "brace", "lunge"],
   "minParty": 3,
   "loot": ["wren-hearth-charm"],
   "lockNarration": "Fog thickens and does not keep footprints.",

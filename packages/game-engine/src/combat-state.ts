@@ -58,6 +58,11 @@ export function closeEncounter(world: WorldState, encounter: Encounter): void {
     character.readySpellBonus = undefined;
     character.hitThisEncounter = undefined;
     character.defending = undefined;
+    character.gearGuardUsed = undefined;
+    character.gearFocusUsed = undefined;
+    character.lastStrike = undefined;
+    character.nextStrikeBonus = undefined;
+    character.strikeLight = undefined;
   }
   delete worldEncounters(world)[encounter.id];
 }

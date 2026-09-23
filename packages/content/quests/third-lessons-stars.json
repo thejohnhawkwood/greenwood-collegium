@@ -4,8 +4,9 @@
   "title": "Alder's Leave: Stars",
   "introNarration": "Lumen closes a chart and sends you to Alder. Lamp-oil and night glass hang in the loft. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
   "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Lumen. The star-wheel can wait a true bearing.",
-  "completionNarration": "College lessons in this hearth are complete. Lumen inks the leave in the Primer. Keep the book. Each new lesson grants one ink. Eat something warm before you take a cold road.",
+  "completionNarration": "College lessons in this hearth are complete. Lumen inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She sets a small glass ring on the chart. It is for counting, not for light. Eat something warm before you take a cold road.",
   "experienceReward": 25,
+  "itemRewardTemplateId": "glass-ring",
   "objectives": [
     {
       "id": "talk-alder",

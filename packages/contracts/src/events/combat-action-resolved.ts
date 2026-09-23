@@ -14,6 +14,7 @@ export const combatActionResolvedPayloadSchema = z.object({
   targetName: z.string().min(1),
   damage: z.number().int().nonnegative(),
   heal: z.number().int().positive().optional(),
+  readNote: z.string().min(1).optional(),
   targetHealth: z.number().int().nonnegative(),
   targetMaxHealth: z.number().int().positive(),
 });
@@ -37,10 +38,12 @@ export function formatCombatActionResolvedText(payload: CombatActionResolvedPayl
   }
   if (payload.verb === "cast" && payload.spellName) {
     const mend = payload.heal ? ` You mend ${String(payload.heal)}.` : "";
-    return `You cast ${payload.spellName} at the ${payload.targetName} for ${String(payload.damage)}.${mend} It has ${String(payload.targetHealth)} remaining.`;
+    const note = payload.readNote ? ` ${payload.readNote}` : "";
+    return `You cast ${payload.spellName} at the ${payload.targetName} for ${String(payload.damage)}.${mend} It has ${String(payload.targetHealth)} remaining.${note}`;
   }
   if (payload.actorKind === "player") {
-    return `You strike the ${payload.targetName} for ${String(payload.damage)}. It has ${String(payload.targetHealth)} remaining.`;
+    const note = payload.readNote ? ` ${payload.readNote}` : "";
+    return `You strike the ${payload.targetName} for ${String(payload.damage)}. It has ${String(payload.targetHealth)} remaining.${note}`;
   }
   return `The ${payload.actorName} thumps you for ${String(payload.damage)}. You have ${String(payload.targetHealth)} remaining.`;
 }

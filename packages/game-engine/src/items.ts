@@ -13,7 +13,7 @@ export function itemsInRoom(
   viewerCharacterId?: string,
 ): ItemInstance[] {
   return Object.values(worldItems(world)).filter((item) => {
-    if (item.roomId !== roomId) {
+    if (item.roomId !== roomId || item.holderCharacterId) {
       return false;
     }
     if (

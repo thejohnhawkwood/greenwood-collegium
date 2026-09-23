@@ -4,8 +4,9 @@
   "title": "Alder's Leave: Stone",
   "introNarration": "Quern sets a block of chalk down without hurry and sends you to Alder. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
   "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Quern. The keystone has not shifted.",
-  "completionNarration": "College lessons in this hearth are complete. Quern inks the leave in the Primer. Keep the book. Each new lesson grants one ink. Eat something warm before you take a cold road.",
+  "completionNarration": "College lessons in this hearth are complete. Quern inks the leave in the Primer. Keep the book. Each new lesson grants one ink. He dusts a felt cap with a slate-grey band and says the hill can wait. Eat something warm before you take a cold road.",
   "experienceReward": 25,
+  "itemRewardTemplateId": "slate-cap",
   "objectives": [
     {
       "id": "talk-alder",

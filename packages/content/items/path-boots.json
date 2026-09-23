@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "path-boots",
+  "name": "Path Boots",
+  "shortDescription": "Soft boots with court-dust in the seams.",
+  "examineDescription": "Soft boots with court-dust in the seams. Porter said the night round is a walk, not a race. They will sit on your feet if you wear them. They do not make the next blow smaller.",
+  "category": "ordinary",
+  "equipSlot": "boots",
+  "unique": true
+}

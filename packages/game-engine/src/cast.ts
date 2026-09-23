@@ -10,6 +10,7 @@ import {
   type CombatFailure,
   type CombatSuccess,
 } from "./combat-resolve.js";
+import { castFocusCost } from "./gear-help.js";
 import { applyRank, canCastSpell, findKnownSpell } from "./primer.js";
 import type { CastIntent, EngineRuntime, SpellTemplate, WorldState } from "./state.js";
 import { systemNotice } from "./system-notice.js";
@@ -79,11 +80,13 @@ export function handleCast(
   const ranked = applyRank(spell, findKnownSpell(character, spell.id)?.rank ?? 1);
   ensurePlayerVitals(character);
   const focus = character.focus ?? 0;
-  if (focus < ranked.focusCost) {
+  const alreadyFighting = Boolean(activeEncounter(world, character.id));
+  const focusCost = castFocusCost(character, ranked.focusCost, alreadyFighting);
+  if (focus < focusCost) {
     return {
       ok: false,
       code: "not_enough_focus",
-      message: `You need ${String(ranked.focusCost)} focus to cast ${ranked.name}. You have ${String(focus)}.`,
+      message: `You need ${String(focusCost)} focus to cast ${ranked.name}. You have ${String(focus)}.`,
     };
   }
 

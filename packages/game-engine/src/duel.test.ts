@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { handleAttack } from "./attack.js";
+import { handleCast } from "./cast.js";
+import { handleDefend } from "./defend.js";
 import { handleDuel } from "./duel.js";
 import { createPlayState } from "./play-state.js";
 import { parsePlayerCommand } from "./parse-command.js";
@@ -117,7 +119,50 @@ describe("classroom duels", () => {
     expect(world.characters["char-moss"]?.health).toBe(20);
     const locked = handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
     expect(locked.ok).toBe(true);
-    expect(world.characters["char-rowan"]?.health).toBeLessThan(20);
-    expect(world.characters["char-moss"]?.health).toBeLessThan(20);
+    expect(world.characters["char-rowan"]?.health).toBe(18);
+    expect(world.characters["char-moss"]?.health).toBe(18);
+    expect(locked.ok && locked.events.some((event) => event.narration.includes("You mirror each other."))).toBe(
+      true,
+    );
+    expect(createPlayState(world, "char-rowan")?.encounter?.read).toContain("same lesson twice");
+  });
+
+  it("covers a classmate's spark and loads the defender's next blow", () => {
+    const world = orchardWorld();
+    world.spells = {
+      ember: {
+        id: "ember",
+        name: "Ember",
+        school: "ember",
+        description: "A small taught flame.",
+        focusCost: 4,
+        targetType: "enemy",
+        context: "encounter",
+        damage: 5,
+        presentationKey: "ember-burst",
+        helpText: "cast ember",
+      },
+    };
+    const clock = runtime();
+    handleDuel(world, { verb: "duel", characterId: "char-rowan", action: "challenge", target: "moss" }, clock);
+    handleDuel(world, { verb: "duel", characterId: "char-moss", action: "accept" }, clock);
+    handleCast(world, { verb: "cast", characterId: "char-rowan", spell: "ember" }, clock);
+    const covered = handleDefend(world, { verb: "defend", characterId: "char-moss" }, clock);
+    expect(covered.ok).toBe(true);
+    expect(world.characters["char-moss"]?.health).toBe(18);
+    expect(world.characters["char-rowan"]?.health).toBe(20);
+    expect(
+      covered.ok && covered.events.some((event) => event.narration.includes("Their guard covers the blow.")),
+    ).toBe(true);
+
+    handleAttack(world, { verb: "attack", characterId: "char-moss" }, clock);
+    const answered = handleDefend(world, { verb: "defend", characterId: "char-rowan" }, clock);
+    expect(answered.ok).toBe(true);
+    if (!answered.ok) {
+      return;
+    }
+    const loaded = answered.events.find((event) => event.narration.includes("Their guard covers the blow."));
+    expect(loaded?.payload).toMatchObject({ damage: 3 });
+    expect(world.characters["char-rowan"]?.health).toBe(17);
   });
 });

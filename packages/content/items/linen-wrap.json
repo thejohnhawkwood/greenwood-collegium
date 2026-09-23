@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "linen-wrap",
+  "name": "Linen Wrap",
+  "shortDescription": "A clean linen wrap from the infirmary press.",
+  "examineDescription": "A clean linen wrap, warm from the infirmary press. Fen tied it so it sits like a vest. It smells of soap and rosemary. It will sit as armor if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "armor",
+  "unique": true
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "fens-linen",
+  "title": "Fen's Linen",
+  "giverNpcId": "npc-healer-fen",
+  "requiresQuestIds": ["arrival-at-the-collegium"],
+  "experienceReward": 10,
+  "itemRewardTemplateId": "linen-wrap",
+  "introNarration": "Fen folds one more bandage and sets the honey where you can see it. \"Sit if you need to. If you can walk, I want a clean smell that is not this room. Type west to the Porter Lodge, south to the East Gate, west to Lantern Court, south to the South Orchard, then west to the Herb Garden. Mint and rosemary. Then come back and talk fen. I will have the linen warm.\"",
+  "reminderNarration": "\"West from here to the lodge, south to the gate, west to the court, south to the orchard, west to the Herb Garden. Then come back and talk fen. Type quests for the list. Honey is still here.\"",
+  "completionNarration": "You come back smelling of mint. Fen ties a clean linen wrap so it sits like a vest. Soap, rosemary, and the press. \"Wear it after a hard stair. It is not courage. It is linen. Eat something warm.\"",
+  "objectives": [
+    {
+      "id": "walk-garden",
+      "kind": "visit",
+      "roomId": "herb-garden",
+      "label": "Reach the Herb Garden. Type west to the Porter Lodge, south to the East Gate, west to Lantern Court, south to the South Orchard, then west."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-healer-fen",
+      "requires": ["walk-garden"],
+      "label": "Return and talk fen in the Infirmary. Type east to the orchard, north to the court, east to the gate, north to the lodge, then east."
+    }
+  ]
+}

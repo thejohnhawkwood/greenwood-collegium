@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "peat-lantern",
+  "name": "Peat Lantern",
+  "shortDescription": "A small lantern with peat-dark glass.",
+  "examineDescription": "A small lantern with a peat-dark glass. It is for the off hand. It is not Colm's crook, and it is not his cloak. The wick smells of old tea and iron.",
+  "category": "ordinary",
+  "equipSlot": "off-hand",
+  "unique": true
+}

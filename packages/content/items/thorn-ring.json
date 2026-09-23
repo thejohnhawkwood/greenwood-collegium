@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "thorn-ring",
+  "name": "Thorn Ring",
+  "shortDescription": "A thin ring of sanded thorn.",
+  "examineDescription": "A thin ring of braided thorn, sanded so it does not bite. Briar turned it until the join sat flat. It will sit on a finger if you wear it.",
+  "category": "ordinary",
+  "equipSlot": "ring",
+  "unique": true
+}
