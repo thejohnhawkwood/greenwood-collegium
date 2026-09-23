@@ -2,7 +2,7 @@
 
 The Greenwood Collegium is a classroom MUD and a public proof of work. Agents assist with issue-sized work. They are not the product architect of record and must not build the entire game in one pass.
 
-Read `docs/PRD.md` and any relevant ADRs before editing. For player-facing story, read `docs/content/STORY.md` (spine) and `docs/content/quests/` (storylines). For Primer leaves, read `docs/content/PROGRESSION.md`.
+Read `docs/PRD.md` and any relevant ADRs before editing. For player-facing story, read `docs/content/STORY.md` (spine) and `docs/content/quests/` (storylines). For Primer leaves, read `docs/content/PROGRESSION.md`. For illustrations, read `GREENWOOD_ART_DIRECTION.md` and ADR-0041.
 
 ## Required rules
 
@@ -37,6 +37,18 @@ Read `docs/PRD.md` and any relevant ADRs before editing. For player-facing story
 8. Run typecheck, lint, and tests when those commands exist.
 9. Summarize the diff and disclose unresolved concerns.
 10. Include AI disclosure in the pull request.
+
+## Art
+
+New and revised pictures follow `GREENWOOD_ART_DIRECTION.md` (22 September 2026). The operating manual is `GREENWOOD_ART_ASSET_AGENT.md`. One task at a time lives in `docs/art/START_HERE.md`. ADR-0041 records the decision. ADR-0032 still owns painted-catalog paths and the compositor.
+
+The picture must read as a finished drawing enriched with colour: visible pencil and selective ink, layered pencil-crayon colour, restrained watercolour, and small matte gouache. Larry MacDougall's _Gwelf_ is the principal stylistic reference. Redwall is broader woodland context. Make original Greenwood characters and compositions. Do not copy book illustrations, lettering, or existing characters.
+
+Do not treat emoji, stock creatures, smooth vector mascots, CSS silhouettes, or a paper-texture filter over a smooth painting as finished art. Keep the school setting adventurous and welcoming, without gore, sexualized characters, or decorative religious or occult symbols.
+
+This direction does not authorize a gameplay rewrite, a new UI, a new equipment system, a map-geometry change, or a batch replacement of `apps/web/public/art/`. Default to an audit. Generate, owner approval, and integration are separate permissions. Philip Bird approves a specific revision. Do not claim an image was generated or inspected unless that work happened. Do not send secrets or student data to an image provider.
+
+The Cursor specialist is `.cursor/agents/greenwood-art.md`. The explicit skill is `greenwood-art-workflow`. Model notes are in `docs/art/CURSOR_IMAGE_MODEL_GUIDE.md`; recheck official documentation before a provider call. That guide does not select the image backend by itself.
 
 ## Security
 

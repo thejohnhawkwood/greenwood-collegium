@@ -24,6 +24,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 6. Slices: DS-001 through DS-007 under [`../design-sprints/`](../design-sprints/). Combat: [`../design-sprints/ds-007-combat-frame.md`](../design-sprints/ds-007-combat-frame.md)
 7. Class: [`../classroom/class-day.md`](../classroom/class-day.md), [`playthrough.md`](../../playthrough.md)
 8. [`apps/server/AGENTS.md`](../../apps/server/AGENTS.md)
+9. Drawing-led art (new pictures only; production plates stay until a named revision is approved): [`../../GREENWOOD_ART_DIRECTION.md`](../../GREENWOOD_ART_DIRECTION.md), [ADR-0041](../adr/0041-drawing-led-art.md), [`../art/START_HERE.md`](../art/START_HERE.md)
 
 ## Forbidden this pass
 

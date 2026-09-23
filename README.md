@@ -186,3 +186,4 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability. Do not file pu
 - [Architecture decision records](docs/adr/)
 - [Changelog](CHANGELOG.md)
 - [Agent instructions](AGENTS.md)
+- [Drawing-led art direction](GREENWOOD_ART_DIRECTION.md)

@@ -1,0 +1,127 @@
+{
+  "_template_note": "Example of one planned asset record, NOT an actual asset. Replace placeholders and adapt existing registry conventions. Unknown values remain null. No image generation or approval is implied.",
+  "asset_id": "REPLACE_WITH_STABLE_ASSET_ID",
+  "kind": "REPLACE_WITH_KIND",
+  "canonical_entity_id": null,
+  "label": null,
+  "tags": [],
+  "intended_use": {
+    "surface": null,
+    "display_width_px": null,
+    "display_height_px": null
+  },
+  "brief_path": null,
+  "style_guide": {
+    "path": "GREENWOOD_ART_DIRECTION.md",
+    "version": null,
+    "sha256": null
+  },
+  "references": [],
+  "dependencies": [],
+  "current_approved_revision": null,
+  "current_production_revision": null,
+  "revisions": [
+    {
+      "revision_id": "v001",
+      "variant_id": "candidate-a",
+      "state": "planned",
+      "origin": null,
+      "parent_asset_id": null,
+      "parent_revision_id": null,
+      "created_at": null,
+      "identity_locks": [],
+      "permitted_changes": [],
+      "prompt": {
+        "submitted_path": null,
+        "submitted_sha256": null,
+        "provider_revised_path": null
+      },
+      "generation": {
+        "route": null,
+        "tool_name": null,
+        "provider": null,
+        "requested_image_model": null,
+        "reported_image_model": null,
+        "model_evidence": null,
+        "documented_backend_note": null,
+        "request_id": null,
+        "job_id": null,
+        "requested_parameters": {},
+        "accepted_or_reported_parameters": {},
+        "seed": null,
+        "authorization_evidence": null,
+        "call_limit": null,
+        "calls_attempted": 0,
+        "spend_limit": null,
+        "spend_currency": null,
+        "raw_usage": null,
+        "estimated_cost": null,
+        "actual_cost": null,
+        "cost_currency": null,
+        "cost_basis": null,
+        "cost_status": "not_incurred_no_call_made",
+        "reference_upload_permissions": []
+      },
+      "source": {
+        "path": null,
+        "sha256": null,
+        "mime_type": null,
+        "width_px": null,
+        "height_px": null,
+        "bytes": null,
+        "has_alpha_channel": null,
+        "has_transparent_pixels": null,
+        "provenance_metadata_preserved": null
+      },
+      "technical_contract": {
+        "aspect_ratio": null,
+        "background_requirement": null,
+        "pose_family": null,
+        "canvas_size_px": null,
+        "baseline_px": null,
+        "anchor_contract_version": null,
+        "compatible_bodies": [],
+        "layer_order": null,
+        "safe_regions": [],
+        "geometry_source": null
+      },
+      "review": {
+        "status": "not_checked",
+        "reviewed_by": null,
+        "reviewed_at": null,
+        "visual_inspection_performed": false,
+        "technical_checks": [],
+        "style_checks": [],
+        "identity_checks": [],
+        "observations": [],
+        "contact_sheet_path": null,
+        "in_game_preview_path": null
+      },
+      "owner_approval": {
+        "status": "pending",
+        "approved_by": null,
+        "approved_at": null,
+        "approved_source_sha256": null,
+        "evidence": null,
+        "scope": null,
+        "derivative_export_policy": null
+      },
+      "rights_and_provenance": {
+        "origin_note": null,
+        "permissions_evidence": null,
+        "source_creator": null,
+        "distribution_status": "not_reviewed"
+      },
+      "exports": [],
+      "integration": {
+        "status": "not_integrated",
+        "authorization_evidence": null,
+        "consumers": [],
+        "tests_run": [],
+        "visual_verification": "not_checked",
+        "previous_mapping": null,
+        "rollback_record": null
+      }
+    }
+  ]
+}
