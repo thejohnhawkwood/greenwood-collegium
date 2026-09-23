@@ -193,33 +193,14 @@ Use natural language unless the verified provider expects structured fields. Kee
 ### Mandatory medium-and-style block
 
 ```text
-Create an original Greenwood woodland-fantasy illustration, with Larry
-MacDougall's Gwelf as the principal stylistic reference and an especially
-strong pencil-and-ink, pencil-crayon, and selective gouache treatment.
-
-Make this a finished drawing enriched with colour, NOT a smooth digital
-painting decorated with a paper-texture filter. Visible fine pencil contours,
-selective warm dark ink, varied line weight, broken edges, and directional
-hatching must carry the forms. Keep the drawing resolved, not scratchy or
-unfinished.
-
-Build colour from layered dry coloured-pencil strokes. Show pressure
-variation, small gaps of paper, and marks following fur, feathers, cloth
-folds, and wood grain. Retain restrained transparent watercolour washes.
-Use only small matte, chalky gouache touches for selected opaque details.
-Do not bury the drawing beneath paint or smooth it into airbrushed shading.
-
-Preserve recognizable animal structure and a distinctive, slightly eccentric
-silhouette. Convey character through posture and restrained expression,
-not infant eyes, plush proportions, or a generic smile. Clothing and tools
-are practical, handmade, weathered, and physically understandable.
-
-Use earthy local colour with clear values and a few purposeful accents.
-Keep atmosphere folkloric and quietly magical. No glossy CGI, plastic fur,
-cinematic bloom, photorealism, thick uniform mascot outlines, anime/chibi
-proportions, ornate RPG clutter, or all-over sepia/noise. No signatures,
-invented lettering, or imitation book pages. Internal drawing texture must
-remain legible at the intended display size.
+Create an original Greenwood illustration in the locked comic-ink style.
+Heavy near-black album contour, thick enough to read at a glance, on top of
+flat local colour. One simple darker shadow of the same local colour.
+Fur colour stays on fur. Cloth colour stays on cloth.
+Style masters are the comic-ink mouse, hare, and Lantern Court under
+art/sources/. Do not copy those characters onto a different species.
+Do not copy Asterix, Obelix, Gwelf characters, or lettering.
+No smooth digital painting, no missing ink, no camouflage stains.
 ```
 
 For isolated assets, append the appropriate supported background request. A drawing-paper texture within the subject must not become a rectangular paper backdrop. Keep exact UI labels and interactive geometry outside the artwork.
@@ -230,12 +211,10 @@ For isolated assets, append the appropriate supported background request. A draw
 Edit the supplied source image. Preserve the approved species, identity,
 proportions, outfit, equipment, pose, camera, crop, and composition.
 
-Change ONLY the rendering language: strengthen visible pencil and selective
-ink contours, replace smooth modelling with dry layered pencil-crayon
-strokes, and restore directional marks in fur and fabric. Reduce all-over
-painting and glossy highlights. Retain light watercolour support and only
-small matte gouache accents. Do not solve this with an overlay or extra
-foliage. Do not make the character cuter, younger, rounder, or photographic.
+Change ONLY the rendering to the locked comic-ink style: a heavy near-black
+contour on top of flat local colour, with one darker shadow of that same
+colour. Do not replace the character with the style-master mouse or hare.
+Do not drop the ink. Do not camouflage the clothes.
 ```
 
 If a provider does not accept the named style reference, do not attempt to evade its restrictions. Use the already explicit medium, anatomy, silhouette, materials, and mood description. Report any material change to the submitted prompt.

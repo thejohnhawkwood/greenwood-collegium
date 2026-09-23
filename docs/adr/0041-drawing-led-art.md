@@ -21,9 +21,14 @@ catalog's file names, the compositor, or the typed command layer.
 - `GREENWOOD_ART_DIRECTION.md` is the creative brief for new and revised
   illustrations. `GREENWOOD_ART_ASSET_AGENT.md` is the operating manual.
   Tasks are in `docs/art/START_HERE.md`.
-- The finished image must read as a drawing enriched with colour. Fine pencil
-  contours and selective ink carry the form. Colour is layered coloured pencil.
-  Watercolour supports the drawing. Gouache is a few matte accents.
+- The finished image must read as a drawing with a heavy black contour.
+  On 22 September 2026 Philip Bird locked the comic-ink pass: mouse
+  `art/sources/character_mouse-female-fern_look__v007__comic-ink.png`, hare
+  `art/sources/character_hare-female-fern_look__v005__comic-ink.png`, and
+  Lantern Court `art/sources/room_lantern-court__v003__comic-ink.png`.
+  Flat local colour sits behind the line. Those files are the style masters.
+  They do not replace the live plates until an integration task says so.
+  The earlier ragged-boundary plate is no longer the style master.
 - Characters stay grounded woodland animals with practical clothing. Original
   Greenwood compositions only. Do not copy book illustrations, lettering, or
   existing characters.

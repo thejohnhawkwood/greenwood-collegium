@@ -1,0 +1,4 @@
+SEMANTIC ID: stoat-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied stoat. Brown head, cream throat and belly, long tail with a pale tip, long blue coat with gold trim, one paw on the hip. The coat stays blue. No green clothes. No leaf badge.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,12 @@
+SEMANTIC ID: warmer-local
+PARENT LOOK: heavy-hooks (v004). Keep that ink. The parent wash is too pale. This variation raises local colour.
+WHAT THIS VARIES: stronger moss green and warmer umber, still a watercolour stain, not a digital fill.
+
+SUBJECT LOCK
+Edit the supplied heavy-hooks mouse. Do not redraw the character. Same female Collegian, large ears, whiskers, long tail, moss-green hooded tunic, toggle closures, rope belt, hands on hips, three-quarter stance, feet planted. Keep the near-black hooked ink, the ear hatching, and the dark hood line. Do not add a weapon, a second animal, scenery, or lettering.
+
+COLOUR
+The parent is washed out. Increase pigment. The tunic is a clearly moss-green stain, varied from olive in the folds to a brighter sap green on the lit chest, with paper still showing in small gaps. Fur is a warm umber and ochre stain, darker on the back and arms, cream left as bare paper on the muzzle and belly. The rope belt is a definite russet brown, darker than the fur. Ear interiors are a pink-tan wash, not empty white. Colour stays blotchy and transparent. It must not become smooth airbrush or a flat vector fill. The black ink stays darker than every wash.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

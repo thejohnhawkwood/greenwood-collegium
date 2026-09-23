@@ -1,0 +1,4 @@
+SEMANTIC ID: toad-female-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied toad. Green skin, wide mouth, long green dress with a white collar and a small flower at the throat, webbed feet. Three-quarter stance, arms at the sides. No fur. No tail. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: mentor-cinder-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied marten. Grey-brown fur, orange eyes, a patched red shirt, a dark leather apron, a belt, and tongs already hanging at the hip. The shirt stays red. The apron stays dark brown. Do not add a weapon.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

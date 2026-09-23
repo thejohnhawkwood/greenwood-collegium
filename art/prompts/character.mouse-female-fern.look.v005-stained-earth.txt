@@ -1,0 +1,12 @@
+SEMANTIC ID: stained-earth
+PARENT LOOK: heavy-hooks (v004). Keep that ink. The parent wash is too pale. This variation is the strongest earth colour of the three.
+WHAT THIS VARIES: denser stained colour across fur and cloth, with one dusty-red accent, still broken watercolour.
+
+SUBJECT LOCK
+Edit the supplied heavy-hooks mouse. Do not redraw the character. Same female Collegian, ears, whiskers, long tail, hooded tunic, toggles, rope belt, hands on hips, three-quarter stance. Keep the near-black hooked ink and the ear hatching. Do not add a weapon, a second animal, scenery, or lettering.
+
+COLOUR
+The parent is washed out. Stain the forms with more pigment while leaving flecks of paper. Fur is a rich toasted brown, not a pale tan. The tunic is a saturated moss green with olive puddles in the folds. The rope belt and toggle cord are dusty red, the one warm accent. Belly and muzzle stay lighter cream so the face does not turn muddy. Colour is layered and uneven, like repeated watercolour passes, and it may miss the ink by a hair. It must not look like flat digital colour inside a cartoon outline, and it must not turn sepia-brown all over. Black ink stays crisp on top of the stain.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

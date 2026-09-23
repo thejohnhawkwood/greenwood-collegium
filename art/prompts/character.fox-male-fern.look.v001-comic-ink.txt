@@ -1,0 +1,4 @@
+SEMANTIC ID: fox-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male fox. Red fur, white chest, white-tipped tail fully in frame, green tunic and green trousers, brown belt, tall brown boots, one paw on the hip. Not a long coat. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

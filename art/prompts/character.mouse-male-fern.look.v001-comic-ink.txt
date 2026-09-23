@@ -1,0 +1,4 @@
+SEMANTIC ID: mouse-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the hooded female mouse.
+IDENTITY: the supplied male mouse. Brown fur, large ears, thin curling tail, green toggle jacket, brown belt with a buckle, both hands on the hips, brown boots. No hood. No rope belt. No apron.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

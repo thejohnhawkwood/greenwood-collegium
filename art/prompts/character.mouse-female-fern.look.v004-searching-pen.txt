@@ -1,0 +1,15 @@
+SEMANTIC ID: searching-pen
+PARENT LOOK: open-contour (v003). Keep that mouse, pose, and pale wash. Push the ink.
+WHAT THIS VARIES: two or three overlapping sketch passes left visible, heavier on the near side.
+
+SUBJECT LOCK
+Edit the supplied open-contour mouse. Same character: female Collegian, light brown fur, cream muzzle and belly, large ears, whiskers, long tail, moss-green hooded tunic, toggle closures, rope belt, hands on hips, three-quarter stance, feet planted. Do not add a weapon, a second animal, scenery, or lettering.
+
+MARKS
+Draw the figure as a pen searching for the pose. Leave two or three overlapping ink passes on the near ear, the hood, the near arm, and the belt hand. The passes do not coincide; a lighter searching line sits beside a heavier final hook. The heavier pass is near-black. The far ear, the far side of the tail, and the hem are only one light broken stroke or the edge of the wash, not a closed contour. Fur on the cheek is short separate ticks, not a filled brown shape.
+
+COLOUR AND CONTRAST
+Thin pale washes sit under the ink and do not hide the extra passes. Strong contrast between the black near-side ink and the white paper. No smooth digital finish, no single clean outline, no airbrushed fur.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

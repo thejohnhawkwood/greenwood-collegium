@@ -1,0 +1,4 @@
+SEMANTIC ID: owl-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied owl. Heart-shaped white face, spectacles on a cord, a rust jacket and short cloak, a cream shirt, a brown waistcoat, one wing holding a pale quill, two legs with talons. The jacket stays rust. Do not add human arms. No dress.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

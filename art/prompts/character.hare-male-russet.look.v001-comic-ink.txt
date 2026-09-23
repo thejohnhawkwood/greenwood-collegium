@@ -1,0 +1,4 @@
+SEMANTIC ID: hare-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied hare. Long ears, brown fur, a short russet hooded cloak, a brown satchel on a strap. The cloak stays russet. No sword. No jacket. No book.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

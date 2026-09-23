@@ -42,7 +42,7 @@ Read `docs/PRD.md` and any relevant ADRs before editing. For player-facing story
 
 New and revised pictures follow `GREENWOOD_ART_DIRECTION.md` (22 September 2026). The operating manual is `GREENWOOD_ART_ASSET_AGENT.md`. One task at a time lives in `docs/art/START_HERE.md`. ADR-0041 records the decision. ADR-0032 still owns painted-catalog paths and the compositor.
 
-The picture must read as a finished drawing enriched with colour: visible pencil and selective ink, layered pencil-crayon colour, restrained watercolour, and small matte gouache. Larry MacDougall's _Gwelf_ is the principal stylistic reference. Redwall is broader woodland context. Make original Greenwood characters and compositions. Do not copy book illustrations, lettering, or existing characters.
+Philip Bird locked the comic-ink pass on 22 September 2026. Masters: `art/sources/character_mouse-female-fern_look__v007__comic-ink.png`, `art/sources/character_hare-female-fern_look__v005__comic-ink.png`, and `art/sources/room_lantern-court__v003__comic-ink.png`. Heavy black contour, flat local colour behind it. Slices are in `docs/art/SLICES.md`. Do not copy those figures onto a different character, and do not copy comic or book characters. A smooth painting with no heavy ink fails the direction.
 
 Do not treat emoji, stock creatures, smooth vector mascots, CSS silhouettes, or a paper-texture filter over a smooth painting as finished art. Keep the school setting adventurous and welcoming, without gore, sexualized characters, or decorative religious or occult symbols.
 

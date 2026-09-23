@@ -1,0 +1,4 @@
+SEMANTIC ID: toad-female-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied toad. Green skin, a long rust-brown hooded dress with a cloak, one hand on the hip, webbed feet. The dress stays rust-brown and distinct from the green skin. No blue dress. No flower. No tail.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

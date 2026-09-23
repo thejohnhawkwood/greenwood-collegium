@@ -1,0 +1,4 @@
+SEMANTIC ID: instructor-flint-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied hare. Long ears, a rust vest over green sleeves, a whistle on a cord, a belt, and one paw holding the sword already on the plate. The vest stays rust. Do not add a second weapon.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: barrow-guard-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied creature. Packed peat over old bone, four legs, a low head, not a dog. No blood. No open wounds. No person.
+OUTPUT: isolated creature, flat background exactly #EE3173, no words, no second animal.

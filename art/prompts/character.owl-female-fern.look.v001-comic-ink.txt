@@ -1,0 +1,4 @@
+SEMANTIC ID: owl-female-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied owl. Heart-shaped white face, brown wings, green dress, cream sash tied in a bow, one wing holding a pale quill. Two legs with talons. Do not add human arms. Keep the quill.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

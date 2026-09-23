@@ -1,0 +1,4 @@
+SEMANTIC ID: stoat-female-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied stoat. Brown head, cream throat, pale-tipped tail, a rust-red hooded cloak, a tan tunic under it, a small pouch. The cloak stays rust-red. No blue coat. No leaf badge.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

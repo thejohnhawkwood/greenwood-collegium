@@ -1,0 +1,4 @@
+SEMANTIC ID: fox-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male fox. Red fur, white-tipped tail fully in frame, long blue coat, dark cravat, arms crossed, black boots. The coat stays blue. No green tunic. No readable writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

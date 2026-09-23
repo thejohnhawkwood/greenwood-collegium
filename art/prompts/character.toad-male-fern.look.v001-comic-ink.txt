@@ -1,0 +1,4 @@
+SEMANTIC ID: toad-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male toad. Warty olive skin, cream belly, round spectacles, green waistcoat, webbed feet, hands near the pockets. No fur. No tail. No dress. No flower.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

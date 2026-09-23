@@ -1,0 +1,4 @@
+SEMANTIC ID: silk-queen-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied silk shape. A tall pale silk hood and cloak, a frayed ruff, two silk-wrapped legs, an empty hood. No face. No eyes. No smile. Thicker silk than a hatchling. Not a plush spider. Not a person. Not cute.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second creature.

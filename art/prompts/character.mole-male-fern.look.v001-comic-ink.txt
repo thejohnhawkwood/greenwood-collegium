@@ -1,0 +1,4 @@
+SEMANTIC ID: mole-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male mole. Brown fur, long snout, huge digging claws, short green tunic, no cap, stooped stance. Do not add a hat. No apron. No long dress.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

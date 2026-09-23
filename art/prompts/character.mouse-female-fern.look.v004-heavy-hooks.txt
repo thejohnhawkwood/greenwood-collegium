@@ -1,0 +1,15 @@
+SEMANTIC ID: heavy-hooks
+PARENT LOOK: open-contour (v003). Keep that mouse, pose, and pale wash. Push the ink.
+WHAT THIS VARIES: near-black hooked strokes, much heavier than the parent, so the drawing reads before the colour.
+
+SUBJECT LOCK
+Edit the supplied open-contour mouse. Same character: female Collegian, light brown fur, cream muzzle and belly, large ears, whiskers, long tail, moss-green hooded tunic, toggle closures, rope belt, hands on hips, three-quarter stance, feet planted. Do not add a weapon, a second animal, scenery, or lettering.
+
+MARKS
+Pen sketch on paper. Ink is near-black and obvious at portrait size. Draw the brow, near muzzle, hood edge, toggles, rope belt, and fingers with short thick hooked strokes, each stroke heavier at one end and broken at the other. Double the hooks at the hood and the knuckles. Leave the far ear rim, the underside of the tail, and the tunic hem without a closed outline; those edges stay the ragged end of the wash. Do not replace this with one smooth even contour.
+
+COLOUR AND CONTRAST
+Keep the pale moss and brown stains from the parent. The ink must be much darker than the wash. Lights stay bare paper: ear interior, muzzle, belly. No soft airbrush, no gradient inside a clean outline, no sticker edge.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

@@ -1,0 +1,4 @@
+SEMANTIC ID: east-gate-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied gate. Open oak doors between honeysuckle pillars, a clover meadow beyond, iron swallow shapes on the hinges, a wayboard with three pictures and no words. No people.
+OUTPUT: wide 16:9, the gate fills the frame. No pink background. No words.

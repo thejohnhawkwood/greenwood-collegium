@@ -1,0 +1,4 @@
+SEMANTIC ID: badger-female-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied badger. Black-and-white striped head, white ears, dark paws, short black-and-white tail. Green blouse, brown apron tied at the waist, slate skirt, brown lace-up boots. Three-quarter stance, one paw on the hip. Keep those clothes. Do not add a hood or a rope belt.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: north-quad-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its oak or bench.
+PLACE: the supplied quad. Four paths, a stone sundial topped by a snail, a doorway with a harp, a copper dome, a clock tower, flower beds. The clock face has hands and no numerals. No people.
+OUTPUT: wide 16:9, the quad fills the frame. No pink background. No words.

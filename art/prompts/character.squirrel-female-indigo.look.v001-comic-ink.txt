@@ -1,0 +1,4 @@
+SEMANTIC ID: squirrel-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied squirrel. Red fur, huge bushy tail fully in frame, long blue coat with gold trim, one paw on the hip. The coat stays blue. No green tunic. No satchel.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

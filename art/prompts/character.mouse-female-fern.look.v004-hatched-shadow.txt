@@ -1,0 +1,15 @@
+SEMANTIC ID: hatched-shadow
+PARENT LOOK: open-contour (v003). Keep that mouse, pose, and pale wash. Push the ink.
+WHAT THIS VARIES: heavy contour plus obvious diagonal hatching in the shadows.
+
+SUBJECT LOCK
+Edit the supplied open-contour mouse. Same character: female Collegian, light brown fur, cream muzzle and belly, large ears, whiskers, long tail, moss-green hooded tunic, toggle closures, rope belt, hands on hips, three-quarter stance, feet planted. Do not add a weapon, a second animal, scenery, or lettering.
+
+MARKS
+A high-contrast ink sketch. The near contour (brow, muzzle, hood opening, sleeve, fingers, belt) is a heavy broken line, dark enough to read as black. Add clear diagonal hatch strokes, not a soft shadow: under the hood on the neck, under the chin, inside the near sleeve, and under the rope belt. Hatch marks are separate pen lines with paper between them. Far ear rim, tail underside, and hem stay open: no closed outline there.
+
+COLOUR AND CONTRAST
+Pale uneven moss-green and light brown washes only. The black hatch is the dark. Do not paint a smooth shadow under the hatch. Ear lights, muzzle, and belly stay white paper. No airbrush, no glossy eyes, no sticker outline.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

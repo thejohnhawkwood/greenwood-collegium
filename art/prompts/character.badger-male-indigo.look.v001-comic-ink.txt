@@ -1,0 +1,4 @@
+SEMANTIC ID: badger-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male badger. Striped head, long blue coat with a small plain gold emblem and no writing, closed books under one arm, the other paw in a pocket, tall black boots. The coat stays blue. No mortarboard. No apron. No green clothes.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,18 @@
+SEMANTIC ID: lantern-court-harder-ink
+PLACE: the supplied courtyard. Keep that place.
+LOOK: the supplied hare is ink and watercolour only. Do not draw the hare or any animal.
+
+SUBJECT LOCK
+Lantern Court. A huge oak at the left, roots in the cobbles. Blue lanterns hanging in the branches. A noticeboard and a stone bench with a satchel at the lower left. A coat on a peg on the trunk. Stone school buildings with a tower across the court. Fallen leaves. Do not move the oak, the bench, or the buildings. Do not add people, animals, or a second courtyard.
+
+INK
+Redraw the place with the hare's harder pen. Near-black hooked lines on the oak bark, the lantern frames, the bench, the noticeboard, the window openings, and the stone joints. The line is rough and heavier on the near oak and the bench. Distant roofs are fewer, lighter strokes. Scratchy hatch in the trunk shadow and under the eaves. The ink stays visible on top of the colour. No smooth digital painting.
+
+LIGHT
+Daylight from the upper right, but not a golden cinematic glow. Lit stone and leaves are a lighter wash of their own colour. Shadow under the oak, under the bench, and in the doorways is a darker wash of the same local colour. Bark stays brown. Leaves stay ochre and olive. Stone stays grey-cream. Lantern glass stays a small blue accent, not a bloom. No brown camouflage stains on the stone. No flat fill.
+
+EDGE
+Foliage and masonry edges are ragged, with a few broken strokes and pale paper gaps. No sticker outline around the whole scene. The noticeboard papers are blank. No readable words, no signature.
+
+OUTPUT
+A wide courtyard illustration, 16:9. The scene fills the frame. No pink background. No characters.

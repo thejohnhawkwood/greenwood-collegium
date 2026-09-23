@@ -1,0 +1,4 @@
+SEMANTIC ID: mouse-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy its green hood.
+IDENTITY: the supplied mouse. Brown fur, large ears, thin tail, long blue robe, rope belt with a tassel, one paw near the belt. The robe stays blue. No green clothes. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

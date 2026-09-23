@@ -1,0 +1,4 @@
+SEMANTIC ID: toad-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied toad. Warty olive-brown skin, a short rust cloak, a grey shirt, brown trousers, boots, and a small pouch. The cloak stays rust and distinct from the skin. No spectacles. No book. No dress. No tail.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

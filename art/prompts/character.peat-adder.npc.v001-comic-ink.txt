@@ -1,0 +1,4 @@
+SEMANTIC ID: peat-adder-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied snake. A small brown adder coiled on a peat mound, head raised, awake, a dark zigzag down the back. Brown as peat water. Not a person. No blood.
+OUTPUT: isolated snake, flat background exactly #EE3173, no words, no second animal.

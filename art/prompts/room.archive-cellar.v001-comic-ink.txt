@@ -1,0 +1,4 @@
+SEMANTIC ID: archive-cellar-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied cellar. Tree roots, stone steps, wooden boxes on feet with simple picture marks, lavender bags, a brass lamp, a closed ledger. No letters. No people.
+OUTPUT: wide 16:9, the cellar fills the frame. No pink background. No words.

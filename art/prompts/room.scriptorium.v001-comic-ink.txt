@@ -1,0 +1,4 @@
+SEMANTIC ID: scriptorium-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied copying room. Slanted desks, quills, ink pots, a candle, blank paper, one wing-shaped ink blot. No letters. No sheet music. No people.
+OUTPUT: wide 16:9, the room fills the frame. No pink background. No words.

@@ -1,0 +1,4 @@
+SEMANTIC ID: south-orchard-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied orchard. Apple trees, blossom, a straw practice dummy with a blank face and a straw hat, a rack with a sword, a staff, and a sling, a basket of apples, a blank board. No person. No instructor.
+OUTPUT: wide 16:9, the orchard fills the frame. No pink background. No words.

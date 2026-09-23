@@ -1,0 +1,4 @@
+SEMANTIC ID: practice-dummy-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied straw dummy. A blank stitched head, a straw hat, patched canvas, two chalk circles, no face, no eyes, no mouth. It is not an animal and not a person.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second figure.

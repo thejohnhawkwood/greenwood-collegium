@@ -1,0 +1,15 @@
+SEMANTIC ID: rough-hooks
+PARENT LOOK: shadow-depth (v005), which already carries the heavy-hooks ink. Keep that mouse and that colour. Push the line.
+WHAT THIS VARIES: rougher, stronger ink. Strokes are thick, broken, and jagged. They do not form one smooth contour.
+
+SUBJECT LOCK
+Edit the supplied shadow-depth mouse. Same female Collegian, large ears, whiskers, long tail, moss-green hooded tunic, toggles, rope belt, hands on hips, three-quarter stance, feet planted. Keep the warmer brown fur, the olive folds in the tunic, and the darker legs. Do not add a weapon, a second animal, scenery, or lettering.
+
+MARKS
+Redraw the ink rougher than the parent. Use short, heavy, near-black hooks. Each stroke changes thickness and ends in a blunt or broken tip. Double the line along the hood, the near arm, and the brow so two hooks sit side by side and do not match. Ear hatching stays, but the hatch strokes are scratchier and uneven. The far ear rim, the underside of the tail, and the hem are ragged, not a clean closed curve. No smooth bezier outline. No tidy cartoon contour.
+
+COLOUR
+Do not pale the washes. Leave the parent's moss, umber, and cream. The black line must stay darker than the colour. Colour remains a stain, not a flat fill.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

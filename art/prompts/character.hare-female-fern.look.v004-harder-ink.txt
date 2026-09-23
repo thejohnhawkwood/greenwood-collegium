@@ -1,0 +1,15 @@
+SEMANTIC ID: hare-harder-ink
+PARENT: the supplied hare. Keep the hare. Make the ink harder and rougher.
+INK REFERENCE: the supplied mouse. Copy only the weight and roughness of its pen. Do not copy the mouse.
+
+SUBJECT LOCK
+Same female hare: long upright ears, brown fur, cream chest, small tail, knee-length green button coat, no hood, profile facing left, walking, one forepaw slightly back. The coat stays green. The fur stays brown. Do not add brown patches to the coat or green patches to the fur. Do not add a bow, a pipe, or armour.
+
+INK, THIS IS THE TASK
+The current hare line is too clean and too light. Replace it with harder, rougher pen work. Near-black. Short hooked strokes that change thickness and end in blunt broken tips. Double the line on the near ear, the brow, the coat opening, and the sleeve so the two strokes do not match. Scratchy uneven hatch inside both ears, under the jaw, and in the shadow of the sleeve. A few strokes overshoot the ear tip and the cuff. Do not tidy this into one smooth contour. The ink must look heavier than the hare you were given.
+
+EDGE AND LIGHT
+Keep a pale frayed fringe on the hem and cuffs. Keep the lit side of the coat a lighter green and the far side a darker green of the same green. Do not solve the shadow with a flat fill.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

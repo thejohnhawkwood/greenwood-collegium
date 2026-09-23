@@ -1,0 +1,4 @@
+SEMANTIC ID: mouse-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy its green hood.
+IDENTITY: the supplied male mouse. Brown fur, thin curling tail, blue jacket and blue trousers, cream shirt, brown belt, both hands on the hips, brown boots. The clothes stay blue. No long robe. No green clothes. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

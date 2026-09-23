@@ -1,0 +1,15 @@
+SEMANTIC ID: lantern-court-watercolour
+PLACE: the supplied courtyard. Keep the oak, lanterns, noticeboard, bench, satchel, coat, and stone school.
+COLOUR REFERENCE: the supplied mouse. Copy only how that mouse is coloured. Do not draw the mouse or any animal.
+
+WHAT TO COPY FROM THE MOUSE
+The mouse is not flat colour inside a line. The green tunic is a transparent watercolour wash: lighter on the lit chest, darker olive in the folds, with the paper and the pen still showing. The brown fur is a softer wash of its own colour, darker toward the shadow, and it never turns into green. The near-black pen sits on top of the paint. Do that to the courtyard.
+
+COURTYARD COLOUR
+Paint each material in its own colour. Bark is brown wash, darker in the trunk shadow, lighter on the lit side. Leaves are ochre and olive wash, uneven because of light, not because of a camouflage pattern. Stone is grey-cream wash, darker under the eaves and under the bench. The coat is brown wash. Lantern glass is a small blue accent, not a glow. Do not sprinkle random green and brown blotches across the stone. Do not turn the scene into one even digital fill.
+
+INK
+Keep a rough near-black pen on the oak, the bench, the lantern frames, and the stone joints, visible on top of the wash, as on the mouse. Edges of leaves and masonry stay a little ragged. Noticeboard papers are blank. No words. No signature. No animals.
+
+OUTPUT
+Wide 16:9 illustration filling the frame. No pink background.

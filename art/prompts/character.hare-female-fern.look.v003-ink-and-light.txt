@@ -1,0 +1,20 @@
+SEMANTIC ID: hare-ink-and-light
+WHAT FAILED: the blotchy hare. Its coat became camouflage, the brown stains mixed fur with cloth, and the pen ink disappeared. Go back to heavy hooks, shadow-depth, and a ragged edge.
+
+STYLE
+The mouse reference is the ink and the light. Copy the visible near-black pen, the hatch, the darker shadow side, and the pale frayed hem. Do not copy the mouse's face, hood, toggles, or rope belt. Do not copy any other artist's archer, pipe, bow, or armour.
+
+IDENTITY
+The hare reference is the character. Tall female hare, long upright ears, brown fur, cream chest, small pale tail, knee-length green button coat, no hood, profile facing left, walking, one forepaw slightly back.
+
+INK, REQUIRED
+Draw the hare in pen first and leave the pen on top of the colour. Near-black hooked lines must be obvious on both ears, the eye, the nose, the coat opening, every button, the sleeve, the paws, and the feet. Scratchy hatch sits inside the ears and in the shadow of the coat. If the picture reads as paint without ink, it fails.
+
+LIGHT, NOT CAMOUFLAGE
+Light comes from the upper left. The coat is green on every part of the coat. The lit chest and near sleeve are a lighter green wash. The far side of the coat, the underside of the sleeve, and the fold by the hem are a darker green wash of that same green. Do not put brown patches on the coat. The fur is brown on every part of the fur. The lit cheek is a lighter brown. The jaw, the far ear, and the far leg are a darker brown. Do not put green patches on the fur. The value change shows the roundness of the body. It is not a pattern.
+
+EDGE
+A pale frayed fringe along the coat hem and cuffs, as on the mouse. The fringe does not replace the ink.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words, no second animal.

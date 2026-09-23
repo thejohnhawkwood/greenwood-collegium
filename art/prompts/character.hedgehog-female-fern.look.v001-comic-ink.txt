@@ -1,0 +1,4 @@
+SEMANTIC ID: hedgehog-female-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied hedgehog. Cream face, brown spines down the back, green dress with a cream neck bow, brown belt with a buckle, one paw raised in a wave, the other on the hip. Keep the spines and the bow. No spectacles. No whistle.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

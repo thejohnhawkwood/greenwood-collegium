@@ -1,0 +1,4 @@
+SEMANTIC ID: squirrel-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male squirrel. Red fur, huge bushy tail fully in frame, tufted ears, green jacket with brass buttons, brown knee breeches, a satchel on a shoulder strap held at the hip. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

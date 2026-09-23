@@ -1,0 +1,4 @@
+SEMANTIC ID: mouse-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy its green hood.
+IDENTITY: the supplied mouse. Brown fur, thin tail, a russet field jacket, an olive shirt under it, a brown belt, a satchel, and boots. Hands on hips. The jacket stays russet. No hood. No red cloak. No blue robe.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

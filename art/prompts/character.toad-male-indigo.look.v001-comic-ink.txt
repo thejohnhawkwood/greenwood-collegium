@@ -1,0 +1,4 @@
+SEMANTIC ID: toad-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male toad. Warty olive skin, blue jacket and blue trousers, waistcoat, a watch chain, a closed brown book in one hand. The suit stays blue and distinct from the skin. No dress. No tail. No spectacles. The book has no writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

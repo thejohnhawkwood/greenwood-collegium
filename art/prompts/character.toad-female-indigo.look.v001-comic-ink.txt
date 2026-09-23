@@ -1,0 +1,4 @@
+SEMANTIC ID: toad-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied toad. Green skin, wide mouth, long blue dress with a white collar, a small flower at the throat, a cream sash, webbed feet. The dress stays blue and distinct from the green skin. No fur. No tail.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

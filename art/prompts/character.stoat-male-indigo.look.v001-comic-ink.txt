@@ -1,0 +1,4 @@
+SEMANTIC ID: stoat-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male stoat. Brown head, cream throat, long tail with a pale tip, long blue coat with a gold clasp, one paw in a pocket, a dark shoe. The coat stays blue. No leaf badge. No green clothes.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

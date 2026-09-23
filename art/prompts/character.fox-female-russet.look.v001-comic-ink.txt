@@ -1,0 +1,4 @@
+SEMANTIC ID: fox-female-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied fox. Red fur, white-tipped tail fully in frame, a rust-red cloak, a blue-grey tunic under it, brown boots, one paw in a pocket. The cloak stays rust-red. No long green coat. A round clasp, no writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

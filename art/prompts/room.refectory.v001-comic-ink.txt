@@ -1,0 +1,4 @@
+SEMANTIC ID: refectory-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied dining room. Long tables, beeswax shine, paper leaves on a string, stacked plates, bread, a blank place card with an acorn, a patched bench. No letters. No people.
+OUTPUT: wide 16:9, the room fills the frame. No pink background. No words.

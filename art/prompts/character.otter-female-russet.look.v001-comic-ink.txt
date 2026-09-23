@@ -1,0 +1,4 @@
+SEMANTIC ID: otter-female-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied otter. Brown fur, cream chest, long tail, a short rust-red hooded cloak clasped at the throat. The cloak stays rust-red. No blue coat. No trousers. No satchel.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

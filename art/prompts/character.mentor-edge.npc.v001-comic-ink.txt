@@ -1,0 +1,4 @@
+SEMANTIC ID: mentor-edge-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied hare. Long ears, one ear notched, a grey mail shirt, a belt, a sheathed practice sword at the hip. The mail stays grey. Do not draw the sword. No green hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

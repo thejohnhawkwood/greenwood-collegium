@@ -1,0 +1,4 @@
+SEMANTIC ID: otter-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied otter. Grey-brown fur, cream muzzle, long dark tail, long blue coat with gold trim, both paws on the hips. The coat stays blue. No green clothes. No trousers.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: fog-walker-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied shape. A tall wet cloak of wool and peat, no face, no eyes, fog at the hem. No blood. No person inside. No symbols.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second creature.

@@ -1,0 +1,4 @@
+SEMANTIC ID: squirrel-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied squirrel. Red fur, huge bushy tail fully in frame, a russet field jacket, brown breeches, a belt, and a satchel. The jacket stays russet. No hood. No cloak.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

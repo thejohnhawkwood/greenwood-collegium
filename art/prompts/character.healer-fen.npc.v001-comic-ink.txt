@@ -1,0 +1,4 @@
+SEMANTIC ID: healer-fen-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied otter. Brown fur, cream chest, a green shirt, a cream apron, a belt, a satchel with a roll of white bandage, and a banded tail. The apron stays cream. The shirt stays green. No writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

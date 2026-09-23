@@ -1,0 +1,4 @@
+SEMANTIC ID: headmaster-study-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied study. Oak beams, a round window of plain glass, a carved wooden owl on a dais, six small banners with simple marks, book stacks, a tuning fork, tea rings on a blotter. The owl is wood. No living person. No letters.
+OUTPUT: wide 16:9, the room fills the frame. No pink background. No words.

@@ -1,0 +1,4 @@
+SEMANTIC ID: west-cloister-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its oak or bench.
+PLACE: the supplied walk. Rain-dark stone arches, moss, wet paving, a round mosaic of paws, wings, and leaves, a closed blue umbrella. No people. No words on the mosaic.
+OUTPUT: wide 16:9, the walk fills the frame. No pink background. No words.

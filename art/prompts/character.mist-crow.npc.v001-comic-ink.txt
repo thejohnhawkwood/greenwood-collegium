@@ -1,0 +1,4 @@
+SEMANTIC ID: mist-crow-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied bird. A wet black crow, larger than a rook, fog in the feathers, perched on a wooden rail. Not a person.
+OUTPUT: isolated bird, flat background exactly #EE3173, no words, no second animal.

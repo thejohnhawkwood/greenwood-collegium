@@ -1,0 +1,4 @@
+SEMANTIC ID: badger-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male badger. Striped head, green shirt, brown work apron with tool pouches and a wide belt, dark trousers, lace-up boots, short black-and-white tail, arms at the sides. Not a long dress. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

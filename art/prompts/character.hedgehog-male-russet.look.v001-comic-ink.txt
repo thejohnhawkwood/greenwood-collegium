@@ -1,0 +1,4 @@
+SEMANTIC ID: hedgehog-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied hedgehog. Cream face, brown spines, a rust-red short cloak over an olive tunic, a satchel, and boots, walking. The cloak stays rust-red. No spectacles. No dress. No waving paw.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

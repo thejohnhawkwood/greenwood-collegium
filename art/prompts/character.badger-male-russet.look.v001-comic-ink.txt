@@ -1,0 +1,4 @@
+SEMANTIC ID: badger-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied badger. Striped head, a red hooded cloak over an olive tunic, a satchel, walking. The cloak stays red. No apron. No mortarboard. No blue coat.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

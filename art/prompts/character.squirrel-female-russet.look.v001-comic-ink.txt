@@ -1,0 +1,4 @@
+SEMANTIC ID: squirrel-female-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied squirrel. Red fur, huge bushy tail fully in frame, a rust-red hooded cloak, an olive tunic under it, a brown satchel. The cloak stays rust-red. No blue coat.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

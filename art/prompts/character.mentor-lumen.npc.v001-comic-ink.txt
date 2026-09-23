@@ -1,0 +1,4 @@
+SEMANTIC ID: mentor-lumen-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied barn owl. Heart-shaped white face, mottled wings, a cream robe, a dark mottled cloak, a satchel, two legs with talons. The robe stays cream. Do not add human arms. The satchel has no readable writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

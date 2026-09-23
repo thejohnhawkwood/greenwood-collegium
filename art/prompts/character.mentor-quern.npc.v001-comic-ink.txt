@@ -1,0 +1,4 @@
+SEMANTIC ID: mentor-quern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied badger. Massive grey body, short rounded badger ears, a striped face, a wide mason's belt with a pouch and chisels. No long rabbit ears. No shirt added. No green hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

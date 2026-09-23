@@ -1,0 +1,4 @@
+SEMANTIC ID: observatory-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied observatory. A brass telescope under a penny-coloured roof slit, hanging star charts of dots only, a desk with a compass and wood shavings. No captions. No people.
+OUTPUT: wide 16:9, the room fills the frame. No pink background. No words.

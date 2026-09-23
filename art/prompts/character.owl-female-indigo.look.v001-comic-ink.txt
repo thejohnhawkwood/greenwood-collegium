@@ -1,0 +1,4 @@
+SEMANTIC ID: owl-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied owl. Heart-shaped white face, brown wings, blue dress, cream sash tied in a bow, one wing holding a pale quill, two legs with talons. The dress stays blue. Do not add human arms. No green dress.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

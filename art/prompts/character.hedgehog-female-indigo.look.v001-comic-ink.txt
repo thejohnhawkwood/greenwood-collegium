@@ -1,0 +1,4 @@
+SEMANTIC ID: hedgehog-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied hedgehog. Cream face, brown spines, blue dress with a cream neck bow and a brown belt, one paw waving, the other holding a closed brown book. The dress stays blue. No green dress. The book has no writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

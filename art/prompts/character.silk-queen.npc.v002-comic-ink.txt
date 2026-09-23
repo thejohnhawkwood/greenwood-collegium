@@ -1,0 +1,4 @@
+SEMANTIC ID: silk-queen-comic-ink-v002
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. The hatchling reference is the same pale spider, smaller. Do not copy the mouse. Do not copy the hatchling's size.
+IDENTITY: the Silk Queen. A terrifying pale silk spider, much larger than a school satchel. Longer jointed legs. A heavy body wrapped in thick pale silk. A wide mouth and clicking mandibles. Tiny dark eyes set far apart. She waits. No smile. No huge glossy eyes. No plush toy. No person in a cloak. No hood. No blood. No wounds.
+OUTPUT: isolated creature, flat background exactly #EE3173, no words, no second animal.

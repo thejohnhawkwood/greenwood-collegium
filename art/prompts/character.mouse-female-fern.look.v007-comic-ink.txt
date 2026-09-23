@@ -1,0 +1,14 @@
+SEMANTIC ID: mouse-comic-ink
+ONE VARIATION. Heavy comic ink, in the spirit of a clear European album outline. Do not copy any existing comic character, costume, or lettering.
+
+IDENTITY
+The supplied mouse. Female Collegian. Light brown fur, cream muzzle and belly, large ears, whiskers, long tail. Moss-green hooded tunic, toggle closures, rope belt, hands on hips, three-quarter stance, feet planted. Keep that mouse. Do not add a weapon or a second animal.
+
+INK
+A heavy near-black contour around the whole figure, thick enough to read at a glance. Interior lines for the hood, toggles, belt, fingers, and ears are the same black pen, confident and a little rough, not a hairline. The ink is the picture. It sits on top of the colour.
+
+COLOUR
+Flat local colour behind the ink. The tunic is moss green, with one simple darker green shadow under the hood and on the far sleeve. The fur is brown, with one simple darker brown shadow under the jaw and on the far leg. Cream muzzle. Do not camouflage. Do not airbrush. Do not let the paint cover the black line.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

@@ -1,0 +1,4 @@
+SEMANTIC ID: piper-mole-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied mole. Dark fur, pink snout, claws, a patched grey coat, a tin whistle at the belt, silk dust on the paws, eyes wide. No cap. No book.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

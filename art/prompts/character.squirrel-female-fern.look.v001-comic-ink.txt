@@ -1,0 +1,4 @@
+SEMANTIC ID: squirrel-female-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied squirrel. Red fur, huge bushy tail, tufted ears, white chest. Green tunic with a brown belt and a small brown satchel held at the hip. Keep the tail fully in frame. No hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: music-loft-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the supplied loft. Sloping timber, empty music stands, a harp under a blue cloth, a small drum, a cup on the sill, one tiny painted bird on a page. No sheet music. No people.
+OUTPUT: wide 16:9, the loft fills the frame. No pink background. No words.

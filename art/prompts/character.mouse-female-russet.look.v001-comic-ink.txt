@@ -1,0 +1,4 @@
+SEMANTIC ID: mouse-female-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy its green hood.
+IDENTITY: the supplied mouse. Brown fur, thin tail, a rust-red hooded cloak, an olive tunic under it, a brown belt, and a brown satchel. The cloak stays rust-red. No blue robe. No hands on hips.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

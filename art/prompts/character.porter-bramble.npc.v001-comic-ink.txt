@@ -1,0 +1,4 @@
+SEMANTIC ID: porter-bramble-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied hedgehog. Cream face, brown spines, round spectacles, a brown jacket and waistcoat, a whistle on a cord, one paw waving. The jacket stays brown. No green hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

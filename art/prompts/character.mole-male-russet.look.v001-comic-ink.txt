@@ -1,0 +1,4 @@
+SEMANTIC ID: mole-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied mole. Dark fur, pink snout, claws, a brown flat cap, a short rust-red cloak. The cloak stays rust-red. No mortarboard. No green cap. No book.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

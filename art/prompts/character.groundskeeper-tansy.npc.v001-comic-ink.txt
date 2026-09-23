@@ -1,0 +1,4 @@
+SEMANTIC ID: groundskeeper-tansy-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied groundskeeper. Striped black-and-white face, long upright ears, a green shirt, a brown apron with two pouches, a belt, boots, and a short pale tail. The apron stays brown. The shirt stays green. No mortarboard.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: fox-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied fox. Red fur, white-tipped tail fully in frame, long blue coat with gold buttons and gold scrollwork, paws in the pockets, profile facing right. The coat stays blue. No readable writing. No green coat.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

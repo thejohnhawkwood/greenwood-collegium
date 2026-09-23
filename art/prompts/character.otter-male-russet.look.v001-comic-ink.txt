@@ -1,0 +1,4 @@
+SEMANTIC ID: otter-male-russet-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied otter. Brown fur, cream chest, a short russet hooded cape, a brown jacket and trousers, a belt, a satchel, boots, and a banded tail. The cape stays russet. No blue coat.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

@@ -1,0 +1,4 @@
+SEMANTIC ID: mentor-briar-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied hedgehog. Brown spines, a green cloak of leaves, a belt, and shears already hanging at the hip. The cloak stays green. Do not add a second tool.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

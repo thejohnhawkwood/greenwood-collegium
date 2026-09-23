@@ -1,0 +1,15 @@
+SEMANTIC ID: ragged-boundary
+PARENT LOOK: shadow-depth (v005), which already carries the heavy-hooks ink. Keep that mouse and that colour. Push the edge.
+WHAT THIS VARIES: messier boundaries. Ink and colour do not share one neat edge.
+
+SUBJECT LOCK
+Edit the supplied shadow-depth mouse. Same female Collegian, ears, whiskers, long tail, hooded tunic, toggles, rope belt, hands on hips, three-quarter stance. Keep the olive tunic, darker brown legs, and cream muzzle. Do not add a weapon, a second animal, scenery, or lettering.
+
+MARKS AND EDGES
+The outer boundary is messy. Heavy ink stops and starts, so gaps open along the sleeve, the hem, and the tail. Where the ink stops, the moss or brown wash continues past that gap and ends in a ragged stain, not a curve. In other places the wash stops inside the ink and leaves a ragged paper gap. Colour bleeds slightly outside the hood and the far ear. The line itself is rough and strong, with doubled hooks. Do not close the silhouette into one even outline. Do not make a sticker edge.
+
+COLOUR
+Keep the parent's stronger moss and umber. The stains stay uneven. Black ink remains the darkest mark and is not softened into the wash.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words.

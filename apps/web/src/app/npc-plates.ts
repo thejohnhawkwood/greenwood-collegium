@@ -59,7 +59,7 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-peat-adder-peat-cut": "peat-adder",
 };
 
-const NPC_ART_REV = "east-watch-2";
+const NPC_ART_REV = "comic-ink-1";
 
 export function npcArtSrc(id: string): string | undefined {
   const plate = NPC_PLATE_ALIASES[id];

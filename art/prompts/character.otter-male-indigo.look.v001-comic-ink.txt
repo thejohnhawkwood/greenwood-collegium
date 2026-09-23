@@ -1,0 +1,4 @@
+SEMANTIC ID: otter-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male otter. Brown fur, cream muzzle, banded tail, blue jacket and waistcoat, blue trousers, brown belt, brown boots, one paw on the hip. The clothes stay blue. No long open robe. No green clothes.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

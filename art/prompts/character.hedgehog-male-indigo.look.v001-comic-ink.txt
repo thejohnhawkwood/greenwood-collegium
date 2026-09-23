@@ -1,0 +1,4 @@
+SEMANTIC ID: hedgehog-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male hedgehog. Cream face, brown spines, long blue coat with gold trim, paws near the pockets. The coat stays blue. No spectacles. No dress. No green jacket.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

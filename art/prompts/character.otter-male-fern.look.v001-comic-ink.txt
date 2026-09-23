@@ -1,0 +1,4 @@
+SEMANTIC ID: otter-male-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male otter. Brown fur, cream muzzle, thick banded tail, green overcoat over a buttoned waistcoat, brown trousers, brown boots, one paw on the hip. No hood. No apron.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

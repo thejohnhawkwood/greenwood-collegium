@@ -1,0 +1,14 @@
+SEMANTIC ID: paper-gap
+WHAT THIS PUSHES: a white paper halo between every ink mark and the colour. Colour is forbidden to touch the line.
+
+SUBJECT LOCK
+One original Greenwood mouse, edited from the supplied identity plate. Female Collegian. Light brown fur, cream muzzle and belly, large mouse ears, whiskers, long tail. Moss-green hooded tunic with toggle closures. Rope belt. Hands on hips. Three-quarter standing pose, feet planted. Do not add a weapon, a second animal, a bow, a cloak from another drawing, scenery, or lettering.
+
+MARKS
+Traditional pen and ink on white paper, then a thin watercolour stain. The contour is short hooked ink strokes, not one continuous outline. Each stroke stops and the next starts a small gap away. Line weight changes inside a single stroke. Ears, hood, and cuffs have doubled overlapping hooks.
+
+COLOUR RULE
+Leave a white paper gap, about as wide as a whisker, between the ink and any green or brown. The wash sits inside the shape and does not touch the contour. Ear interiors, muzzle highlight, and the lit side of the tunic stay bare paper. Fur is a few brown ticks plus a pale uneven stain, not a smooth brown fill. No gradient, no airbrush, no soft digital shading, no sticker edge.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words. Do not copy another artist's characters.

@@ -1,0 +1,151 @@
+{
+  "assets": [
+    {
+      "asset_id": "character.mouse-female-fern.look",
+      "kind": "character-look",
+      "canonical_entity_id": "mouse-female-fern",
+      "label": "Mouse Collegian, Courtyard fern",
+      "tags": ["slice-0", "style-pilot"],
+      "intended_use": {
+        "surface": "lookArtSrc portrait and full figure",
+        "display_width_px": 512,
+        "display_height_px": 768
+      },
+      "brief_path": "art/briefs/character.mouse-female-fern.look.md",
+      "style_guide": {
+        "path": "GREENWOOD_ART_DIRECTION.md",
+        "version": "1.0",
+        "sha256": null
+      },
+      "references": [
+        {
+          "role": "identity",
+          "path": "apps/web/public/art/characters/looks/mouse-female-fern.png",
+          "sha256": "70495ffc8ade8f9d84dec5dbb530c01931224f97f27667fcceee58cc4a9ce8c5"
+        }
+      ],
+      "dependencies": [],
+      "current_approved_revision": null,
+      "current_production_revision": "live-painted-plate",
+      "revisions": [
+        {
+          "revision_id": "v001",
+          "variant_id": "candidate-a",
+          "state": "needs_revision",
+          "origin": "generated",
+          "parent_asset_id": "character.mouse-female-fern.look",
+          "parent_revision_id": "live-painted-plate",
+          "created_at": "2026-09-22",
+          "identity_locks": [
+            "mouse",
+            "female",
+            "moss-green hooded tunic",
+            "rope belt",
+            "hands on hips",
+            "long tail"
+          ],
+          "permitted_changes": ["rendering language only"],
+          "prompt": {
+            "submitted_path": "art/prompts/character.mouse-female-fern.look.v001.txt",
+            "submitted_sha256": "6f351aa20074223f3fd3f1a32349553bd1549183ecb066a39494efcbffa75d8e",
+            "provider_revised_path": null
+          },
+          "generation": {
+            "route": "cursor-native",
+            "tool_name": "GenerateImage",
+            "provider": null,
+            "requested_image_model": null,
+            "reported_image_model": null,
+            "model_evidence": "tool response saved a file and did not disclose a backend id",
+            "documented_backend_note": "Cursor January 2026 launch notes name Nano Banana Pro; that note was not confirmed for this call",
+            "request_id": null,
+            "job_id": null,
+            "requested_parameters": {
+              "aspect_ratio": "3:4",
+              "reference_image_paths": ["apps/web/public/art/characters/looks/mouse-female-fern.png"]
+            },
+            "accepted_or_reported_parameters": {
+              "aspect_ratio": "3:4"
+            },
+            "seed": null,
+            "authorization_evidence": "Owner asked to implement the drawing-led plan. Slice 0 allows one native call.",
+            "call_limit": 1,
+            "calls_attempted": 1,
+            "spend_limit": null,
+            "spend_currency": null,
+            "raw_usage": null,
+            "estimated_cost": null,
+            "actual_cost": null,
+            "cost_currency": null,
+            "cost_basis": "native Cursor usage; amount unknown",
+            "cost_status": "unknown_native_usage",
+            "reference_upload_permissions": ["live mouse-female-fern plate"]
+          },
+          "source": {
+            "path": "art/sources/character_mouse-female-fern_look__v001__candidate-a.png",
+            "sha256": "6018df077d03f7131663b069b6a1e6123d41430ad05834e574d97b420e00adc2",
+            "mime_type": "image/jpeg",
+            "width_px": 864,
+            "height_px": 1152,
+            "bytes": 233208,
+            "has_alpha_channel": false,
+            "has_transparent_pixels": false,
+            "provenance_metadata_preserved": false
+          },
+          "technical_contract": {
+            "aspect_ratio": "3:4",
+            "background_requirement": "flat #EE3173 then punch to alpha",
+            "pose_family": "collegian-look-3/4",
+            "canvas_size_px": [512, 768],
+            "baseline_px": null,
+            "anchor_contract_version": null,
+            "compatible_bodies": [],
+            "layer_order": null,
+            "safe_regions": [],
+            "geometry_source": null
+          },
+          "review": {
+            "status": "needs_revision",
+            "reviewed_by": "agent",
+            "reviewed_at": "2026-09-22",
+            "visual_inspection_performed": true,
+            "technical_checks": ["fail: jpeg 864x1152 rgb, not 512x768 png"],
+            "style_checks": ["fail: thick uniform outline", "fail: smooth colour", "fail: paint covers the drawing"],
+            "identity_checks": ["pass: mouse, green tunic, rope belt, hands on hips, tail"],
+            "observations": [
+              "Cartoon contour and smooth fill. Not a pencil-crayon drawing.",
+              "Pose is more frontal than the live plate. Chest fastening changed."
+            ],
+            "contact_sheet_path": null,
+            "in_game_preview_path": null
+          },
+          "owner_approval": {
+            "status": "pending",
+            "approved_by": null,
+            "approved_at": null,
+            "approved_source_sha256": null,
+            "evidence": null,
+            "scope": null,
+            "derivative_export_policy": null
+          },
+          "rights_and_provenance": {
+            "origin_note": "Native Cursor generation from the live Greenwood plate plus the slice 0 prompt",
+            "permissions_evidence": "Owner authorized slice 0 of the drawing-led plan",
+            "source_creator": null,
+            "distribution_status": "candidate_not_for_production"
+          },
+          "exports": [],
+          "integration": {
+            "status": "not_integrated",
+            "authorization_evidence": null,
+            "consumers": ["apps/web/src/app/portrait-layers.ts lookArtSrc"],
+            "tests_run": [],
+            "visual_verification": "not_checked",
+            "previous_mapping": "apps/web/public/art/characters/looks/mouse-female-fern.png",
+            "rollback_record": null
+          }
+        }
+      ]
+    }
+  ]
+}

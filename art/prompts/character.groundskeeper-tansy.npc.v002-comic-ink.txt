@@ -1,0 +1,4 @@
+SEMANTIC ID: groundskeeper-tansy-comic-ink-v002
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The badger reference is head shape and ink weight only. Do not copy her clothes.
+IDENTITY: Groundskeeper Tansy is a female badger. Short rounded badger ears. Striped black-and-white face. No long rabbit ears. Keep her green shirt, brown leather apron with two pouches, belt, muddy boots, and short pale tail from the groundskeeper plate. The apron stays brown. The shirt stays green.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

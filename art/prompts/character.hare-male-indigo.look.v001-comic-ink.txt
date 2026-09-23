@@ -1,0 +1,4 @@
+SEMANTIC ID: hare-male-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied male hare. Long ears, brown fur, long blue coat over a waistcoat, both paws in the pockets. The coat stays blue. No sword. No green clothes.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

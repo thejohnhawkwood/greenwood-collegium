@@ -1,0 +1,14 @@
+SEMANTIC ID: open-contour
+WHAT THIS PUSHES: parts of the silhouette have no ink at all. Those edges exist only where a wash ends.
+
+SUBJECT LOCK
+One original Greenwood mouse, edited from the supplied identity plate. Female Collegian. Light brown fur, cream muzzle and belly, large mouse ears, whiskers, long tail. Moss-green hooded tunic with toggle closures. Rope belt. Hands on hips. Three-quarter standing pose, feet planted. Do not add a weapon, a second animal, a bow, scenery, or lettering.
+
+MARKS
+Pen and ink plus thin watercolour on white paper. Draw ink along the brow, the near side of the muzzle, the toggle closures, the rope belt, the fingers, and the near edge of the hood. Do not ink the outer rim of the far ear, the underside of the tail, or the bottom hem of the tunic. Those three edges are only the ragged end of a wash, with no line redrawn over them. Remaining ink is scratchy and doubled, with gaps.
+
+COLOUR RULE
+Moss green is a broken stain on the tunic that fades to bare paper before it reaches the hem. Brown is a light stain on the cheek and arms only. Most of the belly, the ear lights, and the tail's far side are untouched paper. Colour may spill past a line. It must not form a neat filled shape. No smooth digital rendering, no closed cartoon contour, no soft shadow gradient.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words. Do not copy another artist's characters.

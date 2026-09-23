@@ -1,0 +1,12 @@
+SEMANTIC ID: porter-style-test
+STYLE MASTER: the ragged-boundary mouse. Copy only its ink, value, and frayed edge.
+IDENTITY: Porter Bramble, the supplied hedgehog. Do not turn the porter into the mouse.
+
+SUBJECT LOCK
+A stocky hedgehog. Cream face, dark nose, small ears, dense spines down the back and head. Round wire spectacles. A slight smile. Brown jacket over a brown waistcoat and white shirt. A brass whistle on a cord. One paw raised in a wave, the other at the side. Keep the jacket, the spectacles, the whistle, and the wave. No green hood. No rope belt. No mouse muzzle.
+
+STYLE
+Near-black heavy hooked ink, with scratchy hatch in the spines and along the jacket. Colour is not washed out: warm brown jacket with darker folds on the shadow side, cream face and belly left lighter, brass whistle kept as a small warm accent. Ragged boundary: a pale frayed fringe along the jacket hem, the sleeve, and the spine tips, so the wash and the ink do not share one neat line. No smooth closed sticker outline. No airbrush.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words, no second animal.

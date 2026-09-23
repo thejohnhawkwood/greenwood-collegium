@@ -1,0 +1,17 @@
+SEMANTIC ID: hare-blotchy-wash
+FAILURE TO CORRECT: hare style-test v001. The hare's coat and fur were one even colour inside a line, like a fill tool. The mouse style master is blotchy watercolour. This pass must match that stain. It is not a pass if the coat is one green.
+
+STYLE MASTER
+The mouse reference controls only the way colour is laid down. Copy the tunic's separate moss, olive, and yellow-green puddles, the paper gaps between them, and the pale frayed edge. Do not copy the mouse's face, hood, toggles, or rope belt.
+
+IDENTITY
+The hare reference is the character. Tall female hare, long upright ears, brown fur, cream chest, small pale tail, knee-length green coat with buttons down the front, no hood, profile facing left, walking, one forepaw back. Keep that pose and those clothes.
+
+COLOUR, THIS IS THE TASK
+Paint the coat as about eight separate watercolour puddles, not one fill. Some puddles are sap green, some dull olive, some yellow-green. Leave irregular white paper between several puddles, especially on the sleeve and the lower coat. The puddles have soft wet edges and do not reach the ink in a straight line. Fur is the same way: the cheek is a pale tan stain, the back is a darker umber stain, the legs are a third browner stain, and those stains do not join into one smooth brown. Do not hatch a flat colour to fake texture. Do not bucket-fill any region.
+
+INK AND EDGE
+Keep near-black hooked ink and a pale frayed fringe on the hem and cuffs, as on the mouse. The fringe is not a substitute for blotchy colour inside the coat.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words, no second animal.

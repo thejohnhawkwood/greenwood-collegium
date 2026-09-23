@@ -1,0 +1,4 @@
+SEMANTIC ID: clock-tower-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The Lantern Court reference is ink weight only. Do not copy its courtyard.
+PLACE: the timber tower from the supplied room. Brass gears, every seventh tooth painted blue. An empty bell frame and ropes. No bell. No insects. A ladder. No people.
+OUTPUT: wide 16:9, the tower fills the frame. No pink background. No words.

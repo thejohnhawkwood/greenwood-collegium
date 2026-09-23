@@ -1,0 +1,4 @@
+SEMANTIC ID: headmaster-alder-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied owl. White face, yellow eyes, a long patched green coat, a belt, a small sheathed knife already on the belt, two legs with talons. The coat stays green with brown patches. Do not add a second weapon.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

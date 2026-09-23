@@ -1,0 +1,4 @@
+SEMANTIC ID: stoat-female-fern-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied stoat. Slender brown body, cream throat, long tail with a black tip. Green coat with a green belt and a round buckle, paws behind the back, profile facing left. No hood. No apron.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

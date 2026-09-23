@@ -1,0 +1,14 @@
+SEMANTIC ID: sparse-stain
+WHAT THIS PUSHES: the fewest marks. The mouse is mostly bare paper. Colour is a handful of puddles, not a filled costume.
+
+SUBJECT LOCK
+One original Greenwood mouse, edited from the supplied identity plate. Female Collegian. Light brown fur, cream muzzle and belly, large mouse ears, whiskers, long tail. Moss-green hooded tunic with toggle closures. Rope belt. Hands on hips. Three-quarter standing pose, feet planted. The pose and clothing stay recognizable. Do not add a weapon, a second animal, a bow, scenery, or lettering.
+
+MARKS
+A spare pen drawing on white paper. Use few strokes. The whole head is mostly bare paper: one wavering ink curve for each ear, a small nose hook, two small dark eyes, and about a dozen short fur ticks on the cheek and brow. Whiskers are single thin lines. The tunic is indicated by the hood opening, the toggles, the rope belt, and a few fold hooks, not by an outline around the whole garment. Paws are three or four finger strokes. The tail is one wavering line that breaks once. Do not close any shape with a continuous outline.
+
+COLOUR RULE
+Four or five small moss-green watercolour puddles on the tunic, leaving most of the cloth white. Two pale brown puddles on the cheek and one forearm. No other colour. Puddles have hard dry edges and do not cover a region evenly. No gradient, no airbrushed fur, no soft shading, no digital polish.
+
+OUTPUT
+Isolated figure. Flat background exactly #EE3173. No ground, no signature, no words. Do not copy another artist's characters.

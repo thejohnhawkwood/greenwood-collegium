@@ -1,5 +1,7 @@
 # Start Here — Cursor Tasks
 
+The locked look is the comic-ink pass. Current slices are `docs/art/SLICES.md`. Rooms, NPC cutouts, and object plates from that pass are in `apps/web/public/art/`. Collegian looks are still candidates in `art/sources/`. Combat FX and the arrival procession are not redrawn.
+
 Use one task at a time. These are prompts, not installed shell commands.
 References to an asset or candidate below must be replaced with actual IDs
 returned by your audit/generation session.

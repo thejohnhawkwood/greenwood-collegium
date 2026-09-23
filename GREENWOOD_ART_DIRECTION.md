@@ -44,29 +44,42 @@ Apply this guide when writing image prompts, evaluating artwork, preparing asset
 
 **Default first task:** Prepare one representative character prompt and one small visual test when generation is available. Do not replace production artwork or expand to a large batch until Mr. Bird has approved the direction or explicitly authorized those steps.
 
+**Locked style, 22 September 2026, later the same night:** Philip Bird locked the comic-ink pass. Heavy black contour, flat local colour behind the line. The earlier ragged-boundary plate is no longer the style master.
+
+Style masters, candidates only, not yet the live plates:
+
+- Mouse: `art/sources/character_mouse-female-fern_look__v007__comic-ink.png`
+  SHA-256 `5b126a7e8b6d435af36fe163d2ae8c3fa7bbcc289b2c84e7b8ff460c0a099439`
+- Hare: `art/sources/character_hare-female-fern_look__v005__comic-ink.png`
+  SHA-256 `b34f8eaa9e2b476b270297a6423af129c419c18bd0f447ddbd441d64067484e0`
+- Lantern Court: `art/sources/room_lantern-court__v003__comic-ink.png`
+  SHA-256 `0239eb1d03209b69572482c00d7057d359f2ac295a31f4f9e310d0421b376fe6`
+
+The ink is a heavy near-black album contour, thick enough to read at a glance, sitting on top of the colour. Interior lines for clothes, fingers, and features are the same black pen. Colour is flat and local: one surface keeps one colour, with a single darker shadow of that same colour. Fur colour stays on fur. Cloth colour stays on cloth. Do not copy those three masters onto a different character or room. Do not copy Asterix, Obelix, or any other comic's characters or lettering. Slices are in `docs/art/SLICES.md`.
+
 ---
 
 ## 3. Non-negotiable visual rules
 
 ### A. Linework must carry the image
 
-Use fine graphite-like contours and selective warm dark ink accents. Vary line weight. Allow some contours to break or soften where light meets the form. Keep the face, paws, garment construction, and important objects clearly drawn.
+Draw the contour in dark ink that wobbles, doubles, and breaks. Line weight changes along a single edge: heavier on the outer silhouette, lighter and incomplete inside the ears, sleeves, and paws. Leave overlaps and small gaps. A face, paw, or satchel is described by those nervous marks, not by one closed stroke.
 
-Use short directional marks, curved hatching, and occasional cross-hatching to describe shape. Fur strokes follow the animal's form; cloth marks follow folds; bark marks follow growth and grain. These marks should explain the object rather than act as random scratches.
+Use short directional ticks, curved hatching, and a few scratchy overlaps to describe shape. Fur is a handful of ink ticks plus a stain of colour, not a smooth brown fill. Cloth marks follow folds. These marks should explain the object rather than act as random scratches.
 
-Avoid thick, uniform cartoon outlines, mechanically clean vector edges, and dense engraving-like hatching across every surface. The result should be a resolved illustration, not an unfinished construction sketch.
+Avoid a single even cartoon outline, mechanically clean vector edges, soft bezier curves, and colour that fills neatly up to the line. The result should stay readable, with the rough edge left visible. Do not tidy the contour into a sticker.
 
 ### B. Pencil-crayon colour must remain visible
 
 Treat **pencil crayon** as **coloured pencil**, not wax-crayon scribbling or children's colouring-book fill.
 
-Build local colour with overlapping dry strokes, changes in pressure, and small gaps where the paper shows through. Use the grain of the drawing surface within the colour. Let the coloured-pencil marks help model cheeks, fur, sleeves, leather, timber, and shadows.
+Build local colour with overlapping dry strokes, changes in pressure, and large gaps of bare paper. The wash or pencil often stops short of the ink or spills past it. Ears, muzzle highlights, and cloth lights stay the white of the paper. Colour is blotchy and local, not a gradient inside an outline.
 
-Do not imitate this by adding uniform noise over smooth rendering. At normal viewing size, at least the focal areas should visibly look drawn and coloured by hand.
+Do not imitate this by adding uniform noise over smooth rendering. At normal viewing size, the edge itself must look drawn: broken ink, missed colour, paper showing. A smooth fill with a texture on top fails.
 
 ### C. Watercolour supports; gouache accents
 
-Use restrained transparent washes for local colour, atmosphere, and some shadows. Preserve the visibility of the drawing underneath and the dry marks above or beside the washes.
+Use thin, uneven transparent washes for local colour and a few shadow puddles. The wash is a stain on paper. It must not model the form into a soft digital volume. Preserve the ink, and leave bare paper beside the colour.
 
 Use gouache selectively: a pale whisker, the edge of a worn cuff, a small lantern highlight, a chalky light on a book spine, or a few opaque marks on fur and cloth. These are matte paint touches, not glowing effects.
 
@@ -110,9 +123,9 @@ Replace every bracketed field before use. Keep the medium treatment intact when 
 
 ```text
 Create an original illustration for Greenwood, a grounded woodland-fantasy world.
-Aim toward Larry MacDougall's Gwelf as the principal stylistic reference, with
-an especially strong pencil-and-ink appearance, visible pencil-crayon colour,
-and selective gouache touches. Make a new Greenwood character and composition.
+Aim toward the mark-making of Larry MacDougall's Gwelf: nervous pen-and-ink,
+thin blotchy watercolour, and bare white paper. Make a new Greenwood character
+and composition. Do not copy a Gwelf character, costume, pose, or signature.
 
 SUBJECT
 [Species or object], [role], [personality], [action or pose].
@@ -120,21 +133,22 @@ Clothing and essential equipment: [specific practical garments and objects].
 Setting: [environment, or explicitly specify an isolated asset].
 Framing and output: [view, aspect ratio, background, crop, and intended use].
 
-DRAWING FIRST
-The finished image must read as a carefully observed drawing enriched with
-colour, not as a smooth digital painting with a texture filter. Use fine
-pencil-like contours and selective dark ink details, varied line weight,
-broken edges, directional hatching, and clearly drawn facial and material
-details. Preserve visible marks in the finished image. Keep the drawing
-resolved and readable rather than messy or unfinished.
+INK EDGES, NOT SMOOTH SHAPES
+The outer contour is dark ink that wobbles, doubles back, breaks, and changes
+thickness along one edge. Heavier on the silhouette. Lighter, incomplete, and
+overlapping inside ears, sleeves, fingers, and folds. Do not draw one closed
+even outline. Do not use soft bezier curves or a sticker edge. Leave the
+searching construction lines that a pen makes. Fur is a few ink ticks, not
+smooth hair. The drawing must look scratchy and specific at normal size.
 
-PENCIL-CRAYON COLOUR
-Model the forms with layered coloured-pencil strokes: dry, slightly grainy
-colour, pressure variation, and small flecks of paper visible between marks.
-Let pencil strokes follow fur direction, cloth folds, and wood grain. Use
-restrained transparent watercolour washes underneath or between the drawing
-passages. Add only small matte gouache accents for selected highlights and
-opaque details. Do not smooth the pencil texture into airbrushed gradients.
+COLOUR MISSES THE LINE
+Colour is a thin watercolour stain and a few dry coloured-pencil marks. It
+often stops short of the ink or spills past it. Leave large areas of bare
+white paper: ear lights, muzzle, cloth highlights, the gaps between marks.
+Washes are blotchy and uneven, with puddles in the shadow and empty paper in
+the light. Do not fill a shape neatly to its outline. Do not airbrush a
+gradient inside the line. Gouache, if any, is a few small matte dabs, not a
+smooth opaque layer. No paper-texture filter over a digital painting.
 
 CHARACTER DESIGN
 Ground the character in recognizable animal structure, then stylize the
@@ -154,24 +168,24 @@ should feel lived-in, old-fashioned, folkloric, and quietly magical.
 COLOUR AND LIGHT
 Use a restrained earthy palette with clear light-dark structure: moss and
 olive, umber, warm cream, ochre, russet, dusty red, slate, and blue-grey.
-Allow a small purposeful accent. Use soft natural or modest lantern light
-without cinematic glow. Maintain readable separation from the background.
+Allow a small purposeful accent. Light is the white of the paper, not a
+rendered highlight. No cinematic glow. Maintain readable separation from the
+background.
 
 FINAL IMPRESSION
-Grounded animal presence, an individual stylized silhouette, visible drawing,
-dry pencil-crayon modelling, restrained washes, and small chalky gouache
-accents. Whimsical but not babyish; detailed but not glossy; atmospheric but
-not blurry. A finished woodland-fantasy book illustration, not a game splash
-screen, a photograph, or an image of a physical book.
+A pen-and-ink animal on paper, with thin dirty washes and dry pencil marks,
+broken contours, and colour that does not obediently fill the drawing.
+Whimsical but not babyish. A book illustration drawn with a pen, not a game
+splash, a cartoon sticker, or a smooth digital character.
 
 EXCLUDE
-Glossy 3D or CGI rendering, airbrushed fur, plastic highlights, thick uniform
-cartoon outlines, vector-mascot styling, anime or chibi proportions, oversized
+Smooth digital painting, airbrushed fur, soft gradients inside a clean
+outline, easy rounded edges, thick uniform cartoon outlines, vector-mascot
+styling, glossy CGI, plastic highlights, anime or chibi proportions, oversized
 cute eyes, photorealism, neon magic, ornate oversized RPG equipment, cinematic
-bloom, depth-of-field blur, all-over sepia staining, and fake grain laid over
-otherwise smooth digital painting. No signatures, watermarks, or invented
-lettering. Keep labels and interface text outside the illustration unless
-explicitly requested.
+bloom, depth-of-field blur, all-over sepia, and fake grain laid over an
+otherwise smooth render. No signatures, watermarks, or invented lettering.
+Do not reproduce another artist's characters or signed drawings.
 ```
 
 ---
@@ -181,26 +195,25 @@ explicitly requested.
 Use this when a detailed subject prompt already exists. Do not replace it with only "storybook fantasy."
 
 ```text
-Greenwood art direction: grounded woodland fantasy with Larry MacDougall's
-Gwelf as the principal reference. Drawing-led, not painting-led. Visible fine
-pencil and selective ink contours; expressive line weight; directional
-hatching; layered pencil-crayon colour with dry grain and paper showing
-through. Restrained watercolour washes and small matte gouache accents.
-Recognizable animal anatomy with an individual, slightly eccentric stylized
-silhouette. Practical handmade clothing, believable wear, earthy colour,
-clear values, and quiet folkloric atmosphere. A finished drawing enriched
-with colour, never glossy digital fantasy with a paper-texture overlay.
+Greenwood locked style: the comic-ink pass of 22 September 2026.
+Heavy near-black album contour, thick enough to read at a glance, on top of
+flat local colour. One darker shadow of the same colour. Fur stays fur.
+Cloth stays cloth. Masters: mouse v007 comic-ink, hare v005 comic-ink,
+Lantern Court v003 comic-ink, under art/sources/. Do not copy those
+characters onto a different species. Do not copy Asterix, Obelix, or Gwelf
+characters or lettering. No missing ink, no camouflage stains, no smooth
+digital painting.
 ```
 
 ### Negative direction block
 
 ```text
-Avoid glossy CGI, airbrushed shading, plastic fur, photorealism, cinematic
-bloom, oversized baby eyes, plush mascots, anime/chibi proportions, thick
-uniform outlines, smooth vector fills, neon fantasy effects, ornate RPG
-clutter, sepia-only colour, and artificial all-over texture. Do not erase the
-drawing beneath paint. Do not turn visible pencil work into an unfinished
-sketch or wax-crayon scribble.
+Avoid smooth digital painting, airbrushed fur, glossy CGI, plastic fur,
+photorealism, cinematic bloom, oversized baby eyes, plush mascots,
+anime/chibi proportions, neon effects, ornate RPG clutter, and fake grain
+over a smooth render. The locked line is a heavy black comic contour with
+flat local colour behind it. Do not drop that ink. Do not camouflage fur
+onto cloth. Do not copy Gwelf, Asterix, or Obelix characters or lettering.
 ```
 
 Use exclusions as ordinary prompt instructions unless the chosen image tool has a verified separate negative-prompt field. Do not invent model-specific syntax, weights, or settings.
@@ -215,20 +228,12 @@ Use only after identifying an actual accessible image to revise. Preserve its ap
 Keep this image's approved character identity, species, clothing, equipment,
 pose, framing, and composition. Change the rendering language, not the design.
 
-Push it substantially toward visible pencil-and-ink drawing and pencil-crayon
-colour. Restore fine contours, selective dark ink accents, directional fur
-strokes, hatching in folds, and dry layered coloured-pencil modelling. Show
-small gaps of paper between colour marks. Retain enough variation in line
-weight to keep the drawing lively and individual.
+Match the locked comic-ink pass. Use a heavy near-black contour on top of
+flat local colour, with one darker shadow of that same colour. Fur stays
+fur. Cloth stays cloth.
 
-Reduce smooth digital blending, polished fur, soft-focus lighting, and broad
-paint coverage. Keep watercolour as restrained washes and gouache as a few
-small matte opaque touches. Do not add a texture filter over the current
-smooth finish; change how the forms themselves are described.
-
-Preserve grounded anatomy and the character's stylistic edge. Do not make it
-cuter, younger, rounder, more photographic, or more cinematic. Keep the result
-finished, readable, and recognizably the same character.
+Do not turn the figure into the style-master mouse or hare. Do not drop the
+ink. Do not camouflage the clothes. Do not make the character photographic.
 ```
 
 ---
@@ -290,8 +295,9 @@ For UI integration, keep text, buttons, focus indicators, and interaction target
 
 Review the actual output, not the intention behind it.
 
-- [ ] **Drawing:** Fine contours and deliberate marks remain visible in focal areas.
-- [ ] **Pencil crayon:** Colour visibly uses layered dry strokes rather than smooth gradients.
+- [ ] **Drawing:** Dark ink wobbles, doubles, and breaks. The figure is not one closed even outline.
+- [ ] **Ink:** Near-black pen is visible on top of the colour. Missing ink fails.
+- [ ] **Colour:** Washes follow the light on each surface. Fur stays fur-coloured. Cloth stays cloth-coloured. Random blotches fail.
 - [ ] **Paint restraint:** Washes support the drawing; opaque gouache remains selective.
 - [ ] **Character:** Species, posture, anatomy, and personality are convincing without mascot proportions.
 - [ ] **Materials:** Clothing and objects have understandable construction and purposeful wear.

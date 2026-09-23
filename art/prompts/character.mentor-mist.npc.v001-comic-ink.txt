@@ -1,0 +1,4 @@
+SEMANTIC ID: mentor-mist-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied ermine. White fur, short rounded ears, a silver-grey cloak over a dark robe, a rope belt. The cloak stays grey. No long rabbit ears. No green hood.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

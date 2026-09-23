@@ -1,0 +1,4 @@
+SEMANTIC ID: mole-female-indigo-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse.
+IDENTITY: the supplied mole. Dark fur, pink snout, claws, blue mortarboard with a gold tassel, long blue coat, both paws holding a closed brown book. The coat stays blue. No green cap. The book has no writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

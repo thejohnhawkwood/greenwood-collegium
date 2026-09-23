@@ -1,0 +1,4 @@
+SEMANTIC ID: librarian-quill-comic-ink
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only. Do not copy the mouse or its green hood.
+IDENTITY: the supplied owl. Tawny feathers, spectacles on a cord, a rust waistcoat, one wing holding a pale quill, two legs with talons. The waistcoat stays rust. Do not add human arms. No writing.
+OUTPUT: isolated figure, flat background exactly #EE3173, no words, no second animal.

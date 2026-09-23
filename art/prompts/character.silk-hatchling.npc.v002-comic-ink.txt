@@ -1,0 +1,4 @@
+SEMANTIC ID: silk-hatchling-comic-ink-v002
+STYLE: locked comic ink. Heavy near-black contour, flat local colour behind it. The mouse reference is ink weight only.
+IDENTITY: a pale silk-spider hatchling the size of a school satchel. Many long jointed legs, torn wet silk, clicking mandibles, tiny dark eyes. No smile. No huge glossy eyes. No plush toy. No blood. No wounds. Not a queen.
+OUTPUT: isolated creature, flat background exactly #EE3173, no words, no second animal.
