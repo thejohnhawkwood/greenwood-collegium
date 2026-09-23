@@ -1,0 +1,32 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-cut-painter",
+  "title": "The Cut Painter",
+  "giverNpcId": "npc-skipper-marram",
+  "experienceReward": 15,
+  "itemRewardTemplateId": "river-boots",
+  "introNarration": "Marram wipes tar on a rag and points east. \"Someone cut the painter at the willow bend. Weather frays a rope. A knife ends it. Examine the cut painter. Then come back and talk marram. The Collegium trains defenders. The river is one of the things we defend. Biscuits and boats count.\"",
+  "reminderNarration": "\"Examine the cut painter at Willow Bend. Then talk marram. Type south from the South Orchard to the landing, then east.\"",
+  "completionNarration": "You describe the clean cut. Marram sets tarred river boots by the post. \"Nett is on the willow root. Talk nett. He left the camp. He still knows which crate was ours.\"",
+  "objectives": [
+    {
+      "id": "reach-bend",
+      "kind": "visit",
+      "roomId": "willow-bend",
+      "label": "Reach Willow Bend. Type east from River Landing."
+    },
+    {
+      "id": "read-painter",
+      "kind": "examine",
+      "targetId": "object-cut-painter",
+      "label": "Examine the Cut Painter at Willow Bend."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-skipper-marram",
+      "requires": ["reach-bend", "read-painter"],
+      "label": "Talk marram at River Landing. Type west from Willow Bend."
+    }
+  ]
+}

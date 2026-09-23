@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-black-mooring",
+  "title": "The Black Mooring",
+  "giverNpcId": "npc-skipper-marram",
+  "requiresQuestIds": ["the-kept-whistle"],
+  "experienceReward": 30,
+  "itemRewardTemplateId": "boarding-oar",
+  "introNarration": "Marram coils a true knot and sets it on the post. \"South from the slip is their camp. Defeat the river captain. Then talk marram. One Collegian can square up. A classmate is still wiser. Bring the boats home in your report. I will send otters for the tins.\"",
+  "reminderNarration": "\"Defeat the river captain in the pirate camp. Then talk marram. Type south from the Otter Slip.\"",
+  "completionNarration": "Marram listens, then puts a short boarding oar in your paws. \"The landing is a gate. You kept it. Eat in the refectory. The wood is still larger than this river, and the College is still the bright place you come back to.\"",
+  "objectives": [
+    {
+      "id": "reach-camp",
+      "kind": "visit",
+      "roomId": "pirate-camp",
+      "label": "Reach the Pirate Camp. Type south from the Otter Slip."
+    },
+    {
+      "id": "defeat-captain",
+      "kind": "defeat",
+      "targetId": "enemy-river-captain-pirate-camp",
+      "label": "Defeat the River Captain in the Pirate Camp."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-skipper-marram",
+      "requires": ["reach-camp", "defeat-captain"],
+      "label": "Talk marram at River Landing."
+    }
+  ]
+}

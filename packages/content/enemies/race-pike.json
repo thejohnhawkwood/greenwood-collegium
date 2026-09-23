@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "race-pike",
+  "name": "Race Pike",
+  "shortDescription": "A long hunger in the mill-race that is not a student.",
+  "lookDescription": "A long dark shape holds the mill-race and does not blink like a fish should.",
+  "examineDescription": "The Race Pike is a fish that learned to keep a stone in the current. It is not a person. Solo work. Leave it if you only came for the osiers. Square up if it will not let the race run.",
+  "maxHealth": 24,
+  "attack": 5,
+  "experience": 8,
+  "loot": ["river-stone"],
+  "lockNarration": "The race flattens, as if something wide had decided to stay.",
+  "victoryNarration": "The Race Pike slips under ordinary water. A smooth stone knocks the piling."
+}

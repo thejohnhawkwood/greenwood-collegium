@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "fold-mitts",
+  "name": "Fold Mitts",
+  "shortDescription": "Wool mitts from the empty byre.",
+  "examineDescription": "Wool mitts, damp at the cuff and mended at the thumb. Foldhand Hobb set them aside after the byre was only a byre again. They will sit on your paws if you wear them.",
+  "category": "ordinary",
+  "unique": true,
+  "equipSlot": "gloves"
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-river-captain-pirate-camp",
+  "templateId": "river-captain",
+  "roomId": "pirate-camp"
+}

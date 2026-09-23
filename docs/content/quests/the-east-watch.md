@@ -118,6 +118,16 @@ Two hungers. Two keepers. Two witnesses who lived (Piper, Wren).
 
 **Next command:** three Collegians, lock, `talk alder`, food.
 
+## Side chain (never required, after the waystone)
+
+Does not spoil Colm. Does not gate L5–L10.
+
+- **The Empty Byre** (`the-empty-byre`) — Hobb, after `the-meadow-fork`. Byre, fold-hound, fold mitts.
+- **The Mere That Keeps** (`the-mere-that-keeps`) — Sile. Still water, reed-wisp, reed cloak.
+- **The Ninth Scratch** (`the-ninth-scratch`) — Kern. Scratch stone, ditch-lurker, lintel band.
+
+Rooms: `wool-shed`, `croft-byre`, `mist-lane`, `reed-mere`, `lintel-field`, `salt-grass`, `black-ditch`, `crow-stile`.
+
 ## Side colour (never required)
 
 Live talk colour, not quests: Tansy peat-mint after the stones; Quill will keep a rubbing; Flint says lock together, then Fen.
@@ -127,14 +137,22 @@ Live talk colour, not quests: Tansy peat-mint after the stones; Quill will keep 
 | id | title | map (z 0 unless noted) | exits (story) |
 | --- | --- | --- | --- |
 | `moor-track` | Moor Track | 6,1 | south → east-meadow (player typed north to enter); north → wren-croft; east → sheepfold |
-| `wren-croft` | Wren’s Croft | 6,2 | south → moor-track |
-| `sheepfold` | Sheepfold | 7,1 | west → moor-track; east → standing-stones |
-| `standing-stones` | Standing Stones | 8,1 | west → sheepfold; north → peat-cut |
-| `peat-cut` | Peat Cut | 8,2 | south → standing-stones; north → barrow-mouth |
-| `barrow-mouth` | Barrow Mouth | 8,3 | south → peat-cut; down → barrow-nave |
+| `wren-croft` | Wren’s Croft | 6,2 | south → moor-track; north → croft-byre; east → wool-shed |
+| `wool-shed` | Wool Shed | 7,2 | south → sheepfold; west → wren-croft; north → mist-lane |
+| `croft-byre` | Croft Byre | 6,3 | south → wren-croft; east → mist-lane |
+| `mist-lane` | Mist Lane | 7,3 | south → wool-shed; west → croft-byre; north → reed-mere |
+| `reed-mere` | Reed Mere | 7,4 | south → mist-lane |
+| `sheepfold` | Sheepfold | 7,1 | west → moor-track; east → standing-stones; north → wool-shed |
+| `standing-stones` | Standing Stones | 8,1 | west → sheepfold; north → peat-cut; east → lintel-field |
+| `lintel-field` | Lintel Field | 9,1 | west → standing-stones; north → black-ditch; south → salt-grass |
+| `salt-grass` | Salt Grass | 9,0 | north → lintel-field |
+| `peat-cut` | Peat Cut | 8,2 | south → standing-stones; north → barrow-mouth; east → black-ditch |
+| `black-ditch` | Black Ditch | 9,2 | south → lintel-field; west → peat-cut; north → crow-stile |
+| `crow-stile` | Crow Stile | 9,3 | south → black-ditch; west → barrow-mouth |
+| `barrow-mouth` | Barrow Mouth | 8,3 | south → peat-cut; down → barrow-nave; east → crow-stile |
 | `barrow-nave` | Barrow Nave | 8,3 z -1 | up → mouth; north → fog-hollow |
 | `fog-hollow` | Fog Hollow | 8,4 z -1 | south → nave |
 
-`east-meadow` gains `north` → `moor-track`. NPC `npc-shepherd-wren`. Reserved `shepherd wren`, `colm`, `keeper holm`. Enemies: `mist-crow`, `barrow-guard`, `fog-walker`. Seven quest JSON files. Shared fixtures; do not consume Colm.
+`east-meadow` gains `north` → `moor-track`. NPCs: Wren, Hobb, Sile, Kern. Reserved `shepherd wren`, `colm`, `keeper holm`, `foldhand hobb`, `reedcutter sile`, `stoneward kern`. Enemies: `mist-crow`, `peat-adder`, `barrow-guard`, `fog-walker`, `fold-hound`, `reed-wisp`, `ditch-lurker`. Seven spine quest files, plus the three side files above. Shared fixtures; do not consume Colm.
 
 Engine: `requiresQuestIds`; Alder leave gated on Sleeps; per-enemy `victoryNarration`.

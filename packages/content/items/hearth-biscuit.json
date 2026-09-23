@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "hearth-biscuit",
+  "name": "Hearth Biscuit",
+  "shortDescription": "A hard biscuit from a school hearth.",
+  "examineDescription": "A hard biscuit, still smelling of the hearth that baked it. The first lesson pays in food as well as ink. Eat is not required. Keep it if you like.",
+  "category": "ordinary",
+  "unique": true
+}

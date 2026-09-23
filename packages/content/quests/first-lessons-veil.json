@@ -28,5 +28,6 @@
       "targetId": "npc-mentor-mist",
       "requires": ["defeat-dummy"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "hearth-biscuit"
 }

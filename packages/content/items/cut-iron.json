@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "cut-iron",
+  "name": "Cut Iron",
+  "shortDescription": "A flake of iron from the peat-cut.",
+  "examineDescription": "A flake of iron from the cut, smelling of old tea. The peat-adder is still. The water is only water.",
+  "category": "ordinary",
+  "unique": true
+}

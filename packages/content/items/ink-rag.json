@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "ink-rag",
+  "name": "Ink Rag",
+  "shortDescription": "A rag stained with honest Primer ink.",
+  "examineDescription": "A small rag stained with Primer ink. The second lesson leaves this in your paw. It does not raise your health. It says you cast when you were asked.",
+  "category": "ordinary",
+  "unique": true
+}

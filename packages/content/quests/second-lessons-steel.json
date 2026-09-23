@@ -21,5 +21,6 @@
       "targetId": "npc-mentor-edge",
       "requires": ["cast-starter"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "ink-rag"
 }

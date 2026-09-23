@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-rope-sentry-rope-island",
+  "templateId": "rope-sentry",
+  "roomId": "rope-island"
+}

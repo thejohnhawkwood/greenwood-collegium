@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "cargo-hollow",
+  "title": "Cargo Hollow",
+  "shortDescription": "A hollow of stolen crates under the bank.",
+  "longDescription": "The bank hollows out here into a hold of crates. One is biscuits. One is twine. None of them were offered. North is the skiff-line. West is the camp. East is the black mooring.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 1,
+    "y": -4
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "skiff-line"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "pirate-camp"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "black-mooring"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-biscuit-crate",
+      "name": "Biscuit Crate",
+      "kind": "object",
+      "lookDescription": "A crate stamped for the refectory. Examine it.",
+      "examineDescription": "The crate is Collegium pine, lid pried, biscuits gone, crumbs left as if crumbs were a tip. Nett carried this. He says so. The tin that belonged on top is a reward, not a clue you have to guess."
+    }
+  ]
+}

@@ -17,6 +17,10 @@
     {
       "direction": "down",
       "toRoomId": "barrow-nave"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "crow-stile"
     }
   ],
   "fixtures": [

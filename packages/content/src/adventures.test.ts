@@ -20,14 +20,14 @@ const baseQuest = {
 };
 
 describe("adventure content", () => {
-  it("offers thirteen speaking staff and discoveries in every existing room", () => {
+  it("offers speaking staff and discoveries in every existing room", () => {
     const world = loadBundledWorld();
     const rooms = Object.values(world.rooms);
-    expect(rooms).toHaveLength(46);
+    expect(rooms).toHaveLength(66);
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );
-    expect(staff).toHaveLength(14);
+    expect(staff).toHaveLength(20);
     for (const npc of staff) {
       expect(npc.dialogue).toBeTruthy();
       expect(reservedCharacterNames()).toContain(npc.name.toLowerCase());
@@ -43,8 +43,15 @@ describe("adventure content", () => {
       "fens-linen",
       "porters-night-round",
       "the-barrow-mouth",
+      "the-biscuit-crate",
+      "the-black-mooring",
+      "the-cut-painter",
+      "the-empty-byre",
+      "the-kept-whistle",
       "the-meadow-fork",
+      "the-mere-that-keeps",
       "the-missing-pages",
+      "the-ninth-scratch",
       "the-stones-that-were-not-there",
       "the-uncounted-flock",
       "what-the-fog-took",

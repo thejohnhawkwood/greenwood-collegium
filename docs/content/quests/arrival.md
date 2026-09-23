@@ -9,7 +9,9 @@
 - **Play / author:** [adventures.md](../adventures.md)
 - **Next:** [College lessons](college-lessons.md)
 
-Auto-starts on join. 10 XP. No `giverNpcId`. No `completionNarration` today. Completing summons the Collegian to the High Study for school pick.
+Auto-starts on join. 10 XP plus Porter's Cord. No `giverNpcId`. Completing summons the Collegian to the High Study for school pick.
+
+The join notice, after character creation, is the introduction: the College is the bright safe place, the wood outside keeps what it takes, students train as defenders, Schools are a chosen path, faculty have been outside, and the tower, moor, and river are named as mysteries without spoiling them.
 
 ## What the student types
 

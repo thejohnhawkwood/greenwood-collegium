@@ -1,0 +1,32 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "osier-holt",
+  "title": "Osier Holt",
+  "shortDescription": "Withies cut for baskets, and a path to the race.",
+  "longDescription": "Withies stand in bundles, cut for Collegium baskets and not yet stolen. The river is louder east of here, where the mill-race drops.\nWest is the willow bend. South is the mill-race.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 2,
+    "y": -2
+  },
+  "exits": [
+    {
+      "direction": "west",
+      "toRoomId": "willow-bend"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "mill-race"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-withy-bundles",
+      "name": "Withy Bundles",
+      "kind": "object",
+      "lookDescription": "Bundles of cut withy. Examine them.",
+      "examineDescription": "The withies are tied with Collegium twine, the green sort Tansy uses. One bundle is missing its twine. Marram says the camp likes baskets because baskets do not look stolen until you know the knot."
+    }
+  ]
+}

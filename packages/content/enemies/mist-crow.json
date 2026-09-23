@@ -5,10 +5,11 @@
   "shortDescription": "A wet black bird too large for a rook, fog in the feathers.",
   "lookDescription": "A wet black bird too large for a rook sits the fold rail, fog in the feathers.",
   "examineDescription": "The Mist Crow is bigger than an honest rook. Its feathers hold fog the way wool holds rain. It watches the empty fold as if it paid rent. Solo work. If it squares up, finish it, then talk Wren.",
-  "maxHealth": 12,
-  "attack": 3,
+  "maxHealth": 28,
+  "attack": 5,
   "experience": 10,
   "reads": ["gather", "lunge", "brace"],
   "lockNarration": "Fog beads on the feathers and does not shake off.",
-  "victoryNarration": "The Mist Crow comes apart into wet feathers and thinner fog. The fold rail is only wood again."
+  "victoryNarration": "The Mist Crow comes apart into wet feathers and thinner fog. The fold rail is only wood again.",
+  "loot": ["crow-pin"]
 }

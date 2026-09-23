@@ -28,5 +28,6 @@
       "targetId": "npc-mentor-lumen",
       "requires": ["defeat-dummy"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "hearth-biscuit"
 }

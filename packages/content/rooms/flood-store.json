@@ -1,0 +1,29 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "flood-store",
+  "title": "Flood Store",
+  "shortDescription": "A locked cellar of tins, twine, and dry biscuits.",
+  "longDescription": "The flood-store is under the slip, dry when the river is merely rude. Tins, twine, and a sack of biscuits sit on a shelf above the old waterline. The camp has not got in here. Up is the slip.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 0,
+    "y": -3,
+    "z": -1
+  },
+  "exits": [
+    {
+      "direction": "up",
+      "toRoomId": "otter-slip"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-biscuit-shelf",
+      "name": "Biscuit Shelf",
+      "kind": "object",
+      "lookDescription": "A shelf of tins above the waterline. Examine it.",
+      "examineDescription": "The tins are stamped with a turnip, the kitchens' mark. One gap shows where a tin was owed to the refectory and did not arrive. The rest are still here because Marram locked the hatch."
+    }
+  ]
+}

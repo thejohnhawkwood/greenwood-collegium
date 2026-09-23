@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "reed-cloak",
+  "name": "Reed Cloak",
+  "shortDescription": "A short cloak that smells of still water.",
+  "examineDescription": "A short cloak cut from oiled wool. Reedcutter Sile kept it for anyone who looked at the mere and did not drink. It smells of still water and cut reed.",
+  "category": "ordinary",
+  "unique": true,
+  "equipSlot": "cloak"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "heron-post",
+  "title": "Heron Post",
+  "shortDescription": "A fishing post and a whistle that should have been heard.",
+  "longDescription": "A post stands in the shallows where a heron might fish and a lookout might not. Heron Midge is the lookout, tall and grey and tired of other people's boats.\nNorth is the rope-island. East is the pirate camp.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": -1,
+    "y": -4
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "rope-island"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "pirate-camp"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-heron-midge",
+      "name": "Heron Midge",
+      "kind": "npc",
+      "lookDescription": "A tall grey heron in a fisherman's vest, spear grounded, not raised. Try talk midge.",
+      "examineDescription": "Midge's vest is patched with oilcloth. The spear is for fish. She has stood this post through floods and through thieves, and she hates both for the same reason: they take the river's manners.",
+      "dialogue": "\"Nett told you about tins. I will tell you about the whistle. Examine the whistle post. The rope-island north of here still has a sentry if the camp has not run. Finish that. Then talk midge. I have seen the river keep a boat until the owner stopped asking. I do not let it.\""
+    },
+    {
+      "id": "object-whistle-post",
+      "name": "Whistle Post",
+      "kind": "object",
+      "lookDescription": "A post with a nail where a whistle hung. Examine it.",
+      "examineDescription": "The nail is bright. The whistle is gone. Midge says she hung it so the landing would hear a cut painter. Someone kept the whistle instead of the warning."
+    }
+  ]
+}

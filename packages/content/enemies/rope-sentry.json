@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "rope-sentry",
+  "name": "Rope Sentry",
+  "shortDescription": "A thief posted to keep the cut painter cut.",
+  "lookDescription": "A badger in a river coat stands on the rope-island with a cut line in one paw.",
+  "examineDescription": "The Rope Sentry was posted so the landing knot would stay cut. Adult. Not a classmate. Solo work. The whistle on the heron post is what they did not want heard.",
+  "maxHealth": 32,
+  "attack": 6,
+  "experience": 12,
+  "loot": ["cut-rope"],
+  "lockNarration": "The cut rope tightens in a paw that is not yours.",
+  "victoryNarration": "The Rope Sentry leaves the island to the ropes. The cut end stays in the mud."
+}

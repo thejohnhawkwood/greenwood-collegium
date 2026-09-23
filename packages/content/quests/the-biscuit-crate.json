@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-biscuit-crate",
+  "title": "The Biscuit Crate",
+  "giverNpcId": "npc-deckhand-nett",
+  "requiresQuestIds": ["the-cut-painter"],
+  "experienceReward": 20,
+  "itemRewardTemplateId": "biscuit-tin",
+  "introNarration": "Nett turns the empty cord at his neck. \"South, then east, the cargo hollow. Examine the biscuit crate. A deck-hand keeps the skiff-line on the way. Defeat him if he squares up. Then talk nett. I carried the tin. I will not carry it back.\"",
+  "reminderNarration": "\"Examine the biscuit crate in the cargo hollow. Defeat the deck-hand on the skiff-line. Then talk nett. Type south from Willow Bend.\"",
+  "completionNarration": "Nett nods at the empty crate and gives you the dented tin. \"Midge is west and south, on the heron post. Talk midge. She hung a whistle. The camp kept it. I am going to sit until Marram says I may tie a knot again.\"",
+  "objectives": [
+    {
+      "id": "read-crate",
+      "kind": "examine",
+      "targetId": "object-biscuit-crate",
+      "label": "Examine the Biscuit Crate in the Cargo Hollow. Type south from the skiff-line."
+    },
+    {
+      "id": "defeat-hand",
+      "kind": "defeat",
+      "targetId": "enemy-deck-hand-skiff-line",
+      "label": "Defeat the Deck Hand on the Skiff Line. Type south from Willow Bend."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-deckhand-nett",
+      "requires": ["read-crate", "defeat-hand"],
+      "label": "Talk nett at Willow Bend."
+    }
+  ]
+}

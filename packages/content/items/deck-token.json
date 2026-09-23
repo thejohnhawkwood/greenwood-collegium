@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "deck-token",
+  "name": "Deck Token",
+  "shortDescription": "A wooden token stamped with a skiff.",
+  "examineDescription": "A wooden token stamped with a flat little skiff. Deck-hands trade these instead of names. It is not Collegium money.",
+  "category": "ordinary",
+  "unique": true
+}

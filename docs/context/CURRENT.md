@@ -4,9 +4,9 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 
 ## Status
 
-- **HEAD / live:** `f8632c9` on `main` (21 September 2026 East Watch flavour, PR #67). CI green. Render deploy success. `/health/ready` ok. Bundle `index-B-DE0noB.js`. Peat-adder, rubbing, and kitchens tin plates return 200.
-- **Release target:** v0.0 foundation (forty-six mapped rooms, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits, Field Primer, East Watch)
-- **Shipped on this HEAD:** Field Primer ranks 1–5 (ADR-0039). East Watch after Sleeps. Lock narration on later combat rounds. Killable peat-adder. Personal abbey-mark rubbing. Kitchens bread-tin memorial. Unique plates: 40 room paintings, 21 NPC files, 56 object files. Chroma key is `#EE3173` only.
+- **This revision:** Opening narrative on join. East side after the meadow fork (eight rooms, Hobb, Sile, Kern). South river hub (thirteen rooms counting the landing, Marram, Nett, Midge, a solo river captain). 66 rooms, 40 quests. Every quest has an item reward. Every foe has loot. Confirm `/health/ready` after Render finishes the merge.
+- **Release target:** v0.0 foundation (sixty-six mapped rooms, look, movement, travel, presence, say, inventory, combat, Ember, Arrival, Schools, level-3 kits, Field Primer, East Watch, river hub)
+- **Shipped on this HEAD:** Field Primer ranks 1–5 (ADR-0039). East Watch after Sleeps, plus the east side and the river hub. Lock narration on later combat rounds. Killable peat-adder. Personal abbey-mark rubbing. Kitchens bread-tin memorial. New east and river places still borrow existing room plates. Their own plates are not drawn. Art task: [`../art/HANDOFF-EAST-RIVER-PLATES.md`](../art/HANDOFF-EAST-RIVER-PLATES.md). Chroma key is `#EE3173` only.
 - **In the live game, not yet built:** rooms for lessons 11–20. Shop, Strength, type chart, and random wipes stay held.
 - **College loop:** Arrive → Flint spark → hearth dummy + mentor inks the School stem → second cast lesson grants ink → Alder’s leave grants ink. Lessons 6–20 grant one ink each. Spend it on a legal Primer vein.
 - **Active playtest:** dummy, a consented duel, and the queen on the live host. Combat law: [DS-007](../design-sprints/ds-007-combat-frame.md), [ADR-0035](../adr/0035-party-chorus.md).

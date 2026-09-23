@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-mere-that-keeps",
+  "title": "The Mere That Keeps",
+  "giverNpcId": "npc-reedcutter-sile",
+  "requiresQuestIds": ["the-empty-byre"],
+  "experienceReward": 20,
+  "itemRewardTemplateId": "reed-cloak",
+  "introNarration": "Sile taps the mere with a reed and does not drink. \"Examine the still water. If the light squares up, defeat it. Then talk sile. It keeps voices. I want the water back.\"",
+  "reminderNarration": "\"Examine the still water. Defeat the reed-wisp if it is on the mere. Then talk sile. Type north from the Mist Lane.\"",
+  "completionNarration": "The mere shows sky again. Sile sets a short reed-cloak on your shoulders. \"Kern is east, past the stones, in the lintel field. Talk kern. He counts scratches. I count reeds. Neither of us is the barrow.\"",
+  "objectives": [
+    {
+      "id": "read-mere",
+      "kind": "examine",
+      "targetId": "object-still-water",
+      "label": "Examine the Still Water at Reed Mere. Type north from the Mist Lane."
+    },
+    {
+      "id": "defeat-wisp",
+      "kind": "defeat",
+      "targetId": "enemy-reed-wisp-reed-mere",
+      "label": "Defeat the Reed Wisp at Reed Mere."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-reedcutter-sile",
+      "requires": ["read-mere", "defeat-wisp"],
+      "label": "Talk sile at Reed Mere."
+    }
+  ]
+}

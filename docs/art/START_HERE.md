@@ -2,6 +2,8 @@
 
 The locked look is the comic-ink pass. Current slices are `docs/art/SLICES.md`. Rooms, NPC cutouts, and object plates from that pass are in `apps/web/public/art/`. Collegian looks are still candidates in `art/sources/`. Combat FX and the arrival procession are not redrawn.
 
+The current task is [`HANDOFF-EAST-RIVER-PLATES.md`](HANDOFF-EAST-RIVER-PLATES.md): 73 plates for the east side and the south river. They are not drawn. CREATE stays unauthorized until Philip says so. Do that handoff before the numbered prompts below.
+
 Use one task at a time. These are prompts, not installed shell commands.
 References to an asset or candidate below must be replaced with actual IDs
 returned by your audit/generation session.

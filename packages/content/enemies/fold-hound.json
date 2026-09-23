@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "fold-hound",
+  "name": "Fold Hound",
+  "shortDescription": "A wet shape the size of a sheepdog, with no honest bark.",
+  "lookDescription": "A wet shape the size of a sheepdog stands in the lane and does not bark.",
+  "examineDescription": "The Fold Hound is wool and mist packed into a dog's outline. It does not bark. It keeps the lane the way weather keeps a gate. Solo work. It is not Colm's dog. Colm did not keep a dog.",
+  "maxHealth": 32,
+  "attack": 6,
+  "experience": 12,
+  "loot": ["fold-bell"],
+  "lockNarration": "Mist packs tighter into the dog-shape.",
+  "victoryNarration": "The Fold Hound thins into wet wool and a small bell. The lane is only a lane."
+}

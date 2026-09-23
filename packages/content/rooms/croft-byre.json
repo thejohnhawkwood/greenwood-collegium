@@ -1,0 +1,32 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "croft-byre",
+  "title": "Croft Byre",
+  "shortDescription": "A byre with straw, and no sheep in it.",
+  "longDescription": "The byre is warm from the croft wall and empty of sheep. Straw is kicked out, not in. A stall at the end has a hook where a bell should hang.\nSouth is Wren. East is the wool shed's lane.",
+  "zone": "east-moor",
+  "visualState": "wren-croft",
+  "map": {
+    "x": 6,
+    "y": 3
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "wren-croft"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "mist-lane"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-empty-stall",
+      "name": "Empty Stall",
+      "kind": "object",
+      "lookDescription": "A stall with straw kicked out. Examine it.",
+      "examineDescription": "The straw is kicked toward the door. The hook is empty. No blood, no silk. Something the size of a sheepdog stood here long enough to warm the straw, and it was not a sheep."
+    }
+  ]
+}

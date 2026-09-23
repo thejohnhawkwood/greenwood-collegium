@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-kept-whistle",
+  "title": "The Kept Whistle",
+  "giverNpcId": "npc-heron-midge",
+  "requiresQuestIds": ["the-biscuit-crate"],
+  "experienceReward": 20,
+  "itemRewardTemplateId": "skipper-whistle",
+  "introNarration": "Midge grounds her spear in the mud. \"Examine the whistle post. North is the rope-island. If the sentry is still posted, defeat the sentry. Then talk midge. A warning that does not sound is just another thing kept.\"",
+  "reminderNarration": "\"Examine the whistle post. Defeat the rope-sentry on the rope-island. Then talk midge. Type south from the rope-island.\"",
+  "completionNarration": "Midge hangs a skipper whistle on a cord and puts it in your paw. \"Marram is at the landing. Talk marram. The captain is south of the slip, in the camp. I will fish. You will finish it.\"",
+  "objectives": [
+    {
+      "id": "read-post",
+      "kind": "examine",
+      "targetId": "object-whistle-post",
+      "label": "Examine the Whistle Post at Heron Post."
+    },
+    {
+      "id": "defeat-sentry",
+      "kind": "defeat",
+      "targetId": "enemy-rope-sentry-rope-island",
+      "label": "Defeat the Rope Sentry on the Rope Island. Type north from Heron Post."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-heron-midge",
+      "requires": ["read-post", "defeat-sentry"],
+      "label": "Talk midge at Heron Post."
+    }
+  ]
+}

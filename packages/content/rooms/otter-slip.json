@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "otter-slip",
+  "title": "Otter Slip",
+  "shortDescription": "A mud slip where the Collegium boats are supposed to rest.",
+  "longDescription": "The slip is mud, willow root, and one ring-bolt with no boat on it. Down, a flood-store keeps what the landing could lock. South, the camp has been using the river as a road.\nNorth is the landing. East is the skiff-line. West is the rope-island.",
+  "zone": "grounds",
+  "visualState": "river-landing",
+  "map": {
+    "x": 0,
+    "y": -3
+  },
+  "exits": [
+    {
+      "direction": "north",
+      "toRoomId": "river-landing"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "skiff-line"
+    },
+    {
+      "direction": "west",
+      "toRoomId": "rope-island"
+    },
+    {
+      "direction": "south",
+      "toRoomId": "pirate-camp"
+    },
+    {
+      "direction": "down",
+      "toRoomId": "flood-store"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "object-empty-ring",
+      "name": "Empty Ring",
+      "kind": "object",
+      "lookDescription": "A ring-bolt with no painter. Examine it.",
+      "examineDescription": "The ring-bolt is polished where a rope used to live. Marram oil the bolts himself. This one is bright and useless until a boat comes home."
+    }
+  ]
+}

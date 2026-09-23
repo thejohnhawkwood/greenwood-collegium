@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-race-pike-mill-race",
+  "templateId": "race-pike",
+  "roomId": "mill-race"
+}

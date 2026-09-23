@@ -28,5 +28,6 @@
       "targetId": "npc-mentor-cinder",
       "requires": ["defeat-dummy"]
     }
-  ]
+  ],
+  "itemRewardTemplateId": "hearth-biscuit"
 }

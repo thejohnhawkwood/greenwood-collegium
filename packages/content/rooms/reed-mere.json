@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/room.schema.json",
+  "id": "reed-mere",
+  "title": "Reed Mere",
+  "shortDescription": "Still water, cut reed, and a light with no lantern.",
+  "longDescription": "The mere is black tea and iron, smaller than the peat-cut and meaner about reflections. Cut reed lies in bundles. Reedcutter Sile watches the water as if it had taken a voice.\nSouth is the mist-lane.",
+  "zone": "east-moor",
+  "visualState": "peat-cut",
+  "map": {
+    "x": 7,
+    "y": 4
+  },
+  "exits": [
+    {
+      "direction": "south",
+      "toRoomId": "mist-lane"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "npc-reedcutter-sile",
+      "name": "Reedcutter Sile",
+      "kind": "npc",
+      "lookDescription": "A toad in oiled wool, reed-knife on a cord, not raised. Try talk sile.",
+      "examineDescription": "Sile's knife is for reed, and the cord is knotted so the blade stays down. She has cut this mere for years. She says the light on the water does not warm her hands. She will not call it a ghost.",
+      "dialogue": "\"Hobb sent you, or you walked. Same work. Examine the still water. If the light squares up, finish it. Then talk sile. Do not drink. I have seen this mere keep a shout and give back silence. That is enough mystery for one afternoon.\""
+    },
+    {
+      "id": "object-still-water",
+      "name": "Still Water",
+      "kind": "object",
+      "lookDescription": "Water that does not give your face back. Examine it.",
+      "examineDescription": "The mere should show sky. It shows reed, and then it shows a light with no lantern under it. Your face is not in it. Sile says that is the problem, and she says it without poetry."
+    }
+  ]
+}

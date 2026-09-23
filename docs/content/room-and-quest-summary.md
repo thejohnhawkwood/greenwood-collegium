@@ -3,8 +3,17 @@
 Developer-facing inventory of the September 10, 2026 content release. The JSON files
 linked below remain the source of truth. This pass keeps the campus rooms, the
 High Study, the Hall of Schools, six hearths, and the Bell Stair below
-the Clock Tower. There are thirteen speaking staff NPCs and twelve quests
-including Arrival and the six first-lessons. Floors use map `z` (ADR-0036).
+the Clock Tower. Later hubs add the east moor parish and the south river.
+Floors use map `z` (ADR-0036).
+
+## East parish and river watch (23 September 2026)
+
+Side quests, not a second spine. Every live quest grants an item. Every mob drops loot.
+
+- East, after the waystone: Wool Shed, Croft Byre, Mist Lane, Reed Mere, Lintel Field, Salt Grass, Black Ditch, Crow Stile. Talk Hobb, Sile, then Kern.
+- South river, any time: from River Landing, talk Marram. Twelve rooms off the landing. Talk Nett and Midge between Marram's two quests.
+
+Storylines: [the-east-watch.md](quests/the-east-watch.md), [the-river-watch.md](quests/the-river-watch.md).
 
 Index of content bibles: [README.md](README.md).
 Player instructions and JSON authoring: [adventures.md](adventures.md).
