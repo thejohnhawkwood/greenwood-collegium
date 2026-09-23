@@ -48,6 +48,7 @@ export function Minimap({
   const patternId = useId();
   const viewportRef = useRef<HTMLDivElement>(null);
   const viewportSize = useRef({ w: 0, h: 0 });
+  const [chartPx, setChartPx] = useState({ w: 0, h: 0 });
   const dragRef = useRef<{
     id: number;
     x: number;
@@ -89,6 +90,7 @@ export function Minimap({
       const h = el.clientHeight;
       if (w < 8 || h < 8) return;
       viewportSize.current = { w, h };
+      setChartPx((current) => (current.w === w && current.h === h ? current : { w, h }));
       setView((current) => {
         const fit = mapFitScale(boxWidth, boxHeight, w, h);
         if (current && current.level === shownLevel) {
@@ -297,10 +299,7 @@ export function Minimap({
       };
     });
   }
-  const fitted =
-    viewportSize.current.w > 8
-      ? mapFitScale(boxWidth, boxHeight, viewportSize.current.w, viewportSize.current.h)
-      : scale;
+  const fitted = chartPx.w > 8 ? mapFitScale(boxWidth, boxHeight, chartPx.w, chartPx.h) : scale;
   const zoomMin = Math.min(fitted, MAP_READABLE_SCALE);
   const zoomMax = Math.max(MAP_READABLE_SCALE * 2.5, fitted);
   return (
@@ -308,7 +307,11 @@ export function Minimap({
       {size === "world" ? (
         <>
           <div className="map-zoom" role="group" aria-label="Chart zoom">
-            <button type="button" onClick={() => zoomBy(1 / 1.25)} disabled={scale <= zoomMin + 0.5}>
+            <button
+              type="button"
+              onClick={() => zoomBy(1 / 1.25)}
+              disabled={scale <= zoomMin + 0.5}
+            >
               Zoom out
             </button>
             <button type="button" onClick={() => zoomBy(1.25)} disabled={scale >= zoomMax - 0.5}>
@@ -587,8 +590,8 @@ function WorldMapChart({
           </button>
         </div>
         <p className="small-copy">
-          Each level has its own chart. Drag to move it, or zoom until the names have room. Fog hides
-          names you have not earned. An explored room sends travel along known paths.
+          Each level has its own chart. Drag to move it, or zoom until the names have room. Fog
+          hides names you have not earned. An explored room sends travel along known paths.
         </p>
         <nav className="map-level-nav" aria-label="Map levels">
           <button

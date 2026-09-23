@@ -247,56 +247,61 @@ const duelChallenge = {
 
 /** Grounds-sized chart for `/?shell=1&map=1`. Names sit on the real spacing. */
 function crowdChart(): PlayState["minimap"] {
-  const placed: Array<[string, string, number, number, PlayState["minimap"]["rooms"][number]["state"]]> =
-    [
-      ["observatory", "Observatory", 0, 3, "explored"],
-      ["kitchens", "Kitchens", 2, 3, "explored"],
-      ["archive-cellar", "Archive Cellar", -2, 2, "explored"],
-      ["music-loft", "Music Loft", -1, 2, "explored"],
-      ["north-quad", "North Quad", 0, 2, "explored"],
-      ["clock-tower", "Clock Tower", 1, 2, "explored"],
-      ["refectory", "Refectory", 2, 2, "explored"],
-      ["hearth-stars", "Hearth of Stars", 5, 2, "explored"],
-      ["wren-croft", "Wren's Croft", 6, 2, "explored"],
-      ["peat-cut", "Peat Cut", 8, 2, "explored"],
-      ["scriptorium", "Scriptorium", -3, 1, "explored"],
-      ["library-stacks", "Library Stacks", -2, 1, "explored"],
-      ["great-hall", "Great Hall", 0, 1, "explored"],
-      ["porter-lodge", "Porter Lodge", 1, 1, "current"],
-      ["lecture-theatre", "Lecture Theatre", 2, 1, "explored"],
-      ["infirmary", "Infirmary", 3, 1, "explored"],
-      ["hearth-thorn", "Hearth of Thorn", 5, 1, "explored"],
-      ["moor-track", "Moor Track", 6, 1, "explored"],
-      ["sheepfold", "Sheepfold", 7, 1, "explored"],
-      ["standing-stones", "Standing Stones", 8, 1, "explored"],
-      ["greenhouse", "Greenhouse", -2, 0, "explored"],
-      ["west-cloister", "West Cloister", -1, 0, "explored"],
-      ["lantern-court", "Lantern Court", 0, 0, "explored"],
-      ["east-gate", "East Gate", 1, 0, "explored"],
-      ["east-meadow", "East Meadow", 3, 0, "explored"],
-      ["hall-of-schools", "Hall of Schools", 4, 0, "explored"],
-      ["hearth-ember", "Hearth of Ember", 5, 0, "explored"],
-      ["quiet-chapel", "Quiet Chapel", -3, -1, "explored"],
-      ["herb-garden", "Herb Garden", -2, -1, "explored"],
-      ["south-orchard", "South Orchard", 0, -1, "explored"],
-      ["pottery-shed", "Pottery Shed", 2, -1, "explored"],
-      ["hearth-stone", "Hearth of Stone", 4, -1, "explored"],
-      ["hearth-veil", "Hearth of the Veil", 5, -1, "explored"],
-      ["river-landing", "River Landing", 0, -2, "explored"],
-      ["otter-slip", "Otter Slip", 0, -3, "explored"],
-      ["skiff-line", "Skiff Line", 1, -3, "explored"],
-      ["barrow-mouth", "Barrow Mouth", 8, 3, "unknown"],
-      ["fog-east", "Fog", 9, 2, "unknown"],
-    ];
+  const placed: Array<
+    [string, string, number, number, PlayState["minimap"]["rooms"][number]["state"]]
+  > = [
+    ["observatory", "Observatory", 0, 3, "explored"],
+    ["kitchens", "Kitchens", 2, 3, "explored"],
+    ["archive-cellar", "Archive Cellar", -2, 2, "explored"],
+    ["music-loft", "Music Loft", -1, 2, "explored"],
+    ["north-quad", "North Quad", 0, 2, "explored"],
+    ["clock-tower", "Clock Tower", 1, 2, "explored"],
+    ["refectory", "Refectory", 2, 2, "explored"],
+    ["hearth-stars", "Hearth of Stars", 5, 2, "explored"],
+    ["wren-croft", "Wren's Croft", 6, 2, "explored"],
+    ["peat-cut", "Peat Cut", 8, 2, "explored"],
+    ["scriptorium", "Scriptorium", -3, 1, "explored"],
+    ["library-stacks", "Library Stacks", -2, 1, "explored"],
+    ["great-hall", "Great Hall", 0, 1, "explored"],
+    ["porter-lodge", "Porter Lodge", 1, 1, "current"],
+    ["lecture-theatre", "Lecture Theatre", 2, 1, "explored"],
+    ["infirmary", "Infirmary", 3, 1, "explored"],
+    ["hearth-thorn", "Hearth of Thorn", 5, 1, "explored"],
+    ["moor-track", "Moor Track", 6, 1, "explored"],
+    ["sheepfold", "Sheepfold", 7, 1, "explored"],
+    ["standing-stones", "Standing Stones", 8, 1, "explored"],
+    ["greenhouse", "Greenhouse", -2, 0, "explored"],
+    ["west-cloister", "West Cloister", -1, 0, "explored"],
+    ["lantern-court", "Lantern Court", 0, 0, "explored"],
+    ["east-gate", "East Gate", 1, 0, "explored"],
+    ["east-meadow", "East Meadow", 3, 0, "explored"],
+    ["hall-of-schools", "Hall of Schools", 4, 0, "explored"],
+    ["hearth-ember", "Hearth of Ember", 5, 0, "explored"],
+    ["quiet-chapel", "Quiet Chapel", -3, -1, "explored"],
+    ["herb-garden", "Herb Garden", -2, -1, "explored"],
+    ["south-orchard", "South Orchard", 0, -1, "explored"],
+    ["pottery-shed", "Pottery Shed", 2, -1, "explored"],
+    ["hearth-stone", "Hearth of Stone", 4, -1, "explored"],
+    ["hearth-veil", "Hearth of the Veil", 5, -1, "explored"],
+    ["river-landing", "River Landing", 0, -2, "explored"],
+    ["otter-slip", "Otter Slip", 0, -3, "explored"],
+    ["skiff-line", "Skiff Line", 1, -3, "explored"],
+    ["barrow-mouth", "Barrow Mouth", 8, 3, "unknown"],
+    ["fog-east", "Fog", 9, 2, "unknown"],
+  ];
   const rooms = placed.map(([id, title, x, y, state]) =>
     state === "unknown"
       ? { id, x, y, state, quest: id === "barrow-mouth" }
       : { id, title, x, y, state, quest: id === "lantern-court" },
   );
   const paths = rooms.flatMap((from, index) =>
-    rooms.slice(index + 1).flatMap((to) =>
-      Math.abs(from.x - to.x) + Math.abs(from.y - to.y) === 1 ? [{ from: from.id, to: to.id }] : [],
-    ),
+    rooms
+      .slice(index + 1)
+      .flatMap((to) =>
+        Math.abs(from.x - to.x) + Math.abs(from.y - to.y) === 1
+          ? [{ from: from.id, to: to.id }]
+          : [],
+      ),
   );
   return { rooms, paths };
 }
@@ -346,14 +351,14 @@ export function PlayShellPreview() {
   const state = wantsMap
     ? { ...peaceful, minimap: crowdChart() }
     : wantsBoard
-    ? boardState
-    : duel === "1"
-      ? { ...peaceful, conversation: duelChallenge }
-      : duel === "wait"
-        ? { ...peaceful, conversation: undefined, duelAsk: { name: "Moss" } }
-        : wantsPrimer
-          ? primerPreviewState
-          : previewState;
+      ? boardState
+      : duel === "1"
+        ? { ...peaceful, conversation: duelChallenge }
+        : duel === "wait"
+          ? { ...peaceful, conversation: undefined, duelAsk: { name: "Moss" } }
+          : wantsPrimer
+            ? primerPreviewState
+            : previewState;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [lobbyOpen, setLobbyOpen] = useState(!duel && !wantsBoard && !wantsMap);
   const [worldMapOpen, setWorldMapOpen] = useState(wantsMap);
