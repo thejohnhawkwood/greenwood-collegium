@@ -342,6 +342,7 @@
 }
 .character-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
   justify-content: center;
 }
@@ -1195,34 +1196,105 @@
   padding: 0.4rem;
   background: #0c161280;
 }
+.primer-overlay {
+  place-items: center;
+}
 .primer-book {
+  position: relative;
+  width: min(96vw, 72rem, calc(90dvh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  overflow: hidden;
+  color: #1c2418;
+}
+.primer-plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+.primer-close {
+  position: absolute;
+  top: 1.4%;
+  right: 1.5%;
+  z-index: 2;
+}
+.primer-fit {
+  position: absolute;
+  left: 6.4%;
+  right: 6.4%;
+  top: 9.5%;
+  bottom: 9%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4.4%;
+  min-height: 0;
+}
+.primer-page {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.primer-page-left {
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  padding: 0.8rem 1rem 1rem;
-  border: 1px solid #50634e;
-  border-radius: 10px;
-  background: #14271f;
+}
+.primer-page-right {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 0.15rem 0.2rem 0.2rem;
+}
+.primer-page-plate {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 112%;
+  height: 112%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  pointer-events: none;
+}
+.primer-book h2 {
+  margin: 0.15rem 0 0.2rem;
+  font:
+    500 1.05rem Georgia,
+    serif;
+  color: #1c2418;
+}
+.primer-book .small-copy,
+.primer-book .primer-detail,
+.primer-book .primer-shut {
+  margin-left: 0;
+  margin-right: 0;
+  color: #243028;
 }
 .primer-pages {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.25rem;
+  position: relative;
+  z-index: 1;
 }
-.primer-spread {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(12rem, 18rem);
-  gap: 0.8rem;
-  min-height: 0;
-  flex: 1;
-  margin-top: 0.6rem;
+.primer-book .primer-pages button {
+  font-size: 0.62rem;
+  padding: 0.08rem 0.28rem;
+  min-height: 22px;
 }
 .primer-leaf {
   position: relative;
-  min-height: 22rem;
-  border: 1px solid #3d5140;
-  border-radius: 12px;
-  background: #10281d;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   overflow: hidden;
 }
 .primer-veins {
@@ -1230,7 +1302,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  color: #8ea58a;
+  color: #1c2418;
 }
 .primer-veins line {
   stroke: currentColor;
@@ -1238,24 +1310,28 @@
 }
 .play-client .primer-node {
   position: absolute;
+  z-index: 1;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.1rem;
-  max-width: 8rem;
-  padding: 0.28rem 0.4rem;
-  font-size: 0.68rem;
+  max-width: 7.2rem;
+  padding: 0.2rem 0.32rem;
+  font-size: 0.62rem;
   line-height: 1.15;
+  color: #1c2418;
+  background: #f4ecd8e6;
+  border-color: #1c2418;
 }
 .primer-node-name {
-  color: #8ea58a;
+  color: #3d4a38;
 }
 .primer-node-name.is-held,
 .primer-detail h3.is-held,
 .primer-ladder .is-held,
 .primer-node-ranks .is-held {
-  color: #fff;
+  color: #141814;
   font-weight: 650;
 }
 .primer-node-ranks {
@@ -1265,16 +1341,16 @@
 }
 .primer-node-ranks .is-spend,
 .primer-ladder .is-spend {
-  color: #c5d0bc;
+  color: #3e5344;
 }
 .primer-node-ranks .is-later,
 .primer-ladder .is-later,
 .primer-ink .is-later {
-  color: #667568;
+  color: #8a8474;
 }
 .primer-node-spend {
-  color: #c5d0bc;
-  font-size: 0.62rem;
+  color: #3e5344;
+  font-size: 0.58rem;
 }
 .primer-node-inked,
 .primer-node-maxed {
@@ -1284,7 +1360,7 @@
   opacity: 0.72;
 }
 .primer-node.is-selected {
-  outline: 2px solid #fff;
+  outline: 2px solid #1c2418;
 }
 .primer-ink {
   display: flex;
@@ -1297,11 +1373,11 @@
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 50%;
-  background: #fff;
+  background: #1c2418;
 }
 .primer-spend-line {
   margin: 0.35rem 0;
-  color: #c5d0bc;
+  color: #3e5344;
 }
 .play-client .primer-ladder {
   list-style: none;
@@ -1322,18 +1398,60 @@
   align-items: baseline;
 }
 .play-client .primer-ladder .is-held {
-  color: #fff;
+  color: #141814;
   font-weight: 650;
 }
 .play-client .primer-ladder .is-spend {
-  color: #c5d0bc;
+  color: #3e5344;
 }
 .play-client .primer-ladder .is-later {
-  color: #667568;
+  color: #8a8474;
 }
 .primer-shut,
 .primer-detail {
   margin: 0.4rem 0;
+}
+.primer-shut {
+  position: relative;
+  z-index: 1;
+  padding: 1.2rem 0.8rem;
+}
+@media (max-width: 720px) {
+  .primer-overlay {
+    align-content: start;
+    padding-bottom: 6.5rem;
+  }
+  .primer-book {
+    width: min(96vw, 28rem);
+    height: min(70dvh, 36rem);
+    aspect-ratio: auto;
+    border: 10px solid #243028;
+    background: #243028;
+  }
+  .primer-plate {
+    display: none;
+  }
+  .primer-close {
+    top: 0.35rem;
+    right: 0.35rem;
+  }
+  .primer-fit {
+    position: absolute;
+    inset: 0.45rem 0.45rem 0.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    overflow: auto;
+  }
+  .primer-page-left {
+    min-height: 15rem;
+    flex: none;
+  }
+  .primer-page-right {
+    flex: none;
+    background: #f4ecd8;
+    padding: 0.45rem 0.55rem 0.7rem;
+  }
 }
 .bag-overlay {
   position: fixed;

@@ -89,6 +89,8 @@ describe("PrimerStage", () => {
       }),
     );
     expect(html).toContain("Field Primer");
+    expect(html).toContain("/art/primer/primer-spread.png");
+    expect(html).toContain("/art/primer/primer-page-ember.png");
     expect(html).toContain("Ember, inked I, spend 1 ink for II");
     expect(html).toContain("Blaze-Mantle, locked");
     expect(html).toContain("Spend 1 ink for rank II.");

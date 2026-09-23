@@ -214,5 +214,20 @@ export const playStateSchema = z.object({
       }),
     )
     .default([]),
+  noticeboard: z
+    .object({
+      posts: z.array(
+        z.object({
+          questId: z.string().min(1),
+          title: z.string().min(1),
+          status: z.enum(["offered", "active"]),
+          line: z.string().min(1),
+          place: z.string().min(1),
+          who: z.string().min(1).optional(),
+          command: z.string().min(1).optional(),
+        }),
+      ),
+    })
+    .optional(),
 });
 export type PlayState = z.infer<typeof playStateSchema>;

@@ -35,6 +35,7 @@ import {
   handleMap,
   handleMove,
   handleTravel,
+  handleSeek,
   handleQuests,
   handleSay,
   handleStats,
@@ -961,15 +962,17 @@ export async function attachRealtime(
                                             ? handleFlee(world, intent, runtime)
                                             : intent.verb === "travel"
                                               ? handleTravel(world, intent, runtime)
-                                              : intent.verb === "bye"
-                                                ? handleBye(world, intent, runtime)
-                                                : intent.verb === "drink"
-                                                  ? handleDrink(world, intent, runtime)
-                                                  : intent.verb === "eat"
-                                                    ? handleEat(world, intent, runtime)
-                                                    : intent.verb === "duel"
-                                                      ? handleDuel(world, intent, runtime)
-                                                      : handleCast(world, intent, runtime);
+                                              : intent.verb === "seek"
+                                                ? handleSeek(world, intent, runtime)
+                                                : intent.verb === "bye"
+                                                  ? handleBye(world, intent, runtime)
+                                                  : intent.verb === "drink"
+                                                    ? handleDrink(world, intent, runtime)
+                                                    : intent.verb === "eat"
+                                                      ? handleEat(world, intent, runtime)
+                                                      : intent.verb === "duel"
+                                                        ? handleDuel(world, intent, runtime)
+                                                        : handleCast(world, intent, runtime);
 
     if (!result.ok) {
       const rejection = commandAckSchema.parse({
@@ -1098,7 +1101,12 @@ export async function attachRealtime(
               ...progressQuests(world, { characterId, kind: "look" }, runtime),
               ...progressQuests(world, { characterId, kind: "move" }, runtime),
             ]
-          : [];
+          : intent.verb === "seek"
+            ? [
+                ...progressQuests(world, { characterId, kind: "look" }, runtime),
+                ...progressQuests(world, { characterId, kind: "move" }, runtime),
+              ]
+            : [];
     if (
       identity &&
       (intent.verb === "look" ||
@@ -1116,6 +1124,7 @@ export async function attachRealtime(
         intent.verb === "defend" ||
         intent.verb === "flee" ||
         intent.verb === "travel" ||
+        intent.verb === "seek" ||
         intent.verb === "duel")
     ) {
       await persistAuthenticatedProgress(characterId);

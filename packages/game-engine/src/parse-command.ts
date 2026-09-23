@@ -22,6 +22,7 @@ import { parseInkCommand } from "./parse-ink.js";
 import { parseEquipCommand } from "./parse-equip.js";
 import { parseUnequipCommand } from "./parse-unequip.js";
 import { parseMapCommand } from "./parse-map.js";
+import { parseSeekCommand } from "./parse-seek.js";
 import { parseTravelCommand } from "./parse-travel.js";
 import { parseDuelCommand } from "./parse-duel.js";
 import type { PlayerCommand } from "./state.js";
@@ -34,6 +35,7 @@ export function parsePlayerCommand(raw: string, characterId: string): PlayerComm
     parseSpellsCommand(raw, characterId) ??
     parseInkCommand(raw, characterId) ??
     parseMapCommand(raw, characterId) ??
+    parseSeekCommand(raw, characterId) ??
     parseTravelCommand(raw, characterId) ??
     parseDuelCommand(raw, characterId) ??
     parseUnequipCommand(raw, characterId) ??

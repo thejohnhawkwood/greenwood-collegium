@@ -359,7 +359,7 @@ Blue lanterns drift beneath the welcoming arms of an ancient oak.
 - Source: [room JSON](../../packages/content/rooms/lantern-court.json).
 - Exits: north → `great-hall`; east → `east-gate`; west → `west-cloister`; south → `south-orchard`.
 - NPCs: Porter Bramble (`npc-porter-bramble`).
-- Discoveries: Noticeboard (`object-noticeboard`).
+- Discoveries: Noticeboard (`object-noticeboard`). Reading it lists offered and active quests. `seek <name>` from this court goes to that giver.
 - Arrival starts here on join. The small copper key is a personal starter placement; each Collegian can obtain one.
 
 ### Lecture Theatre — `lecture-theatre`

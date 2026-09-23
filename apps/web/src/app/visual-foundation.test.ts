@@ -10,6 +10,7 @@ import { PlayChrome } from "./PlayChrome.js";
 import { BagPanel } from "./BagPanel.js";
 import { previewEquipmentSlots } from "./preview-equipment.js";
 import { PlayPanels } from "./PlayPanels.js";
+import { Noticeboard } from "./Noticeboard.js";
 import { QuestJournal } from "./QuestJournal.js";
 import {
   forcedPresenceId,
@@ -359,6 +360,30 @@ describe("visual foundation", () => {
       }),
     ).toBe(false);
   });
+  it("opens the noticeboard from projected posts", () => {
+    const html = renderToStaticMarkup(
+      createElement(Noticeboard, {
+        open: true,
+        posts: [
+          {
+            questId: "the-missing-pages",
+            title: "The Missing Pages",
+            status: "offered",
+            line: "Examine the Ink Blotter.",
+            place: "Library Stacks",
+            who: "Librarian Quill",
+            command: "seek Librarian Quill",
+          },
+        ],
+        onClose: () => {},
+        onSend: () => {},
+      }),
+    );
+    expect(html).toContain("Noticeboard");
+    expect(html).toContain("The Missing Pages");
+    expect(html).toContain("Go to Librarian Quill");
+    expect(html).not.toContain("The Meadow Fork");
+  });
   it("opens the Primer book from play-state without inventing veins", () => {
     const html = renderToStaticMarkup(
       createElement(PlayPanels, {
@@ -408,7 +433,10 @@ describe("visual foundation", () => {
         error: "",
       }),
     );
+    expect(html).toContain("Skills");
     expect(html).toContain("Field Primer");
+    expect(html).toContain("/art/primer/primer-spread.png");
+    expect(html).toContain("/art/primer/primer-page-ember.png");
     expect(html).toContain("Ember, inked");
     expect(html).toContain("A small coal of will that lands and lingers.");
     expect(html).not.toContain("Vital leaf");
@@ -590,6 +618,13 @@ describe("visual foundation", () => {
     expect(objectMenu).not.toContain("Talk");
     expect(objectMenu).not.toContain("Take");
     expect(objectMenu).not.toContain("Attack");
+    expect(
+      presenceActions({
+        id: "object-noticeboard",
+        name: "Noticeboard",
+        kind: "object",
+      }).map((action) => action.label),
+    ).toEqual(["Examine", "Read the board"]);
     expect(
       presenceActions({
         id: "object-courtyard-well",

@@ -248,14 +248,47 @@ const duelChallenge = {
 export function PlayShellPreview() {
   const params = new URLSearchParams(window.location.search);
   const wantsPrimer = params.has("primer");
+  const wantsBoard = params.has("board");
   const duel = params.get("duel");
   const peaceful = {
     ...primerPreviewState,
     primer: undefined,
     character: { ...primerPreviewState.character, inCombat: false },
   };
-  const state =
-    duel === "1"
+  const boardState = {
+    ...peaceful,
+    room: {
+      ...peaceful.room,
+      visible: [
+        ...peaceful.room.visible,
+        { id: "object-noticeboard", name: "Noticeboard", kind: "object" as const },
+      ],
+    },
+    noticeboard: {
+      posts: [
+        {
+          questId: "the-missing-pages",
+          title: "The Missing Pages",
+          status: "offered" as const,
+          line: "Examine the Ink Blotter. Then talk quill.",
+          place: "Library Stacks",
+          who: "Librarian Quill",
+          command: "seek Librarian Quill",
+        },
+        {
+          questId: "arrival-at-the-collegium",
+          title: "Arrival at the Collegium",
+          status: "active" as const,
+          line: "Say hello so Porter knows you arrived.",
+          place: "Lantern Court",
+          who: "Porter Bramble",
+        },
+      ],
+    },
+  };
+  const state = wantsBoard
+    ? boardState
+    : duel === "1"
       ? { ...peaceful, conversation: duelChallenge }
       : duel === "wait"
         ? { ...peaceful, conversation: undefined, duelAsk: { name: "Moss" } }
@@ -263,7 +296,7 @@ export function PlayShellPreview() {
           ? primerPreviewState
           : previewState;
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [lobbyOpen, setLobbyOpen] = useState(!duel);
+  const [lobbyOpen, setLobbyOpen] = useState(!duel && !wantsBoard);
   const [worldMapOpen, setWorldMapOpen] = useState(false);
   const [questJournalOpen, setQuestJournalOpen] = useState(false);
   const [lastSend, setLastSend] = useState("");

@@ -5,6 +5,20 @@ type PrimerBook = NonNullable<PlayState["primer"]>;
 type PrimerLeaf = PrimerBook["leaves"][number];
 type PrimerNode = PrimerLeaf["nodes"][number];
 
+const PRIMER_SPREAD = "/art/primer/primer-spread.png";
+const PRIMER_PAGES: Record<string, string> = {
+  ember: "/art/primer/primer-page-ember.png",
+  thorn: "/art/primer/primer-page-thorn.png",
+  veil: "/art/primer/primer-page-veil.png",
+  stars: "/art/primer/primer-page-stars.png",
+  stone: "/art/primer/primer-page-stone.png",
+  steel: "/art/primer/primer-page-steel.png",
+};
+
+function primerPage(schoolId: string): string {
+  return PRIMER_PAGES[schoolId] ?? "/art/primer/primer-page-ember.png";
+}
+
 export function PrimerStage({
   open,
   primer,
@@ -44,52 +58,58 @@ export function PrimerStage({
         aria-modal="true"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="panel-heading">
-          <h2 id="primer-heading">Field Primer</h2>
-          <button type="button" onClick={onClose}>
-            Close
-          </button>
-        </div>
-        <p className="small-copy">{primer.prompt}</p>
-        <p className="primer-ink" aria-label={`${String(primer.ink)} ink unspent`}>
-          <span>Unspent</span>
-          {primer.ink > 0 ? (
-            Array.from({ length: primer.ink }, (_, index) => (
-              <span key={index} className="primer-ink-pip" aria-hidden="true" />
-            ))
-          ) : (
-            <span className="is-later">none</span>
-          )}
-        </p>
-        <div className="primer-pages" role="tablist" aria-label="School leaves">
-          {leaves.map((entry) => (
-            <button
-              key={entry.schoolId}
-              type="button"
-              role="tab"
-              aria-selected={entry.schoolId === leaf?.schoolId}
-              onClick={() => {
-                setSchoolId(entry.schoolId);
-                setSelectedId(undefined);
-              }}
-            >
-              {entry.open ? entry.title : `${entry.title} shut`}
-            </button>
-          ))}
-        </div>
+        <img className="primer-plate" src={PRIMER_SPREAD} alt="" />
+        <button className="primer-close" type="button" onClick={onClose}>
+          Close
+        </button>
         {leaf ? (
-          <div className={`primer-spread primer-outline-${leaf.outline}`}>
-            {leaf.open ? (
-              <LeafPlate leaf={leaf} selectedId={selected?.id} onSelect={setSelectedId} />
-            ) : (
-              <p className="primer-shut">
-                {leaf.mentor} has not given you this leaf. Finish that hearth&apos;s first lesson.
+          <div className={`primer-fit primer-outline-${leaf.outline}`}>
+            <div className="primer-page primer-page-left">
+              <img className="primer-page-plate" src={primerPage(leaf.schoolId)} alt="" />
+              {leaf.open ? (
+                <LeafPlate leaf={leaf} selectedId={selected?.id} onSelect={setSelectedId} />
+              ) : null}
+            </div>
+            <div className="primer-page primer-page-right">
+              <h2 id="primer-heading">Field Primer</h2>
+              <p className="small-copy">{primer.prompt}</p>
+              <p className="primer-ink" aria-label={`${String(primer.ink)} ink unspent`}>
+                <span>Unspent</span>
+                {primer.ink > 0 ? (
+                  Array.from({ length: primer.ink }, (_, index) => (
+                    <span key={index} className="primer-ink-pip" aria-hidden="true" />
+                  ))
+                ) : (
+                  <span className="is-later">none</span>
+                )}
               </p>
-            )}
-            <VeinSpend
-              node={selected}
-              onSpend={selected ? () => onSend(`ink ${selected.name}`) : undefined}
-            />
+              <div className="primer-pages" role="tablist" aria-label="School leaves">
+                {leaves.map((entry) => (
+                  <button
+                    key={entry.schoolId}
+                    type="button"
+                    role="tab"
+                    aria-selected={entry.schoolId === leaf.schoolId}
+                    onClick={() => {
+                      setSchoolId(entry.schoolId);
+                      setSelectedId(undefined);
+                    }}
+                  >
+                    {entry.open ? entry.title : `${entry.title} shut`}
+                  </button>
+                ))}
+              </div>
+              {leaf.open ? (
+                <VeinSpend
+                  node={selected}
+                  onSpend={selected ? () => onSend(`ink ${selected.name}`) : undefined}
+                />
+              ) : (
+                <p className="primer-shut">
+                  {leaf.mentor} has not given you this leaf. Finish that hearth&apos;s first lesson.
+                </p>
+              )}
+            </div>
           </div>
         ) : null}
       </div>
@@ -250,8 +270,8 @@ function placeNodes(nodes: readonly PrimerNode[]) {
     const index = row.indexOf(node);
     return {
       ...node,
-      x: ((index + 1) / (row.length + 1)) * 100,
-      y: 88 - (node.distance / maxDistance) * 72,
+      x: 28 + ((index + 1) / (row.length + 1)) * 64,
+      y: 86 - (node.distance / maxDistance) * 62,
     };
   });
 }

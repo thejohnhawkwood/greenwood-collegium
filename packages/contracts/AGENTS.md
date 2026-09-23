@@ -19,3 +19,4 @@ Shared Zod schemas for commands, events, snapshots, and errors.
 - Ticket 015 owns `quest.updated` and `progress.level_gained`. The client must not invent quest completion or level.
 - ADR-0039 and ADR-0042 add optional `play-state.primer` leaves. The client must not invent nodes, legality, ranks, rank previews, or descriptions. Quest entries may include a projected `current` step and `reward`. The client must not invent either. A map room may include `quest` when that room is the current step's place. An unknown room still has no title. Optional `play-state.duelAsk` is an outgoing classroom challenge. The client must not invent it.
 - ADR-0040 adds `play-state.slots`. The client must not invent wear positions.
+- ADR-0045 adds optional `play-state.noticeboard` posts. The client must not invent quests, givers, or `seek` destinations.

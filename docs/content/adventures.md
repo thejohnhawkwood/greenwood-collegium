@@ -13,7 +13,7 @@ plot or a second kit.
 
 ## Playing
 
-Start with `talk porter` or `examine noticeboard` in Lantern Court. `talk to Porter
+Start with `talk porter` or read the noticeboard in Lantern Court. The board lists open work and `seek <name>` sends you to that giver. `talk to Porter
 Bramble` also works. `look` lists nearby people and objects; `x` is shorthand for
 `examine`. `help talk` explains conversations and `quests` lists your checklists.
 NPC names use the existing blue treatment, objects use green, and quest updates

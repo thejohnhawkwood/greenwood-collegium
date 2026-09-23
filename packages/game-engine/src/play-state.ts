@@ -20,6 +20,7 @@ import { primerPlayState } from "./primer-book.js";
 import { equipmentSheet, wornSlotId } from "./equipment-slots.js";
 import { readPrompt } from "./combat-read.js";
 import { wearRewardPhrase } from "./gear-help.js";
+import { noticeboardPosts, roomHasNoticeboard } from "./noticeboard.js";
 import { schoolKit } from "./schools.js";
 import type { Character, WorldState } from "./state.js";
 
@@ -156,6 +157,21 @@ export function createPlayState(
       };
     }),
     quests: questJournal(world, character.id),
+    ...(roomHasNoticeboard(room)
+      ? {
+          noticeboard: {
+            posts: noticeboardPosts(world, character).map((post) => ({
+              questId: post.questId,
+              title: post.title,
+              status: post.status,
+              line: post.line,
+              place: post.place,
+              ...(post.who ? { who: post.who } : {}),
+              ...(post.command ? { command: post.command } : {}),
+            })),
+          },
+        }
+      : {}),
   });
 }
 

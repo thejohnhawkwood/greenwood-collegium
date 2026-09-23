@@ -504,6 +504,12 @@ export type TravelIntent = {
   target: string;
 };
 
+export type SeekIntent = {
+  verb: "seek";
+  characterId: string;
+  target: string;
+};
+
 export type DuelIntent = {
   verb: "duel";
   characterId: string;
@@ -592,6 +598,7 @@ export type PlayerCommand =
   | UnequipIntent
   | MapIntent
   | TravelIntent
+  | SeekIntent
   | DuelIntent
   | StaffCommand;
 

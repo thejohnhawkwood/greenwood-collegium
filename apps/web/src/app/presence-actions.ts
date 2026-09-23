@@ -10,6 +10,7 @@ export type PresencePerson = {
 export type PresenceAction = {
   label: string;
   command?: string;
+  openBoard?: boolean;
   disabled?: boolean;
   title?: string;
 };
@@ -47,6 +48,9 @@ export function presenceActions(
     return [examine, { label: "Take", command: `take ${person.name}` }];
   }
   if (person.kind === "object") {
+    if (person.id === "object-noticeboard") {
+      return [examine, { label: "Read the board", openBoard: true }];
+    }
     if (person.id === "object-courtyard-well" || /well/i.test(person.name)) {
       return [examine, { label: "Drink", command: `drink ${person.name}` }];
     }

@@ -6,6 +6,7 @@ import { isDialogueMenuText } from "./conversation-from-story.js";
 import { GameTranscript } from "./GameTranscript.js";
 import { Minimap, WorldMapDialog, type MapTravelResult } from "./Minimap.js";
 import { PresenceAvatars } from "./PresenceAvatars.js";
+import { Noticeboard } from "./Noticeboard.js";
 import { QuestJournal } from "./QuestJournal.js";
 import { CombatStage } from "./CombatStage.js";
 import { DuelPrompt } from "./DuelPrompt.js";
@@ -61,6 +62,7 @@ export function PlayPanels({
   followToken?: number;
 }) {
   const [bagOpen, setBagOpen] = useState(false);
+  const [boardOpen, setBoardOpen] = useState(false);
   const [primerOpen, setPrimerOpen] = useState(primerRequest > 0);
   const [primerSeen, setPrimerSeen] = useState(primerRequest);
   if (primerRequest !== primerSeen) {
@@ -73,6 +75,7 @@ export function PlayPanels({
     if (worldMapOpen) {
       setBagOpen(false);
       setPrimerOpen(false);
+      setBoardOpen(false);
     }
   }
   const fighting = Boolean(state?.encounter);
@@ -159,6 +162,7 @@ export function PlayPanels({
                   onCloseWorldMap();
                   onCloseQuestJournal();
                   setPrimerOpen(false);
+                  setBoardOpen(false);
                   setBagOpen(true);
                   onSend("inventory");
                 }}
@@ -172,17 +176,13 @@ export function PlayPanels({
                   onCloseWorldMap();
                   setBagOpen(false);
                   setPrimerOpen(false);
+                  setBoardOpen(false);
                   onOpenQuestJournal();
                   onSend("quests");
                 }}
               >
                 Quests
               </button>
-            </div>
-          </section>
-          <section className="play-panel local-map" aria-labelledby="local-map-heading">
-            <div className="panel-heading">
-              <h2 id="local-map-heading">Minimap</h2>
               <button
                 type="button"
                 disabled={fighting || !state?.primer}
@@ -190,11 +190,17 @@ export function PlayPanels({
                   onCloseWorldMap();
                   onCloseQuestJournal();
                   setBagOpen(false);
+                  setBoardOpen(false);
                   setPrimerOpen(true);
                 }}
               >
-                Primer
+                Skills
               </button>
+            </div>
+          </section>
+          <section className="play-panel local-map" aria-labelledby="local-map-heading">
+            <div className="panel-heading">
+              <h2 id="local-map-heading">Minimap</h2>
               <button type="button" disabled={fighting} onClick={onOpenWorldMap}>
                 World map
               </button>
@@ -259,6 +265,14 @@ export function PlayPanels({
                 gift={character?.gift}
                 gifts={character?.gifts}
                 onSend={onSend}
+                onOpenNoticeboard={() => {
+                  if (fighting || !state?.noticeboard) return;
+                  onCloseWorldMap();
+                  onCloseQuestJournal();
+                  setBagOpen(false);
+                  setPrimerOpen(false);
+                  setBoardOpen(true);
+                }}
               />
             </div>
           </section>
@@ -335,6 +349,12 @@ export function PlayPanels({
         open={bagOpen && !fighting}
         state={state}
         onClose={() => setBagOpen(false)}
+        onSend={onSend}
+      />
+      <Noticeboard
+        open={boardOpen && !fighting && Boolean(state?.noticeboard)}
+        posts={state?.noticeboard?.posts ?? []}
+        onClose={() => setBoardOpen(false)}
         onSend={onSend}
       />
       <QuestJournal

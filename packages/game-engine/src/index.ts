@@ -43,6 +43,8 @@ export { parseSpellsCommand } from "./parse-spells.js";
 export { handleMap } from "./map.js";
 export { parseMapCommand } from "./parse-map.js";
 export { handleTravel } from "./travel.js";
+export { handleSeek, noticeboardPosts, NOTICEBOARD_ID } from "./noticeboard.js";
+export { parseSeekCommand } from "./parse-seek.js";
 export { parseTravelCommand } from "./parse-travel.js";
 export { handleDuel, DUEL_CHALLENGE_ID } from "./duel.js";
 export { parseDuelCommand } from "./parse-duel.js";

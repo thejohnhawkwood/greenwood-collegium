@@ -40,6 +40,7 @@ describe("adventure content", () => {
     const adventures = Object.values(world.quests).filter((quest) => quest.giverNpcId);
     expect(adventures.map((quest) => quest.id).sort()).toEqual([
       "a-little-room-to-grow",
+      "arrival-at-the-collegium",
       "fens-linen",
       "porters-night-round",
       "the-barrow-mouth",

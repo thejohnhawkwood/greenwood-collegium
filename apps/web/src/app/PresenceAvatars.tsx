@@ -60,6 +60,7 @@ export function PresenceAvatars({
   gift,
   gifts,
   onSend,
+  onOpenNoticeboard,
 }: {
   people: readonly PresencePerson[];
   conversation?: PlayState["conversation"];
@@ -67,6 +68,7 @@ export function PresenceAvatars({
   gift?: PlayState["character"]["gift"];
   gifts?: PlayState["character"]["gifts"];
   onSend: (command: string) => void;
+  onOpenNoticeboard?: () => void;
 }) {
   const forcedId = forcedPresenceId(people, conversation, inCombat);
   const [pickedId, setPickedId] = useState<string | null>(null);
@@ -135,6 +137,7 @@ export function PresenceAvatars({
               }
               onSend(command);
             }}
+            onOpenNoticeboard={onOpenNoticeboard}
             onClose={() => {
               if (!forcedId) setPickedId(null);
             }}
@@ -224,12 +227,14 @@ export function PresenceMenu({
   gift,
   gifts,
   onSend,
+  onOpenNoticeboard,
   onClose,
 }: {
   person: PresencePerson;
   gift?: { id: string; name: string };
   gifts?: readonly { id: string; name: string }[];
   onSend: (command: string) => void;
+  onOpenNoticeboard?: () => void;
   onClose: () => void;
 }) {
   return (
@@ -242,6 +247,11 @@ export function PresenceMenu({
           disabled={action.disabled}
           title={action.title}
           onClick={() => {
+            if (action.openBoard) {
+              onOpenNoticeboard?.();
+              onClose();
+              return;
+            }
             if (!action.command) return;
             onSend(action.command);
             if (!action.command.startsWith("talk ")) {

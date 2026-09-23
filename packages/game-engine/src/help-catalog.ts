@@ -64,7 +64,7 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     aliases: ["attack"],
     summary: "Start a practice fight.",
     detail:
-      "Walk south from Lantern Court, then type attack dummy to square up. The foe card names the read. Type attack, a spell, defend, or flee within twelve seconds. The same swing or the same leaf, twice in a row, lands lighter. A guard meets a lean-in and loads your next blow. A stick glances off set feet. A spark does not. Strike when they draw back, or the next swing is heavier. To fight a classmate, both of you must agree. Type duel and their name.",
+      "Walk south from Lantern Court, then type attack dummy to square up. The foe card names the read. Type attack, a spell, defend, or flee within twelve seconds. The same swing or the same leaf, twice in a row, lands lighter. Against a foe, another leaf right after a leaf lands lighter too. A stick or a guard breaks that. A guard meets a lean-in and loads your next blow. A stick glances off set feet. A spark does not. Strike when they draw back, or the next swing is heavier. To fight a classmate, both of you must agree. Type duel and their name.",
   },
   {
     topic: "duel",
@@ -155,6 +155,13 @@ export const HELP_ENTRIES: readonly HelpEntry[] = [
     summary: "Read your explored rooms and how much of the Collegium remains in fog.",
     detail:
       "map (or chart) names the rooms you have already visited, marks where you stand, names the floor, and says how many charted rooms remain in fog. It does not name unvisited rooms.",
+  },
+  {
+    topic: "seek",
+    aliases: ["seek"],
+    summary: "From the Lantern Court noticeboard, go to a named giver.",
+    detail:
+      "seek Librarian Quill reads the noticeboard where you stand and sends you to that person's room. Finished work and quests you have not earned stay off the board. Rooms between you and there stay in fog. You cannot seek during combat, or away from the board.",
   },
   {
     topic: "quests",
