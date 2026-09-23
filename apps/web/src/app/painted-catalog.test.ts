@@ -161,7 +161,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a unique painted plate for every speaking NPC and the dummy", () => {
-    expect(NPC_PLATE_FILES).toHaveLength(21);
+    expect(NPC_PLATE_FILES).toHaveLength(34);
     for (const id of NPC_PLATE_FILES) {
       const path = join(artRoot, "characters/npcs", `${id}.png`);
       expect(existsSync(path)).toBe(true);
@@ -169,7 +169,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a unique painted plate for every clickable room object and takeable item", () => {
-    expect(OBJECT_PLATE_FILES).toHaveLength(69);
+    expect(OBJECT_PLATE_FILES).toHaveLength(109);
     for (const id of OBJECT_PLATE_FILES) {
       const path = join(artRoot, "objects", `${id}.png`);
       expect(existsSync(path)).toBe(true);
@@ -180,6 +180,10 @@ describe("painted catalog files", () => {
       "/art/objects/patched-hood.png",
     );
     expect(objectArtSrc("wooden-guard", "Wooden Guard")).toBe("/art/objects/wooden-guard.png");
+    expect(objectArtSrc("fold-mitts", "Fold Mitts")).toBe("/art/objects/fold-mitts.png");
+    expect(objectArtSrc("item-quest-the-empty-byre-loot-fold-mitts--moss", "Fold Mitts")).toBe(
+      "/art/objects/fold-mitts.png",
+    );
   });
   it("keeps a punched overlay for every combat FX plate", () => {
     expect(FX_FILES).toHaveLength(27);
@@ -190,7 +194,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a painted plate for every Collegium room", () => {
-    expect(rooms).toHaveLength(40);
+    expect(rooms).toHaveLength(60);
     for (const room of rooms) {
       const path = join(artRoot, "rooms", `${room}.png`);
       expect(existsSync(path)).toBe(true);

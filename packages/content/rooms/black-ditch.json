@@ -5,7 +5,6 @@
   "shortDescription": "A ditch of black water east of the peat-cut.",
   "longDescription": "The ditch is narrower than the peat-cut and just as unwilling. Iron smell. No tea. If the lurker is still here, it is keeping shine, not a person.\nSouth is the lintel field. West is the peat-cut. North is the stile toward the barrow.",
   "zone": "east-moor",
-  "visualState": "peat-cut",
   "map": {
     "x": 9,
     "y": 2

@@ -5,7 +5,6 @@
   "shortDescription": "A byre with straw, and no sheep in it.",
   "longDescription": "The byre is warm from the croft wall and empty of sheep. Straw is kicked out, not in. A stall at the end has a hook where a bell should hang.\nSouth is Wren. East is the wool shed's lane.",
   "zone": "east-moor",
-  "visualState": "wren-croft",
   "map": {
     "x": 6,
     "y": 3

@@ -5,7 +5,6 @@
   "shortDescription": "A locked cellar of tins, twine, and dry biscuits.",
   "longDescription": "The flood-store is under the slip, dry when the river is merely rude. Tins, twine, and a sack of biscuits sit on a shelf above the old waterline. The camp has not got in here. Up is the slip.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 0,
     "y": -3,

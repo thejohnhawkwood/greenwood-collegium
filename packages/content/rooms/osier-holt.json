@@ -5,7 +5,6 @@
   "shortDescription": "Withies cut for baskets, and a path to the race.",
   "longDescription": "Withies stand in bundles, cut for Collegium baskets and not yet stolen. The river is louder east of here, where the mill-race drops.\nWest is the willow bend. South is the mill-race.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 2,
     "y": -2

@@ -5,7 +5,6 @@
   "shortDescription": "A mud slip where the Collegium boats are supposed to rest.",
   "longDescription": "The slip is mud, willow root, and one ring-bolt with no boat on it. Down, a flood-store keeps what the landing could lock. South, the camp has been using the river as a road.\nNorth is the landing. East is the skiff-line. West is the rope-island.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 0,
     "y": -3

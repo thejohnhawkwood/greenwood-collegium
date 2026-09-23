@@ -8,8 +8,10 @@ describe("room catalog", () => {
   it("shows every Collegium plate with its painted file", () => {
     const html = renderToStaticMarkup(createElement(RoomCatalog));
     expect(html).toContain("Room catalog");
-    expect(html).toContain("Forty finished paintings");
-    expect(COLLEGIUM_ROOM_PLATES).toHaveLength(40);
+    expect(html).toContain("Sixty finished paintings");
+    expect(COLLEGIUM_ROOM_PLATES).toHaveLength(60);
+    expect(html).toContain("Wool Shed");
+    expect(html).toContain("/art/rooms/wool-shed.png");
     expect(html).toContain("Lantern Court");
     expect(html).toContain("River Landing");
     expect(html).toContain("Wren&#x27;s Croft");

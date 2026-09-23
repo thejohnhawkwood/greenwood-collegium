@@ -5,7 +5,6 @@
   "shortDescription": "Fast water beside a wheel that no longer turns.",
   "longDescription": "The race runs fast and brown beside a mill wheel furred with moss. The wheel does not turn. Something long holds the current if it has not been sent on.\nNorth is the osier holt. West is the skiff-line. South is the black mooring.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 2,
     "y": -3

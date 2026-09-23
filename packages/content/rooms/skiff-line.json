@@ -5,7 +5,6 @@
   "shortDescription": "A line of flat boats, one of them not ours.",
   "longDescription": "Flat skiffs knock the piling. One has a Collegium knot. One has a thief's knot and a stoat who will not move. North is the willow bend. West is the slip. East is the mill-race. South is the cargo hollow.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 1,
     "y": -3

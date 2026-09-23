@@ -5,7 +5,6 @@
   "shortDescription": "A willow island posted like a gate.",
   "longDescription": "A small island of willow roots holds a coil of rope and, if the sentry is still posted, a badger who means the painter to stay cut. North is the reed bank. East is the slip. South is the heron post.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": -1,
     "y": -3

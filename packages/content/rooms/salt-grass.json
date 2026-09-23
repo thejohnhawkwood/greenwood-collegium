@@ -5,7 +5,6 @@
   "shortDescription": "Wind and pale grass, and no sheep.",
   "longDescription": "The grass here is pale and sharp. Wind comes off the ditch and tastes faintly of iron. No sheep. No footprints worth a story.\nNorth is the lintel field.",
   "zone": "east-moor",
-  "visualState": "sheepfold",
   "map": {
     "x": 9,
     "y": 0

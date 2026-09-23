@@ -5,7 +5,6 @@
   "shortDescription": "Willows, and a painter cut on purpose.",
   "longDescription": "The river bends under willows. A flat skiff should be tied here. The painter is cut, not worn through. Deckhand Nett sits on the root with empty paws and a story he is willing to finish.\nWest is the landing. East is the osier holt. South is the skiff-line.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 1,
     "y": -2

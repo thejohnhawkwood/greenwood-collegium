@@ -5,7 +5,6 @@
   "shortDescription": "A stile of wet stone between ditch and barrow.",
   "longDescription": "A stile of flat stones crosses from the ditch toward the barrow mouth. Crows have used the top stone. They are ordinary crows, smaller than the fold's mist-crow, and they leave when you arrive.\nSouth is the ditch. West is the barrow mouth.",
   "zone": "east-moor",
-  "visualState": "barrow-mouth",
   "map": {
     "x": 9,
     "y": 3

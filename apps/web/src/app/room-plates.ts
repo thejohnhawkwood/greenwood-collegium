@@ -200,6 +200,106 @@ export const COLLEGIUM_ROOM_PLATES = [
     title: "Fog Hollow",
     blurb: "A bowl of fog that does not keep footprints.",
   },
+  {
+    id: "wool-shed",
+    title: "Wool Shed",
+    blurb: "Wet wool hangs under one honest lamp.",
+  },
+  {
+    id: "croft-byre",
+    title: "Croft Byre",
+    blurb: "Straw in the stalls, and no sheep.",
+  },
+  {
+    id: "mist-lane",
+    title: "Mist Lane",
+    blurb: "Mist at knee height that does not lift.",
+  },
+  {
+    id: "reed-mere",
+    title: "Reed Mere",
+    blurb: "Still water, and a light with no lantern.",
+  },
+  {
+    id: "lintel-field",
+    title: "Lintel Field",
+    blurb: "Fallen gate-stones and one new scratch.",
+  },
+  {
+    id: "salt-grass",
+    title: "Salt Grass",
+    blurb: "Pale grass, and no sheep.",
+  },
+  {
+    id: "black-ditch",
+    title: "Black Ditch",
+    blurb: "Black water east of the peat cut.",
+  },
+  {
+    id: "crow-stile",
+    title: "Crow Stile",
+    blurb: "Wet stone between the ditch and the barrow.",
+  },
+  {
+    id: "willow-bend",
+    title: "Willow Bend",
+    blurb: "Willows, and a painter cut on purpose.",
+  },
+  {
+    id: "osier-holt",
+    title: "Osier Holt",
+    blurb: "Cut withies beside the path to the race.",
+  },
+  {
+    id: "reed-bank",
+    title: "Reed Bank",
+    blurb: "The west bank and slow brown water.",
+  },
+  {
+    id: "otter-slip",
+    title: "Otter Slip",
+    blurb: "Mud where the College boats should rest.",
+  },
+  {
+    id: "flood-store",
+    title: "Flood Store",
+    blurb: "A locked cellar of tins, twine, and dry biscuits.",
+  },
+  {
+    id: "skiff-line",
+    title: "Skiff Line",
+    blurb: "Flat boats, one of them not ours.",
+  },
+  {
+    id: "mill-race",
+    title: "Mill Race",
+    blurb: "Fast water, and a wheel that no longer turns.",
+  },
+  {
+    id: "rope-island",
+    title: "Rope Island",
+    blurb: "A willow island posted like a gate.",
+  },
+  {
+    id: "heron-post",
+    title: "Heron Post",
+    blurb: "A fishing post, and the whistle is missing.",
+  },
+  {
+    id: "pirate-camp",
+    title: "Pirate Camp",
+    blurb: "Tarps, tins, and one captain's boat.",
+  },
+  {
+    id: "cargo-hollow",
+    title: "Cargo Hollow",
+    blurb: "Stolen crates under the bank.",
+  },
+  {
+    id: "black-mooring",
+    title: "Black Mooring",
+    blurb: "A tarred post and the captain's best boat.",
+  },
 ] as const;
 
 export type CollegiumRoomPlate = (typeof COLLEGIUM_ROOM_PLATES)[number];

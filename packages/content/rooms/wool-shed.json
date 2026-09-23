@@ -5,7 +5,6 @@
   "shortDescription": "A shed of wet wool and one honest lamp.",
   "longDescription": "The shed smells of lanolin and peat-smoke. Fleeces hang on pegs, most of them still heavy with mist. A lamp burns because Foldhand Hobb does not trust the lane after dusk.\nNorth is the mist-lane. South is the fold. West is Wren's door.",
   "zone": "east-moor",
-  "visualState": "sheepfold",
   "map": {
     "x": 7,
     "y": 2

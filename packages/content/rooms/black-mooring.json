@@ -5,7 +5,6 @@
   "shortDescription": "A tarred post where the captain keeps the best boat.",
   "longDescription": "A tarred post, a good boat, and room for a coat. The captain prefers the camp west of here. The mill-race is north. The cargo hollow is west.\nThis is the end of the south bank. The wood beyond is not this errand.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 2,
     "y": -4

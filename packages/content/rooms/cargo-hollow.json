@@ -5,7 +5,6 @@
   "shortDescription": "A hollow of stolen crates under the bank.",
   "longDescription": "The bank hollows out here into a hold of crates. One is biscuits. One is twine. None of them were offered. North is the skiff-line. West is the camp. East is the black mooring.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": 1,
     "y": -4

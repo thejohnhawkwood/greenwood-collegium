@@ -7,7 +7,7 @@ export function RoomCatalog() {
     <main className="builder-page room-catalog-page" aria-labelledby="room-catalog-heading">
       <h1 id="room-catalog-heading">Room catalog</h1>
       <p>
-        Forty finished paintings. In play, the title, inhabitants, and exits stay server text. Open{" "}
+        Sixty finished paintings. In play, the title, inhabitants, and exits stay server text. Open{" "}
         <code>/?rooms=1</code> to compare the plates.
       </p>
       <ul className="room-catalog-grid">

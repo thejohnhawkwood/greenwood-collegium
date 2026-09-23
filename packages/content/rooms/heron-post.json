@@ -5,7 +5,6 @@
   "shortDescription": "A fishing post and a whistle that should have been heard.",
   "longDescription": "A post stands in the shallows where a heron might fish and a lookout might not. Heron Midge is the lookout, tall and grey and tired of other people's boats.\nNorth is the rope-island. East is the pirate camp.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": -1,
     "y": -4

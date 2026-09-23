@@ -5,7 +5,6 @@
   "shortDescription": "A lane where mist sits at knee height and does not lift.",
   "longDescription": "The lane runs between byre and mere. Mist sits at the knee and does not lift when you ask it to. If the fold-hound still keeps this path, it will look like a dog until it does not.\nSouth is the wool shed. West is the byre. North is the mere.",
   "zone": "east-moor",
-  "visualState": "fog-hollow",
   "map": {
     "x": 7,
     "y": 3

@@ -5,7 +5,6 @@
   "shortDescription": "A west bank of reed and slow brown water.",
   "longDescription": "Reed grows thicker on this bank. The river is slow and brown and smells of wet leaves. No pirates standing here. The rope-island is south, and it is less polite.\nEast is the landing.",
   "zone": "grounds",
-  "visualState": "river-landing",
   "map": {
     "x": -1,
     "y": -2
