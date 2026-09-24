@@ -14,7 +14,7 @@ rewards, enemy stats, and NPC ids all stay as they are.
 | 3 | Third lessons, the six mentor standing lines, and the hearth tree hand-off nodes | Done, 24 September 2026 |
 | 4 | Item and fixture descriptions, reward items, the twenty new river and moor fixtures | Done, 24 September 2026 |
 | 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip | Text done, 24 September 2026. The page hook below needs an engine decision |
-| 6 | Design recommendations written up, nothing shipped | Not started |
+| 6 | Design recommendations written up, nothing shipped | Done, 24 September 2026. [`QUEST_DESIGN_RECOMMENDATIONS.md`](QUEST_DESIGN_RECOMMENDATIONS.md) |
 
 ## Systemic problems found
 
@@ -103,7 +103,13 @@ owns practice. That is design, not a defect.
 
 ## Quest design recommendations, not implemented
 
-These change content structure or mechanics and are recorded for a later decision.
+Moved to [`QUEST_DESIGN_RECOMMENDATIONS.md`](QUEST_DESIGN_RECOMMENDATIONS.md),
+which is the live list and includes two problems found later in the pass: Alder
+saying he keeps a page the student still carries, and the page node repeating on
+every idle conversation.
+
+The summaries below record what the pass observed. The recommendations file says
+what each would cost.
 
 **Fake choice in Porter's nag nodes.** Each of `nag-look`, `nag-speak`,
 `nag-take`, and `nag-arrive` offers `I am working on it` and `Please stop

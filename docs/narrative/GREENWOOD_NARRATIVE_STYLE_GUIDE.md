@@ -31,7 +31,15 @@ Most dialogue carries zero deliberate metaphor. Ordinary narration carries very
 few. An important scene may carry one image.
 
 Do not write `the way X keeps Y`. Do not write `as if`. Both were stripped from
-this project on 24 September 2026 and should not come back.
+quest, room, fixture, item, and foe text on 24 September 2026 and should not come
+back there.
+
+Two exemptions, both deliberate. `packages/content/character-creation/appearances.json`
+keeps its `as if` lines; that text is read once at creation, it is some of the best
+character writing in the project, and it is not a backlog item. And a simile stays
+anywhere it is the shortest true way to say something: Alder's `as if the metal had
+never left` is describing a real acoustic fact, and the sheepfold's `The flock left
+as if someone they knew had opened the way` is the horror of that room.
 
 Treat these with suspicion: whispers, echoes, secrets, ancient, forgotten,
 shadows, threads, tapestry, song, dance, heart, soul, destiny, something
