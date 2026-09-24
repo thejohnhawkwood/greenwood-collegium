@@ -17,7 +17,7 @@ Read this file first on a new machine or in a new Cursor chat. Then open the lat
 ## Read next
 
 1. Latest entry in [`docs/devlog/`](../devlog/)
-2. Story spine (tone, cast, order): [`../content/STORY.md`](../content/STORY.md). Storylines: [`../content/quests/`](../content/quests/README.md)
+2. Story spine (tone, cast, order): [`../content/STORY.md`](../content/STORY.md). Storylines: [`../content/quests/`](../content/quests/README.md). Prose standard and audit: [`../narrative/`](../narrative/README.md)
 3. Field Primer, ranks, and every leaf: [`../content/PROGRESSION.md`](../content/PROGRESSION.md)
 4. Play and JSON authoring: [`../content/adventures.md`](../content/adventures.md)
 5. Implementation handoff: [`CURSOR-HANDOFF-VISUAL-FOUNDATION.md`](CURSOR-HANDOFF-VISUAL-FOUNDATION.md)
