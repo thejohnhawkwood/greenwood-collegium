@@ -1,4 +1,7 @@
+import { authPreviewInviteResponseSchema } from "@greenwood/contracts";
 import { useState, type FormEvent } from "react";
+import { OpeningStory } from "./OpeningStory.js";
+import { stepAfterInvite, type InviteStep } from "./opening-story.js";
 
 export type AuthGateProps = {
   bootstrapOpen: boolean;
@@ -14,6 +17,8 @@ export function AuthGate({
   onContinueAsGuest,
 }: AuthGateProps) {
   const [error, setError] = useState("");
+  const [inviteStep, setInviteStep] = useState<InviteStep>("forms");
+  const [inviteToken, setInviteToken] = useState("");
 
   async function submit(
     event: FormEvent<HTMLFormElement>,
@@ -34,6 +39,37 @@ export function AuthGate({
       return;
     }
     onSignedIn();
+  }
+
+  async function checkInvite(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    const data = new FormData(event.currentTarget);
+    const token = String(data.get("token") ?? "").trim();
+    const response = await fetch("/auth/preview-invite", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+    const payload: unknown = await response.json().catch(() => undefined);
+    const parsed = authPreviewInviteResponseSchema.safeParse(payload);
+    if (!response.ok || !parsed.success) {
+      setError(errorMessage(payload, "That invite is not valid."));
+      return;
+    }
+    setInviteToken(token);
+    setInviteStep(stepAfterInvite(parsed.data.role));
+  }
+
+  if (inviteStep === "story") {
+    return (
+      <OpeningStory
+        onEnter={() => {
+          setInviteStep("account");
+        }}
+      />
+    );
   }
 
   return (
@@ -89,86 +125,99 @@ export function AuthGate({
         </form>
       ) : null}
 
-      <form
-        className="auth-form"
-        onSubmit={(event) => {
-          const data = new FormData(event.currentTarget);
-          void submit(event, "/auth/sign-in", {
-            username: String(data.get("username") ?? ""),
-            password: String(data.get("password") ?? ""),
-            audience: "student",
-          });
-        }}
-      >
-        <h3>Student sign-in</h3>
-        <p>Students who already accepted an invite use this form.</p>
-        <label>
-          Username
-          <input name="username" autoComplete="username" required />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" autoComplete="current-password" required />
-        </label>
-        <button type="submit">Sign in as student</button>
-      </form>
+      {inviteStep === "forms" ? (
+        <>
+          <form
+            className="auth-form"
+            onSubmit={(event) => {
+              const data = new FormData(event.currentTarget);
+              void submit(event, "/auth/sign-in", {
+                username: String(data.get("username") ?? ""),
+                password: String(data.get("password") ?? ""),
+                audience: "student",
+              });
+            }}
+          >
+            <h3>Student sign-in</h3>
+            <p>Students who already accepted an invite use this form.</p>
+            <label>
+              Username
+              <input name="username" autoComplete="username" required />
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" autoComplete="current-password" required />
+            </label>
+            <button type="submit">Sign in as student</button>
+          </form>
 
-      <form
-        className="auth-form"
-        onSubmit={(event) => {
-          const data = new FormData(event.currentTarget);
-          void submit(event, "/auth/sign-in", {
-            username: String(data.get("username") ?? ""),
-            password: String(data.get("password") ?? ""),
-            audience: "staff",
-          });
-        }}
-      >
-        <h3>Teacher sign-in</h3>
-        <p>Use this form for the classroom owner or a teacher account.</p>
-        <label>
-          Username
-          <input name="username" autoComplete="username" required />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" autoComplete="current-password" required />
-        </label>
-        <button type="submit">Sign in as teacher</button>
-      </form>
+          <form
+            className="auth-form"
+            onSubmit={(event) => {
+              const data = new FormData(event.currentTarget);
+              void submit(event, "/auth/sign-in", {
+                username: String(data.get("username") ?? ""),
+                password: String(data.get("password") ?? ""),
+                audience: "staff",
+              });
+            }}
+          >
+            <h3>Teacher sign-in</h3>
+            <p>Use this form for the classroom owner or a teacher account.</p>
+            <label>
+              Username
+              <input name="username" autoComplete="username" required />
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" autoComplete="current-password" required />
+            </label>
+            <button type="submit">Sign in as teacher</button>
+          </form>
 
-      <form
-        className="auth-form"
-        onSubmit={(event) => {
-          const data = new FormData(event.currentTarget);
-          void submit(event, "/auth/accept-invite", {
-            token: String(data.get("token") ?? ""),
-            username: String(data.get("username") ?? ""),
-            password: String(data.get("password") ?? ""),
-          });
-        }}
-      >
-        <h3>Accept an invite</h3>
-        <label>
-          Invite token
-          <input name="token" autoComplete="off" required />
-        </label>
-        <label>
-          Username
-          <input name="username" autoComplete="username" required />
-        </label>
-        <label>
-          Password
-          <input
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            minLength={10}
-            required
-          />
-        </label>
-        <button type="submit">Create account</button>
-      </form>
+          <form className="auth-form" onSubmit={(event) => void checkInvite(event)}>
+            <h3>New student</h3>
+            <p>Enter the invite from your teacher. The story comes next, then your login.</p>
+            <label>
+              Invite token
+              <input name="token" autoComplete="off" required />
+            </label>
+            <button type="submit">Continue</button>
+          </form>
+        </>
+      ) : null}
+
+      {inviteStep === "account" ? (
+        <form
+          className="auth-form"
+          onSubmit={(event) => {
+            const data = new FormData(event.currentTarget);
+            void submit(event, "/auth/accept-invite", {
+              token: inviteToken,
+              username: String(data.get("username") ?? ""),
+              password: String(data.get("password") ?? ""),
+            });
+          }}
+        >
+          <h3>Create your login</h3>
+          <p>This is the name you type to sign in. Your character name comes after.</p>
+          <label>
+            Username
+            <input name="username" autoComplete="username" required />
+          </label>
+          <label>
+            Password
+            <input
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              minLength={10}
+              required
+            />
+          </label>
+          <button type="submit">Create account</button>
+        </form>
+      ) : null}
 
       {allowGuestPlay && onContinueAsGuest ? (
         <p>

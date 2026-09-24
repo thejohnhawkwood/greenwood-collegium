@@ -27,6 +27,20 @@ export const authSignInRequestSchema = z.object({
   audience: authSignInAudienceSchema.optional(),
 });
 
+export const authPreviewInviteRequestSchema = z.object({
+  token: z.string().min(1).max(200),
+});
+
+export const authPreviewInviteResponseSchema = z.object({
+  ok: z.literal(true),
+  role: accountRoleSchema,
+});
+
+export const authOpeningSchema = z.object({
+  narration: z.string().min(1),
+  image: z.string().min(1),
+});
+
 export const authAcceptInviteRequestSchema = z.object({
   token: z.string().min(1).max(200),
   username: usernameSchema,

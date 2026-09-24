@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   CHARACTER_GENDERS,
   characterCreationIntro,
+  openingStory,
   describeCollegian,
   formatCharacterName,
   isKnownGender,
@@ -19,6 +20,9 @@ describe("character creation content", () => {
     expect(speciesWeaponProficiency("badger")).toBe("staff");
     expect(formatCharacterName("Lumen", "otter")).toBe("Lumen the Otter");
     expect(characterCreationIntro()).toContain("Greenwood Collegium");
+    expect(openingStory().narration).toContain("train as a defender");
+    expect(openingStory().narration).toContain("Clock Tower");
+    expect(openingStory().image).toBe("/frame/arrival-students.png");
     expect(suggestedCharacterNames().length).toBeGreaterThan(10);
     expect(suggestedCharacterNames("fox", "male").some((name) => name.includes(" "))).toBe(true);
     expect(

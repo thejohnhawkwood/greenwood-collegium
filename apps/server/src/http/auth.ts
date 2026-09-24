@@ -1,5 +1,7 @@
 import { resolveAppearance, resolveVisualGender } from "@greenwood/contracts";
 import {
+  authOpeningSchema,
+  authPreviewInviteRequestSchema,
   authAcceptInviteRequestSchema,
   authBootstrapRequestSchema,
   authCharacterCreateRequestSchema,
@@ -14,7 +16,7 @@ import {
   authSuggestedNameRequestSchema,
   authSuggestedNameSchema,
 } from "@greenwood/contracts";
-import { formatCharacterName } from "@greenwood/content";
+import { formatCharacterName, openingStory } from "@greenwood/content";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { RateLimiter } from "../application/rate-limit.js";
 import { createOperationQueue, type RunExclusive } from "../application/operation-queue.js";
@@ -303,6 +305,26 @@ export async function registerAuthRoutes(
       role: result.role,
       expiresAt: result.expiresAt.toISOString(),
     };
+  });
+
+  app.get("/auth/opening", async () => authOpeningSchema.parse(openingStory()));
+
+  post("/auth/preview-invite", async (request, reply) => {
+    if (!rateOk(limiter, request)) {
+      return rateLimited(reply);
+    }
+    const parsed = authPreviewInviteRequestSchema.safeParse(request.body);
+    if (!parsed.success) {
+      return invalidBody(reply);
+    }
+    const result = await deps.auth.previewInvite(parsed.data.token);
+    if (!result.ok) {
+      return reply.status(failureStatus[result.code]).send({
+        error: result.code,
+        message: result.message,
+      });
+    }
+    return result;
   });
 
   post("/auth/accept-invite", async (request, reply) => {

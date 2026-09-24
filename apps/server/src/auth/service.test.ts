@@ -60,6 +60,8 @@ describe("classroom auth service", () => {
       return;
     }
 
+    const preview = await auth.previewInvite(invite.token);
+    expect(preview).toEqual({ ok: true, role: "student" });
     const student = await auth.acceptInvite({
       token: invite.token,
       username: "pip",
