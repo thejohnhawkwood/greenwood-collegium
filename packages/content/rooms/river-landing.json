@@ -34,7 +34,7 @@
       "kind": "npc",
       "lookDescription": "An otter in a tarred coat, whistle on a cord, paws still wet. Try talk marram.",
       "examineDescription": "Marram's coat has flood marks older than most students. One ear is nicked from a boathook, not from play. He has kept this landing through thieves and high water. He talks like a veteran because he is one.",
-      "dialogue": "\"The College is the bright place. This landing is the wet edge of it. Boats and biscuits go missing south of the orchard, and I have seen enough of that to stop calling it mischief. Talk marram if you will walk the bank. Type east for the willow bend. Do not invent a second queen on my river.\""
+      "dialogue": "\"Mind the boards, they are slick.\" Marram wrings the water out of one sleeve. \"Four boats were tied here this morning. Three now. The painter at the willow bend was cut clean through, not frayed, and the biscuit crate is gone out of the cargo hollow. Tar was still soft on the rope end, so it happened in the night. Talk marram when you want the bank walked properly.\""
     },
     {
       "id": "object-flood-marker",

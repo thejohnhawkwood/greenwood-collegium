@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "second-lessons-stone",
   "title": "Second Lessons: Stone",
-  "introNarration": "Quern taps the Primer. Granite-dust greys both paws. He does not hurry the next sentence. \"Cast keystone at the hearth dummy in this room. Then talk to me. After that, the Primer will hold one ink. Open the book and type ink and the vein's name.\"",
-  "reminderNarration": "Cast keystone at the hearth dummy in this hearth, then talk to Quern. Weight first. Speech second.",
-  "completionNarration": "The second hearth lesson is done. The Primer rests on the keystone shelf as if it had always belonged there. Open the Primer and type ink and the vein's name.",
+  "introNarration": "Quern sets both paws flat on the bench, grey to the wrist, and takes his time. \"Swinging is done with. Cast keystone at the dummy in here. Set your feet before you set anything else.\" He turns the Primer to the Stone page. \"Then talk to me. After that the Primer holds one ink of its own. Open the book and type ink and the vein's name.\"",
+  "reminderNarration": "Cast keystone at the hearth dummy in this hearth, then talk to Quern. Set your feet first.",
+  "completionNarration": "Quern puts the Primer on the keystone shelf, closes it, and leaves it there while he thinks. \"Your feet were right. Everything else can be taught.\" He passes it back. \"One ink in that book is yours now. Open the Primer and type ink and the vein's name.\"",
   "experienceReward": 20,
   "objectives": [
     {

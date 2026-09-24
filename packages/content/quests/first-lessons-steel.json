@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-steel",
   "title": "First Lessons: Steel",
-  "introNarration": "Mentor Edge keeps the hearth dummy in sight. Mail hangs in a neat row, oiled and unromantic. The air smells of metal, leather, and linseed. \"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
-  "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Edge. The anvil is still bright from honest work.",
-  "completionNarration": "Edge inks the stem at rank I. A smear of oil darkens one corner of the page. The next lesson will ask you to cast.",
+  "introNarration": "Four mail shirts hang in a row, each one oiled and none of them polished for show. Edge is rubbing linseed into a strap and does not put it down. \"Walk the hearth. Name your stance out loud before you swing at anything, and keep naming it until you stop having to.\" He tips his head at the straw dummy. \"That one. Mine, in here, not the one Flint keeps out in his orchard. Then come and talk to me. I will open the Steel leaf in your Field Primer and ink the stem.\"",
+  "reminderNarration": "Look around this hearth, put the hearth dummy down, then talk to Edge. The anvil is still bright from this morning's work.",
+  "completionNarration": "Edge wipes his paws on a rag that has seen worse, then inks the stem of the Steel leaf. A little oil darkens one corner of the page anyway. \"Rank one. Nobody hands you the second one.\" He goes back to the strap. \"Next time you will be casting, not swinging.\"",
   "experienceReward": 15,
   "objectives": [
     {

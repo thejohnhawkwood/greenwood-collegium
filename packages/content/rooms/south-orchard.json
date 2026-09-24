@@ -54,7 +54,7 @@
             ]
           },
           "practice": {
-            "text": "\"Type attack dummy to begin. During the lesson, attack continues. Ember still works here as practice. When your Field Primer inks a School leaf, cast that instead. Finish before you walk away. If you fall, you wake in the Infirmary, where Fen keeps clean linen and a pot of honey. If you mean to practice against a classmate standing with you, type duel and their given name. They must type duel accept. Do not invent a target who is not in the room.\"",
+            "text": "\"Type attack dummy to begin. During the lesson, attack continues. Ember still works here as practice. When your Field Primer inks a School leaf, cast that instead. Finish before you walk away. If you fall, you wake in the Infirmary, where Fen keeps clean linen and a pot of honey. If you mean to practice against a classmate standing with you, type duel and their given name. They must type duel accept. You cannot duel anyone who is not standing here with you.\"",
             "choices": [
               { "say": "1", "label": "Why does a weapon fit?", "next": "fit" },
               { "say": "2", "label": "I understand.", "next": "keep" }
@@ -76,7 +76,7 @@
             "text": "\"As you wish. Feet steady. Eyes open. Pride in your pocket. The apple trees will keep their crooked watch, and the dummy will still be here when you are ready to type attack dummy — or duel and a classmate's given name, if they are standing with you and they agree.\""
           },
           "fog-lock": {
-            "text": "\"If the fog squares up, you lock together. Then Fen. The dummy is still here if you need the clock in your paws first. Type attack dummy. Eat after. Do not invent a hero from an orchard apple.\""
+            "text": "\"If the fog squares up, you lock together. Then Fen. The dummy is still here if you need the clock in your paws first. Type attack dummy. Eat after. Straw in an orchard is practice. The moor is not.\""
           }
         }
       },

@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "second-lessons-ember",
   "title": "Second Lessons: Ember",
-  "introNarration": "Cinder taps the Primer. Soot has dried on her whiskers. The grate still holds a low, useful fire. \"Cast ember at the hearth dummy in this room. Then talk to me. After that, the Primer will hold one ink. Open the book and type ink and the vein's name.\"",
-  "reminderNarration": "Cast ember at the hearth dummy in this hearth, then talk to Cinder. Name the fire before you feed it.",
-  "completionNarration": "The second hearth lesson is done. The Primer lies open on the grate-side table, smelling of smoke and ink. Open the Primer and type ink and the vein's name.",
+  "introNarration": "Cinder has banked the grate down to a low working fire and dried soot sits on her whiskers. She turns the Primer around so the Ember page faces you. \"Swinging is finished. Cast ember at the dummy in here and I will watch your paws while you do it. Then talk to me. After that the Primer holds one ink of its own, and you spend it: open the book and type ink and the vein's name.\"",
+  "reminderNarration": "Cast ember at the hearth dummy in this hearth, then talk to Cinder. She wants to see your paws while you do it.",
+  "completionNarration": "Cinder shuts the Primer on the grate-side table and leaves her paw flat on the cover a moment. \"Better. You named the fire before you fed it.\" She slides the book back to you. \"There is one ink in there now that is yours to spend. Open the Primer and type ink and the vein's name.\"",
   "experienceReward": 20,
   "objectives": [
     {

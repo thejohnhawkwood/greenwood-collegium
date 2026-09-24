@@ -4,7 +4,7 @@
   "name": "Peat Adder",
   "shortDescription": "A brown adder coiled on the cut lip, not asleep.",
   "lookDescription": "A peat-adder coils on the cut lip, brown as the water and not asleep.",
-  "examineDescription": "The peat-adder is small, brown, and honest about its bite. It uses the cut water. It is not Colm. Solo work. If it squares up, finish it. The stones quest does not require the kill.",
+  "examineDescription": "About the length of your forearm, brown with darker bands across the back, coiled on the warm lip of the cut. It does not hiss or rattle. It lifts its head when your shadow crosses the water and lowers it again when you step back. Give it a wide berth and it will stay where it is.",
   "maxHealth": 10,
   "attack": 3,
   "experience": 8,

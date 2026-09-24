@@ -29,13 +29,13 @@
       "name": "Shepherd Wren",
       "kind": "npc",
       "lookDescription": "An adult hare in a wet cloak, peat-smoke in her fur, kettle-calluses on both paws. Try talk wren.",
-      "examineDescription": "Wren's ears are notched by weather, not by Flint. The cloak is mended with wool, not silk. She watches the door as if a partner might still fill it. She is afraid. She is not cute.",
+      "examineDescription": "Wren's ears are notched from weather, not from practice. Her cloak is mended with wool. She keeps glancing at the doorway while she talks to you, and she has not sat down once since you came in. She is frightened, and she is not hiding it well.",
       "dialogue": "\"Sit. The kettle is on. Colm has not come in. Eat something warm before you name the mist. Type north from the East Meadow if you got lost. Talk wren. Examine the waystone on the track.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"I am Wren. Sit. The kettle is on, and the oatcakes are still warm enough to matter. Colm has not come in. The flock was due at dusk yesterday, and the peg where his crook should hang is empty. I will not invent a walker from an empty peg. Eat. Then examine the waystone on the track south of here. Come back and talk wren. Alder sent you? Good. Do not invent a second queen on my moor.\"",
+            "text": "\"I am Wren. Sit. The kettle is on, and the oatcakes are still warm enough to matter. Colm has not come in. The flock was due at dusk yesterday, and the peg where his crook should hang is empty. An empty peg is not proof of anything walking. Eat. Then examine the waystone on the track south of here. Come back and talk wren. Alder sent you? Good. Whatever is out on that moor, it is not the queen again.\"",
             "choices": [
               {
                 "say": "1",
@@ -50,7 +50,7 @@
             ]
           },
           "colm": {
-            "text": "\"My partner. Adult. He counts sheep the way Alder counts facts. He went to look at stones that were not in last winter's count. I told him not to. Eat. Then look. I am owed the truth, not a pretty story.\"",
+            "text": "\"My partner. He counts sheep twice and writes the number down, the same way Alder does with facts. He went out to look at standing stones that were not in last winter's count. I told him not to go. Eat something. Then go and look. I am owed the truth, not a kind version of it.\"",
             "choices": [
               {
                 "say": "1",

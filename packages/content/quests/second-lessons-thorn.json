@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "second-lessons-thorn",
   "title": "Second Lessons: Thorns",
-  "introNarration": "Briar taps the Primer. A thorn has caught her cloak again and she does not bother to free it. \"Cast briar at the hearth dummy in this room. Then talk to me. After that, the Primer will hold one ink. Open the book and type ink and the vein's name.\"",
-  "reminderNarration": "Cast briar at the hearth dummy in this hearth, then talk to Briar. The trellis is still listening.",
-  "completionNarration": "The second hearth lesson is done. Green light lies across the open Primer. Open the Primer and type ink and the vein's name.",
+  "introNarration": "A thorn has caught Briar's cloak again and she leaves it there while she opens the Primer to the Thorns page. \"No more swinging. Cast briar at the dummy in here. Aim for one place and hold it — that is the whole trick, and it is harder than hitting everything.\" She taps the page. \"Then talk to me. After that the Primer holds one ink that is yours. Open the book and type ink and the vein's name.\"",
+  "reminderNarration": "Cast briar at the hearth dummy in this hearth, then talk to Briar. Pick one place and hold it.",
+  "completionNarration": "Briar frees her cloak from the thorn at last, which takes her two tries. \"You held it in one place. Good. Most first-years spray it about and call that enthusiasm.\" She pushes the Primer back across the bench. \"One ink in there now, and it is yours. Open the Primer and type ink and the vein's name.\"",
   "experienceReward": 20,
   "objectives": [
     {
