@@ -3,7 +3,7 @@
   "id": "porters-cord",
   "name": "Porter's Cord",
   "shortDescription": "A short leather cord from the court.",
-  "examineDescription": "A short leather cord, the sort Porter Bramble keeps spare whistles on. It is not a weapon. It is proof you came through the gate and were told what the school is for.",
+  "examineDescription": "A short leather cord, soft from handling, with a worn loop at one end where a whistle used to hang. Porter Bramble keeps a coil of them in his lodge and hands one to every Collegian who finishes Arrival. His own is the same cord, older, and darker at the knot.",
   "category": "ordinary",
   "unique": true,
   "equipSlot": "necklace"

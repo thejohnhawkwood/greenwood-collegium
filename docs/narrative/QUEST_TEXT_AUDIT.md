@@ -12,7 +12,7 @@ rewards, enemy stats, and NPC ids all stay as they are.
 | 1 | Author notes stripped from player text; twelve lesson quests rewritten | Done, 24 September 2026 |
 | 2 | Side-hub voices: Hobb, Sile, Kern, Marram, Nett, Midge and their seven quests, plus the east-moor closing beat | Done, 24 September 2026 |
 | 3 | Third lessons, the six mentor standing lines, and the hearth tree hand-off nodes | Done, 24 September 2026 |
-| 4 | Item and fixture descriptions, reward items, the twenty new river and moor fixtures | Not started |
+| 4 | Item and fixture descriptions, reward items, the twenty new river and moor fixtures | Done, 24 September 2026 |
 | 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip, and the fold tally page hook below | Not started |
 | 6 | Design recommendations written up, nothing shipped | Not started |
 
@@ -51,6 +51,22 @@ conversation, which is the only command a student needs there.
 Flint's orchard dummy` was a parenthetical aimed at a player reading a UI. The
 disambiguation is still needed and is now something the mentor says in their own
 voice: `mine, the one in here, not the one Flint keeps out in his orchard.`
+
+**Fixtures explaining the game instead of the object.** Found in slice 4 and the
+same family of defect as the author notes. A rope coil said `The sentry, if
+present, is an adult keeping a gate. Not a classmate.` A biscuit crate said `The
+tin that belonged on top is a reward, not a clue you have to guess.` Ditch water
+said `This ditch is Kern's errand, not a second queen.` A stile said `Do not skip
+her.` All of those addressed the player about structure rather than describing what
+is in front of them. Rewritten as physical description that carries the same
+information: the willows on the rope island screen the channel, so anyone standing
+there can watch the landing unseen.
+
+**Items describing their own mechanics.** The hearth biscuit said `The first lesson
+pays in food as well as ink. Eat is not required.` The ink rag said `It does not
+raise your health.` The boarding oar said `Wear it in the main paw if you mean
+to.` Eight reward items now describe the object and where it came from. The twelve
+that already passed were left alone.
 
 **Simile habit.** `the way weather keeps a gate`, `the way a door waits`, `the way
 wool holds rain`, `as if it paid rent`, `as if a partner might still fill it`.

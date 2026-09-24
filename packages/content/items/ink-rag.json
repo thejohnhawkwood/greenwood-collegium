@@ -3,7 +3,7 @@
   "id": "ink-rag",
   "name": "Ink Rag",
   "shortDescription": "A rag stained with honest Primer ink.",
-  "examineDescription": "A small rag stained with Primer ink. The second lesson leaves this in your paw. It does not raise your health. It says you cast when you were asked.",
+  "examineDescription": "A square of linen stiff with dried Primer ink, mostly black with one thumbprint of it near the corner. Mentors keep a rag beside the book for wiping a nib, and they give the used one to the student whose page they have just signed. This one is yours because you cast when you were asked to.",
   "category": "ordinary",
   "unique": true
 }

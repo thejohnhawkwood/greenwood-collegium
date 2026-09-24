@@ -29,7 +29,7 @@
       "name": "Deckhand Nett",
       "kind": "npc",
       "lookDescription": "A young-adult mouse in a tarred jerkin, no token on the cord. Try talk nett.",
-      "examineDescription": "Nett's jerkin is river-thief cut, and the cord at his neck is empty. He left the camp. He is not a student and not a captain. He smells of biscuits he did not get to eat.",
+      "examineDescription": "A young mouse in a tarred jerkin cut the way the camp cuts them, with an empty cord at his neck where a token used to hang. His paws are tar-stained to the second knuckle from carrying other people's cargo. He smells of biscuits he was never given any of, and he keeps both feet in the water as though he would rather be somewhere he could not be followed to.",
       "dialogue": "Nett sits on a willow root with his boots in the water, turning the empty cord at his neck over and over. \"I know what this jerkin looks like. I wore it two months and I carried tins in it.\" He holds the cord out so you can see there is nothing on the end of it. \"I never cut a rope. They gave the knives to the ones who liked that part. I do know which crate in the cargo hollow was the College's, because I am the one who carried it out. Talk nett if you want it back.\""
     },
     {
