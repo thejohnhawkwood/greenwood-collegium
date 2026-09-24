@@ -155,7 +155,7 @@ Not a second exit table — use [room-and-quest-summary.md](room-and-quest-summa
 
 ## 6. The spine
 
-Live JSON: 40 quests, 66 rooms. Cross-quest prereqs use `requiresQuestIds` plus
+Live JSON: 41 quests, 66 rooms. Cross-quest prereqs use `requiresQuestIds` plus
 Alder/Wren engine offers (Arrival auto-start, school pick, lesson chain, Alder bell
 and moor offers). `giverNpcId` is used by the side hubs and by Wren’s L4–L8.
 
@@ -179,7 +179,7 @@ talk Quill  → The Missing Pages          docs/content/quests/the-missing-pages
 talk Tansy  → A Little Room to Grow      docs/content/quests/a-little-room-to-grow.md
 talk Porter → Porter's Night Round       docs/content/quests/porters-night-round.md
 talk Fen    → Fen's Linen                 docs/content/quests/fens-linen.md
-talk Hobb   → The Empty Byre … Ninth Scratch   docs/content/quests/the-east-watch.md
+talk Hobb   → The Empty Byre … One Page For Three  docs/content/quests/the-east-watch.md
 talk Marram → The Cut Painter … Black Mooring  docs/content/quests/the-river-watch.md
 Flint       → practice / duel only
 ```

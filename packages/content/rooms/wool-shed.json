@@ -30,7 +30,7 @@
       "kind": "npc",
       "lookDescription": "A mole in a wool vest, lamp-soot on his claws. Try talk hobb.",
       "examineDescription": "A grey mole with his shoulders up, in a vest mended with the same fleece he hangs on the pegs. Lamp-soot is worked into the claws of both paws. He has walked this moor in weather that took sheep and gave none of them back, and he counts a fold twice before he says the number out loud. Ask him what is on the lane and he will tell you to ask Wren first.",
-      "dialogue": "\"If Wren has had you read the waystone, I have a byre that should not be empty. North of her croft. Examine the empty stall. Then the mist-lane, if the hound-shape is still keeping it. Come back and talk hobb. Eat at the croft first. I have seen a fold go quiet. I do not invent why.\""
+      "dialogue": "Hobb is hanging wet fleece on the pegs and counting them under his breath as he goes. \"Eleven pegs, ten full. That is not the number troubling me.\" He nods at the empty bell-loop by the door. \"The flock went out counted and the bell did not come back with them. A bell does not wander off on its own, and a fold does not go quiet for nothing. If Wren has had you read the waystone already, talk hobb and I will show you a byre that should not be empty.\""
     },
     {
       "id": "object-wool-pegs",

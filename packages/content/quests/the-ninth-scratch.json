@@ -6,9 +6,9 @@
   "requiresQuestIds": ["the-mere-that-keeps"],
   "experienceReward": 25,
   "itemRewardTemplateId": "lintel-band",
-  "introNarration": "Kern taps a lintel with chalk, not with a story. \"Examine the scratch stone. North is the black ditch. If the lurker keeps iron there, defeat it. Then talk kern. Eight lintels were enough. The ninth scratch is not mine.\"",
+  "introNarration": "Kern opens the tally-book to last winter's page and turns it so you can read the figure. Eight, in his own hand, with the date beside it. \"Eight. Now go and examine the scratch stone and tell me what you make of a ninth.\" He closes the book. \"North of here there is a ditch with something in the water that collects metal. If it will not let you look, finish it. Then talk kern. Sile says her mere gave her voice back. Good. My field has gained a stone.\"",
   "reminderNarration": "\"Examine the scratch stone. Defeat the ditch-lurker in the black ditch. Then talk kern. Type east from the Standing Stones. Type north from the lintel field.\"",
-  "completionNarration": "Kern chalks a dot beside the ninth scratch and gives you a plain band. \"Wear it or pocket it. The barrow west of the stile is Wren's errand if she has sent you. I do not send students under a hill. Eat something warm.\"",
+  "completionNarration": "Kern chalks a dot on the ninth stone at last, then writes a nine in the book underneath the eight and does not cross the eight out. \"Both numbers are true. That is the part I dislike.\" He hands you a plain metal band with no stone in it. \"Wear it or pocket it, it is honest either way. A bell gone from Hobb's shed, a voice kept off Sile's mere, a stone added to my field. Three wrong things on one moor inside a month. Talk kern again when you have a moment and we will put them on one page.\"",
   "objectives": [
     {
       "id": "read-scratch",

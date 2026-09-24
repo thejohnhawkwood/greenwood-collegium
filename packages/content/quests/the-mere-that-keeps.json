@@ -6,9 +6,9 @@
   "requiresQuestIds": ["the-empty-byre"],
   "experienceReward": 20,
   "itemRewardTemplateId": "reed-cloak",
-  "introNarration": "Sile taps the mere with a reed and does not drink. \"Examine the still water. If the light squares up, defeat it. Then talk sile. It keeps voices. I want the water back.\"",
+  "introNarration": "Sile lays a cut reed flat on the water and holds it there. Not one ripple goes out from it. \"That is not right, and you can see for yourself that it is not right.\" She takes the reed back. \"Go and examine the still water, close enough to see there is nothing under that light holding it up. If it squares up at you, finish it. Then talk sile. I do not want a mystery. I want a mere I can call across.\"",
   "reminderNarration": "\"Examine the still water. Defeat the reed-wisp if it is on the mere. Then talk sile. Type north from the Mist Lane.\"",
-  "completionNarration": "The mere shows sky again. Sile sets a short reed-cloak on your shoulders. \"Kern is east, past the stones, in the lintel field. Talk kern. He counts scratches. I count reeds. Neither of us is the barrow.\"",
+  "completionNarration": "Sile walks to the edge, cups her paws, and shouts her brother's name across the water. It comes back off the far reeds, thin but whole. She listens to it a little longer than she needs to. \"There.\" She takes the short oiled cloak off her own shoulders and puts it on yours. \"Kern is east past the stones, chalking lintels and getting a number he does not care for. He counts stones, I count reeds, and neither of us goes near that barrow. Tell him the mere gave my voice back.\"",
   "objectives": [
     {
       "id": "read-mere",

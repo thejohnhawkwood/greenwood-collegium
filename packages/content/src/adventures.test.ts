@@ -42,6 +42,7 @@ describe("adventure content", () => {
       "a-little-room-to-grow",
       "arrival-at-the-collegium",
       "fens-linen",
+      "one-page-for-three",
       "porters-night-round",
       "the-barrow-mouth",
       "the-biscuit-crate",

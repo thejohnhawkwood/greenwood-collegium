@@ -10,7 +10,7 @@ rewards, enemy stats, and NPC ids all stay as they are.
 | Slice | Scope | Status |
 | --- | --- | --- |
 | 1 | Author notes stripped from player text; twelve lesson quests rewritten | Done, 24 September 2026 |
-| 2 | Side-hub voices: Hobb, Sile, Kern, Marram, Nett, Midge and their seven quests | Not started |
+| 2 | Side-hub voices: Hobb, Sile, Kern, Marram, Nett, Midge and their seven quests, plus the east-moor closing beat | Done, 24 September 2026 |
 | 3 | Third lessons, and the remaining college loop text | Not started |
 | 4 | Item and fixture descriptions, reward items, the twenty new river and moor fixtures | Not started |
 | 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip | Not started |
@@ -69,16 +69,23 @@ These change content structure or mechanics and are recorded for a later decisio
 following me`, and both go to `nag-persist`. Two options, one outcome. The opening
 three choices are real and should stay.
 
-**The river chain is fetch-shaped.** `the-cut-painter` → `the-biscuit-crate` →
+**The river chain is fetch-shaped.** Partly addressed in slice 2 by text alone.
+Marram now compares the two cut rope ends and they match, Nett draws the College
+mark before you go and see it, Midge's whistle is sounded up the bank to prove
+what it was for, and the final count returns to four boats. The structure is
+unchanged, and the remaining recommendation stands: `the-cut-painter` → `the-biscuit-crate` →
 `the-kept-whistle` → `the-black-mooring` is examine, fight, examine, fight,
 examine, fight, boss. It works and it gates nothing, but no stage complicates the
 one before it. A single discovery partway — the store door opened from inside, for
 instance — would make the camp a conclusion rather than a fourth stop.
 
-**The east side never pays Hobb, Sile, and Kern off together.** Three separate
-people report three separate wrong things on the same moor and never compare
-notes. A closing beat where one of them mentions another's finding would make the
-side chain feel like one moor instead of three errands.
+**The east side never pays Hobb, Sile, and Kern off together.** Implemented in
+slice 2, with the owner's approval for a content-structure change. Each completion
+now hands off by naming the other animal's problem rather than their map position,
+and a fourth quest, `one-page-for-three`, sends you back to Hobb and Sile for
+dates and has Kern write all three findings on one page. They are the same three
+nights. The reward is `fold-tally-page`, which carries that fact in writing. It
+requires `the-ninth-scratch` and gates nothing.
 
 **Race-pike has no reason to exist.** It is a foe with loot and no quest, no
 giver, and nothing that refers to it. Either something on the river should want

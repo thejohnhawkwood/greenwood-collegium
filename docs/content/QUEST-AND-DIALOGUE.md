@@ -14,7 +14,7 @@ standing beat, then starts any quest whose `giverNpcId` is that character and wh
 
 The register is set by [`../narrative/GREENWOOD_NARRATIVE_STYLE_GUIDE.md`](../narrative/GREENWOOD_NARRATIVE_STYLE_GUIDE.md).
 
-Quests: 40. Speaking characters: 20.
+Quests: 41. Speaking characters: 20.
 
 ## Quests
 
@@ -720,7 +720,7 @@ Hobb trims the lamp and does not sit down. "Byre north of Wren's croft. Straw ba
 
 **Complete**
 
-You name the empty hook and the hound that was not a dog. Hobb puts wool mitts in your paws. "Wear them if the mist sits on your claws. Sile is at the mere, north of the lane. Talk sile when you want the water's version. Eat at the croft. Wren is still owed the flock."
+Hobb hears you out, then goes and stands in the lane himself for a while to see that it is only a lane. When he comes back he pulls the mitts off his own paws and puts them in yours. "Take those. The mist gets into your claws out here and you will want them." He looks at the empty bell-loop again. "It was not a sheep and it was not a dog, and I still have no bell. Sile is at the mere north of the lane, and she has her own wrong thing. Talk sile. Eat at the croft on your way."
 
 **Objectives**
 
@@ -737,7 +737,7 @@ You name the empty hook and the hound that was not a dog. Hobb puts wool mitts i
 
 **Intro**
 
-Sile taps the mere with a reed and does not drink. "Examine the still water. If the light squares up, defeat it. Then talk sile. It keeps voices. I want the water back."
+Sile lays a cut reed flat on the water and holds it there. Not one ripple goes out from it. "That is not right, and you can see for yourself that it is not right." She takes the reed back. "Go and examine the still water, close enough to see there is nothing under that light holding it up. If it squares up at you, finish it. Then talk sile. I do not want a mystery. I want a mere I can call across."
 
 **Reminder**
 
@@ -745,7 +745,7 @@ Sile taps the mere with a reed and does not drink. "Examine the still water. If 
 
 **Complete**
 
-The mere shows sky again. Sile sets a short reed-cloak on your shoulders. "Kern is east, past the stones, in the lintel field. Talk kern. He counts scratches. I count reeds. Neither of us is the barrow."
+Sile walks to the edge, cups her paws, and shouts her brother's name across the water. It comes back off the far reeds, thin but whole. She listens to it a little longer than she needs to. "There." She takes the short oiled cloak off her own shoulders and puts it on yours. "Kern is east past the stones, chalking lintels and getting a number he does not care for. He counts stones, I count reeds, and neither of us goes near that barrow. Tell him the mere gave my voice back."
 
 **Objectives**
 
@@ -762,7 +762,7 @@ The mere shows sky again. Sile sets a short reed-cloak on your shoulders. "Kern 
 
 **Intro**
 
-Kern taps a lintel with chalk, not with a story. "Examine the scratch stone. North is the black ditch. If the lurker keeps iron there, defeat it. Then talk kern. Eight lintels were enough. The ninth scratch is not mine."
+Kern opens the tally-book to last winter's page and turns it so you can read the figure. Eight, in his own hand, with the date beside it. "Eight. Now go and examine the scratch stone and tell me what you make of a ninth." He closes the book. "North of here there is a ditch with something in the water that collects metal. If it will not let you look, finish it. Then talk kern. Sile says her mere gave her voice back. Good. My field has gained a stone."
 
 **Reminder**
 
@@ -770,7 +770,7 @@ Kern taps a lintel with chalk, not with a story. "Examine the scratch stone. Nor
 
 **Complete**
 
-Kern chalks a dot beside the ninth scratch and gives you a plain band. "Wear it or pocket it. The barrow west of the stile is Wren's errand if she has sent you. I do not send students under a hill. Eat something warm."
+Kern chalks a dot on the ninth stone at last, then writes a nine in the book underneath the eight and does not cross the eight out. "Both numbers are true. That is the part I dislike." He hands you a plain metal band with no stone in it. "Wear it or pocket it, it is honest either way. A bell gone from Hobb's shed, a voice kept off Sile's mere, a stone added to my field. Three wrong things on one moor inside a month. Talk kern again when you have a moment and we will put them on one page."
 
 **Objectives**
 
@@ -786,7 +786,7 @@ Kern chalks a dot beside the ninth scratch and gives you a plain band. "Wear it 
 
 **Intro**
 
-Marram wipes tar on a rag and points east. "Someone cut the painter at the willow bend. Weather frays a rope. A knife ends it. Examine the cut painter. Then come back and talk marram. The Collegium trains defenders. The river is one of the things we defend. Biscuits and boats count."
+Marram wipes tar off his paws and holds up the stub of rope still tied to the landing post. The cut end is flat and clean. "Weather frays a rope for a fortnight before it gives. A knife ends it between one breath and the next." He drops the stub. "Go east to the willow bend and examine the cut painter on that end, then come back and talk marram. Four boats this morning, three now. I would like to know which of those two things happened before I go shouting about it."
 
 **Reminder**
 
@@ -794,7 +794,7 @@ Marram wipes tar on a rag and points east. "Someone cut the painter at the willo
 
 **Complete**
 
-You describe the clean cut. Marram sets tarred river boots by the post. "Nett is on the willow root. Talk nett. He left the camp. He still knows which crate was ours."
+Marram holds both rope ends together, the one from the post and the one you describe, and the cuts match. He does not look pleased to be right. "A knife, then. Somebody walked my landing in the dark." He sets a pair of tarred boots by the post and pushes them toward you with one foot. "Those will keep the river out of your toes. There is a young one on the willow root wearing a thief's jerkin with nothing on the cord. He has not run, which interests me. Talk nett."
 
 **Objectives**
 
@@ -811,7 +811,7 @@ You describe the clean cut. Marram sets tarred river boots by the post. "Nett is
 
 **Intro**
 
-Nett turns the empty cord at his neck. "South, then east, the cargo hollow. Examine the biscuit crate. A deck-hand keeps the skiff-line on the way. Defeat him if he squares up. Then talk nett. I carried the tin. I will not carry it back."
+Nett draws the shape of the crate in the mud with one finger, including the mark on the lid. "College mark, burnt into the end board. I carried it out of your own store and down the bank myself, so I know the one." He rubs the drawing out. "South then east, the cargo hollow. Examine the biscuit crate and you will see I am not lying about the mark. There is a deck-hand on the skiff-line who will not let you past. Then talk nett. I carried that tin once. I am not carrying it again."
 
 **Reminder**
 
@@ -819,7 +819,7 @@ Nett turns the empty cord at his neck. "South, then east, the cargo hollow. Exam
 
 **Complete**
 
-Nett nods at the empty crate and gives you the dented tin. "Midge is west and south, on the heron post. Talk midge. She hung a whistle. The camp kept it. I am going to sit until Marram says I may tie a knot again."
+Nett takes the dented tin, turns it until the College mark is facing up, and hands it straight back to you. "There. Now it is yours and not theirs, and I have carried it the right direction once." He sits back down on the root. "Midge is west and then south, on the heron post. She hung a whistle up so the landing would hear a rope go. The camp took it off the nail the same week they took your crate. Talk midge. I am going to sit here until Marram trusts me with a knot again."
 
 **Objectives**
 
@@ -836,7 +836,7 @@ Nett nods at the empty crate and gives you the dented tin. "Midge is west and so
 
 **Intro**
 
-Midge grounds her spear in the mud. "Examine the whistle post. North is the rope-island. If the sentry is still posted, defeat the sentry. Then talk midge. A warning that does not sound is just another thing kept."
+Midge taps the empty nail with the butt of her spear. It rings. "Bright, you see. Eleven years of weather on that post and the nail is bright, because something was hanging on it until recently." She grounds the spear again. "Examine the whistle post yourself. Then north to the rope-island, where they have put somebody to keep the cut end cut. Finish that and talk midge. A warning nobody can hear is just one more thing they took."
 
 **Reminder**
 
@@ -844,7 +844,7 @@ Midge grounds her spear in the mud. "Examine the whistle post. North is the rope
 
 **Complete**
 
-Midge hangs a skipper whistle on a cord and puts it in your paw. "Marram is at the landing. Talk marram. The captain is south of the slip, in the camp. I will fish. You will finish it."
+Midge takes the whistle off the sentry's cord, blows it once, and the note carries all the way up the bank to the landing. Somewhere up there a door opens. "That is what it is for." She threads it onto a fresh cord and puts it in your paw rather than back on the nail. "You keep that until this is finished. They posted a grown badger on an island to stop one whistle sounding, which tells you the camp is worth guarding. Marram is at the landing. Talk marram."
 
 **Objectives**
 
@@ -861,7 +861,7 @@ Midge hangs a skipper whistle on a cord and puts it in your paw. "Marram is at t
 
 **Intro**
 
-Marram coils a true knot and sets it on the post. "South from the slip is their camp. Defeat the river captain. Then talk marram. One Collegian can square up. A classmate is still wiser. Bring the boats home in your report. I will send otters for the tins."
+Marram ties a proper knot on the landing post, slowly, so you can watch him do it. "That is how a painter is meant to look. Remember it." He straightens up. "South from the slip is their camp, and there is a grown otter in it wearing a coat with his buttons done up, keeping four things that are not his. Defeat the river captain, then talk marram. One trained Collegian can square up to him. Taking a classmate is the wiser of the two plans, and I will think no less of you for it. I will send otters down for the tins."
 
 **Reminder**
 
@@ -869,7 +869,7 @@ Marram coils a true knot and sets it on the post. "South from the slip is their 
 
 **Complete**
 
-Marram listens, then puts a short boarding oar in your paws. "The landing is a gate. You kept it. Eat in the refectory. The wood is still larger than this river, and the College is still the bright place you come back to."
+Marram counts the boats twice before he says anything, which takes a while, because there are four of them again. He reties the willow-bend painter himself rather than let anyone else do it. "Four. That is the number that belongs here." He puts a short notched oar in your paws. "Keep that. It is a tool for keeping a boat yours, and you have earned the loan of it." He is already coiling the next rope. "Go and eat in the refectory. Midge will want her whistle back on that nail before dark, and you are the one who ought to hang it."
 
 **Objectives**
 
@@ -974,6 +974,31 @@ You come back smelling of mint. Fen ties a clean linen wrap so it sits like a ve
 
 - `walk-garden` (visit): Reach the Herb Garden. Type west to the Porter Lodge, south to the East Gate, west to Lantern Court, south to the South Orchard, then west.
 - `report` (talk): Return and talk fen in the Infirmary. Type east to the orchard, north to the court, east to the gate, north to the lodge, then east.
+
+### One Page For Three
+
+- id: `one-page-for-three`
+- giver: `npc-stoneward-kern`
+- requires: `the-ninth-scratch`
+- reward: 25 experience, `fold-tally-page`
+
+**Intro**
+
+Kern turns the tally-book around and pushes it across the lintel toward you, open at a clean page. "Three of us have each been sure of a small wrong thing and none of us has written them down together. That is how a moor gets a reputation instead of a record." He hands you the chalk. "Go back to Hobb and get the night his bell went. Then Sile, for the night the mere took her voice. Bring both to me and talk kern. I will put them under my own date and we will see whether we have three problems or one."
+
+**Reminder**
+
+"Talk hobb in the Wool Shed for the night of the bell. Talk sile at the Reed Mere for the night of the voice. Then talk kern here in the Lintel Field. Type west from the Lintel Field for the stones."
+
+**Complete**
+
+Kern writes all three down, then sets his chalk on the dates and does not move it for a while. "The same three nights. Hobb's bell, Sile's mere, my stone, inside one week and inside two miles." He tears the page out along a fold and gives it to you. "Take that to Shepherd Wren, and then to Headmaster Alder if she says so. I am not sending a student under a hill and I am not guessing at a cause. But three animals keeping careful counts were all wrong in the same week, and somebody above my station should be holding that page."
+
+**Objectives**
+
+- `ask-hobb` (talk): Talk hobb in the Wool Shed for the night of the bell.
+- `ask-sile` (talk): Talk sile at the Reed Mere for the night of the voice.
+- `report` (talk): Talk kern in the Lintel Field.
 
 ## Dialogue
 
@@ -1191,7 +1216,7 @@ You come back smelling of mint. Fen ties a clean linen wrap so it sits like a ve
 
 **Standing line**
 
-"Nett told you about tins. I will tell you about the whistle. Examine the whistle post. The rope-island north of here still has a sentry if the camp has not run. Finish that. Then talk midge. I have seen the river keep a boat until the owner stopped asking. I do not let it."
+Midge stands on one leg in the shallows with her spear grounded, and she does not shift when you come up the bank. "Nett will have told you about tins. I will tell you about the nail." She looks at the post beside her, where the nail is bright and empty. "I hung a whistle there eleven years ago, so anybody cutting a rope downstream would be heard doing it. Somebody took the whistle and left the nail. That is a different crime than stealing a boat, and a worse one. Talk midge."
 
 ### Healer Fen
 
@@ -1277,7 +1302,7 @@ You come back smelling of mint. Fen ties a clean linen wrap so it sits like a ve
 
 **Standing line**
 
-"If Sile has sent you on from the mere, examine the scratch stone. Then the ditch north of here, if the lurker is still keeping iron. Come back and talk kern. Last winter this field had eight fallen lintels. I chalked them. There is a ninth scratch. I did not put it there."
+Kern has a tally-board propped against a fallen lintel, and every stone in the field carries a chalk dot. "Eight. I counted them last winter, I chalked them, and I wrote eight in the book." He puts his paw flat on the ninth stone. "This one has a fresh scratch and no dot. I did not put either of those there, and I have been the only animal in this field since the frost. Talk kern if you want the rest of it."
 
 ### Reedcutter Sile
 
@@ -1286,7 +1311,7 @@ You come back smelling of mint. Fen ties a clean linen wrap so it sits like a ve
 
 **Standing line**
 
-"Hobb sent you, or you walked. Same work. Examine the still water. If the light squares up, finish it. Then talk sile. Do not drink. I have seen this mere keep a shout and give back silence. That is enough mystery for one afternoon."
+Sile has a bundle of cut reed under one arm and her knife corded down against her hip. "Hobb sent you, or you wandered out here. Comes to the same thing." She tips her chin at the water. "I have cut this mere eleven years. Last week I called to my brother across it and got nothing back, and he was standing in the reeds hearing me fine. Whatever is sitting on that water is keeping things. Talk sile and I will show you. Do not drink it."
 
 ### Skipper Marram
 
@@ -1355,7 +1380,7 @@ You come back smelling of mint. Fen ties a clean linen wrap so it sits like a ve
 
 **Standing line**
 
-"Marram will have sent you if the painter is cut. I cut nothing. I carried tins. The crate is south and east, in the cargo hollow. Examine it. A deck-hand still keeps the skiff-line south of here. Finish that if he squares up. Then talk nett. I am done keeping other people's biscuits."
+Nett sits on a willow root with his boots in the water, turning the empty cord at his neck over and over. "I know what this jerkin looks like. I wore it two months and I carried tins in it." He holds the cord out so you can see there is nothing on the end of it. "I never cut a rope. They gave the knives to the ones who liked that part. I do know which crate in the cargo hollow was the College's, because I am the one who carried it out. Talk nett if you want it back."
 
 ### Foldhand Hobb
 
@@ -1364,7 +1389,7 @@ You come back smelling of mint. Fen ties a clean linen wrap so it sits like a ve
 
 **Standing line**
 
-"If Wren has had you read the waystone, I have a byre that should not be empty. North of her croft. Examine the empty stall. Then the mist-lane, if the hound-shape is still keeping it. Come back and talk hobb. Eat at the croft first. I have seen a fold go quiet. I do not invent why."
+Hobb is hanging wet fleece on the pegs and counting them under his breath as he goes. "Eleven pegs, ten full. That is not the number troubling me." He nods at the empty bell-loop by the door. "The flock went out counted and the bell did not come back with them. A bell does not wander off on its own, and a fold does not go quiet for nothing. If Wren has had you read the waystone already, talk hobb and I will show you a byre that should not be empty."
 
 ### Shepherd Wren
 

@@ -6,9 +6,9 @@
   "requiresQuestIds": ["the-kept-whistle"],
   "experienceReward": 30,
   "itemRewardTemplateId": "boarding-oar",
-  "introNarration": "Marram coils a true knot and sets it on the post. \"South from the slip is their camp. Defeat the river captain. Then talk marram. One Collegian can square up. A classmate is still wiser. Bring the boats home in your report. I will send otters for the tins.\"",
+  "introNarration": "Marram ties a proper knot on the landing post, slowly, so you can watch him do it. \"That is how a painter is meant to look. Remember it.\" He straightens up. \"South from the slip is their camp, and there is a grown otter in it wearing a coat with his buttons done up, keeping four things that are not his. Defeat the river captain, then talk marram. One trained Collegian can square up to him. Taking a classmate is the wiser of the two plans, and I will think no less of you for it. I will send otters down for the tins.\"",
   "reminderNarration": "\"Defeat the river captain in the pirate camp. Then talk marram. Type south from the Otter Slip.\"",
-  "completionNarration": "Marram listens, then puts a short boarding oar in your paws. \"The landing is a gate. You kept it. Eat in the refectory. The wood is still larger than this river, and the College is still the bright place you come back to.\"",
+  "completionNarration": "Marram counts the boats twice before he says anything, which takes a while, because there are four of them again. He reties the willow-bend painter himself rather than let anyone else do it. \"Four. That is the number that belongs here.\" He puts a short notched oar in your paws. \"Keep that. It is a tool for keeping a boat yours, and you have earned the loan of it.\" He is already coiling the next rope. \"Go and eat in the refectory. Midge will want her whistle back on that nail before dark, and you are the one who ought to hang it.\"",
   "objectives": [
     {
       "id": "reach-camp",

@@ -22,7 +22,7 @@
       "kind": "npc",
       "lookDescription": "A toad in oiled wool, reed-knife on a cord, not raised. Try talk sile.",
       "examineDescription": "Sile's knife is for reed, and the cord is knotted so the blade stays down. She has cut this mere for years. She says the light on the water does not warm her hands. She will not call it a ghost.",
-      "dialogue": "\"Hobb sent you, or you walked. Same work. Examine the still water. If the light squares up, finish it. Then talk sile. Do not drink. I have seen this mere keep a shout and give back silence. That is enough mystery for one afternoon.\""
+      "dialogue": "Sile has a bundle of cut reed under one arm and her knife corded down against her hip. \"Hobb sent you, or you wandered out here. Comes to the same thing.\" She tips her chin at the water. \"I have cut this mere eleven years. Last week I called to my brother across it and got nothing back, and he was standing in the reeds hearing me fine. Whatever is sitting on that water is keeping things. Talk sile and I will show you. Do not drink it.\""
     },
     {
       "id": "object-still-water",

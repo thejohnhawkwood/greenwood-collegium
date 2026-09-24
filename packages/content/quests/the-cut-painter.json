@@ -5,9 +5,9 @@
   "giverNpcId": "npc-skipper-marram",
   "experienceReward": 15,
   "itemRewardTemplateId": "river-boots",
-  "introNarration": "Marram wipes tar on a rag and points east. \"Someone cut the painter at the willow bend. Weather frays a rope. A knife ends it. Examine the cut painter. Then come back and talk marram. The Collegium trains defenders. The river is one of the things we defend. Biscuits and boats count.\"",
+  "introNarration": "Marram wipes tar off his paws and holds up the stub of rope still tied to the landing post. The cut end is flat and clean. \"Weather frays a rope for a fortnight before it gives. A knife ends it between one breath and the next.\" He drops the stub. \"Go east to the willow bend and examine the cut painter on that end, then come back and talk marram. Four boats this morning, three now. I would like to know which of those two things happened before I go shouting about it.\"",
   "reminderNarration": "\"Examine the cut painter at Willow Bend. Then talk marram. Type south from the South Orchard to the landing, then east.\"",
-  "completionNarration": "You describe the clean cut. Marram sets tarred river boots by the post. \"Nett is on the willow root. Talk nett. He left the camp. He still knows which crate was ours.\"",
+  "completionNarration": "Marram holds both rope ends together, the one from the post and the one you describe, and the cuts match. He does not look pleased to be right. \"A knife, then. Somebody walked my landing in the dark.\" He sets a pair of tarred boots by the post and pushes them toward you with one foot. \"Those will keep the river out of your toes. There is a young one on the willow root wearing a thief's jerkin with nothing on the cord. He has not run, which interests me. Talk nett.\"",
   "objectives": [
     {
       "id": "reach-bend",

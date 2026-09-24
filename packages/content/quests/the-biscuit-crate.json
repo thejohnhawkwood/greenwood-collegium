@@ -6,9 +6,9 @@
   "requiresQuestIds": ["the-cut-painter"],
   "experienceReward": 20,
   "itemRewardTemplateId": "biscuit-tin",
-  "introNarration": "Nett turns the empty cord at his neck. \"South, then east, the cargo hollow. Examine the biscuit crate. A deck-hand keeps the skiff-line on the way. Defeat him if he squares up. Then talk nett. I carried the tin. I will not carry it back.\"",
+  "introNarration": "Nett draws the shape of the crate in the mud with one finger, including the mark on the lid. \"College mark, burnt into the end board. I carried it out of your own store and down the bank myself, so I know the one.\" He rubs the drawing out. \"South then east, the cargo hollow. Examine the biscuit crate and you will see I am not lying about the mark. There is a deck-hand on the skiff-line who will not let you past. Then talk nett. I carried that tin once. I am not carrying it again.\"",
   "reminderNarration": "\"Examine the biscuit crate in the cargo hollow. Defeat the deck-hand on the skiff-line. Then talk nett. Type south from Willow Bend.\"",
-  "completionNarration": "Nett nods at the empty crate and gives you the dented tin. \"Midge is west and south, on the heron post. Talk midge. She hung a whistle. The camp kept it. I am going to sit until Marram says I may tie a knot again.\"",
+  "completionNarration": "Nett takes the dented tin, turns it until the College mark is facing up, and hands it straight back to you. \"There. Now it is yours and not theirs, and I have carried it the right direction once.\" He sits back down on the root. \"Midge is west and then south, on the heron post. She hung a whistle up so the landing would hear a rope go. The camp took it off the nail the same week they took your crate. Talk midge. I am going to sit here until Marram trusts me with a knot again.\"",
   "objectives": [
     {
       "id": "read-crate",
