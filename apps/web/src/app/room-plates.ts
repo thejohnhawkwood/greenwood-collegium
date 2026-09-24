@@ -300,6 +300,31 @@ export const COLLEGIUM_ROOM_PLATES = [
     title: "Black Mooring",
     blurb: "A tarred post and the captain's best boat.",
   },
+  {
+    id: "bell-stair",
+    title: "Bell Stair",
+    blurb: "A tight oak stair under the empty bell frame.",
+  },
+  {
+    id: "silk-gallery",
+    title: "Silk Gallery",
+    blurb: "Pale silk stretched between old stone pillars.",
+  },
+  {
+    id: "webbed-cloister",
+    title: "Webbed Cloister",
+    blurb: "Silk in the arches, and one lantern still lit.",
+  },
+  {
+    id: "cocoon-nave",
+    title: "Cocoon Nave",
+    blurb: "Closed cocoons, and one husk already split.",
+  },
+  {
+    id: "deep-cradle",
+    title: "Deep Cradle",
+    blurb: "A round silk chamber built for something larger.",
+  },
 ] as const;
 
 export type CollegiumRoomPlate = (typeof COLLEGIUM_ROOM_PLATES)[number];

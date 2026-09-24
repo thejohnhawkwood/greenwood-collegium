@@ -5,7 +5,6 @@
   "shortDescription": "An old abbey walk taken over by silk, with one lantern still burning.",
   "longDescription": "This cloister belonged to the abbey that stood before the Collegium. Silk has taken the arches without breaking the stone. A lantern hangs in a web, still lit.\nSouth, the silk thickens. Something small moves there when you stop walking.",
   "zone": "bell-below",
-  "visualState": "clock-tower",
   "map": {
     "x": 2,
     "y": 2,

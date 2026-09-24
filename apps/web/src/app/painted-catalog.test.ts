@@ -198,7 +198,7 @@ describe("painted catalog files", () => {
     }
   });
   it("keeps a painted plate for every Collegium room", () => {
-    expect(rooms).toHaveLength(60);
+    expect(rooms).toHaveLength(65);
     for (const room of rooms) {
       const path = join(artRoot, "rooms", `${room}.png`);
       expect(existsSync(path)).toBe(true);

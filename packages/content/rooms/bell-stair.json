@@ -5,7 +5,6 @@
   "shortDescription": "A tight oak stair turns down from the empty bell frame.",
   "longDescription": "The stair leaves the Clock Tower in a tight coil. Oak steps are polished by older feet than yours. Fine silk has caught on the newel and shakes when the gears above turn.\nThe humming is louder here. It is not a swinging bell. Something below is answering the wood.",
   "zone": "bell-below",
-  "visualState": "clock-tower",
   "map": {
     "x": 1,
     "y": 2,

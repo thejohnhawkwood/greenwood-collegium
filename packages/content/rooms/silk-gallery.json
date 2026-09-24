@@ -5,7 +5,6 @@
   "shortDescription": "A long stone gallery strung with warm silk, and one frightened keeper.",
   "longDescription": "The stair opens into a long gallery the Collegium used to leave off the maps. Silk is stretched from pillar to pillar, tight as drying sheets on a wash-day, and it holds a faint warmth like bread just taken from the oven. A little lantern-light leaks down from the Clock Tower and turns the threads to pale gold. The air smells of damp stone, old dust, and something sweet that should not be sweet this far below.\nPiper Mole sits on a crate with one paw on the silk. He flinches when the threads hum. He has been here too long.",
   "zone": "bell-below",
-  "visualState": "clock-tower",
   "map": {
     "x": 1,
     "y": 2,

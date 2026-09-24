@@ -1,7 +1,7 @@
 import type { CombatActionResolvedPayload, EventEnvelope } from "@greenwood/contracts";
 import type { TranscriptLine } from "./transcript.js";
 
-export const FX_ART_REV = "combat-fx-1";
+export const FX_ART_REV = "comic-ink-fx-1";
 export const FX_DIR = "/art/fx";
 
 export const FX_FILES = [
