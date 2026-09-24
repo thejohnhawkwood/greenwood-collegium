@@ -8,7 +8,11 @@ import {
   MEADOW_FORK_QUEST_ID,
   WALKER_QUEST_ID,
   meadowRoadOpen,
+  tallyPageNode,
 } from "./east-watch.js";
+
+/** Alder reads Kern's page only when he is not already sending you somewhere. */
+const ALDER_IDLE_NODES = ["watch-active", "walker-done", "already-chosen"] as const;
 
 export const HEADMASTER_NPC_ID = "npc-headmaster-alder";
 export const HEADMASTER_STUDY_ID = "headmaster-study";
@@ -104,6 +108,10 @@ export function resolveAlderSpeechNode(
     return undefined;
   }
   const preferred = alderSpeechNode(world, character);
+  const page = tallyPageNode(tree, world, character, ALDER_IDLE_NODES, preferred);
+  if (page) {
+    return page;
+  }
   if (tree.nodes[preferred]) {
     return preferred;
   }

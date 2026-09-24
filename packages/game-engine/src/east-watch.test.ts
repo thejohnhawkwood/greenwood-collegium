@@ -109,6 +109,7 @@ function world(): WorldState {
                 "offer-moor": { text: "North from the meadow." },
                 "moor-active": { text: "Talk wren." },
                 "watch-active": { text: "Wren has you." },
+                "tally-page": { text: "I am keeping this page." },
               },
             },
           },
@@ -135,6 +136,7 @@ function world(): WorldState {
                 "barrow-done": { text: "Examine what the fog took." },
                 "after-colm": { text: "Go to Fen." },
                 stay: { text: "The kettle is for the living." },
+                "tally-page": { text: "Three animals, all wrong in one week." },
               },
             },
           },
@@ -445,6 +447,56 @@ describe("East Watch chain", () => {
       handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "alder" }, clock).ok,
     ).toBe(true);
     expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("watch-active");
+  });
+
+  it("lets Wren and Alder read Kern's page, and never over an urgent beat", () => {
+    const realm = world();
+    const clock = runtime();
+    realm.characters["char-rowan"] = {
+      id: "char-rowan",
+      name: "Rowan",
+      roomId: "wren-croft",
+      discoveredRoomIds: ["wren-croft", "headmaster-study"],
+    };
+    realm.items = {
+      "item-fold-tally-page-char-rowan": {
+        id: "item-fold-tally-page-char-rowan",
+        templateId: "fold-tally-page",
+        name: "Fold Tally Page",
+        examineDescription: "Three hands, one date.",
+        holderCharacterId: "char-rowan",
+      },
+    };
+
+    // Wren is idle at welcome, so the page is what she talks about.
+    expect(
+      handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "wren" }, clock).ok,
+    ).toBe(true);
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("tally-page");
+
+    // Mid-barrow the page must not interrupt. Colm comes first.
+    realm.quests = {
+      "char-rowan": {
+        [BARROW_MOUTH_QUEST_ID]: {
+          questId: BARROW_MOUTH_QUEST_ID,
+          status: "completed",
+          completedObjectiveIds: ["reach-mouth", "read-cloak", "defeat-guard", "report"],
+          rewardGranted: true,
+        },
+      },
+    };
+    expect(
+      handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "wren" }, clock).ok,
+    ).toBe(true);
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("barrow-done");
+
+    // Without the page in paw, an idle Wren goes back to her own node.
+    realm.quests = {};
+    realm.items = {};
+    expect(
+      handleTalk(realm, { verb: "talk", characterId: "char-rowan", target: "wren" }, clock).ok,
+    ).toBe(true);
+    expect(realm.characters["char-rowan"]?.openConversation?.nodeId).toBe("welcome");
   });
 
   it("lets Quill keep an abbey-mark rubbing after the stones", () => {
