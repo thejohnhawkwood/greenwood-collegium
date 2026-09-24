@@ -6,9 +6,9 @@
   "requiresQuestIds": ["the-biscuit-crate"],
   "experienceReward": 20,
   "itemRewardTemplateId": "skipper-whistle",
-  "introNarration": "Midge grounds her spear in the mud. \"Examine the whistle post. North is the rope-island. If the sentry is still posted, defeat the sentry. Then talk midge. A warning that does not sound is just another thing kept.\"",
+  "introNarration": "Midge taps the empty nail with the butt of her spear. It rings. \"Bright, you see. Eleven years of weather on that post and the nail is bright, because something was hanging on it until recently.\" She grounds the spear again. \"Examine the whistle post yourself. Then north to the rope-island, where they have put somebody to keep the cut end cut. Finish that and talk midge. A warning nobody can hear is just one more thing they took.\"",
   "reminderNarration": "\"Examine the whistle post. Defeat the rope-sentry on the rope-island. Then talk midge. Type south from the rope-island.\"",
-  "completionNarration": "Midge hangs a skipper whistle on a cord and puts it in your paw. \"Marram is at the landing. Talk marram. The captain is south of the slip, in the camp. I will fish. You will finish it.\"",
+  "completionNarration": "Midge takes the whistle off the sentry's cord, blows it once, and the note carries all the way up the bank to the landing. Somewhere up there a door opens. \"That is what it is for.\" She threads it onto a fresh cord and puts it in your paw rather than back on the nail. \"You keep that until this is finished. They posted a grown badger on an island to stop one whistle sounding, which tells you the camp is worth guarding. Marram is at the landing. Talk marram.\"",
   "objectives": [
     {
       "id": "read-post",

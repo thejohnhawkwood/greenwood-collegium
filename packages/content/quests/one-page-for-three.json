@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "one-page-for-three",
+  "title": "One Page For Three",
+  "giverNpcId": "npc-stoneward-kern",
+  "requiresQuestIds": ["the-ninth-scratch"],
+  "experienceReward": 25,
+  "itemRewardTemplateId": "fold-tally-page",
+  "introNarration": "Kern turns the tally-book around and pushes it across the lintel toward you, open at a clean page. \"Three of us have each been sure of a small wrong thing and none of us has written them down together. That is how a moor gets a reputation instead of a record.\" He hands you the chalk. \"Go back to Hobb and get the night his bell went. Then Sile, for the night the mere took her voice. Bring both to me and talk kern. I will put them under my own date and we will see whether we have three problems or one.\"",
+  "reminderNarration": "\"Talk hobb in the Wool Shed for the night of the bell. Talk sile at the Reed Mere for the night of the voice. Then talk kern here in the Lintel Field. Type west from the Lintel Field for the stones.\"",
+  "completionNarration": "Kern writes all three down, then sets his chalk on the dates and does not move it for a while. \"The same three nights. Hobb's bell, Sile's mere, my stone, inside one week and inside two miles.\" He tears the page out along a fold and gives it to you. \"Take that to Shepherd Wren, and then to Headmaster Alder if she says so. I am not sending a student under a hill and I am not guessing at a cause. But three animals keeping careful counts were all wrong in the same week, and somebody above my station should be holding that page.\"",
+  "objectives": [
+    {
+      "id": "ask-hobb",
+      "kind": "talk",
+      "targetId": "npc-foldhand-hobb",
+      "label": "Talk hobb in the Wool Shed for the night of the bell."
+    },
+    {
+      "id": "ask-sile",
+      "kind": "talk",
+      "targetId": "npc-reedcutter-sile",
+      "label": "Talk sile at the Reed Mere for the night of the voice."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-stoneward-kern",
+      "requires": ["ask-hobb", "ask-sile"],
+      "label": "Talk kern in the Lintel Field."
+    }
+  ]
+}

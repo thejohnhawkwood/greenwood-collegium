@@ -30,7 +30,7 @@
       "kind": "npc",
       "lookDescription": "A badger in a stone-dust coat, chalk on one claw. Try talk kern.",
       "examineDescription": "Kern counts stones the way Alder counts facts. The coat has old tears mended with wire, not silk. He has stood a gate against weather that walked. He does not discuss the barrow unless you have already told Wren.",
-      "dialogue": "\"If Sile has sent you on from the mere, examine the scratch stone. Then the ditch north of here, if the lurker is still keeping iron. Come back and talk kern. Last winter this field had eight fallen lintels. I chalked them. There is a ninth scratch. I did not put it there.\""
+      "dialogue": "Kern has a tally-board propped against a fallen lintel, and every stone in the field carries a chalk dot. \"Eight. I counted them last winter, I chalked them, and I wrote eight in the book.\" He puts his paw flat on the ninth stone. \"This one has a fresh scratch and no dot. I did not put either of those there, and I have been the only animal in this field since the frost. Talk kern if you want the rest of it.\""
     },
     {
       "id": "object-scratch-stone",

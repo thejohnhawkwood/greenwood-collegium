@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "fold-tally-page",
+  "name": "Fold Tally Page",
+  "shortDescription": "One page with three wrong things written on it.",
+  "examineDescription": "A page torn carefully out of Stoneward Kern's tally-book, written in three hands. A bell missing from the wool shed, in Hobb's blunt capitals. A voice the mere kept and gave back, in Sile's smaller writing. Eight lintels and then nine, in Kern's, with both numbers left standing. At the bottom Kern has written the three dates, and they are the same three nights.",
+  "category": "ordinary",
+  "unique": true
+}

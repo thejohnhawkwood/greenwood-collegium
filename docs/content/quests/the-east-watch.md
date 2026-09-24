@@ -125,6 +125,7 @@ Does not spoil Colm. Does not gate L5–L10.
 - **The Empty Byre** (`the-empty-byre`) — Hobb, after `the-meadow-fork`. Byre, fold-hound, fold mitts.
 - **The Mere That Keeps** (`the-mere-that-keeps`) — Sile. Still water, reed-wisp, reed cloak.
 - **The Ninth Scratch** (`the-ninth-scratch`) — Kern. Scratch stone, ditch-lurker, lintel band.
+- **One Page For Three** (`one-page-for-three`) — Kern, after the scratch. Talk Hobb for the night of the bell, Sile for the night of the voice, then Kern. He writes all three under one date, they are the same three nights, and he tears the page out. Reward: the fold tally page. It closes the side chain and still gates nothing.
 
 Rooms: `wool-shed`, `croft-byre`, `mist-lane`, `reed-mere`, `lintel-field`, `salt-grass`, `black-ditch`, `crow-stile`.
 

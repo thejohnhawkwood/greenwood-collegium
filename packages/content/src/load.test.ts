@@ -220,7 +220,7 @@ describe("content loader", () => {
       world.quests["what-still-sleeps"]?.objectives.map((objective) => objective.kind),
     ).toContain("defeat");
     expect(world.quests["the-meadow-fork"]?.giverNpcId).toBe("npc-shepherd-wren");
-    expect(Object.keys(world.quests)).toHaveLength(40);
+    expect(Object.keys(world.quests)).toHaveLength(41);
     expect(world.quests["arrival-at-the-collegium"]?.introNarration).toContain(
       "train as a defender",
     );

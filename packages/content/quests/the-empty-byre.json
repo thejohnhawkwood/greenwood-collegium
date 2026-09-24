@@ -8,7 +8,7 @@
   "itemRewardTemplateId": "fold-mitts",
   "introNarration": "Hobb trims the lamp and does not sit down. \"Byre north of Wren's croft. Straw banked up the walls, gate sound, latch still dropped. Not one sheep in it.\" He sets the lamp on the bench harder than he meant to. \"No wool caught on the nails. No prints in the mud outside. Go and examine the empty stall yourself, then try the mist-lane east of it. Something has been standing in that lane three nights running and the fog does not move around it. Come back and talk hobb. I would rather know than keep guessing at my own straw.\"",
   "reminderNarration": "\"Examine the empty stall north of the croft. Defeat the fold-hound in the mist-lane if it is still there. Then talk hobb. Type north from Wren's Croft. Type east from the byre.\"",
-  "completionNarration": "You name the empty hook and the hound that was not a dog. Hobb puts wool mitts in your paws. \"Wear them if the mist sits on your claws. Sile is at the mere, north of the lane. Talk sile when you want the water's version. Eat at the croft. Wren is still owed the flock.\"",
+  "completionNarration": "Hobb hears you out, then goes and stands in the lane himself for a while to see that it is only a lane. When he comes back he pulls the mitts off his own paws and puts them in yours. \"Take those. The mist gets into your claws out here and you will want them.\" He looks at the empty bell-loop again. \"It was not a sheep and it was not a dog, and I still have no bell. Sile is at the mere north of the lane, and she has her own wrong thing. Talk sile. Eat at the croft on your way.\"",
   "objectives": [
     {
       "id": "read-stall",
