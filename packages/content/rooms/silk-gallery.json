@@ -26,7 +26,7 @@
       "name": "Piper Mole",
       "kind": "npc",
       "lookDescription": "A small mole in a patched grey coat, tin whistle at his belt, silk dust on both paws, eyes too wide. Try talk piper.",
-      "examineDescription": "Piper is smaller than most first-years. The whistle is dented, as if it has been dropped more than once. The coat has been mended twice with thread that does not match. Silk-dust clings to both paws. His whiskers tremble when the threads hum. He listens before he speaks, and he does not pretend this is a lesson he wanted.",
+      "examineDescription": "Piper is smaller than most first-years. His whistle has two dents in it and the cord is knotted where it broke once. The coat has been mended twice with thread that does not match either time. Silk-dust clings to both paws and to his chin. His whiskers move when the threads hum, and he stops talking when that happens. He listens before he speaks, and he does not pretend this is a lesson he wanted.",
       "dialogue": "\"Don't— don't go past the nave alone. I keep this stair because someone has to. The silk has started to sing, warm as a living thing, and a hatchling already woke. Alder sent you? Good. Examine the threads. East is the cloister. Please come back.\"",
       "dialogueTree": {
         "start": "welcome",
@@ -39,7 +39,7 @@
             ]
           },
           "woke": {
-            "text": "\"A silk-hatchling. Satchel-sized. Hungry. It clicked at me like it wanted a name, and its legs made that dry paper sound — the same sound these threads make when the deep bell rolls through the tower. It should not have woken. The husk in the nave is split and still warm. If it squares up, finish it the way Flint finishes a dummy — then get out. It will not stay dead if you walk away mid-lesson. I already ran once. I am not proud of that. The whistle was in my teeth the whole way up.\"",
+            "text": "\"A silk-hatchling. Satchel-sized. Hungry. It clicked at me like it wanted a name, and its legs made that dry paper sound — the same sound these threads make when the deep bell rolls through the tower. It should not have woken. The husk in the nave is split and still warm. If it squares up, finish it properly and then get out. Do not leave it half-done and walk away; it gets back up, and I have watched that happen. I already ran once. I am not proud of that. The whistle was in my teeth the whole way up.\"",
             "choices": [{ "say": "1", "label": "Who is the queen?", "next": "queen" }]
           },
           "queen": {

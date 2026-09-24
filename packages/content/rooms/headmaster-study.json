@@ -107,7 +107,7 @@
             "text": "\"The wood remembers. That is enough for the first question. You stood in the empty frame, you read the keeper's ink, you felt the chapel root answer. You did this school a service, and I will not forget who brought me facts instead of a rumour.\""
           },
           "offer-wakes": {
-            "text": "\"You already proved the wood can carry a welcome. Something below the Clock Tower has begun to answer — a warmer note, closer, as if silk had learned to hum. I would not send you down that stair if I had another pair of eyes I trusted. Piper Mole has been alone in the Silk Gallery too long. He sits on a crate with silk-dust on both paws, and he is afraid. Talk to him. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. One hungry child is not proof of a queen. Look first, then name what you actually saw.\"",
+            "text": "\"You already proved the wood can carry a welcome. Something below the Clock Tower has begun to answer. A warmer note, closer than the abbey sound, and it comes up through the floor rather than down from the tower. I would not send you down that stair if I had another pair of eyes I trusted. Piper Mole has been alone in the Silk Gallery too long. He sits on a crate with silk-dust on both paws, and he is afraid. Talk to him. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. One hungry child is not proof of a queen. Look first, then name what you actually saw.\"",
             "choices": [
               { "say": "1", "label": "I will descend.", "next": "wakes-active" },
               { "say": "2", "label": "What am I looking for now?", "next": "wakes-why" }

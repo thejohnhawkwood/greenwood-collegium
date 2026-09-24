@@ -3,7 +3,7 @@
   "id": "barrow-mouth",
   "title": "Barrow Mouth",
   "shortDescription": "A hill-lip of wet wool, peat, and one folded cloak.",
-  "longDescription": "The barrow opens under a lip of turf and stone. Fog leaks out as if the hill were breathing. A spare cloak is folded on a stone like an offering — wet wool, not silk.\nA barrow-guard is here if it still lives. Down, the nave. Under the lip, if you have come this far, someone is sitting as if he sat down out of the wind.",
+  "longDescription": "The barrow opens under a lip of turf and stone, and fog comes out of the gap in slow pulses rather than drifting. A spare cloak is folded in four on a flat stone, wet wool and not silk.\nA barrow-guard is here if it still lives. Down is the nave. Under the lip, if you have come this far, someone is sitting with his legs drawn up, out of the wind.",
   "zone": "east-moor",
   "map": {
     "x": 8,
@@ -29,14 +29,14 @@
       "name": "Colm's Spare Cloak",
       "kind": "object",
       "lookDescription": "A folded cloak on a stone, wet wool, not silk. Examine it.",
-      "examineDescription": "Colm's spare cloak, folded as if someone meant it as an offering. Wet wool. The weave matches Wren's mending. Enough to scare. This is not a body. Leave it until you know whether he still needs covering."
+      "examineDescription": "A shepherd's spare cloak, folded in four and set square on the stone by somebody who was not in a hurry. Wet wool, not silk. The mending along the hem is Wren's work, the same stitch you saw on her own cloak at the croft. It is a cloak and nothing more. Leave it here until you know whether he still needs covering."
     },
     {
       "id": "object-colm-aftermath",
       "name": "What the Fog Took",
       "kind": "object",
-      "lookDescription": "Someone sits under the barrow lip as if out of the wind. Examine him. Do not talk to him.",
-      "examineDescription": "Colm is under the barrow lip, sitting as if he sat down out of the wind. Fog has soaked his wool coat through. His crook-hand is empty — you already found the crook. There is no silk. There is a stillness that shepherds use for sheep that will not rise. His eyes are closed. The fog moves and he does not. Leave him covered with his own cloak if the spare is here. Tell Wren. Do not invent a fight you already missed. There are no wounds. He is past air. The fog-walker kept him the way weather keeps a stone."
+      "lookDescription": "Someone is sitting under the barrow lip, out of the wind, and has not turned around. Examine him.",
+      "examineDescription": "Colm is sitting under the lip of the barrow with his back to the turf and his legs drawn up, out of the wind. Fog has soaked his wool coat through to the lining. His crook-hand is open and empty; you are carrying the crook. There is no silk on him anywhere, and there are no wounds. His eyes are closed. The fog moves and he does not. He is past air. Fold the spare cloak over him if you have found it, and then go and tell Wren yourself, before she hears it from anyone else."
     }
   ]
 }

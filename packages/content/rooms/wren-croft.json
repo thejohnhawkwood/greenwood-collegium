@@ -30,7 +30,7 @@
       "kind": "npc",
       "lookDescription": "An adult hare in a wet cloak, peat-smoke in her fur, kettle-calluses on both paws. Try talk wren.",
       "examineDescription": "Wren's ears are notched from weather, not from practice. Her cloak is mended with wool. She keeps glancing at the doorway while she talks to you, and she has not sat down once since you came in. She is frightened, and she is not hiding it well.",
-      "dialogue": "\"Sit. The kettle is on. Colm has not come in. Eat something warm before you name the mist. Type north from the East Meadow if you got lost. Talk wren. Examine the waystone on the track.\"",
+      "dialogue": "Wren has the kettle on and has not sat down since you came in. \"Sit, if you like. I cannot.\" She glances at the door again. \"Colm has not come in. The flock was due at dusk yesterday and his peg is empty. Eat something warm before you go naming anything you saw in the mist. Talk wren when you are ready.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
@@ -63,7 +63,7 @@
             "text": "\"South to the waystone. Examine it. Then talk wren here. The oatcakes will keep. I will not.\""
           },
           "fork-done": {
-            "text": "\"The waystone told you the same three counts the chapel knows. East is the fold. The latch was lifted, not broken. Examine the empty fold and Colm's crook. A mist-crow has been sitting the rail as if it paid rent. Defeat it if it squares up. Then talk wren. I will have the kettle too hot by then.\""
+            "text": "\"The waystone told you the same three counts the chapel knows. East is the fold. The latch was lifted, not broken. Examine the empty fold and Colm's crook. There has been a mist-crow on that rail three days running and it has worn the moss off the top of it. Defeat it if it squares up. Then talk wren. I will have the kettle too hot by then.\""
           },
           "flock-done": {
             "text": "\"The stones next. They were not in last winter's count. Colm went to look. I told him not to. East from the fold. Examine the abbey mark and the new stone. Then talk wren. I will not go with you. Someone has to keep the kettle.\""
