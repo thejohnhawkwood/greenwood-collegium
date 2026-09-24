@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-stars",
   "title": "First Lessons: Stars",
-  "introNarration": "Mentor Lumen keeps the hearth dummy in sight. Brass instruments wait beside a star-wheel. The air smells of ink, cold glass, and lamp-oil. \"Look around this hearth. Charts before wonder. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
-  "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Lumen. The star-wheel has not moved.",
-  "completionNarration": "Lumen inks the stem at rank I. A little lamp-oil shines on the nib and is gone. The next lesson will ask you to cast.",
+  "introNarration": "Lumen is writing a column of figures and finishes it before she looks up. Brass instruments are laid out on felt beside the star-wheel, each one in its own spot. The room smells of lamp-oil and ink. \"Walk the hearth and look at the instruments, but do not pick them up. Charts first. Wonder keeps.\" She indicates the straw dummy with the end of her pen. \"Then put that one down. Mine, in here, not the one Flint keeps out in his orchard. Come back and talk to me. I will open the Stars leaf in your Field Primer and ink the stem.\"",
+  "reminderNarration": "Look around this hearth, put the hearth dummy down, then talk to Lumen. The star-wheel has not moved and neither has she.",
+  "completionNarration": "Lumen rules a faint line first, then inks the stem of the Stars leaf along it. \"Rank one.\" She checks the mark against the line and is satisfied. \"Next time you will be casting rather than swinging. Take the reading before you take the shot.\"",
   "experienceReward": 15,
   "objectives": [
     {

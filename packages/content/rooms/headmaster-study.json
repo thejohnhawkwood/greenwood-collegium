@@ -107,7 +107,7 @@
             "text": "\"The wood remembers. That is enough for the first question. You stood in the empty frame, you read the keeper's ink, you felt the chapel root answer. You did this school a service, and I will not forget who brought me facts instead of a rumour.\""
           },
           "offer-wakes": {
-            "text": "\"You already proved the wood can carry a welcome. Something below the Clock Tower has begun to answer — a warmer note, closer, as if silk had learned to hum. I would not send you down that stair if I had another pair of eyes I trusted. Piper Mole has been alone in the Silk Gallery too long. He sits on a crate with silk-dust on both paws, and he is afraid. Talk to him. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. Do not invent a queen from one hungry child. Look. Name what you saw.\"",
+            "text": "\"You already proved the wood can carry a welcome. Something below the Clock Tower has begun to answer — a warmer note, closer, as if silk had learned to hum. I would not send you down that stair if I had another pair of eyes I trusted. Piper Mole has been alone in the Silk Gallery too long. He sits on a crate with silk-dust on both paws, and he is afraid. Talk to him. Examine the Stair Rope, the Silk Thread, and the Waking Husk. Then return and talk alder here. One hungry child is not proof of a queen. Look first, then name what you actually saw.\"",
             "choices": [
               { "say": "1", "label": "I will descend.", "next": "wakes-active" },
               { "say": "2", "label": "What am I looking for now?", "next": "wakes-why" }
@@ -141,14 +141,14 @@
             "text": "\"You stood in the cradle. You named the score, the button, the three who stood, and Holm. That is enough. You did not invent a monster. You finished a lesson I could not fight for you. Holm kept that stair so first-years would not walk it dark. We will keep his name in the High Study. Go to class. Eat something warm. If your paws are shaking, talk to Fen. Then, when you can stand a cold wind, come back. The grounds east of the meadow have their own hunger, and I will not send you still hungry from this one.\""
           },
           "offer-moor": {
-            "text": "\"North from the East Meadow. The Hall stays east for class. The hedge-path bends east onto the moor — do not look for a door on the Infirmary tile. Talk to Shepherd Wren. She has a croft and a missing partner. Do not invent a second queen on the way. Sit. Eat. Then look.\"",
+            "text": "\"North from the East Meadow. The Hall stays east for class. The hedge-path bends east onto the moor — do not look for a door on the Infirmary tile. Talk to Shepherd Wren. She has a croft and a missing partner. Whatever is out there, it is not the queen again. Sit. Eat. Then go and look.\"",
             "choices": [
               { "say": "1", "label": "I will go north from the meadow.", "next": "moor-active" },
               { "say": "2", "label": "What am I walking into?", "next": "moor-why" }
             ]
           },
           "moor-why": {
-            "text": "\"Mist. Wet wool. A flock that did not come in. Wren is afraid, not cute. Colm has not come home. I will not guess a cause from this blotter. Bring her facts. The bronze we proved gone may have a resting place out there. That is a later question. Eat first.\"",
+            "text": "\"Mist. Wet wool. A flock that did not come in.\" Alder lays the tuning fork across the blotter. \"Wren is frightened, and she has earned the right to be. Colm has not come home. I will not name a cause from behind this desk. Bring her facts, not comfort. The bronze we proved gone may be lying somewhere out there. That is a later question. Eat before you go.\"",
             "choices": [{ "say": "1", "label": "I will go.", "next": "moor-active" }]
           },
           "moor-active": {
@@ -172,7 +172,7 @@
             "text": "\"Into the Barrow Nave. Examine the Abbey Bronze. Then talk alder here. Wren stays at the croft. She is owed that.\""
           },
           "offer-walker": {
-            "text": "\"One more. Not alone. The Fog Walker used our welcome for a mouth. Take two classmates who can lock a move on the same clock as you. Visit the Fog Hollow north of the nave. If it squares up, lock together. Then talk alder here. Wren blesses you and stays. Eat after. Sleep after. Do not invent an answer to who carried the bronze in.\"",
+            "text": "\"One more. Not alone. The Fog Walker used our welcome for a mouth. Take two classmates who can lock a move on the same clock as you. Visit the Fog Hollow north of the nave. If it squares up, lock together. Then talk alder here. Wren blesses you and stays. Eat after. Sleep after. Nobody yet knows who carried the bronze in there. Do not come back with a guess dressed as an answer.\"",
             "choices": [
               { "say": "1", "label": "We will go together.", "next": "walker-active" },
               { "say": "2", "label": "What are we facing?", "next": "walker-why" }

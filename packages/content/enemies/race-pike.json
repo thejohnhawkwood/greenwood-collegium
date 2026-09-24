@@ -4,7 +4,7 @@
   "name": "Race Pike",
   "shortDescription": "A long hunger in the mill-race that is not a student.",
   "lookDescription": "A long dark shape holds the mill-race and does not blink like a fish should.",
-  "examineDescription": "The Race Pike is a fish that learned to keep a stone in the current. It is not a person. Solo work. Leave it if you only came for the osiers. Square up if it will not let the race run.",
+  "examineDescription": "A pike as long as your arm, holding station in the fastest part of the race without appearing to work at it. Its eye tracks you along the bank. If you only came for the osiers, leave it alone. If it will not let the water run, it will fight.",
   "maxHealth": 24,
   "attack": 5,
   "experience": 8,

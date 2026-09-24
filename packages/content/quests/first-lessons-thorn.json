@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-thorn",
   "title": "First Lessons: Thorns",
-  "introNarration": "Mentor Briar keeps the hearth dummy in sight. Green light pools on the stone. The air smells of crushed sap and damp earth. \"Look around this hearth. The briar remembers every cut, and so will you. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
-  "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Briar. The shears are still on her belt.",
-  "completionNarration": "Briar inks the stem at rank I. A drop of sap darkens the page-edge and dries. The next lesson will ask you to cast.",
+  "introNarration": "Briar is halfway through pruning the trellis and does not stop. Cut stems go in a pile at her feet, and the room smells of sap and wet soil. \"Walk the hearth first. Look at what I have taken off that trellis and what I have left on it — that is most of the School, if you want it early.\" She nods at the straw dummy. \"Then put that one down. Mine, the one in here, not the one Flint keeps out in his orchard. Come back and talk to me after. I will open the Thorns leaf in your Field Primer and ink the stem.\"",
+  "reminderNarration": "Look around this hearth, put the hearth dummy down, then talk to Briar. She is still on the trellis and the shears are still out.",
+  "completionNarration": "Briar wipes the sap off her paws before she will touch the book. She inks the stem of the Thorns leaf, holds the page open until it dries, then closes it. \"Rank one. A cut in the right place is worth more than a strong swing.\" She goes back to the trellis. \"Next time you will not be swinging. You will be casting.\"",
   "experienceReward": 15,
   "objectives": [
     {

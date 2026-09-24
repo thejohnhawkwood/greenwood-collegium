@@ -6,7 +6,7 @@
   "requiresQuestIds": ["the-meadow-fork"],
   "experienceReward": 20,
   "itemRewardTemplateId": "fold-mitts",
-  "introNarration": "Hobb trims a lamp and does not sit. \"North of Wren's croft the byre is empty. Examine the empty stall. Then go east into the mist-lane. If a hound-shape keeps it, defeat it. Come back and talk hobb. It is not a sheep. It is not a story you leave in the straw.\"",
+  "introNarration": "Hobb trims the lamp and does not sit down. \"Byre north of Wren's croft. Straw banked up the walls, gate sound, latch still dropped. Not one sheep in it.\" He sets the lamp on the bench harder than he meant to. \"No wool caught on the nails. No prints in the mud outside. Go and examine the empty stall yourself, then try the mist-lane east of it. Something has been standing in that lane three nights running and the fog does not move around it. Come back and talk hobb. I would rather know than keep guessing at my own straw.\"",
   "reminderNarration": "\"Examine the empty stall north of the croft. Defeat the fold-hound in the mist-lane if it is still there. Then talk hobb. Type north from Wren's Croft. Type east from the byre.\"",
   "completionNarration": "You name the empty hook and the hound that was not a dog. Hobb puts wool mitts in your paws. \"Wear them if the mist sits on your claws. Sile is at the mere, north of the lane. Talk sile when you want the water's version. Eat at the croft. Wren is still owed the flock.\"",
   "objectives": [

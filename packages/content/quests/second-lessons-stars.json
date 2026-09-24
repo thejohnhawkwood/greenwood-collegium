@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "second-lessons-stars",
   "title": "Second Lessons: Stars",
-  "introNarration": "Lumen taps the Primer. Ink has dried on her primaries in a constellation of honest mistakes. \"Cast azimuth at the hearth dummy in this room. Then talk to me. After that, the Primer will hold one ink. Open the book and type ink and the vein's name.\"",
-  "reminderNarration": "Cast azimuth at the hearth dummy in this hearth, then talk to Lumen. Charts before wonder.",
-  "completionNarration": "The second hearth lesson is done. The Primer lies open under the night windows. Open the Primer and type ink and the vein's name.",
+  "introNarration": "Dried ink spots Lumen's primaries in three or four places where she has pushed a nib too hard. She opens the Primer to the Stars page and squares it with the edge of the desk. \"Swinging is behind you. Cast azimuth at the dummy in here. Take your bearing before you throw anything.\" She turns the page toward you. \"Then talk to me. After that the Primer holds one ink of yours. Open the book and type ink and the vein's name.\"",
+  "reminderNarration": "Cast azimuth at the hearth dummy in this hearth, then talk to Lumen. Take the bearing first.",
+  "completionNarration": "Lumen notes something in the margin of her own book before she says anything about yours. \"You took the bearing first. That is the difference between a charted shot and a lucky one.\" She hands the Primer back. \"One ink in there is yours to spend. Open the Primer and type ink and the vein's name.\"",
   "experienceReward": 20,
   "objectives": [
     {

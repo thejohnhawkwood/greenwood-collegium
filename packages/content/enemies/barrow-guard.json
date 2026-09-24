@@ -4,7 +4,7 @@
   "name": "Barrow Guard",
   "shortDescription": "Peat-and-bone that is not a dog.",
   "lookDescription": "A peat-and-bone shape keeps the barrow mouth, not quite a dog and not quite still.",
-  "examineDescription": "The Barrow Guard is packed peat over old bone. It is not a dog. It does not bark. It waits the way a door waits. Solo work. If it squares up, finish it, then talk Wren before Alder.",
+  "examineDescription": "Packed peat over old bone, about the size of a large dog and shaped roughly like one. It has no mouth to bark with. It does not pace or circle. It stands in the gap and turns its head to follow you. Beat it, and Wren should hear before Alder does.",
   "maxHealth": 18,
   "attack": 4,
   "experience": 15,

@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-ember",
   "title": "First Lessons: Ember",
-  "introNarration": "Mentor Cinder keeps the hearth dummy in sight. The copper grate ticks. There is a ghost of oatcakes left too near the coals. \"Look around this hearth. Smell the soot and name the fire before you feed it. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
-  "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Cinder. The grate is still warm, and she is still waiting.",
-  "completionNarration": "Cinder inks the stem at rank I. The Primer smells faintly of smoke and new ink. The next lesson will ask you to cast.",
+  "introNarration": "The copper grate ticks as it cools. Two oatcakes sat too near the coals earlier and the burnt-sugar smell is still in the room. Cinder does not take her eyes off the straw dummy in the corner. \"Walk the hearth first. I want you knowing where the fire is before you feed it. Then take that dummy down — mine, the one in here, not the one Flint keeps out in his orchard. When it is done, come and talk to me. I will open the Ember leaf in your Field Primer and ink the stem.\"",
+  "reminderNarration": "Look around this hearth, put the hearth dummy down, then talk to Cinder. The grate is still warm and she has not moved from it.",
+  "completionNarration": "Cinder takes the Primer, sets it on her knee, and inks the stem of the Ember leaf in three short strokes. She blows on the page before she shuts it. \"Rank one. That is a real mark, not a sticker.\" She hands it back warm. \"Next time you will not be swinging at it. You will be casting.\"",
   "experienceReward": 15,
   "objectives": [
     {

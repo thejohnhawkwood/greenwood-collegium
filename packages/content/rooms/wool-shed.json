@@ -29,7 +29,7 @@
       "name": "Foldhand Hobb",
       "kind": "npc",
       "lookDescription": "A mole in a wool vest, lamp-soot on his claws. Try talk hobb.",
-      "examineDescription": "Hobb's vest is mended with the same wool he hangs. He has walked this moor in weather that took sheep and did not give them back. He is adult. He is not cute. He will not name a walker until Wren does.",
+      "examineDescription": "A grey mole with his shoulders up, in a vest mended with the same fleece he hangs on the pegs. Lamp-soot is worked into the claws of both paws. He has walked this moor in weather that took sheep and gave none of them back, and he counts a fold twice before he says the number out loud. Ask him what is on the lane and he will tell you to ask Wren first.",
       "dialogue": "\"If Wren has had you read the waystone, I have a byre that should not be empty. North of her croft. Examine the empty stall. Then the mist-lane, if the hound-shape is still keeping it. Come back and talk hobb. Eat at the croft first. I have seen a fold go quiet. I do not invent why.\""
     },
     {

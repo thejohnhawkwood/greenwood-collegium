@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "first-lessons-stone",
   "title": "First Lessons: Stone",
-  "introNarration": "Mentor Quern keeps the hearth dummy in sight. Granite takes the cool light and does not complain. The air smells of wet rock after rain and mason's chalk. \"Look around this hearth. Weight first. Speech second. Defeat the hearth dummy in this room — not Flint's orchard dummy. Then come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
-  "reminderNarration": "Look around this hearth. Defeat the hearth dummy here. Then talk to Quern. He has not hurried the sentence, and he will not drop it.",
-  "completionNarration": "Quern inks the stem at rank I. Stone-dust from his paw greys the margin. The next lesson will ask you to cast.",
+  "introNarration": "Quern has a block of granite up on the bench and is marking it with chalk, a line at a time. Stone-dust greys both paws to the wrist. The room smells of wet rock and chalk. \"Walk the hearth. Put your paw flat on the keystone while you are at it, so you know what holds this roof up.\" He takes his time getting to the rest. \"Then the straw one. Mine, in here, not the one Flint keeps out in his orchard. Come back and talk to me. I will open the Stone leaf in your Field Primer and ink the stem.\"",
+  "reminderNarration": "Look around this hearth, put the hearth dummy down, then talk to Quern. He has not hurried a sentence yet and he has not dropped one either.",
+  "completionNarration": "Quern sets the chalk down, dusts one paw on his apron, and inks the stem of the Stone leaf. Grey dust still greys the margin. \"Rank one.\" He looks at it a moment. \"Weight first, speech second. Next time you will be casting instead of swinging.\"",
   "experienceReward": 15,
   "objectives": [
     {
