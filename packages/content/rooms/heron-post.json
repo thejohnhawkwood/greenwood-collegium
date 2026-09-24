@@ -25,7 +25,7 @@
       "name": "Heron Midge",
       "kind": "npc",
       "lookDescription": "A tall grey heron in a fisherman's vest, spear grounded, not raised. Try talk midge.",
-      "examineDescription": "Midge's vest is patched with oilcloth. The spear is for fish. She has stood this post through floods and through thieves, and she hates both for the same reason: they take the river's manners.",
+      "examineDescription": "A tall grey heron in a fisherman's vest patched over twice with oilcloth, standing on one leg without any apparent effort. The spear is a fishing spear, barbed for pike, and it stays grounded while she talks. She has held this post through three floods and two sets of thieves, and she keeps the count of both.",
       "dialogue": "Midge stands on one leg in the shallows with her spear grounded, and she does not shift when you come up the bank. \"Nett will have told you about tins. I will tell you about the nail.\" She looks at the post beside her, where the nail is bright and empty. \"I hung a whistle there eleven years ago, so anybody cutting a rope downstream would be heard doing it. Somebody took the whistle and left the nail. That is a different crime than stealing a boat, and a worse one. Talk midge.\""
     },
     {

@@ -29,7 +29,7 @@
       "name": "Stoneward Kern",
       "kind": "npc",
       "lookDescription": "A badger in a stone-dust coat, chalk on one claw. Try talk kern.",
-      "examineDescription": "Kern counts stones the way Alder counts facts. The coat has old tears mended with wire, not silk. He has stood a gate against weather that walked. He does not discuss the barrow unless you have already told Wren.",
+      "examineDescription": "A badger in a stone-dust coat, chalk worn down to a stub in one claw, the tally-book buttoned into an inside pocket. Two old tears in the coat are mended with wire rather than thread, because wire was what he had. He has stood a gate on this moor in weather that walked, and he will tell you the number of stones before he tells you anything about the barrow.",
       "dialogue": "Kern has a tally-board propped against a fallen lintel, and every stone in the field carries a chalk dot. \"Eight. I counted them last winter, I chalked them, and I wrote eight in the book.\" He puts his paw flat on the ninth stone. \"This one has a fresh scratch and no dot. I did not put either of those there, and I have been the only animal in this field since the frost. Talk kern if you want the rest of it.\""
     },
     {
