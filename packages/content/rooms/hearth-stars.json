@@ -22,12 +22,12 @@
       "kind": "npc",
       "lookDescription": "A barn owl with ink-stained primaries and a star-chart satchel. Try talk lumen.",
       "examineDescription": "Lumen's facial disc is pale and severe. The satchel is heavy with charts, not stories. She corrects a wrong azimuth the way other teachers correct a sloppy stance.",
-      "dialogue": "\"Look around this hearth. Charts before wonder. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
+      "dialogue": "Lumen has the star-wheel set and a column of figures half finished. \"Stars is a bearing written down before you walk. Charts first. Wonder keeps.\" She taps the straw dummy in the corner with the end of her pen. \"Talk lumen when you want to begin.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Ink, cold glass, lamp-oil. Look around this hearth. Charts before wonder. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
+            "text": "\"Ink, cold glass, lamp-oil. Look around this hearth. Charts before wonder. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -58,10 +58,10 @@
             "text": "\"The stem is inked. Cast azimuth at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
-            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+            "text": "\"Your chart is rolled and your name is on it. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"This hearth has taught you what it holds. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am at your shoulder or not.\" She notes the date in her own book. \"Keeper Holm kept a stair lit so first-years would not walk it in the dark. Eat something warm before you walk a cold road.\""
           }
         }
       }

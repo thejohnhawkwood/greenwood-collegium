@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "third-lessons-ember",
   "title": "Alder's Leave: Ember",
-  "introNarration": "Cinder hangs the tongs and sends you to Alder. The grate ticks behind her. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
-  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Cinder. The oatcakes are still a little too near the coals.",
-  "completionNarration": "College lessons in this hearth are complete. Cinder inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She sets a pair of hearth mitts on the grate rail. Wear them if you want the soot on your paws. Eat something warm before you take a cold road.",
+  "introNarration": "Cinder hangs the tongs on their nail and shuts the grate door, which she has not done once while you were learning here. \"That is me finished. There are three things this hearth can teach you and you have had all three.\" She jerks her head at the ceiling. \"Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on that Clock Tower stair, finish that before you come back here. When he tells you the grounds will teach the rest, come and talk to me and I will close the page.\"",
+  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Cinder. The grate door is still shut, and she is still standing next to it.",
+  "completionNarration": "Cinder inks Alder's leave under the Ember stem and shuts the book properly this time. \"That is the whole of the college in this hearth. From here on the lessons come off the grounds, and each one puts one ink in that book for you to spend.\" She takes the mitts off the grate rail and pushes them at you. \"Take those. My paws know the heat by now and yours do not. Eat something warm before you walk a cold road.\"",
   "experienceReward": 25,
   "itemRewardTemplateId": "hearth-mitts",
   "objectives": [

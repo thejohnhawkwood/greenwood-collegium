@@ -11,9 +11,9 @@ rewards, enemy stats, and NPC ids all stay as they are.
 | --- | --- | --- |
 | 1 | Author notes stripped from player text; twelve lesson quests rewritten | Done, 24 September 2026 |
 | 2 | Side-hub voices: Hobb, Sile, Kern, Marram, Nett, Midge and their seven quests, plus the east-moor closing beat | Done, 24 September 2026 |
-| 3 | Third lessons, and the remaining college loop text | Not started |
+| 3 | Third lessons, the six mentor standing lines, and the hearth tree hand-off nodes | Done, 24 September 2026 |
 | 4 | Item and fixture descriptions, reward items, the twenty new river and moor fixtures | Not started |
-| 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip | Not started |
+| 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip, and the fold tally page hook below | Not started |
 | 6 | Design recommendations written up, nothing shipped | Not started |
 
 ## Systemic problems found
@@ -31,6 +31,21 @@ one template with the mentor's name swapped. Every first lesson opened `Mentor X
 keeps the hearth dummy in sight` and closed `X inks the stem at rank I`, and every
 second lesson closed `The second hearth lesson is done`. Six mentors were
 indistinguishable. Each now has its own action, concern, and closing line.
+
+**One sentence in thirteen places.** All six third-lesson quests and all six
+hearth `third-lesson` tree nodes carried the identical sentence `Talk to Headmaster
+Alder in the High Study. Type up from the Great Hall. If he is still sending you
+down the Clock Tower stair, finish that first.` All six `third-done` nodes were
+also word for word the same, including the Holm line. Each mentor now closes their
+own hearth with a physical act that marks the end of teaching: Cinder shuts the
+grate, Briar hangs the shears and leaves them, Mist opens the double curtain,
+Lumen rolls and names your chart, Quern puts his paw back on the keystone, Edge
+racks your blade and does not hand you another.
+
+**Mentor standing lines were quest terminals.** Each was `Look around this hearth.
+[one aphorism]. Defeat the hearth dummy in this room. Come back and talk to me.`
+They now say what the School actually is in one sentence and then invite the
+conversation, which is the only command a student needs there.
 
 **Interface talk inside speech.** `Defeat the hearth dummy in this room — not
 Flint's orchard dummy` was a parenthetical aimed at a player reading a UI. The
@@ -90,6 +105,25 @@ requires `the-ninth-scratch` and gates nothing.
 **Race-pike has no reason to exist.** It is a foe with loot and no quest, no
 giver, and nothing that refers to it. Either something on the river should want
 the race running, or it can stay as ambient danger; right now it is neither.
+
+## Open hook for slice 5
+
+`one-page-for-three` ends with Kern tearing the page out and saying that Wren
+should see it, and Alder after her if she says so. Nothing in the game answers
+that yet. Wren has no line about the page and Alder has no line about it either,
+so a student who carries it gets no acknowledgement.
+
+Slice 5 should close that. The cheapest honest version is a line on each of them
+that fires when the page is held, in the way Librarian Quill already recognises
+the abbey-mark rubbing through the `abbey-rubbing-kept` node. Wren reads three
+careful animals being wrong in the same week and does not pretend it is comfort.
+Alder puts it beside what he already knows about the bronze and declines to name
+a cause from behind a desk, which is his established position.
+
+This would be the first time a side chain feeds the spine, so it needs care: the
+page must not skip, gate, or shortcut any part of the East Watch, and it must not
+reveal Colm before Wren's own chain does. Text and one dialogue node each. No new
+quest, no new objective, no change to any `requiresQuestIds`.
 
 ## Canon questions
 

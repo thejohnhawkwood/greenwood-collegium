@@ -26,12 +26,12 @@
       "kind": "npc",
       "lookDescription": "A scarred hare in a mail shirt, one ear notched, a practice sword at the hip. Try talk edge.",
       "examineDescription": "Edge's notch is newer than Flint's and just as earned. The mail is mended. He treats a sloppy stance as a kindness you have not yet been given.",
-      "dialogue": "\"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
+      "dialogue": "Edge has four mail shirts hanging oiled behind him and a strap in his paws. \"Steel is a blade kept flat until it is wanted, and a stance you can name out loud.\" He tips his head at the straw dummy in the corner. \"Talk edge when you are ready.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
+            "text": "\"Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -62,10 +62,10 @@
             "text": "\"The stem is inked. Cast strike at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
-            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+            "text": "\"Your blade is on the rack and it stays there. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"This hearth is finished with you. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am standing at your shoulder or not.\" He sets the oil rag down. \"Keeper Holm kept a stair lit so first-years would not walk it in the dark. Nobody handed him a medal for it either. Eat something warm before you walk a cold road.\""
           }
         }
       }
