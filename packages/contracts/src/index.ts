@@ -153,6 +153,9 @@ export { commandAckSchema, type CommandAck } from "./commands/ack.js";
 export {
   accountRoleSchema,
   authAcceptInviteRequestSchema,
+  authOpeningSchema,
+  authPreviewInviteRequestSchema,
+  authPreviewInviteResponseSchema,
   authBootstrapRequestSchema,
   authCharacterCreateRequestSchema,
   authCharacterGenderSchema,

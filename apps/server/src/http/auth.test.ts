@@ -217,6 +217,20 @@ describe("auth HTTP", () => {
     const token = (invite.json() as { token: string }).token;
     expect(token.length).toBeGreaterThan(20);
 
+    const preview = await app.inject({
+      method: "POST",
+      url: "/auth/preview-invite",
+      payload: { token },
+    });
+    expect(preview.statusCode).toBe(200);
+    expect(preview.json()).toEqual({ ok: true, role: "student" });
+    const opening = await app.inject({ method: "GET", url: "/auth/opening" });
+    expect(opening.statusCode).toBe(200);
+    expect(opening.json()).toMatchObject({
+      image: "/frame/arrival-students.png",
+    });
+    expect((opening.json() as { narration: string }).narration).toContain("train as a defender");
+
     const accepted = await app.inject({
       method: "POST",
       url: "/auth/accept-invite",

@@ -1,6 +1,7 @@
 export {
   CHARACTER_GENDERS,
   characterCreationIntro,
+  openingStory,
   describeCollegian,
   formatCharacterName,
   isKnownGender,

@@ -162,6 +162,7 @@ export type AuthService = {
     username: string;
     password: string;
   }): Promise<SignedIn | AuthFailure>;
+  previewInvite(token: string): Promise<{ ok: true; role: InviteRole } | AuthFailure>;
   disableAccount(actorId: string, targetId: string): Promise<{ ok: true } | AuthFailure>;
   disableAccountByUsername(actorId: string, username: string): Promise<{ ok: true } | AuthFailure>;
   resolveSession(
@@ -323,6 +324,16 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
       );
     }
     return { ok: true, token, tokens, role, expiresAt };
+  }
+
+  async function previewInvite(
+    token: string,
+  ): Promise<{ ok: true; role: InviteRole } | AuthFailure> {
+    const invite = await deps.invites.getByTokenHash(hashToken(token.trim()));
+    if (!invite || invite.consumedAt || invite.expiresAt.getTime() <= now().getTime()) {
+      return fail("invalid_invite", "That invite is not valid.");
+    }
+    return { ok: true, role: invite.role };
   }
 
   async function acceptInvite(input: {
@@ -763,6 +774,7 @@ export function createAuthService(deps: AuthServiceDeps): AuthService {
     signOut,
     createInvite,
     acceptInvite,
+    previewInvite,
     listClassroom,
     disableAccount,
     disableAccountByUsername,

@@ -43,6 +43,14 @@ const NAMES = namesSchema.parse(
   ),
 );
 
+const OPENING = introSchema.parse(
+  JSON.parse(
+    readFileSync(fileURLToPath(new URL("../character-creation/opening.json", import.meta.url)), {
+      encoding: "utf8",
+    }),
+  ),
+);
+
 const INTRO = introSchema.parse(
   JSON.parse(
     readFileSync(fileURLToPath(new URL("../character-creation/intro.json", import.meta.url)), {
@@ -82,6 +90,12 @@ export const CHARACTER_GENDERS = [
 ] as const;
 
 export type CharacterGenderId = (typeof CHARACTER_GENDERS)[number]["id"];
+
+export const OPENING_IMAGE = "/frame/arrival-students.png";
+
+export function openingStory(): { narration: string; image: string } {
+  return { narration: OPENING.narration, image: OPENING_IMAGE };
+}
 
 export function characterCreationIntro(): string {
   return INTRO.narration;
