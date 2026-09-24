@@ -13,7 +13,7 @@ rewards, enemy stats, and NPC ids all stay as they are.
 | 2 | Side-hub voices: Hobb, Sile, Kern, Marram, Nett, Midge and their seven quests, plus the east-moor closing beat | Done, 24 September 2026 |
 | 3 | Third lessons, the six mentor standing lines, and the hearth tree hand-off nodes | Done, 24 September 2026 |
 | 4 | Item and fixture descriptions, reward items, the twenty new river and moor fixtures | Done, 24 September 2026 |
-| 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip, and the fold tally page hook below | Not started |
+| 5 | Spine continuity: Alder, Wren, Piper, the bell chain, Colm under the barrow lip | Text done, 24 September 2026. The page hook below needs an engine decision |
 | 6 | Design recommendations written up, nothing shipped | Not started |
 
 ## Systemic problems found
@@ -78,14 +78,24 @@ book and saying one line only they would say.
 
 ## Deliberately not changed in slice 1
 
-**Colm under the barrow lip** (`barrow-mouth`, fixture examine) contains `Do not
-invent a fight you already missed`, which is an author note. It is left for slice
-5 so the named loss is rewritten with the whole East Watch chain in view. It is
-the only known author note still shipping.
+**Colm under the barrow lip** was left for slice 5 and is now done. The author
+note `Do not invent a fight you already missed` and the simile `the way weather
+keeps a stone` are gone. The facts that matter are kept and made physical: the
+coat soaked through to the lining, the open and empty crook-hand, no silk
+anywhere, no wounds, the fog moving while he does not, `He is past air`. The
+closing instruction is now his shepherd's due rather than a note to the writer:
+fold the spare cloak over him, then tell Wren yourself before she hears it from
+anyone else. No author note is known to ship anywhere now.
 
-**Wren's fold node** (`wren-croft`) still says a mist-crow has been sitting the
-rail `as if it paid rent`. It is a simile, not an author note, and Wren is a slice
-5 character, so it waits for that pass with the rest of her chain.
+**Wren's fold node** is done. The mist-crow now has three days on the rail and has
+worn the moss off it.
+
+**Similes deliberately kept.** Restraint matters as much as removal. `as if the
+metal had never left` stays, because Alder is describing a real acoustic fact and
+the comparison is the shortest true way to say it. `The flock left as if someone
+they knew had opened the way` stays, because that sentence is the horror of the
+sheepfold and nothing literal replaces it. Holm's wrapping in `cocoon-nave` stays
+whole; it is the other named loss and it already reads correctly.
 
 **Porter Bramble and Instructor Flint** keep explicit `type` instructions in
 speech. Both are teaching the interface on purpose; Porter owns Arrival and Flint
@@ -129,9 +139,16 @@ should see it, and Alder after her if she says so. Nothing in the game answers
 that yet. Wren has no line about the page and Alder has no line about it either,
 so a student who carries it gets no acknowledgement.
 
-Slice 5 should close that. The cheapest honest version is a line on each of them
-that fires when the page is held, in the way Librarian Quill already recognises
-the abbey-mark rubbing through the `abbey-rubbing-kept` node. Wren reads three
+This is **not** text-only, which the earlier note underestimated. Held-item node
+selection is engine code, not data: `resolveQuillSpeechNode` in
+`packages/game-engine/src/east-watch.ts` checks the rubbing template against the
+Collegian's held items and names `abbey-rubbing-kept` itself. Wren and Alder go
+through `resolveWrenSpeechNode` and `resolveAlderSpeechNode`, so recognising the
+page means editing those functions and adding engine tests. That is a mechanics
+change and it is waiting on the owner.
+
+The cheapest honest version is a line on each of them that fires when the page is
+held, in the way Librarian Quill already recognises the abbey-mark rubbing. Wren reads three
 careful animals being wrong in the same week and does not pretend it is comfort.
 Alder puts it beside what he already knows about the bronze and declines to name
 a cause from behind a desk, which is his established position.
