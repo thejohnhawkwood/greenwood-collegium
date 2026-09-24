@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "third-lessons-veil",
   "title": "Alder's Leave: the Veil",
-  "introNarration": "Mist lets the curtain fall and sends you to Alder. Lavender hangs in the quiet. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
-  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Mist. The mirror will wait. It always does.",
-  "completionNarration": "College lessons in this hearth are complete. Mist inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She folds a short quiet cloak once and gives it over. Eat something warm before you take a cold road.",
+  "introNarration": "Mist draws the double curtain fully back, which lets the whole of the afternoon into a room you have only seen in strips. \"Three lessons. You have stopped announcing yourself before you move, which is the one I was waiting on.\" She leaves the curtain open. \"Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
+  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Mist. She has left the curtain open and has not said why.",
+  "completionNarration": "Mist inks Alder's leave under the Veil stem, then holds the book shut a moment before she gives it back. \"The college part is finished. The grounds teach the rest, and each lesson out there leaves one ink in the book for you.\" She folds a short cloak once and hands it over. \"That is quieter than what you are wearing. Eat something warm before you walk a cold road.\"",
   "experienceReward": 25,
   "itemRewardTemplateId": "quiet-cloak",
   "objectives": [

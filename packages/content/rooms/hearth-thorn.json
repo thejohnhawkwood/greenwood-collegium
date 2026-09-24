@@ -30,12 +30,12 @@
       "kind": "npc",
       "lookDescription": "A scarred hedgehog in a green cloak caught with thorns, shears at the belt. Try talk briar.",
       "examineDescription": "Briar's quills are patched with old scratches. The cloak is mended with vine-thread. She speaks as if the plants were listening, and they usually are.",
-      "dialogue": "\"Look around this hearth. The briar remembers every cut. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
+      "dialogue": "Briar has the shears out and a pile of cut stems at her feet. \"Thorns is growth that knows where the path is. Anything can grow. Not everything guards.\" She nods at the straw dummy in the corner. \"Talk briar when you want to start.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
+            "text": "\"Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -66,10 +66,10 @@
             "text": "\"The stem is inked. Cast briar at the hearth dummy for the second lesson — a vine trained, not a snare left to wander. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
-            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+            "text": "\"Shears are hung up and I am leaving them there. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"You are done in here, and I will not prune a student who has stopped needing it. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am beside you or not.\" She looks along the trellis. \"Keeper Holm kept a stair lit so first-years would not walk it in the dark. Eat something warm before you walk a cold road.\""
           }
         }
       }

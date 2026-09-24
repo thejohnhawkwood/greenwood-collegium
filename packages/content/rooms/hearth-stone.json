@@ -26,12 +26,12 @@
       "kind": "npc",
       "lookDescription": "A massive grey badger with granite-dusted paws and a mason's belt. Try talk quern.",
       "examineDescription": "Quern's stripe is pale with stone-dust. The belt is heavy. He does not hurry a sentence, and he does not drop one.",
-      "dialogue": "\"Look around this hearth. Weight first. Speech second. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer.\"",
+      "dialogue": "Quern has a granite block up on the bench, chalked in lines. \"Stone is carrying weight without making a speech about it. Feet first.\" He looks at the straw dummy in the corner. \"Talk quern when you are ready.\"",
       "dialogueTree": {
         "start": "welcome",
         "nodes": {
           "welcome": {
-            "text": "\"Wet rock after rain. Mason's chalk. The keystone watching the door. Look around this hearth. Weight first. Speech second. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
+            "text": "\"Wet rock after rain. Mason's chalk. The keystone watching the door. Look around this hearth. Weight first. Speech second. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem.\"",
             "choices": [
               {
                 "say": "1",
@@ -62,10 +62,10 @@
             "text": "\"The stem is inked. Cast keystone at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name.\""
           },
           "third-lesson": {
-            "text": "\"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\""
+            "text": "\"Chalk is down. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me.\""
           },
           "third-done": {
-            "text": "\"College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road.\""
+            "text": "\"This hearth is done with you, and I will not stretch it out. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am at your shoulder or not.\" He puts his paw on the keystone. \"Keeper Holm kept a stair lit so first-years would not walk it in the dark. He was a mole who understood weight. Eat something warm before you walk a cold road.\""
           }
         }
       }

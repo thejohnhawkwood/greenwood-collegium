@@ -328,15 +328,15 @@ Edge picks the Primer up off the anvil and leaves a little linseed on the cover 
 
 **Intro**
 
-Cinder hangs the tongs and sends you to Alder. The grate ticks behind her. "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
+Cinder hangs the tongs on their nail and shuts the grate door, which she has not done once while you were learning here. "That is me finished. There are three things this hearth can teach you and you have had all three." She jerks her head at the ceiling. "Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on that Clock Tower stair, finish that before you come back here. When he tells you the grounds will teach the rest, come and talk to me and I will close the page."
 
 **Reminder**
 
-Talk to Alder in the High Study, then come back and talk to Cinder. The oatcakes are still a little too near the coals.
+Talk to Alder in the High Study, then come back and talk to Cinder. The grate door is still shut, and she is still standing next to it.
 
 **Complete**
 
-College lessons in this hearth are complete. Cinder inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She sets a pair of hearth mitts on the grate rail. Wear them if you want the soot on your paws. Eat something warm before you take a cold road.
+Cinder inks Alder's leave under the Ember stem and shuts the book properly this time. "That is the whole of the college in this hearth. From here on the lessons come off the grounds, and each one puts one ink in that book for you to spend." She takes the mitts off the grate rail and pushes them at you. "Take those. My paws know the heat by now and yours do not. Eat something warm before you walk a cold road."
 
 **Objectives**
 
@@ -350,15 +350,15 @@ College lessons in this hearth are complete. Cinder inks the leave in the Primer
 
 **Intro**
 
-Briar wipes sap from the shears and sends you to Alder. The trellis ticks as if it were counting. "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
+Briar closes the shears and hangs them up, and for once does not find another stem that needs taking off. "Three lessons and the trellis is still standing. Some years that is not how it goes." She wipes the sap off her paws. "Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that first. When he says the grounds will teach you the rest, come back and talk to me and I will close the page."
 
 **Reminder**
 
-Talk to Alder in the High Study, then come back and talk to Briar. The living walls have not forgotten you.
+Talk to Alder in the High Study, then come back and talk to Briar. The shears are hung up and she has left them there.
 
 **Complete**
 
-College lessons in this hearth are complete. Briar inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She turns a thin thorn ring until the join sits flat, then sets it in your paw. Eat something warm before you take a cold road.
+Briar inks Alder's leave under the Thorns stem and presses the page flat with her palm. "That is the college part done. The grounds teach the rest, and each lesson out there puts one ink in the book for you to spend." She works a thin ring round until the join sits flat, then sets it in your paw. "Cut in the right place and you will not need to cut twice. Eat something warm before you walk a cold road."
 
 **Objectives**
 
@@ -372,15 +372,15 @@ College lessons in this hearth are complete. Briar inks the leave in the Primer.
 
 **Intro**
 
-Mist lets the curtain fall and sends you to Alder. Lavender hangs in the quiet. "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
+Mist draws the double curtain fully back, which lets the whole of the afternoon into a room you have only seen in strips. "Three lessons. You have stopped announcing yourself before you move, which is the one I was waiting on." She leaves the curtain open. "Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
 
 **Reminder**
 
-Talk to Alder in the High Study, then come back and talk to Mist. The mirror will wait. It always does.
+Talk to Alder in the High Study, then come back and talk to Mist. She has left the curtain open and has not said why.
 
 **Complete**
 
-College lessons in this hearth are complete. Mist inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She folds a short quiet cloak once and gives it over. Eat something warm before you take a cold road.
+Mist inks Alder's leave under the Veil stem, then holds the book shut a moment before she gives it back. "The college part is finished. The grounds teach the rest, and each lesson out there leaves one ink in the book for you." She folds a short cloak once and hands it over. "That is quieter than what you are wearing. Eat something warm before you walk a cold road."
 
 **Objectives**
 
@@ -394,15 +394,15 @@ College lessons in this hearth are complete. Mist inks the leave in the Primer. 
 
 **Intro**
 
-Lumen closes a chart and sends you to Alder. Lamp-oil and night glass hang in the loft. "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
+Lumen rolls the chart you have been working from and ties it, then writes your name on the outside of it. "Three lessons, and your last bearing was within a degree. I have kept worse charts from older students." She sets the roll aside. "Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
 
 **Reminder**
 
-Talk to Alder in the High Study, then come back and talk to Lumen. The star-wheel can wait a true bearing.
+Talk to Alder in the High Study, then come back and talk to Lumen. Your chart is rolled and tied with your name on it.
 
 **Complete**
 
-College lessons in this hearth are complete. Lumen inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She sets a small glass ring on the chart. It is for counting, not for light. Eat something warm before you take a cold road.
+Lumen rules a line and inks Alder's leave under the Stars stem along it. "The college part is closed. The grounds teach the rest, and each lesson out there leaves one ink in the book for you to spend." She puts a small glass ring on top of your rolled chart. "That is for counting, not for seeing. Take both. Eat something warm before you walk a cold road."
 
 **Objectives**
 
@@ -416,15 +416,15 @@ College lessons in this hearth are complete. Lumen inks the leave in the Primer.
 
 **Intro**
 
-Quern sets a block of chalk down without hurry and sends you to Alder. "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
+Quern sets the chalk down and puts his paw on the keystone, the way he had you do it on your first day. "Three lessons. The roof is where it was. So are you." He takes a while getting to the rest of it. "Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that before you come back. When he says the grounds will teach the rest, talk to me and I will close the page."
 
 **Reminder**
 
-Talk to Alder in the High Study, then come back and talk to Quern. The keystone has not shifted.
+Talk to Alder in the High Study, then come back and talk to Quern. The chalk is down and the keystone has not shifted.
 
 **Complete**
 
-College lessons in this hearth are complete. Quern inks the leave in the Primer. Keep the book. Each new lesson grants one ink. He dusts a felt cap with a slate-grey band and says the hill can wait. Eat something warm before you take a cold road.
+Quern inks Alder's leave under the Stone stem, slowly, and leaves grey dust in the margin again. "The college part is finished. The grounds teach the rest, and each lesson out there leaves one ink in the book for you." He dusts off a felt cap with a slate-grey band and holds it out. "The hill can wait. It has waited longer than the College has stood. Eat something warm before you walk a cold road."
 
 **Objectives**
 
@@ -438,15 +438,15 @@ College lessons in this hearth are complete. Quern inks the leave in the Primer.
 
 **Intro**
 
-Edge oils a practice blade, sets it on the rack, and sends you to Alder. "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
+Edge racks the practice blade you have been using and does not hand you another one. "Three lessons, and you named your stance every time without me asking after the second. That is the whole of what I teach." He wipes his paws. "Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
 
 **Reminder**
 
-Talk to Alder in the High Study, then come back and talk to Edge. The mail is still hanging, oiled and unromantic.
+Talk to Alder in the High Study, then come back and talk to Edge. Your practice blade is on the rack and he has not taken it down again.
 
 **Complete**
 
-College lessons in this hearth are complete. Edge inks the leave in the Primer. Keep the book. Each new lesson grants one ink. He oils a light wooden guard for the off paw and does not call it a shield. Eat something warm before you take a cold road.
+Edge inks Alder's leave under the Steel stem and leaves a thumbprint of linseed on the corner, as he has every time. "College part is done. The grounds teach the rest, and each lesson out there puts one ink in the book for you." He oils a light wooden guard and fits it on your off paw himself. "That is a guard. It is not a shield and I will not have you calling it one. Eat something warm before you walk a cold road."
 
 **Objectives**
 
@@ -1076,19 +1076,19 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 
 **Standing line**
 
-"Look around this hearth. Smell the soot. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer."
+Cinder has the grate open and a low fire working in it. "Ember is fire kept in a grate and not up in the rafters. That is the whole difference, and it takes three lessons to learn." She nods at the straw dummy in the corner. "Talk cinder when you are ready to start."
 
 **Tree**
 
-- `welcome` (start): "The grate ticks, and last night's oatcakes were left too near the coals again. Look around this hearth. Name the fire before you feed it. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem."
+- `welcome` (start): "The grate ticks, and last night's oatcakes were left too near the coals again. Look around this hearth. Name the fire before you feed it. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem."
   - say `1` What does the Primer ask? → `craft`
   - say `2` I will go. → `go`
 - `craft`: "The Field Primer is your book, not a decoration. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Do not skip the dummy. Fire that is not named will bite."
   - say `1` I understand. → `go`
 - `go`: "Look around this hearth. Defeat the dummy. I will be here by the grate. The tongs stay hot. So do I."
 - `lessons-done`: "The stem is inked. Cast ember at the hearth dummy for the second lesson — a sheltered coal, not a show. After that, the Primer holds one ink. Open the book and type ink and the vein's name."
-- `third-lesson`: "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
-- `third-done`: "College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road."
+- `third-lesson`: "The grate is shut and the tongs are on their nail. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on that Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me."
+- `third-done`: "This hearth has nothing left to teach you, and I am not going to invent a fourth lesson to keep you here. Each lesson off the grounds leaves one ink in the Primer. I sign the page whether I am standing at your shoulder or not." She checks the grate out of habit. "Keeper Holm kept a stair lit so first-years would not walk it in the dark. Eat something warm before you walk a cold road."
 
 ### Mentor Lumen
 
@@ -1097,19 +1097,19 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 
 **Standing line**
 
-"Look around this hearth. Charts before wonder. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer."
+Lumen has the star-wheel set and a column of figures half finished. "Stars is a bearing written down before you walk. Charts first. Wonder keeps." She taps the straw dummy in the corner with the end of her pen. "Talk lumen when you want to begin."
 
 **Tree**
 
-- `welcome` (start): "Ink, cold glass, lamp-oil. Look around this hearth. Charts before wonder. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem."
+- `welcome` (start): "Ink, cold glass, lamp-oil. Look around this hearth. Charts before wonder. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem."
   - say `1` What does the Primer ask? → `craft`
   - say `2` I will go. → `go`
 - `craft`: "The Field Primer is your book, not a wish flung at the night. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Write the hour before you name the star."
   - say `1` I understand. → `go`
 - `go`: "Look around this hearth. Defeat the dummy. I will be here with the charts. Guesswork dressed as wonder will not pass."
 - `lessons-done`: "The stem is inked. Cast azimuth at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name."
-- `third-lesson`: "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
-- `third-done`: "College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road."
+- `third-lesson`: "Your chart is rolled and your name is on it. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me."
+- `third-done`: "This hearth has taught you what it holds. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am at your shoulder or not." She notes the date in her own book. "Keeper Holm kept a stair lit so first-years would not walk it in the dark. Eat something warm before you walk a cold road."
 
 ### Mentor Edge
 
@@ -1118,19 +1118,19 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 
 **Standing line**
 
-"Look around this hearth. Name the stance before you swing. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer."
+Edge has four mail shirts hanging oiled behind him and a strap in his paws. "Steel is a blade kept flat until it is wanted, and a stance you can name out loud." He tips his head at the straw dummy in the corner. "Talk edge when you are ready."
 
 **Tree**
 
-- `welcome` (start): "Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem."
+- `welcome` (start): "Metal, leather, linseed. Mail hanging oiled and unromantic. Look around this hearth. Name the stance before you swing. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem."
   - say `1` What does the Primer ask? → `craft`
   - say `2` I will go. → `go`
 - `craft`: "The Field Primer is your book. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. A sloppy stance is a kindness you have not yet been given."
   - say `1` I understand. → `go`
 - `go`: "Look around this hearth. Defeat the dummy. I will be here by the anvil. Excuses stay shorter than the lesson."
 - `lessons-done`: "The stem is inked. Cast strike at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name."
-- `third-lesson`: "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
-- `third-done`: "College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road."
+- `third-lesson`: "Your blade is on the rack and it stays there. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me."
+- `third-done`: "This hearth is finished with you. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am standing at your shoulder or not." He sets the oil rag down. "Keeper Holm kept a stair lit so first-years would not walk it in the dark. Nobody handed him a medal for it either. Eat something warm before you walk a cold road."
 
 ### Mentor Quern
 
@@ -1139,19 +1139,19 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 
 **Standing line**
 
-"Look around this hearth. Weight first. Speech second. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer."
+Quern has a granite block up on the bench, chalked in lines. "Stone is carrying weight without making a speech about it. Feet first." He looks at the straw dummy in the corner. "Talk quern when you are ready."
 
 **Tree**
 
-- `welcome` (start): "Wet rock after rain. Mason's chalk. The keystone watching the door. Look around this hearth. Weight first. Speech second. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem."
+- `welcome` (start): "Wet rock after rain. Mason's chalk. The keystone watching the door. Look around this hearth. Weight first. Speech second. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem."
   - say `1` What does the Primer ask? → `craft`
   - say `2` I will go. → `go`
 - `craft`: "The Field Primer is your book. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Carry the weight you named."
   - say `1` I understand. → `go`
 - `go`: "Look around this hearth. Defeat the dummy. I will be here. I do not hurry a sentence, and I will not drop this one."
 - `lessons-done`: "The stem is inked. Cast keystone at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name."
-- `third-lesson`: "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
-- `third-done`: "College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road."
+- `third-lesson`: "Chalk is down. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me."
+- `third-done`: "This hearth is done with you, and I will not stretch it out. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am at your shoulder or not." He puts his paw on the keystone. "Keeper Holm kept a stair lit so first-years would not walk it in the dark. He was a mole who understood weight. Eat something warm before you walk a cold road."
 
 ### Mentor Briar
 
@@ -1160,19 +1160,19 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 
 **Standing line**
 
-"Look around this hearth. The briar remembers every cut. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer."
+Briar has the shears out and a pile of cut stems at her feet. "Thorns is growth that knows where the path is. Anything can grow. Not everything guards." She nods at the straw dummy in the corner. "Talk briar when you want to start."
 
 **Tree**
 
-- `welcome` (start): "Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem."
+- `welcome` (start): "Green light. Crushed sap. Shears where you can reach them. Look around this hearth. The plants are listening. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem."
   - say `1` What does the Primer ask? → `craft`
   - say `2` I will go. → `go`
 - `craft`: "The Field Primer is your book, not a pressed flower. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Growth that is not named will snare you."
   - say `1` I understand. → `go`
 - `go`: "Look around this hearth. Defeat the dummy. I will be here among the living walls. The shears stay sharp. So do I."
 - `lessons-done`: "The stem is inked. Cast briar at the hearth dummy for the second lesson — a vine trained, not a snare left to wander. After that, the Primer holds one ink. Open the book and type ink and the vein's name."
-- `third-lesson`: "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
-- `third-done`: "College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road."
+- `third-lesson`: "Shears are hung up and I am leaving them there. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me."
+- `third-done`: "You are done in here, and I will not prune a student who has stopped needing it. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am beside you or not." She looks along the trellis. "Keeper Holm kept a stair lit so first-years would not walk it in the dark. Eat something warm before you walk a cold road."
 
 ### Mentor Mist
 
@@ -1181,19 +1181,19 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 
 **Standing line**
 
-"Look around this hearth. The curtains keep honest shadow. Defeat the hearth dummy in this room. Come back and talk to me. I will open this School's leaf and ink its stem in your Field Primer."
+Mist stands where the curtain light falls in strips and does not step out of it. "The Veil is work done without announcing it first. Students find that harder than fire." She indicates the straw dummy in the corner. "Talk mist when you are ready."
 
 **Tree**
 
-- `welcome` (start): "Lavender. Cold stone. A mirror that is only a mirror until you waste time in it. Look around this hearth. Then attack the hearth dummy in this room — not Flint's orchard dummy, unless you are still learning the spark. Come back and talk to me. I will open this School's leaf and ink its stem."
+- `welcome` (start): "Lavender. Cold stone. A mirror that is only a mirror until you waste time in it. Look around this hearth. Then attack the hearth dummy in here, mine and not the one Flint keeps out in his orchard, unless you are still learning the spark on his. Come back and talk to me. I will open this School's leaf and ink its stem."
   - say `1` What does the Primer ask? → `craft`
   - say `2` I will go. → `go`
 - `craft`: "The Field Primer is your book. I open this School's leaf and ink the stem after you look around this hearth, defeat the dummy, and talk to me. Later the Primer holds ink. Open the book and type ink and the vein's name. Quiet work is still work. Do not skip the dummy because the room is dim."
   - say `1` I understand. → `go`
 - `go`: "Look around this hearth. Defeat the dummy. I will be here in the quiet. The silence is not empty. Neither am I."
 - `lessons-done`: "The stem is inked. Cast shade at the hearth dummy for the second lesson. After that, the Primer holds one ink. Open the book and type ink and the vein's name."
-- `third-lesson`: "Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me."
-- `third-done`: "College lessons in this hearth are complete. Keep the Primer. Each new lesson grants one ink. I still sign the page even when I am not at your shoulder. Holm kept a stair so first-years would not walk it dark. Eat something warm before you take a cold road."
+- `third-lesson`: "The curtain is open. You will notice that. Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish it first. When he says the grounds will teach the rest, come back and talk to me."
+- `third-done`: "This hearth is finished with you. Each lesson off the grounds leaves one ink in the Primer, and I sign the page whether I am at your shoulder or not." She lets that stand. "Keeper Holm kept a stair lit so first-years would not walk it in the dark. That is the only reason I will tell you to eat something warm before you walk a cold road."
 
 ### Groundskeeper Tansy
 

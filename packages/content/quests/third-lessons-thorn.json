@@ -2,9 +2,9 @@
   "$schema": "../schemas/quest.schema.json",
   "id": "third-lessons-thorn",
   "title": "Alder's Leave: Thorns",
-  "introNarration": "Briar wipes sap from the shears and sends you to Alder. The trellis ticks as if it were counting. \"Talk to Headmaster Alder in the High Study. Type up from the Great Hall. If he is still sending you down the Clock Tower stair, finish that first. When he says the grounds will teach the rest, come back and talk to me.\"",
-  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Briar. The living walls have not forgotten you.",
-  "completionNarration": "College lessons in this hearth are complete. Briar inks the leave in the Primer. Keep the book. Each new lesson grants one ink. She turns a thin thorn ring until the join sits flat, then sets it in your paw. Eat something warm before you take a cold road.",
+  "introNarration": "Briar closes the shears and hangs them up, and for once does not find another stem that needs taking off. \"Three lessons and the trellis is still standing. Some years that is not how it goes.\" She wipes the sap off her paws. \"Talk to Headmaster Alder in the High Study, up from the Great Hall. If he has you on the Clock Tower stair, finish that first. When he says the grounds will teach you the rest, come back and talk to me and I will close the page.\"",
+  "reminderNarration": "Talk to Alder in the High Study, then come back and talk to Briar. The shears are hung up and she has left them there.",
+  "completionNarration": "Briar inks Alder's leave under the Thorns stem and presses the page flat with her palm. \"That is the college part done. The grounds teach the rest, and each lesson out there puts one ink in the book for you to spend.\" She works a thin ring round until the join sits flat, then sets it in your paw. \"Cut in the right place and you will not need to cut twice. Eat something warm before you walk a cold road.\"",
   "experienceReward": 25,
   "itemRewardTemplateId": "thorn-ring",
   "objectives": [
