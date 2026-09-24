@@ -132,7 +132,29 @@ requires `the-ninth-scratch` and gates nothing.
 giver, and nothing that refers to it. Either something on the river should want
 the race running, or it can stay as ambient danger; right now it is neither.
 
-## Open hook for slice 5
+## The fold tally page hook — closed, 24 September 2026
+
+Implemented with the owner's approval for an engine change. `fold-tally-page` is
+now recognised by Wren and by Alder, mirroring how Quill recognises the abbey-mark
+rubbing.
+
+`tallyPageNode` in `packages/game-engine/src/east-watch.ts` takes an explicit
+allow-list of idle nodes and returns `tally-page` only when the character holds
+the page **and** the node the NPC would otherwise pick is in that list. Wren's list
+is `welcome`, `fork-done`, `stay`. Alder's is `watch-active`, `walker-done`,
+`already-chosen`. An allow-list rather than a deny-list means a new spine node can
+never accidentally be interrupted by side colour.
+
+Wren reads it twice, puts the kettle down without pouring, and says three animals
+who count things properly were all wrong in the same week and none of them came to
+her. She does not soften it, and she sends the page up to Alder. Alder holds it
+flat under the tuning fork, says Kern does not write a number he cannot stand
+behind, and declines to name who carried the bronze in. He keeps the page.
+
+Engine test covers all three cases: the page fires when Wren is idle, the barrow
+beat still wins while it is live, and an empty paw returns her to her own node.
+
+## Superseded note: the original hook write-up
 
 `one-page-for-three` ends with Kern tearing the page out and saying that Wren
 should see it, and Alder after her if she says so. Nothing in the game answers

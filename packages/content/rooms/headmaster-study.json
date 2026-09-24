@@ -185,6 +185,9 @@
           "walker-active": {
             "text": "\"Three Collegians. Fog Hollow. Defeat the Fog Walker. Then talk alder here. The wood and the moor both remember. I would rather watch you walk back to the croft.\""
           },
+          "tally-page": {
+            "text": "Alder reads Kern's page without comment, then sets it on the blotter and puts the tuning fork across it to hold it flat. \"Three careful animals, three counts, one week. Stoneward Kern does not write a number he cannot stand behind.\" He looks at the dates rather than at you. \"This does not tell me who carried our bronze into that hill, and I will not name a cause from behind a desk. It does tell me the moor was busy before we knew to watch it. That is worth more than a rumour. I am keeping this page. Tell Kern his book was the right place to put it.\""
+          },
           "walker-done": {
             "text": "\"The wood remembers. The moor remembers. That is enough for one year. Eat. Sleep. Who took the bronze into the hill — if the walker only learned to use it — is a later question. I will not invent a thief from a fog. Holm's name stays in this study. Colm's stays at Wren's kettle. Go to class.\""
           }

@@ -9,6 +9,29 @@ export const FLINT_NPC_ID = "npc-instructor-flint";
 export const TANSY_NPC_ID = "npc-groundskeeper-tansy";
 export const QUILL_NPC_ID = "npc-librarian-quill";
 export const ABBEY_MARK_RUBBING_TEMPLATE_ID = "abbey-mark-rubbing";
+export const FOLD_TALLY_PAGE_TEMPLATE_ID = "fold-tally-page";
+
+/** Kern's page is side colour. It never interrupts an urgent East Watch beat. */
+const TALLY_PAGE_NODE = "tally-page";
+
+export function holdsFoldTallyPage(world: WorldState, character: Character): boolean {
+  return itemsHeldBy(world, character.id).some(
+    (item) => item.templateId === FOLD_TALLY_PAGE_TEMPLATE_ID,
+  );
+}
+
+export function tallyPageNode(
+  tree: DialogueTree,
+  world: WorldState,
+  character: Character,
+  idleNodes: readonly string[],
+  preferred: string,
+): string | undefined {
+  if (!idleNodes.includes(preferred) || !tree.nodes[TALLY_PAGE_NODE]) {
+    return undefined;
+  }
+  return holdsFoldTallyPage(world, character) ? TALLY_PAGE_NODE : undefined;
+}
 
 const STILL_SLEEPS_ID = "what-still-sleeps";
 
@@ -96,11 +119,18 @@ export function resolveWrenSpeechNode(
     return undefined;
   }
   const preferred = wrenSpeechNode(world, character);
+  const page = tallyPageNode(tree, world, character, WREN_IDLE_NODES, preferred);
+  if (page) {
+    return page;
+  }
   if (tree.nodes[preferred]) {
     return preferred;
   }
   return tree.nodes[tree.start] ? tree.start : undefined;
 }
+
+/** Wren is free to read Kern's page only outside the fold, barrow, and Colm beats. */
+const WREN_IDLE_NODES = ["welcome", "fork-done", "stay"] as const;
 
 function wrenSpeechNode(world: WorldState, character: Character): string {
   if (questStatus(world, character, FOG_TOOK_QUEST_ID) === "completed") {
