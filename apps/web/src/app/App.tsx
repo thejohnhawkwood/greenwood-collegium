@@ -81,8 +81,21 @@ export function App() {
   const showGate = status !== undefined && shouldShowAuthGate(status, forceGate);
   const waiting =
     me !== undefined && (me.nameReview?.status === "pending" || Boolean(me.timeoutUntil));
+  const staffSend = useRef<((raw: string) => void) | undefined>(undefined);
+  const bindStaffCommand = useCallback((send?: (raw: string) => void) => {
+    staffSend.current = send;
+  }, []);
   const sidebar =
-    me && (me.role === "owner" || me.role === "teacher") ? <AdminPane me={me} /> : undefined;
+    me && (me.role === "owner" || me.role === "teacher") ? (
+      <AdminPane
+        me={me}
+        onStaffCommand={(command) => {
+          if (!staffSend.current) return false;
+          staffSend.current(command);
+          return true;
+        }}
+      />
+    ) : undefined;
   const authNotice = authError ? (
     <div>
       <p role="alert">{authError}</p>
@@ -185,6 +198,7 @@ export function App() {
         onSignedOut={() => {
           void refresh();
         }}
+        onBindStaffCommand={bindStaffCommand}
       />
     </AcademyFrame>
   );
@@ -196,12 +210,14 @@ function PlayClient({
   onShowGate,
   onSignedOut,
   authNotice,
+  onBindStaffCommand,
 }: {
   status: AuthStatus;
   me: AuthSessionPublic | undefined;
   onShowGate: () => void;
   onSignedOut: () => void;
   authNotice: ReactNode;
+  onBindStaffCommand?: (send?: (raw: string) => void) => void;
 }) {
   const socketRef = useRef<Socket | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -372,6 +388,7 @@ function PlayClient({
     raw: string,
     preserveDraft = false,
     onSettled?: (result: { ok: boolean; message: string }) => void,
+    skipFocus = false,
   ) {
     const socket = socketRef.current;
     if (raw.trim().length === 0) {
@@ -437,8 +454,15 @@ function PlayClient({
       },
     );
 
-    inputRef.current?.focus();
+    if (!skipFocus) inputRef.current?.focus();
   }
+
+  const sendFromPanel = useRef(sendCommand);
+  sendFromPanel.current = sendCommand;
+  useEffect(() => {
+    onBindStaffCommand?.((raw) => sendFromPanel.current(raw, true, undefined, true));
+    return () => onBindStaffCommand?.(undefined);
+  }, [onBindStaffCommand]);
 
   function fillCommand(raw: string) {
     setInputValue(raw);

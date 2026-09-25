@@ -37,7 +37,10 @@ NPCS_MAP = {
     "npc-scout-tern.png": "character_npc-scout-tern__v003__comic-ink.png",
     "archive-bat.png": "character_archive-bat__v001__comic-ink.png",
     "withy-sentry.png": "character_withy-sentry__v001__comic-ink.png",
-    "college-raider.png": "character_college-raider__v002__comic-ink.png",
+    "college-raider.png": "character_college-raider__v003__comic-ink.png",
+    "college-raider-badger.png": "character_college-raider-badger__v001__comic-ink.png",
+    "college-raider-rat.png": "character_college-raider-rat__v001__comic-ink.png",
+    "college-raider-stoat.png": "character_college-raider-stoat__v001__comic-ink.png",
 }
 OBJECTS_MAP = {
     "pressed-mask.png": "object_pressed-mask__v002__comic-ink.png",

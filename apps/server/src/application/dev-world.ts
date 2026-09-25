@@ -105,5 +105,25 @@ export function createDevWorld(): WorldState {
       ]),
     ),
     speciesProficiencies: { ...loaded.speciesProficiencies },
+    enemyTemplates: Object.fromEntries(
+      Object.values(loaded.enemyTemplates).map((template) => [
+        template.templateId,
+        {
+          templateId: template.templateId,
+          name: template.name,
+          examineDescription: template.examineDescription,
+          lookDescription: template.lookDescription,
+          maxHealth: template.maxHealth,
+          maxFocus: template.maxFocus,
+          attack: template.attack,
+          experience: template.experience,
+          ...(template.minParty ? { minParty: template.minParty } : {}),
+          ...(template.loot?.length ? { loot: [...template.loot] } : {}),
+          ...(template.victoryNarration ? { victoryNarration: template.victoryNarration } : {}),
+          ...(template.lockNarration ? { lockNarration: template.lockNarration } : {}),
+          ...(template.reads?.length ? { reads: [...template.reads] } : {}),
+        },
+      ]),
+    ),
   };
 }

@@ -921,6 +921,13 @@ export async function attachRealtime(
         return;
       }
       const delivered = deliverPlay(characterId, staff.events, staff.notices);
+      if (intent.verb === "defense-start") {
+        for (const id of sockets.keys()) {
+          if (activeEncounter(world, id)) {
+            armCombatLock(id, identities.get(id));
+          }
+        }
+      }
       if (staff.kickCharacterId) {
         kickCharacter(staff.kickCharacterId);
       }
@@ -1207,7 +1214,10 @@ export async function attachRealtime(
       intent.verb === "attack" ||
       intent.verb === "cast" ||
       intent.verb === "defend" ||
-      intent.verb === "flee"
+      intent.verb === "flee" ||
+      intent.verb === "move" ||
+      intent.verb === "travel" ||
+      intent.verb === "seek"
     ) {
       rearmPartyLocks(characterId, previousEncounterId);
     }

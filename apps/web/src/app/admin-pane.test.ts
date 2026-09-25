@@ -2,7 +2,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { AuthSessionPublic } from "@greenwood/contracts";
-import { ActiveStudentCard, AdminPane } from "./AdminPane.js";
+import { ActiveStudentCard, AdminPane, defenseStaffCommand } from "./AdminPane.js";
 import { givenNameFromCollegian, isInPlayAccount } from "./classroom-data.js";
 import { AcademyFrame } from "./academy-frame.js";
 import { ApprovalGate } from "./ApprovalGate.js";
@@ -32,6 +32,11 @@ describe("teacher and approval presentation", () => {
     expect(html).toContain("Pause student chat");
     expect(html).toContain("Active");
     expect(html).toContain("Roster");
+    expect(html).toContain("Server");
+    expect(defenseStaffCommand("start", "7")).toBe("admin defense start 7");
+    expect(defenseStaffCommand("end", "7")).toBe("admin defense cancel");
+    expect(defenseStaffCommand("status", "")).toBe("admin defense status");
+    expect(defenseStaffCommand("start", "8")).toBeUndefined();
     expect(html).toContain("Transcript");
   });
   it("treats only live courtyard seats as the Active tab list", () => {

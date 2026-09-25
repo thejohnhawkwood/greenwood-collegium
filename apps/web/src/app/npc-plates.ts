@@ -40,6 +40,9 @@ export const NPC_PLATE_FILES = [
   "archive-bat",
   "withy-sentry",
   "college-raider",
+  "college-raider-badger",
+  "college-raider-rat",
+  "college-raider-stoat",
 ] as const;
 
 const NPC_PLATE_ALIASES: Record<string, string> = {
@@ -111,9 +114,25 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "college-raider": "college-raider",
 };
 
-const NPC_ART_REV = "comic-ink-2";
+const NPC_ART_REV = "comic-ink-3";
+
+/** Four vicious faces. A defense spawn keeps the same one for that id. */
+export const RAIDER_PLATES = [
+  "college-raider",
+  "college-raider-badger",
+  "college-raider-rat",
+  "college-raider-stoat",
+] as const;
+
+export function raiderPlateForSpawn(id: string): (typeof RAIDER_PLATES)[number] {
+  let hash = 0;
+  for (const char of id) {
+    hash = (Math.imul(hash, 33) + char.charCodeAt(0)) >>> 0;
+  }
+  return RAIDER_PLATES[hash % RAIDER_PLATES.length] ?? "college-raider";
+}
 
 export function npcArtSrc(id: string): string | undefined {
-  const plate = id.startsWith("defense-") ? "college-raider" : NPC_PLATE_ALIASES[id];
+  const plate = id.startsWith("defense-") ? raiderPlateForSpawn(id) : NPC_PLATE_ALIASES[id];
   return plate ? `/art/characters/npcs/${plate}.png?v=${NPC_ART_REV}` : undefined;
 }

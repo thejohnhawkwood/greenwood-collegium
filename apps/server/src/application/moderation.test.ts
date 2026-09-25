@@ -170,9 +170,20 @@ describe("classroom moderation", () => {
     if (called.ok) {
       // Every other Collegian online hears Alder, not just the teacher.
       expect(called.events[0]?.narration).toContain("Raiders are on the grounds");
-      expect(called.notices).toHaveLength(1);
-      expect(called.notices[0]?.event.narration).toContain("7 minutes");
+      expect(called.notices.some((notice) => notice.event.narration.includes("7 minutes"))).toBe(
+        true,
+      );
+      // People already at the gate are in the fight. Nobody is asked first.
+      expect(called.events.some((event) => event.type === "combat.started")).toBe(true);
+      expect(
+        called.notices.some(
+          (notice) =>
+            notice.characterId === "char-student" && notice.event.type === "combat.started",
+        ),
+      ).toBe(true);
     }
+    expect(state.characters["char-teacher"]?.encounterId).toBeTruthy();
+    expect(state.characters["char-student"]?.encounterId).toBeTruthy();
     expect(state.defense?.phase).toBe("fighting");
     expect(saved).toEqual([{ phase: "fighting" }]);
     // Raiders actually arrive at the three gates, minted from content.

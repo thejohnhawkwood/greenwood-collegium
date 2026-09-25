@@ -21,7 +21,7 @@ import {
   tokenKind,
 } from "./presence-layout.js";
 import { presenceActions } from "./presence-actions.js";
-import { npcArtSrc } from "./npc-plates.js";
+import { npcArtSrc, raiderPlateForSpawn } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
 import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
@@ -545,34 +545,34 @@ describe("visual foundation", () => {
     expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
-      "/art/characters/npcs/practice-dummy.png?v=comic-ink-2",
+      "/art/characters/npcs/practice-dummy.png?v=comic-ink-3",
     );
     expect(npcArtSrc("npc-piper-mole")).toBe(
-      "/art/characters/npcs/npc-piper-mole.png?v=comic-ink-2",
+      "/art/characters/npcs/npc-piper-mole.png?v=comic-ink-3",
     );
     expect(npcArtSrc("enemy-silk-hatchling-cocoon-nave")).toBe(
-      "/art/characters/npcs/silk-hatchling.png?v=comic-ink-2",
+      "/art/characters/npcs/silk-hatchling.png?v=comic-ink-3",
     );
     expect(npcArtSrc("npc-shepherd-wren")).toBe(
-      "/art/characters/npcs/npc-shepherd-wren.png?v=comic-ink-2",
+      "/art/characters/npcs/npc-shepherd-wren.png?v=comic-ink-3",
     );
     expect(npcArtSrc("enemy-mist-crow-sheepfold")).toBe(
-      "/art/characters/npcs/mist-crow.png?v=comic-ink-2",
+      "/art/characters/npcs/mist-crow.png?v=comic-ink-3",
     );
     expect(npcArtSrc("enemy-fog-walker-fog-hollow")).toBe(
-      "/art/characters/npcs/fog-walker.png?v=comic-ink-2",
+      "/art/characters/npcs/fog-walker.png?v=comic-ink-3",
     );
     expect(npcArtSrc("enemy-peat-adder-peat-cut")).toBe(
-      "/art/characters/npcs/peat-adder.png?v=comic-ink-2",
+      "/art/characters/npcs/peat-adder.png?v=comic-ink-3",
     );
     expect(npcArtSrc("enemy-archive-bat-root")).toBe(
-      "/art/characters/npcs/archive-bat.png?v=comic-ink-2",
+      "/art/characters/npcs/archive-bat.png?v=comic-ink-3",
     );
     expect(npcArtSrc("enemy-withy-sentry-osier-holt")).toBe(
-      "/art/characters/npcs/withy-sentry.png?v=comic-ink-2",
+      "/art/characters/npcs/withy-sentry.png?v=comic-ink-3",
     );
     expect(npcArtSrc("defense-night-lantern-court-1")).toBe(
-      "/art/characters/npcs/college-raider.png?v=comic-ink-2",
+      `/art/characters/npcs/${raiderPlateForSpawn("defense-night-lantern-court-1")}.png?v=comic-ink-3`,
     );
     expect(objectArtSrc("object-kitchen-initials", "Bread Tin")).toBe(
       "/art/objects/object-kitchen-initials.png",
@@ -787,6 +787,25 @@ describe("visual foundation", () => {
     ).toBe(false);
     expect(isConversationVisible(edge, "npc-porter-bramble")).toBe(true);
   });
+  it("gives each defense raider a stable face from four plates", () => {
+    const ids = [
+      "defense-night-lantern-court-0",
+      "defense-night-lantern-court-1",
+      "defense-night-east-meadow-0",
+      "defense-night-south-orchard-0",
+      "defense-night-lantern-court-2",
+      "defense-later-lantern-court-0",
+    ];
+    const plates = new Set(ids.map((id) => npcArtSrc(id)));
+    expect(plates.size).toBeGreaterThanOrEqual(3);
+    for (const id of ids) {
+      expect(npcArtSrc(id)).toBe(npcArtSrc(id));
+      expect(npcArtSrc(id)).toContain("college-raider");
+    }
+    expect(npcArtSrc("college-raider")).toBe(
+      "/art/characters/npcs/college-raider.png?v=comic-ink-3",
+    );
+  });
   it("lists known destinations and present Collegians in the lobby", () => {
     const html = renderToStaticMarkup(
       createElement(CollegiumLobby, {
@@ -861,7 +880,7 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain("Fighting Practice Dummy");
-    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=comic-ink-2");
+    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=comic-ink-3");
     expect(html).toContain("Health 8 / 8");
     expect(html).toContain("Focus 6 / 6");
     expect(html).toContain("1. Attack");

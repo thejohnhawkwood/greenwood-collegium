@@ -52,6 +52,7 @@ import {
   worldEnemies,
 } from "./enemies.js";
 import { worldItems } from "./items.js";
+import { DEFENSE_GATE_ROOM_IDS, defenseFighting, isDefenseSpawnId } from "./college-defense.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
@@ -999,4 +1000,41 @@ function levelEvent(character: Character, runtime: EngineRuntime): EventEnvelope
     narration: formatLevelGainedText(payload),
     payload,
   });
+}
+
+/**
+ * A raider at a gate opens the fight. No ask, no accept. One free raider per Collegian.
+ */
+export function beginDefenseAmbushes(
+  world: WorldState,
+  runtime: EngineRuntime,
+): Array<{ characterId: string; result: CombatSuccess }> {
+  if (!defenseFighting(world, runtime.now())) {
+    return [];
+  }
+  const gates: readonly string[] = DEFENSE_GATE_ROOM_IDS;
+  const opened: Array<{ characterId: string; result: CombatSuccess }> = [];
+  for (const character of Object.values(world.characters)) {
+    if (character.encounterId || !gates.includes(character.roomId)) {
+      continue;
+    }
+    const spawn = Object.values(worldEnemies(world)).find(
+      (enemy) =>
+        enemy.roomId === character.roomId &&
+        isDefenseSpawnId(enemy.id) &&
+        !encounterUsingSpawn(world, enemy.id),
+    );
+    if (!spawn) {
+      continue;
+    }
+    const prepared = prepareEncounter(world, character.id, spawn.id, runtime);
+    if (!prepared.ok || !prepared.started) {
+      continue;
+    }
+    opened.push({
+      characterId: character.id,
+      result: openingOnly(world, prepared.character, prepared.encounter, runtime),
+    });
+  }
+  return opened;
 }

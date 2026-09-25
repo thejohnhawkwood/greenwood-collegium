@@ -21,7 +21,28 @@ import { useEffect, useRef, useState } from "react";
 import { adminRequest, requestMessage } from "./admin-api.js";
 import { SpeechLog } from "./SpeechLog.js";
 
-export function AdminPane({ me }: { me: AuthSessionPublic }) {
+/** The typed staff line a Server button sends. Blank minutes use the server default. */
+export function defenseStaffCommand(
+  kind: "start" | "end" | "status",
+  minutes: string,
+): string | undefined {
+  if (kind === "end") return "admin defense cancel";
+  if (kind === "status") return "admin defense status";
+  const trimmed = minutes.trim();
+  if (trimmed === "") return "admin defense start";
+  if (!/^\d{1,2}$/u.test(trimmed)) return undefined;
+  const count = Number(trimmed);
+  if (count < 1 || count > 7) return undefined;
+  return `admin defense start ${String(count)}`;
+}
+
+export function AdminPane({
+  me,
+  onStaffCommand,
+}: {
+  me: AuthSessionPublic;
+  onStaffCommand?: (command: string) => boolean | void;
+}) {
   const allowed = me.role === "teacher" || me.role === "owner";
   const [classroom, setClassroom] = useState<AuthClassroom>();
   const [tab, setTab] = useState("Approvals");
@@ -111,7 +132,7 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
             (classroom ? `${pending.length} names waiting for review.` : "Loading classroom…")}
         </p>
         <nav className="admin-tabs" aria-label="Teacher sections">
-          {["Active", "Approvals", "Roster", "Speech", "History"].map((name) => (
+          {["Active", "Approvals", "Roster", "Speech", "History", "Server"].map((name) => (
             <button
               key={name}
               type="button"
@@ -357,8 +378,60 @@ export function AdminPane({ me }: { me: AuthSessionPublic }) {
         ) : null}
         {tab === "Speech" ? <SpeechLog /> : null}
         {tab === "History" ? <AuditHistory /> : null}
+        {tab === "Server" ? <ServerTab onStaffCommand={onStaffCommand} /> : null}
       </details>
     </aside>
+  );
+}
+
+function ServerTab({ onStaffCommand }: { onStaffCommand?: (command: string) => boolean | void }) {
+  const [minutes, setMinutes] = useState("7");
+  const [note, setNote] = useState("");
+  function send(kind: "start" | "end" | "status") {
+    const command = defenseStaffCommand(kind, minutes);
+    if (!command) {
+      setNote("Minutes must be from 1 to 7.");
+      return;
+    }
+    if (!onStaffCommand || onStaffCommand(command) === false) {
+      setNote("Enter the courtyard first. These buttons send the same words as the command box.");
+      return;
+    }
+    setNote("");
+  }
+  return (
+    <section aria-labelledby="server-heading">
+      <h3 id="server-heading">Server</h3>
+      <p className="admin-hint">
+        A defense calls raiders to Lantern Court, the East Meadow, and the South Orchard. Seven
+        minutes is the longest. The answer appears in the courtyard transcript.
+      </p>
+      <label>
+        Minutes
+        <input
+          type="number"
+          min={1}
+          max={7}
+          value={minutes}
+          onChange={(event) => setMinutes(event.target.value)}
+        />
+      </label>
+      <div className="admin-buttons">
+        <button type="button" onClick={() => send("start")}>
+          Start the defense
+        </button>
+        <button type="button" onClick={() => send("end")}>
+          End the defense
+        </button>
+        <button type="button" onClick={() => send("status")}>
+          Defense status
+        </button>
+      </div>
+      <p className="admin-hint">
+        Typed: admin defense start [minutes], admin defense cancel, admin defense status.
+      </p>
+      {note ? <p role="status">{note}</p> : null}
+    </section>
   );
 }
 

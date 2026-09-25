@@ -14,6 +14,7 @@ import {
   promptPorterAfterMove,
 } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
+import { beginDefenseAmbushes } from "./combat-resolve.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { systemNotice } from "./system-notice.js";
@@ -114,6 +115,12 @@ export function handleMove(
   const nag = promptPorterAfterMove(world, character, destination.id, runtime);
   if (nag) {
     events.push(nag);
+  }
+  const ambush = beginDefenseAmbushes(world, runtime).find(
+    (opened) => opened.characterId === character.id,
+  );
+  if (ambush) {
+    events.push(...ambush.result.events);
   }
 
   return {

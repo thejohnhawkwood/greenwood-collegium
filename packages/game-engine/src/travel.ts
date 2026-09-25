@@ -7,6 +7,7 @@ import {
 } from "@greenwood/contracts";
 import { closeConversationIfNpcGone } from "./arrival-guide.js";
 import { rejectIfInCombat } from "./combat-state.js";
+import { beginDefenseAmbushes } from "./combat-resolve.js";
 import { handleLook } from "./look.js";
 import { namesMatch } from "./names.js";
 import { charactersInRoom } from "./occupants.js";
@@ -129,9 +130,12 @@ export function handleTravel(
   if (!look.ok) {
     return { ok: false, code: "room_not_found", message: look.message };
   }
+  const ambush = beginDefenseAmbushes(world, runtime).find(
+    (opened) => opened.characterId === character.id,
+  );
   return {
     ok: true,
-    events: [notice, look.event],
+    events: ambush ? [notice, look.event, ...ambush.result.events] : [notice, look.event],
     notices: [
       ...leftNotices(leavers, character, origin.id, runtime),
       ...enteredNotices(arrivals, character, destination.id, runtime),

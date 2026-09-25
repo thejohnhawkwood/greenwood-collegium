@@ -28,6 +28,7 @@ export {
 } from "./recover.js";
 export { handleInventory } from "./inventory.js";
 export { handleAttack } from "./attack.js";
+export { beginDefenseAmbushes } from "./combat-resolve.js";
 export { handleDefend } from "./defend.js";
 export { handleFlee } from "./flee.js";
 export { handleCombatExpire } from "./combat-expire.js";

@@ -7,6 +7,7 @@ import {
   cancelDefense,
   clearDefenseSpawns,
   defenseMinutes,
+  beginDefenseAmbushes,
   openDefenseGates,
   defenseStatusLine,
   settleDefense,
@@ -311,14 +312,23 @@ async function defense(
     defenseId: started.id,
     onlineCount: context.onlineCharacterIds.length,
   });
+  const ambushes = beginDefenseAmbushes(context.world, context.runtime);
   await context.persistDefense?.(started);
   await writeAudit(context, "defense", undefined, `start ${String(minutes)}m`);
   const line = alderCallNarration(minutes);
-  return {
-    ok: true,
-    events: [noticeFor(context.actorId, line, context.runtime)],
-    notices: broadcast(context, line),
-  };
+  const events = [noticeFor(context.actorId, line, context.runtime)];
+  const notices = broadcast(context, line);
+  for (const ambush of ambushes) {
+    if (ambush.characterId === context.actorId) {
+      events.push(...ambush.result.events);
+    } else {
+      for (const event of ambush.result.events) {
+        notices.push({ characterId: ambush.characterId, event });
+      }
+    }
+    notices.push(...ambush.result.notices);
+  }
+  return { ok: true, events, notices };
 }
 
 function broadcast(context: StaffContext, line: string): StaffSuccess["notices"] {
