@@ -41,6 +41,10 @@ export const itemTemplateSchema = z
       ])
       .optional(),
     training: z.boolean().optional(),
+    /** H2. Extra plain text when somebody examines the Collegian wearing this. */
+    examineRider: z.string().min(1).optional(),
+    /** H2. While worn, this piece admits the wearer to that room. */
+    admitsRoomId: stableIdSchema.optional(),
     unique: z.literal(true).default(true),
   })
   .strict()
@@ -48,6 +52,15 @@ export const itemTemplateSchema = z
     rejectMarkup(item.name, "name", ctx);
     rejectMarkup(item.shortDescription, "shortDescription", ctx);
     rejectMarkup(item.examineDescription, "examineDescription", ctx);
+    if (item.examineRider) {
+      rejectMarkup(item.examineRider, "examineRider", ctx);
+    }
+    if ((item.examineRider || item.admitsRoomId) && !item.equipSlot) {
+      ctx.addIssue({
+        code: "custom",
+        message: "examineRider and admitsRoomId only work on a piece with an equipSlot",
+      });
+    }
     const primitive =
       item.itemType ??
       (item.category === "weapon" || item.category === "ordinary" ? undefined : item.category);

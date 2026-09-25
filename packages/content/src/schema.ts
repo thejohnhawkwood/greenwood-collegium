@@ -118,6 +118,8 @@ export const roomFileSchema = z
     fixtures: z.array(roomFixtureSchema).default([]),
     map: roomMapSchema.optional(),
     visualState: stableIdSchema.optional(),
+    /** H2. What the door says to a Collegian not wearing the piece that admits it. */
+    admissionRefusal: z.string().min(1).optional(),
     unmapped: z.literal(true).optional(),
     terminal: z.boolean().optional(),
   })

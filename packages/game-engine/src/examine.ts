@@ -10,6 +10,7 @@ import { itemTypeWord, itemsHeldBy, itemsInRoom, whichItemMessage } from "./item
 import { ensureCharacterStarterItems } from "./starter-items.js";
 import { namesMatch } from "./names.js";
 import type { Character, EngineRuntime, ExamineIntent, WorldState } from "./state.js";
+import { wornExamineRiders } from "./worn-world.js";
 
 export type ExamineSuccess = {
   ok: true;
@@ -82,10 +83,13 @@ export function handleExamine(
         entityKind: "player" as const,
         name: other.name,
         aliases: other.accountUsername ? [other.accountUsername] : undefined,
-        description:
+        description: [
           other.examineDescription ??
-          other.lookDescription ??
-          `${other.name} is a Collegian standing nearby.`,
+            other.lookDescription ??
+            `${other.name} is a Collegian standing nearby.`,
+          // H2. What they are wearing can change what you see.
+          ...wornExamineRiders(world, other),
+        ].join("\n\n"),
       })),
   ];
 

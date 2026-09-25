@@ -24,6 +24,7 @@ import {
   type OccupantNotice,
 } from "./presence-events.js";
 import type { EngineRuntime, MoveIntent, Room, WorldState } from "./state.js";
+import { admissionRefusal } from "./worn-world.js";
 
 export type MoveSuccess = {
   ok: true;
@@ -83,6 +84,12 @@ export function handleMove(
       code: "exit_closed",
       message: `The way ${intent.direction} is not open yet.`,
     };
+  }
+
+  // H2. A closed camp turns you away in plain words until you are dressed for it.
+  const refused = admissionRefusal(world, character, destination.id);
+  if (refused) {
+    return { ok: false, code: "exit_closed", message: refused };
   }
 
   const leavers = charactersInRoom(world, room.id, character.id);

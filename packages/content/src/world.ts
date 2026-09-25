@@ -13,6 +13,7 @@ export type LoadedRoom = {
   longDescription: string;
   zone: string;
   visualState: string;
+  admissionRefusal?: string;
   exits: Array<{
     direction: string;
     toRoomId: string;
@@ -154,6 +155,8 @@ export type LoadedItemTemplate = {
   itemType?: string;
   equipSlot?: string;
   training?: boolean;
+  examineRider?: string;
+  admitsRoomId?: string;
 };
 
 export type LoadedStarterPlacement = {
@@ -203,6 +206,7 @@ export function toWorldState(
       longDescription: room.longDescription,
       zone: room.zone,
       visualState: room.visualState ?? room.id,
+      admissionRefusal: room.admissionRefusal,
       exits: room.exits.map((exit) => ({
         direction: exit.direction,
         toRoomId: exit.toRoomId,
@@ -229,6 +233,8 @@ export function toWorldState(
       itemType: template.itemType,
       equipSlot: template.equipSlot,
       training: template.training,
+      examineRider: template.examineRider,
+      admitsRoomId: template.admitsRoomId,
     };
   }
   const items: Record<string, LoadedItem> = {};

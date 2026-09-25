@@ -41,6 +41,8 @@ export type Room = {
   longDescription: string;
   zone: string;
   visualState?: string;
+  /** H2. What the door says to a Collegian who is not wearing the right piece. */
+  admissionRefusal?: string;
   exits: RoomExit[];
   fixtures: RoomFixture[];
 };
@@ -305,6 +307,10 @@ export type ItemTemplateRecord = {
   itemType?: string;
   equipSlot?: string;
   training?: boolean;
+  /** H2. Extra plain text when somebody examines the Collegian wearing this. */
+  examineRider?: string;
+  /** H2. While worn, this piece admits the wearer to that room. */
+  admitsRoomId?: string;
 };
 
 export type StarterItemPlacement = {
