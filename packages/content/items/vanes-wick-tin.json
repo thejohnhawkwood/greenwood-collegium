@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "vanes-wick-tin",
+  "name": "Vane's Wick Tin",
+  "shortDescription": "A flat tin of trimmed wicks and a stub of taper.",
+  "examineDescription": "A flat tin that once held lamp oil and now holds a coil of fresh wick, a stub of taper, and a scrap of the black rag. Vane pressed it into your paws and said a lit stair is worth more than a brave one. The lid does not quite shut, which she says is on purpose so you can hear it rattle and remember you have it.",
+  "category": "ordinary",
+  "unique": true
+}

@@ -40,15 +40,15 @@ describe("content loader", () => {
 
   it("loads twenty-five bundled rooms without an import list", () => {
     const world = loadBundledWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(66);
+    expect(Object.keys(world.rooms)).toHaveLength(67);
     expect(world.rooms[START_ROOM_ID]?.map).toEqual({ x: 0, y: 0 });
     expect(world.rooms["great-hall"]?.map).toEqual({ x: 0, y: 1 });
     const charted = Object.values(world.rooms).filter((room) => room.map);
-    expect(charted).toHaveLength(66);
+    expect(charted).toHaveLength(67);
     expect(
       new Set(charted.map((room) => `${room.map!.x},${room.map!.y},${String(room.map!.z ?? 0)}`))
         .size,
-    ).toBe(66);
+    ).toBe(67);
     expect(world.rooms["headmaster-study"]?.map).toEqual({ x: 0, y: 1, z: 1 });
     expect(world.rooms["bell-stair"]?.map).toEqual({ x: 1, y: 2, z: -1 });
     expect(world.rooms["deep-cradle"]?.map).toEqual({ x: 2, y: 0, z: -2 });
@@ -133,6 +133,12 @@ describe("content loader", () => {
         templateId: "practice-sword",
         roomId: "south-orchard",
       }),
+      expect.objectContaining({
+        id: "item-pressed-mask-webbed-cloister",
+        templateId: "pressed-mask",
+        name: "Pressed Mask",
+        roomId: "webbed-cloister",
+      }),
     ]);
     expect(world.itemTemplates["small-copper-key"]?.name).toBe("Small Copper Key");
     expect(world.itemTemplates["librarians-ribbon"]?.name).toBe("Librarian's Ribbon");
@@ -169,7 +175,7 @@ describe("content loader", () => {
       attack: 3,
       experience: 8,
     });
-    expect(Object.keys(world.enemies)).toHaveLength(24);
+    expect(Object.keys(world.enemies)).toHaveLength(25);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,
@@ -226,7 +232,7 @@ describe("content loader", () => {
       world.quests["what-still-sleeps"]?.objectives.map((objective) => objective.kind),
     ).toContain("defeat");
     expect(world.quests["the-meadow-fork"]?.giverNpcId).toBe("npc-shepherd-wren");
-    expect(Object.keys(world.quests)).toHaveLength(44);
+    expect(Object.keys(world.quests)).toHaveLength(46);
     expect(world.quests["arrival-at-the-collegium"]?.introNarration).toContain(
       "train as a defender",
     );
@@ -292,7 +298,7 @@ describe("content loader", () => {
     });
 
     const world = loadWorldFromDirectory(directory);
-    expect(Object.keys(world.rooms)).toHaveLength(67);
+    expect(Object.keys(world.rooms)).toHaveLength(68);
     expect(world.rooms["extra-nook"]?.title).toBe("Extra Nook");
   });
 

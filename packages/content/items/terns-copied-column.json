@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "terns-copied-column",
+  "name": "Copied Column",
+  "shortDescription": "One column of somebody else's ledger, copied out by hand.",
+  "examineDescription": "A strip of paper with the third column of the withy camp's tally copied onto it in your own hand, dates and all. Two farms downriver, then the same mark over and over for a buyer nobody wrote down.\n\nTern has pencilled underneath: \"A camp that keeps columns is not a gang. Somebody taught them. Find out who, and do not go back in there wearing their ring.\"",
+  "category": "ordinary",
+  "unique": true
+}

@@ -28,6 +28,7 @@ import {
   isSchoolId,
 } from "./schools.js";
 import { WREN_CHAIN_NEXT } from "./east-watch.js";
+import { wearsTemplate } from "./worn-world.js";
 import type {
   Character,
   EngineRuntime,
@@ -42,7 +43,7 @@ import { systemNotice } from "./system-notice.js";
 export { ARRIVAL_QUEST_ID } from "./arrival-guide.js";
 
 export type QuestTriggerKind =
-  "look" | "say" | "take" | "move" | "examine" | "talk" | "defeat" | "cast";
+  "look" | "say" | "take" | "move" | "examine" | "talk" | "defeat" | "cast" | "equip";
 
 export type QuestTrigger = {
   characterId: string;
@@ -359,6 +360,10 @@ function objectiveMatches(
       kind === "take" &&
       itemsHeldBy(world, character.id).some((item) => item.templateId === objective.itemTemplateId)
     );
+  }
+  // ADR-0047. Wearing a named piece can be the thing a story asks for.
+  if (objective.kind === "equip") {
+    return kind === "equip" && wearsTemplate(world, character, objective.itemTemplateId);
   }
   if (objective.kind === "defeat") {
     return (

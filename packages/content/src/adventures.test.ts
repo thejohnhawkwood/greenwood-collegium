@@ -23,11 +23,11 @@ describe("adventure content", () => {
   it("offers speaking staff and discoveries in every existing room", () => {
     const world = loadBundledWorld();
     const rooms = Object.values(world.rooms);
-    expect(rooms).toHaveLength(66);
+    expect(rooms).toHaveLength(67);
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );
-    expect(staff).toHaveLength(21);
+    expect(staff).toHaveLength(23);
     for (const npc of staff) {
       expect(npc.dialogue).toBeTruthy();
       expect(reservedCharacterNames()).toContain(npc.name.toLowerCase());
@@ -57,6 +57,8 @@ describe("adventure content", () => {
       "the-mere-that-keeps",
       "the-missing-pages",
       "the-ninth-scratch",
+      "the-passed-sentry",
+      "the-pressed-mask",
       "the-stones-that-were-not-there",
       "the-uncounted-flock",
       "what-the-fog-took",

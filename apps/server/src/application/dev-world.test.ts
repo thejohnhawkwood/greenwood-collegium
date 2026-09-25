@@ -4,7 +4,7 @@ import { createDevWorld } from "./dev-world.js";
 describe("createDevWorld", () => {
   it("loads the bundled rooms through the content package", () => {
     const world = createDevWorld();
-    expect(Object.keys(world.rooms)).toHaveLength(66);
+    expect(Object.keys(world.rooms)).toHaveLength(67);
     expect(world.rooms["lantern-court"]?.title).toBe("Lantern Court");
     expect(world.rooms["east-gate"]?.title).toBe("East Gate");
     expect(world.items?.["item-copper-key-lantern-court"]).toBeUndefined();

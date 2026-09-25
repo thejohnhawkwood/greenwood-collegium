@@ -1,0 +1,55 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-passed-sentry",
+  "title": "The Passed Sentry",
+  "giverNpcId": "npc-scout-tern",
+  "requiresQuestIds": ["the-black-mooring"],
+  "experienceReward": 30,
+  "itemRewardTemplateId": "terns-copied-column",
+  "introNarration": "Tern draws the shape of it in the mud with one foot: the holt, the drying frames, the gap. \"Screened on three sides. You cannot see in from the water and you cannot walk in off the path, because they have a cutter posted and she checks paws before faces.\"\n\nShe rubs the drawing out. \"She wears a woven ring. Everybody in that camp does, spliced not knotted, and it is how they know each other without saying anything out loud. Get one. Put it on. Walk in, read the slate they keep their tally on, and walk out. Then talk tern. I want the third column, not a fight and not a story.\"",
+  "reminderNarration": "\"The cutter is in the holt. Take her ring, type equip ring, then east into the camp. Examine the tally slate. Then talk tern at the reed bank.\"",
+  "completionNarration": "Tern has you read the third column out twice, and the second time she writes it down herself with the pencil from under her wing, because she does not trust anybody's memory including her own.\n\n\"Two farms and then one mark, over and over.\" She taps the repeated mark. \"That is not a gang selling baskets. That is a regular buyer, and somebody in that camp was taught to keep columns properly, which means somebody taught them.\" She hands you the copy. \"Take the ring off before you go back up the bank. You are not one of theirs and I do not want you getting comfortable wearing that.\"",
+  "objectives": [
+    {
+      "id": "hear-tern",
+      "kind": "talk",
+      "targetId": "npc-scout-tern",
+      "label": "Hear Tern out at the Reed Bank. Type talk tern."
+    },
+    {
+      "id": "take-the-ring",
+      "kind": "defeat",
+      "targetId": "enemy-withy-sentry-osier-holt",
+      "requires": ["hear-tern"],
+      "label": "Get the ring from the sentry in the Osier Holt. Type attack sentry."
+    },
+    {
+      "id": "wear-the-ring",
+      "kind": "equip",
+      "itemTemplateId": "withy-ring",
+      "requires": ["take-the-ring"],
+      "label": "Put the withy ring on. Type equip ring."
+    },
+    {
+      "id": "walk-in",
+      "kind": "visit",
+      "roomId": "osier-camp",
+      "requires": ["wear-the-ring"],
+      "label": "Walk into the Withy Camp. Type east from the Osier Holt."
+    },
+    {
+      "id": "read-the-slate",
+      "kind": "examine",
+      "targetId": "object-tally-slate",
+      "requires": ["walk-in"],
+      "label": "Read the tally slate. Type examine slate."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-scout-tern",
+      "requires": ["read-the-slate"],
+      "label": "Bring the third column to Tern. Type talk tern."
+    }
+  ]
+}

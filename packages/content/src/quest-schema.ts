@@ -19,7 +19,7 @@ function rejectMarkup(value: string, label: string, ctx: z.RefinementCtx): void 
 export const questObjectiveSchema = z
   .object({
     id: stableIdSchema,
-    kind: z.enum(["look", "say", "take", "visit", "examine", "talk", "defeat", "cast"]),
+    kind: z.enum(["look", "say", "take", "visit", "examine", "talk", "defeat", "cast", "equip"]),
     label: z.string().min(1),
     itemTemplateId: stableIdSchema.optional(),
     roomId: stableIdSchema.optional(),
@@ -39,10 +39,10 @@ export const questObjectiveSchema = z
     if ((objective.kind === "defeat" || objective.kind === "cast") && !objective.targetId) {
       ctx.addIssue({ code: "custom", message: "defeat and cast objectives need targetId" });
     }
-    if (objective.kind === "take" && !objective.itemTemplateId) {
+    if ((objective.kind === "take" || objective.kind === "equip") && !objective.itemTemplateId) {
       ctx.addIssue({
         code: "custom",
-        message: "take objectives need itemTemplateId",
+        message: `${objective.kind} objectives need itemTemplateId`,
       });
     }
     if (objective.kind === "visit" && !objective.roomId) {
