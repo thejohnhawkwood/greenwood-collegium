@@ -135,10 +135,11 @@ export function raiderPlateForSpawn(id: string): (typeof RAIDER_PLATES)[number] 
 }
 
 export function npcArtSrc(id: string): string | undefined {
-  const plate = id.endsWith("-captain") || id === "raid-captain"
-    ? "raid-captain"
-    : id.startsWith("defense-")
-      ? raiderPlateForSpawn(id)
-      : NPC_PLATE_ALIASES[id];
+  const plate =
+    id.endsWith("-captain") || id === "raid-captain"
+      ? "raid-captain"
+      : id.startsWith("defense-")
+        ? raiderPlateForSpawn(id)
+        : NPC_PLATE_ALIASES[id];
   return plate ? `/art/characters/npcs/${plate}.png?v=${NPC_ART_REV}` : undefined;
 }
