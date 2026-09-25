@@ -25,6 +25,7 @@ export const questObjectiveSchema = z
     roomId: stableIdSchema.optional(),
     targetId: stableIdSchema.optional(),
     requires: z.array(stableIdSchema).min(1).optional(),
+    outcome: stableIdSchema.optional(),
   })
   .strict()
   .superRefine((objective, ctx) => {
@@ -52,6 +53,18 @@ export const questObjectiveSchema = z
     }
   });
 
+/** H1. A remembered fork: the objective a Collegian finishes decides the ending. */
+export const questOutcomeSchema = z
+  .object({
+    id: stableIdSchema,
+    completionNarration: z.string().min(1),
+    itemRewardTemplateId: stableIdSchema.optional(),
+  })
+  .strict()
+  .superRefine((outcome, ctx) => {
+    rejectMarkup(outcome.completionNarration, "completionNarration", ctx);
+  });
+
 export const questTemplateSchema = z
   .object({
     $schema: z.string().optional(),
@@ -64,6 +77,7 @@ export const questTemplateSchema = z
     completionNarration: z.string().min(1).optional(),
     experienceReward: z.number().int().positive(),
     itemRewardTemplateId: stableIdSchema.optional(),
+    outcomes: z.array(questOutcomeSchema).min(2).optional(),
     objectives: z.array(questObjectiveSchema).min(1),
   })
   .strict()
@@ -79,6 +93,40 @@ export const questTemplateSchema = z
       new Set(quest.requiresQuestIds).size !== quest.requiresQuestIds.length
     ) {
       ctx.addIssue({ code: "custom", message: "requiresQuestIds must be unique" });
+    }
+    const outcomeIds = new Set((quest.outcomes ?? []).map((outcome) => outcome.id));
+    if (quest.outcomes && outcomeIds.size !== quest.outcomes.length) {
+      ctx.addIssue({ code: "custom", message: "outcome ids must be unique" });
+    }
+    if (quest.outcomes && quest.completionNarration) {
+      ctx.addIssue({
+        code: "custom",
+        message: "a quest with outcomes narrates completion per outcome, not once",
+      });
+    }
+    if (quest.outcomes && quest.itemRewardTemplateId) {
+      ctx.addIssue({
+        code: "custom",
+        message: "a quest with outcomes rewards per outcome, not once",
+      });
+    }
+    const tagged = new Set<string>();
+    for (const objective of quest.objectives) {
+      if (!objective.outcome) {
+        continue;
+      }
+      tagged.add(objective.outcome);
+      if (!outcomeIds.has(objective.outcome)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `${objective.id} names an unknown outcome: ${objective.outcome}`,
+        });
+      }
+    }
+    for (const id of outcomeIds) {
+      if (!tagged.has(id)) {
+        ctx.addIssue({ code: "custom", message: `no objective reaches outcome ${id}` });
+      }
     }
     const earlierIds = new Set<string>();
     for (const objective of quest.objectives) {

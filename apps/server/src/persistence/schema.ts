@@ -153,6 +153,7 @@ export const questProgress = pgTable(
     status: text("status").notNull(),
     completedObjectives: text("completed_objectives").notNull(),
     rewardGranted: text("reward_granted").notNull(),
+    outcome: text("outcome"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
   },

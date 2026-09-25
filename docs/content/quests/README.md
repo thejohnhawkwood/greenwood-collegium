@@ -1,6 +1,8 @@
 # Quest storylines
 
 Modular author truth. The [spine](../STORY.md) says what order the class walks.
+The co-created queue is a handoff, not live content:
+[HANDOFF-COCREATED-QUESTLINE.md](HANDOFF-COCREATED-QUESTLINE.md).
 Each file below says what one storyline *means*. Live objectives stay in JSON
 and in [room-and-quest-summary.md](../room-and-quest-summary.md). Play commands
 and JSON authoring stay in [adventures.md](../adventures.md).

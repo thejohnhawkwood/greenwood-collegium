@@ -475,6 +475,7 @@ export class PostgresQuestRepository implements QuestProgressRepository {
         status: record.status,
         completedObjectives,
         rewardGranted,
+        outcome: record.outcome ?? null,
         createdAt: now,
         updatedAt: now,
       })
@@ -484,6 +485,7 @@ export class PostgresQuestRepository implements QuestProgressRepository {
           status: record.status,
           completedObjectives,
           rewardGranted,
+          outcome: record.outcome ?? null,
           updatedAt: now,
         },
       });
@@ -566,6 +568,7 @@ function toQuest(row: typeof questProgress.$inferSelect): QuestProgressRecord {
     status: row.status === "completed" ? "completed" : "active",
     completedObjectiveIds,
     rewardGranted: row.rewardGranted === "true",
+    outcome: row.outcome ?? undefined,
     createdAt: asDate(row.createdAt),
     updatedAt: asDate(row.updatedAt),
   };
