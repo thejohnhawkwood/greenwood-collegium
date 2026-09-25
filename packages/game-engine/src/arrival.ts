@@ -32,6 +32,7 @@ import type {
   Character,
   EngineRuntime,
   QuestObjective,
+  QuestOutcome,
   QuestProgress,
   QuestTemplate,
   WorldState,
@@ -55,6 +56,7 @@ export type QuestProgressRecord = {
   status: "active" | "completed";
   completedObjectiveIds: string[];
   rewardGranted: boolean;
+  outcome?: string;
 };
 
 export function applyQuestProgress(
@@ -70,6 +72,7 @@ export function applyQuestProgress(
       status: record.status,
       completedObjectiveIds: [...record.completedObjectiveIds],
       rewardGranted: record.rewardGranted,
+      outcome: record.outcome,
     };
   }
   byCharacter[characterId] = progress;
@@ -82,6 +85,7 @@ export function listQuestRecords(world: WorldState, characterId: string): QuestP
     status: progress.status,
     completedObjectiveIds: [...progress.completedObjectiveIds],
     rewardGranted: progress.rewardGranted,
+    outcome: progress.outcome,
   }));
 }
 
@@ -180,6 +184,7 @@ export function progressQuests(
       continue;
     }
     progress.completedObjectiveIds.push(...alreadyBeaten.map((objective) => objective.id));
+    progress.outcome ??= reachedOutcome(template, progress);
     const remaining = remainingObjectives(template, progress);
     if (remaining.length === 0) {
       progress.status = "completed";
@@ -258,17 +263,41 @@ function awardQuestReward(
     events.push(levelEvent(character, runtime));
     events.push(...maybeOpenWorldPrimer(world, character, previousLevel, nextLevel, runtime));
   }
-  events.push(...grantQuestItem(world, character, template, runtime));
+  events.push(...grantQuestItem(world, character, template, progress, runtime));
   return events;
+}
+
+/** H1. The first tagged objective a Collegian finishes is the ending they get. */
+function reachedOutcome(template: QuestTemplate, progress: QuestProgress): string | undefined {
+  if (!template.outcomes?.length) {
+    return undefined;
+  }
+  for (const id of progress.completedObjectiveIds) {
+    const objective = template.objectives.find((candidate) => candidate.id === id);
+    if (objective?.outcome) {
+      return objective.outcome;
+    }
+  }
+  return undefined;
+}
+
+function chosenOutcome(
+  template: QuestTemplate,
+  progress: QuestProgress | undefined,
+): QuestOutcome | undefined {
+  const id = progress?.outcome;
+  return id ? template.outcomes?.find((outcome) => outcome.id === id) : undefined;
 }
 
 function grantQuestItem(
   world: WorldState,
   character: Character,
   template: QuestTemplate,
+  progress: QuestProgress,
   runtime: EngineRuntime,
 ): EventEnvelope[] {
-  const templateId = template.itemRewardTemplateId;
+  const templateId =
+    chosenOutcome(template, progress)?.itemRewardTemplateId ?? template.itemRewardTemplateId;
   if (!templateId) {
     return [];
   }
@@ -378,18 +407,30 @@ function questUpdatedEvent(
     audience: "character",
     narration: [
       formatQuestUpdatedText(payload),
-      ...(progress?.status === "completed" && template.completionNarration
-        ? [template.completionNarration]
+      ...(progress?.status === "completed"
+        ? [
+            chosenOutcome(template, progress)?.completionNarration ?? template.completionNarration,
+          ].filter((line): line is string => Boolean(line))
         : []),
     ].join("\n\n"),
     payload,
   });
 }
 
+/**
+ * H1. Tagged objectives are alternatives, not a checklist. A forked quest needs
+ * every untagged objective plus exactly one tagged one, so the branch a Collegian
+ * did not walk never counts as unfinished work.
+ */
 function remainingObjectives(template: QuestTemplate, progress: QuestProgress): QuestObjective[] {
-  return template.objectives.filter(
+  const open = template.objectives.filter(
     (objective) => !progress.completedObjectiveIds.includes(objective.id),
   );
+  if (!template.outcomes?.length) {
+    return open;
+  }
+  const shared = open.filter((objective) => !objective.outcome);
+  return progress.outcome ? shared : [...shared, ...open.filter((objective) => objective.outcome)];
 }
 
 function experienceEvent(

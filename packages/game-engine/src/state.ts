@@ -161,6 +161,14 @@ export type QuestObjective = {
   roomId?: string;
   targetId?: string;
   requires?: string[];
+  /** H1. Finishing this objective ends the quest on that outcome. */
+  outcome?: string;
+};
+
+export type QuestOutcome = {
+  id: string;
+  completionNarration: string;
+  itemRewardTemplateId?: string;
 };
 
 export type QuestTemplate = {
@@ -173,6 +181,7 @@ export type QuestTemplate = {
   completionNarration?: string;
   experienceReward: number;
   itemRewardTemplateId?: string;
+  outcomes?: QuestOutcome[];
   objectives: QuestObjective[];
 };
 
@@ -181,6 +190,8 @@ export type QuestProgress = {
   status: "active" | "completed";
   completedObjectiveIds: string[];
   rewardGranted: boolean;
+  /** H1. Which ending this Collegian reached. Absent on a quest without a fork. */
+  outcome?: string;
 };
 
 export type StatusEffect = {

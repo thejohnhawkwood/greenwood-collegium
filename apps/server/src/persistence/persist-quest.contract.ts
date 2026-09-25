@@ -45,9 +45,24 @@ export function persistQuestProgressAndExperience(
       rewardGranted: true,
     });
     expect(stored[0]?.completedObjectiveIds).toEqual(["look", "speak", "take", "arrive"]);
+    expect(stored[0]?.outcome).toBeUndefined();
     expect(await characters.getById(character.id)).toMatchObject({
       experience: 10,
       level: 2,
     });
+
+    // H1. A forked quest remembers which ending this Collegian reached.
+    await quests.upsert({
+      characterId: character.id,
+      questId: "the-borrowed-ink",
+      status: "completed",
+      completedObjectiveIds: ["fetch", "give-back"],
+      rewardGranted: true,
+      outcome: "returned",
+    });
+    const forked = (await quests.listByCharacter(character.id)).find(
+      (record) => record.questId === "the-borrowed-ink",
+    );
+    expect(forked?.outcome).toBe("returned");
   });
 }

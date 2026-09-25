@@ -341,6 +341,8 @@ export type QuestProgressRecord = {
   status: "active" | "completed";
   completedObjectiveIds: string[];
   rewardGranted: boolean;
+  /** H1. Which ending this Collegian reached on a forked quest. */
+  outcome?: string;
   createdAt: Date;
   updatedAt: Date;
 };

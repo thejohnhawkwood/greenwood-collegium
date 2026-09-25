@@ -178,6 +178,7 @@ export type RealtimeOptions = {
         status: "active" | "completed";
         completedObjectiveIds: string[];
         rewardGranted: boolean;
+        outcome?: string;
       }>
     >;
     upsert(record: {
@@ -186,6 +187,7 @@ export type RealtimeOptions = {
       status: "active" | "completed";
       completedObjectiveIds: string[];
       rewardGranted: boolean;
+      outcome?: string;
     }): Promise<void>;
   };
 };
