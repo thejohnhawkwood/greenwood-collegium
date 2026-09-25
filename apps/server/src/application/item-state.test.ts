@@ -30,6 +30,11 @@ describe("item-state starter copies", () => {
         roomId: "standing-stones",
       },
       {
+        id: starterInstanceId("item-borrowed-ink-scriptorium", "char-rowan"),
+        templateId: "borrowed-ink",
+        roomId: "scriptorium",
+      },
+      {
         id: personalId,
         templateId: "small-copper-key",
         roomId: "lantern-court",

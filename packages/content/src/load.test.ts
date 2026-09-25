@@ -101,6 +101,12 @@ describe("content loader", () => {
         roomId: "standing-stones",
       }),
       expect.objectContaining({
+        id: "item-borrowed-ink-scriptorium",
+        templateId: "borrowed-ink",
+        name: "Borrowed Ink",
+        roomId: "scriptorium",
+      }),
+      expect.objectContaining({
         id: "item-copper-key-lantern-court",
         templateId: "small-copper-key",
         name: "Small Copper Key",
@@ -163,7 +169,7 @@ describe("content loader", () => {
       attack: 3,
       experience: 8,
     });
-    expect(Object.keys(world.enemies)).toHaveLength(20);
+    expect(Object.keys(world.enemies)).toHaveLength(24);
     expect(world.spells.ember).toMatchObject({
       name: "Ember",
       focusCost: 4,
@@ -220,13 +226,22 @@ describe("content loader", () => {
       world.quests["what-still-sleeps"]?.objectives.map((objective) => objective.kind),
     ).toContain("defeat");
     expect(world.quests["the-meadow-fork"]?.giverNpcId).toBe("npc-shepherd-wren");
-    expect(Object.keys(world.quests)).toHaveLength(41);
+    expect(Object.keys(world.quests)).toHaveLength(44);
     expect(world.quests["arrival-at-the-collegium"]?.introNarration).toContain(
       "train as a defender",
     );
+    // Every quest pays something you can hold. ADR-0046 forks pay per outcome, and a
+    // path may deliberately pay nothing, so one rewarding path is enough.
     for (const quest of Object.values(world.quests)) {
-      expect(quest.itemRewardTemplateId, quest.id).toBeTruthy();
+      const paysOnSomePath =
+        Boolean(quest.itemRewardTemplateId) ||
+        (quest.outcomes ?? []).some((outcome) => Boolean(outcome.itemRewardTemplateId));
+      expect(paysOnSomePath, quest.id).toBe(true);
     }
+    expect(world.quests["the-borrowed-ink"]?.outcomes?.map((outcome) => outcome.id)).toEqual([
+      "returned",
+      "kept",
+    ]);
     for (const enemy of Object.values(world.enemies)) {
       expect(enemy.loot?.length, enemy.id).toBeGreaterThan(0);
     }

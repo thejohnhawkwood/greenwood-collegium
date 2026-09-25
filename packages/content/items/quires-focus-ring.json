@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "quires-focus-ring",
+  "name": "Quire's Focus Ring",
+  "shortDescription": "A plain band a third-year wore through her own lessons.",
+  "examineDescription": "A narrow band of grey metal, worn thin on the inside where it has turned on a paw for two years. Quire took it off and put it in yours without ceremony. She says she inked her first leaf wearing it, which she admits is not the same as the ring having done anything.",
+  "category": "ordinary",
+  "unique": true,
+  "equipSlot": "ring"
+}

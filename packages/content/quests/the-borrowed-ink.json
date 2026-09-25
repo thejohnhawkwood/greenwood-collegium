@@ -1,0 +1,46 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "the-borrowed-ink",
+  "title": "The Borrowed Ink",
+  "giverNpcId": "npc-collegian-quire",
+  "requiresQuestIds": ["arrival-at-the-collegium"],
+  "experienceReward": 20,
+  "introNarration": "Quire pats the empty side pocket one more time and then makes herself stop. \"Squat bottle, cork stoppered, wax over the cork with a Q scratched in it. Third desk from the window in the Scriptorium. Court, north to the Great Hall, west into the Stacks, west again.\" She hitches the satchel. \"I need it to ink a leaf tonight and I will not get another bottle out of the stores until Thursday. Bring it to me here and I will make it worth the walk. Or do not, and we will both know what happened.\"",
+  "reminderNarration": "\"The Scriptorium, third desk from the window. Squat bottle, wax over the cork. Type take ink. Then bring it back and talk quire, or do not.\"",
+  "outcomes": [
+    {
+      "id": "returned",
+      "completionNarration": "Quire checks the wax seal is unbroken before she looks at you, which tells you what she expected. Then she has the decency to look embarrassed about checking. \"Unbroken. Right.\" She works a thin grey band off her own paw and puts it in yours. \"I wore that through two years of lessons. It did not ink anything for me, I want to be honest, but I had it on the night I got my first leaf right.\" She shoulders the satchel and goes out through the gate while the light holds.",
+      "itemRewardTemplateId": "quires-focus-ring"
+    },
+    {
+      "id": "kept",
+      "completionNarration": "The ink is good. It goes onto the page black and stays black, and the leaf you raise with it is properly yours.\n\nQuire is still at the gate when you pass, boots laced, satchel strapped, going out on a road she meant to walk an hour ago. She looks at your paws and then at your face and works out the whole thing in about two seconds. \"Right,\" she says. \"Well. It was ink, not a kidney.\" She says it lightly and it does not come out lightly, and she goes through the gate without waiting for you to explain."
+    }
+  ],
+  "objectives": [
+    {
+      "id": "fetch",
+      "kind": "take",
+      "itemTemplateId": "borrowed-ink",
+      "roomId": "scriptorium",
+      "label": "Take the Borrowed Ink in the Scriptorium. Type west from the Library Stacks, then take ink."
+    },
+    {
+      "id": "give-back",
+      "kind": "talk",
+      "targetId": "npc-collegian-quire",
+      "requires": ["fetch"],
+      "outcome": "returned",
+      "label": "Bring the ink to Quire at the East Gate. Type talk quire."
+    },
+    {
+      "id": "use-it",
+      "kind": "cast",
+      "targetId": "ember",
+      "requires": ["fetch"],
+      "outcome": "kept",
+      "label": "Or use the ink on your own leaf. Type cast ember."
+    }
+  ]
+}

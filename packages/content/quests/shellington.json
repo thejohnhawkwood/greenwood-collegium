@@ -1,0 +1,34 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "shellington",
+  "title": "Shellington",
+  "giverNpcId": "npc-mentor-lumen",
+  "requiresQuestIds": ["first-lessons-stars"],
+  "experienceReward": 25,
+  "itemRewardTemplateId": "shellington-diary",
+  "introNarration": "Lumen turns her own book around so you can see the column she has been keeping. It is a list of dates with one name at the top and nothing written beside the last four. \"Shellington borrowed a bearing book from this hearth in the spring and has not brought it back, which I could forgive. He also stopped writing to me, which I cannot.\" She closes it. \"A crow-stile on the east moor, past the barrow. Somebody saw him sitting on it. He is corrupted, and I am told that is a word people use to mean finished. It is not. Bring him back to me and I will do the rest.\"",
+  "reminderNarration": "\"Shellington is on the crow-stile east of the barrow mouth. Bring him down and bring him back. Then talk lumen.\"",
+  "completionNarration": "Lumen has the Infirmary send for Fen before she says anything to you, which is the right order and not the polite one. Then she reads the last two pages of the diary twice.\n\n\"He wrote down that he said no.\" She sets it flat. \"Hold on to this. I want it read by somebody who is not me, and I want it read by somebody who was out there.\" She starts a fresh column in her own book with today's date in it. \"He will be a fortnight mending and he will be insufferable about the bearing book. Go and eat something.\"",
+  "objectives": [
+    {
+      "id": "reach-stile",
+      "kind": "visit",
+      "roomId": "crow-stile",
+      "label": "Reach the Crow Stile. Type east from the Barrow Mouth."
+    },
+    {
+      "id": "bring-him-down",
+      "kind": "defeat",
+      "targetId": "enemy-shellington-crow-stile",
+      "requires": ["reach-stile"],
+      "label": "Bring Shellington down. Type attack shellington."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-mentor-lumen",
+      "requires": ["bring-him-down"],
+      "label": "Talk lumen at the Hearth of Stars."
+    }
+  ]
+}

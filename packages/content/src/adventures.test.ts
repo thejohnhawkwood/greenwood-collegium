@@ -27,7 +27,7 @@ describe("adventure content", () => {
     const staff = rooms.flatMap((room) =>
       room.fixtures.filter((fixture) => fixture.kind === "npc"),
     );
-    expect(staff).toHaveLength(20);
+    expect(staff).toHaveLength(21);
     for (const npc of staff) {
       expect(npc.dialogue).toBeTruthy();
       expect(reservedCharacterNames()).toContain(npc.name.toLowerCase());
@@ -44,9 +44,12 @@ describe("adventure content", () => {
       "fens-linen",
       "one-page-for-three",
       "porters-night-round",
+      "quills-second-book",
+      "shellington",
       "the-barrow-mouth",
       "the-biscuit-crate",
       "the-black-mooring",
+      "the-borrowed-ink",
       "the-cut-painter",
       "the-empty-byre",
       "the-kept-whistle",

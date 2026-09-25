@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "borrowed-ink",
+  "name": "Borrowed Ink",
+  "shortDescription": "A stoppered bottle of oak-gall ink that is not yours.",
+  "examineDescription": "A squat glass bottle of oak-gall ink, stoppered with cork and sealed over with candle wax so it cannot weep in a satchel. Quire's initial is scratched into the wax. There is enough here to ink a leaf properly, once, which is exactly why she wants it back and exactly why you are thinking about it.",
+  "category": "ordinary",
+  "unique": true
+}

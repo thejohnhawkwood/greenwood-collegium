@@ -1,0 +1,55 @@
+{
+  "$schema": "../schemas/quest.schema.json",
+  "id": "quills-second-book",
+  "title": "Quill's Second Book",
+  "giverNpcId": "npc-librarian-quill",
+  "requiresQuestIds": ["the-missing-pages"],
+  "experienceReward": 20,
+  "itemRewardTemplateId": "oak-and-bronze-book",
+  "introNarration": "Quill has the borrowing register open at a page she does not like. \"One more gap, and this one is older than your lantern wren.\" She turns the register so you can read the line. \"Oak and Bronze. Thin, warped boards, gilt worn off the spine. Signed out to the High Study and never signed back. I do not accuse the Headmaster of theft; I accuse the Headmaster of a desk.\" She marks the line with one finger. \"Ask him where it went. If he sends you to the cellar, mind the roots. Something has been nesting down there and the lavender is losing.\"",
+  "reminderNarration": "\"Ask Alder about Oak and Bronze. Type talk alder in the High Study. Then the Archive Cellar, and mind the bats. Then talk quill.\"",
+  "completionNarration": "Quill takes the book, opens the boards flat, and looks along the warp with one eye closed like a joiner checking a plank. \"Not damaged. Seasoned.\" She finds the borrowing slip inside, reads it, and pencils one word on it rather than three.\n\n\"Misfiled. Not stolen, not late, misfiled.\" She sets the book down and looks at you properly. \"You understand that this is the better ending and also the duller one. Most of them are.\" She slides it back across the desk. \"Keep it for a week. It is about cradles cut from living trees, and you have been under that tower. Read the fourth chapter and then come and argue with me about it.\"",
+  "objectives": [
+    {
+      "id": "ask-alder",
+      "kind": "talk",
+      "targetId": "npc-headmaster-alder",
+      "label": "Ask Alder about the book. Type talk alder in the High Study."
+    },
+    {
+      "id": "reach-cellar",
+      "kind": "visit",
+      "roomId": "archive-cellar",
+      "requires": ["ask-alder"],
+      "label": "Reach the Archive Cellar. Type north from the Library Stacks."
+    },
+    {
+      "id": "clear-root",
+      "kind": "defeat",
+      "targetId": "enemy-archive-bat-root",
+      "requires": ["reach-cellar"],
+      "label": "Move the bat on the root. Type attack bat."
+    },
+    {
+      "id": "clear-shelf",
+      "kind": "defeat",
+      "targetId": "enemy-archive-bat-shelf",
+      "requires": ["reach-cellar"],
+      "label": "Move the bat over the high shelf. Type attack bat."
+    },
+    {
+      "id": "clear-stair",
+      "kind": "defeat",
+      "targetId": "enemy-archive-bat-stair",
+      "requires": ["reach-cellar"],
+      "label": "Move the bat on the stair root. Type attack bat."
+    },
+    {
+      "id": "report",
+      "kind": "talk",
+      "targetId": "npc-librarian-quill",
+      "requires": ["clear-root", "clear-shelf", "clear-stair"],
+      "label": "Talk quill in the Library Stacks."
+    }
+  ]
+}

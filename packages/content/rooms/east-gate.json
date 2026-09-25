@@ -29,6 +29,14 @@
   ],
   "fixtures": [
     {
+      "id": "npc-collegian-quire",
+      "name": "Collegian Quire",
+      "kind": "npc",
+      "lookDescription": "A third-year vole waits at the gate with her boots already laced. Try talk quire.",
+      "examineDescription": "A vole two years ahead of you, dressed for the moor road: boots laced high, satchel strapped down, hood up against weather that has not arrived yet. Her right paw is ink-stained to the second joint. She keeps checking the satchel's side pocket and finding it empty, which is how you know she has already checked it four times.",
+      "dialogue": "Quire has her boots laced and her satchel strapped, and she keeps patting an empty side pocket. \"I am walking to the moor road within the hour and my ink is sitting on a desk in the Scriptorium. Third time this term.\" She gives up on the pocket. \"I cannot go back for it and keep the light. Talk quire if you have legs and an hour.\""
+    },
+    {
       "id": "object-wayboard",
       "name": "Wayboard",
       "kind": "object",

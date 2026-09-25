@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/enemy-placement.schema.json",
+  "id": "enemy-archive-bat-root",
+  "templateId": "archive-bat",
+  "roomId": "archive-cellar"
+}

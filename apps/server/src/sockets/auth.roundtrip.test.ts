@@ -229,6 +229,10 @@ describe("authenticated socket identity", () => {
         roomId: "standing-stones",
       }),
       expect.objectContaining({
+        templateId: "borrowed-ink",
+        roomId: "scriptorium",
+      }),
+      expect.objectContaining({
         templateId: "small-copper-key",
         roomId: "lantern-court",
       }),
