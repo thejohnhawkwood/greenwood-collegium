@@ -172,6 +172,10 @@ JOIN
                       → The East Watch docs/content/quests/the-east-watch.md
 ```
 
+A teacher may call a defense of the college at any time
+([the-defense.md](quests/the-defense.md), [ADR-0048](../adr/0048-college-defense.md)).
+It is an event, not a numbered step, and it does not gate the walk.
+
 Side, any time, never required:
 
 ```text

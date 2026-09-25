@@ -73,6 +73,8 @@ export type LoadedEnemy = {
   reads?: Array<"lunge" | "brace" | "gather">;
 };
 
+export type LoadedEnemyTemplate = Omit<LoadedEnemy, "id" | "roomId">;
+
 export type LoadedSpellRank = {
   focusCost?: number;
   damage?: number;
@@ -177,6 +179,7 @@ export type LoadedWorld = {
   itemTemplates: Record<string, LoadedItemTemplate>;
   starterPlacements: LoadedStarterPlacement[];
   enemies: Record<string, LoadedEnemy>;
+  enemyTemplates: Record<string, LoadedEnemyTemplate>;
   spells: Record<string, LoadedSpell>;
   quests: Record<string, LoadedQuest>;
   speciesProficiencies: Record<string, string>;
@@ -296,6 +299,25 @@ export function toWorldState(
       ...(template.reads?.length ? { reads: [...template.reads] } : {}),
     };
   }
+  // H3. Declared stats, so a defense can mint raiders from content rather than code.
+  const enemyTemplateRecords: Record<string, LoadedEnemyTemplate> = {};
+  for (const template of catalog.enemies ?? []) {
+    enemyTemplateRecords[template.id] = {
+      templateId: template.id,
+      name: template.name,
+      examineDescription: template.examineDescription,
+      lookDescription: template.lookDescription,
+      maxHealth: template.maxHealth,
+      maxFocus: template.maxFocus ?? 6,
+      attack: template.attack,
+      experience: template.experience,
+      ...(template.minParty ? { minParty: template.minParty } : {}),
+      ...(template.loot?.length ? { loot: [...template.loot] } : {}),
+      ...(template.victoryNarration ? { victoryNarration: template.victoryNarration } : {}),
+      ...(template.lockNarration ? { lockNarration: template.lockNarration } : {}),
+      ...(template.reads?.length ? { reads: [...template.reads] } : {}),
+    };
+  }
   const spells: Record<string, LoadedSpell> = {};
   for (const spell of catalog.spells ?? []) {
     spells[spell.id] = {
@@ -354,6 +376,7 @@ export function toWorldState(
     itemTemplates,
     starterPlacements,
     enemies,
+    enemyTemplates: enemyTemplateRecords,
     spells,
     quests,
     speciesProficiencies: speciesProficiencyTable(),

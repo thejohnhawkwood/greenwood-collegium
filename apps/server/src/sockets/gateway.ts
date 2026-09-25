@@ -55,6 +55,7 @@ import {
   revertTake,
   type EngineRuntime,
   alderCallNarration,
+  clearDefenseSpawns,
   defenseClosedNarration,
   minutesLeft,
   settleDefense,
@@ -1232,6 +1233,7 @@ export async function attachRealtime(
         const before = world.defense?.phase;
         settleDefense(world, new Date());
         if (before === "fighting" && world.defense?.phase === "closed") {
+          clearDefenseSpawns(world);
           await options.persistDefense?.({
             id: world.defense.id,
             phase: "closed",

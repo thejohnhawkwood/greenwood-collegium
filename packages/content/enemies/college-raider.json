@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "college-raider",
+  "name": "Raider",
+  "shortDescription": "A grown animal at the gate who came for the stores, not for you.",
+  "lookDescription": "A raider works at the gate with a sack in one paw and does not look at the buildings.",
+  "examineDescription": "A grown animal in a hood with a grain sack already half full. Nothing about the gear is martial: a pry-bar, a sack, boots for running. They came for the stores and they will go through a Collegian who is between them and the stores, which is a different thing from coming for one. They will not stay once the porters are up.",
+  "maxHealth": 12,
+  "attack": 3,
+  "experience": 8,
+  "loot": ["raiders-token"],
+  "reads": ["lunge", "gather", "brace"],
+  "lockNarration": "The sack goes down and the pry-bar comes up.",
+  "victoryNarration": "The raider drops the sack, decides the stores are not worth this, and goes back out through the gap they came in by. A wooden token comes off their belt in the scramble."
+}

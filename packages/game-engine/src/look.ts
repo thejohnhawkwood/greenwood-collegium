@@ -9,6 +9,7 @@ import {
   type SemanticSegment,
 } from "@greenwood/contracts";
 import { ARRIVAL_KEY_TEMPLATE_ID } from "./arrival-guide.js";
+import { defenseAftermathLine } from "./college-defense.js";
 import { fixturesVisibleTo } from "./arrival-guide.js";
 import { enemiesInRoom } from "./enemies.js";
 import { itemsInRoom } from "./items.js";
@@ -97,11 +98,14 @@ export function snapshotPayload(
       description: character.lookDescription,
     }));
 
+  // H3. After a defense, a gate carries the night in its description. No exit changes.
+  const aftermath = defenseAftermathLine(world, room.id);
+
   return {
     roomId: room.id,
     title: room.title,
     shortDescription: room.shortDescription,
-    longDescription: room.longDescription,
+    longDescription: aftermath ? `${room.longDescription}\n${aftermath}` : room.longDescription,
     zone: room.zone,
     visualState: room.visualState ?? room.id,
     exits: room.exits.map((exit) => ({ direction: exit.direction, toRoomId: exit.toRoomId })),

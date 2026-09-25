@@ -57,11 +57,24 @@ No punishment exists anywhere in this feature, by construction rather than by po
 there is no code path that removes anything from a character. Offline Collegians are
 paid nothing and lose nothing.
 
-Raiders, the three gates, the trophy, and the aftermath room text are **not** in this
-decision. They are ordinary enemies and content in the next slice, and they will reuse
-the existing shared-spawn and personal-copy loot paths rather than a second reward
-system. Spawn ids will carry the defense id so a trophy can only come from the night it
-was won in.
+Raiders, the gates, the trophy, and the aftermath shipped the same day, in a second
+slice. They reuse the existing spawn and personal-copy loot paths rather than a second
+reward system:
+
+- `college-raider` is a declared enemy template with no placement. To mint one at
+  runtime the loader now also exposes `enemyTemplates` on the world, so the stats stay
+  in JSON and no enemy numbers live in engine code.
+- `openDefenseGates` puts about one raider per two Collegians online at each of the
+  three gates, never fewer than three, and is idempotent for a given night.
+- Every spawn id carries the defense id, so a trophy can only come from the night it was
+  won in. `clearDefenseSpawns` removes them all on close or cancel, so no raider outlives
+  the night.
+- `defenseAftermathLine` appends one line to a gate's description while the phase is
+  `closed`. It never changes an exit.
+
+One cost worth naming: `defeatedSpawnIds` grows by roughly a dozen ids per defense and is
+never pruned. That is a few hundred short strings across a term, which is acceptable, and
+it is the price of a trophy that cannot leak between nights.
 
 `DEFENSE_GATE_ROOM_IDS` names Lantern Court, the East Meadow, and the South Orchard and
 lives with the phase so the gates slice and the narration cannot disagree.
