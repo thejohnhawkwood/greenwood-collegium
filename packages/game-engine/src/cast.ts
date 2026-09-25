@@ -1,4 +1,5 @@
-import { progressQuests } from "./arrival.js";
+import { progressQuests, questAwaitingCast } from "./arrival.js";
+import { enemiesInRoom } from "./enemies.js";
 import { applyHostileCast, applySelfCast, applySelfEffect, matchSpell } from "./combat-apply.js";
 import { lockChorusMove } from "./combat-chorus.js";
 import { isChorus } from "./combat-party.js";
@@ -141,6 +142,32 @@ export function handleCast(
     );
   }
 
+  if (!intent.target && questAwaitingCast(world, character.id, ranked.id)) {
+    const named = enemiesInRoom(world, character.roomId, character);
+    if (named.length === 0) {
+      character.focus = focus - focusCost;
+      return withCastProgress(
+        world,
+        character.id,
+        ranked,
+        {
+          ok: true,
+          events: [
+            systemNotice(
+              character.id,
+              `You cast ${ranked.name}. The spark lands on the page, not on a foe.`,
+              runtime,
+            ),
+          ],
+          notices: [],
+          outcome: "ongoing",
+          roomId: character.roomId,
+        },
+        runtime,
+      );
+    }
+  }
+
   const prepared = prepareEncounter(
     world,
     intent.characterId,
@@ -154,7 +181,13 @@ export function handleCast(
 
   const { encounter } = prepared;
   if (prepared.started) {
-    return openingOnly(world, character, encounter, runtime);
+    return withCastProgress(
+      world,
+      character.id,
+      ranked,
+      openingOnly(world, character, encounter, runtime),
+      runtime,
+    );
   }
   if (isChorus(encounter)) {
     return lockChorusMove(world, character, encounter, { verb: "cast", spell: ranked.id }, runtime);

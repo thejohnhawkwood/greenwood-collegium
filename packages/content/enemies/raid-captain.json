@@ -1,0 +1,17 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "raid-captain",
+  "name": "Raid Captain",
+  "shortDescription": "The one the others keep looking at. She waits for three.",
+  "lookDescription": "A tall badger in a patched greatcoat stands at the well with a pry-bar across her shoulders. The other raiders keep their eyes on her. She waits for three.",
+  "examineDescription": "The Raid Captain is the one who decided the stores were worth the walk. Taller than the others, coat scorched at the cuffs, a pry-bar notched from doors. She does not rush one Collegian. She counts until three are locked, then she comes in hard. Alder would not send one Collegian for this.",
+  "maxHealth": 42,
+  "maxFocus": 12,
+  "attack": 7,
+  "experience": 28,
+  "reads": ["lunge", "lunge", "brace"],
+  "minParty": 3,
+  "loot": ["raiders-token"],
+  "lockNarration": "The captain taps the pry-bar once on the well cover. The others go quiet.",
+  "victoryNarration": "The Raid Captain drops the pry-bar, looks at the three of you, and decides the stores can wait for another night. She goes back out the way she came, and the yard feels larger."
+}

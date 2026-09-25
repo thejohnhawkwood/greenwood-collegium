@@ -81,3 +81,8 @@ export function portraitLayers(visual?: CharacterVisual): PortraitLayer[] {
 export function roomArtSrc(visualState: string): string {
   return `/art/rooms/${visualState}.png`;
 }
+
+/** Paintings for the rooms one step away, so the next move does not wait on a download. */
+export function neighbourRoomArt(exits: readonly { toRoomId: string }[]): string[] {
+  return [...new Set(exits.map((exit) => roomArtSrc(exit.toRoomId)))];
+}

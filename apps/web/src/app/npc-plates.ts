@@ -43,6 +43,7 @@ export const NPC_PLATE_FILES = [
   "college-raider-badger",
   "college-raider-rat",
   "college-raider-stoat",
+  "raid-captain",
 ] as const;
 
 const NPC_PLATE_ALIASES: Record<string, string> = {
@@ -112,6 +113,7 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "withy-sentry": "withy-sentry",
   "enemy-withy-sentry-osier-holt": "withy-sentry",
   "college-raider": "college-raider",
+  "raid-captain": "raid-captain",
 };
 
 const NPC_ART_REV = "comic-ink-3";
@@ -133,6 +135,10 @@ export function raiderPlateForSpawn(id: string): (typeof RAIDER_PLATES)[number] 
 }
 
 export function npcArtSrc(id: string): string | undefined {
-  const plate = id.startsWith("defense-") ? raiderPlateForSpawn(id) : NPC_PLATE_ALIASES[id];
+  const plate = id.endsWith("-captain") || id === "raid-captain"
+    ? "raid-captain"
+    : id.startsWith("defense-")
+      ? raiderPlateForSpawn(id)
+      : NPC_PLATE_ALIASES[id];
   return plate ? `/art/characters/npcs/${plate}.png?v=${NPC_ART_REV}` : undefined;
 }

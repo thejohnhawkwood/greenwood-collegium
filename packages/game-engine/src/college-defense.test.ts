@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { startQuest } from "./arrival.js";
 import {
-  DEFENSE_GATE_ROOM_IDS,
   DEFENSE_MAX_MINUTES,
   RAIDER_TEMPLATE_ID,
   alderCallNarration,
@@ -171,10 +170,8 @@ describe("college defense", () => {
     expect(raidersPerGate(30)).toBe(5);
 
     const made = openDefenseGates(state, { defenseId: "night-1", onlineCount: 30 });
-    expect(made).toHaveLength(15);
-    for (const roomId of DEFENSE_GATE_ROOM_IDS) {
-      expect(made.filter((spawn) => spawn.roomId === roomId)).toHaveLength(5);
-    }
+    expect(made).toHaveLength(1);
+    expect(made[0]?.roomId).toBe("lantern-court");
     // Stats come off the declared template, and the trophy rides the normal loot path.
     expect(made[0]).toMatchObject({ maxHealth: 12, attack: 3, loot: ["raiders-token"] });
     expect(made.every((spawn) => isDefenseSpawnId(spawn.id))).toBe(true);
@@ -184,13 +181,50 @@ describe("college defense", () => {
 
     // A second night mints different ids, so last night's win cannot pay again.
     const second = openDefenseGates(state, { defenseId: "night-2", onlineCount: 6 });
-    expect(second).toHaveLength(9);
+    expect(second).toHaveLength(1);
     expect(second.some((spawn) => made.some((first) => first.id === spawn.id))).toBe(false);
 
     // The porters clear every raider and leave the rest of the world alone.
     state.enemies = { ...state.enemies, "enemy-practice-dummy-south-orchard": made[0]! };
-    expect(clearDefenseSpawns(state)).toBe(24);
+    expect(clearDefenseSpawns(state)).toBe(2);
     expect(Object.keys(state.enemies ?? {})).toEqual(["enemy-practice-dummy-south-orchard"]);
+  });
+
+  it("mints another wave the size of the Collegians still in the room", () => {
+    const state = world();
+    state.characters["char-wren"] = {
+      id: "char-wren",
+      name: "Wren",
+      roomId: "lantern-court",
+      discoveredRoomIds: ["lantern-court"],
+    };
+    state.enemyTemplates = {
+      [RAIDER_TEMPLATE_ID]: {
+        templateId: RAIDER_TEMPLATE_ID,
+        name: "Raider",
+        examineDescription: "A grain sack and a pry-bar.",
+        maxHealth: 12,
+        maxFocus: 6,
+        attack: 3,
+        experience: 8,
+      },
+    };
+    startDefense(state, { id: "night-1", now: new Date("2026-09-25T18:00:00.000Z") });
+    const first = openDefenseGates(state, { defenseId: "night-1", onlineCount: 2 });
+    expect(first.filter((spawn) => spawn.templateId === RAIDER_TEMPLATE_ID)).toHaveLength(2);
+    for (const spawn of first) {
+      state.characters["char-rowan"]!.defeatedSpawnIds = [
+        ...(state.characters["char-rowan"]!.defeatedSpawnIds ?? []),
+        spawn.id,
+      ];
+      state.characters["char-wren"]!.defeatedSpawnIds = [
+        ...(state.characters["char-wren"]!.defeatedSpawnIds ?? []),
+        spawn.id,
+      ];
+    }
+    const second = openDefenseGates(state, { defenseId: "night-1", onlineCount: 2 });
+    expect(second.filter((spawn) => spawn.templateId === RAIDER_TEMPLATE_ID)).toHaveLength(2);
+    expect(state.defense?.waves?.["lantern-court"]).toBe(2);
   });
 
   it("marks the gates the morning after without touching an exit", () => {

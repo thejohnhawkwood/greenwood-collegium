@@ -5,7 +5,7 @@ Fastify process for HTTP and Socket.IO.
 - Socket handlers coordinate. They call the engine. They do not invent room text.
 - Ignore client-supplied account, role, or character fields. Production sockets require a completed Collegian plus a session cookie or a short-lived server-issued socket ticket. Development and tests may still assign an unused in-memory guest.
 - Validate command payloads with Zod before calling engine handlers.
-- Persist critical mutations before acknowledging success (Ticket 008+).
+- Persist critical mutations before acknowledging success (Ticket 008+). A command writes only the character fields it changed, so a step saves the room and a new discovery, and leaves experience, Primer, gear, and untouched quests on disk.
 - Ticket 012 persists unique item ownership with a conditional claim. A failed claim must not stay taken in memory. Persist a personal Arrival key with `ensurePlacements` before that take can `claim`.
 - Ticket 013 owns combat command dispatch. Socket handlers do not invent combat text or damage. ADR-0038 owns `duel` / `duel accept` / `duel decline`. Handlers do not invent duel outcomes. The gateway owns the lock-in `setTimeout` and calls `handleCombatExpire`; it does not invent defend or flee text. After a party command it rearms every living member.
 - Ticket 014 owns `cast`. Handlers do not invent Ember damage, burning, or presentation.

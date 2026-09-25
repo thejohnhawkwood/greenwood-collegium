@@ -47,12 +47,19 @@ import { levelForExperience } from "./progression.js";
 import {
   enemiesInRoom,
   hasDefeatedSpawn,
+  isPracticeDummy,
   matchEnemies,
   recordSpawnDefeat,
   worldEnemies,
 } from "./enemies.js";
 import { worldItems } from "./items.js";
-import { DEFENSE_GATE_ROOM_IDS, defenseFighting, isDefenseSpawnId } from "./college-defense.js";
+import {
+  DEFENSE_GATE_ROOM_IDS,
+  RAIDER_TEMPLATE_ID,
+  defenseFighting,
+  ensureDefenseWaves,
+  isDefenseSpawnId,
+} from "./college-defense.js";
 import { handleLook } from "./look.js";
 import { charactersInRoom } from "./occupants.js";
 import { enteredNotices, leftNotices, type OccupantNotice } from "./presence-events.js";
@@ -206,12 +213,19 @@ export function prepareEncounter(
     };
   }
   if (matches.length > 1) {
-    const names = matches.map((enemy) => enemy.name).join(", ");
-    return {
-      ok: false,
-      code: "foe_ambiguous",
-      message: `Which did you mean: ${names}?`,
-    };
+    const sameName = matches.every(
+      (enemy) => enemy.name.toLowerCase() === matches[0]?.name.toLowerCase(),
+    );
+    if (!sameName) {
+      const names = matches.map((enemy) => enemy.name).join(", ");
+      return {
+        ok: false,
+        code: "foe_ambiguous",
+        message: `Which did you mean: ${names}?`,
+      };
+    }
+    const free = matches.find((enemy) => !encounterUsingSpawn(world, enemy.id));
+    matches.splice(0, matches.length, free ?? matches[0]!);
   }
 
   const spawn = matches[0];
@@ -752,6 +766,17 @@ export function finishVictory(
     }
   }
   closeEncounter(world, encounter);
+  const follow = beginDefenseAmbushes(world, runtime);
+  for (const opened of follow) {
+    if (opened.characterId === character.id) {
+      events.push(...opened.result.events);
+      continue;
+    }
+    notices.push(
+      ...opened.result.events.map((event) => ({ characterId: opened.characterId, event })),
+    );
+    notices.push(...opened.result.notices);
+  }
   return {
     ok: true,
     events,
@@ -1003,27 +1028,37 @@ function levelEvent(character: Character, runtime: EngineRuntime): EventEnvelope
 }
 
 /**
- * A raider at a gate opens the fight. No ask, no accept. One free raider per Collegian.
+ * The first free foe in the room opens the fight. No ask, no accept.
+ * Practice dummies and party bosses wait. During a defense, a gate uses raiders.
+ * One foe per Collegian; the rest wait their turn.
  */
 export function beginDefenseAmbushes(
   world: WorldState,
   runtime: EngineRuntime,
 ): Array<{ characterId: string; result: CombatSuccess }> {
-  if (!defenseFighting(world, runtime.now())) {
-    return [];
+  if (defenseFighting(world, runtime.now())) {
+    ensureDefenseWaves(world);
   }
   const gates: readonly string[] = DEFENSE_GATE_ROOM_IDS;
   const opened: Array<{ characterId: string; result: CombatSuccess }> = [];
   for (const character of Object.values(world.characters)) {
-    if (character.encounterId || !gates.includes(character.roomId)) {
+    if (character.encounterId) {
       continue;
     }
-    const spawn = Object.values(worldEnemies(world)).find(
+    const fighting = defenseFighting(world, runtime.now());
+    const pool = enemiesInRoom(world, character.roomId, character).filter(
       (enemy) =>
-        enemy.roomId === character.roomId &&
-        isDefenseSpawnId(enemy.id) &&
-        !encounterUsingSpawn(world, enemy.id),
+        !isPracticeDummy(enemy) &&
+        (enemy.minParty ?? 1) <= 1 &&
+        !encounterUsingSpawn(world, enemy.id) &&
+        !hasDefeatedSpawn(character, enemy.id),
     );
+    const spawn =
+      fighting && gates.includes(character.roomId)
+        ? pool.find(
+            (enemy) => isDefenseSpawnId(enemy.id) && enemy.templateId === RAIDER_TEMPLATE_ID,
+          )
+        : pool[0];
     if (!spawn) {
       continue;
     }

@@ -135,7 +135,13 @@ function LeafPlate({
   const byId = new Map(placed.map((node) => [node.id, node]));
   return (
     <div className="primer-leaf" aria-label={`${leaf.title} leaf`}>
-      <svg className="primer-veins" viewBox="0 0 100 100" aria-hidden="true">
+      <img className="primer-leaf-ground" src={primerPage(leaf.schoolId)} alt="" />
+      <svg
+        className="primer-veins"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
         <LeafOutline outline={leaf.outline} />
         {placed.flatMap((node) =>
           node.parents.flatMap((parentId) => {

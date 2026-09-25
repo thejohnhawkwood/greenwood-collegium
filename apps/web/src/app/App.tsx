@@ -32,6 +32,7 @@ import {
   canSendCommand,
 } from "./command-input.js";
 import { loadSocketTicket } from "./socket-ticket.js";
+import { neighbourRoomArt } from "./portrait-layers.js";
 import { shouldShowAuthGate, type AuthStatus } from "./auth-status.js";
 import { loadAuthSession } from "./auth-session.js";
 import {
@@ -231,6 +232,12 @@ function PlayClient({
   }, [onSignedOut]);
   const [connection, setConnection] = useState("disconnected");
   const [playState, setPlayState] = useState<PlayState>();
+  useEffect(() => {
+    for (const src of neighbourRoomArt(playState?.room.exits ?? [])) {
+      const image = new Image();
+      image.src = src;
+    }
+  }, [playState?.room.roomId, playState?.room.exits]);
   const [viewError, setViewError] = useState("");
   const [lines, setLines] = useState<TranscriptLine[]>([
     {

@@ -172,7 +172,10 @@ function matchExamineTargets(
   candidates: readonly ExamineTarget[],
   target: string,
 ): ExamineTarget[] {
-  return candidates.filter((candidate) => targetMatches(candidate, target));
+  const hits = candidates.filter((candidate) => targetMatches(candidate, target));
+  const needle = target.trim().toLowerCase();
+  const exact = hits.filter((candidate) => candidate.name.toLowerCase() === needle);
+  return exact.length > 0 ? exact : hits;
 }
 
 function targetMatches(candidate: ExamineTarget, target: string): boolean {

@@ -23,7 +23,7 @@ import {
 import { presenceActions } from "./presence-actions.js";
 import { npcArtSrc, raiderPlateForSpawn } from "./npc-plates.js";
 import { objectArtSrc } from "./object-plates.js";
-import { portraitLayers, roomArtSrc } from "./portrait-layers.js";
+import { neighbourRoomArt, portraitLayers, roomArtSrc } from "./portrait-layers.js";
 import { shouldFocusCommandInput } from "./command-focus.js";
 
 const state: PlayState = {
@@ -494,6 +494,13 @@ describe("visual foundation", () => {
     expect(layers.find((layer) => layer.layer === "marking")).toBeUndefined();
     expect(layers.some((layer) => layer.layer === "weapon" && !layer.src)).toBe(true);
     expect(roomArtSrc("lantern-court")).toBe("/art/rooms/lantern-court.png");
+    expect(
+      neighbourRoomArt([
+        { toRoomId: "great-hall" },
+        { toRoomId: "great-hall" },
+        { toRoomId: "porter-lodge" },
+      ]),
+    ).toEqual(["/art/rooms/great-hall.png", "/art/rooms/porter-lodge.png"]);
     expect(snapAppearanceValue("ears", 2)).toBe("long");
     const editor = renderToStaticMarkup(
       createElement(AppearanceEditor, { value: DEFAULT_APPEARANCE, onChange: () => {} }),

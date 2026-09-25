@@ -18,6 +18,8 @@ export type CollegeDefense = {
   /** ISO. Absent once the phase is `closed`. */
   endsAt?: string;
   startedByUsername?: string;
+  /** Waves already minted at each gate this night. Three is the ceiling. */
+  waves?: Record<string, number>;
 };
 
 export const DEFENSE_DEFAULT_MINUTES = 7;
@@ -101,6 +103,12 @@ export function restoreDefense(
 }
 
 export const RAIDER_TEMPLATE_ID = "college-raider";
+export const CAPTAIN_TEMPLATE_ID = "raid-captain";
+export const DEFENSE_WAVE_LIMIT = 3;
+
+export function captainSpawnId(defenseId: string): string {
+  return `defense-${defenseId}-captain`;
+}
 
 /** A defense spawn belongs to one night. `defeatedSpawnIds` can never leak a trophy. */
 export function defenseSpawnId(defenseId: string, roomId: string, index: number): string {
@@ -112,11 +120,15 @@ export function isDefenseSpawnId(spawnId: string): boolean {
 }
 
 /**
- * About one raider per two Collegians online, spread over three gates, and never fewer
- * than three at any gate. A gate that is empty of students still has to look defended.
+ * Older sizing: about one raider per two Collegians online, never fewer than three.
+ * Live gates use {@link playersInRoom} so each Collegian at a gate has a foe.
  */
 export function raidersPerGate(onlineCount: number): number {
   return Math.max(3, Math.ceil(Math.max(0, onlineCount) / 6));
+}
+
+export function playersInRoom(world: WorldState, roomId: string): number {
+  return Object.values(world.characters).filter((character) => character.roomId === roomId).length;
 }
 
 /** Mint this night's raiders at the three gates from the declared enemy template. */
@@ -128,12 +140,62 @@ export function openDefenseGates(
   if (!template) {
     return [];
   }
+  if (!world.defense || world.defense.id !== input.defenseId) {
+    world.defense = { id: input.defenseId, phase: "fighting" };
+  }
+  void input.onlineCount;
+  return ensureDefenseWaves(world);
+}
+
+/**
+ * Each occupied gate gets a wave the size of the Collegians standing there, up to
+ * three waves. An empty gate waits until somebody arrives. The captain stands once,
+ * at Lantern Court, and is not part of a wave.
+ */
+export function ensureDefenseWaves(world: WorldState): EnemySpawn[] {
+  const defense = world.defense;
+  if (!defense || defense.phase !== "fighting") {
+    return [];
+  }
+  const night = defense.id;
+  const template = world.enemyTemplates?.[RAIDER_TEMPLATE_ID];
+  if (!template) {
+    return [];
+  }
   const enemies = (world.enemies ??= {});
-  const perGate = raidersPerGate(input.onlineCount);
+  const waves = (defense.waves ??= {});
   const created: EnemySpawn[] = [];
   for (const roomId of DEFENSE_GATE_ROOM_IDS) {
-    for (let index = 1; index <= perGate; index += 1) {
-      const id = defenseSpawnId(input.defenseId, roomId, index);
+    const present = playersInRoom(world, roomId);
+    if (present === 0) {
+      continue;
+    }
+    const issued = waves[roomId] ?? 0;
+    if (issued >= DEFENSE_WAVE_LIMIT) {
+      continue;
+    }
+    const standing = Object.values(enemies).filter(
+      (enemy) =>
+        enemy.roomId === roomId &&
+        enemy.templateId === RAIDER_TEMPLATE_ID &&
+        isDefenseSpawnId(enemy.id) &&
+        Object.values(world.characters).some(
+          (character) =>
+            character.roomId === roomId && !character.defeatedSpawnIds?.includes(enemy.id),
+        ),
+    );
+    if (issued > 0 && standing.length >= present) {
+      continue;
+    }
+    const need = issued === 0 ? present : present - standing.length;
+    if (need <= 0) {
+      continue;
+    }
+    const start = Object.values(enemies).filter(
+      (enemy) => enemy.roomId === roomId && isDefenseSpawnId(enemy.id),
+    ).length;
+    for (let offset = 1; offset <= need; offset += 1) {
+      const id = defenseSpawnId(night, roomId, start + offset);
       if (enemies[id]) {
         continue;
       }
@@ -141,6 +203,14 @@ export function openDefenseGates(
       enemies[id] = spawn;
       created.push(spawn);
     }
+    waves[roomId] = issued + 1;
+  }
+  const captainTemplate = world.enemyTemplates?.[CAPTAIN_TEMPLATE_ID];
+  const captainId = captainSpawnId(night);
+  if (captainTemplate && !enemies[captainId]) {
+    const captain: EnemySpawn = { ...captainTemplate, id: captainId, roomId: "lantern-court" };
+    enemies[captainId] = captain;
+    created.push(captain);
   }
   return created;
 }

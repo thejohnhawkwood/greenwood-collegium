@@ -127,6 +127,10 @@ export function startQuest(
     completedObjectiveIds: [],
     rewardGranted: false,
   });
+  const character = world.characters[characterId];
+  if (character) {
+    creditHeldObjectives(world, character);
+  }
   openArrivalSpeech(world, characterId, template.id, false);
   return [
     systemNotice(characterId, template.introNarration, runtime),
@@ -152,6 +156,36 @@ function openArrivalSpeech(
   if (character) {
     openPorterArrival(world, character, reminding);
   }
+}
+
+export function questAwaitingCast(
+  world: WorldState,
+  characterId: string,
+  spellId: string,
+): boolean {
+  const character = world.characters[characterId];
+  if (!character) {
+    return false;
+  }
+  creditHeldObjectives(world, character);
+  for (const template of Object.values(world.questTemplates ?? {})) {
+    const progress = characterQuest(world, character.id, template.id);
+    if (!progress || progress.status !== "active" || progress.rewardGranted) {
+      continue;
+    }
+    if (
+      template.objectives.some(
+        (objective) =>
+          objective.kind === "cast" &&
+          objective.targetId === spellId &&
+          !progress.completedObjectiveIds.includes(objective.id) &&
+          (objective.requires ?? []).every((id) => progress.completedObjectiveIds.includes(id)),
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function progressQuests(
@@ -328,6 +362,32 @@ function grantQuestItem(
     equipSlot: itemTemplate.equipSlot,
   };
   return [systemNotice(character.id, `You receive ${itemTemplate.name}.`, runtime)];
+}
+
+function creditHeldObjectives(world: WorldState, character: Character): void {
+  const held = new Set(itemsHeldBy(world, character.id).map((item) => item.templateId));
+  for (const template of Object.values(world.questTemplates ?? {})) {
+    const progress = characterQuest(world, character.id, template.id);
+    if (!progress || progress.status !== "active" || progress.rewardGranted) {
+      continue;
+    }
+    for (const objective of template.objectives) {
+      if (progress.completedObjectiveIds.includes(objective.id)) {
+        continue;
+      }
+      if (!(objective.requires ?? []).every((id) => progress.completedObjectiveIds.includes(id))) {
+        continue;
+      }
+      const already =
+        objective.kind === "take" &&
+        !objective.outcome &&
+        Boolean(objective.itemTemplateId) &&
+        held.has(objective.itemTemplateId ?? "");
+      if (already) {
+        progress.completedObjectiveIds.push(objective.id);
+      }
+    }
+  }
 }
 
 function objectiveMatches(

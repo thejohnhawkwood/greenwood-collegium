@@ -69,6 +69,14 @@ import type { FastifyInstance } from "fastify";
 import { Server, type Socket } from "socket.io";
 import { CommandLog } from "../application/command-log.js";
 import { persistCharacterStarterItems, persistPersonalLoot } from "../application/item-state.js";
+import {
+  changedProgress,
+  fullPersistDelta,
+  persistDeltaIsQuiet,
+  questStamp,
+  type PersistDelta,
+  type ProgressStamp,
+} from "./persist-delta.js";
 import { handleStaffCommand, muteRejection } from "../application/moderation.js";
 import {
   COMMAND_RATE_MAX,
@@ -501,7 +509,10 @@ export async function attachRealtime(
       restoreEquipment(world, arrived, identity.equipment ?? {});
     }
     if (identity && (options.persistRoom || options.persistProgress || options.persistQuest)) {
-      await persistAuthenticatedProgress(characterId);
+      const arrivedStamp = stampProgress(characterId);
+      if (arrivedStamp) {
+        await persistAuthenticatedProgress(characterId, fullPersistDelta(arrivedStamp));
+      }
     }
 
     sockets.set(characterId, socket);
@@ -578,49 +589,87 @@ export async function attachRealtime(
     );
   }
 
-  async function persistAuthenticatedProgress(characterId: string): Promise<void> {
+  function stampProgress(characterId: string): ProgressStamp | undefined {
     const character = world.characters[characterId];
     if (!character) {
+      return undefined;
+    }
+    const quests = new Map<string, string>();
+    for (const record of listQuestRecords(world, characterId)) {
+      quests.set(record.questId, questStamp(record));
+    }
+    return {
+      roomId: character.roomId,
+      discovered: character.discoveredRoomIds.join(","),
+      experience: character.experience ?? 0,
+      level: character.level ?? 1,
+      schoolId: character.schoolId ?? "",
+      defeated: (character.defeatedSpawnIds ?? []).join(","),
+      equipment: JSON.stringify(character.equipment ?? {}),
+      primer: JSON.stringify({
+        known: character.knownSpells ?? [],
+        pending: character.pendingPrimerChoices ?? null,
+        awarded: character.primerAwardedLevels ?? [],
+      }),
+      quests,
+    };
+  }
+
+  async function persistAuthenticatedProgress(
+    characterId: string,
+    delta: PersistDelta,
+  ): Promise<void> {
+    const character = world.characters[characterId];
+    if (!character || persistDeltaIsQuiet(delta)) {
       return;
     }
-    if (options.persistRoom) {
-      await options.persistRoom(characterId, character.roomId);
+    const writes: Promise<void>[] = [];
+    if (delta.room && options.persistRoom) {
+      writes.push(options.persistRoom(characterId, character.roomId));
     }
-    if (options.persistDiscovery) {
-      await options.persistDiscovery(characterId, character.discoveredRoomIds);
+    if (delta.discovery && options.persistDiscovery) {
+      writes.push(options.persistDiscovery(characterId, character.discoveredRoomIds));
     }
-    if (options.persistProgress) {
-      await options.persistProgress(characterId, {
-        experience: character.experience ?? 0,
-        level: character.level ?? 1,
-      });
+    if (delta.progress && options.persistProgress) {
+      writes.push(
+        options.persistProgress(characterId, {
+          experience: character.experience ?? 0,
+          level: character.level ?? 1,
+        }),
+      );
     }
-    if (options.persistSchool) {
-      await options.persistSchool(characterId, character.schoolId);
+    if (delta.school && options.persistSchool) {
+      writes.push(options.persistSchool(characterId, character.schoolId));
     }
-    if (options.persistDefeatedSpawns) {
-      await options.persistDefeatedSpawns(characterId, character.defeatedSpawnIds ?? []);
+    if (delta.defeated && options.persistDefeatedSpawns) {
+      writes.push(options.persistDefeatedSpawns(characterId, character.defeatedSpawnIds ?? []));
     }
-    if (options.persistEquipment) {
-      await options.persistEquipment(characterId, { ...(character.equipment ?? {}) });
+    if (delta.equipment && options.persistEquipment) {
+      writes.push(options.persistEquipment(characterId, { ...(character.equipment ?? {}) }));
     }
-    if (options.persistPrimer) {
-      await options.persistPrimer(characterId, {
-        knownSpells: (character.knownSpells ?? []).map((leaf) => ({ ...leaf })),
-        pendingPrimerChoices: character.pendingPrimerChoices
-          ? {
-              ...character.pendingPrimerChoices,
-              options: character.pendingPrimerChoices.options.map((card) => ({ ...card })),
-            }
-          : undefined,
-        primerAwardedLevels: [...(character.primerAwardedLevels ?? [])],
-      });
+    if (delta.primer && options.persistPrimer) {
+      writes.push(
+        options.persistPrimer(characterId, {
+          knownSpells: (character.knownSpells ?? []).map((leaf) => ({ ...leaf })),
+          pendingPrimerChoices: character.pendingPrimerChoices
+            ? {
+                ...character.pendingPrimerChoices,
+                options: character.pendingPrimerChoices.options.map((card) => ({ ...card })),
+              }
+            : undefined,
+          primerAwardedLevels: [...(character.primerAwardedLevels ?? [])],
+        }),
+      );
     }
-    if (options.persistQuest) {
+    if (delta.questIds.length > 0 && options.persistQuest) {
+      const wanted = new Set(delta.questIds);
       for (const record of listQuestRecords(world, characterId)) {
-        await options.persistQuest.upsert(record);
+        if (wanted.has(record.questId)) {
+          writes.push(options.persistQuest.upsert(record));
+        }
       }
     }
+    await Promise.all(writes);
   }
 
   function bindCommandHandlers(
@@ -965,6 +1014,7 @@ export async function attachRealtime(
 
     await persistStarterCopies(characterId, identity);
 
+    const progressBefore = identity ? stampProgress(characterId) : undefined;
     const previousEncounterId = activeEncounter(world, characterId)?.id;
     const result =
       intent.verb === "look"
@@ -1173,7 +1223,13 @@ export async function attachRealtime(
         intent.verb === "seek" ||
         intent.verb === "duel")
     ) {
-      await persistAuthenticatedProgress(characterId);
+      const progressAfter = stampProgress(characterId);
+      if (progressBefore && progressAfter) {
+        await persistAuthenticatedProgress(
+          characterId,
+          changedProgress(progressBefore, progressAfter),
+        );
+      }
       await persistPersonalLoot(world, options.persistItem);
     }
 
@@ -1324,6 +1380,7 @@ export async function attachRealtime(
         void runExclusive(async () => {
           combatLockTimers.delete(characterId);
           const previousEncounterId = activeEncounter(world, characterId)?.id;
+          const progressBefore = identity ? stampProgress(characterId) : undefined;
           const result = handleCombatExpire(
             world,
             { verb: "combat-expire", characterId },
@@ -1335,8 +1392,12 @@ export async function attachRealtime(
           if (identity && result.outcome === "defeat" && options.persistRoom) {
             await options.persistRoom(characterId, result.roomId);
           }
-          if (identity) {
-            await persistAuthenticatedProgress(characterId);
+          const progressAfter = progressBefore ? stampProgress(characterId) : undefined;
+          if (identity && progressBefore && progressAfter) {
+            await persistAuthenticatedProgress(
+              characterId,
+              changedProgress(progressBefore, progressAfter),
+            );
           }
           deliverPlay(characterId, result.events, result.notices);
           rearmPartyLocks(characterId, previousEncounterId);

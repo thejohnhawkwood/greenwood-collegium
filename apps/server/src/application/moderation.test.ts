@@ -190,10 +190,8 @@ describe("classroom moderation", () => {
     const raiders = Object.values(state.enemies ?? {}).filter(
       (enemy) => enemy.templateId === "college-raider",
     );
-    expect(raiders).toHaveLength(9);
-    expect(new Set(raiders.map((enemy) => enemy.roomId))).toEqual(
-      new Set(["lantern-court", "east-meadow", "south-orchard"]),
-    );
+    expect(raiders).toHaveLength(2);
+    expect(raiders.every((enemy) => enemy.roomId === "lantern-court")).toBe(true);
 
     // A second call while one is running is refused with the clock, not stacked.
     expect(
