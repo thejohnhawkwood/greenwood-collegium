@@ -988,7 +988,7 @@ Kern turns the tally-book around and pushes it across the lintel toward you, ope
 
 **Reminder**
 
-"Talk hobb in the Wool Shed for the night of the bell. Talk sile at the Reed Mere for the night of the voice. Then talk kern here in the Lintel Field. Type west from the Lintel Field for the stones."
+"Talk hobb in the Wool Shed for the night of the bell. Talk sile at the Reed Mere for the night of the voice. Then talk kern here in the Lintel Field."
 
 **Complete**
 
@@ -1019,7 +1019,7 @@ Quill has the borrowing register open at a page she does not like. "One more gap
 
 Quill takes the book, opens the boards flat, and looks along the warp with one eye closed like a joiner checking a plank. "Not damaged. Seasoned." She finds the borrowing slip inside, reads it, and pencils one word on it rather than three.
 
-"Misfiled. Not stolen, not late, misfiled." She sets the book down and looks at you properly. "You understand that this is the better ending and also the duller one. Most of them are." She slides it back across the desk. "Keep it for a week. It is about cradles cut from living trees, and you have been under that tower. Read the fourth chapter and then come and argue with me about it."
+"Misfiled. Not stolen, not late, misfiled." She sets the book down and slides it back across the desk. "Keep it for a week. It is about cradles cut from living trees, and you have been under that tower. Read the fourth chapter and then come and argue with me about it."
 
 **Objectives**
 
@@ -1039,7 +1039,7 @@ Quill takes the book, opens the boards flat, and looks along the warp with one e
 
 **Intro**
 
-Lumen turns her own book around so you can see the column she has been keeping. It is a list of dates with one name at the top and nothing written beside the last four. "Shellington borrowed a bearing book from this hearth in the spring and has not brought it back, which I could forgive. He also stopped writing to me, which I cannot." She closes it. "A crow-stile on the east moor, past the barrow. Somebody saw him sitting on it. He is corrupted, and I am told that is a word people use to mean finished. It is not. Bring him back to me and I will do the rest."
+Lumen turns her own book around so you can see the column she has been keeping. It is a list of dates with one name at the top and nothing written beside the last four. "Shellington borrowed a bearing book from this hearth in the spring and has not brought it back, which I could forgive. He also stopped writing to me, which I cannot." She closes it. "A crow-stile on the east moor, past the barrow. Somebody saw him sitting on it. He is not finished. Bring him back to me and I will do the rest."
 
 **Reminder**
 
@@ -1070,7 +1070,7 @@ Quire pats the empty side pocket one more time and then makes herself stop. "Squ
 
 **Reminder**
 
-"The Scriptorium, third desk from the window. Squat bottle, wax over the cork. Type take ink. Then bring it back and talk quire, or do not."
+"The Scriptorium, third desk from the window. Squat bottle, wax over the cork. Bring it back and talk quire, or do not."
 
 **Complete**
 
@@ -1097,7 +1097,7 @@ She rubs the drawing out. "She wears a woven ring. Everybody in that camp does, 
 
 **Reminder**
 
-"The cutter is in the holt. Take her ring, type equip ring, then east into the camp. Examine the tally slate. Then talk tern at the reed bank."
+"The cutter is in the holt. Take her ring, put it on, and walk east into the camp. Read the tally slate. Then talk tern at the reed bank."
 
 **Complete**
 
@@ -1129,7 +1129,7 @@ She picks the shears back up. "Bring it up into lamplight. Carry it or wear it, 
 
 **Reminder**
 
-"The cloister below the gallery. Type take mask. Then bring it up to the stair and talk vane, or put it on first. Either way I want it in lamplight."
+"The cloister below the gallery. Bring it up to the stair and talk vane, or put it on first. Either way I want it in lamplight."
 
 **Complete**
 
@@ -1585,3 +1585,4 @@ Wren has the kettle on and has not sat down since you came in. "Sit, if you like
 - `after-colm`: "Put the kettle down. I put it down too hard. Did you tell him anything? No. Do not answer that. I hate the question. Go to Fen. Sit. Honey. Tell him if you can feel your paws. I will keep this fire. I will not go into the hill."
 - `stay`: "Alder can have the bronze. I will not go in. The kettle is for the living. If the fog squares up, you lock together. Then Fen. Then you come back here and eat."
 - `tally-page`: Wren reads Kern's page twice and then puts the kettle down without pouring anything. "Hobb's bell. Sile's mere. Kern's stone. Three animals who count things properly, all wrong in the same week, and none of them came to me." She hands the page back and does not soften it. "That is not comfort and I will not pretend it is. Take it up to Alder. He is owed facts as much as I am, and he is the one who can do something with a date."
+                     

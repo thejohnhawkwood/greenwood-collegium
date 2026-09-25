@@ -108,6 +108,19 @@ export const OBJECT_PLATE_FILES = [
   "crow-pin",
   "peat-nail",
   "cut-iron",
+  "pressed-mask",
+  "object-tally-slate",
+  "object-drying-frames",
+  "borrowed-ink",
+  "quires-focus-ring",
+  "vanes-wick-tin",
+  "shellington-diary",
+  "cellar-lavender",
+  "oak-and-bronze-book",
+  "withy-ring",
+  "terns-copied-column",
+  "fold-tally-page",
+  "raiders-token",
 ] as const;
 
 const OBJECT_PLATE_ALIASES: Record<string, string> = Object.fromEntries(

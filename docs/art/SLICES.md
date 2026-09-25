@@ -18,3 +18,15 @@ Heavy black contour, flat local colour behind it. Fur colour stays on fur. Cloth
 6. **Arrival procession.** `apps/web/public/frame/arrival-students.png` is the comic-ink procession, punched off `#EE3173` and fitted to 1600×900. Source: `art/sources/frame_arrival-students__v001__comic-ink.png`.
 
 Unused body, clothing, ear, muzzle, marking, face, and accessory files stay unused.
+
+## Quest plates
+
+Twenty-one plates from [`HANDOFF-QUEST-PLATES.md`](HANDOFF-QUEST-PLATES.md). Philip Bird authorized CREATE and INTEGRATE on 25 September 2026. Do not redraw plates already in the list above. Continue one slice at a time.
+
+1. **Calibration.** Integrated 25 September 2026. Sources: room `v001`, Quire `v002`, Shellington `v002`, pressed mask `v002`. Live files: `rooms/osier-camp.png`, `characters/npcs/npc-collegian-quire.png`, `characters/npcs/shellington.png`, `objects/pressed-mask.png`. Withy Camp no longer borrows `pirate-camp`. Cache key for character plates is `comic-ink-2`. Quire’s ink stain did not land on the paw.
+2. **People still missing.** Integrated 25 September 2026. Vane is `v001` (singed shoulder and black rag did not land; the ground pile still reads as dirt). Tern is `v003`, a common tern with a pencil under one wing. `v001` of Tern was a hare-headed chimera with a caption and was not used.
+3. **Foes still missing.** Integrated 25 September 2026. Archive bat `v001`, withy sentry `v001`, college raider `v002` (a fox; the pry-bar is a straight bar). Spawn ids `enemy-archive-bat-*`, `enemy-withy-sentry-osier-holt`, and any id starting with `defense-` use those plates. The sentry’s withy ring is not visible on the paw.
+4. **Withy Camp fixtures.** Integrated 25 September 2026. Tally slate `v001` (three chalk columns and a total). Drying frames `v001` (green twine on the bundles; three ties rather than two).
+5. **Ink and mask kit.** Integrated 25 September 2026 as `v001`: borrowed ink, Quire’s ring, Vane’s wick tin.
+6. **Books and pages.** Integrated 25 September 2026 as `v001`: Shellington’s diary, oak-and-bronze book, cellar lavender, Tern’s column, fold tally page. The lavender bag is open, and a stray tally mark sits in the corner of that source.
+7. **Small tokens.** Integrated 25 September 2026 as `v001`: withy ring, raider’s token.

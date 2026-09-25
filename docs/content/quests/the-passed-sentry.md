@@ -27,7 +27,7 @@ there until you step back. That refusal is ordinary narration, not a puzzle.
 
 New room `osier-camp`, the Withy Camp, east of the Osier Holt. Closed because
 `withy-ring` names it in `admitsRoomId`. Its `admissionRefusal` is the weaver in the
-gap. The room borrows the `pirate-camp` plate until an art pass.
+gap. The room has its own plate, `rooms/osier-camp.png`.
 
 The costume is a normal `ring`: spliced, not knotted, which is the point — anybody
 can knot a withy and only somebody taught in that camp can splice one. It carries an

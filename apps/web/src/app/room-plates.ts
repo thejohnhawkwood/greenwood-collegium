@@ -286,6 +286,11 @@ export const COLLEGIUM_ROOM_PLATES = [
     blurb: "A fishing post, and the whistle is missing.",
   },
   {
+    id: "osier-camp",
+    title: "Withy Camp",
+    blurb: "Drying frames hide the baskets from the river.",
+  },
+  {
     id: "pirate-camp",
     title: "Pirate Camp",
     blurb: "Tarps, tins, and one captain's boat.",

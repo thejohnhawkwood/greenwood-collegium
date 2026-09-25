@@ -545,25 +545,34 @@ describe("visual foundation", () => {
     expect(html).toContain("presence-avatar player");
     expect(html).toContain("/art/characters/npcs/npc-porter-bramble.png");
     expect(npcArtSrc("enemy-practice-dummy-south-orchard")).toBe(
-      "/art/characters/npcs/practice-dummy.png?v=comic-ink-1",
+      "/art/characters/npcs/practice-dummy.png?v=comic-ink-2",
     );
     expect(npcArtSrc("npc-piper-mole")).toBe(
-      "/art/characters/npcs/npc-piper-mole.png?v=comic-ink-1",
+      "/art/characters/npcs/npc-piper-mole.png?v=comic-ink-2",
     );
     expect(npcArtSrc("enemy-silk-hatchling-cocoon-nave")).toBe(
-      "/art/characters/npcs/silk-hatchling.png?v=comic-ink-1",
+      "/art/characters/npcs/silk-hatchling.png?v=comic-ink-2",
     );
     expect(npcArtSrc("npc-shepherd-wren")).toBe(
-      "/art/characters/npcs/npc-shepherd-wren.png?v=comic-ink-1",
+      "/art/characters/npcs/npc-shepherd-wren.png?v=comic-ink-2",
     );
     expect(npcArtSrc("enemy-mist-crow-sheepfold")).toBe(
-      "/art/characters/npcs/mist-crow.png?v=comic-ink-1",
+      "/art/characters/npcs/mist-crow.png?v=comic-ink-2",
     );
     expect(npcArtSrc("enemy-fog-walker-fog-hollow")).toBe(
-      "/art/characters/npcs/fog-walker.png?v=comic-ink-1",
+      "/art/characters/npcs/fog-walker.png?v=comic-ink-2",
     );
     expect(npcArtSrc("enemy-peat-adder-peat-cut")).toBe(
-      "/art/characters/npcs/peat-adder.png?v=comic-ink-1",
+      "/art/characters/npcs/peat-adder.png?v=comic-ink-2",
+    );
+    expect(npcArtSrc("enemy-archive-bat-root")).toBe(
+      "/art/characters/npcs/archive-bat.png?v=comic-ink-2",
+    );
+    expect(npcArtSrc("enemy-withy-sentry-osier-holt")).toBe(
+      "/art/characters/npcs/withy-sentry.png?v=comic-ink-2",
+    );
+    expect(npcArtSrc("defense-night-lantern-court-1")).toBe(
+      "/art/characters/npcs/college-raider.png?v=comic-ink-2",
     );
     expect(objectArtSrc("object-kitchen-initials", "Bread Tin")).toBe(
       "/art/objects/object-kitchen-initials.png",
@@ -852,7 +861,7 @@ describe("visual foundation", () => {
       }),
     );
     expect(html).toContain("Fighting Practice Dummy");
-    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=comic-ink-1");
+    expect(html).toContain("/art/characters/npcs/practice-dummy.png?v=comic-ink-2");
     expect(html).toContain("Health 8 / 8");
     expect(html).toContain("Focus 6 / 6");
     expect(html).toContain("1. Attack");

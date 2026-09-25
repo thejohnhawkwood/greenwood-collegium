@@ -13,6 +13,9 @@ export const NPC_PLATE_FILES = [
   "npc-mentor-edge",
   "npc-piper-mole",
   "npc-shepherd-wren",
+  "npc-collegian-quire",
+  "npc-stairkeeper-vane",
+  "npc-scout-tern",
   "practice-dummy",
   "silk-hatchling",
   "silk-queen",
@@ -33,6 +36,10 @@ export const NPC_PLATE_FILES = [
   "rope-sentry",
   "river-captain",
   "race-pike",
+  "shellington",
+  "archive-bat",
+  "withy-sentry",
+  "college-raider",
 ] as const;
 
 const NPC_PLATE_ALIASES: Record<string, string> = {
@@ -50,6 +57,9 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "npc-mentor-edge": "npc-mentor-edge",
   "npc-piper-mole": "npc-piper-mole",
   "npc-shepherd-wren": "npc-shepherd-wren",
+  "npc-collegian-quire": "npc-collegian-quire",
+  "npc-stairkeeper-vane": "npc-stairkeeper-vane",
+  "npc-scout-tern": "npc-scout-tern",
   "practice-dummy": "practice-dummy",
   "enemy-practice-dummy-south-orchard": "practice-dummy",
   "enemy-practice-dummy-hearth-ember": "practice-dummy",
@@ -90,11 +100,20 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-river-captain-pirate-camp": "river-captain",
   "race-pike": "race-pike",
   "enemy-race-pike-mill-race": "race-pike",
+  "shellington": "shellington",
+  "enemy-shellington-crow-stile": "shellington",
+  "archive-bat": "archive-bat",
+  "enemy-archive-bat-root": "archive-bat",
+  "enemy-archive-bat-shelf": "archive-bat",
+  "enemy-archive-bat-stair": "archive-bat",
+  "withy-sentry": "withy-sentry",
+  "enemy-withy-sentry-osier-holt": "withy-sentry",
+  "college-raider": "college-raider",
 };
 
-const NPC_ART_REV = "comic-ink-1";
+const NPC_ART_REV = "comic-ink-2";
 
 export function npcArtSrc(id: string): string | undefined {
-  const plate = NPC_PLATE_ALIASES[id];
+  const plate = id.startsWith("defense-") ? "college-raider" : NPC_PLATE_ALIASES[id];
   return plate ? `/art/characters/npcs/${plate}.png?v=${NPC_ART_REV}` : undefined;
 }

@@ -202,8 +202,6 @@ export function defenseClosedNarration(): string {
     '"That is time. Hands off, step back, let the porters through."',
     "",
     "Porters move up to the three gates with lanterns and long poles and finish what is left, which is what porters are for. Somebody is already sweeping.",
-    "",
-    "Nothing you were carrying was taken from you.",
   ].join("\n");
 }
 

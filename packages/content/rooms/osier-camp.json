@@ -5,7 +5,6 @@
   "shortDescription": "A basket camp behind the osiers that keeps its own ledger.",
   "longDescription": "Cut withies lean in drying frames on three sides, which is why nobody on the water can see in. Finished baskets are stacked by size and tallied, and the tally is kept properly, in columns, by somebody who was taught to keep one.\nA slate leans against the nearest frame. This is not where the boats go. This is where the cargo goes after.",
   "zone": "grounds",
-  "visualState": "pirate-camp",
   "admissionRefusal": "A basket-weaver straightens up in the gap between the drying frames and looks at your collar, your paws, and your face, in that order. Whatever she is looking for, you are not wearing it. She does not say anything. She simply keeps standing there until you step back.",
   "map": {
     "x": 3,
@@ -23,7 +22,7 @@
       "name": "Tally Slate",
       "kind": "object",
       "lookDescription": "A slate of columns against the drying frame. Examine it.",
-      "examineDescription": "Three columns in chalk, kept the way a mentor would want them kept: what came in, what it was worth, and who it went to. The third column is the one that matters. Two entries are farms downriver. The rest are a single mark repeated, which means a regular buyer somebody did not want to write the name of.\n\nAt the bottom, a running total, and beside it in the same hand: the date the Collegium's biscuit crate came through."
+      "examineDescription": "Three columns in chalk, ruled straight: what came in, what it was worth, and who it went to. The third column is the one that matters. Two entries are farms downriver. The rest are a single mark repeated, which means a regular buyer somebody did not want to write the name of.\n\nAt the bottom, a running total, and beside it in the same hand: the date the Collegium's biscuit crate came through."
     },
     {
       "id": "object-drying-frames",

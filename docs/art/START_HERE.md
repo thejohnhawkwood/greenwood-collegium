@@ -2,7 +2,7 @@
 
 The locked look is the comic-ink pass. Current slices are `docs/art/SLICES.md`. Rooms, NPC cutouts, object plates, Collegian looks, combat FX, and the arrival procession from that pass are in `apps/web/public/`. Every play room has its own plate. Do not borrow another room's painting.
 
-The east-river handoff in [`HANDOFF-EAST-RIVER-PLATES.md`](HANDOFF-EAST-RIVER-PLATES.md) is drawn, punched, and live. Do not redraw those 73 plates. CREATE stays unauthorized until Philip names the next plate.
+The east-river handoff in [`HANDOFF-EAST-RIVER-PLATES.md`](HANDOFF-EAST-RIVER-PLATES.md) is drawn, punched, and live. Do not redraw those 73 plates. Quest plates are sliced in [`SLICES.md`](SLICES.md). Quest plates in [`HANDOFF-QUEST-PLATES.md`](HANDOFF-QUEST-PLATES.md) are drawn through slice 7.
 
 Use one task at a time. These are prompts, not installed shell commands.
 References to an asset or candidate below must be replaced with actual IDs

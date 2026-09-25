@@ -6,7 +6,7 @@
   "requiresQuestIds": ["arrival-at-the-collegium"],
   "experienceReward": 20,
   "introNarration": "Quire pats the empty side pocket one more time and then makes herself stop. \"Squat bottle, cork stoppered, wax over the cork with a Q scratched in it. Third desk from the window in the Scriptorium. Court, north to the Great Hall, west into the Stacks, west again.\" She hitches the satchel. \"I need it to ink a leaf tonight and I will not get another bottle out of the stores until Thursday. Bring it to me here and I will make it worth the walk. Or do not, and we will both know what happened.\"",
-  "reminderNarration": "\"The Scriptorium, third desk from the window. Squat bottle, wax over the cork. Type take ink. Then bring it back and talk quire, or do not.\"",
+  "reminderNarration": "\"The Scriptorium, third desk from the window. Squat bottle, wax over the cork. Bring it back and talk quire, or do not.\"",
   "outcomes": [
     {
       "id": "returned",

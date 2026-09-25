@@ -198,7 +198,7 @@ describe("classroom moderation", () => {
     );
     expect(cancelled.ok).toBe(true);
     if (cancelled.ok) {
-      expect(cancelled.events[0]?.narration).toContain("Nothing you were carrying was taken");
+      expect(cancelled.events[0]?.narration).toContain("The staff will see to the gates.");
     }
     expect(state.defense?.phase).toBe("closed");
     expect(saved.map((row) => row.phase)).toEqual(["fighting", "closed"]);
