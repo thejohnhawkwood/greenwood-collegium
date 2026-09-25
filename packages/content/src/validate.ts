@@ -291,6 +291,20 @@ export function validateCatalog(
     }
   }
 
+  // H2. A piece that admits a room has to name a room that exists.
+  for (const named of namedTemplates) {
+    const admits = named.template.admitsRoomId;
+    if (admits && !roomIds.has(admits)) {
+      issues.push({
+        code: "missing_reference",
+        message: `${named.template.id} admits unknown room ${admits}`,
+        itemId: named.template.id,
+        roomId: admits,
+        fileName: named.fileName,
+      });
+    }
+  }
+
   return issues;
 }
 

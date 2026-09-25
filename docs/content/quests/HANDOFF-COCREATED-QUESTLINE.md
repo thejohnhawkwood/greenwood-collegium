@@ -97,7 +97,17 @@ Content shape (extend `questTemplateSchema` in
 
 First consumer: **The Borrowed Ink**.
 
-### H2 — Worn piece changes the world
+### H2 — Worn piece changes the world — **built 24 September 2026, [ADR-0047](../../adr/0047-worn-piece-changes-the-world.md)**
+
+Shipped as specified. Both fields live on the item template and require an
+`equipSlot`. A room is closed because some item names it in `admitsRoomId`, so there
+is no second locked flag; that room may write `admissionRefusal`, and without one the
+engine speaks a plain default. `handleMove` reuses `exit_closed`. Admission is checked
+on entry, so removing a costume inside does not eject you, and walking back in without
+it is refused again. Validation rejects an `admitsRoomId` naming an unknown room. No
+stat changes anywhere.
+
+Original sketch, kept for the record:
 
 A worn item template may set:
 
