@@ -153,7 +153,7 @@ export type SpellRankNumbers = {
 };
 
 export type QuestObjectiveKind =
-  "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast";
+  "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast" | "equip";
 
 export type QuestObjective = {
   id: string;

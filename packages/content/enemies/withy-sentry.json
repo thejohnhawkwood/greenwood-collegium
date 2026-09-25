@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "withy-sentry",
+  "name": "Withy Sentry",
+  "shortDescription": "A basket-cutter posted where the path leaves the water.",
+  "lookDescription": "A stoat sits on a cutting stool among the withies with a billhook across her knees and watches the path rather than the river.",
+  "examineDescription": "A grown stoat on a cutting stool, sleeves tied back, a billhook across her knees and a woven ring on her right paw. She has been cutting withy all morning and there is a proper pile to prove it, so the posting is real work as well as a watch. She is not a student, and she will ask you what you want before she does anything else.",
+  "maxHealth": 14,
+  "attack": 4,
+  "experience": 12,
+  "loot": ["withy-ring"],
+  "reads": ["brace", "lunge", "gather"],
+  "lockNarration": "She sets the billhook down and stands up off the stool.",
+  "victoryNarration": "The sentry sits back down on the stool, winded, and waves you past with the back of her paw as though you were a wasp. The spliced ring is off her paw and in the cut withy where she dropped it."
+}

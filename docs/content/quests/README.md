@@ -27,6 +27,8 @@ and JSON authoring stay in [adventures.md](../adventures.md).
 - [The Borrowed Ink](the-borrowed-ink.md) — `the-borrowed-ink` (forked: `returned` / `kept`)
 - [Shellington](shellington.md) — `shellington`
 - [Quill's Second Book](quills-second-book.md) — `quills-second-book`
+- [The Pressed Mask](the-pressed-mask.md) — `the-pressed-mask` (forked: `worn` / `returned`)
+- [The Passed Sentry](the-passed-sentry.md) — `the-passed-sentry`
 
 Co-created queue and its remaining tickets: [HANDOFF-COCREATED-QUESTLINE.md](HANDOFF-COCREATED-QUESTLINE.md).
 

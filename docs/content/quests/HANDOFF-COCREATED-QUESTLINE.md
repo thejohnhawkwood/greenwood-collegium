@@ -171,7 +171,13 @@ Raiders hit the college. Alder speaks in every transcript: drop the errand, defe
 
 **Ids:** phase `college-defense`. Spawns `enemy-raider-court`, `enemy-raider-meadow`, `enemy-raider-orchard` (multiply instances, one template). Trophy item `raiders-token` or a named piece off the body.
 
-### 3. The Pressed Mask — David — needs H2
+### 3. The Pressed Mask — David — needs H2 — **built, [story notes](the-pressed-mask.md)**
+
+Keeper is `npc-stairkeeper-vane` on the Bell Stair, the hedgehog who took Holm's
+lamp-keeping job. Wearing the mask is an `equip` objective, a new objective kind (not
+a new player command). Vane never takes the mask on the `returned` path, because the
+engine cannot make an NPC take a held item; she sets it on the high ledge and pays for
+restraint instead.
 
 Under the grounds, a keeper asks you to find a mask. It is barrow stone, or a face the silk pressed flat. Wear it and you are changed: `examine` on you says so, and mentors answer that fact. Give it back and the keeper pays a smaller gift; your description stays yours.
 
@@ -181,7 +187,11 @@ Under the grounds, a keeper asks you to find a mask. It is barrow stone, or a fa
 
 **Ids:** `the-pressed-mask`. Item `pressed-mask` (`equipSlot` helmet or necklace).
 
-### 4. The Passed Sentry — Adrian — needs H2
+### 4. The Passed Sentry — Adrian — needs H2 — **built, [story notes](the-passed-sentry.md)**
+
+Spy is `npc-scout-tern` at the Reed Bank. Faction is the river thieves' basket camp:
+new room `osier-camp` east of the Osier Holt, closed because `withy-ring` admits it.
+The salt-grass escort stays out, as asked.
 
 A spy needs intel from a closed camp of river thieves or silk-kept sentries. You take that faction’s helmet or ring and wear it. The door admits you. Unworn, the door says no in plain text. Inside, you examine the intel and bring it back.
 

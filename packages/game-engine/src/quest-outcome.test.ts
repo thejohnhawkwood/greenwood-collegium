@@ -149,6 +149,79 @@ describe("remembered choice", () => {
     expect(realm.quests?.["char-rowan"]?.[forked.id]?.outcome).toBe("returned");
   });
 
+  it("takes an equip as the branch a story asked for", () => {
+    const realm = world();
+    const clock = runtime();
+    realm.questTemplates = {
+      "the-pressed-mask": {
+        id: "the-pressed-mask",
+        title: "The Pressed Mask",
+        giverNpcId: GIVER,
+        introNarration: "Bring it into lamplight.",
+        reminderNarration: "Take the mask.",
+        experienceReward: 25,
+        outcomes: [
+          { id: "worn", completionNarration: "You put it on in front of her." },
+          {
+            id: "returned",
+            completionNarration: "You carry it up unworn.",
+            itemRewardTemplateId: "focus-ring",
+          },
+        ],
+        objectives: [
+          {
+            id: "put-it-on",
+            kind: "equip",
+            itemTemplateId: "pressed-mask",
+            outcome: "worn",
+            label: "Type equip mask.",
+          },
+          {
+            id: "carry-it-up",
+            kind: "talk",
+            targetId: GIVER,
+            outcome: "returned",
+            label: "Type talk pell.",
+          },
+        ],
+      },
+    };
+    realm.items = {
+      "mask-1": {
+        id: "mask-1",
+        templateId: "pressed-mask",
+        name: "Pressed Mask",
+        examineDescription: "Silk.",
+        holderCharacterId: "char-rowan",
+        equipSlot: "helmet",
+      },
+    };
+    realm.itemTemplates = {
+      ...realm.itemTemplates,
+      "pressed-mask": {
+        id: "pressed-mask",
+        name: "Pressed Mask",
+        examineDescription: "Silk.",
+        category: "ordinary",
+        equipSlot: "helmet",
+      },
+    };
+    startQuest(realm, "char-rowan", "the-pressed-mask", clock);
+
+    // Holding it is not wearing it.
+    expect(progressQuests(realm, { characterId: "char-rowan", kind: "equip" }, clock)).toEqual([]);
+
+    realm.characters["char-rowan"]!.equipment = { helmet: "mask-1" };
+    const events = progressQuests(realm, { characterId: "char-rowan", kind: "equip" }, clock);
+    expect(realm.quests?.["char-rowan"]?.["the-pressed-mask"]?.outcome).toBe("worn");
+    expect(events.some((event) => event.narration.includes("put it on in front of her"))).toBe(
+      true,
+    );
+    expect(Object.values(realm.items ?? {}).some((item) => item.templateId === "focus-ring")).toBe(
+      false,
+    );
+  });
+
   it("carries the outcome through a restart", () => {
     const { realm } = fetchThen("cast");
     const records = listQuestRecords(realm, "char-rowan");

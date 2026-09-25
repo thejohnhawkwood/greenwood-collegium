@@ -137,7 +137,7 @@ export type LoadedQuest = {
   }>;
   objectives: Array<{
     id: string;
-    kind: "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast";
+    kind: "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast" | "equip";
     label: string;
     itemTemplateId?: string;
     roomId?: string;

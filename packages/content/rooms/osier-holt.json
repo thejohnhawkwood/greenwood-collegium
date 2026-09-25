@@ -3,7 +3,7 @@
   "id": "osier-holt",
   "title": "Osier Holt",
   "shortDescription": "Withies cut for baskets, and a path to the race.",
-  "longDescription": "Withies stand in bundles, cut for Collegium baskets and not yet stolen. The river is louder east of here, where the mill-race drops.\nWest is the willow bend. South is the mill-race.",
+  "longDescription": "Withies stand in bundles, cut for Collegium baskets and not yet stolen. The river is louder south of here, where the mill-race drops.\nWest is the willow bend. South is the mill-race. East, past the cut stools, somebody has trodden a path that does not go to the water.",
   "zone": "grounds",
   "map": {
     "x": 2,
@@ -17,6 +17,10 @@
     {
       "direction": "south",
       "toRoomId": "mill-race"
+    },
+    {
+      "direction": "east",
+      "toRoomId": "osier-camp"
     }
   ],
   "fixtures": [

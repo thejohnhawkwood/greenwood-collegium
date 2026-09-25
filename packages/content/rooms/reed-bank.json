@@ -21,6 +21,14 @@
   ],
   "fixtures": [
     {
+      "id": "npc-scout-tern",
+      "name": "Scout Tern",
+      "kind": "npc",
+      "lookDescription": "A tern stands in the shallows facing away from the water. Try talk tern.",
+      "examineDescription": "A common tern, white and grey and sharper than she looks, standing in two inches of water with her back to the river so she can watch the bank. Marram uses her when he wants something found out rather than fought over. She has a pencil stub tucked under one wing and a habit of finishing your sentences correctly, which is not endearing and is usually right.",
+      "dialogue": "Tern watches the bank rather than the water, which tells you what she is for. \"Marram has his boats back and I have a question he did not ask. Where did the cargo go?\" She shifts her weight to the other foot. \"Not the camp you cleared. The one behind the osiers that nobody can see into. Talk tern if you want to find out instead of guessing.\""
+    },
+    {
       "id": "object-reed-bundles",
       "name": "Reed Bundles",
       "kind": "object",

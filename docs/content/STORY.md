@@ -155,7 +155,7 @@ Not a second exit table — use [room-and-quest-summary.md](room-and-quest-summa
 
 ## 6. The spine
 
-Live JSON: 44 quests, 66 rooms. Cross-quest prereqs use `requiresQuestIds` plus
+Live JSON: 46 quests, 67 rooms. Cross-quest prereqs use `requiresQuestIds` plus
 Alder/Wren engine offers (Arrival auto-start, school pick, lesson chain, Alder bell
 and moor offers). `giverNpcId` is used by the side hubs and by Wren’s L4–L8.
 
@@ -184,6 +184,8 @@ talk Marram → The Cut Painter … Black Mooring  docs/content/quests/the-river
 talk Quire  → The Borrowed Ink (forked)        docs/content/quests/the-borrowed-ink.md
 talk Lumen  → Shellington                      docs/content/quests/shellington.md
 talk Quill  → Quill's Second Book              docs/content/quests/quills-second-book.md
+talk Vane   → The Pressed Mask (forked)        docs/content/quests/the-pressed-mask.md
+talk Tern   → The Passed Sentry                docs/content/quests/the-passed-sentry.md
 Flint       → practice / duel only
 ```
 

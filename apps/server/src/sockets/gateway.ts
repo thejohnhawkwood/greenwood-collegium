@@ -1085,6 +1085,7 @@ export async function attachRealtime(
       (intent.verb === "say" && resultEvents.some((event) => event.type === "chat.said")) ||
       intent.verb === "take" ||
       intent.verb === "move" ||
+      intent.verb === "equip" ||
       intent.verb === "examine"
         ? progressQuests(
             world,

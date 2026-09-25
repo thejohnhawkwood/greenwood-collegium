@@ -21,6 +21,17 @@ function wornTemplates(world: WorldState, character: Character): ItemTemplateRec
   return templates;
 }
 
+/** True when a named template is in one of this Collegian's worn slots. */
+export function wearsTemplate(
+  world: WorldState,
+  character: Character,
+  templateId: string | undefined,
+): boolean {
+  return templateId
+    ? wornTemplates(world, character).some((template) => template.id === templateId)
+    : false;
+}
+
 /** Plain lines to append when somebody examines this Collegian. */
 export function wornExamineRiders(world: WorldState, character: Character): string[] {
   return wornTemplates(world, character)

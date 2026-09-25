@@ -40,6 +40,29 @@
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$"
     },
+    "outcomes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "completionNarration"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "completionNarration": {
+            "type": "string",
+            "minLength": 1
+          },
+          "itemRewardTemplateId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        }
+      }
+    },
     "objectives": {
       "type": "array",
       "minItems": 1,
@@ -53,7 +76,7 @@
             "pattern": "^[a-z][a-z0-9-]*$"
           },
           "kind": {
-            "enum": ["look", "say", "take", "visit", "examine", "talk", "defeat", "cast"]
+            "enum": ["look", "say", "take", "visit", "examine", "talk", "defeat", "cast", "equip"]
           },
           "label": {
             "type": "string",
@@ -79,6 +102,10 @@
               "type": "string",
               "pattern": "^[a-z][a-z0-9-]*$"
             }
+          },
+          "outcome": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
           }
         },
         "allOf": [
@@ -98,7 +125,7 @@
             "if": {
               "properties": {
                 "kind": {
-                  "const": "take"
+                  "enum": ["take", "equip"]
                 }
               }
             },

@@ -59,6 +59,11 @@ describe("item-state starter copies", () => {
         templateId: "practice-sword",
         roomId: "south-orchard",
       },
+      {
+        id: starterInstanceId("item-pressed-mask-webbed-cloister", "char-rowan"),
+        templateId: "pressed-mask",
+        roomId: "webbed-cloister",
+      },
     ]);
     expect((await items.list()).some((record) => record.id === personalId)).toBe(true);
 

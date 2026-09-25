@@ -1,0 +1,12 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "withy-ring",
+  "name": "Withy Ring",
+  "shortDescription": "A woven ring the basket camp wears instead of a password.",
+  "examineDescription": "A ring the width of your finger, woven from three split withies and finished with a splice rather than a knot. The splice is the whole point: anybody can knot a withy, and only somebody taught in that camp can splice one this way. It is not jewellery and it is not magic. It is a name badge for people who do not write their names down.",
+  "category": "ordinary",
+  "equipSlot": "ring",
+  "examineRider": "They are wearing a spliced withy ring on one paw, the sort the basket camp hands out to its own.",
+  "admitsRoomId": "osier-camp",
+  "unique": true
+}

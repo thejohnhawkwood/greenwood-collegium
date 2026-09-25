@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/placement.schema.json",
+  "id": "item-pressed-mask-webbed-cloister",
+  "templateId": "pressed-mask",
+  "roomId": "webbed-cloister",
+  "starterPerCharacter": true
+}

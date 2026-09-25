@@ -22,6 +22,14 @@
   ],
   "fixtures": [
     {
+      "id": "npc-stairkeeper-vane",
+      "name": "Stairkeeper Vane",
+      "kind": "npc",
+      "lookDescription": "A hedgehog sits on the fourth step with a lamp-trimming kit open beside her. Try talk vane.",
+      "examineDescription": "A hedgehog in a canvas apron with a lamp-trimming kit open on the step beside her: wick shears, a tin of oil, a rag gone black. She keeps the stair lamps lit, which is the job Keeper Holm had before her, and she took it on knowing that. Her quills are singed short along one shoulder. She does not go below the cloister and does not pretend the reason is a rule.",
+      "dialogue": "Vane trims a wick to length before she looks up, because the wick is on fire and you are not. \"Somebody has to keep this stair lit. Holm did. Now I do, and I do it from up here, which I will not dress up as bravery.\" She snuffs the taper. \"There is a thing in the cloister I want carried up into lamplight where I can look at it. Talk vane.\""
+    },
+    {
       "id": "object-stair-rope",
       "name": "Stair Rope",
       "kind": "object",

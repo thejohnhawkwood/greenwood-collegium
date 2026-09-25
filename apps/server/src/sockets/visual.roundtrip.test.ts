@@ -110,7 +110,7 @@ describe("visual state over authenticated sockets", () => {
     await command(first, "move-north", "north");
     const moved = await waiting;
     expect(moved.room.roomId).toBe("great-hall");
-    expect(moved.minimap.rooms).toHaveLength(66);
+    expect(moved.minimap.rooms).toHaveLength(67);
     expect(moved.minimap.rooms.find((room) => room.id === "lantern-court")).toMatchObject({
       state: "explored",
       title: "Lantern Court",

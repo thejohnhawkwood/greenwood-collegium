@@ -14,7 +14,7 @@ standing beat, then starts any quest whose `giverNpcId` is that character and wh
 
 The register is set by [`../narrative/GREENWOOD_NARRATIVE_STYLE_GUIDE.md`](../narrative/GREENWOOD_NARRATIVE_STYLE_GUIDE.md).
 
-Quests: 44. Speaking characters: 21.
+Quests: 46. Speaking characters: 23.
 
 ## Quests
 
@@ -1082,7 +1082,76 @@ _none_
 - `give-back` (talk): Bring the ink to Quire at the East Gate. Type talk quire.
 - `use-it` (cast): Or use the ink on your own leaf. Type cast ember.
 
+### The Passed Sentry
+
+- id: `the-passed-sentry`
+- giver: `npc-scout-tern`
+- requires: `the-black-mooring`
+- reward: 30 experience, `terns-copied-column`
+
+**Intro**
+
+Tern draws the shape of it in the mud with one foot: the holt, the drying frames, the gap. "Screened on three sides. You cannot see in from the water and you cannot walk in off the path, because they have a cutter posted and she checks paws before faces."
+
+She rubs the drawing out. "She wears a woven ring. Everybody in that camp does, spliced not knotted, and it is how they know each other without saying anything out loud. Get one. Put it on. Walk in, read the slate they keep their tally on, and walk out. Then talk tern. I want the third column, not a fight and not a story."
+
+**Reminder**
+
+"The cutter is in the holt. Take her ring, type equip ring, then east into the camp. Examine the tally slate. Then talk tern at the reed bank."
+
+**Complete**
+
+Tern has you read the third column out twice, and the second time she writes it down herself with the pencil from under her wing, because she does not trust anybody's memory including her own.
+
+"Two farms and then one mark, over and over." She taps the repeated mark. "That is not a gang selling baskets. That is a regular buyer, and somebody in that camp was taught to keep columns properly, which means somebody taught them." She hands you the copy. "Take the ring off before you go back up the bank. You are not one of theirs and I do not want you getting comfortable wearing that."
+
+**Objectives**
+
+- `hear-tern` (talk): Hear Tern out at the Reed Bank. Type talk tern.
+- `take-the-ring` (defeat): Get the ring from the sentry in the Osier Holt. Type attack sentry.
+- `wear-the-ring` (equip): Put the withy ring on. Type equip ring.
+- `walk-in` (visit): Walk into the Withy Camp. Type east from the Osier Holt.
+- `read-the-slate` (examine): Read the tally slate. Type examine slate.
+- `report` (talk): Bring the third column to Tern. Type talk tern.
+
+### The Pressed Mask
+
+- id: `the-pressed-mask`
+- giver: `npc-stairkeeper-vane`
+- requires: `the-bell-wakes`
+- reward: 25 experience
+
+**Intro**
+
+Vane sets the shears down. "Two turns below the gallery there is a cloister with webs in the arches. On the floor there is a face." She lets that sit. "Not a body. A shell of silk pressed round a face and then left, hard as a nutshell and about as heavy. I have seen it from the arch and I have not gone in for it, and you may write that down anywhere you like."
+
+She picks the shears back up. "Bring it up into lamplight. Carry it or wear it, that is yours to decide, but I want to be looking at it in good light either way. Then talk vane."
+
+**Reminder**
+
+"The cloister below the gallery. Type take mask. Then bring it up to the stair and talk vane, or put it on first. Either way I want it in lamplight."
+
+**Complete**
+
+_none_
+
+**Objectives**
+
+- `reach-cloister` (visit): Reach the Webbed Cloister below the Silk Gallery.
+- `lift-mask` (take): Take the Pressed Mask. Type take mask.
+- `put-it-on` (equip): Wear it and let Vane see. Type equip mask.
+- `carry-it-up` (talk): Or carry it up unworn. Type talk vane.
+
 ## Dialogue
+
+### Stairkeeper Vane
+
+- id: `npc-stairkeeper-vane`
+- room: Bell Stair (`bell-stair`)
+
+**Standing line**
+
+Vane trims a wick to length before she looks up, because the wick is on fire and you are not. "Somebody has to keep this stair lit. Holm did. Now I do, and I do it from up here, which I will not dress up as bravery." She snuffs the taper. "There is a thing in the cloister I want carried up into lamplight where I can look at it. Talk vane."
 
 ### Collegian Quire
 
@@ -1395,6 +1464,15 @@ Midge stands on one leg in the shallows with her spear grounded, and she does no
 **Standing line**
 
 Kern has a tally-board propped against a fallen lintel, and every stone in the field carries a chalk dot. "Eight. I counted them last winter, I chalked them, and I wrote eight in the book." He puts his paw flat on the ninth stone. "This one has a fresh scratch and no dot. I did not put either of those there, and I have been the only animal in this field since the frost. Talk kern if you want the rest of it."
+
+### Scout Tern
+
+- id: `npc-scout-tern`
+- room: Reed Bank (`reed-bank`)
+
+**Standing line**
+
+Tern watches the bank rather than the water, which tells you what she is for. "Marram has his boats back and I have a question he did not ask. Where did the cargo go?" She shifts her weight to the other foot. "Not the camp you cleared. The one behind the osiers that nobody can see into. Talk tern if you want to find out instead of guessing."
 
 ### Reedcutter Sile
 

@@ -1,0 +1,11 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "pressed-mask",
+  "name": "Pressed Mask",
+  "shortDescription": "A face the silk pressed flat and left behind.",
+  "examineDescription": "A shell of hardened silk the size and shape of a face, pressed smooth on the inside and ridged on the outside where the threads ran. Whoever it was pressed against is not in it and never will be. It weighs almost nothing. Held up to lamplight it is the colour of weak tea, and you can see the print of a muzzle in it.\n\nIt fits over your own face without being asked to.",
+  "category": "ordinary",
+  "equipSlot": "helmet",
+  "examineRider": "They are wearing a mask of pressed silk, muzzle-print and all, and their own face is somewhere behind it. It is hard to keep looking at them and hard to look away.",
+  "unique": true
+}
