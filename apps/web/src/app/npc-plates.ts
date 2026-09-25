@@ -100,7 +100,7 @@ const NPC_PLATE_ALIASES: Record<string, string> = {
   "enemy-river-captain-pirate-camp": "river-captain",
   "race-pike": "race-pike",
   "enemy-race-pike-mill-race": "race-pike",
-  "shellington": "shellington",
+  shellington: "shellington",
   "enemy-shellington-crow-stile": "shellington",
   "archive-bat": "archive-bat",
   "enemy-archive-bat-root": "archive-bat",

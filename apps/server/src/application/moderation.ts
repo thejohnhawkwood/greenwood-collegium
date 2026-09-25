@@ -283,8 +283,7 @@ async function defense(
     clearDefenseSpawns(context.world);
     await context.persistDefense?.(context.world.defense);
     await writeAudit(context, "defense", undefined, "cancel");
-    const line =
-      "A teacher calls the defense off. The staff will see to the gates.";
+    const line = "A teacher calls the defense off. The staff will see to the gates.";
     return {
       ok: true,
       events: [noticeFor(context.actorId, line, context.runtime)],
