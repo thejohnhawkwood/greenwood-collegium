@@ -54,6 +54,10 @@ import {
   revertDrop,
   revertTake,
   type EngineRuntime,
+  alderCallNarration,
+  defenseClosedNarration,
+  minutesLeft,
+  settleDefense,
   type PendingPrimerChoices,
   type PrimerChoiceCard,
   type SpellTag,
@@ -164,6 +168,13 @@ export type RealtimeOptions = {
     },
   ) => Promise<void>;
   auditLog?: AuditLogRepository;
+  /** H3. One row for the process-wide defense phase. */
+  persistDefense?: (record: {
+    id: string;
+    phase: "quiet" | "called" | "fighting" | "closed";
+    endsAt?: Date;
+    startedByUsername?: string;
+  }) => Promise<void>;
   listClassroom?: (actorAccountId: string) => Promise<ClassroomReadModel | undefined>;
   bindInPlay?: (listInPlay: () => InPlaySeat[]) => void;
   disableAccount?: (
@@ -272,6 +283,7 @@ export async function attachRealtime(
   const limiter = new RateLimiter();
   const mutedUntil = new Map<string, number>();
   const identities = new Map<string, PlayIdentity>();
+  let defenseTimer: ReturnType<typeof setTimeout> | undefined;
   const bootId = crypto.randomUUID();
   const io = new Server(app.server, {
     cors: {
@@ -503,8 +515,22 @@ export async function attachRealtime(
       },
       "courtyard seat",
     );
-    deliverPlay(characterId, joined.events, joined.notices);
+    // H3. Somebody arriving mid-defense is exactly who needs to hear Alder.
+    const greeting = defenseGreeting();
+    deliverPlay(characterId, [...joined.events, ...greeting(characterId)], joined.notices);
     bindCommandHandlers(socket, characterId, identity);
+  }
+
+  /** Alder's call again, for a Collegian who joined or reconnected while the yard is held. */
+  function defenseGreeting(): (characterId: string) => EventEnvelope[] {
+    settleDefense(world, new Date());
+    const running = world.defense?.phase === "fighting" ? world.defense : undefined;
+    if (!running) {
+      return () => [];
+    }
+    const minutes = Math.max(1, minutesLeft(running, new Date()));
+    const line = alderCallNarration(minutes);
+    return (characterId) => [systemNoticeFor(characterId, line, commandRuntime(sequences))];
   }
 
   function resumeAuthenticated(socket: Socket, characterId: string): void {
@@ -534,7 +560,7 @@ export async function attachRealtime(
     const snapshot = sessionSnapshotEvent(world, characterId, runtime);
     const look = handleLook(world, { verb: "look", characterId }, runtime);
     const events = look.ok ? [snapshot, look.event] : [snapshot];
-    deliverPlay(characterId, events, []);
+    deliverPlay(characterId, [...events, ...defenseGreeting()(characterId)], []);
     armCombatLock(characterId, identities.get(characterId));
   }
 
@@ -867,6 +893,15 @@ export async function attachRealtime(
               return options.disableAccount(identity.accountId, username);
             }
           : undefined,
+        persistDefense: async (defense) => {
+          await options.persistDefense?.({
+            id: defense.id,
+            phase: defense.phase,
+            endsAt: defense.endsAt ? new Date(defense.endsAt) : undefined,
+            startedByUsername: defense.startedByUsername,
+          });
+          armDefenseClock();
+        },
       });
       if (!staff.ok) {
         const rejection = commandAckSchema.parse({
@@ -1177,6 +1212,43 @@ export async function attachRealtime(
     }
   }
 
+  /**
+   * H3. One timer for the whole college. When the clock runs out, Flint calls the yard
+   * closed in every transcript and the porters finish the gates.
+   */
+  function armDefenseClock(): void {
+    if (defenseTimer) {
+      clearTimeout(defenseTimer);
+      defenseTimer = undefined;
+    }
+    const endsAt = world.defense?.endsAt;
+    if (world.defense?.phase !== "fighting" || !endsAt) {
+      return;
+    }
+    const wait = Math.max(250, new Date(endsAt).getTime() - Date.now());
+    defenseTimer = setTimeout(() => {
+      defenseTimer = undefined;
+      void runExclusive(async () => {
+        const before = world.defense?.phase;
+        settleDefense(world, new Date());
+        if (before === "fighting" && world.defense?.phase === "closed") {
+          await options.persistDefense?.({
+            id: world.defense.id,
+            phase: "closed",
+            startedByUsername: world.defense.startedByUsername,
+          });
+          const runtime = commandRuntime(sequences);
+          const line = defenseClosedNarration();
+          for (const id of [...sockets.keys()]) {
+            deliverPlay(id, [systemNoticeFor(id, line, runtime)], []);
+          }
+        }
+      }).catch(() => {
+        app.log.error({ event: "defense_close_failed" }, "defense could not close");
+      });
+    }, wait);
+  }
+
   function kickCharacter(targetId: string): void {
     clearCombatLock(targetId);
     const timer = leaveTimers.get(targetId);
@@ -1278,6 +1350,24 @@ export async function attachRealtime(
     }
     return delivered;
   }
+}
+
+/** H3. One plain line to one Collegian, in the sequence they are already reading. */
+function systemNoticeFor(
+  characterId: string,
+  narration: string,
+  runtime: EngineRuntime,
+): EventEnvelope {
+  return eventEnvelopeSchema.parse({
+    eventId: runtime.nextEventId(),
+    sequence: runtime.nextSequence(characterId),
+    schemaVersion,
+    type: "system.notice",
+    occurredAt: runtime.now().toISOString(),
+    audience: "character",
+    narration,
+    payload: {},
+  });
 }
 
 function noticeAndDisconnect(socket: Socket, narration: string): void {

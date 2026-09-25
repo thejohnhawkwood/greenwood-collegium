@@ -27,6 +27,7 @@ import {
   SCHOOL_TITLE,
   isSchoolId,
 } from "./schools.js";
+import { alderYardFirstLine, defenseFighting } from "./college-defense.js";
 import { WREN_CHAIN_NEXT } from "./east-watch.js";
 import { wearsTemplate } from "./worn-world.js";
 import type {
@@ -107,6 +108,10 @@ export function startQuest(
   const template = world.questTemplates?.[questId];
   if (!template) {
     return [];
+  }
+  // H3. While the yard is being defended, new errands wait. Work already begun does not.
+  if (defenseFighting(world, runtime.now()) && !characterQuest(world, characterId, template.id)) {
+    return [systemNotice(characterId, alderYardFirstLine(), runtime)];
   }
   const existing = characterQuest(world, characterId, template.id);
   if (existing?.status === "completed") {

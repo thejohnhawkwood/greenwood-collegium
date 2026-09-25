@@ -5,6 +5,7 @@ import {
   accounts,
   auditLog,
   characters,
+  collegeDefense,
   invites,
   itemInstances,
   questProgress,
@@ -37,6 +38,8 @@ import {
   type ItemPlacementSeed,
   type KnownSpellRecord,
   type PendingPrimerRecord,
+  type DefenseRecord,
+  type DefenseRepository,
   type QuestProgressRecord,
   type QuestProgressRepository,
   type SessionRecord,
@@ -490,6 +493,53 @@ export class PostgresQuestRepository implements QuestProgressRepository {
         },
       });
   }
+}
+
+export class PostgresDefenseRepository implements DefenseRepository {
+  constructor(private readonly db: Database) {}
+
+  async current(): Promise<DefenseRecord | undefined> {
+    const [row] = await this.db
+      .select()
+      .from(collegeDefense)
+      .orderBy(desc(collegeDefense.updatedAt))
+      .limit(1);
+    if (!row) {
+      return undefined;
+    }
+    return {
+      id: row.id,
+      phase: toPhase(row.phase),
+      endsAt: row.endsAt ? asDate(row.endsAt) : undefined,
+      startedByUsername: row.startedByUsername ?? undefined,
+    };
+  }
+
+  async save(record: DefenseRecord): Promise<void> {
+    const now = new Date();
+    await this.db
+      .insert(collegeDefense)
+      .values({
+        id: record.id,
+        phase: record.phase,
+        endsAt: record.endsAt ?? null,
+        startedByUsername: record.startedByUsername ?? null,
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: collegeDefense.id,
+        set: {
+          phase: record.phase,
+          endsAt: record.endsAt ?? null,
+          startedByUsername: record.startedByUsername ?? null,
+          updatedAt: now,
+        },
+      });
+  }
+}
+
+function toPhase(value: string): DefenseRecord["phase"] {
+  return value === "called" || value === "fighting" || value === "closed" ? value : "quiet";
 }
 
 function asDate(value: Date | string): Date {

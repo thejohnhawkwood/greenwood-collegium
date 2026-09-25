@@ -34,4 +34,20 @@ describe("parseStaffCommand", () => {
     expect(parseStaffCommand("admin who", "char-1")?.verb).toBe("roster");
     expect(parseStaffCommand("dance", "char-1")).toBeNull();
   });
+
+  it("reads the defense verbs", () => {
+    expect(parseStaffCommand("admin defense start", "char-1")).toEqual({
+      verb: "defense-start",
+      characterId: "char-1",
+      minutes: undefined,
+    });
+    expect(parseStaffCommand("admin defense start 5", "char-1")).toEqual({
+      verb: "defense-start",
+      characterId: "char-1",
+      minutes: 5,
+    });
+    expect(parseStaffCommand("defense cancel", "char-1")?.verb).toBe("defense-cancel");
+    expect(parseStaffCommand("admin defense", "char-1")?.verb).toBe("defense-status");
+    expect(parseStaffCommand("admin defense status", "char-1")?.verb).toBe("defense-status");
+  });
 });

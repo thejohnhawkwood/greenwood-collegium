@@ -53,6 +53,7 @@ Use an ADR when a choice is hard to reverse or will shape later tickets.
 | [0045](0045-noticeboard-seek.md) | Lantern Court noticeboard seek |
 | [0046](0046-remembered-choice.md) | A quest may remember which ending a Collegian chose |
 | [0047](0047-worn-piece-changes-the-world.md) | A worn piece may change how you are seen and where you are let in |
+| [0048](0048-college-defense.md) | A teacher may call one defense of the college |
 
 ## Template
 

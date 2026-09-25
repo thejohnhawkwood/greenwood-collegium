@@ -163,6 +163,15 @@ export const questProgress = pgTable(
   ],
 );
 
+/** H3. One row. The college is defended or it is not. */
+export const collegeDefense = pgTable("college_defense", {
+  id: text("id").primaryKey(),
+  phase: text("phase").notNull(),
+  endsAt: timestamp("ends_at", { withTimezone: true }),
+  startedByUsername: text("started_by_username"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
+});
+
 export const auditLog = pgTable(
   "audit_log",
   {

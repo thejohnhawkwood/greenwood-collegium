@@ -25,6 +25,8 @@ import {
   type ItemPlacementSeed,
   type KnownSpellRecord,
   type PendingPrimerRecord,
+  type DefenseRecord,
+  type DefenseRepository,
   type QuestProgressRecord,
   type QuestProgressRepository,
   type SessionRecord,
@@ -479,6 +481,18 @@ export class InMemoryQuestRepository implements QuestProgressRepository {
   }
 }
 
+export class InMemoryDefenseRepository implements DefenseRepository {
+  private row: DefenseRecord | undefined;
+
+  async current(): Promise<DefenseRecord | undefined> {
+    return this.row ? { ...this.row } : undefined;
+  }
+
+  async save(record: DefenseRecord): Promise<void> {
+    this.row = { ...record };
+  }
+}
+
 export class InMemoryAuditRepository implements AuditLogRepository {
   private readonly rows: AuditRecord[] = [];
 
@@ -504,6 +518,7 @@ export function createMemoryStores() {
   const items = new InMemoryItemRepository();
   const quests = new InMemoryQuestRepository();
   const audit = new InMemoryAuditRepository();
+  const defense = new InMemoryDefenseRepository();
   const moderation = new InMemoryModerationRepository();
   const reset = new InMemoryClassroomResetRepository({
     accounts,
@@ -514,5 +529,16 @@ export function createMemoryStores() {
     quests,
     moderation,
   });
-  return { accounts, characters, sessions, invites, items, quests, audit, moderation, reset };
+  return {
+    accounts,
+    characters,
+    sessions,
+    invites,
+    items,
+    quests,
+    audit,
+    defense,
+    moderation,
+    reset,
+  };
 }

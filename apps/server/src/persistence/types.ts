@@ -347,6 +347,19 @@ export type QuestProgressRecord = {
   updatedAt: Date;
 };
 
+/** H3. The process-wide defense phase, so a restart does not lose the night. */
+export type DefenseRecord = {
+  id: string;
+  phase: "quiet" | "called" | "fighting" | "closed";
+  endsAt?: Date;
+  startedByUsername?: string;
+};
+
+export interface DefenseRepository {
+  current(): Promise<DefenseRecord | undefined>;
+  save(record: DefenseRecord): Promise<void>;
+}
+
 export interface QuestProgressRepository {
   listByCharacter(characterId: string): Promise<QuestProgressRecord[]>;
   upsert(record: Omit<QuestProgressRecord, "createdAt" | "updatedAt">): Promise<void>;
@@ -368,7 +381,8 @@ export type AuditAction =
   | "remove-character"
   | "rename-character"
   | "chat-pause"
-  | "reset-students";
+  | "reset-students"
+  | "defense";
 
 export type AuditRecord = {
   id: string;

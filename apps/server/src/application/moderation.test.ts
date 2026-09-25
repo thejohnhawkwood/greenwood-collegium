@@ -123,6 +123,77 @@ describe("classroom moderation", () => {
     }
   });
 
+  it("lets only a teacher call a defense, and cancelling rolls nothing back", async () => {
+    const state = world();
+    const audit = new InMemoryAuditRepository();
+    const saved: Array<{ phase: string }> = [];
+    const clock = runtime();
+    const now = () => new Date("2026-09-25T18:00:00.000Z");
+    const base = {
+      world: state,
+      runtime: clock,
+      onlineCharacterIds: ["char-teacher", "char-student"],
+      mutedUntil: new Map<string, number>(),
+      identities: new Map<string, PlayIdentity>(),
+      audit,
+      now,
+      persistDefense: async (defense: { phase: string }) => {
+        saved.push({ phase: defense.phase });
+      },
+    };
+
+    expect(
+      await handleStaffCommand(
+        { verb: "defense-start", characterId: "char-student" },
+        { ...base, actorId: "char-student", identity: student() },
+      ),
+    ).toMatchObject({ ok: false, code: "forbidden" });
+    expect(state.defense).toBeUndefined();
+
+    const called = await handleStaffCommand(
+      { verb: "defense-start", characterId: "char-teacher", minutes: 99 },
+      { ...base, actorId: "char-teacher", identity: teacher() },
+    );
+    expect(called.ok).toBe(true);
+    if (called.ok) {
+      // Every other Collegian online hears Alder, not just the teacher.
+      expect(called.events[0]?.narration).toContain("Raiders are on the grounds");
+      expect(called.notices).toHaveLength(1);
+      expect(called.notices[0]?.event.narration).toContain("7 minutes");
+    }
+    expect(state.defense?.phase).toBe("fighting");
+    expect(saved).toEqual([{ phase: "fighting" }]);
+
+    // A second call while one is running is refused with the clock, not stacked.
+    expect(
+      await handleStaffCommand(
+        { verb: "defense-start", characterId: "char-teacher" },
+        { ...base, actorId: "char-teacher", identity: teacher() },
+      ),
+    ).toMatchObject({ ok: false, code: "invalid_command" });
+
+    const cancelled = await handleStaffCommand(
+      { verb: "defense-cancel", characterId: "char-teacher" },
+      { ...base, actorId: "char-teacher", identity: teacher() },
+    );
+    expect(cancelled.ok).toBe(true);
+    if (cancelled.ok) {
+      expect(cancelled.events[0]?.narration).toContain("Nothing you were carrying was taken");
+    }
+    expect(state.defense?.phase).toBe("closed");
+    expect(saved.map((row) => row.phase)).toEqual(["fighting", "closed"]);
+
+    const log = await handleStaffCommand(
+      { verb: "audit", characterId: "char-teacher" },
+      { ...base, actorId: "char-teacher", identity: teacher() },
+    );
+    expect(log.ok).toBe(true);
+    if (log.ok) {
+      expect(log.events[0]?.narration).toContain("defense");
+      expect(log.events[0]?.narration).toContain("start 7m");
+    }
+  });
+
   it("refuses students and lets a teacher announce, inspect, mute, and audit", async () => {
     const state = world();
     const audit = new InMemoryAuditRepository();
