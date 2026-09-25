@@ -30,6 +30,11 @@ and JSON authoring stay in [adventures.md](../adventures.md).
 - [The Pressed Mask](the-pressed-mask.md) — `the-pressed-mask` (forked: `worn` / `returned`)
 - [The Passed Sentry](the-passed-sentry.md) — `the-passed-sentry`
 
+## Event (not a quest)
+
+- [The Defense](the-defense.md) — phase `college-defense`. A teacher calls it; the whole
+  college is in it at once. No giver, no objectives, never required.
+
 Co-created queue and its remaining tickets: [HANDOFF-COCREATED-QUESTLINE.md](HANDOFF-COCREATED-QUESTLINE.md).
 
 Flint’s orchard is practice and consented duels, not a quest file.

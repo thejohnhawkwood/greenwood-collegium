@@ -5,7 +5,9 @@ import {
   SAY_MAX_LENGTH,
   alderCallNarration,
   cancelDefense,
+  clearDefenseSpawns,
   defenseMinutes,
+  openDefenseGates,
   defenseStatusLine,
   settleDefense,
   startDefense,
@@ -278,6 +280,7 @@ async function defense(
       return { ok: false, code: "invalid_command", message: "No defense is running." };
     }
     cancelDefense(context.world);
+    clearDefenseSpawns(context.world);
     await context.persistDefense?.(context.world.defense);
     await writeAudit(context, "defense", undefined, "cancel");
     const line =
@@ -303,6 +306,11 @@ async function defense(
     minutes,
     now,
     startedByUsername: context.identity?.username,
+  });
+  clearDefenseSpawns(context.world);
+  openDefenseGates(context.world, {
+    defenseId: started.id,
+    onlineCount: context.onlineCharacterIds.length,
   });
   await context.persistDefense?.(started);
   await writeAudit(context, "defense", undefined, `start ${String(minutes)}m`);

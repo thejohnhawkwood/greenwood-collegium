@@ -1,4 +1,4 @@
-import type { WorldState } from "./state.js";
+import type { EnemySpawn, WorldState } from "./state.js";
 
 /**
  * H3. One defense of the college, shared by everybody online.
@@ -98,6 +98,84 @@ export function restoreDefense(
   }
   world.defense = { ...defense };
   settleDefense(world, now);
+}
+
+export const RAIDER_TEMPLATE_ID = "college-raider";
+
+/** A defense spawn belongs to one night. `defeatedSpawnIds` can never leak a trophy. */
+export function defenseSpawnId(defenseId: string, roomId: string, index: number): string {
+  return `defense-${defenseId}-${roomId}-${String(index)}`;
+}
+
+export function isDefenseSpawnId(spawnId: string): boolean {
+  return spawnId.startsWith("defense-");
+}
+
+/**
+ * About one raider per two Collegians online, spread over three gates, and never fewer
+ * than three at any gate. A gate that is empty of students still has to look defended.
+ */
+export function raidersPerGate(onlineCount: number): number {
+  return Math.max(3, Math.ceil(Math.max(0, onlineCount) / 6));
+}
+
+/** Mint this night's raiders at the three gates from the declared enemy template. */
+export function openDefenseGates(
+  world: WorldState,
+  input: { defenseId: string; onlineCount: number },
+): EnemySpawn[] {
+  const template = world.enemyTemplates?.[RAIDER_TEMPLATE_ID];
+  if (!template) {
+    return [];
+  }
+  const enemies = (world.enemies ??= {});
+  const perGate = raidersPerGate(input.onlineCount);
+  const created: EnemySpawn[] = [];
+  for (const roomId of DEFENSE_GATE_ROOM_IDS) {
+    for (let index = 1; index <= perGate; index += 1) {
+      const id = defenseSpawnId(input.defenseId, roomId, index);
+      if (enemies[id]) {
+        continue;
+      }
+      const spawn: EnemySpawn = { ...template, id, roomId };
+      enemies[id] = spawn;
+      created.push(spawn);
+    }
+  }
+  return created;
+}
+
+/** The porters finish what is left, so no raider outlives the night. */
+export function clearDefenseSpawns(world: WorldState): number {
+  const enemies = world.enemies;
+  if (!enemies) {
+    return 0;
+  }
+  let removed = 0;
+  for (const id of Object.keys(enemies)) {
+    if (isDefenseSpawnId(id)) {
+      delete enemies[id];
+      removed += 1;
+    }
+  }
+  return removed;
+}
+
+/** What a gate looks like the morning after. It never removes an exit. */
+export function defenseAftermathLine(world: WorldState, roomId: string): string | undefined {
+  if (world.defense?.phase !== "closed") {
+    return undefined;
+  }
+  if (roomId === "lantern-court") {
+    return "One of the oak lanterns is out, and the well cover is off and propped where somebody moved it in a hurry.";
+  }
+  if (roomId === "east-meadow") {
+    return "The clover is trampled flat in a wide band, and the hedge on the moor side has been pushed through and not yet laid back.";
+  }
+  if (roomId === "south-orchard") {
+    return "Windfall apples are trodden into the grass, and one of the practice stands is on its side where the line held.";
+  }
+  return undefined;
 }
 
 export function alderCallNarration(minutes: number): string {

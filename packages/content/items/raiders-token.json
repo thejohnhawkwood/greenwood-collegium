@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "raiders-token",
+  "name": "Raider's Token",
+  "shortDescription": "A wooden tally-token from a night at the gates.",
+  "examineDescription": "A flat wooden disc on a broken thong, stamped with a grain measure on one side and notched three times on the other. The raiders carry them to settle shares afterward, which tells you they expected to be settling shares.\n\nYou were at a gate on the night this came off somebody's belt. That is all it proves, and it is enough.",
+  "category": "ordinary",
+  "unique": true
+}

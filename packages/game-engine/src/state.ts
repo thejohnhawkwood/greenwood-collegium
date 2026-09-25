@@ -261,6 +261,9 @@ export type EnemySpawn = {
   reads?: Array<"lunge" | "brace" | "gather">;
 };
 
+/** Declared enemy stats, so a runtime spawn can be minted from content rather than code. */
+export type EnemyTemplateRecord = Omit<EnemySpawn, "id" | "roomId">;
+
 export type LockedCombatMove = {
   verb: "attack" | "cast" | "defend" | "flee";
   spell?: string;
@@ -346,6 +349,7 @@ export type WorldState = {
   itemTemplates?: Record<string, ItemTemplateRecord>;
   starterPlacements?: StarterItemPlacement[];
   enemies?: Record<string, EnemySpawn>;
+  enemyTemplates?: Record<string, EnemyTemplateRecord>;
   encounters?: Record<string, Encounter>;
   spells?: Record<string, SpellTemplate>;
   questTemplates?: Record<string, QuestTemplate>;

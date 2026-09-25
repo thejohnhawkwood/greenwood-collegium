@@ -169,7 +169,11 @@ A Collegian at the barrow mouth left a bottle of ink in the Scriptorium and need
 
 **Ids:** `the-borrowed-ink`. Outcomes `returned`, `kept`.
 
-### 2. The defense — Caleb — needs H3
+### 2. The defense — Caleb — needs H3 — **built, [story notes](the-defense.md)**
+
+One template `college-raider`, no placement, minted at the call. Trophy `raiders-token`
+rides the ordinary loot path. Spawn ids carry the defense id. Aftermath text on the three
+gates, no exit changed. Punishment stayed cut.
 
 Raiders hit the college. Alder speaks in every transcript: drop the errand, defend the grounds. Three gates stand until the class breaks them or the clock ends and the staff finish what is left.
 

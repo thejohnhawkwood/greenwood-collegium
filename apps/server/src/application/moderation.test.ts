@@ -6,6 +6,18 @@ import { handleStaffCommand, muteRejection } from "./moderation.js";
 
 function world(): WorldState {
   return {
+    enemyTemplates: {
+      "college-raider": {
+        templateId: "college-raider",
+        name: "Raider",
+        examineDescription: "A grain sack and a pry-bar.",
+        maxHealth: 12,
+        maxFocus: 6,
+        attack: 3,
+        experience: 8,
+        loot: ["raiders-token"],
+      },
+    },
     rooms: {
       "lantern-court": {
         id: "lantern-court",
@@ -163,6 +175,14 @@ describe("classroom moderation", () => {
     }
     expect(state.defense?.phase).toBe("fighting");
     expect(saved).toEqual([{ phase: "fighting" }]);
+    // Raiders actually arrive at the three gates, minted from content.
+    const raiders = Object.values(state.enemies ?? {}).filter(
+      (enemy) => enemy.templateId === "college-raider",
+    );
+    expect(raiders).toHaveLength(9);
+    expect(new Set(raiders.map((enemy) => enemy.roomId))).toEqual(
+      new Set(["lantern-court", "east-meadow", "south-orchard"]),
+    );
 
     // A second call while one is running is refused with the clock, not stacked.
     expect(
@@ -182,6 +202,10 @@ describe("classroom moderation", () => {
     }
     expect(state.defense?.phase).toBe("closed");
     expect(saved.map((row) => row.phase)).toEqual(["fighting", "closed"]);
+    // The porters clear the gates; no raider outlives the night.
+    expect(
+      Object.values(state.enemies ?? {}).filter((enemy) => enemy.templateId === "college-raider"),
+    ).toEqual([]);
 
     const log = await handleStaffCommand(
       { verb: "audit", characterId: "char-teacher" },
