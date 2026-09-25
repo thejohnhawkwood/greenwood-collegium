@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "cellar-lavender",
+  "name": "Cellar Lavender",
+  "shortDescription": "A linen sachet of lavender, knocked off a shelf.",
+  "examineDescription": "A small linen bag of dried lavender, stitched shut, with a year written on the seam in Quill's hand. The archive keeps dozens of these to argue with the moths. This one came off the shelf during the disagreement and smells strongly of a cupboard somebody looks after.",
+  "category": "ordinary",
+  "unique": true
+}

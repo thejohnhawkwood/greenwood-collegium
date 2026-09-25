@@ -24,6 +24,11 @@ and JSON authoring stay in [adventures.md](../adventures.md).
 - [Fen's Linen](fens-linen.md) — `fens-linen`
 - [East Watch sides](the-east-watch.md) — `the-empty-byre`, `the-mere-that-keeps`, `the-ninth-scratch`, `one-page-for-three`
 - [The River Watch](the-river-watch.md) — `the-cut-painter` … `the-black-mooring`
+- [The Borrowed Ink](the-borrowed-ink.md) — `the-borrowed-ink` (forked: `returned` / `kept`)
+- [Shellington](shellington.md) — `shellington`
+- [Quill's Second Book](quills-second-book.md) — `quills-second-book`
+
+Co-created queue and its remaining tickets: [HANDOFF-COCREATED-QUESTLINE.md](HANDOFF-COCREATED-QUESTLINE.md).
 
 Flint’s orchard is practice and consented duels, not a quest file.
 

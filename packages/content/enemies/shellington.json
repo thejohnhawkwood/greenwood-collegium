@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "shellington",
+  "name": "Shellington",
+  "shortDescription": "An otter on the stile who does not answer to his own name.",
+  "lookDescription": "An otter sits on the stile with a satchel across his knees and does not look up when you speak to him.",
+  "examineDescription": "A grown otter in a Collegium satchel-strap, sitting on the stile with his diary open and the same page turned over and over. Something grey has got into him: it is under the fur at his neck and in the whites of his eyes, and it moves when he is still. He answers questions with the wrong answers, in the right voice. Lumen says he is not gone and wants him brought back rather than buried.",
+  "maxHealth": 18,
+  "attack": 4,
+  "experience": 16,
+  "loot": ["shellington-diary"],
+  "reads": ["brace", "gather", "lunge"],
+  "lockNarration": "The grey under his fur tightens and he turns the same page again.",
+  "victoryNarration": "Shellington stops fighting and sits down hard on the step, breathing. The grey goes out of his eyes in patches, the way frost goes off a window. He does not know where he is, and he asks you, in his own voice, whether he is late for Stars. His diary is on the stone where he dropped it."
+}

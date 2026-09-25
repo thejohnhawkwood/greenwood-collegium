@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "oak-and-bronze-book",
+  "name": "Oak and Bronze",
+  "shortDescription": "A thin book about cradles cut from living wood.",
+  "examineDescription": "A thin book, bound in boards that have warped along the grain, titled Oak and Bronze in faded gilt. It is about bell cradles cut from living trees and why the practice was given up. A borrowing slip is still tucked inside, signed out to the High Study and never signed back in, in a hand that is not Alder's.\n\nQuill has pencilled on the slip, lightly, so it can be rubbed out: \"Returned. Not late. Misfiled.\"",
+  "category": "ordinary",
+  "unique": true
+}

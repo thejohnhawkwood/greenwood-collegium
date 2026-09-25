@@ -1,0 +1,7 @@
+{
+  "$schema": "../schemas/placement.schema.json",
+  "id": "item-borrowed-ink-scriptorium",
+  "templateId": "borrowed-ink",
+  "roomId": "scriptorium",
+  "starterPerCharacter": true
+}

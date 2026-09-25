@@ -1,0 +1,9 @@
+{
+  "$schema": "../schemas/item.schema.json",
+  "id": "shellington-diary",
+  "name": "Shellington's Diary",
+  "shortDescription": "A field diary kept in a steady hand, then a worse one.",
+  "examineDescription": "Forty pages of careful field notes: weather, bearings, what the crows did and when. The handwriting is neat for thirty-eight of them.\n\nThe last two are the same hand pressed harder. \"The creatures out here are not what we were taught they are. They do not behave like animals defending a place. They behave like something is asking them to.\" Then, lower down, in letters that dig into the paper: \"It asked me too. I wrote down that I said no.\"",
+  "category": "ordinary",
+  "unique": true
+}

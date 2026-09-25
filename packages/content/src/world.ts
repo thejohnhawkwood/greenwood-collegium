@@ -129,6 +129,11 @@ export type LoadedQuest = {
   completionNarration?: string;
   experienceReward: number;
   itemRewardTemplateId?: string;
+  outcomes?: Array<{
+    id: string;
+    completionNarration: string;
+    itemRewardTemplateId?: string;
+  }>;
   objectives: Array<{
     id: string;
     kind: "look" | "say" | "take" | "visit" | "examine" | "talk" | "defeat" | "cast";
@@ -137,6 +142,7 @@ export type LoadedQuest = {
     roomId?: string;
     targetId?: string;
     requires?: string[];
+    outcome?: string;
   }>;
 };
 
@@ -322,6 +328,7 @@ export function toWorldState(
       completionNarration: quest.completionNarration,
       experienceReward: quest.experienceReward,
       itemRewardTemplateId: quest.itemRewardTemplateId,
+      outcomes: quest.outcomes?.map((outcome) => ({ ...outcome })),
       objectives: quest.objectives.map((objective) => ({
         id: objective.id,
         kind: objective.kind,
@@ -330,6 +337,7 @@ export function toWorldState(
         roomId: objective.roomId,
         targetId: objective.targetId,
         requires: objective.requires ? [...objective.requires] : undefined,
+        outcome: objective.outcome,
       })),
     };
   }

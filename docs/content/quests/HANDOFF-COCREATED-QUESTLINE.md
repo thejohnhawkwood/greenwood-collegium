@@ -137,7 +137,11 @@ Ship H1, then Ink. H3’s phase, then the gates. H2, then mask and costume.
 Later stories are independent sides unless a `requiresQuestIds` is listed.
 Suggested ids are stable once published.
 
-### 1. The Borrowed Ink — Kevin — needs H1
+### 1. The Borrowed Ink — Kevin — needs H1 — **built, [story notes](the-borrowed-ink.md)**
+
+Giver is `npc-collegian-quire` at the East Gate rather than the barrow mouth: this
+quest requires only Arrival, and the barrow sits deep in the East Watch. She is
+dressed for the moor road she is about to walk, so the intent holds.
 
 A Collegian at the barrow mouth left a bottle of ink in the Scriptorium and needs it to raise a spell. You take it. Return it and they give you a focus ring. Use it instead and the spell-work is yours; they thank you thinly and the ring is not offered.
 
@@ -197,7 +201,7 @@ You were beaten by a boss at the start of this chain. You gather silk, pass the 
 
 **Ids:** `a-thread-that-walks`.
 
-### 7. Shellington — Shanayah
+### 7. Shellington — Shanayah — **built, [story notes](shellington.md)**
 
 Lumen at the Hearth of Stars needs a book. Shellington the otter is at Crow Stile, corrupted. You fight him, bring him back, and Lumen cures him. His diary says the creatures are not what they seem. Later NPC lines may acknowledge the diary.
 
@@ -281,7 +285,7 @@ A room is wrecked. You choose health, focus, or stamina, gather what that room n
 
 **Ids:** `hudricks-room`.
 
-### 17. Quill’s second book — Lennox
+### 17. Quill’s second book — Lennox — **built, [story notes](quills-second-book.md)**
 
 After *The Missing Pages*, a book last seen in the High Study sends you through Alder to the archive cellar and three bats, then back to Quill.
 

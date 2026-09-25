@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/enemy.schema.json",
+  "id": "archive-bat",
+  "name": "Archive Bat",
+  "shortDescription": "A bat that has decided the cellar roots are hers.",
+  "lookDescription": "A bat hangs from the cellar root above the boxes and opens one eye at you.",
+  "examineDescription": "A long-eared bat the length of your paw, hanging from a root with her wings folded like a shut book. She is not ill and she is not cursed. She is nesting, the lavender sachets have not discouraged her, and she objects to anybody reaching past her toward the high shelf. Quill would rather you moved her than harmed her, and has been outvoted by the bat.",
+  "maxHealth": 8,
+  "attack": 2,
+  "experience": 6,
+  "loot": ["cellar-lavender"],
+  "reads": ["lunge", "gather", "brace"],
+  "lockNarration": "She lets go of the root and the cellar air moves.",
+  "victoryNarration": "The bat gives up the argument, drops off the root, and goes to hang somewhere further along where nobody is reaching for anything."
+}

@@ -14,7 +14,7 @@ standing beat, then starts any quest whose `giverNpcId` is that character and wh
 
 The register is set by [`../narrative/GREENWOOD_NARRATIVE_STYLE_GUIDE.md`](../narrative/GREENWOOD_NARRATIVE_STYLE_GUIDE.md).
 
-Quests: 41. Speaking characters: 20.
+Quests: 44. Speaking characters: 21.
 
 ## Quests
 
@@ -1000,7 +1000,98 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 - `ask-sile` (talk): Talk sile at the Reed Mere for the night of the voice.
 - `report` (talk): Talk kern in the Lintel Field.
 
+### Quill's Second Book
+
+- id: `quills-second-book`
+- giver: `npc-librarian-quill`
+- requires: `the-missing-pages`
+- reward: 20 experience, `oak-and-bronze-book`
+
+**Intro**
+
+Quill has the borrowing register open at a page she does not like. "One more gap, and this one is older than your lantern wren." She turns the register so you can read the line. "Oak and Bronze. Thin, warped boards, gilt worn off the spine. Signed out to the High Study and never signed back. I do not accuse the Headmaster of theft; I accuse the Headmaster of a desk." She marks the line with one finger. "Ask him where it went. If he sends you to the cellar, mind the roots. Something has been nesting down there and the lavender is losing."
+
+**Reminder**
+
+"Ask Alder about Oak and Bronze. Type talk alder in the High Study. Then the Archive Cellar, and mind the bats. Then talk quill."
+
+**Complete**
+
+Quill takes the book, opens the boards flat, and looks along the warp with one eye closed like a joiner checking a plank. "Not damaged. Seasoned." She finds the borrowing slip inside, reads it, and pencils one word on it rather than three.
+
+"Misfiled. Not stolen, not late, misfiled." She sets the book down and looks at you properly. "You understand that this is the better ending and also the duller one. Most of them are." She slides it back across the desk. "Keep it for a week. It is about cradles cut from living trees, and you have been under that tower. Read the fourth chapter and then come and argue with me about it."
+
+**Objectives**
+
+- `ask-alder` (talk): Ask Alder about the book. Type talk alder in the High Study.
+- `reach-cellar` (visit): Reach the Archive Cellar. Type north from the Library Stacks.
+- `clear-root` (defeat): Move the bat on the root. Type attack bat.
+- `clear-shelf` (defeat): Move the bat over the high shelf. Type attack bat.
+- `clear-stair` (defeat): Move the bat on the stair root. Type attack bat.
+- `report` (talk): Talk quill in the Library Stacks.
+
+### Shellington
+
+- id: `shellington`
+- giver: `npc-mentor-lumen`
+- requires: `first-lessons-stars`
+- reward: 25 experience, `shellington-diary`
+
+**Intro**
+
+Lumen turns her own book around so you can see the column she has been keeping. It is a list of dates with one name at the top and nothing written beside the last four. "Shellington borrowed a bearing book from this hearth in the spring and has not brought it back, which I could forgive. He also stopped writing to me, which I cannot." She closes it. "A crow-stile on the east moor, past the barrow. Somebody saw him sitting on it. He is corrupted, and I am told that is a word people use to mean finished. It is not. Bring him back to me and I will do the rest."
+
+**Reminder**
+
+"Shellington is on the crow-stile east of the barrow mouth. Bring him down and bring him back. Then talk lumen."
+
+**Complete**
+
+Lumen has the Infirmary send for Fen before she says anything to you, which is the right order and not the polite one. Then she reads the last two pages of the diary twice.
+
+"He wrote down that he said no." She sets it flat. "Hold on to this. I want it read by somebody who is not me, and I want it read by somebody who was out there." She starts a fresh column in her own book with today's date in it. "He will be a fortnight mending and he will be insufferable about the bearing book. Go and eat something."
+
+**Objectives**
+
+- `reach-stile` (visit): Reach the Crow Stile. Type east from the Barrow Mouth.
+- `bring-him-down` (defeat): Bring Shellington down. Type attack shellington.
+- `report` (talk): Talk lumen at the Hearth of Stars.
+
+### The Borrowed Ink
+
+- id: `the-borrowed-ink`
+- giver: `npc-collegian-quire`
+- requires: `arrival-at-the-collegium`
+- reward: 20 experience
+
+**Intro**
+
+Quire pats the empty side pocket one more time and then makes herself stop. "Squat bottle, cork stoppered, wax over the cork with a Q scratched in it. Third desk from the window in the Scriptorium. Court, north to the Great Hall, west into the Stacks, west again." She hitches the satchel. "I need it to ink a leaf tonight and I will not get another bottle out of the stores until Thursday. Bring it to me here and I will make it worth the walk. Or do not, and we will both know what happened."
+
+**Reminder**
+
+"The Scriptorium, third desk from the window. Squat bottle, wax over the cork. Type take ink. Then bring it back and talk quire, or do not."
+
+**Complete**
+
+_none_
+
+**Objectives**
+
+- `fetch` (take): Take the Borrowed Ink in the Scriptorium. Type west from the Library Stacks, then take ink.
+- `give-back` (talk): Bring the ink to Quire at the East Gate. Type talk quire.
+- `use-it` (cast): Or use the ink on your own leaf. Type cast ember.
+
 ## Dialogue
+
+### Collegian Quire
+
+- id: `npc-collegian-quire`
+- room: East Gate (`east-gate`)
+
+**Standing line**
+
+Quire has her boots laced and her satchel strapped, and she keeps patting an empty side pocket. "I am walking to the moor road within the hour and my ink is sitting on a desk in the Scriptorium. Third time this term." She gives up on the pocket. "I cannot go back for it and keep the light. Talk quire if you have legs and an hour."
 
 ### Headmaster Alder
 
@@ -1067,6 +1158,7 @@ Kern writes all three down, then sets his chalk on the dates and does not move i
 - `walker-why`: "A tall wet shape that does not keep footprints. Wool and peat. Not a lecture. A hunger that learned to walk. Fog thickens when you lock. The count is still three. When it falls the hollow should smell like rain on a hearth-stone, not sweetness. Come home."
   - say `1` We will go. → `walker-active`
 - `walker-active`: "Three Collegians. Fog Hollow. Defeat the Fog Walker. Then talk alder here. The wood and the moor both remember. I would rather watch you walk back to the croft."
+- `tally-page`: Alder reads Kern's page without comment, then sets it on the blotter and puts the tuning fork across it to hold it flat. "Three careful animals, three counts, one week. Stoneward Kern does not write a number he cannot stand behind." He looks at the dates rather than at you. "This does not tell me who carried our bronze into that hill, and I will not name a cause from behind a desk. It does tell me the moor was busy before we knew to watch it. That is worth more than a rumour. I am keeping this page. Tell Kern his book was the right place to put it."
 - `walker-done`: "The wood remembers. The moor remembers. That is enough for one year. Eat. Sleep. Who took the bronze into the hill — if the walker only learned to use it — is a later question. I will not invent a thief from a fog. Holm's name stays in this study. Colm's stays at Wren's kettle. Go to class."
 
 ### Mentor Cinder
@@ -1414,3 +1506,4 @@ Wren has the kettle on and has not sat down since you came in. "Sit, if you like
 - `barrow-done`: "You found the spare cloak. Now the lip of the barrow. Examine what the fog took. Then come to me. Do not go to Alder first. I asked you that already."
 - `after-colm`: "Put the kettle down. I put it down too hard. Did you tell him anything? No. Do not answer that. I hate the question. Go to Fen. Sit. Honey. Tell him if you can feel your paws. I will keep this fire. I will not go into the hill."
 - `stay`: "Alder can have the bronze. I will not go in. The kettle is for the living. If the fog squares up, you lock together. Then Fen. Then you come back here and eat."
+- `tally-page`: Wren reads Kern's page twice and then puts the kettle down without pouring anything. "Hobb's bell. Sile's mere. Kern's stone. Three animals who count things properly, all wrong in the same week, and none of them came to me." She hands the page back and does not soften it. "That is not comfort and I will not pretend it is. Take it up to Alder. He is owed facts as much as I am, and he is the one who can do something with a date."
