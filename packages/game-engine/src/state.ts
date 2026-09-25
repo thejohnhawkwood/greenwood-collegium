@@ -1,4 +1,5 @@
 import type { Appearance } from "@greenwood/contracts";
+import type { CollegeDefense } from "./college-defense.js";
 export type RoomExit = {
   direction: string;
   toRoomId: string;
@@ -351,6 +352,8 @@ export type WorldState = {
   quests?: Record<string, Record<string, QuestProgress>>;
   speciesProficiencies?: Record<string, string>;
   duelChallenges?: Record<string, { fromId: string; createdAt: string }>;
+  /** H3. One defense of the college, shared by everybody online. */
+  defense?: CollegeDefense;
 };
 
 export type LookIntent = {
@@ -580,6 +583,22 @@ export type RemoveIntent = {
   target: string;
 };
 
+export type DefenseStartIntent = {
+  verb: "defense-start";
+  characterId: string;
+  minutes?: number;
+};
+
+export type DefenseCancelIntent = {
+  verb: "defense-cancel";
+  characterId: string;
+};
+
+export type DefenseStatusIntent = {
+  verb: "defense-status";
+  characterId: string;
+};
+
 export type StaffCommand =
   | StaffHelpIntent
   | AnnounceIntent
@@ -588,7 +607,10 @@ export type StaffCommand =
   | KickIntent
   | AuditIntent
   | RosterIntent
-  | RemoveIntent;
+  | RemoveIntent
+  | DefenseStartIntent
+  | DefenseCancelIntent
+  | DefenseStatusIntent;
 
 export type PlayerCommand =
   | LookIntent

@@ -8,7 +8,10 @@ import {
 } from "./connection.js";
 import { persistSessionsAndInvites } from "./persist-auth.contract.js";
 import { persistInventoryOwnership } from "./persist-inventory.contract.js";
-import { persistQuestProgressAndExperience } from "./persist-quest.contract.js";
+import {
+  persistCollegeDefense,
+  persistQuestProgressAndExperience,
+} from "./persist-quest.contract.js";
 import { persistAccountAndCharacter } from "./persist.contract.js";
 import { persistModeration } from "./persist-moderation.contract.js";
 import {
@@ -18,6 +21,7 @@ import {
 import {
   PostgresAccountRepository,
   PostgresCharacterRepository,
+  PostgresDefenseRepository,
   PostgresInviteRepository,
   PostgresItemRepository,
   PostgresQuestRepository,
@@ -34,6 +38,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
   const invites = () => new PostgresInviteRepository(persistence.db);
   const items = () => new PostgresItemRepository(persistence.db);
   const quests = () => new PostgresQuestRepository(persistence.db);
+  const defenseRepo = () => new PostgresDefenseRepository(persistence.db);
 
   beforeAll(async () => {
     if (!testDatabaseUrl) {
@@ -45,6 +50,7 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
     await persistence.pool.query("delete from speech_log");
     await persistence.pool.query("delete from classroom_settings");
     await persistence.pool.query("delete from quest_progress");
+    await persistence.pool.query("delete from college_defense");
     await persistence.pool.query("delete from item_instances");
     await persistence.pool.query("delete from sessions");
     await persistence.pool.query("delete from invites");
@@ -183,6 +189,10 @@ describe.skipIf(!testDatabaseUrl)("postgres persistence", () => {
       upsert: (record) => quests().upsert(record),
     },
   );
+  persistCollegeDefense({
+    current: () => defenseRepo().current(),
+    save: (record) => defenseRepo().save(record),
+  });
   persistModeration(() => ({
     accounts: accounts(),
     characters: characters(),

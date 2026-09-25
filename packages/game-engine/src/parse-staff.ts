@@ -14,6 +14,19 @@ export function parseStaffCommand(raw: string, characterId: string): StaffComman
     return { verb: "staff-help", characterId };
   }
 
+  // H3. A defense is called, cancelled, or checked. Never by a student.
+  if (/^defense\s+cancel$/iu.test(body)) {
+    return { verb: "defense-cancel", characterId };
+  }
+  if (/^defense(?:\s+status)?$/iu.test(body)) {
+    return { verb: "defense-status", characterId };
+  }
+  const defenseStart = /^defense\s+start(?:\s+(\d{1,3}))?$/iu.exec(body);
+  if (defenseStart) {
+    const minutes = defenseStart[1] ? Number.parseInt(defenseStart[1], 10) : undefined;
+    return { verb: "defense-start", characterId, minutes };
+  }
+
   const announce = /^announce\s+(.+)$/iu.exec(body);
   if (announce?.[1]) {
     return { verb: "announce", characterId, text: announce[1].trim() };
@@ -65,7 +78,10 @@ export function isStaffCommand(intent: { verb: string } | null): intent is Staff
     intent?.verb === "kick" ||
     intent?.verb === "audit" ||
     intent?.verb === "roster" ||
-    intent?.verb === "remove"
+    intent?.verb === "remove" ||
+    intent?.verb === "defense-start" ||
+    intent?.verb === "defense-cancel" ||
+    intent?.verb === "defense-status"
   );
 }
 

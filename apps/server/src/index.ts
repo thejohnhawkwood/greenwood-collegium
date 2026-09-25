@@ -1,4 +1,5 @@
 import { ContentValidationError } from "@greenwood/content";
+import { restoreDefense } from "@greenwood/game-engine";
 import { argon2Hasher } from "./auth/hasher.js";
 import { createAuthService } from "./auth/service.js";
 import { createDevWorld } from "./application/dev-world.js";
@@ -20,6 +21,7 @@ import {
   PostgresAccountRepository,
   PostgresAuditRepository,
   PostgresCharacterRepository,
+  PostgresDefenseRepository,
   PostgresInviteRepository,
   PostgresItemRepository,
   PostgresQuestRepository,
@@ -74,6 +76,7 @@ const stores = persistence
         invites: new PostgresInviteRepository(persistence.db),
         quests: new PostgresQuestRepository(persistence.db),
         audit: new PostgresAuditRepository(persistence.db),
+        defense: new PostgresDefenseRepository(persistence.db),
         moderation: new PostgresModerationRepository(persistence.db),
         reset: new PostgresClassroomResetRepository(persistence.db),
       };
@@ -162,6 +165,26 @@ if (persistItem) {
   await hydrateWorldItems(world, persistItem);
 }
 
+// H3. A defense that was running when this process restarted comes back with the time
+// it has left. One whose clock already ran out comes back closed.
+restoreDefense(
+  world,
+  await stores.defense
+    .current()
+    .then((row) =>
+      row
+        ? {
+            id: row.id,
+            phase: row.phase,
+            endsAt: row.endsAt?.toISOString(),
+            startedByUsername: row.startedByUsername,
+          }
+        : undefined,
+    )
+    .catch(() => undefined),
+  new Date(),
+);
+
 await attachRealtime(app, world, {
   classroom,
   runExclusive,
@@ -181,6 +204,7 @@ await attachRealtime(app, world, {
   persistItem,
   persistQuest: stores.quests,
   auditLog: stores.audit,
+  persistDefense: (record) => stores.defense.save(record),
   listClassroom: async (actorAccountId) => {
     const result = await auth.listClassroom(actorAccountId);
     return result.ok ? result : undefined;

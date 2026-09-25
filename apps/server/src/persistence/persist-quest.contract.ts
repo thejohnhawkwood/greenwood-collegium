@@ -1,5 +1,10 @@
 import { expect, it } from "vitest";
-import type { AccountRepository, CharacterRepository, QuestProgressRepository } from "./types.js";
+import type {
+  AccountRepository,
+  CharacterRepository,
+  DefenseRepository,
+  QuestProgressRepository,
+} from "./types.js";
 
 export function persistQuestProgressAndExperience(
   accounts: AccountRepository,
@@ -64,5 +69,31 @@ export function persistQuestProgressAndExperience(
       (record) => record.questId === "the-borrowed-ink",
     );
     expect(forked?.outcome).toBe("returned");
+  });
+}
+
+/** H3. The defense phase survives a restart so a redeploy mid-class does not lose it. */
+export function persistCollegeDefense(defense: DefenseRepository): void {
+  it("stores one defense row and overwrites it in place", async () => {
+    expect(await defense.current()).toBeUndefined();
+
+    const endsAt = new Date("2026-09-25T18:07:00.000Z");
+    await defense.save({
+      id: "defense-1",
+      phase: "fighting",
+      endsAt,
+      startedByUsername: "arbird",
+    });
+    expect(await defense.current()).toMatchObject({
+      id: "defense-1",
+      phase: "fighting",
+      startedByUsername: "arbird",
+    });
+    expect((await defense.current())?.endsAt?.toISOString()).toBe(endsAt.toISOString());
+
+    await defense.save({ id: "defense-1", phase: "closed", startedByUsername: "arbird" });
+    const closed = await defense.current();
+    expect(closed?.phase).toBe("closed");
+    expect(closed?.endsAt).toBeUndefined();
   });
 }

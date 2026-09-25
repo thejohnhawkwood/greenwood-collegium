@@ -92,6 +92,24 @@ export { parseHelpCommand } from "./parse-help.js";
 export { parseQuestsCommand } from "./parse-quests.js";
 export { parsePlayerCommand } from "./parse-command.js";
 export { isStaffCommand, parseStaffCommand } from "./parse-staff.js";
+export {
+  alderCallNarration,
+  alderYardFirstLine,
+  cancelDefense,
+  DEFENSE_DEFAULT_MINUTES,
+  DEFENSE_GATE_ROOM_IDS,
+  DEFENSE_MAX_MINUTES,
+  defenseClosedNarration,
+  defenseFighting,
+  defenseMinutes,
+  defenseStatusLine,
+  minutesLeft,
+  restoreDefense,
+  settleDefense,
+  startDefense,
+  type CollegeDefense,
+  type DefensePhase,
+} from "./college-defense.js";
 export { namesMatch } from "./names.js";
 export { SAY_MAX_LENGTH, sanitizeSpeech } from "./speech.js";
 export { itemsHeldBy, itemsInRoom, matchItems, resolveTypedItems, worldItems } from "./items.js";

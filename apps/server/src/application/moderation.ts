@@ -3,6 +3,13 @@ import {
   namesMatch,
   sanitizeSpeech,
   SAY_MAX_LENGTH,
+  alderCallNarration,
+  cancelDefense,
+  defenseMinutes,
+  defenseStatusLine,
+  settleDefense,
+  startDefense,
+  type CollegeDefense,
   type EngineRuntime,
   type OccupantNotice,
   type StaffCommand,
@@ -20,7 +27,12 @@ export const STAFF_HELP_TEXT = [
   "  admin roster",
   "  admin remove <username>",
   "  admin audit",
+  "  admin defense start [minutes]",
+  "  admin defense cancel",
+  "  admin defense status",
   "",
+  "admin defense start calls every Collegian online to the three gates for up to 7 minutes.",
+  "Losing a fight there costs nobody a quest, ink, or gear. Cancel hands the gates to the staff.",
   "admin roster lists unused tokens and each login with its Collegian name.",
   "admin audit lists teacher actions (announce, inspect, mute, kick, remove) with times.",
   "It does not list student say or movement.",
@@ -71,6 +83,7 @@ export type StaffContext = {
     | undefined
   >;
   disableAccount?: (username: string) => Promise<{ ok: true } | { ok: false; message: string }>;
+  persistDefense?: (defense: CollegeDefense) => Promise<void>;
 };
 
 export function canModerate(identity: PlayIdentity | undefined): boolean {
@@ -119,6 +132,14 @@ export async function handleStaffCommand(
 
   if (intent.verb === "announce") {
     return announce(intent.text, context);
+  }
+
+  if (
+    intent.verb === "defense-start" ||
+    intent.verb === "defense-cancel" ||
+    intent.verb === "defense-status"
+  ) {
+    return defense(intent, context);
   }
 
   const matches = matchCourtyardCharacters(context.world, intent.target);
@@ -229,6 +250,77 @@ export async function handleStaffCommand(
 export function muteRejection(untilMs: number, nowMs: number): string {
   const minutes = Math.max(1, Math.ceil((untilMs - nowMs) / 60_000));
   return `You are muted. Ask a teacher, or wait about ${String(minutes)} minutes.`;
+}
+
+/**
+ * H3. A teacher calls the defense, cancels it, or asks where it stands. Students are
+ * already refused above. Cancelling is the adults calling it off; it rolls nothing back.
+ */
+async function defense(
+  intent: { verb: "defense-start" | "defense-cancel" | "defense-status"; minutes?: number },
+  context: StaffContext,
+): Promise<StaffResult> {
+  const now = context.now();
+  settleDefense(context.world, now);
+
+  if (intent.verb === "defense-status") {
+    return {
+      ok: true,
+      events: [
+        noticeFor(context.actorId, defenseStatusLine(context.world.defense, now), context.runtime),
+      ],
+      notices: [],
+    };
+  }
+
+  if (intent.verb === "defense-cancel") {
+    if (context.world.defense?.phase !== "fighting") {
+      return { ok: false, code: "invalid_command", message: "No defense is running." };
+    }
+    cancelDefense(context.world);
+    await context.persistDefense?.(context.world.defense);
+    await writeAudit(context, "defense", undefined, "cancel");
+    const line =
+      "A teacher calls the defense off. The staff will see to the gates. Nothing you were carrying was taken from you.";
+    return {
+      ok: true,
+      events: [noticeFor(context.actorId, line, context.runtime)],
+      notices: broadcast(context, line),
+    };
+  }
+
+  if (context.world.defense?.phase === "fighting") {
+    return {
+      ok: false,
+      code: "invalid_command",
+      message: defenseStatusLine(context.world.defense, now),
+    };
+  }
+
+  const minutes = defenseMinutes(intent.minutes);
+  const started = startDefense(context.world, {
+    id: crypto.randomUUID(),
+    minutes,
+    now,
+    startedByUsername: context.identity?.username,
+  });
+  await context.persistDefense?.(started);
+  await writeAudit(context, "defense", undefined, `start ${String(minutes)}m`);
+  const line = alderCallNarration(minutes);
+  return {
+    ok: true,
+    events: [noticeFor(context.actorId, line, context.runtime)],
+    notices: broadcast(context, line),
+  };
+}
+
+function broadcast(context: StaffContext, line: string): StaffSuccess["notices"] {
+  return context.onlineCharacterIds
+    .filter((characterId) => characterId !== context.actorId)
+    .map((characterId) => ({
+      characterId,
+      event: noticeFor(characterId, line, context.runtime),
+    }));
 }
 
 function announce(raw: string, context: StaffContext): Promise<StaffResult> {

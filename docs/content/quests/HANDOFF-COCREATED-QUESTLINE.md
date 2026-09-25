@@ -122,7 +122,15 @@ once-per-fight reduction still applies only to the slots it already names.
 First consumers: **The Pressed Mask** (`examineRider`), **The Passed Sentry**
 (`admitsRoomId`).
 
-### H3 — College defense phase
+### H3 — College defense phase — **phase built 25 September 2026, [ADR-0048](../../adr/0048-college-defense.md)**
+
+Built: the phase, the three staff commands, the audit row, Alder in every transcript on
+call and on join or reconnect, the quest-offer pause, the close timer plus lazy settle,
+and restore-on-boot. Owner set the ceiling at **7 minutes**, which is also the default.
+Not built yet, and next: raiders, the three gates, the trophy, and the aftermath room
+text.
+
+Original sketch, kept for the record:
 
 One process-wide phase, not a per-character quest flag. Suggested module
 `packages/game-engine/src/college-defense.ts`, persisted on the server (new
